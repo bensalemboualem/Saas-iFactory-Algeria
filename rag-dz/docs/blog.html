@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - IAFactory Algeria</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00c261;
+            --primary-dark: #00a050;
+            --bg: #0a0a0a;
+            --surface: #111;
+            --surface-light: #1a1a1a;
+            --text: #fff;
+            --text-muted: #888;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+        
+        .header { background: rgba(10,10,10,0.95); padding: 1rem 2rem; position: fixed; top: 0; left: 0; right: 0; z-index: 100; border-bottom: 1px solid #222; }
+        .header-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--primary); text-decoration: none; }
+        .back-btn { background: var(--primary); color: #000; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; }
+
+        .main { max-width: 1200px; margin: 0 auto; padding: 120px 2rem 4rem; }
+        .page-header { text-align: center; margin-bottom: 4rem; }
+        .page-header h1 { font-size: 3rem; margin-bottom: 1rem; background: linear-gradient(135deg, var(--primary), #00ff88); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .page-header p { font-size: 1.2rem; color: var(--text-muted); }
+
+        /* Categories */
+        .categories { display: flex; gap: 1rem; justify-content: center; margin-bottom: 3rem; flex-wrap: wrap; }
+        .category-btn { background: var(--surface); border: 1px solid #333; color: var(--text-muted); padding: 0.5rem 1.5rem; border-radius: 25px; cursor: pointer; transition: all 0.3s; font-size: 0.9rem; }
+        .category-btn:hover, .category-btn.active { background: var(--primary); color: #000; border-color: var(--primary); }
+
+        /* Featured Post */
+        .featured { display: grid; grid-template-columns: 1.5fr 1fr; gap: 2rem; margin-bottom: 4rem; }
+        .featured-main { background: var(--surface); border: 1px solid #222; border-radius: 20px; overflow: hidden; transition: all 0.3s; }
+        .featured-main:hover { border-color: var(--primary); }
+        .featured-image { height: 300px; background: linear-gradient(135deg, rgba(0,194,97,0.3), rgba(0,194,97,0.1)); display: flex; align-items: center; justify-content: center; font-size: 5rem; }
+        .featured-content { padding: 2rem; }
+        .featured-tag { background: var(--primary); color: #000; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
+        .featured-content h2 { font-size: 1.8rem; margin: 1rem 0; }
+        .featured-content p { color: var(--text-muted); margin-bottom: 1rem; }
+        .featured-meta { display: flex; gap: 1.5rem; color: var(--text-muted); font-size: 0.9rem; }
+
+        .featured-side { display: flex; flex-direction: column; gap: 1rem; }
+        .featured-small { background: var(--surface); border: 1px solid #222; border-radius: 12px; padding: 1.5rem; transition: all 0.3s; }
+        .featured-small:hover { border-color: var(--primary); }
+        .featured-small h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .featured-small p { color: var(--text-muted); font-size: 0.9rem; }
+
+        /* Blog Grid */
+        .blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; margin-bottom: 4rem; }
+        .blog-card { background: var(--surface); border: 1px solid #222; border-radius: 16px; overflow: hidden; transition: all 0.3s; }
+        .blog-card:hover { border-color: var(--primary); transform: translateY(-5px); }
+        .blog-card-image { height: 200px; background: linear-gradient(135deg, rgba(0,194,97,0.2), rgba(0,194,97,0.05)); display: flex; align-items: center; justify-content: center; font-size: 3rem; }
+        .blog-card-content { padding: 1.5rem; }
+        .blog-card-tag { background: rgba(0,194,97,0.1); color: var(--primary); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+        .blog-card h3 { font-size: 1.2rem; margin: 1rem 0 0.5rem; }
+        .blog-card p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem; }
+        .blog-card-meta { display: flex; justify-content: space-between; color: var(--text-muted); font-size: 0.85rem; }
+        .read-more { color: var(--primary); text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; }
+        .read-more:hover { text-decoration: underline; }
+
+        /* Newsletter */
+        .newsletter { background: linear-gradient(135deg, rgba(0,194,97,0.1), rgba(0,255,136,0.05)); border: 1px solid rgba(0,194,97,0.3); border-radius: 20px; padding: 3rem; text-align: center; margin-bottom: 4rem; }
+        .newsletter h2 { font-size: 2rem; margin-bottom: 1rem; }
+        .newsletter p { color: var(--text-muted); margin-bottom: 2rem; }
+        .newsletter-form { display: flex; gap: 1rem; max-width: 500px; margin: 0 auto; }
+        .newsletter-form input { flex: 1; background: var(--surface); border: 1px solid #333; border-radius: 12px; padding: 1rem 1.5rem; color: var(--text); font-size: 1rem; }
+        .newsletter-form input:focus { outline: none; border-color: var(--primary); }
+        .newsletter-form button { background: var(--primary); color: #000; border: none; padding: 1rem 2rem; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s; }
+        .newsletter-form button:hover { background: var(--primary-dark); }
+
+        /* Pagination */
+        .pagination { display: flex; justify-content: center; gap: 0.5rem; }
+        .page-btn { width: 40px; height: 40px; background: var(--surface); border: 1px solid #333; border-radius: 8px; color: var(--text); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; }
+        .page-btn:hover, .page-btn.active { background: var(--primary); color: #000; border-color: var(--primary); }
+
+        footer { background: var(--surface); border-top: 1px solid #222; padding: 2rem; text-align: center; color: var(--text-muted); margin-top: 4rem; }
+
+        @media (max-width: 768px) {
+            .page-header h1 { font-size: 2rem; }
+            .featured { grid-template-columns: 1fr; }
+            .blog-grid { grid-template-columns: 1fr; }
+            .newsletter-form { flex-direction: column; }
+        }
+    </style>
+<link rel="stylesheet" href="/apps/shared/iafactory-unified.css">
+</head>
+<body>
+<!-- IAFactory Trilingue Controls -->
+<div class="iaf-controls-floating" style="position:fixed;top:20px;right:20px;z-index:9998;display:flex;gap:10px;align-items:center;">
+    <div class="iaf-lang-dropdown" style="position:relative;">
+        <button class="iaf-lang-btn" onclick="IAFUnified.toggleLangMenu()" 
+            style="background:#667eea;color:white;border:none;padding:8px 15px;border-radius:8px;cursor:pointer;font-size:14px;display:flex;align-items:center;gap:5px;">
+            🌐 <span id="current-lang-label">FR</span> ▼
+        </button>
+        <div class="iaf-lang-menu" id="lang-menu" 
+            style="display:none;position:absolute;top:100%;right:0;background:white;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,0.15);min-width:150px;margin-top:5px;overflow:hidden;">
+            <button onclick="IAFUnified.changeLang('fr')" style="width:100%;padding:10px 15px;border:none;background:none;text-align:left;cursor:pointer;">🇫🇷 Français</button>
+            <button onclick="IAFUnified.changeLang('ar')" style="width:100%;padding:10px 15px;border:none;background:none;text-align:left;cursor:pointer;">🇩🇿 العربية</button>
+            <button onclick="IAFUnified.changeLang('en')" style="width:100%;padding:10px 15px;border:none;background:none;text-align:left;cursor:pointer;">🇬🇧 English</button>
+        </div>
+    </div>
+    <button class="iaf-theme-toggle" onclick="IAFUnified.toggleTheme()" 
+        style="background:#667eea;color:white;border:none;padding:8px 12px;border-radius:8px;cursor:pointer;font-size:16px;" 
+        title="Toggle theme">🌓</button>
+</div>
+
+    <header class="header">
+        <div class="header-content">
+            <a href="../landing-complete-responsive.html" class="logo">🇩🇿 IAFactory</a>
+            <a href="../landing-complete-responsive.html" class="back-btn"><i class="fas fa-arrow-left"></i> Retour</a>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="page-header">
+            <h1>📰 Blog IAFactory</h1>
+            <p>Actualités, tutoriels et analyses sur l'IA en Algérie et dans le monde</p>
+        </div>
+
+        <div class="categories">
+            <button class="category-btn active">Tous</button>
+            <button class="category-btn">Actualités IA</button>
+            <button class="category-btn">Tutoriels</button>
+            <button class="category-btn">Cas d'Usage</button>
+            <button class="category-btn">Recherche</button>
+            <button class="category-btn">Algérie</button>
+        </div>
+
+        <!-- Featured -->
+        <div class="featured">
+            <article class="featured-main">
+                <div class="featured-image">🤖</div>
+                <div class="featured-content">
+                    <span class="featured-tag">À la Une</span>
+                    <h2>L'IA Souveraine : Pourquoi l'Algérie doit investir maintenant</h2>
+                    <p>Analyse complète des enjeux de souveraineté numérique et comment l'Algérie peut se positionner comme leader régional dans l'intelligence artificielle.</p>
+                    <div class="featured-meta">
+                        <span><i class="far fa-calendar"></i> 15 Jan 2025</span>
+                        <span><i class="far fa-clock"></i> 12 min de lecture</span>
+                        <span><i class="far fa-eye"></i> 2.4k vues</span>
+                    </div>
+                </div>
+            </article>
+            <div class="featured-side">
+                <article class="featured-small">
+                    <span class="featured-tag" style="background: rgba(0,194,97,0.1); color: var(--primary);">Tutoriel</span>
+                    <h3>Créer son premier RAG Assistant en 10 minutes</h3>
+                    <p>Guide pas à pas pour déployer votre assistant IA.</p>
+                </article>
+                <article class="featured-small">
+                    <span class="featured-tag" style="background: rgba(0,194,97,0.1); color: var(--primary);">Actualité</span>
+                    <h3>Claude 3.5 Sonnet : Test complet et comparatif</h3>
+                    <p>Notre analyse du dernier modèle d'Anthropic.</p>
+                </article>
+                <article class="featured-small">
+                    <span class="featured-tag" style="background: rgba(0,194,97,0.1); color: var(--primary);">Cas d'Usage</span>
+                    <h3>Comment l'APC d'Alger utilise notre RAG</h3>
+                    <p>Retour d'expérience sur notre déploiement pilote.</p>
+                </article>
+            </div>
+        </div>
+
+        <!-- Blog Grid -->
+        <div class="blog-grid">
+            <article class="blog-card">
+                <div class="blog-card-image">📊</div>
+                <div class="blog-card-content">
+                    <span class="blog-card-tag">Data Science</span>
+                    <h3>Les meilleurs modèles d'embeddings pour l'arabe</h3>
+                    <p>Comparatif des modèles d'embeddings pour le traitement de la langue arabe et dialectes maghrébins.</p>
+                    <div class="blog-card-meta">
+                        <span>10 Jan 2025</span>
+                        <a href="#" class="read-more">Lire plus <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <div class="blog-card-image">🔧</div>
+                <div class="blog-card-content">
+                    <span class="blog-card-tag">Tutoriel</span>
+                    <h3>Optimiser les prompts pour GPT-4 en contexte algérien</h3>
+                    <p>Techniques avancées de prompt engineering adaptées au contexte local.</p>
+                    <div class="blog-card-meta">
+                        <span>8 Jan 2025</span>
+                        <a href="#" class="read-more">Lire plus <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <div class="blog-card-image">🏛️</div>
+                <div class="blog-card-content">
+                    <span class="blog-card-tag">Secteur Public</span>
+                    <h3>IA dans l'administration algérienne : État des lieux</h3>
+                    <p>Panorama des initiatives d'IA dans le secteur public en Algérie.</p>
+                    <div class="blog-card-meta">
+                        <span>5 Jan 2025</span>
+                        <a href="#" class="read-more">Lire plus <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <div class="blog-card-image">⚖️</div>
+                <div class="blog-card-content">
+                    <span class="blog-card-tag">Juridique</span>
+                    <h3>Réglementation IA en Algérie : Ce qu'il faut savoir</h3>
+                    <p>Analyse du cadre légal et des projets de loi sur l'intelligence artificielle.</p>
+                    <div class="blog-card-meta">
+                        <span>2 Jan 2025</span>
+                        <a href="#" class="read-more">Lire plus <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <div class="blog-card-image">🚀</div>
+                <div class="blog-card-content">
+                    <span class="blog-card-tag">Startup</span>
+                    <h3>Les startups IA algériennes à suivre en 2025</h3>
+                    <p>Notre sélection des startups les plus prometteuses de l'écosystème IA algérien.</p>
+                    <div class="blog-card-meta">
+                        <span>28 Dec 2024</span>
+                        <a href="#" class="read-more">Lire plus <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <div class="blog-card-image">🎓</div>
+                <div class="blog-card-content">
+                    <span class="blog-card-tag">Formation</span>
+                    <h3>Meilleures formations IA en Algérie</h3>
+                    <p>Guide complet des formations en intelligence artificielle disponibles en Algérie.</p>
+                    <div class="blog-card-meta">
+                        <span>25 Dec 2024</span>
+                        <a href="#" class="read-more">Lire plus <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        <!-- Newsletter -->
+        <div class="newsletter">
+            <h2>📬 Restez informé</h2>
+            <p>Recevez nos derniers articles et actualités IA directement dans votre boîte mail.</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Votre adresse email">
+                <button type="submit">S'abonner</button>
+            </form>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+            <button class="page-btn"><i class="fas fa-chevron-left"></i></button>
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <button class="page-btn">...</button>
+            <button class="page-btn">10</button>
+            <button class="page-btn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2025 IAFactory Algeria. Tous droits réservés.</p>
+    </footer>
+<script src="/apps/shared/iafactory-unified.js"></script>
+<!-- IAFactory Chatbot -->
+<button class="iaf-chatbot-btn" onclick="IAFUnified.toggleChatbot()" title="Aide" aria-label="Aide">💬</button>
+<div data-iaf-footer></div>
+</body>
+</html>

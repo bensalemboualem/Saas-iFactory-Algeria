@@ -1,0 +1,93 @@
+# ===================================
+# iafactory AI Tools - Backend Requirements
+# ===================================
+
+# FastAPI & Server
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
+python-multipart==0.0.6
+python-dotenv==1.0.0
+
+# Pydantic
+pydantic==2.5.3
+pydantic-settings==2.1.0
+
+# AI Providers
+openai==1.10.0
+anthropic==0.18.1
+
+# Image Processing
+Pillow==10.2.0
+rembg[gpu]==2.0.56  # Background removal (use rembg[cpu] if no GPU)
+# opencv-python==4.9.0.80  # Optional for advanced image processing
+
+# Audio Processing
+# pydub==0.25.1  # Optional for audio format conversion
+
+# Database
+sqlalchemy==2.0.25
+asyncpg==0.29.0  # PostgreSQL async driver
+alembic==1.13.1  # Database migrations
+
+# Redis
+redis==5.0.1
+hiredis==2.3.2
+
+# Storage
+boto3==1.34.34  # S3-compatible storage
+aioboto3==12.3.0  # Async S3
+
+# HTTP Client
+aiohttp==3.9.1
+httpx==0.26.0
+
+# Utilities
+python-jose[cryptography]==3.3.0  # JWT
+passlib[bcrypt]==1.7.4  # Password hashing
+python-slugify==8.0.1
+pytz==2024.1
+
+# Monitoring & Logging
+sentry-sdk[fastapi]==1.40.0  # Optional error tracking
+
+# Testing
+pytest==7.4.4
+pytest-asyncio==0.23.3
+pytest-cov==4.1.0
+httpx==0.26.0  # For testing
+
+# Development
+black==24.1.1
+flake8==7.0.0
+mypy==1.8.0
+isort==5.13.2
+
+# ===================================
+# Optional: Local AI Models
+# ===================================
+
+# For running Whisper locally (CPU)
+# openai-whisper==20231117
+# torch==2.1.2
+# torchaudio==2.1.2
+
+# For running Stable Diffusion locally
+# diffusers==0.25.0
+# transformers==4.37.0
+# accelerate==0.26.1
+
+# For advanced image upscaling
+# realesrgan==0.3.0
+
+# ===================================
+# Notes
+# ===================================
+# 
+# GPU Support:
+# - For rembg with GPU: pip install rembg[gpu]
+# - For local AI models: Install CUDA toolkit first
+#
+# Minimum versions:
+# - Python 3.10+
+# - PostgreSQL 14+
+# - Redis 6+

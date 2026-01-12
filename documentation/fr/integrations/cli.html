@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interface CLI - IAFactory Algeria</title>
+    <link rel="stylesheet" href="../../assets/css/docs-theme.css">
+</head>
+<body>
+    <header class="docs-header">
+        <div class="docs-logo">
+            <img src="../../assets/images/logo.png" alt="IAFactory Algeria">
+            <span>IAFactory Algeria</span>
+        </div>
+        <nav class="main-nav">
+            <a href="../index.html">Documentation</a>
+            <a href="https://app.iafactory-algeria.com">App</a>
+            <a href="../api/index.html">API</a>
+        </nav>
+        <div class="docs-controls">
+            <div class="language-switcher">
+                <button data-lang="fr" class="active">🇫🇷 FR</button>
+                <button data-lang="en">🇬🇧 EN</button>
+                <button data-lang="ar">🇸🇦 AR</button>
+            </div>
+            <div class="theme-toggle">
+                <div class="theme-toggle-slider">☀️</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <!-- Sidebar -->
+        </aside>
+
+        <main class="docs-main">
+            <h1>Interface CLI IAFactory</h1>
+            
+            <p class="lead">Utilisez l'IA d'IAFactory Algeria directement depuis votre terminal avec notre CLI puissant et facile à utiliser.</p>
+
+            <h2 id="introduction">⌨️ Introduction</h2>
+
+            <p>Le CLI IAFactory vous permet d'accéder à tous les modèles d'IA depuis la ligne de commande. Parfait pour les scripts, l'automatisation et le prototypage rapide.</p>
+
+            <div class="alert alert-info">
+                <strong>💡 Cas d'usage :</strong>
+                <ul>
+                    <li>Scripts d'automatisation batch</li>
+                    <li>Pipelines CI/CD avec IA</li>
+                    <li>Prototypage rapide de prompts</li>
+                    <li>Génération de code assistée</li>
+                    <li>Traitement de fichiers en masse</li>
+                </ul>
+            </div>
+
+            <h2 id="installation">📦 Installation</h2>
+
+            <h3 id="via-npm">Via npm (Node.js)</h3>
+
+            <pre><code class="language-bash">npm install -g @iafactory/cli
+
+# Vérifier l'installation
+iafactory --version</code></pre>
+
+            <h3 id="via-pip">Via pip (Python)</h3>
+
+            <pre><code class="language-bash">pip install iafactory-cli
+
+# Vérifier l'installation
+iafactory --version</code></pre>
+
+            <h3 id="via-binary">Via Binary (Go)</h3>
+
+            <pre><code class="language-bash"># Linux / macOS
+curl -sSL https://cli.iafactory-algeria.com/install.sh | bash
+
+# Windows (PowerShell)
+iwr -useb https://cli.iafactory-algeria.com/install.ps1 | iex</code></pre>
+
+            <h2 id="configuration">⚙️ Configuration</h2>
+
+            <h3 id="authentification">Authentification</h3>
+
+            <pre><code class="language-bash"># Configurer votre clé API
+iafactory config set api-key VOTRE_CLE_API
+
+# Vérifier la configuration
+iafactory config get api-key
+
+# Tester la connexion
+iafactory auth test</code></pre>
+
+            <h3 id="configuration-avancee">Configuration Avancée</h3>
+
+            <pre><code class="language-bash"># Configurer le modèle par défaut
+iafactory config set default-model gpt-4.1
+
+# Configurer la température par défaut
+iafactory config set default-temperature 0.7
+
+# Voir toutes les configurations
+iafactory config list</code></pre>
+
+            <h2 id="commandes">🚀 Commandes Principales</h2>
+
+            <h3 id="chat">Chat Completion</h3>
+
+            <pre><code class="language-bash"># Simple prompt
+iafactory chat "Explique-moi le machine learning"
+
+# Avec modèle spécifique
+iafactory chat -m gpt-4.1 "Génère un poème sur l'Algérie"
+
+# Avec paramètres
+iafactory chat \
+  --model gpt-4.1 \
+  --temperature 0.9 \
+  --max-tokens 500 \
+  "Écris une histoire courte"
+
+# Mode interactif
+iafactory chat --interactive</code></pre>
+
+            <h3 id="generate">Génération d'Images</h3>
+
+            <pre><code class="language-bash"># Générer une image
+iafactory generate image "Un paysage algérien au coucher du soleil"
+
+# Avec options
+iafactory generate image \
+  --model dall-e-3 \
+  --size 1024x1024 \
+  --quality hd \
+  --output ./output.png \
+  "Logo moderne pour startup tech"
+
+# Générer plusieurs variations
+iafactory generate image \
+  --variations 4 \
+  "Icône minimaliste pour app mobile"</code></pre>
+
+            <h3 id="complete">Code Completion</h3>
+
+            <pre><code class="language-bash"># Compléter du code
+iafactory complete --file script.py
+
+# Avec contexte
+iafactory complete \
+  --file main.js \
+  --context "Fonction pour valider email" \
+  --language javascript
+
+# Mode interactif
+iafactory complete --interactive</code></pre>
+
+            <h3 id="translate">Traduction</h3>
+
+            <pre><code class="language-bash"># Traduire texte
+iafactory translate --to fr "Hello world"
+
+# Traduire fichier
+iafactory translate \
+  --file document.txt \
+  --from en \
+  --to ar \
+  --output document_ar.txt
+
+# Traduction multilingue
+iafactory translate \
+  --file content.md \
+  --to fr,ar,en \
+  --output-dir ./translations/</code></pre>
+
+            <h2 id="scripts">📜 Scripts et Automatisation</h2>
+
+            <h3 id="batch-processing">Traitement Batch</h3>
+
+            <pre><code class="language-bash">#!/bin/bash
+
+# Générer descriptions pour tous les produits
+for file in products/*.json; do
+  name=$(jq -r '.name' "$file")
+  features=$(jq -r '.features' "$file")
+  
+  description=$(iafactory chat \
+    "Génère une description produit e-commerce pour: $name. Features: $features")
+  
+  echo "$description" > "descriptions/$(basename $file .json).txt"
+done</code></pre>
+
+            <h3 id="pipeline-ci-cd">Pipeline CI/CD</h3>
+
+            <pre><code class="language-yaml"># .github/workflows/ai-review.yml
+name: AI Code Review
+
+on: [pull_request]
+
+jobs:
+  ai-review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Install IAFactory CLI
+        run: npm install -g @iafactory/cli
+      
+      - name: Configure API Key
+        run: iafactory config set api-key ${{ secrets.IAFACTORY_API_KEY }}
+      
+      - name: AI Code Review
+        run: |
+          git diff origin/main...HEAD > changes.diff
+          iafactory chat \
+            --model gpt-4.1 \
+            --system "Tu es un code reviewer expert" \
+            --file changes.diff \
+            > review.md
+      
+      - name: Post Review
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            const review = fs.readFileSync('review.md', 'utf8');
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: review
+            });</code></pre>
+
+            <h3 id="watch-mode">Watch Mode</h3>
+
+            <pre><code class="language-bash"># Surveiller un dossier et générer docs automatiquement
+iafactory watch \
+  --dir ./src \
+  --pattern "**/*.js" \
+  --command "iafactory chat --system 'Génère la documentation' --file {file} > docs/{file}.md"</code></pre>
+
+            <h2 id="exemples-avances">🎯 Exemples Avancés</h2>
+
+            <h3 id="prompt-engineering">Prompt Engineering Interactif</h3>
+
+            <pre><code class="language-bash"># Tester différentes températures
+for temp in 0.1 0.5 0.9; do
+  echo "=== Temperature: $temp ==="
+  iafactory chat \
+    --temperature $temp \
+    --max-tokens 100 \
+    "Écris un slogan pour une startup IA algérienne"
+  echo ""
+done</code></pre>
+
+            <h3 id="data-extraction">Extraction de Données</h3>
+
+            <pre><code class="language-bash"># Extraire informations structurées
+cat emails.txt | iafactory chat \
+  --system "Extrait les emails et noms au format JSON" \
+  --response-format json \
+  > contacts.json</code></pre>
+
+            <h3 id="content-generation">Génération de Contenu en Masse</h3>
+
+            <pre><code class="language-bash">#!/bin/bash
+
+# Générer 100 posts blog
+topics=(
+  "Intelligence Artificielle en Algérie"
+  "Startups Tech à Alger"
+  "Digital Transformation"
+  # ... plus de topics
+)
+
+for topic in "${topics[@]}"; do
+  iafactory chat \
+    --model gpt-4.1 \
+    --temperature 0.7 \
+    --max-tokens 1500 \
+    "Écris un article de blog de 1000 mots sur: $topic" \
+    > "articles/$(echo $topic | tr ' ' '_').md"
+  
+  sleep 1  # Rate limiting
+done</code></pre>
+
+            <h2 id="bonnes-pratiques">✨ Bonnes Pratiques</h2>
+
+            <h3 id="securite">1. Sécurité</h3>
+
+            <ul>
+                <li>Ne commitez jamais votre clé API</li>
+                <li>Utilisez des variables d'environnement</li>
+                <li>Utilisez <code>iafactory config</code> qui stocke en sécurité</li>
+            </ul>
+
+            <pre><code class="language-bash"># ✅ Bon
+export IAFACTORY_API_KEY="votre_cle"
+iafactory chat "test"
+
+# ❌ Mauvais
+iafactory chat --api-key "votre_cle_en_clair" "test"</code></pre>
+
+            <h3 id="optimisation-costs">2. Optimisation Coûts</h3>
+
+            <pre><code class="language-bash"># Utilisez --max-tokens pour limiter
+iafactory chat --max-tokens 100 "prompt court"
+
+# Utilisez gpt-4.1-mini pour tâches simples
+iafactory chat -m gpt-4.1-mini "classification simple"
+
+# Cachez les résultats fréquents
+iafactory chat --cache "question fréquente"</code></pre>
+
+            <h3 id="debugging">3. Debugging</h3>
+
+            <pre><code class="language-bash"># Mode verbose
+iafactory chat --verbose "test"
+
+# Voir les requêtes raw
+iafactory chat --debug "test"
+
+# Dry-run (ne fait pas l'appel API)
+iafactory chat --dry-run "test"</code></pre>
+
+            <h2 id="ressources">📚 Ressources</h2>
+
+            <ul>
+                <li>📖 <a href="https://github.com/iafactory-algeria/cli">CLI GitHub</a></li>
+                <li>🎥 <a href="../api/quick-start.html">API Quick Start</a></li>
+                <li>💬 <a href="https://discord.gg/iafactory">Communauté Discord</a></li>
+                <li>🐛 <a href="https://github.com/iafactory-algeria/cli/issues">Report Issues</a></li>
+            </ul>
+
+            <div class="alert alert-success">
+                <strong>⌨️ Prêt à scripter ?</strong>
+                <p>Récupérez votre clé API : <a href="https://app.iafactory-algeria.com/api-keys">app.iafactory-algeria.com</a></p>
+            </div>
+        </main>
+
+        <aside class="docs-toc">
+            <h3 class="docs-toc-title">Sur cette page</h3>
+            <ul></ul>
+        </aside>
+    </div>
+
+    <script src="../../assets/js/docs-theme.js"></script>
+</body>
+</html>

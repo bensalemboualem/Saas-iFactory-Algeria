@@ -1,0 +1,21 @@
+# DZ-VoiceAssistant Backend Dependencies
+
+# Core FastAPI
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
+python-multipart==0.0.6
+
+# HTTP Client
+httpx==0.26.0
+
+# TTS - Edge TTS (Microsoft, gratuit)
+edge-tts==6.1.9
+
+# Audio processing (optionnel pour conversion)
+# pydub==0.25.1
+
+# Pydantic
+pydantic==2.5.3
+
+# Logging
+python-json-logger==2.0.7

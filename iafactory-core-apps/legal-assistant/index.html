@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fr" data-iaf-auto-init>
+<head>
+<link rel="stylesheet" href="/apps/shared/iafactory-unified.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DZ-LegalAssistant | IAFactory Algeria</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'dz-green': '#006847',
+                        'dz-red': '#D52B1E',
+                        'dz-white': '#FFFFFF',
+                        'iaf-primary': '#10B981',
+                        'iaf-dark': '#1F2937',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        
+:root{--bg:#020617;--card:#020617;--border:rgba(255,255,255,0.12);--primary:#00a651;--primary-dark:#008c45;--text:#f8fafc;--text-primary:#f8fafc;--muted:rgba(248,250,252,0.75);--bg-card:#020617;--bg-secondary:#0f172a;--border-primary:rgba(255,255,255,0.12);--accent:#00a651}
+[data-theme="light"]{--bg:#f7f5f0;--card:#f7f5f0;--border:rgba(0,0,0,0.08);--primary:#00a651;--text:#0f172a;--text-primary:#0f172a;--muted:rgba(15,23,42,0.7);--bg-card:#ffffff;--bg-secondary:#f7f5f0;--border-primary:rgba(0,0,0,0.08);--accent:#00a651}
+
+
+        [data-theme="light"] {
+            --bg: #f7f5f0;
+            --bg-alt: #f7f5f0;
+            --card: #f7f5f0;
+            --border: rgba(0, 0, 0, 0.08);
+            --text: #0f172a;
+            --muted: rgba(15, 23, 42, 0.7);
+            --shadow: 0 20px 60px rgba(15, 23, 42, 0.25);
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        * { font-family: 'Inter', sans-serif; }
+        
+        .loader {
+            border: 3px solid rgba(16, 185, 129, 0.2);
+            border-top: 3px solid #10B981;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .step-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .category-btn.active {
+            background: linear-gradient(135deg, #10B981, #059669);
+            color: white;
+            border-color: #10B981;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.3s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        /* Status Indicator */
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .status-success {
+            background: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+        }
+
+        .status-success::before {
+            content: '●';
+            animation: pulse 2s infinite;
+        }
+
+        .status-error {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+        }
+
+        .status-info {
+            background: rgba(59, 130, 246, 0.1);
+            color: #3b82f6;
+        }
+
+        /* Action Buttons */
+        .action-btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Loading */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive improvements */
+        @media (max-width: 640px) {
+            .header { padding: 1rem; }
+            .container { padding: 1rem; }
+        }
+    
+    </style>
+
+  
+        <div style="display:flex;padding:8px;gap:4px;background:rgba(0,0,0,0.2);">
+            <button class="iaf-chatbot-mode active" id="iaf-mode-chat" onclick="IAFactory.setChatMode('chat')" style="flex:1;padding:8px;border:none;background:var(--accent,#00a651);color:white;cursor:pointer;border-radius:8px;font-size:12px;" data-i18n="chatbotModeChat">Chat IA</button>
+            <button class="iaf-chatbot-mode" id="iaf-mode-rag" onclick="IAFactory.setChatMode('rag')" style="flex:1;padding:8px;border:none;background:transparent;color:inherit;cursor:pointer;border-radius:8px;font-size:12px;opacity:0.6;" data-i18n="chatbotModeRag">Recherche</button>
+            <button class="iaf-chatbot-mode" id="iaf-mode-support" onclick="IAFactory.setChatMode('support')" style="flex:1;padding:8px;border:none;background:transparent;color:inherit;cursor:pointer;border-radius:8px;font-size:12px;opacity:0.6;" data-i18n="chatbotModeSupport">Support</button>
+        </div>
+        <div class="iaf-chatbot-messages" id="iaf-chatbot-messages" style="flex:1;overflow-y:auto;padding:16px;">
+            <div style="display:flex;gap:8px;margin-bottom:12px;">
+                <div style="width:32px;height:32px;background:linear-gradient(135deg,#00a651,#00d66a);color:white;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:11px;flex-shrink:0;">DZ</div>
+                <div style="background:rgba(0,0,0,0.2);padding:10px 14px;border-radius:12px;max-width:80%;font-size:14px;line-height:1.4;" data-i18n="chatbotWelcome" data-i18n-html>👋 Bonjour ! Je suis <strong>Dzir IA</strong>. Comment puis-je vous aider ?</div>
+            </div>
+        </div>
+        <div style="display:flex;padding:12px;gap:8px;border-top:1px solid rgba(255,255,255,0.1);">
+            <input type="text" id="iaf-chatbot-input" placeholder="Tapez votre message..." data-i18n-placeholder="chatbotPlaceholder" onkeypress="if(event.key==='Enter')IAFactory.sendChatMessage()" style="flex:1;padding:10px 14px;border:1px solid rgba(255,255,255,0.1);border-radius:20px;background:rgba(0,0,0,0.2);color:inherit;outline:none;font-size:14px;">
+            <button onclick="IAFactory.sendChatMessage()" style="width:40px;height:40px;border-radius:50%;border:none;background:#00a651;color:white;cursor:pointer;font-size:16px;">➤</button>
+        </div>
+    </div>
+
+<div data-iaf-footer></div>
+ ========== -->
+<div data-iaf-footer></div>
+<button class="iaf-chatbot-btn" onclick="IAFactory.toggleChatbot()">💬</button>
+<script src="/apps/shared/iafactory-unified.js"></script>
+</body>
+</html>

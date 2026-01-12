@@ -1,0 +1,1568 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>51+ Applications IA - IAFactory RAG Algérie</title>
+    <meta name="description" content="Découvrez nos 94+ applications IA prêtes à l'emploi : rédaction, business, éducation, juridique, et plus encore.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --bg-secondary: #111111;
+            --card: #1a1a1a;
+            --border: #2a2a2a;
+            --text: #ffffff;
+            --text-secondary: #a0a0a0;
+            --primary: #00c261;
+            --primary-hover: #00a351;
+            --accent: #3b82f6;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 24px;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 18px;
+        }
+
+        .logo-text { font-weight: 700; font-size: 20px; }
+        .logo-text span { color: var(--primary); }
+
+        nav { display: flex; gap: 32px; align-items: center; }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover, .nav-link.active { color: var(--primary); }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+
+        /* Hero */
+        .hero {
+            padding: 140px 24px 60px;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(0, 194, 97, 0.05) 0%, transparent 50%);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--text), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 24px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Filter Tabs */
+        .filter-section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px 32px;
+        }
+
+        /* Search Box */
+        .search-box {
+            max-width: 500px;
+            margin: 0 auto 24px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 14px 20px 14px 50px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            color: var(--text);
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 194, 97, 0.1);
+        }
+
+        .search-input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            pointer-events: none;
+        }
+
+        .search-clear {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--border);
+            border: none;
+            color: var(--text-secondary);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .search-clear:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .search-clear.visible {
+            display: flex;
+        }
+
+        .search-results-info {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+            display: none;
+        }
+
+        .search-results-info.visible {
+            display: block;
+        }
+
+        .search-results-info .count {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            display: none;
+        }
+
+        .no-results.visible {
+            display: block;
+        }
+
+        .no-results .emoji {
+            font-size: 4rem;
+            margin-bottom: 16px;
+        }
+
+        .no-results h3 {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .no-results p {
+            color: var(--text-secondary);
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-tab {
+            background: var(--card);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-tab:hover, .filter-tab.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px 80px;
+        }
+
+        /* Category Section */
+        .category-section {
+            margin-bottom: 64px;
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .category-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .category-info h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .category-info p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .category-count {
+            margin-left: auto;
+            background: rgba(0, 194, 97, 0.1);
+            color: var(--primary);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* Apps Grid */
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .app-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .app-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 194, 97, 0.15);
+        }
+
+        .app-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            margin-bottom: 14px;
+        }
+
+        .app-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, rgba(0, 194, 97, 0.2), rgba(59, 130, 246, 0.2));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .app-title-area {
+            flex: 1;
+        }
+
+        .app-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .app-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+
+        .app-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .app-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .app-tag {
+            background: var(--bg);
+            color: var(--text-secondary);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .app-tag.popular {
+            background: rgba(0, 194, 97, 0.15);
+            color: var(--primary);
+        }
+
+        .app-tag.new {
+            background: rgba(59, 130, 246, 0.15);
+            color: var(--accent);
+        }
+
+        .app-tag.pro {
+            background: rgba(255, 193, 7, 0.15);
+            color: #ffc107;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, rgba(0, 194, 97, 0.1), rgba(59, 130, 246, 0.1));
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 48px;
+            text-align: center;
+            margin-top: 64px;
+        }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 16px;
+        }
+
+        .cta-section p {
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 40px 24px;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav { display: none; }
+            .hero h1 { font-size: 2rem; }
+            .stats { gap: 24px; }
+            .stat-number { font-size: 2rem; }
+            .category-header { flex-wrap: wrap; }
+            .category-count { margin-left: 0; margin-top: 12px; }
+            .apps-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+<link rel="stylesheet" href="/apps/shared/iafactory-unified.css">
+</head>
+<body>
+<!-- IAFactory Trilingue Controls -->
+<div class="iaf-controls-floating" style="position:fixed;top:20px;right:20px;z-index:9998;display:flex;gap:10px;align-items:center;">
+    <div class="iaf-lang-dropdown" style="position:relative;">
+        <button class="iaf-lang-btn" onclick="IAFUnified.toggleLangMenu()" 
+            style="background:#667eea;color:white;border:none;padding:8px 15px;border-radius:8px;cursor:pointer;font-size:14px;display:flex;align-items:center;gap:5px;">
+            🌐 <span id="current-lang-label">FR</span> ▼
+        </button>
+        <div class="iaf-lang-menu" id="lang-menu" 
+            style="display:none;position:absolute;top:100%;right:0;background:white;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,0.15);min-width:150px;margin-top:5px;overflow:hidden;">
+            <button onclick="IAFUnified.changeLang('fr')" style="width:100%;padding:10px 15px;border:none;background:none;text-align:left;cursor:pointer;">🇫🇷 Français</button>
+            <button onclick="IAFUnified.changeLang('ar')" style="width:100%;padding:10px 15px;border:none;background:none;text-align:left;cursor:pointer;">🇩🇿 العربية</button>
+            <button onclick="IAFUnified.changeLang('en')" style="width:100%;padding:10px 15px;border:none;background:none;text-align:left;cursor:pointer;">🇬🇧 English</button>
+        </div>
+    </div>
+    <button class="iaf-theme-toggle" onclick="IAFUnified.toggleTheme()" 
+        style="background:#667eea;color:white;border:none;padding:8px 12px;border-radius:8px;cursor:pointer;font-size:16px;" 
+        title="Toggle theme">🌓</button>
+</div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="../landing-complete-responsive.html" class="logo">
+                <div class="logo-icon">IA</div>
+                <div class="logo-text">IA<span>Factory</span></div>
+            </a>
+            <nav>
+                <a class="nav-link" href="../landing-complete-responsive.html">Accueil</a>
+                <a class="nav-link" href="fonctionnalites.html">Fonctionnalités</a>
+                <a class="nav-link active" href="applications.html">Applications</a>
+                <a class="nav-link" href="tarifs.html">Tarifs</a>
+                <a class="nav-link" href="documentation.html">Documentation</a>
+            </nav>
+            <a href="../landing-complete-responsive.html" class="btn-primary">Essayer Gratuitement</a>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <h1>📱 51+ Applications IA</h1>
+        <p>Des applications prêtes à l'emploi pour tous vos besoins professionnels. Connectées à votre base de connaissances RAG.</p>
+        
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-number">51+</div>
+                <div class="stat-label">Applications</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">8</div>
+                <div class="stat-label">Catégories</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Personnalisables</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter Tabs -->
+    <section class="filter-section">
+        <!-- Search Box -->
+        <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" class="search-input" id="appSearch" placeholder="Rechercher une application... (ex: email, contrat, quiz)">
+            <button class="search-clear" id="searchClear">✕</button>
+        </div>
+        <div class="search-results-info" id="searchResultsInfo">
+            <span class="count" id="resultsCount">0</span> application(s) trouvée(s)
+        </div>
+
+        <div class="filter-tabs">
+            <button class="filter-tab active" data-filter="all">Toutes</button>
+            <button class="filter-tab" data-filter="redaction">✍️ Rédaction</button>
+            <button class="filter-tab" data-filter="business">💼 Business</button>
+            <button class="filter-tab" data-filter="education">🎓 Éducation</button>
+            <button class="filter-tab" data-filter="code">💻 Code</button>
+            <button class="filter-tab" data-filter="juridique">⚖️ Juridique</button>
+            <button class="filter-tab" data-filter="creatif">🎨 Créatif</button>
+            <button class="filter-tab" data-filter="analyse">📊 Analyse</button>
+            <button class="filter-tab" data-filter="algerie">🇩🇿 Algérie</button>
+        </div>
+    </section>
+
+    <!-- No Results -->
+    <div class="no-results" id="noResults">
+        <div class="emoji">🔍</div>
+        <h3>Aucune application trouvée</h3>
+        <p>Essayez avec d'autres mots-clés</p>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+
+        <!-- Catégorie: Rédaction & Content -->
+        <section class="category-section" id="redaction">
+            <div class="category-header">
+                <div class="category-icon">✍️</div>
+                <div class="category-info">
+                    <h2>Rédaction & Content</h2>
+                    <p>Créez du contenu de qualité professionnelle en quelques secondes</p>
+                </div>
+                <span class="category-count">10 apps</span>
+            </div>
+
+            <div class="apps-grid">
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">📝</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Rédacteur d'Articles SEO</div>
+                            <div class="app-subtitle">Content Marketing</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Génère des articles optimisés SEO avec structure Hn, mots-clés, et méta descriptions.</p>
+                    <div class="app-tags">
+                        <span class="app-tag popular">Populaire</span>
+                        <span class="app-tag">SEO</span>
+                        <span class="app-tag">Blog</span>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">📧</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Email Professionnel</div>
+                            <div class="app-subtitle">Communication</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Rédige des emails professionnels adaptés au contexte algérien et international.</p>
+                    <div class="app-tags">
+                        <span class="app-tag popular">Populaire</span>
+                        <span class="app-tag">Business</span>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">💼</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Posts LinkedIn</div>
+                            <div class="app-subtitle">Réseaux Sociaux</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Crée des posts LinkedIn engageants avec hooks, storytelling et CTA optimisés.</p>
+                    <div class="app-tags">
+                        <span class="app-tag">Social Media</span>
+                        <span class="app-tag">B2B</span>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">🌐</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Traducteur Pro</div>
+                            <div class="app-subtitle">FR ↔ AR ↔ EN</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Traduction de qualité entre français, arabe (darija inclus) et anglais.</p>
+                    <div class="app-tags">
+                        <span class="app-tag popular">Populaire</span>
+                        <span class="app-tag">Multilingue</span>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">✨</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Correcteur IA</div>
+                            <div class="app-subtitle">Qualité rédactionnelle</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Corrige orthographe, grammaire, style et améliore la lisibilité de vos textes.</p>
+                    <div class="app-tags">
+                        <span class="app-tag">Grammaire</span>
+                        <span class="app-tag">Style</span>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">📰</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Résumeur de Texte</div>
+                            <div class="app-subtitle">Productivité</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Résume de longs documents en points clés avec niveau de détail personnalisable.</p>
+                    <div class="app-tags">
+                        <span class="app-tag">Productivité</span>
+                        <span class="app-tag">Documents</span>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">🎯</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Générateur de Slogans</div>
+                            <div class="app-subtitle">Branding</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Crée des slogans accrocheurs et mémorables pour votre marque.</p>
+                    <div class="app-tags">
+                        <span class="app-tag">Marketing</span>
+                        <span class="app-tag">Créatif</span>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">📱</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Social Media Manager</div>
+                            <div class="app-subtitle">Multi-plateforme</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Génère du contenu adapté pour Facebook, Instagram, Twitter et TikTok.</p>
+                    <div class="app-tags">
+                        <span class="app-tag new">Nouveau</span>
+                        <span class="app-tag">Social</span>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">📋</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Reformulateur</div>
+                            <div class="app-subtitle">Paraphrase</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Reformule vos textes dans différents tons : formel, casual, académique.</p>
+                    <div class="app-tags">
+                        <span class="app-tag">Réécriture</span>
+                        <span class="app-tag">Tone</span>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">📖</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Storyteller</div>
+                            <div class="app-subtitle">Narratif</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Transforme des faits en histoires captivantes pour vos présentations.</p>
+                    <div class="app-tags">
+                        <span class="app-tag">Créatif</span>
+                        <span class="app-tag">Présentation</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Catégorie: Business & Finance -->
+        <section class="category-section" id="business">
+            <div class="category-header">
+                <div class="category-icon">💼</div>
+                <div class="category-info">
+                    <h2>Business & Finance</h2>
+                    <p>Automatisez vos tâches business et financières</p>
+                </div>
+                <span class="category-count">8 apps</span>
+            </div>
+
+            <div class="apps-grid">
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">📊</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Analyseur Business Plan</div>
+                            <div class="app-subtitle">Entrepreneuriat</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Analyse et améliore vos business plans avec feedback structuré.</p>
+                    <div class="app-tags">
+                        <span class="app-tag popular">Populaire</span>
+                        <span class="app-tag">Startup</span>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">💰</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Générateur de Devis</div>
+                            <div class="app-subtitle">Commercial</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Crée des devis professionnels adaptés au marché algérien (DZD).</p>
+                    <div class="app-tags">
+                        <span class="app-tag">🇩🇿 Algérie</span>
+                        <span class="app-tag">Finance</span>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">📑</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Analyseur de Contrats</div>
+                            <div class="app-subtitle">Juridique</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Identifie les clauses importantes et les risques dans vos contrats.</p>
+                    <div class="app-tags">
+                        <span class="app-tag pro">Pro</span>
+                        <span class="app-tag">Legal</span>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">📈</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Veille Concurrentielle</div>
+                            <div class="app-subtitle">Intelligence</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Surveille et analyse vos concurrents automatiquement.</p>
+                    <div class="app-tags">
+                        <span class="app-tag">Stratégie</span>
+                        <span class="app-tag">Analyse</span>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">🧮</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Assistant Comptable</div>
+                            <div class="app-subtitle">Finance</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Aide à la comptabilité selon les normes algériennes (PCN).</p>
+                    <div class="app-tags">
+                        <span class="app-tag">🇩🇿 Algérie</span>
+                        <span class="app-tag">Comptabilité</span>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">🎯</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Pitch Deck Generator</div>
+                            <div class="app-subtitle">Startup</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Structure votre pitch deck pour lever des fonds.</p>
+                    <div class="app-tags">
+                        <span class="app-tag">Investissement</span>
+                        <span class="app-tag">Présentation</span>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">📝</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Rédacteur de Rapports</div>
+                            <div class="app-subtitle">Corporate</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Génère des rapports d'activité, financiers et de synthèse.</p>
+                    <div class="app-tags">
+                        <span class="app-tag">Reporting</span>
+                        <span class="app-tag">Management</span>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">🤝</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Négociateur IA</div>
+                            <div class="app-subtitle">Commercial</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Prépare vos arguments de négociation et contre-arguments.</p>
+                    <div class="app-tags">
+                        <span class="app-tag new">Nouveau</span>
+                        <span class="app-tag">Sales</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Catégorie: Éducation & Formation -->
+        <section class="category-section" id="education">
+            <div class="category-header">
+                <div class="category-icon">🎓</div>
+                <div class="category-info">
+                    <h2>Éducation & Formation</h2>
+                    <p>Outils d'apprentissage et de formation assistés par IA</p>
+                </div>
+                <span class="category-count">7 apps</span>
+            </div>
+
+            <div class="apps-grid">
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">👨‍🏫</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Tuteur Personnel IA</div>
+                            <div class="app-subtitle">Apprentissage adaptatif</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Un tuteur qui s'adapte à votre niveau et votre rythme d'apprentissage.</p>
+                    <div class="app-tags">
+                        <span class="app-tag popular">Populaire</span>
+                        <span class="app-tag">Personnalisé</span>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">❓</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Générateur de Quiz</div>
+                            <div class="app-subtitle">Évaluation</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Crée des quiz et QCM à partir de vos cours ou documents.</p>
+                    <div class="app-tags">
+                        <span class="app-tag">Examens</span>
+                        <span class="app-tag">Auto-évaluation</span>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">📚</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Résumeur de Cours</div>
+                            <div class="app-subtitle">Synthèse</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Transforme vos cours en fiches de révision structurées.</p>
+                    <div class="app-tags">
+                        <span class="app-tag popular">Populaire</span>
+                        <span class="app-tag">Révision</span>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">📝</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Aide aux Devoirs</div>
+                            <div class="app-subtitle">Support scolaire</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Explique les concepts et guide vers la solution sans donner la réponse.</p>
+                    <div class="app-tags">
+                        <span class="app-tag">Scolaire</span>
+                        <span class="app-tag">Pédagogie</span>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">🎯</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Prépa BAC/BEM</div>
+                            <div class="app-subtitle">Examens nationaux</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Préparation aux examens algériens BAC et BEM avec exercices types.</p>
+                    <div class="app-tags">
+                        <span class="app-tag">🇩🇿 Algérie</span>
+                        <span class="app-tag">Examens</span>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">🗣️</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Coach Langues</div>
+                            <div class="app-subtitle">Apprentissage</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Pratique conversationnelle en anglais, français et arabe.</p>
+                    <div class="app-tags">
+                        <span class="app-tag">Langues</span>
+                        <span class="app-tag">Conversation</span>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">🧠</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Flashcards IA</div>
+                            <div class="app-subtitle">Mémorisation</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Génère des flashcards avec répétition espacée automatique.</p>
+                    <div class="app-tags">
+                        <span class="app-tag new">Nouveau</span>
+                        <span class="app-tag">Mémoire</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Catégorie: Code & Dev -->
+        <section class="category-section" id="code">
+            <div class="category-header">
+                <div class="category-icon">💻</div>
+                <div class="category-info">
+                    <h2>Code & Développement</h2>
+                    <p>Outils pour développeurs et programmeurs</p>
+                </div>
+                <span class="category-count">8 apps</span>
+            </div>
+
+            <div class="apps-grid">
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">🐍</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Code Generator</div>
+                            <div class="app-subtitle">Multi-langage</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Génère du code Python, JavaScript, SQL et plus à partir de descriptions.</p>
+                    <div class="app-tags">
+                        <span class="app-tag popular">Populaire</span>
+                        <span class="app-tag">Dev</span>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">🐛</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Debug Assistant</div>
+                            <div class="app-subtitle">Debugging</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Analyse vos erreurs et propose des solutions de debugging.</p>
+                    <div class="app-tags">
+                        <span class="app-tag popular">Populaire</span>
+                        <span class="app-tag">Fix</span>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">📖</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Code Explainer</div>
+                            <div class="app-subtitle">Documentation</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Explique du code complexe ligne par ligne en français.</p>
+                    <div class="app-tags">
+                        <span class="app-tag">Learning</span>
+                        <span class="app-tag">Docs</span>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">🔄</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Code Converter</div>
+                            <div class="app-subtitle">Traduction</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Convertit du code entre langages (Python ↔ JS ↔ Java...).</p>
+                    <div class="app-tags">
+                        <span class="app-tag">Migration</span>
+                        <span class="app-tag">Convert</span>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">🗄️</div>
+                        <div class="app-title-area">
+                            <div class="app-title">SQL Assistant</div>
+                            <div class="app-subtitle">Database</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Génère et optimise vos requêtes SQL complexes.</p>
+                    <div class="app-tags">
+                        <span class="app-tag">Database</span>
+                        <span class="app-tag">Query</span>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">📝</div>
+                        <div class="app-title-area">
+                            <div class="app-title">API Doc Generator</div>
+                            <div class="app-subtitle">Documentation</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Génère la documentation de vos APIs automatiquement.</p>
+                    <div class="app-tags">
+                        <span class="app-tag">OpenAPI</span>
+                        <span class="app-tag">REST</span>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">✅</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Code Reviewer</div>
+                            <div class="app-subtitle">Quality</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Review automatique avec suggestions d'amélioration.</p>
+                    <div class="app-tags">
+                        <span class="app-tag pro">Pro</span>
+                        <span class="app-tag">Review</span>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">🧪</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Test Generator</div>
+                            <div class="app-subtitle">Testing</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Génère des tests unitaires pour votre code.</p>
+                    <div class="app-tags">
+                        <span class="app-tag new">Nouveau</span>
+                        <span class="app-tag">QA</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Catégorie: Juridique Algérien -->
+        <section class="category-section" id="juridique">
+            <div class="category-header">
+                <div class="category-icon">⚖️</div>
+                <div class="category-info">
+                    <h2>Juridique Algérien</h2>
+                    <p>Applications spécialisées pour le droit algérien</p>
+                </div>
+                <span class="category-count">6 apps</span>
+            </div>
+
+            <div class="apps-grid">
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">📜</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Assistant Code Commerce</div>
+                            <div class="app-subtitle">Droit des affaires</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Consulte et explique le code de commerce algérien.</p>
+                    <div class="app-tags">
+                        <span class="app-tag">🇩🇿 Algérie</span>
+                        <span class="app-tag">Commerce</span>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">🏢</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Rédacteur de Statuts</div>
+                            <div class="app-subtitle">Création entreprise</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Génère des statuts de SARL, SPA, EURL conformes.</p>
+                    <div class="app-tags">
+                        <span class="app-tag popular">Populaire</span>
+                        <span class="app-tag">🇩🇿 Algérie</span>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">📋</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Veille Réglementaire</div>
+                            <div class="app-subtitle">Conformité</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Surveille les changements réglementaires algériens.</p>
+                    <div class="app-tags">
+                        <span class="app-tag">🇩🇿 Algérie</span>
+                        <span class="app-tag">Compliance</span>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">💼</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Assistant ANDI</div>
+                            <div class="app-subtitle">Investissement</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Guide les démarches ANDI pour les investisseurs.</p>
+                    <div class="app-tags">
+                        <span class="app-tag">🇩🇿 Algérie</span>
+                        <span class="app-tag">Investment</span>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">👷</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Droit du Travail DZ</div>
+                            <div class="app-subtitle">RH & Social</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Répond aux questions sur le code du travail algérien.</p>
+                    <div class="app-tags">
+                        <span class="app-tag">🇩🇿 Algérie</span>
+                        <span class="app-tag">RH</span>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">🏛️</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Fiscalité Algérienne</div>
+                            <div class="app-subtitle">Impôts & Taxes</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Guide fiscal : TVA, IBS, IRG, TAP et déclarations.</p>
+                    <div class="app-tags">
+                        <span class="app-tag pro">Pro</span>
+                        <span class="app-tag">🇩🇿 Algérie</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Catégorie: Créatif -->
+        <section class="category-section" id="creatif">
+            <div class="category-header">
+                <div class="category-icon">🎨</div>
+                <div class="category-info">
+                    <h2>Créatif & Design</h2>
+                    <p>Outils créatifs assistés par intelligence artificielle</p>
+                </div>
+                <span class="category-count">6 apps</span>
+            </div>
+
+            <div class="apps-grid">
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">🖼️</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Prompt Image Generator</div>
+                            <div class="app-subtitle">Midjourney/DALL-E</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Crée des prompts optimisés pour la génération d'images.</p>
+                    <div class="app-tags">
+                        <span class="app-tag popular">Populaire</span>
+                        <span class="app-tag">Images</span>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">✏️</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Écrivain Créatif</div>
+                            <div class="app-subtitle">Fiction & Storytelling</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Aide à écrire des histoires, romans et scénarios.</p>
+                    <div class="app-tags">
+                        <span class="app-tag">Fiction</span>
+                        <span class="app-tag">Créatif</span>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">🎬</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Script Vidéo</div>
+                            <div class="app-subtitle">YouTube/TikTok</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Génère des scripts vidéo avec hooks et structure optimisée.</p>
+                    <div class="app-tags">
+                        <span class="app-tag new">Nouveau</span>
+                        <span class="app-tag">Video</span>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">🎵</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Parolier IA</div>
+                            <div class="app-subtitle">Musique</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Écrit des paroles de chansons en français et arabe.</p>
+                    <div class="app-tags">
+                        <span class="app-tag">Musique</span>
+                        <span class="app-tag">Créatif</span>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">🎭</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Générateur de Personas</div>
+                            <div class="app-subtitle">UX/Marketing</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Crée des personas détaillés pour vos projets.</p>
+                    <div class="app-tags">
+                        <span class="app-tag">UX</span>
+                        <span class="app-tag">Marketing</span>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">🎪</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Brainstormer</div>
+                            <div class="app-subtitle">Idéation</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Génère des idées créatives pour vos projets.</p>
+                    <div class="app-tags">
+                        <span class="app-tag">Créativité</span>
+                        <span class="app-tag">Ideas</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Catégorie: Analyse & Data -->
+        <section class="category-section" id="analyse">
+            <div class="category-header">
+                <div class="category-icon">📊</div>
+                <div class="category-info">
+                    <h2>Analyse & Data</h2>
+                    <p>Outils d'analyse de données et insights</p>
+                </div>
+                <span class="category-count">6 apps</span>
+            </div>
+
+            <div class="apps-grid">
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">📈</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Analyseur de Données</div>
+                            <div class="app-subtitle">Data Analysis</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Analyse vos fichiers Excel/CSV et génère des insights.</p>
+                    <div class="app-tags">
+                        <span class="app-tag popular">Populaire</span>
+                        <span class="app-tag">Excel</span>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">📉</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Dashboard Generator</div>
+                            <div class="app-subtitle">Visualisation</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Crée des tableaux de bord à partir de vos données.</p>
+                    <div class="app-tags">
+                        <span class="app-tag pro">Pro</span>
+                        <span class="app-tag">Charts</span>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">🔍</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Sentiment Analyzer</div>
+                            <div class="app-subtitle">NLP</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Analyse le sentiment de textes et avis clients.</p>
+                    <div class="app-tags">
+                        <span class="app-tag">NLP</span>
+                        <span class="app-tag">Sentiment</span>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">📊</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Survey Analyzer</div>
+                            <div class="app-subtitle">Sondages</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Analyse les résultats de vos enquêtes et sondages.</p>
+                    <div class="app-tags">
+                        <span class="app-tag">Survey</span>
+                        <span class="app-tag">Insights</span>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">🔢</div>
+                        <div class="app-title-area">
+                            <div class="app-title">KPI Tracker</div>
+                            <div class="app-subtitle">Performance</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Suit et analyse vos indicateurs de performance.</p>
+                    <div class="app-tags">
+                        <span class="app-tag">Business</span>
+                        <span class="app-tag">Metrics</span>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">🤖</div>
+                        <div class="app-title-area">
+                            <div class="app-title">Prédicteur ML</div>
+                            <div class="app-subtitle">Machine Learning</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Applique des modèles ML sur vos données sans code.</p>
+                    <div class="app-tags">
+                        <span class="app-tag new">Nouveau</span>
+                        <span class="app-tag pro">Pro</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="cta-section">
+            <h2>🚀 Prêt à utiliser ces applications ?</h2>
+            <p>Toutes ces applications sont incluses dans IAFactory RAG - commencez gratuitement.</p>
+            <a href="../landing-complete-responsive.html" class="btn-primary">Essayer Maintenant →</a>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2024 IAFactory Algeria - Plateforme RAG pour l'Algérie et le Maghreb</p>
+        <p style="margin-top: 8px;">
+            <a href="fonctionnalites.html">Fonctionnalités</a> · 
+            <a href="applications.html">Applications</a> · 
+            <a href="tarifs.html">Tarifs</a> · 
+            <a href="documentation.html">Documentation</a>
+        </p>
+    </footer>
+
+    <script>
+        // === IAFactory Apps Search & Filter ===
+        const $ = id => document.getElementById(id);
+        const $$ = sel => document.querySelectorAll(sel);
+        
+        const els = {
+            search: $('appSearch'),
+            clear: $('searchClear'),
+            info: $('searchResultsInfo'),
+            count: $('resultsCount'),
+            noResults: $('noResults'),
+            main: $('mainContent')
+        };
+        
+        const cards = $$('.app-card');
+        const sections = $$('.category-section');
+
+        // Normalize text (remove accents, lowercase)
+        const normalize = t => t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9\s]/g, ' ').trim();
+
+        // Reset all to visible
+        function resetAll() {
+            cards.forEach(c => { c.style.display = ''; c.classList.remove('hidden'); });
+            sections.forEach(s => s.style.display = '');
+            els.info?.classList.remove('visible');
+            els.noResults?.classList.remove('visible');
+            els.clear?.classList.remove('visible');
+            if (els.main) els.main.style.display = '';
+        }
+
+        // Search apps
+        function search(query) {
+            const words = normalize(query).split(/\s+/).filter(w => w);
+            els.clear?.classList.toggle('visible', query.trim().length > 0);
+            
+            if (!words.length) return resetAll();
+
+            let count = 0;
+            cards.forEach(card => {
+                const text = normalize(['.app-title', '.app-subtitle', '.app-description', '.app-tags']
+                    .map(s => card.querySelector(s)?.textContent || '').join(' '));
+                const match = words.every(w => text.includes(w));
+                card.style.display = match ? '' : 'none';
+                card.classList.toggle('hidden', !match);
+                if (match) count++;
+            });
+
+            sections.forEach(s => {
+                const visible = s.querySelectorAll('.app-card:not(.hidden)').length;
+                s.style.display = visible ? '' : 'none';
+            });
+
+            if (els.count) els.count.textContent = count;
+            els.info?.classList.add('visible');
+            els.noResults?.classList.toggle('visible', !count);
+            if (els.main) els.main.style.display = count ? '' : 'none';
+        }
+
+        // Filter by category
+        function filter(type) {
+            if (els.search) els.search.value = '';
+            resetAll();
+            
+            if (type === 'all') return;
+            
+            if (type === 'algerie') {
+                sections.forEach(s => {
+                    let hasVisible = false;
+                    s.querySelectorAll('.app-card').forEach(c => {
+                        const tags = c.querySelector('.app-tags')?.textContent || '';
+                        const match = /🇩🇿|algérie|algerie/i.test(tags);
+                        c.style.display = match ? '' : 'none';
+                        c.classList.toggle('hidden', !match);
+                        if (match) hasVisible = true;
+                    });
+                    s.style.display = hasVisible ? '' : 'none';
+                });
+            } else {
+                sections.forEach(s => s.style.display = s.id === type ? '' : 'none');
+            }
+        }
+
+        // Events
+        els.search?.addEventListener('input', e => search(e.target.value));
+        els.search?.addEventListener('keydown', e => e.key === 'Escape' && (els.search.value = '', search('')));
+        els.clear?.addEventListener('click', () => { els.search.value = ''; search(''); els.search.focus(); });
+
+        $$('.filter-tab').forEach(tab => tab.addEventListener('click', () => {
+            $$('.filter-tab.active').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            filter(tab.dataset.filter);
+        }));
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', e => {
+            if ((e.ctrlKey && e.key === 'k') || (e.key === '/' && document.activeElement !== els.search)) {
+                e.preventDefault();
+                els.search?.focus();
+            }
+        });
+    </script>
+<script src="/apps/shared/iafactory-unified.js"></script>
+<!-- IAFactory Chatbot -->
+<button class="iaf-chatbot-btn" onclick="IAFUnified.toggleChatbot()" title="Aide" aria-label="Aide">💬</button>
+<div data-iaf-footer></div>
+</body>
+</html>

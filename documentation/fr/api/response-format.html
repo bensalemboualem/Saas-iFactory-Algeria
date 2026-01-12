@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Format de Réponse API - IAFactory Algeria</title>
+    <link rel="stylesheet" href="../../assets/css/docs-theme.css">
+    <link rel="icon" href="../../assets/images/favicon.ico">
+</head>
+<body>
+    <header class="docs-header">
+        <div class="docs-logo">
+            <img src="../../assets/images/logo.png" alt="IAFactory Algeria">
+            <span>IAFactory Algeria</span>
+        </div>
+        
+        <nav class="main-nav">
+            <a href="../index.html">Documentation</a>
+            <a href="https://app.iafactory-algeria.com">App</a>
+            <a href="./index.html" class="active">API</a>
+            <a href="https://jobs.iafactory-algeria.com">Jobs</a>
+        </nav>
+        
+        <div class="docs-controls">
+            <div class="language-switcher">
+                <button data-lang="fr" class="active">🇫🇷 FR</button>
+                <button data-lang="en">🇬🇧 EN</button>
+                <button data-lang="ar">🇸🇦 AR</button>
+            </div>
+            
+            <div class="theme-toggle">
+                <div class="theme-toggle-slider">☀️</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" placeholder="Rechercher...">
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-section-title">🔌 API</h3>
+                <ul class="sidebar-menu">
+                    <li><a href="./quick-start.html">Démarrage rapide</a></li>
+                    <li><a href="./response-format.html" class="active">Format de réponse</a></li>
+                    <li><a href="./models-pricing.html">Modèles et tarifs</a></li>
+                    <li><a href="./error-codes.html">Codes d'erreur</a></li>
+                    <li><a href="./parameters.html">Paramètres</a></li>
+                    <li><a href="./optimization.html">Conseils d'optimisation</a></li>
+                    <li><a href="./migration-openai.html">Migration depuis OpenAI</a></li>
+                    <li><a href="./webhooks.html">Webhooks</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="docs-main">
+            <h1>📋 Format de Réponse API</h1>
+            
+            <p class="lead">Comprendre la structure des réponses de l'API IAFactory Algeria.</p>
+
+            <h2 id="reponse-standard">Réponse Standard (Non-Streaming)</h2>
+            
+            <p>Lorsque vous faites une requête API sans streaming, vous recevez une réponse JSON complète :</p>
+
+            <pre><code class="language-json">{
+  "id": "chatcmpl-9x7k2j4mN8pQrStUvWxYz",
+  "object": "chat.completion",
+  "created": 1704283200,
+  "model": "gpt-4.1",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "Voici ma réponse complète à votre question..."
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 42,
+    "completion_tokens": 158,
+    "total_tokens": 200
+  },
+  "system_fingerprint": "fp_iafactory_v1"
+}</code></pre>
+
+            <h3 id="champs-principaux">Champs Principaux</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Champ</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>id</code></td>
+                        <td>string</td>
+                        <td>Identifiant unique de la complétion</td>
+                    </tr>
+                    <tr>
+                        <td><code>object</code></td>
+                        <td>string</td>
+                        <td>Type d'objet (toujours "chat.completion")</td>
+                    </tr>
+                    <tr>
+                        <td><code>created</code></td>
+                        <td>integer</td>
+                        <td>Timestamp Unix de création</td>
+                    </tr>
+                    <tr>
+                        <td><code>model</code></td>
+                        <td>string</td>
+                        <td>Modèle utilisé pour générer la réponse</td>
+                    </tr>
+                    <tr>
+                        <td><code>choices</code></td>
+                        <td>array</td>
+                        <td>Liste des réponses générées (normalement 1 seul)</td>
+                    </tr>
+                    <tr>
+                        <td><code>usage</code></td>
+                        <td>object</td>
+                        <td>Statistiques d'utilisation des tokens</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 id="objet-choice">Objet Choice</h3>
+
+            <p>Chaque élément du tableau <code>choices</code> contient :</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Champ</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>index</code></td>
+                        <td>integer</td>
+                        <td>Index du choix (0 par défaut)</td>
+                    </tr>
+                    <tr>
+                        <td><code>message</code></td>
+                        <td>object</td>
+                        <td>Message généré par l'IA</td>
+                    </tr>
+                    <tr>
+                        <td><code>finish_reason</code></td>
+                        <td>string</td>
+                        <td>Raison de l'arrêt de génération</td>
+                    </tr>
+                    <tr>
+                        <td><code>logprobs</code></td>
+                        <td>object | null</td>
+                        <td>Probabilités logarithmiques (si demandées)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 id="finish-reason">Valeurs finish_reason</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Valeur</th>
+                        <th>Signification</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>stop</code></td>
+                        <td>Réponse complète terminée naturellement</td>
+                    </tr>
+                    <tr>
+                        <td><code>length</code></td>
+                        <td>Arrêt dû à la limite de tokens (max_tokens atteint)</td>
+                    </tr>
+                    <tr>
+                        <td><code>content_filter</code></td>
+                        <td>Réponse bloquée par le filtre de contenu</td>
+                    </tr>
+                    <tr>
+                        <td><code>tool_calls</code></td>
+                        <td>Modèle demande l'exécution d'un outil (function calling)</td>
+                    </tr>
+                    <tr>
+                        <td><code>null</code></td>
+                        <td>Génération toujours en cours (mode streaming)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 id="objet-usage">Objet Usage</h3>
+
+            <p>Indique la consommation de tokens pour facturation :</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Champ</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>prompt_tokens</code></td>
+                        <td>integer</td>
+                        <td>Nombre de tokens dans votre prompt</td>
+                    </tr>
+                    <tr>
+                        <td><code>completion_tokens</code></td>
+                        <td>integer</td>
+                        <td>Nombre de tokens dans la réponse générée</td>
+                    </tr>
+                    <tr>
+                        <td><code>total_tokens</code></td>
+                        <td>integer</td>
+                        <td>Total (prompt_tokens + completion_tokens)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 id="reponse-streaming">Réponse Streaming</h2>
+            
+            <p>Avec <code>stream: true</code>, vous recevez des événements SSE (Server-Sent Events) :</p>
+
+            <pre><code class="language-json">data: {"id":"chatcmpl-abc","object":"chat.completion.chunk","created":1704283200,"model":"gpt-4.1","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
+
+data: {"id":"chatcmpl-abc","object":"chat.completion.chunk","created":1704283200,"model":"gpt-4.1","choices":[{"index":0,"delta":{"content":"Voici"},"finish_reason":null}]}
+
+data: {"id":"chatcmpl-abc","object":"chat.completion.chunk","created":1704283200,"model":"gpt-4.1","choices":[{"index":0,"delta":{"content":" ma"},"finish_reason":null}]}
+
+data: {"id":"chatcmpl-abc","object":"chat.completion.chunk","created":1704283200,"model":"gpt-4.1","choices":[{"index":0,"delta":{"content":" réponse"},"finish_reason":null}]}
+
+data: {"id":"chatcmpl-abc","object":"chat.completion.chunk","created":1704283200,"model":"gpt-4.1","choices":[{"index":0,"delta":{},"finish_reason":"stop"}]}
+
+data: [DONE]</code></pre>
+
+            <p>Chaque chunk contient un fragment de la réponse dans <code>delta.content</code>.</p>
+
+            <h3 id="exemple-streaming">Exemple Python avec Streaming</h3>
+
+            <pre><code class="language-python">import openai
+
+openai.api_base = "https://api.iafactory-algeria.com/v1"
+openai.api_key = "VOTRE_CLE_API"
+
+response = openai.ChatCompletion.create(
+    model="gpt-4.1",
+    messages=[{"role": "user", "content": "Raconte une histoire"}],
+    stream=True
+)
+
+full_response = ""
+for chunk in response:
+    if chunk.choices[0].delta.get("content"):
+        content = chunk.choices[0].delta.content
+        full_response += content
+        print(content, end="", flush=True)
+
+print("\n\nRéponse complète:", full_response)</code></pre>
+
+            <h2 id="gestion-erreurs">Format des Erreurs</h2>
+            
+            <p>En cas d'erreur, l'API retourne un JSON avec code HTTP approprié :</p>
+
+            <pre><code class="language-json">{
+  "error": {
+    "message": "Invalid API key provided",
+    "type": "invalid_request_error",
+    "param": null,
+    "code": "invalid_api_key"
+  }
+}</code></pre>
+
+            <p><a href="./error-codes.html">Voir tous les codes d'erreur →</a></p>
+
+            <h2 id="function-calling">Function Calling (Appels de Fonctions)</h2>
+            
+            <p>Si vous utilisez des outils, la réponse peut contenir <code>tool_calls</code> :</p>
+
+            <pre><code class="language-json">{
+  "id": "chatcmpl-xyz",
+  "choices": [
+    {
+      "message": {
+        "role": "assistant",
+        "content": null,
+        "tool_calls": [
+          {
+            "id": "call_abc123",
+            "type": "function",
+            "function": {
+              "name": "get_weather",
+              "arguments": "{\"location\": \"Alger\", \"unit\": \"celsius\"}"
+            }
+          }
+        ]
+      },
+      "finish_reason": "tool_calls"
+    }
+  ]
+}</code></pre>
+
+            <p>Vous devez ensuite exécuter la fonction et renvoyer le résultat à l'API.</p>
+
+            <h2 id="bonnes-pratiques">Bonnes Pratiques</h2>
+
+            <div class="alert alert-info">
+                <strong>💡 Conseils :</strong>
+                <ul>
+                    <li>Vérifiez toujours <code>finish_reason</code> pour détecter les troncatures</li>
+                    <li>Surveillez <code>usage.total_tokens</code> pour contrôler les coûts</li>
+                    <li>Utilisez le streaming pour une meilleure UX sur les longues réponses</li>
+                    <li>Gérez gracieusement les erreurs avec try/catch</li>
+                </ul>
+            </div>
+
+            <h2 id="voir-aussi">Voir Aussi</h2>
+
+            <ul>
+                <li><a href="./parameters.html">Tous les paramètres disponibles</a></li>
+                <li><a href="./error-codes.html">Guide des codes d'erreur</a></li>
+                <li><a href="./optimization.html">Optimiser vos requêtes</a></li>
+            </ul>
+
+        </main>
+
+        <aside class="docs-toc">
+            <h3 class="docs-toc-title">Sur cette page</h3>
+            <ul>
+                <!-- Generated dynamically by JS -->
+            </ul>
+        </aside>
+    </div>
+
+    <script src="../../assets/js/docs-theme.js"></script>
+</body>
+</html>

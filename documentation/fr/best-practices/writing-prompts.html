@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rédiger des Prompts - IAFactory Algeria</title>
+    <link rel="stylesheet" href="../../assets/css/docs-theme.css">
+</head>
+<body>
+    <header class="docs-header">
+        <div class="docs-logo">
+            <img src="../../assets/images/logo.png" alt="IAFactory Algeria">
+            <span>IAFactory Algeria</span>
+        </div>
+        <nav class="main-nav">
+            <a href="../index.html">Documentation</a>
+            <a href="https://app.iafactory-algeria.com">Application</a>
+            <a href="../api/index.html">API</a>
+        </nav>
+        <div class="docs-controls">
+            <div class="language-switcher">
+                <button data-lang="fr" class="active">FR</button>
+                <button data-lang="en">EN</button>
+                <button data-lang="ar">AR</button>
+            </div>
+            <div class="theme-toggle">
+                <div class="theme-toggle-slider"></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <!-- ...existing sidebar... -->
+        </aside>
+
+        <main class="docs-main">
+            <h1>Rédiger des Prompts</h1>
+
+            <p class="lead">Maîtrisez l'art de communiquer avec l'IA pour obtenir les meilleurs résultats.</p>
+
+            <h2 id="principes-base">Principes de Base</h2>
+
+            <h3 id="clarte">1. Clarté</h3>
+
+            <div class="alert alert-success">
+                <strong>Bon</strong>
+                <pre><code>Écris une fonction Python qui calcule la moyenne d'une liste de nombres.
+Gère les listes vides en retournant 0.</code></pre>
+            </div>
+
+            <div class="alert alert-danger">
+                <strong>Mauvais</strong>
+                <pre><code>fais un truc pour calculer</code></pre>
+            </div>
+
+            <h3 id="contexte">2. Contexte</h3>
+
+            <pre><code class="language-text">Je suis développeur backend en Node.js.
+Je travaille sur une API REST pour un site e-commerce.
+J'ai besoin d'une fonction middleware pour valider les tokens JWT.
+
+Contraintes :
+- Utiliser jsonwebtoken v9
+- Gérer l'expiration
+- Logs des erreurs
+- TypeScript</code></pre>
+
+            <h3 id="specificite">3. Spécificité</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Vague</th>
+                        <th>Spécifique</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>"Aide-moi avec SQL"</td>
+                        <td>"Écris une requête SQL pour obtenir les 10 clients ayant dépensé le plus en 2024"</td>
+                    </tr>
+                    <tr>
+                        <td>"Explique React"</td>
+                        <td>"Explique le concept de hooks en React avec un exemple de useState et useEffect"</td>
+                    </tr>
+                    <tr>
+                        <td>"Débugue mon code"</td>
+                        <td>"Ce code Python retourne KeyError sur la ligne 15. Voici le code: [code]. Comment corriger?"</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 id="formules-prompts">Formules de Prompts</h2>
+
+            <h3 id="formule-role-tache-format">Formule: Rôle + Tâche + Format</h3>
+
+            <pre><code class="language-text">Tu es [RÔLE].
+
+Tâche : [CE QUE TU VEUX]
+
+Format de sortie : [COMMENT TU LE VEUX]</code></pre>
+
+            <strong>Exemple concret :</strong>
+            <pre><code class="language-text">Tu es un expert en cybersécurité.
+
+Tâche : Analyse ce code PHP et identifie les vulnérabilités de sécurité.
+
+Format de sortie :
+- Liste numérotée des vulnérabilités
+- Niveau de criticité (Faible/Moyen/Critique)
+- Solution recommandée pour chacune</code></pre>
+
+            <h3 id="formule-contexte-action-contraintes">Formule: Contexte + Action + Contraintes</h3>
+
+            <pre><code class="language-text">Contexte : [SITUATION]
+
+Action : [CE QUI DOIT ÊTRE FAIT]
+
+Contraintes :
+- [CONTRAINTE 1]
+- [CONTRAINTE 2]
+- [CONTRAINTE 3]</code></pre>
+
+            <strong>Exemple :</strong>
+            <pre><code class="language-text">Contexte : Application mobile de fitness en React Native
+
+Action : Crée un composant Timer pour les exercices
+
+Contraintes :
+- Utiliser React hooks
+- Affichage format MM:SS
+- Boutons play/pause/reset
+- Notification sonore à la fin
+- Style Material Design</code></pre>
+
+            <h3 id="formule-few-shot">Formule: Few-Shot Learning</h3>
+
+            <pre><code class="language-text">Voici des exemples :
+
+Exemple 1:
+Input: [exemple 1 input]
+Output: [exemple 1 output]
+
+Exemple 2:
+Input: [exemple 2 input]
+Output: [exemple 2 output]
+
+Maintenant fais la même chose pour:
+Input: [ton input]</code></pre>
+
+            <strong>Exemple concret :</strong>
+            <pre><code class="language-text">Convertis ces phrases en format JSON structuré :
+
+Exemple 1:
+Input: "Jean Dupont habite à Paris, il a 30 ans"
+Output: {"nom": "Jean Dupont", "ville": "Paris", "age": 30}
+
+Exemple 2:
+Input: "Marie Martin de Lyon, 25 ans"
+Output: {"nom": "Marie Martin", "ville": "Lyon", "age": 25}
+
+Maintenant convertis:
+Input: "Ahmed Ben Ali vit à Alger, âgé de 35 ans"</code></pre>
+
+            <h2 id="techniques-avancees">Techniques Avancées</h2>
+
+            <h3 id="chaining">Chain-of-Thought (Chaînage de Pensée)</h3>
+
+            <pre><code class="language-text">Résous ce problème étape par étape :
+
+Problème : Calcule le coût total d'un projet
+
+Données :
+- 3 développeurs à 500€/jour
+- 2 designers à 400€/jour
+- 20 jours ouvrables
+- +20% de charges
+
+Réfléchis étape par étape avant de répondre.</code></pre>
+
+            <h3 id="role-playing">Role-Playing</h3>
+
+            <pre><code class="language-text">Tu es un code reviewer senior avec 15 ans d'expérience.
+Tu es exigeant sur :
+- La lisibilité du code
+- Les performances
+- La sécurité
+- Les bonnes pratiques
+
+Review ce code comme tu le ferais pour un junior de ton équipe :
+
+[code ici]</code></pre>
+
+            <h3 id="constraint-based">Constraint-Based</h3>
+
+            <pre><code class="language-text">Génère 5 noms de marque pour une startup de livraison de nourriture.
+
+Contraintes OBLIGATOIRES :
+- Maximum 8 lettres
+- Facile à prononcer en français et arabe
+- Disponible comme nom de domaine .com
+- Évoque la rapidité ou la fraîcheur
+- Pas de chiffres
+
+Pour chaque nom, explique pourquoi il respecte les contraintes.</code></pre>
+
+            <h3 id="iterative-refinement">Iterative Refinement</h3>
+
+            <pre><code class="language-text">Étape 1 : "Écris un article sur l'IA"
+→ Réponse générique
+
+Étape 2 : "Rends-le plus technique, cible : développeurs"
+→ Ajout de détails techniques
+
+Étape 3 : "Ajoute des exemples de code en Python"
+→ Code ajouté
+
+Étape 4 : "Simplifie pour les débutants en IA"
+→ Article final optimisé</code></pre>
+
+            <h2 id="prompts-par-domaine">Prompts par Domaine</h2>
+
+            <h3 id="developpement">Développement</h3>
+
+            <strong>Debug :</strong>
+            <pre><code class="language-text">J'ai cette erreur : [erreur]
+Dans ce code : [code]
+Environnement : [Python 3.11, Django 4.2]
+
+1. Explique la cause de l'erreur
+2. Propose une solution
+3. Montre le code corrigé
+4. Suggère comment éviter ce type d'erreur à l'avenir</code></pre>
+
+            <strong>Refactoring :</strong>
+            <pre><code class="language-text">Refactorise ce code pour améliorer :
+- Lisibilité
+- Performance
+- Maintenabilité
+
+Code actuel :
+[code]
+
+Explique chaque amélioration apportée.</code></pre>
+
+            <strong>Tests :</strong>
+            <pre><code class="language-text">Génère des tests unitaires pour cette fonction :
+[code de la fonction]
+
+Framework : Jest
+Coverage souhaité : 100%
+Inclus les cas limites (edge cases)</code></pre>
+
+            <h3 id="data-analysis">Analyse de Données</h3>
+
+            <pre><code class="language-text">Analyse ce dataset CSV et fournis :
+
+1. Statistiques descriptives
+2. Valeurs manquantes et outliers
+3. Corrélations intéressantes
+4. Visualisations recommandées
+5. Insights business
+
+Dataset :
+[données ou structure]
+
+Format : Rapport structuré avec code Python (pandas)</code></pre>
+
+            <h3 id="marketing">Marketing</h3>
+
+            <pre><code class="language-text">Crée une campagne email pour :
+
+Produit : [description]
+Cible : [audience]
+Objectif : [conversion/engagement]
+Ton : [professionnel/décontracté/etc]
+
+Livrables :
+1. Sujet (3 variantes A/B test)
+2. Email HTML (structure)
+3. CTA (call-to-action)
+4. PS (postscriptum)
+
+Max 150 mots, optimize pour mobile.</code></pre>
+
+            <h3 id="education">Éducation</h3>
+
+            <pre><code class="language-text">Crée un plan de cours sur : [sujet]
+
+Public : [niveau]
+Durée : [temps]
+Objectifs pédagogiques :
+- [objectif 1]
+- [objectif 2]
+
+Structure :
+1. Introduction (accroche)
+2. Concepts clés
+3. Exemples pratiques
+4. Exercices
+5. Évaluation
+
+Format : Markdown</code></pre>
+
+            <h2 id="optimisation">Optimisation des Prompts</h2>
+
+            <h3 id="temperature-usage">Usage de Temperature</h3>
+
+            <pre><code class="language-json">{
+  "model": "gpt-4.1",
+  "messages": [...],
+  "temperature": 0.2  // Pour du code/extraction
+}
+
+{
+  "model": "gpt-4.1",
+  "messages": [...],
+  "temperature": 1.3  // Pour du brainstorming/créativité
+}</code></pre>
+
+            <h3 id="token-optimization">Optimisation des Tokens</h3>
+
+            <div class="alert alert-warning">
+                <strong>Verbose (coûteux)</strong>
+                <pre><code>Pourrais-tu s'il te plaît m'aider à comprendre comment je pourrais potentiellement résoudre ce problème complexe que je rencontre actuellement dans mon application...</code></pre>
+            </div>
+
+            <div class="alert alert-success">
+                <strong>Concis (économique)</strong>
+                <pre><code>Comment résoudre : [problème précis]
+Code : [snippet]
+Erreur : [message d'erreur]</code></pre>
+            </div>
+
+            <h3 id="system-messages">System Messages</h3>
+
+            <pre><code class="language-json">{
+  "messages": [
+    {
+      "role": "system",
+      "content": "Tu es un expert Python. Réponds avec du code commenté. Sois concis."
+    },
+    {
+      "role": "user",
+      "content": "Fonction tri fusion"
+    }
+  ]
+}</code></pre>
+
+            <h2 id="anti-patterns">Anti-Patterns à Éviter</h2>
+
+            <h3 id="trop-vague">1. Trop Vague</h3>
+            <pre><code>"Aide-moi"
+"Ça marche pas"
+"Fais quelque chose avec ce code"</code></pre>
+
+            <h3 id="trop-complexe">2. Trop Complexe en Une Fois</h3>
+            <pre><code>Mauvais : "Crée-moi une app complète avec frontend React, backend Node, base MongoDB, auth JWT, tests unitaires, CI/CD, Docker, et déploie sur AWS"
+
+Bon : Décomposer en étapes :
+1. "Structure backend Node.js avec Express"
+2. "Ajoute système auth JWT"
+3. etc...</code></pre>
+
+            <h3 id="manque-contexte">3. Manque de Contexte</h3>
+            <pre><code>Mauvais : "Ce code a un bug"
+[code sans contexte]
+
+Bon : "Bug dans fonction de paiement Stripe.
+Environnement : Node.js 18, stripe v13.
+Erreur : [message exact]
+Code : [snippet pertinent]"</code></pre>
+
+            <h3 id="attentes-irrealistes">4. Attentes Irréalistes</h3>
+            <pre><code>Mauvais : "Crée un AlphaGo en 10 lignes de Python"
+Mauvais : "Génère une IA qui prédit la bourse à 100%"
+
+Bon : Objectifs réalistes et décomposés</code></pre>
+
+            <h2 id="prompts-templates">Templates Prêts à l'Emploi</h2>
+
+            <h3 id="template-documentation">Documentation Technique</h3>
+
+            <pre><code class="language-text">Documente cette fonction/classe :
+
+Code :
+[code]
+
+Génère :
+1. Description de ce que ça fait
+2. Paramètres (type, description)
+3. Valeur de retour
+4. Exceptions possibles
+5. Exemple d'utilisation
+6. Notes techniques
+
+Format : Docstring Python (Google Style)</code></pre>
+
+            <h3 id="template-architecture">Architecture Decision</h3>
+
+            <pre><code class="language-text">Aide-moi à choisir entre [Option A] et [Option B] pour [use case].
+
+Contexte :
+- Scale attendu : [nombre]
+- Budget : [contrainte]
+- Équipe : [compétences]
+- Timeline : [deadline]
+
+Compare sur :
+1. Performance
+2. Coût
+3. Maintenabilité
+4. Courbe d'apprentissage
+5. Écosystème
+
+Recommandation finale justifiée.</code></pre>
+
+            <h3 id="template-api-design">API Design</h3>
+
+            <pre><code class="language-text">Conçois une API REST pour [fonctionnalité].
+
+Spécifications :
+- Ressources : [liste]
+- Actions CRUD nécessaires
+- Authentification : JWT
+- Pagination requise
+- Rate limiting : 100 req/min
+
+Fournis :
+1. Endpoints avec méthodes HTTP
+2. Structure des requêtes/réponses JSON
+3. Codes de statut HTTP
+4. Exemple cURL pour chaque endpoint</code></pre>
+
+            <h2 id="evaluation">Évaluer la Qualité d'un Prompt</h2>
+
+            <h3 id="checklist">Checklist</h3>
+
+            <ul>
+                <li>Objectif clair ?</li>
+                <li>Contexte fourni ?</li>
+                <li>Contraintes spécifiées ?</li>
+                <li>Format de sortie défini ?</li>
+                <li>Exemples si nécessaire ?</li>
+                <li>Niveau de détail approprié ?</li>
+                <li>Vocabulaire précis ?</li>
+            </ul>
+
+            <h3 id="score">Score ton Prompt</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Critère</th>
+                        <th>Points</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Clarté</td><td>/20</td></tr>
+                    <tr><td>Contexte</td><td>/20</td></tr>
+                    <tr><td>Spécificité</td><td>/20</td></tr>
+                    <tr><td>Format défini</td><td>/20</td></tr>
+                    <tr><td>Contraintes</td><td>/20</td></tr>
+                    <tr><td><strong>Total</strong></td><td><strong>/100</strong></td></tr>
+                </tbody>
+            </table>
+
+            <p>Score minimum recommandé : <strong>70/100</strong></p>
+
+            <h2 id="outils">Outils et Ressources</h2>
+
+            <ul>
+                <li><a href="https://promptbase.com">PromptBase</a> - Marketplace de prompts</li>
+                <li><a href="https://learnprompting.org">Learn Prompting</a> - Cours gratuit</li>
+                <li><a href="https://www.promptingguide.ai">Prompting Guide</a> - Guide interactif</li>
+                <li><a href="https://discord.gg/iafactory">IAFactory Discord</a> - Communauté</li>
+            </ul>
+
+            <div class="alert alert-success">
+                <strong>Prochaine étape :</strong> Pratiquez avec nos <a href="../tips-tricks.html">exercices interactifs</a> !
+            </div>
+        </main>
+
+        <aside class="docs-toc">
+            <h3 class="docs-toc-title">Sur cette page</h3>
+            <ul></ul>
+        </aside>
+    </div>
+
+    <script src="../../assets/js/docs-theme.js"></script>
+</body>
+</html>

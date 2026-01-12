@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intégration Xcode - IAFactory Algeria</title>
+    <link rel="stylesheet" href="../../assets/css/docs-theme.css">
+</head>
+<body>
+    <header class="docs-header">
+        <div class="docs-logo">
+            <img src="../../assets/images/logo.png" alt="IAFactory Algeria">
+            <span>IAFactory Algeria</span>
+        </div>
+        <nav class="main-nav">
+            <a href="../index.html">Documentation</a>
+            <a href="https://app.iafactory-algeria.com">App</a>
+            <a href="../api/index.html">API</a>
+        </nav>
+        <div class="docs-controls">
+            <div class="language-switcher">
+                <button data-lang="fr" class="active">🇫🇷 FR</button>
+                <button data-lang="en">🇬🇧 EN</button>
+                <button data-lang="ar">🇸🇦 AR</button>
+            </div>
+            <div class="theme-toggle">
+                <div class="theme-toggle-slider">☀️</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <!-- Sidebar -->
+        </aside>
+
+        <main class="docs-main">
+            <h1>Intégration Xcode</h1>
+            
+            <p class="lead">Intégrez l'IA d'IAFactory Algeria dans vos applications iOS et macOS développées avec Xcode.</p>
+
+            <h2 id="introduction">🍎 Introduction</h2>
+
+            <p>Utilisez l'API IAFactory Algeria dans vos apps Swift pour ajouter des fonctionnalités IA : chat, génération de contenu, analyse d'images, traduction en temps réel et plus.</p>
+
+            <div class="alert alert-info">
+                <strong>💡 Cas d'usage :</strong>
+                <ul>
+                    <li>Chatbot intégré dans votre app</li>
+                    <li>Génération de contenu utilisateur</li>
+                    <li>Traduction multilingue en temps réel</li>
+                    <li>Analyse et description d'images</li>
+                    <li>Assistant vocal intelligent</li>
+                </ul>
+            </div>
+
+            <h2 id="installation">📦 Installation</h2>
+
+            <h3 id="swift-package-manager">Via Swift Package Manager</h3>
+
+            <ol>
+                <li>Dans Xcode : <strong>File → Add Packages...</strong></li>
+                <li>URL : <code>https://github.com/iafactory-algeria/swift-sdk</code></li>
+                <li>Version : Latest</li>
+                <li>Add to target</li>
+            </ol>
+
+            <h3 id="cocoapods">Via CocoaPods</h3>
+
+            <pre><code class="language-ruby"># Podfile
+platform :ios, '15.0'
+use_frameworks!
+
+target 'YourApp' do
+  pod 'IAFactorySDK', '~> 1.0'
+end</code></pre>
+
+            <pre><code class="language-bash">pod install</code></pre>
+
+            <h2 id="configuration">⚙️ Configuration</h2>
+
+            <h3 id="initialisation">Initialisation du SDK</h3>
+
+            <pre><code class="language-swift">import IAFactorySDK
+
+// Dans AppDelegate ou App struct
+class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    func application(_ application: UIApplication, 
+                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        // Configurer IAFactory
+        IAFactory.configure(apiKey: "VOTRE_CLE_API")
+        
+        return true
+    }
+}</code></pre>
+
+            <h3 id="securite-api-key">Sécurité de la Clé API</h3>
+
+            <pre><code class="language-swift">// ⚠️ NE PAS hardcoder la clé API
+// ✅ Utiliser un fichier de configuration
+
+// Config.plist
+/*
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN">
+<plist version="1.0">
+<dict>
+    <key>IAFactoryAPIKey</key>
+    <string>votre_cle_api</string>
+</dict>
+</plist>
+*/
+
+// Lecture sécurisée
+func loadAPIKey() -> String? {
+    guard let path = Bundle.main.path(forResource: "Config", ofType: "plist"),
+          let config = NSDictionary(contentsOfFile: path),
+          let apiKey = config["IAFactoryAPIKey"] as? String else {
+        return nil
+    }
+    return apiKey
+}</code></pre>
+
+            <h2 id="exemples">🚀 Exemples d'Utilisation</h2>
+
+            <h3 id="chat-completion">Chat Completion</h3>
+
+            <pre><code class="language-swift">import IAFactorySDK
+
+class ChatViewModel: ObservableObject {
+    @Published var messages: [Message] = []
+    @Published var isLoading = false
+    
+    private let client = IAFactory.client
+    
+    func sendMessage(_ text: String) {
+        let userMessage = Message(role: .user, content: text)
+        messages.append(userMessage)
+        
+        isLoading = true
+        
+        Task {
+            do {
+                let response = try await client.chat.completions.create(
+                    model: "gpt-4.1",
+                    messages: messages.map { ChatMessage(role: $0.role, content: $0.content) },
+                    temperature: 0.7,
+                    maxTokens: 500
+                )
+                
+                if let content = response.choices.first?.message.content {
+                    let aiMessage = Message(role: .assistant, content: content)
+                    await MainActor.run {
+                        self.messages.append(aiMessage)
+                        self.isLoading = false
+                    }
+                }
+            } catch {
+                await MainActor.run {
+                    self.isLoading = false
+                    print("Error: \(error)")
+                }
+            }
+        }
+    }
+}
+
+struct Message: Identifiable {
+    let id = UUID()
+    let role: Role
+    let content: String
+    
+    enum Role: String {
+        case user
+        case assistant
+        case system
+    }
+}</code></pre>
+
+            <h3 id="image-generation">Génération d'Images</h3>
+
+            <pre><code class="language-swift">import SwiftUI
+import IAFactorySDK
+
+class ImageGenerationViewModel: ObservableObject {
+    @Published var generatedImage: UIImage?
+    @Published var isGenerating = false
+    @Published var errorMessage: String?
+    
+    private let client = IAFactory.client
+    
+    func generateImage(prompt: String) {
+        isGenerating = true
+        errorMessage = nil
+        
+        Task {
+            do {
+                let response = try await client.images.generate(
+                    model: "dall-e-3",
+                    prompt: prompt,
+                    size: .size1024x1024,
+                    quality: .hd
+                )
+                
+                if let urlString = response.data.first?.url,
+                   let url = URL(string: urlString),
+                   let data = try? Data(contentsOf: url),
+                   let image = UIImage(data: data) {
+                    
+                    await MainActor.run {
+                        self.generatedImage = image
+                        self.isGenerating = false
+                    }
+                }
+            } catch {
+                await MainActor.run {
+                    self.errorMessage = error.localizedDescription
+                    self.isGenerating = false
+                }
+            }
+        }
+    }
+}
+
+// Vue SwiftUI
+struct ImageGenerationView: View {
+    @StateObject private var viewModel = ImageGenerationViewModel()
+    @State private var prompt = ""
+    
+    var body: some View {
+        VStack {
+            TextField("Décrivez l'image...", text: $prompt)
+                .textFieldStyle(.roundedBorder)
+                .padding()
+            
+            Button("Générer") {
+                viewModel.generateImage(prompt: prompt)
+            }
+            .disabled(viewModel.isGenerating || prompt.isEmpty)
+            
+            if viewModel.isGenerating {
+                ProgressView("Génération en cours...")
+            }
+            
+            if let image = viewModel.generatedImage {
+                Image(uiImage: image)
+                    .resizable()
+                    .scaledToFit()
+            }
+        }
+    }
+}</code></pre>
+
+            <h3 id="streaming">Streaming de Réponses</h3>
+
+            <pre><code class="language-swift">class StreamingChatViewModel: ObservableObject {
+    @Published var currentResponse = ""
+    @Published var isStreaming = false
+    
+    func sendStreamingMessage(_ text: String) async {
+        isStreaming = true
+        currentResponse = ""
+        
+        do {
+            let stream = try await IAFactory.client.chat.completions.createStream(
+                model: "gpt-4.1",
+                messages: [ChatMessage(role: .user, content: text)]
+            )
+            
+            for try await chunk in stream {
+                if let content = chunk.choices.first?.delta.content {
+                    await MainActor.run {
+                        self.currentResponse += content
+                    }
+                }
+            }
+            
+            await MainActor.run {
+                self.isStreaming = false
+            }
+        } catch {
+            print("Streaming error: \(error)")
+            await MainActor.run {
+                self.isStreaming = false
+            }
+        }
+    }
+}</code></pre>
+
+            <h2 id="bonnes-pratiques">✨ Bonnes Pratiques</h2>
+
+            <h3 id="gestion-erreurs">1. Gestion des Erreurs</h3>
+
+            <pre><code class="language-swift">enum IAFactoryError: Error {
+    case invalidAPIKey
+    case rateLimitExceeded
+    case networkError(Error)
+    case invalidResponse
+    
+    var localizedDescription: String {
+        switch self {
+        case .invalidAPIKey:
+            return "Clé API invalide"
+        case .rateLimitExceeded:
+            return "Limite de requêtes atteinte"
+        case .networkError(let error):
+            return "Erreur réseau: \(error.localizedDescription)"
+        case .invalidResponse:
+            return "Réponse invalide du serveur"
+        }
+    }
+}
+
+// Utilisation
+do {
+    let response = try await client.chat.completions.create(...)
+} catch let error as IAFactoryError {
+    print(error.localizedDescription)
+} catch {
+    print("Erreur inattendue: \(error)")
+}</code></pre>
+
+            <h3 id="cache">2. Cache des Réponses</h3>
+
+            <pre><code class="language-swift">import Foundation
+
+class ResponseCache {
+    private var cache: [String: String] = [:]
+    private let cacheExpiry: TimeInterval = 3600 // 1 heure
+    
+    func get(for key: String) -> String? {
+        return cache[key]
+    }
+    
+    func set(_ value: String, for key: String) {
+        cache[key] = value
+    }
+    
+    func clear() {
+        cache.removeAll()
+    }
+}
+
+// Utilisation dans ViewModel
+class CachedChatViewModel {
+    private let cache = ResponseCache()
+    
+    func sendMessage(_ text: String) async -> String? {
+        // Vérifier le cache
+        if let cached = cache.get(for: text) {
+            return cached
+        }
+        
+        // Appel API
+        let response = try? await IAFactory.client.chat.completions.create(...)
+        if let content = response?.choices.first?.message.content {
+            cache.set(content, for: text)
+            return content
+        }
+        
+        return nil
+    }
+}</code></pre>
+
+            <h3 id="optimisation">3. Optimisation des Coûts</h3>
+
+            <ul>
+                <li>Utilisez <code>max_tokens</code> pour limiter la longueur des réponses</li>
+                <li>Cachez les réponses fréquentes</li>
+                <li>Utilisez <code>gpt-4.1-mini</code> pour les tâches simples</li>
+                <li>Implémentez un système de retry avec backoff exponentiel</li>
+            </ul>
+
+            <h2 id="exemple-complet">📱 Exemple d'App Complète</h2>
+
+            <pre><code class="language-swift">import SwiftUI
+import IAFactorySDK
+
+@main
+struct MyAIApp: App {
+    init() {
+        IAFactory.configure(apiKey: loadAPIKey() ?? "")
+    }
+    
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+        }
+    }
+}
+
+struct ContentView: View {
+    @StateObject private var chatVM = ChatViewModel()
+    @State private var inputText = ""
+    
+    var body: some View {
+        NavigationView {
+            VStack {
+                ScrollView {
+                    ForEach(chatVM.messages) { message in
+                        MessageBubble(message: message)
+                    }
+                }
+                
+                HStack {
+                    TextField("Message...", text: $inputText)
+                        .textFieldStyle(.roundedBorder)
+                    
+                    Button("Envoyer") {
+                        chatVM.sendMessage(inputText)
+                        inputText = ""
+                    }
+                    .disabled(inputText.isEmpty || chatVM.isLoading)
+                }
+                .padding()
+            }
+            .navigationTitle("IAFactory Chat")
+        }
+    }
+}
+
+struct MessageBubble: View {
+    let message: Message
+    
+    var body: some View {
+        HStack {
+            if message.role == .user {
+                Spacer()
+            }
+            
+            Text(message.content)
+                .padding()
+                .background(message.role == .user ? Color.blue : Color.gray.opacity(0.2))
+                .foregroundColor(message.role == .user ? .white : .primary)
+                .cornerRadius(12)
+            
+            if message.role == .assistant {
+                Spacer()
+            }
+        }
+        .padding(.horizontal)
+    }
+}</code></pre>
+
+            <h2 id="ressources">📚 Ressources</h2>
+
+            <ul>
+                <li>📖 <a href="https://github.com/iafactory-algeria/swift-sdk">SDK Swift GitHub</a></li>
+                <li>🎥 <a href="../api/quick-start.html">API Quick Start</a></li>
+                <li>💬 <a href="https://discord.gg/iafactory">Communauté Discord</a></li>
+                <li>📱 <a href="https://developer.apple.com/documentation">Apple Developer</a></li>
+            </ul>
+
+            <div class="alert alert-success">
+                <strong>🚀 Prêt à développer ?</strong>
+                <p>Récupérez votre clé API : <a href="https://app.iafactory-algeria.com/api-keys">app.iafactory-algeria.com</a></p>
+            </div>
+        </main>
+
+        <aside class="docs-toc">
+            <h3 class="docs-toc-title">Sur cette page</h3>
+            <ul></ul>
+        </aside>
+    </div>
+
+    <script src="../../assets/js/docs-theme.js"></script>
+</body>
+</html>

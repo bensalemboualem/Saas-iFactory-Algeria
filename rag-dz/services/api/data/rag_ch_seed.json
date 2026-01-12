@@ -1,0 +1,104 @@
+{
+  "docs": [
+    {
+      "title": "AVS - Assurance vieillesse et survivants",
+      "text": "L'AVS est le premier pilier du système de prévoyance suisse, obligatoire pour toutes les personnes domiciliées ou travaillant en Suisse.\n\nCotisations:\n- Salariés: 4.35% (part employé) + 4.35% (part employeur) = 8.7%\n- Indépendants: 7.8% à 8.1% selon le revenu (taux dégressif)\n\nL'AVS assure:\n- Rente de vieillesse dès 65 ans (hommes) / 64 ans (femmes)\n- Rentes de survivants (veuve/veuf, orphelins)\n\nMontant de la rente complète (2024):\n- Minimum: CHF 1'225/mois\n- Maximum: CHF 2'450/mois\n\nCondition pour rente complète: 44 années de cotisation sans lacunes.",
+      "country": "CH",
+      "language": "fr",
+      "theme": "Sécurité Sociale",
+      "source": "AVS",
+      "tags": ["AVS", "Retraite", "Prévoyance", "1er pilier", "8.7%"],
+      "is_official": true
+    },
+    {
+      "title": "TVA Suisse - Taux et assujettissement 2024",
+      "text": "La taxe sur la valeur ajoutée (TVA) en Suisse est gérée par l'Administration Fédérale des Contributions (AFC).\n\nTaux de TVA (2024):\n- Taux normal: 8.1% (la plupart des biens et services)\n- Taux réduit: 2.6% (biens de première nécessité, médicaments, livres, journaux)\n- Taux spécial hébergement: 3.8% (prestations d'hébergement)\n\nAssujettissement:\n- Obligatoire si chiffre d'affaires annuel > CHF 100'000\n- Assujettissement volontaire possible\n\nDéclaration:\n- Trimestrielle (standard)\n- Semestrielle (sur demande)\n- Méthode effective ou forfaitaire (taux de dette fiscale nette).",
+      "country": "CH",
+      "language": "fr",
+      "theme": "Fiscalité",
+      "source": "TVA-CH",
+      "tags": ["TVA", "AFC", "Fiscalité", "8.1%", "2.6%", "Suisse"],
+      "is_official": true
+    },
+    {
+      "title": "LPP - Prévoyance professionnelle (2ème pilier)",
+      "text": "La prévoyance professionnelle (LPP) constitue le 2ème pilier du système de retraite suisse.\n\nObligatoire pour:\n- Salariés dès CHF 22'050/an de salaire\n- Dès l'âge de 25 ans (17 ans pour risques décès/invalidité)\n\nCotisations (part employé = part employeur minimum):\n- 25-34 ans: 7%\n- 35-44 ans: 10%\n- 45-54 ans: 15%\n- 55-64/65 ans: 18%\n\nPrestations:\n- Rente de vieillesse (taux de conversion: 6.8%)\n- Rente d'invalidité\n- Rente de survivants\n- Possibilité de retrait en capital\n\nSalaire coordonné: CHF 25'725 à CHF 88'200 (2024).",
+      "country": "CH",
+      "language": "fr",
+      "theme": "Sécurité Sociale",
+      "source": "Admin.ch",
+      "tags": ["LPP", "2ème pilier", "Retraite", "Prévoyance professionnelle"],
+      "is_official": true
+    },
+    {
+      "title": "Création d'entreprise - Sàrl en Suisse",
+      "text": "La Sàrl (Société à responsabilité limitée) est une forme juridique populaire pour les PME en Suisse.\n\nCaractéristiques:\n- Capital minimum: CHF 20'000 (libéré intégralement)\n- Minimum 1 associé (pas de maximum)\n- Responsabilité limitée au capital\n- Parts sociales non négociables librement\n\nÉtapes de création:\n1. Rédaction des statuts\n2. Acte de fondation (acte authentique chez notaire)\n3. Versement du capital sur compte bloqué\n4. Inscription au registre du commerce\n5. Affiliation aux assurances sociales (AVS, LAA, LPP)\n\nDélai: 2-4 semaines\nCoût approximatif: CHF 2'000-5'000 (hors capital)",
+      "country": "CH",
+      "language": "fr",
+      "theme": "Création d'entreprise",
+      "source": "Admin.ch",
+      "tags": ["Sàrl", "Création entreprise", "RC", "CHF 20000"],
+      "is_official": true
+    },
+    {
+      "title": "Impôt fédéral direct - Personnes morales",
+      "text": "L'impôt fédéral direct sur le bénéfice des personnes morales est prélevé par la Confédération.\n\nTaux:\n- 8.5% du bénéfice net\n- Pas d'impôt sur le capital au niveau fédéral\n\nBase imposable:\n- Bénéfice net selon le compte de résultat\n- Corrections fiscales (amortissements, provisions, etc.)\n\nDéclaration:\n- Annuelle (exercice fiscal = exercice comptable)\n- Délai: généralement 6-9 mois après clôture\n\nNote: Les cantons et communes prélèvent également des impôts sur le bénéfice et le capital avec des taux variables.",
+      "country": "CH",
+      "language": "fr",
+      "theme": "Fiscalité",
+      "source": "AFC",
+      "tags": ["IFD", "Impôt", "Bénéfice", "8.5%", "Sociétés"],
+      "is_official": true
+    },
+    {
+      "title": "AI - Assurance invalidité",
+      "text": "L'Assurance-invalidité (AI) est le 2ème volet du 1er pilier, avec l'AVS.\n\nCotisations: 1.4% du salaire (0.7% employé + 0.7% employeur)\n\nPrestations:\n- Mesures de réinsertion professionnelle\n- Rentes d'invalidité (1/4, 1/2, 3/4, rente entière)\n- Allocations pour impotent\n- Moyens auxiliaires\n\nConditions:\n- Incapacité de gain d'au moins 40% (1/4 de rente)\n- Durée prévisible d'au moins 1 an\n- Épuisement des mesures de réadaptation\n\nMontant rente entière: CHF 1'225 à 2'450/mois (identique AVS).",
+      "country": "CH",
+      "language": "fr",
+      "theme": "Sécurité Sociale",
+      "source": "AI",
+      "tags": ["AI", "Invalidité", "1er pilier", "Rente", "Réinsertion"],
+      "is_official": true
+    },
+    {
+      "title": "LAA - Assurance accidents obligatoire",
+      "text": "La LAA (Loi sur l'assurance-accidents) couvre les salariés contre les accidents professionnels et non professionnels.\n\nCouverture:\n- Accidents professionnels (AP): dès la 1ère heure de travail\n- Accidents non professionnels (ANP): dès 8h/semaine chez le même employeur\n\nPrimes:\n- AP: entièrement à charge de l'employeur (0.1% à 10% selon risque)\n- ANP: généralement à charge du salarié (environ 1.5%)\n\nPrestations:\n- Frais de traitement (intégral)\n- Indemnités journalières (80% du salaire)\n- Rente d'invalidité\n- Indemnité pour atteinte à l'intégrité\n\nSalaire assuré maximum: CHF 148'200/an (2024).",
+      "country": "CH",
+      "language": "fr",
+      "theme": "Sécurité Sociale",
+      "source": "Admin.ch",
+      "tags": ["LAA", "Accidents", "Assurance", "SUVA", "80%"],
+      "is_official": true
+    },
+    {
+      "title": "Raison individuelle - Entreprise individuelle",
+      "text": "La raison individuelle (entreprise individuelle) est la forme juridique la plus simple en Suisse.\n\nCaractéristiques:\n- Pas de capital minimum\n- Responsabilité illimitée (patrimoine personnel)\n- Imposition au niveau personnel (pas d'impôt sur le bénéfice)\n\nInscription au RC:\n- Obligatoire si CA > CHF 100'000/an\n- Facultative en dessous\n\nCharges sociales:\n- AVS/AI/APG: 10.6% (indépendant)\n- Pas de LPP obligatoire (facultative)\n- Pas de LAA salariés (assurance personnelle recommandée)\n\nAvantages: simplicité, faibles coûts de création, autonomie totale.",
+      "country": "CH",
+      "language": "fr",
+      "theme": "Création d'entreprise",
+      "source": "Admin.ch",
+      "tags": ["Raison individuelle", "Indépendant", "Entreprise individuelle"],
+      "is_official": true
+    },
+    {
+      "title": "APG - Allocations perte de gain",
+      "text": "Les APG compensent la perte de revenu lors du service militaire, civil ou de la protection civile, ainsi que pour le congé maternité/paternité.\n\nCotisations: 0.5% du salaire (0.25% employé + 0.25% employeur)\n\nPrestations:\n- Service militaire/civil: 80% du revenu moyen (max CHF 245/jour)\n- Congé maternité: 80% du salaire pendant 14 semaines (98 jours)\n- Congé paternité: 80% du salaire pendant 2 semaines (10 jours)\n- Allocation d'adoption: 2 semaines\n\nConditions maternité:\n- 9 mois d'assurance AVS avant accouchement\n- 5 mois d'activité lucrative",
+      "country": "CH",
+      "language": "fr",
+      "theme": "Sécurité Sociale",
+      "source": "Admin.ch",
+      "tags": ["APG", "Maternité", "Paternité", "Service militaire", "80%"],
+      "is_official": true
+    },
+    {
+      "title": "AC - Assurance chômage",
+      "text": "L'Assurance-chômage (AC) protège contre la perte de revenu en cas de chômage.\n\nCotisations:\n- 2.2% jusqu'à CHF 148'200/an (1.1% employé + 1.1% employeur)\n- Cotisation de solidarité: 1% au-delà (jusqu'à CHF 406'200)\n\nConditions d'indemnisation:\n- 12 mois de cotisation sur les 2 dernières années\n- Apte au placement\n- Recherche active d'emploi\n\nMontant des indemnités:\n- 70% du gain assuré (sans enfant)\n- 80% du gain assuré (avec enfant ou invalidité partielle)\n\nDurée maximale:\n- 260 jours (moins de 55 ans)\n- 400 jours (plus de 55 ans ou 22+ mois de cotisation).",
+      "country": "CH",
+      "language": "fr",
+      "theme": "Sécurité Sociale",
+      "source": "SECO",
+      "tags": ["AC", "Chômage", "Indemnités", "70%", "80%", "ORP"],
+      "is_official": true
+    }
+  ]
+}

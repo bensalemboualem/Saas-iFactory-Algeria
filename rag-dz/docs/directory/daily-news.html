@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily News IA - Directory | IAFactory Algérie</title>
+    <meta name="description" content="Actualités IA en temps réel. Découvrez les dernières nouvelles, lancements et tendances de l'intelligence artificielle chaque jour.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00c261;
+            --primary-dark: #00a050;
+            --primary-light: #00e070;
+            --bg-dark: #0a0a0a;
+            --bg-card: #111111;
+            --bg-card-hover: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-muted: #666666;
+            --border-color: #222222;
+            --gradient-primary: linear-gradient(135deg, #00c261 0%, #00a050 100%);
+            --gradient-orange: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+            --gradient-red: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            --gradient-blue: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.3);
+            --shadow-hover: 0 8px 40px rgba(0, 194, 97, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .logo-text {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .logo-text span {
+            color: var(--primary);
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 0.95rem;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--primary);
+        }
+
+        .nav-cta {
+            background: var(--gradient-primary);
+            color: white !important;
+            padding: 0.6rem 1.25rem;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .nav-cta:hover {
+            opacity: 0.9;
+            color: white !important;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 3rem 2rem;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(249, 115, 22, 0.05) 0%, transparent 100%);
+            position: relative;
+        }
+
+        .live-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: #ef4444;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .hero h1 .gradient-text {
+            background: var(--gradient-orange);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        .hero-date {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .hero-date i {
+            color: #f97316;
+            margin-right: 0.5rem;
+        }
+
+        /* Main Layout */
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 2rem;
+        }
+
+        /* News Feed */
+        .news-feed {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        /* Section Header */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title i {
+            color: #f97316;
+        }
+
+        /* Filter Tabs */
+        .filter-tabs {
+            display: flex;
+            gap: 0.5rem;
+            background: var(--bg-card);
+            padding: 0.35rem;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        .filter-tab {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-tab.active {
+            background: var(--gradient-orange);
+            color: white;
+        }
+
+        .filter-tab:hover:not(.active) {
+            color: var(--text-primary);
+        }
+
+        /* News Card */
+        .news-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .news-card:hover {
+            border-color: #f97316;
+            box-shadow: 0 8px 40px rgba(249, 115, 22, 0.1);
+        }
+
+        .news-card.featured {
+            border-color: #f97316;
+        }
+
+        .news-card.featured::before {
+            content: '';
+            display: block;
+            height: 3px;
+            background: var(--gradient-orange);
+        }
+
+        .news-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+        }
+
+        .news-content {
+            padding: 1.5rem;
+        }
+
+        .news-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .news-source {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .news-source img {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+        }
+
+        .news-time {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .news-category {
+            background: rgba(249, 115, 22, 0.15);
+            color: #f97316;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .news-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+        }
+
+        .news-title a {
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .news-title a:hover {
+            color: #f97316;
+        }
+
+        .news-excerpt {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .news-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .news-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .news-tag {
+            background: var(--bg-dark);
+            color: var(--text-muted);
+            padding: 0.25rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+        }
+
+        .news-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .news-action {
+            width: 35px;
+            height: 35px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: transparent;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .news-action:hover {
+            border-color: #f97316;
+            color: #f97316;
+        }
+
+        /* Compact News */
+        .news-compact {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            transition: all 0.3s;
+        }
+
+        .news-compact:hover {
+            border-color: #f97316;
+        }
+
+        .news-compact-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .news-compact-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .news-compact-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.35rem;
+            line-height: 1.4;
+        }
+
+        .news-compact-title a {
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .news-compact-title a:hover {
+            color: #f97316;
+        }
+
+        .news-compact-meta {
+            display: flex;
+            gap: 0.75rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .sidebar-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+        }
+
+        .sidebar-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sidebar-title i {
+            color: #f97316;
+        }
+
+        /* Trending Topics */
+        .trending-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .trending-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            background: var(--bg-dark);
+            border-radius: 10px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .trending-item:hover {
+            background: var(--bg-card-hover);
+        }
+
+        .trending-rank {
+            width: 28px;
+            height: 28px;
+            background: var(--gradient-orange);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .trending-rank.silver {
+            background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+        }
+
+        .trending-rank.bronze {
+            background: linear-gradient(135deg, #92400e 0%, #78350f 100%);
+        }
+
+        .trending-info {
+            flex: 1;
+        }
+
+        .trending-topic {
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .trending-count {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+        }
+
+        /* Newsletter */
+        .newsletter-card {
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.1) 0%, rgba(249, 115, 22, 0.02) 100%);
+            border-color: rgba(249, 115, 22, 0.3);
+        }
+
+        .newsletter-text {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .newsletter-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+
+        .newsletter-input:focus {
+            outline: none;
+            border-color: #f97316;
+        }
+
+        .newsletter-btn {
+            background: var(--gradient-orange);
+            color: white;
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .newsletter-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 20px rgba(249, 115, 22, 0.3);
+        }
+
+        /* Quick Links */
+        .quick-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .quick-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.6rem 0;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .quick-link:last-child {
+            border-bottom: none;
+        }
+
+        .quick-link:hover {
+            color: #f97316;
+        }
+
+        .quick-link i {
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Load More */
+        .load-more {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .load-more-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .load-more-btn:hover {
+            border-color: #f97316;
+            color: #f97316;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr repeat(3, 1fr);
+            gap: 3rem;
+        }
+
+        .footer-brand p {
+            color: var(--text-secondary);
+            margin: 1rem 0;
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            background: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            transition: all 0.3s;
+        }
+
+        .footer-social a:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .footer-column h4 {
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            color: var(--text-primary);
+        }
+
+        .footer-column a {
+            display: block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.4rem 0;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .footer-column a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 2rem auto 0;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .sidebar {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-tabs {
+                flex-wrap: wrap;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">IA</div>
+                <div class="logo-text">IAFactory<span>.dz</span></div>
+            </a>
+            <nav>
+                <a href="index.html">Directory</a>
+                <a href="ia-tools.html">Outils IA</a>
+                <a href="agents.html">Agents</a>
+                <a href="workflows.html">Workflows</a>
+                <a href="daily-news.html" class="active">Daily News</a>
+                <a href="#newsletter" class="nav-cta">S'abonner</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="live-badge">
+            <span class="live-dot"></span>
+            Actualités en temps réel
+        </div>
+        <h1>Daily <span class="gradient-text">News</span> IA</h1>
+        <p>Restez informé des dernières actualités, lancements et tendances de l'intelligence artificielle. Mis à jour en continu.</p>
+        <p class="hero-date"><i class="fas fa-calendar"></i> Lundi 2 Décembre 2025</p>
+    </section>
+
+    <!-- Main Content -->
+    <main>
+        <!-- News Feed -->
+        <div class="news-feed">
+            <div class="section-header">
+                <h2 class="section-title"><i class="fas fa-bolt"></i> Dernières Actualités</h2>
+                <div class="filter-tabs">
+                    <button class="filter-tab active">Tout</button>
+                    <button class="filter-tab">Outils</button>
+                    <button class="filter-tab">Research</button>
+                    <button class="filter-tab">Startups</button>
+                    <button class="filter-tab">Algérie</button>
+                </div>
+            </div>
+
+            <!-- Featured News -->
+            <article class="news-card featured">
+                <div class="news-image">🚀</div>
+                <div class="news-content">
+                    <div class="news-meta">
+                        <span class="news-category">Breaking</span>
+                        <span class="news-source"><i class="fas fa-globe"></i> TechCrunch</span>
+                        <span class="news-time"><i class="far fa-clock"></i> Il y a 2 heures</span>
+                    </div>
+                    <h3 class="news-title">
+                        <a href="#">OpenAI annonce GPT-5 avec des capacités de raisonnement révolutionnaires</a>
+                    </h3>
+                    <p class="news-excerpt">OpenAI a dévoilé aujourd'hui GPT-5, sa nouvelle génération de modèle de langage avec des capacités de raisonnement avancées. Le modèle surpasse les performances humaines sur plusieurs benchmarks complexes et introduit de nouvelles fonctionnalités multimodales.</p>
+                    <div class="news-footer">
+                        <div class="news-tags">
+                            <span class="news-tag">#OpenAI</span>
+                            <span class="news-tag">#GPT-5</span>
+                            <span class="news-tag">#LLM</span>
+                        </div>
+                        <div class="news-actions">
+                            <button class="news-action"><i class="far fa-bookmark"></i></button>
+                            <button class="news-action"><i class="fas fa-share-alt"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Regular News -->
+            <article class="news-card">
+                <div class="news-content">
+                    <div class="news-meta">
+                        <span class="news-category">Startup</span>
+                        <span class="news-source"><i class="fas fa-globe"></i> VentureBeat</span>
+                        <span class="news-time"><i class="far fa-clock"></i> Il y a 4 heures</span>
+                    </div>
+                    <h3 class="news-title">
+                        <a href="#">Anthropic lève 2 milliards de dollars pour accélérer le développement de Claude</a>
+                    </h3>
+                    <p class="news-excerpt">Anthropic a annoncé une levée de fonds majeure pour poursuivre le développement de son assistant IA Claude et renforcer ses équipes de recherche sur la sécurité de l'IA.</p>
+                    <div class="news-footer">
+                        <div class="news-tags">
+                            <span class="news-tag">#Anthropic</span>
+                            <span class="news-tag">#Claude</span>
+                            <span class="news-tag">#Funding</span>
+                        </div>
+                        <div class="news-actions">
+                            <button class="news-action"><i class="far fa-bookmark"></i></button>
+                            <button class="news-action"><i class="fas fa-share-alt"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="news-card">
+                <div class="news-content">
+                    <div class="news-meta">
+                        <span class="news-category">Research</span>
+                        <span class="news-source"><i class="fas fa-globe"></i> MIT News</span>
+                        <span class="news-time"><i class="far fa-clock"></i> Il y a 6 heures</span>
+                    </div>
+                    <h3 class="news-title">
+                        <a href="#">Des chercheurs du MIT développent une IA capable d'apprendre comme un enfant</a>
+                    </h3>
+                    <p class="news-excerpt">Une équipe du MIT a publié une étude révolutionnaire sur un nouveau modèle d'apprentissage inspiré du développement cognitif humain, promettant des IA plus efficaces et généralisables.</p>
+                    <div class="news-footer">
+                        <div class="news-tags">
+                            <span class="news-tag">#MIT</span>
+                            <span class="news-tag">#Research</span>
+                            <span class="news-tag">#CognitiveAI</span>
+                        </div>
+                        <div class="news-actions">
+                            <button class="news-action"><i class="far fa-bookmark"></i></button>
+                            <button class="news-action"><i class="fas fa-share-alt"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Compact News Section -->
+            <h3 style="font-size: 1.1rem; font-weight: 600; margin: 1.5rem 0 1rem; color: var(--text-secondary);">
+                <i class="fas fa-list" style="color: #f97316; margin-right: 0.5rem;"></i> Plus d'actualités
+            </h3>
+
+            <div class="news-compact">
+                <div class="news-compact-icon">🎨</div>
+                <div class="news-compact-content">
+                    <h4 class="news-compact-title">
+                        <a href="#">Midjourney v7 introduit la génération vidéo et le contrôle fin des détails</a>
+                    </h4>
+                    <div class="news-compact-meta">
+                        <span><i class="fas fa-globe"></i> The Verge</span>
+                        <span><i class="far fa-clock"></i> Il y a 8h</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="news-compact">
+                <div class="news-compact-icon">💻</div>
+                <div class="news-compact-content">
+                    <h4 class="news-compact-title">
+                        <a href="#">GitHub Copilot X devient autonome pour résoudre les bugs complexes</a>
+                    </h4>
+                    <div class="news-compact-meta">
+                        <span><i class="fas fa-globe"></i> GitHub Blog</span>
+                        <span><i class="far fa-clock"></i> Il y a 10h</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="news-compact">
+                <div class="news-compact-icon">🇩🇿</div>
+                <div class="news-compact-content">
+                    <h4 class="news-compact-title">
+                        <a href="#">L'Algérie lance son premier centre national de recherche en IA à Alger</a>
+                    </h4>
+                    <div class="news-compact-meta">
+                        <span><i class="fas fa-globe"></i> APS</span>
+                        <span><i class="far fa-clock"></i> Il y a 12h</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="news-compact">
+                <div class="news-compact-icon">🔒</div>
+                <div class="news-compact-content">
+                    <h4 class="news-compact-title">
+                        <a href="#">L'UE adopte de nouvelles régulations sur la transparence des modèles IA</a>
+                    </h4>
+                    <div class="news-compact-meta">
+                        <span><i class="fas fa-globe"></i> Reuters</span>
+                        <span><i class="far fa-clock"></i> Il y a 14h</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="news-compact">
+                <div class="news-compact-icon">🎵</div>
+                <div class="news-compact-content">
+                    <h4 class="news-compact-title">
+                        <a href="#">Suno AI permet désormais de créer des albums entiers en quelques minutes</a>
+                    </h4>
+                    <div class="news-compact-meta">
+                        <span><i class="fas fa-globe"></i> Music Tech</span>
+                        <span><i class="far fa-clock"></i> Il y a 16h</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="news-compact">
+                <div class="news-compact-icon">📊</div>
+                <div class="news-compact-content">
+                    <h4 class="news-compact-title">
+                        <a href="#">Google DeepMind annonce AlphaFold 3 avec prédiction des interactions moléculaires</a>
+                    </h4>
+                    <div class="news-compact-meta">
+                        <span><i class="fas fa-globe"></i> Nature</span>
+                        <span><i class="far fa-clock"></i> Hier</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="load-more">
+                <button class="load-more-btn">
+                    <i class="fas fa-plus"></i> Charger plus d'actualités
+                </button>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <!-- Newsletter -->
+            <div class="sidebar-card newsletter-card" id="newsletter">
+                <h3 class="sidebar-title"><i class="fas fa-envelope"></i> Newsletter IA</h3>
+                <p class="newsletter-text">Recevez les meilleures actualités IA directement dans votre boîte mail, chaque matin.</p>
+                <form class="newsletter-form">
+                    <input type="email" class="newsletter-input" placeholder="votre@email.com">
+                    <button type="submit" class="newsletter-btn">
+                        <i class="fas fa-paper-plane"></i> S'abonner gratuitement
+                    </button>
+                </form>
+            </div>
+
+            <!-- Trending Topics -->
+            <div class="sidebar-card">
+                <h3 class="sidebar-title"><i class="fas fa-fire"></i> Sujets Tendances</h3>
+                <div class="trending-list">
+                    <a href="#" class="trending-item">
+                        <div class="trending-rank">1</div>
+                        <div class="trending-info">
+                            <div class="trending-topic">GPT-5</div>
+                            <div class="trending-count">2.4K mentions</div>
+                        </div>
+                    </a>
+                    <a href="#" class="trending-item">
+                        <div class="trending-rank silver">2</div>
+                        <div class="trending-info">
+                            <div class="trending-topic">AI Agents</div>
+                            <div class="trending-count">1.8K mentions</div>
+                        </div>
+                    </a>
+                    <a href="#" class="trending-item">
+                        <div class="trending-rank bronze">3</div>
+                        <div class="trending-info">
+                            <div class="trending-topic">Sora OpenAI</div>
+                            <div class="trending-count">1.2K mentions</div>
+                        </div>
+                    </a>
+                    <a href="#" class="trending-item">
+                        <div class="trending-rank bronze">4</div>
+                        <div class="trending-info">
+                            <div class="trending-topic">Claude 4</div>
+                            <div class="trending-count">980 mentions</div>
+                        </div>
+                    </a>
+                    <a href="#" class="trending-item">
+                        <div class="trending-rank bronze">5</div>
+                        <div class="trending-info">
+                            <div class="trending-topic">AI Regulation</div>
+                            <div class="trending-count">756 mentions</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="sidebar-card">
+                <h3 class="sidebar-title"><i class="fas fa-link"></i> Liens Rapides</h3>
+                <div class="quick-links">
+                    <a href="ia-tools.html" class="quick-link">
+                        <i class="fas fa-tools"></i> Outils IA
+                    </a>
+                    <a href="agents.html" class="quick-link">
+                        <i class="fas fa-robot"></i> Agents IA
+                    </a>
+                    <a href="workflows.html" class="quick-link">
+                        <i class="fas fa-project-diagram"></i> Workflows
+                    </a>
+                    <a href="../blog.html" class="quick-link">
+                        <i class="fas fa-blog"></i> Blog IAFactory
+                    </a>
+                    <a href="#" class="quick-link">
+                        <i class="fas fa-rss"></i> Flux RSS
+                    </a>
+                </div>
+            </div>
+
+            <!-- Sources -->
+            <div class="sidebar-card">
+                <h3 class="sidebar-title"><i class="fas fa-newspaper"></i> Nos Sources</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1rem;">
+                    Nous agrégeons les actualités des meilleures sources tech mondiales.
+                </p>
+                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                    <span class="news-tag">TechCrunch</span>
+                    <span class="news-tag">The Verge</span>
+                    <span class="news-tag">VentureBeat</span>
+                    <span class="news-tag">MIT News</span>
+                    <span class="news-tag">Wired</span>
+                    <span class="news-tag">ArXiv</span>
+                    <span class="news-tag">Ars Technica</span>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <a href="../index.html" class="logo">
+                    <div class="logo-icon">IA</div>
+                    <div class="logo-text">IAFactory<span>.dz</span></div>
+                </a>
+                <p>Votre source quotidienne d'actualités sur l'intelligence artificielle. Restez informé des dernières avancées et tendances du monde de l'IA.</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-discord"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4>Directory</h4>
+                <a href="ia-tools.html">Outils IA</a>
+                <a href="agents.html">Agents IA</a>
+                <a href="workflows.html">Workflows</a>
+                <a href="daily-news.html">Daily News</a>
+            </div>
+            <div class="footer-column">
+                <h4>Ressources</h4>
+                <a href="#">Flux RSS</a>
+                <a href="#">API News</a>
+                <a href="#">Archives</a>
+                <a href="../blog.html">Blog</a>
+            </div>
+            <div class="footer-column">
+                <h4>Entreprise</h4>
+                <a href="../a-propos.html">À Propos</a>
+                <a href="../contact.html">Contact</a>
+                <a href="../confidentialite.html">Confidentialité</a>
+                <a href="../conditions.html">Conditions</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 - 2025 IAFactory Algérie. Tous droits réservés.</p>
+            <p>Fait avec ❤️ en Algérie</p>
+        </div>
+    </footer>
+</body>
+</html>

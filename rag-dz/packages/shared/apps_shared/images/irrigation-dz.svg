@@ -1,0 +1,214 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <defs>
+    <linearGradient id="skyIrrigation" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#7dd3fc;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#38bdf8;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="water" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#22d3ee;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="field" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#34d399;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#10b981;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="sun" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fef08a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#fbbf24;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Sky -->
+  <rect width="400" height="300" fill="url(#skyIrrigation)"/>
+
+  <!-- Sun -->
+  <g transform="translate(350, 60)">
+    <circle cx="0" cy="0" r="30" fill="url(#sun)"/>
+    <circle cx="0" cy="0" r="25" fill="#fef3c7" opacity="0.5"/>
+    <!-- Sun rays -->
+    <line x1="0" y1="-40" x2="0" y2="-50" stroke="#fbbf24" stroke-width="3" stroke-linecap="round"/>
+    <line x1="28" y1="-28" x2="35" y2="-35" stroke="#fbbf24" stroke-width="3" stroke-linecap="round"/>
+    <line x1="40" y1="0" x2="50" y2="0" stroke="#fbbf24" stroke-width="3" stroke-linecap="round"/>
+    <line x1="28" y1="28" x2="35" y2="35" stroke="#fbbf24" stroke-width="3" stroke-linecap="round"/>
+  </g>
+
+  <!-- Ground/Field -->
+  <rect x="0" y="200" width="400" height="100" fill="url(#field)"/>
+  <rect x="0" y="200" width="400" height="10" fill="#10b981" opacity="0.5"/>
+
+  <!-- Field rows -->
+  <line x1="0" y1="220" x2="400" y2="220" stroke="#059669" stroke-width="2" opacity="0.3"/>
+  <line x1="0" y1="240" x2="400" y2="240" stroke="#059669" stroke-width="2" opacity="0.3"/>
+  <line x1="0" y1="260" x2="400" y2="260" stroke="#059669" stroke-width="2" opacity="0.3"/>
+  <line x1="0" y1="280" x2="400" y2="280" stroke="#059669" stroke-width="2" opacity="0.3"/>
+
+  <!-- Large water drop -->
+  <g transform="translate(100, 100)">
+    <path d="M 0,-30 Q -20,0 -20,15 Q -20,35 0,40 Q 20,35 20,15 Q 20,0 0,-30 Z" fill="url(#water)"/>
+    <path d="M 0,-30 Q -15,0 -15,15 Q -15,30 0,35 Q 15,30 15,15 Q 15,0 0,-30 Z" fill="#67e8f9" opacity="0.4"/>
+    <ellipse cx="-5" cy="5" rx="6" ry="8" fill="#ffffff" opacity="0.6"/>
+  </g>
+
+  <!-- Irrigation system pipes -->
+  <g transform="translate(0, 180)">
+    <!-- Main horizontal pipe -->
+    <rect x="50" y="0" width="300" height="12" rx="2" fill="#6b7280"/>
+    <rect x="50" y="2" width="300" height="8" rx="1" fill="#9ca3af"/>
+
+    <!-- Vertical pipes -->
+    <rect x="98" y="12" width="4" height="30" fill="#6b7280"/>
+    <rect x="148" y="12" width="4" height="30" fill="#6b7280"/>
+    <rect x="198" y="12" width="4" height="30" fill="#6b7280"/>
+    <rect x="248" y="12" width="4" height="30" fill="#6b7280"/>
+    <rect x="298" y="12" width="4" height="30" fill="#6b7280"/>
+
+    <!-- Sprinkler heads -->
+    <circle cx="100" cy="45" r="5" fill="#4b5563"/>
+    <circle cx="150" cy="45" r="5" fill="#4b5563"/>
+    <circle cx="200" cy="45" r="5" fill="#4b5563"/>
+    <circle cx="250" cy="45" r="5" fill="#4b5563"/>
+    <circle cx="300" cy="45" r="5" fill="#4b5563"/>
+  </g>
+
+  <!-- Water spray from sprinklers -->
+  <g opacity="0.6">
+    <!-- Sprinkler 1 -->
+    <g transform="translate(100, 225)">
+      <path d="M 0,0 Q -15,-10 -20,-15" stroke="#38bdf8" stroke-width="2" fill="none"/>
+      <path d="M 0,0 Q -10,-12 -12,-18" stroke="#38bdf8" stroke-width="2" fill="none"/>
+      <path d="M 0,0 Q -5,-15 -5,-22" stroke="#38bdf8" stroke-width="2" fill="none"/>
+      <path d="M 0,0 Q 0,-15 0,-25" stroke="#06b6d4" stroke-width="3" fill="none"/>
+      <path d="M 0,0 Q 5,-15 5,-22" stroke="#38bdf8" stroke-width="2" fill="none"/>
+      <path d="M 0,0 Q 10,-12 12,-18" stroke="#38bdf8" stroke-width="2" fill="none"/>
+      <path d="M 0,0 Q 15,-10 20,-15" stroke="#38bdf8" stroke-width="2" fill="none"/>
+    </g>
+
+    <!-- Sprinkler 2 -->
+    <g transform="translate(200, 225)">
+      <path d="M 0,0 Q -15,-10 -20,-15" stroke="#38bdf8" stroke-width="2" fill="none"/>
+      <path d="M 0,0 Q -10,-12 -12,-18" stroke="#38bdf8" stroke-width="2" fill="none"/>
+      <path d="M 0,0 Q -5,-15 -5,-22" stroke="#38bdf8" stroke-width="2" fill="none"/>
+      <path d="M 0,0 Q 0,-15 0,-25" stroke="#06b6d4" stroke-width="3" fill="none"/>
+      <path d="M 0,0 Q 5,-15 5,-22" stroke="#38bdf8" stroke-width="2" fill="none"/>
+      <path d="M 0,0 Q 10,-12 12,-18" stroke="#38bdf8" stroke-width="2" fill="none"/>
+      <path d="M 0,0 Q 15,-10 20,-15" stroke="#38bdf8" stroke-width="2" fill="none"/>
+    </g>
+
+    <!-- Sprinkler 3 -->
+    <g transform="translate(300, 225)">
+      <path d="M 0,0 Q -15,-10 -20,-15" stroke="#38bdf8" stroke-width="2" fill="none"/>
+      <path d="M 0,0 Q -10,-12 -12,-18" stroke="#38bdf8" stroke-width="2" fill="none"/>
+      <path d="M 0,0 Q -5,-15 -5,-22" stroke="#38bdf8" stroke-width="2" fill="none"/>
+      <path d="M 0,0 Q 0,-15 0,-25" stroke="#06b6d4" stroke-width="3" fill="none"/>
+      <path d="M 0,0 Q 5,-15 5,-22" stroke="#38bdf8" stroke-width="2" fill="none"/>
+      <path d="M 0,0 Q 10,-12 12,-18" stroke="#38bdf8" stroke-width="2" fill="none"/>
+      <path d="M 0,0 Q 15,-10 20,-15" stroke="#38bdf8" stroke-width="2" fill="none"/>
+    </g>
+  </g>
+
+  <!-- Water drops falling -->
+  <g opacity="0.7">
+    <ellipse cx="85" cy="245" rx="3" ry="5" fill="#38bdf8"/>
+    <ellipse cx="95" cy="250" rx="3" ry="5" fill="#22d3ee"/>
+    <ellipse cx="105" cy="248" rx="3" ry="5" fill="#38bdf8"/>
+    <ellipse cx="115" cy="252" rx="3" ry="5" fill="#22d3ee"/>
+
+    <ellipse cx="185" cy="245" rx="3" ry="5" fill="#38bdf8"/>
+    <ellipse cx="195" cy="252" rx="3" ry="5" fill="#22d3ee"/>
+    <ellipse cx="205" cy="247" rx="3" ry="5" fill="#38bdf8"/>
+    <ellipse cx="215" cy="250" rx="3" ry="5" fill="#22d3ee"/>
+
+    <ellipse cx="285" cy="248" rx="3" ry="5" fill="#38bdf8"/>
+    <ellipse cx="295" cy="245" rx="3" ry="5" fill="#22d3ee"/>
+    <ellipse cx="305" cy="251" rx="3" ry="5" fill="#38bdf8"/>
+    <ellipse cx="315" cy="249" rx="3" ry="5" fill="#22d3ee"/>
+  </g>
+
+  <!-- Plants/Crops growing -->
+  <g transform="translate(120, 260)">
+    <line x1="0" y1="0" x2="0" y2="-25" stroke="#059669" stroke-width="3"/>
+    <ellipse cx="0" cy="-30" rx="6" ry="8" fill="#10b981"/>
+    <ellipse cx="-5" cy="-25" rx="4" ry="6" fill="#34d399"/>
+    <ellipse cx="5" cy="-25" rx="4" ry="6" fill="#34d399"/>
+  </g>
+
+  <g transform="translate(170, 265)">
+    <line x1="0" y1="0" x2="0" y2="-20" stroke="#059669" stroke-width="3"/>
+    <ellipse cx="0" cy="-24" rx="5" ry="7" fill="#10b981"/>
+    <ellipse cx="-4" cy="-20" rx="3" ry="5" fill="#34d399"/>
+    <ellipse cx="4" cy="-20" rx="3" ry="5" fill="#34d399"/>
+  </g>
+
+  <g transform="translate(220, 258)">
+    <line x1="0" y1="0" x2="0" y2="-28" stroke="#059669" stroke-width="3"/>
+    <ellipse cx="0" cy="-33" rx="7" ry="9" fill="#10b981"/>
+    <ellipse cx="-6" cy="-28" rx="5" ry="7" fill="#34d399"/>
+    <ellipse cx="6" cy="-28" rx="5" ry="7" fill="#34d399"/>
+  </g>
+
+  <g transform="translate(270, 262)">
+    <line x1="0" y1="0" x2="0" y2="-23" stroke="#059669" stroke-width="3"/>
+    <ellipse cx="0" cy="-27" rx="6" ry="8" fill="#10b981"/>
+    <ellipse cx="-5" cy="-23" rx="4" ry="6" fill="#34d399"/>
+    <ellipse cx="5" cy="-23" rx="4" ry="6" fill="#34d399"/>
+  </g>
+
+  <!-- Water tank/reservoir -->
+  <g transform="translate(40, 160)">
+    <rect x="0" y="20" width="50" height="40" rx="4" fill="#6b7280"/>
+    <rect x="2" y="22" width="46" height="36" fill="#9ca3af"/>
+
+    <!-- Water level inside -->
+    <rect x="4" y="35" width="42" height="21" fill="url(#water)" opacity="0.8"/>
+
+    <!-- Tank top -->
+    <ellipse cx="25" cy="20" rx="25" ry="8" fill="#4b5563"/>
+    <ellipse cx="25" cy="20" rx="23" ry="6" fill="#6b7280"/>
+
+    <!-- Pipe connection -->
+    <rect x="48" y="38" width="15" height="6" fill="#6b7280"/>
+    <circle cx="63" cy="41" r="4" fill="#4b5563"/>
+  </g>
+
+  <!-- Water valve control -->
+  <g transform="translate(250, 120)">
+    <circle cx="0" cy="0" r="25" fill="#ffffff" opacity="0.9"/>
+    <circle cx="0" cy="0" r="22" fill="#06b6d4"/>
+
+    <!-- Valve handle -->
+    <rect x="-3" y="-18" width="6" height="36" rx="2" fill="#0e7490"/>
+    <rect x="-18" y="-3" width="36" height="6" rx="2" fill="#0e7490"/>
+
+    <!-- Center circle -->
+    <circle cx="0" cy="0" r="8" fill="#164e63"/>
+    <circle cx="0" cy="0" r="5" fill="#0891b2"/>
+  </g>
+
+  <!-- Digital sensor/monitor -->
+  <g transform="translate(320, 100)">
+    <rect x="0" y="0" width="50" height="35" rx="4" fill="#1f2937"/>
+    <rect x="3" y="3" width="44" height="29" rx="3" fill="#374151"/>
+
+    <!-- Screen -->
+    <rect x="6" y="6" width="38" height="20" rx="2" fill="#0ea5e9"/>
+    <rect x="8" y="8" width="34" height="16" fill="#e0f2fe"/>
+
+    <!-- Moisture reading -->
+    <text x="25" y="18" font-family="monospace" font-size="8" fill="#0891b2" text-anchor="middle" font-weight="bold">75%</text>
+
+    <!-- LED indicator -->
+    <circle cx="42" cy="30" r="2" fill="#10b981"/>
+  </g>
+
+  <!-- Algerian crescent and star -->
+  <g transform="translate(30, 40)">
+    <path d="M 0,-15 A 12,12 0 1,1 0,9 A 10,10 0 1,0 0,-15" fill="#006233"/>
+    <path d="M 12,-3 L 13.5,1 L 17.5,1 L 14.5,3.5 L 16,7.5 L 12,5 L 8,7.5 L 9.5,3.5 L 6.5,1 L 10.5,1 Z" fill="#d4af37"/>
+  </g>
+
+  <!-- Star of Algeria -->
+  <g transform="translate(370, 270)">
+    <path d="M 0,-12 L 2.8,-3.7 L 11.4,-3.7 L 4.7,1.7 L 7.4,9.7 L 0,4.3 L -7.4,9.7 L -4.7,1.7 L -11.4,-3.7 L -2.8,-3.7 Z"
+          fill="#d4af37"/>
+  </g>
+</svg>

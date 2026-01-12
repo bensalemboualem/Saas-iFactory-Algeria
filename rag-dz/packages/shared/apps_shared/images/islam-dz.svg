@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <defs>
+    <linearGradient id="skyIslam" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e3a8a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#fef3c7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d4af37;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="dome" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="minaret" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#f5f5f4;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e7e5e4;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Sky background -->
+  <rect width="400" height="300" fill="url(#skyIslam)"/>
+
+  <!-- Stars in sky -->
+  <circle cx="50" cy="40" r="2" fill="#fef3c7"/>
+  <circle cx="100" cy="60" r="1.5" fill="#fef3c7"/>
+  <circle cx="350" cy="45" r="2" fill="#fef3c7"/>
+  <circle cx="320" cy="80" r="1.5" fill="#fef3c7"/>
+
+  <!-- Large crescent moon -->
+  <g transform="translate(80, 60)">
+    <path d="M 0,0 A 25,25 0 1,1 0,50 A 20,20 0 1,0 0,0" fill="url(#goldGrad)"/>
+    <path d="M 5,5 A 20,20 0 1,1 5,45 A 16,16 0 1,0 5,5" fill="#fef08a" opacity="0.3"/>
+  </g>
+
+  <!-- Star next to crescent -->
+  <g transform="translate(130, 70)">
+    <path d="M 0,-15 L 3.5,-4.6 L 14.3,-4.6 L 5.9,2.2 L 9.3,12.2 L 0,5.4 L -9.3,12.2 L -5.9,2.2 L -14.3,-4.6 L -3.5,-4.6 Z"
+          fill="url(#goldGrad)"/>
+  </g>
+
+  <!-- Ground -->
+  <rect x="0" y="240" width="400" height="60" fill="#006233"/>
+  <rect x="0" y="240" width="400" height="10" fill="#065f46" opacity="0.5"/>
+
+  <!-- Mosque main building -->
+  <rect x="120" y="140" width="160" height="100" fill="url(#minaret)"/>
+
+  <!-- Dome -->
+  <ellipse cx="200" cy="140" rx="80" ry="40" fill="url(#dome)"/>
+  <ellipse cx="200" cy="135" rx="70" ry="35" fill="#34d399" opacity="0.4"/>
+  <circle cx="200" cy="100" r="8" fill="url(#goldGrad)"/>
+  <path d="M 200,92 L 195,80 Q 195,75 200,70 Q 205,75 205,80 Z" fill="url(#goldGrad)"/>
+
+  <!-- Decorative arch -->
+  <path d="M 160,200 Q 160,170 180,160 Q 200,155 220,160 Q 240,170 240,200"
+        fill="none" stroke="#d4af37" stroke-width="3"/>
+  <path d="M 165,200 Q 165,175 180,167 Q 200,162 220,167 Q 235,175 235,200"
+        fill="#1e3a8a" opacity="0.3"/>
+
+  <!-- Minaret left -->
+  <g transform="translate(90, 140)">
+    <rect x="-15" y="0" width="30" height="100" fill="url(#minaret)"/>
+    <rect x="-18" y="0" width="36" height="8" fill="#d4af37"/>
+    <rect x="-18" y="50" width="36" height="6" fill="#d4af37"/>
+    <rect x="-20" y="-15" width="40" height="15" fill="url(#dome)"/>
+    <circle cx="0" cy="-22" r="6" fill="url(#goldGrad)"/>
+    <path d="M 0,-28 L -3,-38 Q -3,-42 0,-45 Q 3,-42 3,-38 Z" fill="url(#goldGrad)"/>
+  </g>
+
+  <!-- Minaret right -->
+  <g transform="translate(310, 140)">
+    <rect x="-15" y="0" width="30" height="100" fill="url(#minaret)"/>
+    <rect x="-18" y="0" width="36" height="8" fill="#d4af37"/>
+    <rect x="-18" y="50" width="36" height="6" fill="#d4af37"/>
+    <rect x="-20" y="-15" width="40" height="15" fill="url(#dome)"/>
+    <circle cx="0" cy="-22" r="6" fill="url(#goldGrad)"/>
+    <path d="M 0,-28 L -3,-38 Q -3,-42 0,-45 Q 3,-42 3,-38 Z" fill="url(#goldGrad)"/>
+  </g>
+
+  <!-- Open Quran -->
+  <g transform="translate(200, 260)">
+    <!-- Left page -->
+    <path d="M -50,-20 L -50,20 Q -50,25 -45,25 L 0,25 L 0,-25 L -45,-25 Q -50,-25 -50,-20"
+          fill="#fef3c7" stroke="#d4af37" stroke-width="2"/>
+    <!-- Right page -->
+    <path d="M 0,-25 L 0,25 L 45,25 Q 50,25 50,20 L 50,-20 Q 50,-25 45,-25 Z"
+          fill="#fef3c7" stroke="#d4af37" stroke-width="2"/>
+    <!-- Arabic-style text lines (decorative) -->
+    <line x1="-40" y1="-15" x2="-10" y2="-15" stroke="#006233" stroke-width="1.5"/>
+    <line x1="-40" y1="-8" x2="-5" y2="-8" stroke="#006233" stroke-width="1.5"/>
+    <line x1="-40" y1="-1" x2="-8" y2="-1" stroke="#006233" stroke-width="1.5"/>
+    <line x1="-40" y1="6" x2="-12" y2="6" stroke="#006233" stroke-width="1.5"/>
+
+    <line x1="10" y1="-15" x2="40" y2="-15" stroke="#006233" stroke-width="1.5"/>
+    <line x1="5" y1="-8" x2="40" y2="-8" stroke="#006233" stroke-width="1.5"/>
+    <line x1="8" y1="-1" x2="40" y2="-1" stroke="#006233" stroke-width="1.5"/>
+    <line x1="12" y1="6" x2="40" y2="6" stroke="#006233" stroke-width="1.5"/>
+
+    <!-- Decorative ornament -->
+    <circle cx="0" cy="15" r="4" fill="none" stroke="#d4af37" stroke-width="1.5"/>
+  </g>
+
+  <!-- Prayer beads (Tasbih) -->
+  <g transform="translate(320, 220)">
+    <circle cx="0" cy="0" r="5" fill="#8b4513"/>
+    <circle cx="12" cy="3" r="5" fill="#a0522d"/>
+    <circle cx="24" cy="0" r="5" fill="#8b4513"/>
+    <circle cx="36" cy="3" r="5" fill="#a0522d"/>
+    <circle cx="20" cy="-10" r="6" fill="#d4af37"/>
+  </g>
+
+  <!-- Islamic geometric pattern (subtle) -->
+  <g transform="translate(30, 180)" opacity="0.3">
+    <polygon points="0,0 10,10 0,20 -10,10" fill="#fef3c7"/>
+    <polygon points="0,0 10,10 0,20 -10,10" fill="none" stroke="#d4af37" stroke-width="1"/>
+  </g>
+
+  <g transform="translate(370, 200)" opacity="0.3">
+    <polygon points="0,0 10,10 0,20 -10,10" fill="#fef3c7"/>
+    <polygon points="0,0 10,10 0,20 -10,10" fill="none" stroke="#d4af37" stroke-width="1"/>
+  </g>
+</svg>

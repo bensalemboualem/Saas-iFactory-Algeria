@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Outils IA - Directory | IAFactory Algérie</title>
+    <meta name="description" content="Découvrez 500+ outils IA pour tous vos besoins. Chat, image, vidéo, audio, code et plus. Le plus grand catalogue d'outils IA en Algérie.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00c261;
+            --primary-dark: #00a050;
+            --bg-dark: #0a0a0a;
+            --bg-card: #111111;
+            --bg-card-hover: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-muted: #666666;
+            --border-color: #222222;
+            --gradient-primary: linear-gradient(135deg, #00c261 0%, #00a050 100%);
+            --gradient-gold: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%);
+            --shadow-hover: 0 8px 40px rgba(0, 194, 97, 0.15);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        header {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .logo-text { font-size: 1.25rem; font-weight: 700; }
+        .logo-text span { color: var(--primary); }
+
+        nav { display: flex; gap: 2rem; align-items: center; }
+        nav a { color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.3s; font-size: 0.95rem; }
+        nav a:hover, nav a.active { color: var(--primary); }
+
+        .nav-cta {
+            background: var(--gradient-primary);
+            color: white !important;
+            padding: 0.6rem 1.25rem;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .hero {
+            padding: 4rem 2rem;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(0, 194, 97, 0.05) 0%, transparent 100%);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .hero h1 span {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        .hero-stats { display: flex; justify-content: center; gap: 3rem; margin-bottom: 2rem; }
+        .hero-stat { text-align: center; }
+        .hero-stat-number { font-size: 2.5rem; font-weight: 800; color: var(--primary); }
+        .hero-stat-label { color: var(--text-secondary); font-size: 0.9rem; }
+
+        .search-container { max-width: 700px; margin: 0 auto 2rem; position: relative; }
+
+        .search-box {
+            width: 100%;
+            padding: 1.25rem 1.5rem 1.25rem 3.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 194, 97, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1.25rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .search-hint { display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap; margin-top: 1rem; }
+
+        .search-tag {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .search-tag:hover { border-color: var(--primary); color: var(--primary); }
+
+        main { max-width: 1400px; margin: 0 auto; padding: 0 2rem 4rem; }
+
+        .filter-bar {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+        }
+
+        .filter-select {
+            background: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            min-width: 140px;
+        }
+
+        .filter-label { color: var(--text-muted); font-size: 0.85rem; margin-right: 0.5rem; }
+
+        .categories-bar {
+            display: flex;
+            gap: 0.75rem;
+            overflow-x: auto;
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+            scrollbar-width: none;
+        }
+
+        .categories-bar::-webkit-scrollbar { display: none; }
+
+        .category-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 0.6rem 1.25rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .category-btn:hover, .category-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .category-btn .count {
+            background: rgba(255,255,255,0.2);
+            padding: 0.15rem 0.5rem;
+            border-radius: 10px;
+            font-size: 0.75rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title i { color: var(--primary); }
+
+        .section-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .tool-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-card:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-4px);
+        }
+
+        .tool-card.premium { border-color: #ffd700; }
+
+        .tool-card.premium::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: var(--gradient-gold);
+        }
+
+        .tool-header { display: flex; gap: 1rem; margin-bottom: 1rem; }
+
+        .tool-logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            flex-shrink: 0;
+        }
+
+        .tool-info { flex: 1; min-width: 0; }
+
+        .tool-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tool-name a { color: var(--text-primary); text-decoration: none; }
+        .tool-name a:hover { color: var(--primary); }
+
+        .verified-badge { color: #ffd700; font-size: 0.9rem; }
+
+        .new-badge {
+            background: var(--primary);
+            color: white;
+            font-size: 0.65rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .hot-badge {
+            background: #ef4444;
+            color: white;
+            font-size: 0.65rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .tool-company { color: var(--text-muted); font-size: 0.85rem; }
+
+        .tool-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .tool-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+
+        .tool-tag {
+            background: rgba(0, 194, 97, 0.1);
+            color: var(--primary);
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .tool-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .tool-stats { display: flex; gap: 1rem; }
+
+        .tool-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .tool-stat.upvotes { color: var(--primary); cursor: pointer; }
+        .tool-stat.rating { color: #ffc107; }
+
+        .pricing-badge {
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .pricing-badge.free { background: rgba(0, 194, 97, 0.15); color: #00e070; }
+        .pricing-badge.freemium { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
+        .pricing-badge.paid { background: rgba(168, 85, 247, 0.15); color: #c084fc; }
+
+        .released-section { margin-bottom: 3rem; }
+
+        .released-date {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .released-date i { color: var(--primary); }
+
+        .pagination { display: flex; justify-content: center; gap: 0.5rem; margin-top: 3rem; }
+
+        .page-btn {
+            width: 45px;
+            height: 45px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .page-btn:hover, .page-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .submit-cta {
+            background: linear-gradient(135deg, rgba(0, 194, 97, 0.1) 0%, rgba(0, 194, 97, 0.02) 100%);
+            border: 1px solid rgba(0, 194, 97, 0.3);
+            border-radius: 16px;
+            padding: 3rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .submit-cta h2 { font-size: 1.75rem; margin-bottom: 1rem; }
+
+        .submit-cta p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .submit-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 194, 97, 0.3);
+        }
+
+        footer {
+            background: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr repeat(3, 1fr);
+            gap: 3rem;
+        }
+
+        .footer-brand p { color: var(--text-secondary); margin: 1rem 0; font-size: 0.9rem; line-height: 1.7; }
+
+        .footer-social { display: flex; gap: 1rem; margin-top: 1.5rem; }
+
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            background: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            transition: all 0.3s;
+        }
+
+        .footer-social a:hover { border-color: var(--primary); color: var(--primary); }
+
+        .footer-column h4 { font-weight: 600; margin-bottom: 1.25rem; }
+
+        .footer-column a {
+            display: block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.4rem 0;
+            font-size: 0.9rem;
+        }
+
+        .footer-column a:hover { color: var(--primary); }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 2rem auto 0;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .hero-stats { gap: 1.5rem; }
+            .hero-stat-number { font-size: 1.75rem; }
+            nav { display: none; }
+            .tools-grid { grid-template-columns: 1fr; }
+            .filter-bar { flex-direction: column; }
+            .footer-content { grid-template-columns: 1fr; gap: 2rem; }
+            .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">IA</div>
+                <div class="logo-text">IAFactory<span>.dz</span></div>
+            </a>
+            <nav>
+                <a href="index.html">Directory</a>
+                <a href="ia-tools.html" class="active">Outils IA</a>
+                <a href="agents.html">Agents</a>
+                <a href="workflows.html">Workflows</a>
+                <a href="daily-news.html">Daily News</a>
+                <a href="#submit" class="nav-cta">Soumettre</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>Outils <span>IA</span></h1>
+        <p>Découvrez les meilleurs outils d'intelligence artificielle pour tous vos besoins. Chat, image, vidéo, audio, code et productivité.</p>
+        
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <div class="hero-stat-number">500+</div>
+                <div class="hero-stat-label">Outils IA</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-number">50</div>
+                <div class="hero-stat-label">Catégories</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-number">100K+</div>
+                <div class="hero-stat-label">Utilisateurs</div>
+            </div>
+        </div>
+
+        <div class="search-container">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" class="search-box" placeholder="Rechercher un outil IA...">
+            <div class="search-hint">
+                <span class="search-tag">ChatGPT</span>
+                <span class="search-tag">Midjourney</span>
+                <span class="search-tag">Claude</span>
+                <span class="search-tag">Cursor</span>
+                <span class="search-tag">Perplexity</span>
+            </div>
+        </div>
+    </section>
+
+    <main>
+        <div class="filter-bar">
+            <span class="filter-label">Catégorie:</span>
+            <select class="filter-select">
+                <option>Toutes catégories</option>
+                <option>Chat & LLM</option>
+                <option>Image & Art</option>
+                <option>Vidéo</option>
+                <option>Audio & Voix</option>
+                <option>Code & Dev</option>
+            </select>
+            <span class="filter-label">Prix:</span>
+            <select class="filter-select">
+                <option>Tous les prix</option>
+                <option>Gratuit</option>
+                <option>Freemium</option>
+                <option>Payant</option>
+            </select>
+            <span class="filter-label">Trier par:</span>
+            <select class="filter-select">
+                <option>Plus populaires</option>
+                <option>Mieux notés</option>
+                <option>Plus récents</option>
+            </select>
+        </div>
+
+        <div class="categories-bar">
+            <button class="category-btn active"><i class="fas fa-fire"></i> Tous <span class="count">500+</span></button>
+            <button class="category-btn"><i class="fas fa-comment"></i> Chat & LLM <span class="count">85</span></button>
+            <button class="category-btn"><i class="fas fa-image"></i> Image <span class="count">120</span></button>
+            <button class="category-btn"><i class="fas fa-video"></i> Vidéo <span class="count">65</span></button>
+            <button class="category-btn"><i class="fas fa-music"></i> Audio <span class="count">48</span></button>
+            <button class="category-btn"><i class="fas fa-code"></i> Code <span class="count">72</span></button>
+            <button class="category-btn"><i class="fas fa-pen"></i> Rédaction <span class="count">58</span></button>
+        </div>
+
+        <section class="released-section">
+            <div class="section-header">
+                <h2 class="section-title"><i class="fas fa-sparkles"></i> Nouveaux Outils</h2>
+                <a href="#all" class="section-link">Voir tout <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <p class="released-date"><i class="fas fa-calendar"></i> Décembre 2025</p>
+
+            <div class="tools-grid">
+                <div class="tool-card premium">
+                    <div class="tool-header">
+                        <div class="tool-logo">🚀</div>
+                        <div class="tool-info">
+                            <div class="tool-name">
+                                <a href="#">GPT-5</a>
+                                <i class="fas fa-check-circle verified-badge"></i>
+                                <span class="new-badge">New</span>
+                            </div>
+                            <span class="tool-company">OpenAI</span>
+                        </div>
+                    </div>
+                    <p class="tool-description">La nouvelle génération de GPT avec des capacités de raisonnement avancées et une compréhension multimodale révolutionnaire.</p>
+                    <div class="tool-tags">
+                        <span class="tool-tag">Chat</span>
+                        <span class="tool-tag">Raisonnement</span>
+                        <span class="tool-tag">Multimodal</span>
+                    </div>
+                    <div class="tool-footer">
+                        <div class="tool-stats">
+                            <div class="tool-stat upvotes"><i class="fas fa-arrow-up"></i> 15.2K</div>
+                            <div class="tool-stat rating"><i class="fas fa-star"></i> 4.9</div>
+                            <div class="tool-stat"><i class="fas fa-eye"></i> 89K</div>
+                        </div>
+                        <span class="pricing-badge freemium">Freemium</span>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-logo">🎬</div>
+                        <div class="tool-info">
+                            <div class="tool-name">
+                                <a href="#">Sora</a>
+                                <span class="new-badge">New</span>
+                                <span class="hot-badge">Hot</span>
+                            </div>
+                            <span class="tool-company">OpenAI</span>
+                        </div>
+                    </div>
+                    <p class="tool-description">Génération de vidéos photoréalistes à partir de descriptions textuelles. Révolutionne la création de contenu vidéo.</p>
+                    <div class="tool-tags">
+                        <span class="tool-tag">Vidéo</span>
+                        <span class="tool-tag">Génération</span>
+                    </div>
+                    <div class="tool-footer">
+                        <div class="tool-stats">
+                            <div class="tool-stat upvotes"><i class="fas fa-arrow-up"></i> 12.8K</div>
+                            <div class="tool-stat rating"><i class="fas fa-star"></i> 4.8</div>
+                            <div class="tool-stat"><i class="fas fa-eye"></i> 72K</div>
+                        </div>
+                        <span class="pricing-badge paid">$20/mois</span>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-logo">🧠</div>
+                        <div class="tool-info">
+                            <div class="tool-name">
+                                <a href="#">Claude 4</a>
+                                <i class="fas fa-check-circle verified-badge"></i>
+                                <span class="new-badge">New</span>
+                            </div>
+                            <span class="tool-company">Anthropic</span>
+                        </div>
+                    </div>
+                    <p class="tool-description">Assistant IA avec 500K tokens de contexte et des capacités d'analyse de documents inégalées.</p>
+                    <div class="tool-tags">
+                        <span class="tool-tag">Chat</span>
+                        <span class="tool-tag">Documents</span>
+                    </div>
+                    <div class="tool-footer">
+                        <div class="tool-stats">
+                            <div class="tool-stat upvotes"><i class="fas fa-arrow-up"></i> 8.9K</div>
+                            <div class="tool-stat rating"><i class="fas fa-star"></i> 4.9</div>
+                            <div class="tool-stat"><i class="fas fa-eye"></i> 45K</div>
+                        </div>
+                        <span class="pricing-badge freemium">Freemium</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-header">
+                <h2 class="section-title"><i class="fas fa-fire-flame-curved"></i> Outils Populaires</h2>
+                <a href="#all" class="section-link">Voir tout <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="tools-grid">
+                <div class="tool-card premium">
+                    <div class="tool-header">
+                        <div class="tool-logo">🤖</div>
+                        <div class="tool-info">
+                            <div class="tool-name">
+                                <a href="#">ChatGPT</a>
+                                <i class="fas fa-check-circle verified-badge"></i>
+                            </div>
+                            <span class="tool-company">OpenAI</span>
+                        </div>
+                    </div>
+                    <p class="tool-description">Assistant IA conversationnel basé sur GPT-4. Idéal pour la rédaction, le code, l'analyse et les questions générales.</p>
+                    <div class="tool-tags">
+                        <span class="tool-tag">Chat</span>
+                        <span class="tool-tag">Code</span>
+                        <span class="tool-tag">Rédaction</span>
+                    </div>
+                    <div class="tool-footer">
+                        <div class="tool-stats">
+                            <div class="tool-stat upvotes"><i class="fas fa-arrow-up"></i> 42.5K</div>
+                            <div class="tool-stat rating"><i class="fas fa-star"></i> 4.8</div>
+                            <div class="tool-stat"><i class="fas fa-eye"></i> 250K</div>
+                        </div>
+                        <span class="pricing-badge freemium">Freemium</span>
+                    </div>
+                </div>
+
+                <div class="tool-card premium">
+                    <div class="tool-header">
+                        <div class="tool-logo">🎨</div>
+                        <div class="tool-info">
+                            <div class="tool-name">
+                                <a href="#">Midjourney</a>
+                                <i class="fas fa-check-circle verified-badge"></i>
+                            </div>
+                            <span class="tool-company">Midjourney Inc</span>
+                        </div>
+                    </div>
+                    <p class="tool-description">Générateur d'images IA de haute qualité. Leader pour la création artistique et le design conceptuel.</p>
+                    <div class="tool-tags">
+                        <span class="tool-tag">Image</span>
+                        <span class="tool-tag">Art</span>
+                        <span class="tool-tag">Design</span>
+                    </div>
+                    <div class="tool-footer">
+                        <div class="tool-stats">
+                            <div class="tool-stat upvotes"><i class="fas fa-arrow-up"></i> 38.2K</div>
+                            <div class="tool-stat rating"><i class="fas fa-star"></i> 4.9</div>
+                            <div class="tool-stat"><i class="fas fa-eye"></i> 180K</div>
+                        </div>
+                        <span class="pricing-badge paid">$10/mois</span>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-logo">💻</div>
+                        <div class="tool-info">
+                            <div class="tool-name">
+                                <a href="#">Cursor</a>
+                                <i class="fas fa-check-circle verified-badge"></i>
+                            </div>
+                            <span class="tool-company">Anysphere</span>
+                        </div>
+                    </div>
+                    <p class="tool-description">IDE propulsé par l'IA. Code plus vite avec l'auto-complétion intelligente et le chat intégré.</p>
+                    <div class="tool-tags">
+                        <span class="tool-tag">Code</span>
+                        <span class="tool-tag">IDE</span>
+                        <span class="tool-tag">Productivité</span>
+                    </div>
+                    <div class="tool-footer">
+                        <div class="tool-stats">
+                            <div class="tool-stat upvotes"><i class="fas fa-arrow-up"></i> 25.3K</div>
+                            <div class="tool-stat rating"><i class="fas fa-star"></i> 4.7</div>
+                            <div class="tool-stat"><i class="fas fa-eye"></i> 95K</div>
+                        </div>
+                        <span class="pricing-badge freemium">Freemium</span>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-logo">🔍</div>
+                        <div class="tool-info">
+                            <div class="tool-name"><a href="#">Perplexity</a></div>
+                            <span class="tool-company">Perplexity AI</span>
+                        </div>
+                    </div>
+                    <p class="tool-description">Moteur de recherche IA avec sources citées. Idéal pour la recherche et la vérification d'informations.</p>
+                    <div class="tool-tags">
+                        <span class="tool-tag">Recherche</span>
+                        <span class="tool-tag">Sources</span>
+                    </div>
+                    <div class="tool-footer">
+                        <div class="tool-stats">
+                            <div class="tool-stat upvotes"><i class="fas fa-arrow-up"></i> 18.7K</div>
+                            <div class="tool-stat rating"><i class="fas fa-star"></i> 4.8</div>
+                            <div class="tool-stat"><i class="fas fa-eye"></i> 78K</div>
+                        </div>
+                        <span class="pricing-badge free">Gratuit</span>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-logo">🎙️</div>
+                        <div class="tool-info">
+                            <div class="tool-name"><a href="#">ElevenLabs</a></div>
+                            <span class="tool-company">ElevenLabs</span>
+                        </div>
+                    </div>
+                    <p class="tool-description">Synthèse vocale IA ultra-réaliste. Clonage de voix et text-to-speech de qualité studio.</p>
+                    <div class="tool-tags">
+                        <span class="tool-tag">Audio</span>
+                        <span class="tool-tag">Voix</span>
+                        <span class="tool-tag">TTS</span>
+                    </div>
+                    <div class="tool-footer">
+                        <div class="tool-stats">
+                            <div class="tool-stat upvotes"><i class="fas fa-arrow-up"></i> 15.4K</div>
+                            <div class="tool-stat rating"><i class="fas fa-star"></i> 4.7</div>
+                            <div class="tool-stat"><i class="fas fa-eye"></i> 62K</div>
+                        </div>
+                        <span class="pricing-badge freemium">Freemium</span>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-logo">✨</div>
+                        <div class="tool-info">
+                            <div class="tool-name">
+                                <a href="#">Gemini</a>
+                                <i class="fas fa-check-circle verified-badge"></i>
+                            </div>
+                            <span class="tool-company">Google</span>
+                        </div>
+                    </div>
+                    <p class="tool-description">L'assistant IA de Google avec intégration native aux services Google et capacités multimodales.</p>
+                    <div class="tool-tags">
+                        <span class="tool-tag">Chat</span>
+                        <span class="tool-tag">Multimodal</span>
+                        <span class="tool-tag">Google</span>
+                    </div>
+                    <div class="tool-footer">
+                        <div class="tool-stats">
+                            <div class="tool-stat upvotes"><i class="fas fa-arrow-up"></i> 22.1K</div>
+                            <div class="tool-stat rating"><i class="fas fa-star"></i> 4.6</div>
+                            <div class="tool-stat"><i class="fas fa-eye"></i> 120K</div>
+                        </div>
+                        <span class="pricing-badge free">Gratuit</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="pagination">
+            <button class="page-btn"><i class="fas fa-chevron-left"></i></button>
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <button class="page-btn">...</button>
+            <button class="page-btn">50</button>
+            <button class="page-btn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+
+        <section class="submit-cta" id="submit">
+            <h2>Vous avez développé un Outil IA ?</h2>
+            <p>Soumettez votre outil pour le faire découvrir à des milliers d'utilisateurs en Algérie et dans le monde francophone.</p>
+            <a href="#" class="submit-btn"><i class="fas fa-plus"></i> Soumettre un Outil</a>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <a href="../index.html" class="logo">
+                    <div class="logo-icon">IA</div>
+                    <div class="logo-text">IAFactory<span>.dz</span></div>
+                </a>
+                <p>Le plus grand catalogue d'outils IA en Algérie. Découvrez, comparez et choisissez les meilleurs outils d'intelligence artificielle.</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-discord"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4>Directory</h4>
+                <a href="ia-tools.html">Outils IA</a>
+                <a href="agents.html">Agents IA</a>
+                <a href="workflows.html">Workflows</a>
+                <a href="daily-news.html">Daily News</a>
+            </div>
+            <div class="footer-column">
+                <h4>Ressources</h4>
+                <a href="#">Soumettre un Outil</a>
+                <a href="#">API Data</a>
+                <a href="../blog.html">Blog</a>
+            </div>
+            <div class="footer-column">
+                <h4>Entreprise</h4>
+                <a href="../a-propos.html">À Propos</a>
+                <a href="../contact.html">Contact</a>
+                <a href="../confidentialite.html">Confidentialité</a>
+                <a href="../conditions.html">Conditions</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 - 2025 IAFactory Algérie. Tous droits réservés.</p>
+            <p>Fait avec ❤️ en Algérie</p>
+        </div>
+    </footer>
+</body>
+</html>

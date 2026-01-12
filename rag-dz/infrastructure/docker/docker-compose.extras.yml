@@ -1,0 +1,173 @@
+# ==============================================
+# IA FACTORY - SERVICES SUPPLEMENTAIRES
+# ==============================================
+# Flowise (RAG Visual Builder) + Firecrawl (Web Scraper)
+# Ports: 8220-8225 (plage reservee extras)
+# ==============================================
+
+services:
+  # ==============================================
+  # FLOWISE - Visual RAG Builder
+  # ==============================================
+  # URL: https://github.com/FlowiseAI/Flowise
+  # Interface drag-and-drop pour configurer les agents
+
+  iafactory-flowise:
+    image: flowiseai/flowise:latest
+    container_name: iaf-flowise
+    hostname: flowise
+    environment:
+      # Database (utilise le meme PostgreSQL)
+      DATABASE_TYPE: postgres
+      DATABASE_HOST: iaf-dz-postgres
+      DATABASE_PORT: 5432
+      DATABASE_USER: ${POSTGRES_USER:-postgres}
+      DATABASE_PASSWORD: ${POSTGRES_PASSWORD:-votre-mot-de-passe-postgres-securise}
+      DATABASE_NAME: flowise
+
+      # API Keys (pour les nodes LLM)
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      GROQ_API_KEY: ${GROQ_API_KEY:-}
+
+      # Auth
+      FLOWISE_USERNAME: ${FLOWISE_USERNAME:-admin}
+      FLOWISE_PASSWORD: ${FLOWISE_PASSWORD:-IAFactory2025!}
+
+      # Config
+      PORT: 3000
+      FLOWISE_FILE_SIZE_LIMIT: 50mb
+      NUMBER_OF_PROXIES: 0
+      CORS_ORIGINS: "*"
+      IFRAME_ORIGINS: "*"
+
+      # Debug
+      DEBUG: "false"
+      LOG_LEVEL: info
+
+    volumes:
+      - flowise_data:/root/.flowise
+
+    ports:
+      - "8220:3000"
+
+    networks:
+      - iafactory-net
+
+    restart: unless-stopped
+
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ==============================================
+  # FIRECRAWL - Web Scraper Intelligent
+  # ==============================================
+  # URL: https://github.com/mendableai/firecrawl
+  # Permet aux agents de lire n'importe quel site web
+
+  iafactory-firecrawl-api:
+    image: mendableai/firecrawl:latest
+    container_name: iaf-firecrawl
+    hostname: firecrawl
+    environment:
+      # Redis pour le cache
+      REDIS_URL: redis://iaf-dz-redis:6380/1
+      REDIS_RATE_LIMIT_URL: redis://iaf-dz-redis:6380/2
+
+      # API Config
+      PORT: 3002
+      HOST: 0.0.0.0
+
+      # Rate Limits
+      RATE_LIMIT_TEST_API_KEY_SCRAPE: 100
+      RATE_LIMIT_TEST_API_KEY_CRAWL: 50
+      RATE_LIMIT_TEST_API_KEY_SEARCH: 20
+
+      # Scraping Config
+      SCRAPING_BEE_API_KEY: ${SCRAPING_BEE_API_KEY:-}
+      PLAYWRIGHT_MICROSERVICE_URL: http://iaf-playwright:3000
+
+      # Misc
+      USE_DB_AUTHENTICATION: "false"
+      NUM_WORKERS_PER_QUEUE: 4
+
+      # Logging
+      LOGGING_LEVEL: info
+
+    ports:
+      - "8221:3002"
+
+    networks:
+      - iafactory-net
+
+    restart: unless-stopped
+
+    depends_on:
+      - iafactory-playwright
+
+  # Playwright pour le rendu JavaScript
+  iafactory-playwright:
+    image: mcr.microsoft.com/playwright:v1.40.0-focal
+    container_name: iaf-playwright
+    hostname: playwright
+    command: npx playwright install && npx @anthropics/browserbase-playwright-server
+    ports:
+      - "8222:3000"
+    networks:
+      - iafactory-net
+    restart: unless-stopped
+
+  # ==============================================
+  # N8N VOICE BRIDGE
+  # ==============================================
+  # Connecte le Voice Agent (8205) a n8n pour les actions
+
+  iafactory-voice-bridge:
+    build:
+      context: ./backend/voice-bridge
+      dockerfile: Dockerfile
+    container_name: iaf-voice-bridge
+    hostname: voice-bridge
+    environment:
+      # Voice Agent
+      VOICE_AGENT_URL: http://host.docker.internal:8205
+
+      # n8n Webhook
+      N8N_WEBHOOK_URL: http://iaf-dz-n8n:5678/webhook
+      N8N_API_KEY: ${N8N_API_KEY:-}
+
+      # Redis pour les sessions
+      REDIS_URL: redis://iaf-dz-redis:6380/3
+
+      # Config
+      PORT: 8223
+      LOG_LEVEL: info
+
+    ports:
+      - "8223:8223"
+
+    networks:
+      - iafactory-net
+
+    restart: unless-stopped
+
+    depends_on:
+      - iafactory-n8n
+
+# ==============================================
+# VOLUMES
+# ==============================================
+volumes:
+  flowise_data:
+    name: iaf-flowise-data
+
+# ==============================================
+# NETWORKS (utilise le reseau existant)
+# ==============================================
+networks:
+  iafactory-net:
+    external: true
+    name: rag-dz_iafactory-net

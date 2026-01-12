@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation IAFactory Algeria</title>
+    <link rel="stylesheet" href="../assets/css/docs-theme.css">
+    <link rel="icon" href="../assets/images/favicon.ico">
+</head>
+<body>
+    <!-- Header -->
+    <header class="docs-header">
+        <div class="docs-logo">
+            <img src="../assets/images/logo.png" alt="IAFactory Algeria">
+            <span>IAFactory Algeria</span>
+        </div>
+        
+        <nav class="main-nav">
+            <a href="./index.html" class="active">Documentation</a>
+            <a href="https://app.iafactory-algeria.com">App</a>
+            <a href="./api/index.html">API</a>
+            <a href="https://jobs.iafactory-algeria.com">Jobs</a>
+        </nav>
+        
+        <div class="docs-controls">
+            <div class="language-switcher">
+                <button data-lang="fr" class="active">🇫🇷 FR</button>
+                <button data-lang="en">🇬🇧 EN</button>
+                <button data-lang="ar">🇸🇦 AR</button>
+            </div>
+            
+            <div class="theme-toggle">
+                <div class="theme-toggle-slider">☀️</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="docs-container">
+        <!-- Sidebar -->
+        <aside class="docs-sidebar">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" placeholder="Rechercher...">
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-section-title">🚀 Premiers pas</h3>
+                <ul class="sidebar-menu">
+                    <li><a href="./introduction.html">Introduction à IAFactory</a></li>
+                    <li><a href="./tips-tricks.html">Trucs et astuces</a></li>
+                    <li><a href="./installation.html">Installer l'application</a></li>
+                    <li><a href="./custom-agents.html">Agents IA personnalisés</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-section-title">📚 Bonnes pratiques</h3>
+                <ul class="sidebar-menu">
+                    <li><a href="./best-practices/writing-prompts.html">Rédiger ses prompts</a></li>
+                    <li><a href="./best-practices/choosing-models.html">Choisir le bon modèle</a></li>
+                    <li><a href="./best-practices/image-generation.html">Générer des images</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-section-title">🔌 API</h3>
+                <ul class="sidebar-menu">
+                    <li><a href="./api/quick-start.html">Démarrage rapide</a></li>
+                    <li><a href="./api/response-format.html">Format de réponse</a></li>
+                    <li><a href="./api/models-pricing.html">Modèles et tarifs</a></li>
+                    <li><a href="./api/error-codes.html">Codes d'erreur</a></li>
+                    <li><a href="./api/parameters.html">Paramètres</a></li>
+                    <li><a href="./api/optimization.html">Conseils d'optimisation</a></li>
+                    <li><a href="./api/migration-openai.html">Migration depuis OpenAI</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-section-title">🛠️ Intégrations</h3>
+                <ul class="sidebar-menu">
+                    <li><a href="./integrations/n8n.html">n8n</a></li>
+                    <li><a href="./integrations/vscode-cline.html">VS Code / Cline</a></li>
+                    <li><a href="./integrations/make.html">Make</a></li>
+                    <li><a href="./integrations/xcode.html">XCode</a></li>
+                    <li><a href="./integrations/cli.html">CLI</a></li>
+                    <li><a href="./integrations/opencode.html">Opencode</a></li>
+                    <li><a href="./integrations/goose.html">Goose</a></li>
+                    <li><a href="./integrations/gitkraken.html">GitKraken</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-section-title">📖 Documentation</h3>
+                <ul class="sidebar-menu">
+                    <li><a href="./legal/terms.html">Conditions d'utilisation</a></li>
+                    <li><a href="./legal/privacy.html">Politique de Confidentialité</a></li>
+                    <li><a href="./legal/privacy-about.html">À propos de la confidentialité</a></li>
+                    <li><a href="./legal/quotas.html">Détails des quotas</a></li>
+                    <li><a href="./legal/ai-identity.html">Identité des IAs</a></li>
+                    <li><a href="./changelog.html">🚀 Notes de version</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="docs-main">
+            <h1>Documentation API IAFactory Algeria</h1>
+            
+            <p class="lead">Une API LLM compatible OpenAI pour intégrer facilement l'IA dans vos applications.</p>
+            
+            <div class="alert alert-info">
+                <strong>➡️</strong> <a href="https://dashboard.iafactory-algeria.com/api">Obtenez votre clé API et vos crédits</a>
+            </div>
+
+            <h2 id="demarrage-rapide">Démarrage rapide</h2>
+            
+            <p>Tous les abonnés à IAFactory Algeria ont quelques crédits inclus.</p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Formule</th>
+                        <th>Starter</th>
+                        <th>Standard</th>
+                        <th>Expert</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Crédits mensuels</strong></td>
+                        <td>2$</td>
+                        <td>4$</td>
+                        <td>10$</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>Vous pouvez également vous abonner sur la base d'un paiement à l'usage directement depuis les paramètres de l'API.</p>
+
+            <h3 id="avec-api-directement">Avec l'API IAFactory directement</h3>
+            
+            <p>Génère une réponse de complétion de chat basée sur votre prompt.</p>
+
+            <h4>Python</h4>
+            <pre><code class="language-python">import requests
+
+url = "https://api.iafactory-algeria.com/v1/chat/completions"
+headers = {
+    "Authorization": "Bearer VOTRE_CLE_API",
+    "Content-Type": "application/json"
+}
+data = {
+    "model": "gpt-4.1",
+    "messages": [
+        {
+            "role": "user",
+            "content": "Explique les bases de l'apprentissage automatique"
+        }
+    ]
+}
+
+response = requests.post(url, headers=headers, json=data)
+print(response.json())</code></pre>
+
+            <h4>JavaScript</h4>
+            <pre><code class="language-javascript">const url = "https://api.iafactory-algeria.com/v1/chat/completions";
+const headers = {
+    "Authorization": "Bearer VOTRE_CLE_API",
+    "Content-Type": "application/json"
+};
+const data = {
+    model: "gpt-4.1",
+    messages: [
+        {
+            role: "user",
+            content: "Explique les bases de l'apprentissage automatique"
+        }
+    ]
+};
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify(data)
+})
+.then(response => response.json())
+.then(data => console.log(data));</code></pre>
+
+            <h4>cURL</h4>
+            <pre><code class="language-bash">curl https://api.iafactory-algeria.com/v1/chat/completions \
+  -H "Authorization: Bearer VOTRE_CLE_API" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "gpt-4.1",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Explique les bases de l'\''apprentissage automatique"
+      }
+    ]
+  }'</code></pre>
+
+            <h3 id="avec-bibliotheque-openai">Avec la bibliothèque OpenAI</h3>
+            
+            <pre><code class="language-python">import openai
+
+# Configurer le client pour utiliser IAFactory Algeria
+openai.api_base = "https://api.iafactory-algeria.com/v1"
+openai.api_key = "VOTRE_CLE_API"
+
+response = openai.ChatCompletion.create(
+    model="gpt-4.1",
+    messages=[
+        {"role": "user", "content": "Quels sont les avantages des énergies renouvelables ?"}
+    ]
+)
+
+print(response.choices[0].message.content)</code></pre>
+
+            <h2 id="format-reponse">Format de réponse</h2>
+
+            <h3 id="reponse-reussie">Réponse réussie</h3>
+            
+            <pre><code class="language-json">{
+  "id": "chatcmpl-123",
+  "object": "chat.completion",
+  "created": 1677652288,
+  "model": "gpt-4.1",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "Bonjour ! Je vais très bien, merci de demander. Comment puis-je vous aider aujourd'hui ?"
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 12,
+    "completion_tokens": 19,
+    "total_tokens": 31
+  }
+}</code></pre>
+
+            <h3 id="reponse-streaming">Réponse en streaming</h3>
+            
+            <p>Quand <code>stream: true</code> est défini, les réponses sont retournées sous forme de Server-Sent Events :</p>
+            
+            <pre><code class="language-text">data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1677652288,"model":"gpt-4.1","choices":[{"index":0,"delta":{"content":"Bonjour"},"finish_reason":null}]}
+
+data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1677652288,"model":"gpt-4.1","choices":[{"index":0,"delta":{"content":"!"},"finish_reason":null}]}
+
+data: [DONE]</code></pre>
+
+            <h2 id="modeles-tarifs">Modèles et tarifs</h2>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Modèle</th>
+                        <th>Entrée ($/M tokens)</th>
+                        <th>Sortie ($/M tokens)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>gpt-5.2-chat</td><td>1,75</td><td>14</td></tr>
+                    <tr><td>gpt-5.1-chat</td><td>1,25</td><td>10</td></tr>
+                    <tr><td>gpt-5-mini</td><td>0,25</td><td>2</td></tr>
+                    <tr><td>gpt-4.1</td><td>2</td><td>8</td></tr>
+                    <tr><td>gpt-4.1-mini</td><td>0.4</td><td>1.6</td></tr>
+                    <tr><td>gpt-4.1-nano</td><td>0.1</td><td>0.4</td></tr>
+                    <tr><td>gpt-4o</td><td>2.5</td><td>10</td></tr>
+                    <tr><td>mistral-large-3</td><td>0.5</td><td>1.5</td></tr>
+                    <tr><td>mistral-medium-3.1</td><td>0.4</td><td>2</td></tr>
+                    <tr><td>mistral-small-3.2-24b-instruct</td><td>0.1</td><td>0.3</td></tr>
+                    <tr><td>magistral-medium-2506</td><td>2</td><td>5</td></tr>
+                    <tr><td>codestral-2508</td><td>0.3</td><td>0.9</td></tr>
+                    <tr><td>grok-4</td><td>3</td><td>15</td></tr>
+                    <tr><td>grok-4-fast</td><td>0.2</td><td>0.5</td></tr>
+                    <tr><td>grok-code-fast-1</td><td>0.2</td><td>1.5</td></tr>
+                    <tr><td>gemini-2.5-flash</td><td>0.3</td><td>2.5</td></tr>
+                    <tr><td>gemini-3-pro</td><td>2.5</td><td>15</td></tr>
+                    <tr><td>deepseek-r1-0528</td><td>3</td><td>8</td></tr>
+                    <tr><td>deepseek-v3.2</td><td>0.30</td><td>0.45</td></tr>
+                    <tr><td>kimi-k2-instruct</td><td>0.4</td><td>2</td></tr>
+                    <tr><td>kimi-k2-thinking</td><td>0.45</td><td>2.35</td></tr>
+                    <tr><td>qwen3-coder</td><td>0.5</td><td>2</td></tr>
+                    <tr><td>qwen3-coder-flash</td><td>0.5</td><td>2.5</td></tr>
+                    <tr><td>qwen3-coder-plus</td><td>1.8</td><td>9</td></tr>
+                    <tr><td>llama-4-maverick</td><td>0.22</td><td>0.88</td></tr>
+                    <tr><td>llama-4-scout</td><td>0.15</td><td>0.6</td></tr>
+                    <tr><td>sonar-pro</td><td>3</td><td>15</td></tr>
+                    <tr><td>sonar-deep-research</td><td>2</td><td>8</td></tr>
+                    <tr><td>claude-haiku-4-5</td><td>0.8</td><td>4</td></tr>
+                    <tr><td>claude-opus-4-5</td><td>5</td><td>25</td></tr>
+                    <tr><td>claude-sonnet-4-5</td><td>3</td><td>15</td></tr>
+                </tbody>
+            </table>
+
+            <div class="alert alert-warning">
+                ⚠️ <strong>Note :</strong> Les prix peuvent varier et ne pas être à jour dans ce tableau.
+            </div>
+
+            <p>📜 L'utilisation et les coûts sont loggés dans vos <a href="https://dashboard.iafactory-algeria.com/api/usage">paramètres</a>.</p>
+
+            <p>💡 Nous avons ajouté des alias alignés avec l'app IAFactory pour faciliter la sélection de modèles : si vous écrivez <code>mistral</code>, cela utilisera <code>mistral-medium-3.1</code> automatiquement.</p>
+
+            <h2 id="codes-erreur">Codes d'erreur</h2>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>400</td><td>Requête incorrecte - Paramètres manquants ou incorrects</td></tr>
+                    <tr><td>401</td><td>Non autorisé - Clé API invalide</td></tr>
+                    <tr><td>429</td><td>Trop de requêtes - Limite de débit dépassée</td></tr>
+                    <tr><td>500</td><td>Erreur serveur interne - Problème côté serveur</td></tr>
+                    <tr><td>503</td><td>Service indisponible - Serveur temporairement indisponible</td></tr>
+                </tbody>
+            </table>
+
+            <h2 id="parametres">Paramètres</h2>
+
+            <h3 id="parametres-requis">Paramètres requis</h3>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Paramètre</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>messages</code></td><td>array</td><td>Liste des messages dans la conversation</td></tr>
+                    <tr><td><code>model</code></td><td>string</td><td>Identificateur du modèle à utiliser</td></tr>
+                </tbody>
+            </table>
+
+            <h3 id="parametres-optionnels">Paramètres optionnels</h3>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Paramètre</th>
+                        <th>Type</th>
+                        <th>Défaut</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>temperature</code></td><td>number</td><td>0.7</td><td>Contrôle la créativité (0.0 à 2.0)</td></tr>
+                    <tr><td><code>max_tokens</code></td><td>integer</td><td>2048</td><td>Nombre maximum de tokens à générer</td></tr>
+                    <tr><td><code>top_p</code></td><td>number</td><td>1.0</td><td>Contrôle la diversité des réponses</td></tr>
+                    <tr><td><code>stream</code></td><td>boolean</td><td>false</td><td>Streaming de réponse en temps réel</td></tr>
+                </tbody>
+            </table>
+
+            <h2 id="conseils-optimisation">Conseils d'optimisation</h2>
+
+            <h3 id="structure-messages">Structure des messages</h3>
+            
+            <pre><code class="language-json">{
+  "messages": [
+    {
+      "role": "system",
+      "content": "Vous êtes un assistant IA spécialisé en programmation."
+    },
+    {
+      "role": "user",
+      "content": "Comment optimiser une boucle for en Python ?"
+    }
+  ]
+}</code></pre>
+
+            <h3 id="types-roles">Types de rôles</h3>
+            
+            <ul>
+                <li><strong>system</strong> : Définit le comportement et le contexte de l'assistant</li>
+                <li><strong>user</strong> : Représente les messages de l'utilisateur</li>
+                <li><strong>assistant</strong> : Représente les réponses précédentes de l'IA</li>
+            </ul>
+
+            <h2 id="migration-openai">Migration depuis OpenAI</h2>
+            
+            <p>Si vous utilisez déjà l'API OpenAI, migrer vers IAFactory Algeria est simple :</p>
+            
+            <ol>
+                <li>Changez l'URL de base de <code>https://api.openai.com/v1</code> à <code>https://api.iafactory-algeria.com/v1</code></li>
+                <li>Mettez à jour votre clé API</li>
+                <li>Gardez tous les autres paramètres identiques</li>
+            </ol>
+
+            <h3 id="bibliotheque-python-openai">Bibliothèque Python OpenAI</h3>
+            
+            <pre><code class="language-python">import openai
+
+# Avant
+openai.api_base = "https://api.openai.com/v1"
+openai.api_key = "sk-openai-key"
+
+# Après
+openai.api_base = "https://api.iafactory-algeria.com/v1"
+openai.api_key = "votre-cle-iafactory"</code></pre>
+
+            <h2 id="integrations">n8n, VS Code, Cline, Make, XCode, CLI, etc.</h2>
+            
+            <p>Vous pouvez utiliser l'API IAFactory avec des outils tels que n8n, VS Code, Cline, Make et bien d'autres.</p>
+            
+            <div class="alert alert-info">
+                Assurez-vous d'utiliser l'URL correcte. En cas de doute, essayez chacune d'entre elles :
+                <ul>
+                    <li>Pour l'URL de base : <code>https://api.iafactory-algeria.com/v1</code> ou <code>https://api.iafactory-algeria.com/</code></li>
+                    <li>Pour les requêtes https : <code>https://api.iafactory-algeria.com/v1/chat/completions</code> sera nécessaire</li>
+                </ul>
+            </div>
+
+            <h3 id="tutoriels">Tutoriels sur l'utilisation de l'API IAFactory dans vos outils préférés</h3>
+            
+            <h4>Pour les automatisations :</h4>
+            <ul>
+                <li><a href="./integrations/n8n.html">n8n</a></li>
+                <li><a href="./integrations/make.html">Make</a></li>
+            </ul>
+
+            <h4>Pour les IDE :</h4>
+            <ul>
+                <li><a href="./integrations/vscode-cline.html">Cline (dans VS Code ou JetBrains)</a></li>
+                <li><a href="./integrations/xcode.html">XCode</a></li>
+            </ul>
+
+            <h4>Pour CLI (équivalent de Claude Code) :</h4>
+            <ul>
+                <li><a href="./integrations/opencode.html">Opencode</a></li>
+                <li><a href="./integrations/goose.html">Goose</a></li>
+            </ul>
+
+            <h4>Autres :</h4>
+            <ul>
+                <li><a href="./integrations/gitkraken.html">GitKraken</a></li>
+            </ul>
+
+            <div class="alert alert-success">
+                <strong>➡️</strong> <a href="https://dashboard.iafactory-algeria.com/api">Obtenez votre clé API et vos crédits</a>
+            </div>
+        </main>
+
+        <!-- Table of Contents -->
+        <aside class="docs-toc">
+            <h3 class="docs-toc-title">Sur cette page</h3>
+            <ul>
+                <!-- Generated dynamically by JS -->
+            </ul>
+        </aside>
+    </div>
+
+    <script src="../assets/js/docs-theme.js"></script>
+</body>
+</html>

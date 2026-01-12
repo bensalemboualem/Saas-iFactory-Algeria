@@ -1,0 +1,194 @@
+{
+  "name": "Rappel RDV (24h avant)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 1
+            }
+          ]
+        }
+      },
+      "id": "schedule-trigger",
+      "name": "Vérifier RDV",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "url": "={{ $env.BACKEND_URL || 'http://backend:8180' }}/api/calendar/upcoming",
+        "options": {
+          "timeout": 10000
+        },
+        "headerParametersUi": {
+          "parameter": [
+            {
+              "name": "X-API-Key",
+              "value": "={{ $env.API_KEY || 'change-me-in-production' }}"
+            }
+          ]
+        }
+      },
+      "id": "get-appointments",
+      "name": "Récupérer RDV",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "leftValue": "={{ $json.hours_until_appointment }}",
+              "rightValue": 24,
+              "operator": {
+                "type": "number",
+                "operation": "lte"
+              }
+            },
+            {
+              "leftValue": "={{ $json.hours_until_appointment }}",
+              "rightValue": 23,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "loopItems": true
+      },
+      "id": "filter-24h",
+      "name": "Filtrer 24h avant",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "from": "={{ $env.TWILIO_PHONE_NUMBER }}",
+        "to": "={{ $json.patient_phone }}",
+        "message": "Rappel: RDV demain à {{ $json.appointment_time }} avec Dr. {{ $json.doctor_name }}. Pour annuler ou reporter, appelez le {{ $env.CLINIC_PHONE || '0000000000' }}"
+      },
+      "id": "send-sms",
+      "name": "Envoyer SMS Twilio",
+      "type": "n8n-nodes-base.twilio",
+      "typeVersion": 1,
+      "position": [900, 300],
+      "credentials": {
+        "twilioApi": {
+          "id": "twilio-credentials",
+          "name": "Twilio Account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $env.BACKEND_URL || 'http://backend:8180' }}/api/notifications/log",
+        "method": "POST",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "type",
+              "value": "sms_reminder"
+            },
+            {
+              "name": "appointment_id",
+              "value": "={{ $json.appointment_id }}"
+            },
+            {
+              "name": "status",
+              "value": "sent"
+            },
+            {
+              "name": "sent_at",
+              "value": "={{ $now.toISO() }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "log-notification",
+      "name": "Logger dans IA Factory",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1120, 300]
+    }
+  ],
+  "connections": {
+    "Vérifier RDV": {
+      "main": [
+        [
+          {
+            "node": "Récupérer RDV",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Récupérer RDV": {
+      "main": [
+        [
+          {
+            "node": "Filtrer 24h avant",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filtrer 24h avant": {
+      "main": [
+        [
+          {
+            "node": "Envoyer SMS Twilio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Envoyer SMS Twilio": {
+      "main": [
+        [
+          {
+            "node": "Logger dans IA Factory",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "SMS"
+    },
+    {
+      "name": "Twilio"
+    },
+    {
+      "name": "RDV"
+    }
+  ],
+  "triggerCount": 0,
+  "versionId": "1"
+}

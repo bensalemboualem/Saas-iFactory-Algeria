@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تكامل GitKraken - IAFactory الجزائر</title>
+    <link rel="stylesheet" href="../../assets/css/docs-theme.css">
+</head>
+<body>
+    <header class="docs-header">
+        <div class="docs-logo">
+            <img src="../../assets/images/logo.png" alt="IAFactory الجزائر">
+            <span>IAFactory الجزائر</span>
+        </div>
+        <nav class="main-nav">
+            <a href="../index.html">التوثيق</a>
+            <a href="https://app.iafactory-algeria.com">التطبيق</a>
+            <a href="../api/index.html">API</a>
+        </nav>
+        <div class="docs-controls">
+            <div class="language-switcher">
+                <button data-lang="fr">🇫🇷 FR</button>
+                <button data-lang="en">🇬🇧 EN</button>
+                <button data-lang="ar" class="active">🇸🇦 AR</button>
+            </div>
+            <div class="theme-toggle">
+                <div class="theme-toggle-slider">☀️</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <!-- Sidebar -->
+        </aside>
+
+        <main class="docs-main">
+            <h1>تكامل GitKraken</h1>
+            
+            <p class="lead">استخدم الذكاء الاصطناعي من IAFactory الجزائر في GitKraken للالتزامات الذكية، ومراجعات الكود التلقائية، وسير عمل Git بمساعدة.</p>
+
+            <h2 id="introduction">🐙 مقدمة</h2>
+
+            <p>GitKraken هو عميل Git رسومي قوي. مع تكامل IAFactory الجزائر، أضف الذكاء الاصطناعي لإنشاء رسائل الالتزام، وتحليل الفروقات، وأتمتة سير عمل Git.</p>
+
+            <div class="alert alert-info">
+                <strong>💡 ميزات الذكاء الاصطناعي:</strong>
+                <ul>
+                    <li>إنشاء رسائل الالتزام التلقائية</li>
+                    <li>مراجعات الكود الذكية للـ PR</li>
+                    <li>اقتراحات حل تعارضات الدمج</li>
+                    <li>تحليل السجل والرؤى</li>
+                    <li>التوثيق التلقائي للتغييرات</li>
+                </ul>
+            </div>
+
+            <h2 id="installation">📦 التثبيت</h2>
+
+            <h3 id="gitkraken">تثبيت GitKraken</h3>
+
+            <ol>
+                <li>قم بالتنزيل من <a href="https://gitkraken.com">gitkraken.com</a></li>
+                <li>ثبّت لنظام التشغيل الخاص بك (Windows/Mac/Linux)</li>
+                <li>شغّل GitKraken</li>
+            </ol>
+
+            <h3 id="cli-integration">تكامل CLI (gitkraken-cli)</h3>
+
+            <pre><code class="language-bash"># عبر npm
+npm install -g gitkraken-cli
+
+# أو عبر Binary
+curl -sSL https://cli.gitkraken.com/install.sh | bash</code></pre>
+
+            <h2 id="configuration">⚙️ التكوين</h2>
+
+            <h3 id="api-setup">إعداد API IAFactory</h3>
+
+            <p>أنشئ سكريبت Git hook مع IAFactory:</p>
+
+            <pre><code class="language-bash"># .git/hooks/prepare-commit-msg
+#!/bin/bash
+
+# الحصول على التغييرات المرحلة
+DIFF=$(git diff --cached)
+
+# استدعاء IAFactory لإنشاء رسالة الالتزام
+COMMIT_MSG=$(curl -s -X POST https://api.iafactory-algeria.com/v1/chat/completions \
+  -H "Authorization: Bearer $IAFACTORY_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d "{
+    \"model\": \"gpt-4.1-mini\",
+    \"messages\": [{
+      \"role\": \"system\",
+      \"content\": \"أنشئ رسالة التزام git موجزة بتنسيق conventional commits (type(scope): description). كن محدداً بشأن ما تغير.\"
+    }, {
+      \"role\": \"user\",
+      \"content\": \"Git diff:\n$DIFF\"
+    }],
+    \"temperature\": 0.3,
+    \"max_tokens\": 100
+  }" | jq -r '.choices[0].message.content')
+
+# الكتابة في ملف الالتزام
+echo "$COMMIT_MSG" > "$1"</code></pre>
+
+            <pre><code class="language-bash"># اجعله قابلاً للتنفيذ
+chmod +x .git/hooks/prepare-commit-msg</code></pre>
+
+            <h3 id="gitkraken-config">تكوين GitKraken</h3>
+
+            <ol>
+                <li>افتح <strong>التفضيلات ← التكاملات</strong></li>
+                <li>أضف <strong>تكامل مخصص</strong></li>
+                <li>كوّن سكريبتات Hook</li>
+            </ol>
+
+            <h2 id="features">🚀 الميزات</h2>
+
+            <h3 id="auto-commit">1. رسائل الالتزام التلقائية</h3>
+
+            <p><strong>سير العمل:</strong></p>
+
+            <ol>
+                <li>رحّل ملفاتك في GitKraken</li>
+                <li>انقر على <strong>Commit</strong></li>
+                <li>الرسالة منشأة تلقائياً</li>
+                <li>عدّل إذا لزم الأمر والتزم</li>
+            </ol>
+
+            <p><strong>أمثلة منشأة:</strong></p>
+
+            <pre><code class="language-text">feat(auth): add JWT authentication middleware
+fix(api): resolve null pointer in user endpoint  
+docs(readme): update installation instructions
+refactor(utils): simplify date formatting logic
+perf(db): add index on user_email column</code></pre>
+
+            <h3 id="pr-review">2. مراجعة طلب السحب</h3>
+
+            <p>سكريبت لمراجعة PR التلقائية:</p>
+
+            <pre><code class="language-bash">#!/bin/bash
+# review-pr.sh
+
+PR_NUMBER=$1
+REPO_PATH=$2
+
+# الحصول على فرق PR
+cd "$REPO_PATH"
+git fetch origin pull/$PR_NUMBER/head:pr-$PR_NUMBER
+git diff main...pr-$PR_NUMBER > pr-diff.txt
+
+# التحليل باستخدام IAFactory
+curl -X POST https://api.iafactory-algeria.com/v1/chat/completions \
+  -H "Authorization: Bearer $IAFACTORY_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d "{
+    \"model\": \"gpt-4.1\",
+    \"messages\": [{
+      \"role\": \"system\",
+      \"content\": \"أنت خبير مراجعة الكود. حلل هذا PR وقدم:\n1. التقييم الشامل\n2. مشاكل الأمان (إن وجدت)\n3. مخاوف الأداء\n4. انتهاكات أفضل الممارسات\n5. التحسينات المقترحة\n\nالتنسيق في Markdown.\"
+    }, {
+      \"role\": \"user\",
+      \"content\": \"$(cat pr-diff.txt)\"
+    }],
+    \"temperature\": 0.2,
+    \"max_tokens\": 2000
+  }" | jq -r '.choices[0].message.content' > pr-review.md
+
+# عرض المراجعة
+cat pr-review.md</code></pre>
+
+            <h3 id="conflict-resolution">3. حل التعارضات</h3>
+
+            <pre><code class="language-bash">#!/bin/bash
+# resolve-conflict.sh
+
+CONFLICT_FILE=$1
+
+# استخراج أقسام التعارض
+CONFLICT_CONTENT=$(cat "$CONFLICT_FILE")
+
+# اطلب من الذكاء الاصطناعي الحل
+curl -X POST https://api.iafactory-algeria.com/v1/chat/completions \
+  -H "Authorization: Bearer $IAFACTORY_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d "{
+    \"model\": \"gpt-4.1\",
+    \"messages\": [{
+      \"role\": \"system\",
+      \"content\": \"حل تعارض دمج git هذا. احتفظ بأفضل الأجزاء من كلا الإصدارين. أرجع الكود المحلول فقط، بدون شروحات.\"
+    }, {
+      \"role\": \"user\",
+      \"content\": \"$CONFLICT_CONTENT\"
+    }],
+    \"temperature\": 0.1
+  }" | jq -r '.choices[0].message.content' > "$CONFLICT_FILE.resolved"
+
+echo "الحل المقترح في $CONFLICT_FILE.resolved"
+echo "راجع قبل التطبيق!"</code></pre>
+
+            <h3 id="changelog">4. سجل التغييرات التلقائي</h3>
+
+            <pre><code class="language-bash">#!/bin/bash
+# generate-changelog.sh
+
+FROM_TAG=$1
+TO_TAG=$2
+
+# الحصول على الالتزامات بين الوسوم
+git log $FROM_TAG..$TO_TAG --oneline > commits.txt
+
+# إنشاء سجل التغييرات بالذكاء الاصطناعي
+curl -X POST https://api.iafactory-algeria.com/v1/chat/completions \
+  -H "Authorization: Bearer $IAFACTORY_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d "{
+    \"model\": \"gpt-4.1\",
+    \"messages\": [{
+      \"role\": \"system\",
+      \"content\": \"حوّل التزامات git هذه إلى تنسيق CHANGELOG.md نظيف. جمّع حسب: الميزات، إصلاحات الأخطاء، الأداء، التوثيق، إعادة الهيكلة.\"
+    }, {
+      \"role\": \"user\",
+      \"content\": \"$(cat commits.txt)\"
+    }],
+    \"temperature\": 0.3,
+    \"max_tokens\": 1500
+  }" | jq -r '.choices[0].message.content' > CHANGELOG-$TO_TAG.md
+
+echo "سجل التغييرات منشأ: CHANGELOG-$TO_TAG.md"</code></pre>
+
+            <h2 id="workflows">🔄 سير عمل GitKraken + الذكاء الاصطناعي</h2>
+
+            <h3 id="feature-workflow">سير عمل الميزة الكامل</h3>
+
+            <pre><code class="language-bash"># 1. إنشاء فرع الميزة
+git checkout -b feature/user-authentication
+
+# 2. التطوير مع التزامات الذكاء الاصطناعي
+# (الرسائل منشأة تلقائياً بواسطة hook)
+
+# 3. قبل PR: المراجعة الذاتية
+./scripts/self-review.sh
+
+# 4. إنشاء PR بوصف الذكاء الاصطناعي
+gh pr create --title "$(generate-pr-title.sh)" \
+             --body "$(generate-pr-body.sh)"
+
+# 5. CI/CD مع مراجعة الذكاء الاصطناعي
+# (مكوّن في .github/workflows/)
+
+# 6. الدمج وسجل التغييرات
+git checkout main
+git merge feature/user-authentication
+./scripts/generate-changelog.sh v1.0.0 v1.1.0</code></pre>
+
+            <h3 id="release-workflow">سير عمل الإصدار</h3>
+
+            <pre><code class="language-bash">#!/bin/bash
+# release.sh
+
+VERSION=$1
+
+# 1. إنشاء سجل التغييرات
+./scripts/generate-changelog.sh $(git describe --tags --abbrev=0) HEAD
+
+# 2. إنشاء ملاحظات الإصدار
+curl -X POST https://api.iafactory-algeria.com/v1/chat/completions \
+  -H "Authorization: Bearer $IAFACTORY_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d "{
+    \"model\": \"gpt-4.1\",
+    \"messages\": [{
+      \"role\": \"system\",
+      \"content\": \"أنشئ ملاحظات الإصدار من سجل التغييرات هذا. سلط الضوء على الميزات الرئيسية، والتغييرات الكبيرة، وأدلة الترحيل.\"
+    }, {
+      \"role\": \"user\",
+      \"content\": \"$(cat CHANGELOG-HEAD.md)\"
+    }]
+  }" | jq -r '.choices[0].message.content' > RELEASE-NOTES-$VERSION.md
+
+# 3. وسم ودفع
+git tag -a v$VERSION -m "الإصدار v$VERSION"
+git push origin v$VERSION
+
+# 4. إنشاء إصدار GitHub
+gh release create v$VERSION --notes-file RELEASE-NOTES-$VERSION.md
+
+echo "✅ الإصدار v$VERSION منشأ!"</code></pre>
+
+            <h2 id="gitkraken-cli">🖥️ GitKraken CLI مع الذكاء الاصطناعي</h2>
+
+            <pre><code class="language-bash"># تثبيت wrapper الذكاء الاصطناعي
+npm install -g gitkraken-ai-wrapper
+
+# أوامر معززة بالذكاء الاصطناعي
+gk commit --ai-message   # إنشاء الرسالة تلقائياً
+gk pr --ai-description   # إنشاء وصف PR تلقائياً
+gk review --ai          # مراجعة تلقائية
+gk changelog --ai       # إنشاء سجل التغييرات
+
+# التكوين
+gk config set ai.provider iafactory
+gk config set ai.api_key $IAFACTORY_API_KEY
+gk config set ai.model gpt-4.1</code></pre>
+
+            <h2 id="best-practices">✨ أفضل الممارسات</h2>
+
+            <h3 id="commit-quality">1. جودة الالتزامات</h3>
+
+            <ul>
+                <li>راجع دائماً الرسائل المنشأة</li>
+                <li>التزم بتغييرات منطقية صغيرة</li>
+                <li>استخدم conventional commits (feat, fix, docs، إلخ.)</li>
+            </ul>
+
+            <h3 id="security">2. الأمان</h3>
+
+            <ul>
+                <li>لا تلتزم أبداً بمفاتيح API</li>
+                <li>استخدم <code>git-secrets</code> للمسح التلقائي</li>
+                <li>كوّن <code>.gitignore</code> للملفات الحساسة</li>
+            </ul>
+
+            <h3 id="collaboration">3. التعاون</h3>
+
+            <ul>
+                <li>شارك سكريبتات الذكاء الاصطناعي مع الفريق</li>
+                <li>وثّق سير العمل في README</li>
+                <li>أنشئ قوالب PR مع مراجعة الذكاء الاصطناعي</li>
+            </ul>
+
+            <h2 id="resources">📚 الموارد</h2>
+
+            <ul>
+                <li>📖 <a href="https://help.gitkraken.com">توثيق GitKraken</a></li>
+                <li>🎥 <a href="../api/quick-start.html">البداية السريعة لـ API IAFactory</a></li>
+                <li>💬 <a href="https://discord.gg/iafactory">مجتمع Discord</a></li>
+                <li>🐙 <a href="https://github.com/gitkraken">GitKraken GitHub</a></li>
+            </ul>
+
+            <div class="alert alert-success">
+                <strong>🐙 هل أنت مستعد لـ Git بالذكاء الاصطناعي؟</strong>
+                <p>احصل على مفتاح API الخاص بك: <a href="https://app.iafactory-algeria.com/api-keys">app.iafactory-algeria.com</a></p>
+            </div>
+        </main>
+
+        <aside class="docs-toc">
+            <h3 class="docs-toc-title">في هذه الصفحة</h3>
+            <ul></ul>
+        </aside>
+    </div>
+
+    <script src="../../assets/js/docs-theme.js"></script>
+</body>
+</html>

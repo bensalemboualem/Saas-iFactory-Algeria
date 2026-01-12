@@ -1,0 +1,502 @@
+# =============================================================================
+# IAFACTORY SWITZERLAND - DOCKER COMPOSE DEVELOPMENT
+# =============================================================================
+# Region: CH (Suisse)
+# Environment: Development
+# Stack: PostgreSQL 16 + PGVector, Redis 7, Qdrant, Meilisearch, Ollama
+# Ports: 5433 (DB), 6380 (Redis), 6335 (Qdrant), 8001 (API), 3001 (Frontend)
+# =============================================================================
+# Usage:
+#   cd deployments/switzerland
+#   cp .env.example .env
+#   docker-compose -f docker-compose.yml up -d
+# =============================================================================
+# NOTE: Ports decales pour permettre execution simultanee avec Algeria
+# =============================================================================
+
+services:
+  # ===========================================================================
+  # DATABASES & CACHE
+  # ===========================================================================
+
+  iaf-postgres:
+    image: pgvector/pgvector:pg16
+    container_name: iaf-ch-postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-iafactory_ch}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD requis}
+      POSTGRES_DB: ${POSTGRES_DB:-iafactory_ch}
+      TZ: Europe/Zurich
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ../../core/infrastructure/sql/init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+      - ../../core/infrastructure/sql/pgvector_migration.sql:/docker-entrypoint-initdb.d/02-pgvector.sql:ro
+    ports:
+      - "5433:5432"
+    command: postgres -c shared_preload_libraries=vector -c max_connections=200
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-iafactory_ch} -d ${POSTGRES_DB:-iafactory_ch}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - iaf-ch-network
+
+  iaf-redis:
+    image: redis:7-alpine
+    container_name: iaf-ch-redis
+    command: >
+      redis-server
+      --appendonly yes
+      --maxmemory 512mb
+      --maxmemory-policy allkeys-lru
+      ${REDIS_PASSWORD:+--requirepass ${REDIS_PASSWORD}}
+    volumes:
+      - redis-data:/data
+    ports:
+      - "6380:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - iaf-ch-network
+
+  iaf-qdrant:
+    image: qdrant/qdrant:latest
+    container_name: iaf-ch-qdrant
+    volumes:
+      - qdrant-data:/qdrant/storage
+    ports:
+      - "6335:6333"
+      - "6336:6334"
+    environment:
+      QDRANT__LOG_LEVEL: ${LOG_LEVEL:-INFO}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:6333/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - iaf-ch-network
+
+  iaf-meilisearch:
+    image: getmeili/meilisearch:latest
+    container_name: iaf-ch-meilisearch
+    environment:
+      MEILI_MASTER_KEY: ${MEILI_MASTER_KEY:-masterKey123}
+      MEILI_ENV: development
+    volumes:
+      - meili-data:/meili_data
+    ports:
+      - "7701:7700"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7700/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - iaf-ch-network
+
+  # ===========================================================================
+  # RAG & AI SERVICES
+  # ===========================================================================
+
+  iaf-ollama:
+    image: ollama/ollama:latest
+    container_name: iaf-ch-ollama
+    volumes:
+      - ollama-data:/root/.ollama
+    ports:
+      - "11435:11434"
+    environment:
+      OLLAMA_HOST: 0.0.0.0
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - iaf-ch-network
+    profiles:
+      - ai-local
+
+  iaf-anythingllm:
+    image: mintplexlabs/anythingllm:latest
+    container_name: iaf-ch-anythingllm
+    ports:
+      - "3005:3001"
+    volumes:
+      - anythingllm-data:/app/server/storage
+    environment:
+      STORAGE_DIR: /app/server/storage
+      JWT_SECRET: ${JWT_SECRET_KEY:-change-me-jwt-secret}
+      VECTOR_DB: qdrant
+      QDRANT_ENDPOINT: http://iaf-qdrant:6333
+    depends_on:
+      iaf-qdrant:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - iaf-ch-network
+    profiles:
+      - extras
+
+  # ===========================================================================
+  # BACKEND API (FastAPI)
+  # ===========================================================================
+
+  iaf-backend:
+    build:
+      context: ../../core/services/api
+      dockerfile: Dockerfile
+    container_name: iaf-ch-backend
+    env_file:
+      - .env
+    depends_on:
+      iaf-postgres:
+        condition: service_healthy
+      iaf-redis:
+        condition: service_healthy
+      iaf-qdrant:
+        condition: service_healthy
+    environment:
+      # === REGION ===
+      REGION: switzerland
+      REGION_CODE: CH
+      SOVEREIGNTY_REGION: CH
+      TZ: Europe/Zurich
+
+      # === DATABASE ===
+      POSTGRES_URL: postgresql://${POSTGRES_USER:-iafactory_ch}:${POSTGRES_PASSWORD}@iaf-postgres:5432/${POSTGRES_DB:-iafactory_ch}
+      DATABASE_URL: postgresql://${POSTGRES_USER:-iafactory_ch}:${POSTGRES_PASSWORD}@iaf-postgres:5432/${POSTGRES_DB:-iafactory_ch}
+      USE_PGVECTOR: "true"
+
+      # === REDIS ===
+      REDIS_URL: redis://${REDIS_PASSWORD:+:${REDIS_PASSWORD}@}iaf-redis:6379/0
+
+      # === QDRANT ===
+      QDRANT_HOST: iaf-qdrant
+      QDRANT_PORT: 6333
+
+      # === MEILISEARCH ===
+      MEILI_URL: http://iaf-meilisearch:7700
+      MEILI_MASTER_KEY: ${MEILI_MASTER_KEY:-masterKey123}
+
+      # === LLM PROVIDERS ===
+      ENABLE_LLM: "true"
+      LLM_PROVIDER: ${LLM_PROVIDER:-anthropic}
+      LLM_MODEL: ${LLM_MODEL:-claude-3-5-sonnet-20241022}
+      GROQ_API_KEY: ${GROQ_API_KEY:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY:-}
+      GOOGLE_GENERATIVE_AI_API_KEY: ${GOOGLE_GENERATIVE_AI_API_KEY:-}
+
+      # === OLLAMA (LOCAL) ===
+      OLLAMA_BASE_URL: http://iaf-ollama:11434
+
+      # === EMBEDDINGS ===
+      EMBEDDING_MODEL: ${EMBEDDING_MODEL:-sentence-transformers/paraphrase-multilingual-mpnet-base-v2}
+      EMBEDDING_DEVICE: ${EMBEDDING_DEVICE:-cpu}
+      EMBEDDING_BATCH_SIZE: ${EMBEDDING_BATCH_SIZE:-32}
+
+      # === RERANKING ===
+      USE_RERANKING: ${USE_RERANKING:-true}
+      RERANKING_MODEL: ${RERANKING_MODEL:-cross-encoder/ms-marco-MiniLM-L-6-v2}
+      RERANKING_TOP_K: ${RERANKING_TOP_K:-10}
+
+      # === PAYMENT (STRIPE - SWITZERLAND) ===
+      PAYMENT_PROVIDER: stripe
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY:-}
+      STRIPE_PUBLIC_KEY: ${STRIPE_PUBLIC_KEY:-}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET:-}
+      PAYMENT_CURRENCY: CHF
+
+      # === SECURITY ===
+      API_SECRET_KEY: ${API_SECRET_KEY:?API_SECRET_KEY requis}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY:-change-me-jwt-secret}
+      HASH_ALGORITHM: sha256
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-http://localhost:3001,http://localhost:5174,http://localhost:8181}
+
+      # === RATE LIMITING ===
+      ENABLE_RATE_LIMITING: "true"
+      RATE_LIMIT_PER_MINUTE: ${RATE_LIMIT_PER_MINUTE:-60}
+      RATE_LIMIT_PER_HOUR: ${RATE_LIMIT_PER_HOUR:-1000}
+      RATE_LIMIT_BURST: ${RATE_LIMIT_BURST:-10}
+
+      # === FEATURES ===
+      ENABLE_CORS: "true"
+      ENABLE_METRICS: "true"
+      ENABLE_API_KEY_AUTH: "true"
+      ENABLE_DARIJA: "false"
+      ENABLE_ARABIC_RTL: "false"
+      LEGAL_FRAMEWORK: switzerland
+
+      # === COMPLIANCE ===
+      DATA_RETENTION_DAYS: 365
+      GDPR_COMPLIANT: "true"
+      LPD_CH_COMPLIANT: "true"
+
+      # === SERVICE ===
+      SERVICE_NAME: iafactory-ch-api
+      SERVICE_VERSION: 1.0.0
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      ENVIRONMENT: ${ENVIRONMENT:-development}
+      DEFAULT_TENANT_ID: ${DEFAULT_TENANT_ID:-660e8400-e29b-41d4-a716-446655440001}
+      PORT: 8000
+      HOST: 0.0.0.0
+
+    ports:
+      - "8001:8000"
+    volumes:
+      - ../../core/services/api:/app
+      - ../../core/agents:/agents:ro
+      - backend-cache:/root/.cache
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    restart: unless-stopped
+    networks:
+      - iaf-ch-network
+
+  # ===========================================================================
+  # FRONTEND APPLICATIONS
+  # ===========================================================================
+
+  iaf-frontend:
+    build:
+      context: ../../core/frontend/main-ui
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: ${API_URL:-http://localhost:8001}
+        NEXT_PUBLIC_REGION: switzerland
+    container_name: iaf-ch-frontend
+    depends_on:
+      - iaf-backend
+    environment:
+      NEXT_PUBLIC_API_URL: ${API_URL:-http://localhost:8001}
+      NEXT_PUBLIC_REGION: switzerland
+      NEXT_PUBLIC_DEFAULT_LOCALE: fr
+      NEXT_PUBLIC_SUPPORTED_LOCALES: fr,de,it,en
+      NODE_ENV: ${ENVIRONMENT:-development}
+    volumes:
+      - ./messages:/app/messages:ro
+      - ./branding:/app/public/branding:ro
+    ports:
+      - "3001:3000"
+    restart: unless-stopped
+    networks:
+      - iaf-ch-network
+
+  iaf-rag-ui:
+    build:
+      context: ../../core/frontend/rag-ui
+      dockerfile: Dockerfile
+    container_name: iaf-ch-rag-ui
+    depends_on:
+      - iaf-backend
+    environment:
+      VITE_API_URL: ${API_URL:-http://localhost:8001}
+      VITE_REGION: switzerland
+    ports:
+      - "5174:5173"
+    restart: unless-stopped
+    networks:
+      - iaf-ch-network
+    profiles:
+      - full
+
+  # ===========================================================================
+  # WORKFLOW & AUTOMATION
+  # ===========================================================================
+
+  iaf-n8n:
+    image: docker.n8n.io/n8nio/n8n:latest
+    container_name: iaf-ch-n8n
+    depends_on:
+      iaf-postgres:
+        condition: service_healthy
+    environment:
+      # Database
+      DB_TYPE: postgresdb
+      DB_POSTGRESDB_HOST: iaf-postgres
+      DB_POSTGRESDB_PORT: 5432
+      DB_POSTGRESDB_DATABASE: ${POSTGRES_DB:-iafactory_ch}
+      DB_POSTGRESDB_USER: ${POSTGRES_USER:-iafactory_ch}
+      DB_POSTGRESDB_PASSWORD: ${POSTGRES_PASSWORD}
+      DB_POSTGRESDB_SCHEMA: n8n
+
+      # Auth
+      N8N_BASIC_AUTH_ACTIVE: "true"
+      N8N_BASIC_AUTH_USER: ${N8N_USER:-admin}
+      N8N_BASIC_AUTH_PASSWORD: ${N8N_PASSWORD:-admin}
+
+      # Config
+      WEBHOOK_URL: ${N8N_WEBHOOK_URL:-http://localhost:5679}
+      N8N_HOST: ${N8N_HOST:-localhost}
+      N8N_PORT: 5678
+      GENERIC_TIMEZONE: Europe/Zurich
+      TZ: Europe/Zurich
+
+      # Execution
+      EXECUTIONS_DATA_PRUNE: "true"
+      EXECUTIONS_DATA_MAX_AGE: 168
+
+    volumes:
+      - n8n-data:/home/node/.n8n
+      - ../../core/workflows:/home/node/workflows:ro
+    ports:
+      - "5679:5678"
+    restart: unless-stopped
+    networks:
+      - iaf-ch-network
+    profiles:
+      - automation
+
+  # ===========================================================================
+  # ADMIN & MONITORING
+  # ===========================================================================
+
+  iaf-adminer:
+    image: adminer:latest
+    container_name: iaf-ch-adminer
+    ports:
+      - "8081:8080"
+    environment:
+      ADMINER_DEFAULT_SERVER: iaf-postgres
+      ADMINER_DESIGN: dracula
+    depends_on:
+      iaf-postgres:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - iaf-ch-network
+    profiles:
+      - admin
+
+  iaf-prometheus:
+    image: prom/prometheus:latest
+    container_name: iaf-ch-prometheus
+    volumes:
+      - ../../core/infrastructure/observability/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=90d'
+    ports:
+      - "9091:9090"
+    restart: unless-stopped
+    networks:
+      - iaf-ch-network
+    profiles:
+      - monitoring
+
+  iaf-grafana:
+    image: grafana/grafana:latest
+    container_name: iaf-ch-grafana
+    depends_on:
+      - iaf-prometheus
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:-admin}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+    volumes:
+      - grafana-data:/var/lib/grafana
+    ports:
+      - "3003:3000"
+    restart: unless-stopped
+    networks:
+      - iaf-ch-network
+    profiles:
+      - monitoring
+
+  # ===========================================================================
+  # AI AGENTS (Streamlit)
+  # ===========================================================================
+
+  iaf-agent-consultant:
+    build: ../../core/agents/business/consultant
+    container_name: iaf-ch-agent-consultant
+    environment:
+      GOOGLE_API_KEY: ${GOOGLE_API_KEY:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      REGION: switzerland
+    ports:
+      - "8504:8501"
+    restart: unless-stopped
+    networks:
+      - iaf-ch-network
+    profiles:
+      - agents
+
+  iaf-agent-data-analysis:
+    build: ../../core/agents/business/data-analysis
+    container_name: iaf-ch-agent-data-analysis
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      REGION: switzerland
+    ports:
+      - "8505:8501"
+    restart: unless-stopped
+    networks:
+      - iaf-ch-network
+    profiles:
+      - agents
+
+  iaf-agent-customer-support:
+    build: ../../core/agents/business/customer-support
+    container_name: iaf-ch-agent-customer-support
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      REGION: switzerland
+    ports:
+      - "8506:8501"
+    restart: unless-stopped
+    networks:
+      - iaf-ch-network
+    profiles:
+      - agents
+
+# =============================================================================
+# VOLUMES
+# =============================================================================
+volumes:
+  postgres-data:
+    name: iaf-ch-postgres-data
+  redis-data:
+    name: iaf-ch-redis-data
+  qdrant-data:
+    name: iaf-ch-qdrant-data
+  meili-data:
+    name: iaf-ch-meili-data
+  ollama-data:
+    name: iaf-ch-ollama-data
+  anythingllm-data:
+    name: iaf-ch-anythingllm-data
+  backend-cache:
+    name: iaf-ch-backend-cache
+  n8n-data:
+    name: iaf-ch-n8n-data
+  prometheus-data:
+    name: iaf-ch-prometheus-data
+  grafana-data:
+    name: iaf-ch-grafana-data
+
+# =============================================================================
+# NETWORKS
+# =============================================================================
+networks:
+  iaf-ch-network:
+    name: iafactory-ch-network
+    driver: bridge

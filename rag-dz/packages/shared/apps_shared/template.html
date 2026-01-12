@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template - IAFactory Algeria</title>
+
+    <!-- IAFactory Unified Components -->
+    <link rel="stylesheet" href="/apps/shared/iafactory-unified.css">
+
+    <!-- FontAwesome Icons (required for header/footer icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Page-specific styles -->
+    <style>
+        /* Add padding for fixed header */
+        body {
+            padding-top: var(--iaf-header-height);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-family: var(--iaf-font-primary);
+            background: var(--iaf-bg);
+            color: var(--iaf-text);
+            margin: 0;
+        }
+
+        main {
+            flex: 1;
+            max-width: var(--iaf-container-max);
+            margin: 0 auto;
+            padding: 2rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Your app-specific styles go here */
+        .app-content {
+            background: var(--iaf-bg-card);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid var(--iaf-border);
+        }
+
+        .app-title {
+            color: var(--iaf-primary);
+            margin-bottom: 1rem;
+        }
+
+        .app-description {
+            color: var(--iaf-text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Theme Toggle Button (for demo) */
+        .theme-toggle-demo {
+            position: fixed;
+            bottom: 100px;
+            left: 24px;
+            z-index: 9999;
+            padding: 12px 20px;
+            background: var(--iaf-gradient);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: var(--iaf-shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .theme-toggle-demo:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body data-iaf-auto-init>
+
+    <!-- Header: Will be auto-injected by iafactory-unified.js -->
+    <div id="iaf-header" data-iaf-header></div>
+
+    <!-- Main Content -->
+    <main>
+        <div class="app-content">
+            <h1 class="app-title">Template IAFactory</h1>
+            <p class="app-description">
+                Ce template utilise les composants unifiés IAFactory Algeria.<br>
+                Header, Footer et Chatbot sont automatiquement injectés.<br>
+                Supports: Dark/Light mode, i18n FR/AR/EN, RTL pour l'arabe.
+            </p>
+
+            <h2 style="color: var(--iaf-text-primary); margin-top: 2rem;">Fonctionnalités incluses:</h2>
+            <ul style="color: var(--iaf-text-secondary); line-height: 2;">
+                <li>Header avec logo animé et navigation</li>
+                <li>Toggle User/Développeur</li>
+                <li>Sélecteur de langue FR/EN/AR avec RTL</li>
+                <li>Liens sociaux (GitHub, Hugging Face)</li>
+                <li>Boutons d'authentification (Log in, Get Started)</li>
+                <li>Menu mobile responsive</li>
+                <li>Footer avec 10 réseaux sociaux</li>
+                <li>Chatbot Dzir IA avec 3 modes (Chat, RAG, Support)</li>
+                <li>Dark/Light mode persistant (localStorage)</li>
+            </ul>
+
+            <h2 style="color: var(--iaf-text-primary); margin-top: 2rem;">Comment utiliser:</h2>
+            <pre style="background: var(--iaf-bg); padding: 1rem; border-radius: 8px; overflow-x: auto; color: var(--iaf-text-secondary);">
+&lt;!-- 1. Inclure les fichiers CSS et JS --&gt;
+&lt;link rel="stylesheet" href="/apps/shared/iafactory-unified.css"&gt;
+&lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"&gt;
+&lt;script src="/apps/shared/iafactory-unified.js"&gt;&lt;/script&gt;
+
+&lt;!-- 2. Ajouter data-iaf-auto-init au body pour auto-init --&gt;
+&lt;body data-iaf-auto-init&gt;
+
+&lt;!-- 3. Ajouter les placeholders pour les composants --&gt;
+&lt;div id="iaf-header" data-iaf-header&gt;&lt;/div&gt;
+&lt;!-- Votre contenu ici --&gt;
+&lt;div id="iaf-footer" data-iaf-footer&gt;&lt;/div&gt;
+&lt;!-- Le chatbot est auto-injecté --&gt;
+            </pre>
+
+            <h2 style="color: var(--iaf-text-primary); margin-top: 2rem;">API JavaScript:</h2>
+            <pre style="background: var(--iaf-bg); padding: 1rem; border-radius: 8px; overflow-x: auto; color: var(--iaf-text-secondary);">
+// Changer la langue
+IAFactory.setLanguage('fr'); // 'fr', 'en', 'ar'
+
+// Changer le thème
+IAFactory.toggleTheme();
+
+// Ouvrir/fermer le chatbot
+IAFactory.toggleChatbot();
+
+// Changer le mode chatbot
+IAFactory.setChatMode('chat'); // 'chat', 'rag', 'support'
+
+// Écouter les changements de langue
+window.addEventListener('languageChanged', (e) => {
+    console.log('New language:', e.detail.lang);
+});
+
+// Écouter les changements de profil (User/Dev)
+window.addEventListener('profileChanged', (e) => {
+    console.log('New profile:', e.detail.profile);
+});
+            </pre>
+        </div>
+    </main>
+
+    <!-- Footer: Will be auto-injected by iafactory-unified.js -->
+    <div id="iaf-footer" data-iaf-footer></div>
+
+    <!-- Theme Toggle Button (for demo) -->
+    <button class="theme-toggle-demo" onclick="IAFactory.toggleTheme()">
+        <i class="fa-solid fa-circle-half-stroke"></i>
+        Toggle Theme
+    </button>
+
+    <!-- IAFactory Unified JS -->
+    <script src="/apps/shared/iafactory-unified.js"></script>
+</body>
+</html>

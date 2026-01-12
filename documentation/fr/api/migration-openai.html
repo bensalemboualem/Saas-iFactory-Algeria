@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Migration depuis OpenAI - IAFactory Algeria</title>
+    <link rel="stylesheet" href="../../assets/css/docs-theme.css">
+</head>
+<body>
+    <header class="docs-header">
+        <div class="docs-logo">
+            <img src="../../assets/images/logo.png" alt="IAFactory Algeria">
+            <span>IAFactory Algeria</span>
+        </div>
+        <nav class="main-nav">
+            <a href="../index.html">Documentation</a>
+            <a href="./index.html" class="active">API</a>
+        </nav>
+        <div class="docs-controls">
+            <div class="language-switcher">
+                <button data-lang="fr" class="active">🇫🇷 FR</button>
+                <button data-lang="en">🇬🇧 EN</button>
+                <button data-lang="ar">🇸🇦 AR</button>
+            </div>
+            <div class="theme-toggle">
+                <div class="theme-toggle-slider">☀️</div>
+            </div>
+        </div>
+    </header>
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <div class="sidebar-section">
+                <h3>🔌 API</h3>
+                <ul class="sidebar-menu">
+                    <li><a href="./quick-start.html">Démarrage rapide</a></li>
+                    <li><a href="./migration-openai.html" class="active">Migration OpenAI</a></li>
+                    <li><a href="./models-pricing.html">Modèles et tarifs</a></li>
+                </ul>
+            </div>
+        </aside>
+        <main class="docs-main">
+            <h1>🔄 Migration depuis OpenAI</h1>
+            <p class="lead">L'API IAFactory est 100% compatible OpenAI. Changez juste 2 lignes !</p>
+            <h2>Migration Python</h2>
+            <pre><code class="language-python"># AVANT (OpenAI)
+import openai
+openai.api_key = "sk-openai-key"
+openai.api_base = "https://api.openai.com/v1"
+
+# APRÈS (IAFactory Algeria)
+import openai
+openai.api_key = "votre-cle-iafactory"  # ← Changez ici
+openai.api_base = "https://api.iafactory-algeria.com/v1"  # ← Et ici
+
+# Le reste du code reste identique !
+response = openai.ChatCompletion.create(
+    model="gpt-4-turbo",
+    messages=[{"role": "user", "content": "Hello"}]
+)
+</code></pre>
+            <h2>Migration JavaScript</h2>
+            <pre><code class="language-javascript">// AVANT
+const configuration = new Configuration({
+  apiKey: 'sk-openai-key',
+  basePath: 'https://api.openai.com/v1'
+});
+
+// APRÈS
+const configuration = new Configuration({
+  apiKey: 'votre-cle-iafactory',
+  basePath: 'https://api.iafactory-algeria.com/v1'
+});
+</code></pre>
+            <h2>Différences</h2>
+            <table>
+                <tr><th>Caractéristique</th><th>OpenAI</th><th>IAFactory</th></tr>
+                <tr><td>API Compatible</td><td>✅</td><td>✅ 100%</td></tr>
+                <tr><td>Modèles GPT</td><td>✅</td><td>✅</td></tr>
+                <tr><td>Modèles Claude</td><td>❌</td><td>✅</td></tr>
+                <tr><td>Modèles Gemini</td><td>❌</td><td>✅</td></tr>
+                <tr><td>Crédits inclus</td><td>❌</td><td>✅ 2-10$/mois</td></tr>
+            </table>
+        </main>
+    </div>
+    <script src="../../assets/js/docs-theme.js"></script>
+</body>
+</html>

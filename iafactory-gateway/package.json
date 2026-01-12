@@ -1,0 +1,59 @@
+{
+    "name":  "@iafactory/gateway",
+    "version":  "1.0.0",
+    "description":  "IAFactory AI Gateway - OpenAI-compatible API with multi-provider routing and credit management",
+    "main":  "dist/index.js",
+    "type":  "module",
+    "scripts":  {
+                    "dev":  "tsx watch src/index.ts",
+                    "build":  "tsc --noEmit false || true \u0026\u0026 tsc --skipLibCheck --noUnusedLocals false --noUnusedParameters false",
+                    "start":  "node dist/index.js",
+                    "db:generate":  "prisma generate",
+                    "db:migrate":  "prisma migrate dev",
+                    "db:push":  "prisma db push",
+                    "db:studio":  "prisma studio",
+                    "test":  "vitest",
+                    "lint":  "eslint src --ext .ts",
+                    "format":  "prettier --write \"src/**/*.ts\""
+                },
+    "keywords":  [
+                     "ai",
+                     "gateway",
+                     "openai",
+                     "groq",
+                     "openrouter",
+                     "streaming",
+                     "credits"
+                 ],
+    "author":  "IAFactory",
+    "license":  "MIT",
+    "dependencies":  {
+                         "@fastify/cors":  "^10.0.1",
+                         "@fastify/rate-limit":  "^10.1.1",
+                         "@prisma/client":  "^5.22.0",
+                         "dotenv":  "^16.4.5",
+                         "fastify":  "^5.6.0",
+                         "groq-sdk":  "^0.8.0",
+                         "ioredis":  "^5.4.1",
+                         "jsonwebtoken":  "^9.0.2",
+                         "openai":  "^4.75.0",
+                         "pino":  "^9.5.0",
+                         "pino-pretty":  "^12.0.0",
+                         "zod":  "^3.23.8"
+                     },
+    "devDependencies":  {
+                            "@types/jsonwebtoken":  "^9.0.7",
+                            "@types/node":  "^22.10.2",
+                            "@typescript-eslint/eslint-plugin":  "^8.18.1",
+                            "@typescript-eslint/parser":  "^8.18.1",
+                            "eslint":  "^9.16.0",
+                            "prettier":  "^3.4.2",
+                            "prisma":  "^5.22.0",
+                            "tsx":  "^4.19.2",
+                            "typescript":  "^5.7.2",
+                            "vitest":  "^2.1.8"
+                        },
+    "engines":  {
+                    "node":  "\u003e=20.0.0"
+                }
+}

@@ -1,0 +1,40 @@
+{
+  "name": "@iafactory/pipeline-cli",
+  "version": "1.0.0",
+  "description": "IAFactory Algeria - Pipeline Creator CLI for Developers",
+  "main": "iafactory-cli.js",
+  "bin": {
+    "iafactory": "./iafactory-cli.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "iafactory",
+    "bmad",
+    "archon",
+    "bolt",
+    "pipeline",
+    "ai",
+    "code-generation",
+    "algeria"
+  ],
+  "author": "IAFactory Algeria",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^11.1.0",
+    "inquirer": "^8.2.6",
+    "chalk": "^4.1.2",
+    "ora": "^5.4.1",
+    "axios": "^1.6.2",
+    "fs-extra": "^11.2.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iafactory-algeria/pipeline-cli"
+  },
+  "homepage": "https://iafactoryalgeria.com"
+}

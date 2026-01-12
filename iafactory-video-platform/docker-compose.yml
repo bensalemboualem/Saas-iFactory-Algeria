@@ -1,0 +1,209 @@
+# =============================================================================
+# IAFactory Video Platform - Docker Compose
+# =============================================================================
+# Usage: docker-compose up -d
+# =============================================================================
+
+services:
+  # ===========================================================================
+  # DATABASE
+  # ===========================================================================
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: iaf-video-postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-iafactory}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
+      POSTGRES_DB: ${POSTGRES_DB:-video_platform}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5436:5432"  # Changed to avoid conflict with local PostgreSQL
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-iafactory}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - video-network
+
+  # ===========================================================================
+  # CACHE & QUEUE
+  # ===========================================================================
+
+  redis:
+    image: redis:7-alpine
+    container_name: iaf-video-redis
+    command: redis-server --appendonly yes --maxmemory 512mb --maxmemory-policy allkeys-lru
+    volumes:
+      - redis-data:/data
+    ports:
+      - "6380:6383"  # Changed to avoid conflict with local Redis
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - video-network
+
+  # ===========================================================================
+  # BACKEND API
+  # ===========================================================================
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: iaf-video-backend
+    env_file:
+      - ./backend/.env
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-iafactory}:${POSTGRES_PASSWORD:-password}@postgres:5432/${POSTGRES_DB:-video_platform}
+      REDIS_URL: redis://redis:6383/0
+      CELERY_BROKER_URL: redis://redis:6383/1
+      CELERY_RESULT_BACKEND: redis://redis:6383/2
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    ports:
+      - "8240:8000"  # Changed to avoid conflict with local services
+    volumes:
+      - ./backend/app:/app/app
+      - ./storage:/app/storage
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8240/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    restart: unless-stopped
+    networks:
+      - video-network
+
+  # ===========================================================================
+  # CELERY WORKER (Background tasks)
+  # ===========================================================================
+
+  celery-worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: iaf-video-celery-worker
+    command: celery -A app.celery_app worker --loglevel=info --concurrency=4
+    env_file:
+      - ./backend/.env
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-iafactory}:${POSTGRES_PASSWORD:-password}@postgres:5432/${POSTGRES_DB:-video_platform}
+      REDIS_URL: redis://redis:6383/0
+      CELERY_BROKER_URL: redis://redis:6383/1
+      CELERY_RESULT_BACKEND: redis://redis:6383/2
+    depends_on:
+      - backend
+      - redis
+    volumes:
+      - ./backend/app:/app/app
+      - ./storage:/app/storage
+    restart: unless-stopped
+    networks:
+      - video-network
+    profiles:
+      - full
+
+  # ===========================================================================
+  # CELERY BEAT (Scheduled tasks)
+  # ===========================================================================
+
+  celery-beat:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: iaf-video-celery-beat
+    command: celery -A app.celery_app beat --loglevel=info
+    env_file:
+      - ./backend/.env
+    environment:
+      CELERY_BROKER_URL: redis://redis:6383/1
+      CELERY_RESULT_BACKEND: redis://redis:6383/2
+    depends_on:
+      - celery-worker
+    restart: unless-stopped
+    networks:
+      - video-network
+    profiles:
+      - full
+
+  # ===========================================================================
+  # FRONTEND
+  # ===========================================================================
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: iaf-video-frontend
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8001
+    depends_on:
+      - backend
+    ports:
+      - "3120:3000"
+    restart: unless-stopped
+    networks:
+      - video-network
+    profiles:
+      - full
+
+  # ===========================================================================
+  # MINIO (Object Storage - Dev)
+  # ===========================================================================
+
+  minio:
+    image: minio/minio:latest
+    container_name: iaf-video-minio
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-minioadmin}
+    volumes:
+      - minio-data:/data
+    ports:
+      - "9004:9000"
+      - "9005:9001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - video-network
+    profiles:
+      - storage
+
+# =============================================================================
+# VOLUMES
+# =============================================================================
+volumes:
+  postgres-data:
+    name: iaf-video-postgres-data
+  redis-data:
+    name: iaf-video-redis-data
+  minio-data:
+    name: iaf-video-minio-data
+
+# =============================================================================
+# NETWORKS
+# =============================================================================
+networks:
+  video-network:
+    name: iafactory-video-network
+    driver: bridge
+
+
+

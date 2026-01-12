@@ -1,0 +1,20 @@
+{
+  "hero": {
+    "title": "DZ-LegalAssistant | IAFactory Algeria",
+    "desc": "Assistant juridique intelligent pour l'Algérie.",
+    "status": "Service actif"
+  },
+  "features": {
+    "1": {"title": "Fonctionnalité 1", "desc": "Description de la fonctionnalité."},
+    "2": {"title": "Fonctionnalité 2", "desc": "Description de la fonctionnalité."},
+    "3": {"title": "Fonctionnalité 3", "desc": "Description de la fonctionnalité."},
+    "4": {"title": "Fonctionnalité 4", "desc": "Description de la fonctionnalité."}
+  },
+  "dashboard": {
+    "title": "Tableau de bord",
+    "status": "Connecté"
+  },
+  "ready": "Prêt à commencer ?",
+  "launch": "Lancer l'application",
+  "launch_alert": "DZ-LegalAssistant | IAFactory Algeria - Fonctionnalité en cours de développement"
+}

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Application IAFactory Algeria">
+    <title>🚀 Voice Assistant - IAFactory Algeria</title>
+
+    <!-- IAFactory Unified Components -->
+    <link rel="stylesheet" href="/apps/shared/iafactory-unified.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* App-specific styles */
+        body {
+            padding-top: var(--iaf-header-height);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-family: var(--iaf-font-primary);
+            background: var(--iaf-bg);
+            color: var(--iaf-text);
+            margin: 0;
+        }
+
+        .container {
+            max-width: var(--iaf-container-max);
+            margin: 0 auto;
+            padding: 2rem;
+            flex: 1;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(0, 166, 81, 0.1) 0%, transparent 100%);
+            border-radius: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--iaf-primary), #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--iaf-text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .feature-card {
+            background: var(--iaf-bg-card);
+            border: 1px solid var(--iaf-border);
+            border-radius: 1rem;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            border-color: var(--iaf-primary);
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--iaf-gradient);
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: var(--iaf-text-primary);
+        }
+
+        .feature-card p {
+            color: var(--iaf-text-secondary);
+            line-height: 1.6;
+        }
+
+        .dashboard {
+            background: var(--iaf-bg-card);
+            border: 1px solid var(--iaf-border);
+            border-radius: 1rem;
+            padding: 2rem;
+        }
+
+        .dashboard-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-header h3 {
+            font-size: 1.5rem;
+            color: var(--iaf-text-primary);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--iaf-bg);
+            border: 1px solid var(--iaf-border);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--iaf-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--iaf-text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            background: rgba(0, 166, 81, 0.1);
+            color: var(--iaf-primary);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--iaf-gradient);
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 166, 81, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 166, 81, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .hero h2 { font-size: 1.75rem; }
+            .features { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body data-iaf-auto-init>
+    <!-- Header (auto-injected) -->
+    <div id="iaf-header" data-iaf-header></div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero">
+            <h2>🚀 Voice Assistant</h2>
+            <p>Application IAFactory Algeria</p>
+            <div class="status-badge">
+                <i class="fas fa-check-circle"></i>
+                Service actif
+            </div>
+        </div>
+
+        <!-- Features -->
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>Fonctionnalité 1</h3>
+                <p>Description de la fonctionnalité.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Fonctionnalité 2</h3>
+                <p>Description de la fonctionnalité.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>Fonctionnalité 3</h3>
+                <p>Description de la fonctionnalité.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Fonctionnalité 4</h3>
+                <p>Description de la fonctionnalité.</p>
+            </div>
+        </div>
+
+        <!-- Dashboard -->
+        <div class="dashboard">
+            <div class="dashboard-header">
+                <h3>Tableau de bord</h3>
+                <span class="status-badge">
+                    <i class="fas fa-circle"></i> Connecté
+                </span>
+            </div>
+
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-value">100%</div>
+                    <div class="stat-label">Disponibilité</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">< 50ms</div>
+                    <div class="stat-label">Latence</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">99.9%</div>
+                    <div class="stat-label">Uptime</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">24/7</div>
+                    <div class="stat-label">Support</div>
+                </div>
+            </div>
+
+            <div style="text-align: center; padding: 2rem;">
+                <p style="color: var(--iaf-text-secondary); margin-bottom: 1rem;">
+                    Prêt à commencer ?
+                </p>
+                <button class="btn btn-primary" id="launchBtn">
+                    <i class="fas fa-rocket"></i> Lancer l'application
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer (auto-injected) -->
+    <div id="iaf-footer" data-iaf-footer></div>
+
+    <!-- IAFactory Unified JS -->
+    <script src="/apps/shared/iafactory-unified.js"></script>
+
+    <script>
+        // Configuration API
+        const API_URL = '/api';
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Voice Assistant - Application chargée');
+            checkAPIConnection();
+        });
+
+        async function checkAPIConnection() {
+            try {
+                const response = await fetch('/api/health');
+                if (response.ok) console.log('✅ API connectée');
+            } catch (error) {
+                console.warn('⚠️ API non disponible:', error);
+            }
+        }
+
+        // Lancement
+        document.getElementById('launchBtn')?.addEventListener('click', function() {
+            alert('Voice Assistant - Fonctionnalité en cours de développement');
+        });
+    </script>
+</body>
+</html>

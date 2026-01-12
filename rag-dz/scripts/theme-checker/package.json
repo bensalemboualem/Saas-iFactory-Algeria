@@ -1,0 +1,14 @@
+{
+  "name": "theme-checker",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check-theme": "node index.js"
+  },
+  "dependencies": {
+    "playwright": "^1.45.0",
+    "pngjs": "^6.0.0",
+    "minimist": "^1.2.8"
+  }
+}

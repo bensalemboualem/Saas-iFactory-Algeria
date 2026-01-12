@@ -1,0 +1,97 @@
+/* ============================================
+   IAFactory Algeria - Unified Theme System
+   Couleurs harmonisées pour toutes les apps
+   ============================================ */
+
+/* Dark Mode (default) */
+:root, [data-theme="dark"] {
+    --bg-primary: #020617;
+    --bg-secondary: #020617;
+    --bg-card: #0f172a;
+    --bg-card-hover: #1e293b;
+    --border-color: rgba(255, 255, 255, 0.12);
+    --text-primary: #f8fafc;
+    --text-secondary: rgba(248, 250, 252, 0.75);
+    --text-muted: rgba(248, 250, 252, 0.5);
+    --accent-primary: #00a651;
+    --accent-secondary: #00c95d;
+    --accent-gradient: linear-gradient(135deg, #00a651, #00c95d);
+    --success: #10b981;
+    --success-bg: rgba(16, 185, 129, 0.1);
+    --warning: #f59e0b;
+    --warning-bg: rgba(245, 158, 11, 0.1);
+    --error: #ef4444;
+    --error-bg: rgba(239, 68, 68, 0.1);
+    --input-bg: #0f172a;
+    --input-border: rgba(255, 255, 255, 0.15);
+    --input-text: #f8fafc;
+    --purple-accent: #8b5cf6;
+}
+
+/* Light Mode */
+[data-theme="light"] {
+    --bg-primary: #f7f5f0;
+    --bg-secondary: #ffffff;
+    --bg-card: #ffffff;
+    --bg-card-hover: #f1f5f9;
+    --border-color: rgba(0, 0, 0, 0.08);
+    --text-primary: #0f172a;
+    --text-secondary: rgba(15, 23, 42, 0.7);
+    --text-muted: rgba(15, 23, 42, 0.5);
+    --accent-primary: #00a651;
+    --accent-secondary: #008c45;
+    --accent-gradient: linear-gradient(135deg, #00a651, #008c45);
+    --success-bg: rgba(16, 185, 129, 0.1);
+    --warning-bg: rgba(245, 158, 11, 0.1);
+    --error-bg: rgba(239, 68, 68, 0.1);
+    --input-bg: #ffffff;
+    --input-border: rgba(0, 0, 0, 0.12);
+    --input-text: #0f172a;
+    --purple-accent: #7c3aed;
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-card);
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+    border-color: var(--accent-primary);
+    background: rgba(0, 166, 81, 0.1);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-primary);
+}
+
+/* Selection */
+::selection {
+    background: var(--accent-primary);
+    color: white;
+}

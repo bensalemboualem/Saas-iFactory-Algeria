@@ -1,0 +1,323 @@
+<!--
+====================================================================
+  IAFACTORY ALGERIA - HEADER COMPONENT (Réutilisable)
+  Version: 2.1 - Décembre 2025
+  Design: Modern Professional with FontAwesome Icons
+  Compatible: Tous les apps du SaaS
+====================================================================
+-->
+
+<!-- FontAwesome Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<header class="iaf-header" role="banner">
+    <div class="iaf-header-container">
+
+        <!-- Logo Section (EXACT COPY from index.html) -->
+        <div class="header-logo" dir="ltr">
+            <img src="https://flagcdn.com/w40/dz.png" alt="Algérie" class="logo-flag">
+            <span class="logo-text"><span class="letter i-drop" style="color: #00a651; animation-delay: 0s;"><span class="i-stem">ı</span><span class="i-dot">•</span></span><span class="letter" style="color: #00a651; animation-delay: 0.1s;">A</span><span class="letter" style="color: var(--text); animation-delay: 0.2s;">F</span><span class="letter" style="color: var(--text); animation-delay: 0.3s;">a</span><span class="letter" style="color: var(--text); animation-delay: 0.4s;">c</span><span class="letter" style="color: var(--text); animation-delay: 0.5s;">t</span><span class="letter" style="color: var(--text); animation-delay: 0.6s;">o</span><span class="letter" style="color: #ef4444; animation-delay: 0.7s;">r</span><span class="letter" style="color: #ef4444; animation-delay: 0.8s;">y</span> <span class="letter" style="color: var(--text); animation-delay: 0.9s;">A</span><span class="letter" style="color: var(--text); animation-delay: 1s;">l</span><span class="letter" style="color: var(--text); animation-delay: 1.1s;">g</span><span class="letter" style="color: var(--text); animation-delay: 1.2s;">e</span><span class="letter" style="color: var(--text); animation-delay: 1.3s;">r</span><span class="letter i-drop" style="color: #00a651; animation-delay: 1.4s;"><span class="i-stem">ı</span><span class="i-dot">•</span></span><span class="letter" style="color: #00a651; animation-delay: 1.5s;">a</span></span>
+        </div>
+
+        <!-- Main Navigation -->
+        <nav class="iaf-nav" role="navigation" aria-label="Navigation principale">
+            <a href="/docs/tarifs.html" class="iaf-nav-link">
+                <i class="fa-solid fa-tags iaf-nav-icon"></i>
+                <span data-i18n="pricing">Tarifs</span>
+            </a>
+            <a href="/apps.html" class="iaf-nav-link">
+                <i class="fa-solid fa-th iaf-nav-icon"></i>
+                <span data-i18n="apps">Applications</span>
+            </a>
+            <a href="/docs/directory/agents.html" class="iaf-nav-link">
+                <i class="fa-solid fa-robot iaf-nav-icon"></i>
+                <span data-i18n="ai_agents">Agents IA</span>
+            </a>
+            <a href="/docs/directory/workflows.html" class="iaf-nav-link">
+                <i class="fa-solid fa-diagram-project iaf-nav-icon"></i>
+                <span data-i18n="workflows">Workflows</span>
+            </a>
+        </nav>
+
+        <!-- Header Actions -->
+        <div class="iaf-header-actions">
+
+            <!-- User/Dev Profile Toggle -->
+            <div class="iaf-profile-toggle" role="tablist" aria-label="Type de profil">
+                <button
+                    class="iaf-profile-btn active"
+                    data-profile="user"
+                    role="tab"
+                    aria-selected="true"
+                    aria-controls="user-panel"
+                    onclick="switchProfile('user')">
+                    <i class="fa-solid fa-user iaf-profile-icon"></i>
+                    <span data-i18n="user">Utilisateur</span>
+                </button>
+                <button
+                    class="iaf-profile-btn"
+                    data-profile="dev"
+                    role="tab"
+                    aria-selected="false"
+                    aria-controls="dev-panel"
+                    onclick="switchProfile('dev')">
+                    <i class="fa-solid fa-code iaf-profile-icon"></i>
+                    <span data-i18n="developer">Développeur</span>
+                </button>
+            </div>
+
+            <!-- Language Selector -->
+            <div class="iaf-language-selector">
+                <button
+                    class="iaf-lang-btn"
+                    onclick="toggleLangMenu(event)"
+                    aria-label="Changer la langue"
+                    aria-haspopup="true"
+                    aria-expanded="false">
+                    <i class="fa-solid fa-globe iaf-lang-icon"></i>
+                    <span class="iaf-lang-label" id="headerLangLabel"></span>
+                    <i class="fa-solid fa-chevron-down iaf-lang-chevron"></i>
+                </button>
+                <script>
+                    // Set language label immediately (before DOMContentLoaded)
+                    (function() {
+                        const currentLang = localStorage.getItem('iafactory_lang') || 'fr';
+                        const labels = { fr: 'FR', en: 'EN', ar: 'AR' };
+                        const labelEl = document.getElementById('headerLangLabel');
+                        if (labelEl) labelEl.textContent = labels[currentLang];
+                    })();
+                </script>
+                <div class="iaf-lang-menu" id="langMenu" role="menu" aria-label="Sélection de langue">
+                    <button class="iaf-lang-option" onclick="changeLanguage('fr')" role="menuitem">
+                        <span class="iaf-lang-flag">🇫🇷</span>
+                        <span>Français</span>
+                        <i class="fa-solid fa-check iaf-lang-check"></i>
+                    </button>
+                    <button class="iaf-lang-option" onclick="changeLanguage('en')" role="menuitem">
+                        <span class="iaf-lang-flag">🇬🇧</span>
+                        <span>English</span>
+                        <i class="fa-solid fa-check iaf-lang-check"></i>
+                    </button>
+                    <button class="iaf-lang-option" onclick="changeLanguage('ar')" role="menuitem" dir="rtl">
+                        <span class="iaf-lang-flag">🇩🇿</span>
+                        <span>العربية</span>
+                        <i class="fa-solid fa-check iaf-lang-check"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Social Links (GitHub, Hugging Face) -->
+            <div class="iaf-social-links">
+                <a href="https://github.com/IAFactory-Algeria"
+                   class="iaf-social-link"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   aria-label="GitHub"
+                   title="GitHub">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+                <a href="https://huggingface.co/IAFactory-Algeria"
+                   class="iaf-social-link"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   aria-label="Hugging Face"
+                   title="Hugging Face">
+                    <span class="hf-icon">🤗</span>
+                </a>
+            </div>
+
+            <!-- Auth Buttons -->
+            <div class="iaf-auth-buttons">
+                <a href="/docs/login.html" class="iaf-btn iaf-btn-secondary">
+                    <i class="fa-solid fa-arrow-right-to-bracket iaf-btn-icon"></i>
+                    <span data-i18n="login">Log in</span>
+                </a>
+                <a href="/docs/getstarted.html" class="iaf-btn iaf-btn-primary">
+                    <i class="fa-solid fa-rocket iaf-btn-icon"></i>
+                    <span data-i18n="get_started">Get Started</span>
+                </a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button
+                class="iaf-mobile-menu-btn"
+                onclick="toggleMobileMenu()"
+                aria-label="Menu mobile"
+                aria-expanded="false"
+                aria-controls="mobile-menu">
+                <span class="iaf-burger-line"></span>
+                <span class="iaf-burger-line"></span>
+                <span class="iaf-burger-line"></span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="iaf-mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Menu mobile">
+        <div class="iaf-mobile-menu-header">
+            <div class="iaf-mobile-logo">
+                <img src="https://flagcdn.com/w40/dz.png" alt="Algeria" width="28" height="21">
+                <span>IAFactory DZ</span>
+            </div>
+            <button
+                class="iaf-mobile-close"
+                onclick="toggleMobileMenu()"
+                aria-label="Fermer le menu">
+                <span>✕</span>
+            </button>
+        </div>
+
+        <nav class="iaf-mobile-nav" role="navigation">
+            <a href="/docs/tarifs.html" class="iaf-mobile-link">
+                <span class="iaf-mobile-icon">💰</span>
+                <span data-i18n="pricing">Tarifs</span>
+            </a>
+            <a href="/apps.html" class="iaf-mobile-link">
+                <span class="iaf-mobile-icon">📱</span>
+                <span data-i18n="apps">Applications</span>
+            </a>
+            <a href="/docs/directory/agents.html" class="iaf-mobile-link">
+                <span class="iaf-mobile-icon">🤖</span>
+                <span data-i18n="ai_agents">Agents IA</span>
+            </a>
+            <a href="/docs/directory/workflows.html" class="iaf-mobile-link">
+                <span class="iaf-mobile-icon">⚡</span>
+                <span data-i18n="workflows">Workflows</span>
+            </a>
+
+            <div class="iaf-mobile-divider"></div>
+
+            <a href="https://github.com/IAFactory-Algeria" target="_blank" rel="noopener noreferrer" class="iaf-mobile-link">
+                <span class="iaf-mobile-icon">
+                    <i class="fa-brands fa-github"></i>
+                </span>
+                <span>GitHub</span>
+            </a>
+            <a href="https://huggingface.co/IAFactory-Algeria" target="_blank" rel="noopener noreferrer" class="iaf-mobile-link">
+                <span class="iaf-mobile-icon">🤗</span>
+                <span>Hugging Face</span>
+            </a>
+
+            <div class="iaf-mobile-divider"></div>
+
+            <a href="/docs/login.html" class="iaf-mobile-link iaf-mobile-link-auth">
+                <span class="iaf-mobile-icon">🔑</span>
+                <span data-i18n="login">Log in</span>
+            </a>
+            <a href="/docs/getstarted.html" class="iaf-mobile-link iaf-mobile-link-primary">
+                <span class="iaf-mobile-icon">🚀</span>
+                <span data-i18n="get_started">Get Started</span>
+            </a>
+        </nav>
+    </div>
+</header>
+
+<!-- Header Scripts -->
+<script>
+// Switch Profile (User/Dev)
+function switchProfile(profile) {
+    const buttons = document.querySelectorAll('.iaf-profile-btn');
+    buttons.forEach(btn => {
+        const isActive = btn.dataset.profile === profile;
+        btn.classList.toggle('active', isActive);
+        btn.setAttribute('aria-selected', isActive);
+    });
+
+    // Dispatch event pour autres composants
+    window.dispatchEvent(new CustomEvent('profileChanged', { detail: { profile } }));
+}
+
+// Toggle Mobile Menu
+function toggleMobileMenu() {
+    const menu = document.getElementById('mobileMenu');
+    const btn = document.querySelector('.iaf-mobile-menu-btn');
+    const isOpen = menu.classList.toggle('open');
+
+    btn.setAttribute('aria-expanded', isOpen);
+    btn.classList.toggle('active', isOpen);
+
+    // Prevent body scroll when menu is open
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+}
+
+// Toggle Language Menu
+function toggleLangMenu(event) {
+    event.stopPropagation();
+    const menu = document.getElementById('langMenu');
+    const btn = event.currentTarget;
+    const isOpen = menu.classList.toggle('show');
+
+    btn.setAttribute('aria-expanded', isOpen);
+}
+
+// Change Language
+function changeLanguage(lang) {
+    const labels = { fr: 'FR', en: 'EN', ar: 'AR' };
+    const langLabel = document.querySelector('.iaf-lang-label');
+    if (langLabel) langLabel.textContent = labels[lang];
+
+    const menu = document.getElementById('langMenu');
+    if (menu) menu.classList.remove('show');
+
+    // Update active state
+    document.querySelectorAll('.iaf-lang-option').forEach(opt => {
+        opt.classList.remove('active');
+    });
+    event.target.closest('.iaf-lang-option')?.classList.add('active');
+
+    // Call i18n system if exists
+    if (typeof IAFactoryI18n !== 'undefined') {
+        IAFactoryI18n.setLanguage(lang);
+    }
+    localStorage.setItem('iafactory_lang', lang);
+}
+
+// Close language menu on outside click
+document.addEventListener('click', (e) => {
+    if (!e.target.closest('.iaf-language-selector')) {
+        const menu = document.getElementById('langMenu');
+        if (menu) {
+            menu.classList.remove('show');
+            document.querySelector('.iaf-lang-btn')?.setAttribute('aria-expanded', 'false');
+        }
+    }
+});
+
+// Close mobile menu on escape
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        const menu = document.getElementById('mobileMenu');
+        if (menu?.classList.contains('open')) {
+            toggleMobileMenu();
+        }
+    }
+});
+
+// Update language label when language changes
+window.addEventListener('languageChanged', (e) => {
+    const lang = e.detail.lang;
+    const labels = { fr: 'FR', en: 'EN', ar: 'AR' };
+    const langLabel = document.querySelector('.iaf-lang-label');
+    if (langLabel) langLabel.textContent = labels[lang];
+
+    // Update active state
+    document.querySelectorAll('.iaf-lang-option').forEach(opt => {
+        const btnLang = opt.getAttribute('onclick')?.match(/changeLanguage\('(\w+)'\)/)?.[1];
+        if (btnLang === lang) {
+            opt.classList.add('active');
+        } else {
+            opt.classList.remove('active');
+        }
+    });
+});
+
+// Update language label on load (backup for cases where inline script didn't run)
+document.addEventListener('DOMContentLoaded', () => {
+    const currentLang = localStorage.getItem('iafactory_lang') || 'fr';
+    const labels = { fr: 'FR', en: 'EN', ar: 'AR' };
+    const langLabel = document.querySelector('.iaf-lang-label');
+    if (langLabel && !langLabel.textContent) {
+        langLabel.textContent = labels[currentLang];
+    }
+});
+</script>

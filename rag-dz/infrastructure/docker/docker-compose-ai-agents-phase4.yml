@@ -1,0 +1,93 @@
+version: "3.9"
+
+services:
+  # 1. AI Investment Agent (OpenAI + yfinance)
+  ai-investment:
+    build: ./ai-agents/finance-startups/ai_investment_agent
+    container_name: iaf-ai-investment-prod
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    ports:
+      - "9114:8501"
+    networks:
+      - iafactory-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # 2. AI Financial Coach (Google ADK multi-agent)
+  ai-financial-coach:
+    build: ./ai-agents/finance-startups/ai_financial_coach_agent
+    container_name: iaf-ai-financial-coach-prod
+    environment:
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+    ports:
+      - "9115:8501"
+    networks:
+      - iafactory-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # 3. AI Startup Trend Analysis (DuckDuckGo + newspaper)
+  ai-startup-trends:
+    build: ./ai-agents/finance-startups/ai_startup_trend_analysis_agent
+    container_name: iaf-ai-startup-trends-prod
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - GOOGLE_API_KEY=${GOOGLE_GENERATIVE_AI_API_KEY}
+    ports:
+      - "9116:8501"
+    networks:
+      - iafactory-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+  ai-system-architect:
+    build: ./ai-agents/finance-startups/ai_system_architect_r1
+    container_name: iaf-ai-system-architect-prod
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+    ports:
+      - "9117:8501"
+    networks:
+      - iafactory-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # 5. AI Deep Research Agent (OpenAI + Firecrawl)
+  ai-deep-research:
+    build: ./ai-agents/finance-startups/ai_deep_research_agent
+    container_name: iaf-ai-deep-research-prod
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - FIRECRAWL_API_KEY=${FIRECRAWL_API_KEY}
+    ports:
+      - "9118:8501"
+    networks:
+      - iafactory-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+networks:
+  iafactory-net:
+    external: true
+    name: iafactory-rag-dz_iafactory-net

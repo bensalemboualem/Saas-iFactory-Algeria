@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تكامل CLI - IAFactory الجزائر</title>
+    <link rel="stylesheet" href="../../assets/css/docs-theme.css">
+</head>
+<body>
+    <header class="docs-header">
+        <div class="docs-logo">
+            <img src="../../assets/images/logo.png" alt="IAFactory الجزائر">
+            <span>IAFactory الجزائر</span>
+        </div>
+        <nav class="main-nav">
+            <a href="../index.html">التوثيق</a>
+            <a href="https://app.iafactory-algeria.com">التطبيق</a>
+            <a href="../api/index.html">API</a>
+        </nav>
+        <div class="docs-controls">
+            <div class="language-switcher">
+                <button data-lang="fr">🇫🇷 FR</button>
+                <button data-lang="en">🇬🇧 EN</button>
+                <button data-lang="ar" class="active">🇸🇦 AR</button>
+            </div>
+            <div class="theme-toggle">
+                <div class="theme-toggle-slider">☀️</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <!-- Sidebar -->
+        </aside>
+
+        <main class="docs-main">
+            <h1>تكامل CLI</h1>
+            
+            <p class="lead">استخدم الذكاء الاصطناعي من IAFactory الجزائر مباشرة من Terminal باستخدام واجهة سطر الأوامر القوية.</p>
+
+            <h2 id="introduction">💻 مقدمة</h2>
+
+            <p>يجلب IAFactory CLI قدرات الذكاء الاصطناعي إلى Terminal الخاص بك للبرمجة النصية والأتمتة والوصول السريع إلى نماذج الذكاء الاصطناعي دون مغادرة سطر الأوامر.</p>
+
+            <div class="alert alert-info">
+                <strong>💡 الميزات:</strong>
+                <ul>
+                    <li>وضع الدردشة التفاعلي</li>
+                    <li>إدخال/إخراج الأنابيب للأتمتة</li>
+                    <li>معالجة الملفات والعمليات المجمعة</li>
+                    <li>مطالبات وقوالب مخصصة</li>
+                    <li>دعم متعدد النماذج</li>
+                    <li>تكامل Shell</li>
+                </ul>
+            </div>
+
+            <h2 id="installation">📦 التثبيت</h2>
+
+            <h3 id="npm">عبر npm</h3>
+
+            <pre><code class="language-bash">npm install -g @iafactory/cli
+
+# التحقق من التثبيت
+iafactory --version</code></pre>
+
+            <h3 id="pip">عبر pip (Python)</h3>
+
+            <pre><code class="language-bash">pip install iafactory-cli
+
+# التحقق من التثبيت
+iafactory --version</code></pre>
+
+            <h3 id="binary">التثبيت الثنائي</h3>
+
+            <pre><code class="language-bash"># macOS/Linux
+curl -sSL https://cli.iafactory-algeria.com/install.sh | bash
+
+# Windows (PowerShell)
+irm https://cli.iafactory-algeria.com/install.ps1 | iex</code></pre>
+
+            <h2 id="configuration">⚙️ التكوين</h2>
+
+            <h3 id="auth">المصادقة</h3>
+
+            <pre><code class="language-bash"># تسجيل الدخول التفاعلي
+iafactory auth login
+
+# أو تعيين مفتاح API
+iafactory config set api-key YOUR_API_KEY
+
+# أو عبر متغير البيئة
+export IAFACTORY_API_KEY="your_api_key"</code></pre>
+
+            <h3 id="config-file">ملف التكوين</h3>
+
+            <p>قم بتحرير <code>~/.iafactory/config.yaml</code>:</p>
+
+            <pre><code class="language-yaml">api:
+  key: YOUR_API_KEY
+  base_url: https://api.iafactory-algeria.com/v1
+
+defaults:
+  model: gpt-4.1
+  temperature: 0.7
+  max_tokens: 2000
+
+prompts:
+  system: "أنت مساعد مفيد."
+
+output:
+  format: text  # text, json, markdown
+  color: true
+  streaming: true</code></pre>
+
+            <h2 id="usage">🚀 الاستخدام</h2>
+
+            <h3 id="interactive">الوضع التفاعلي</h3>
+
+            <pre><code class="language-bash"># بدء الدردشة التفاعلية
+iafactory chat
+
+# مع نموذج محدد
+iafactory chat --model gpt-4.1
+
+# مع مطالبة نظام مخصصة
+iafactory chat --system "أنت خبير Python"</code></pre>
+
+            <h3 id="one-shot">أوامر لمرة واحدة</h3>
+
+            <pre><code class="language-bash"># استعلام بسيط
+iafactory "اشرح الحوسبة الكمومية بعبارات بسيطة"
+
+# مع اختيار النموذج
+iafactory --model claude-3.7-sonnet "اكتب هايكو عن البرمجة"
+
+# إخراج JSON
+iafactory --format json "اسرد 5 لغات برمجة" | jq</code></pre>
+
+            <h3 id="piping">الأنابيب والأتمتة</h3>
+
+            <pre><code class="language-bash"># معالجة محتوى الملف
+cat README.md | iafactory "لخص هذا المستند"
+
+# إنشاء من قالب
+echo "اسم المستخدم: john_doe" | iafactory "أنشئ بريد إلكتروني ترحيبي"
+
+# المعالجة الدفعية
+find . -name "*.py" | while read file; do
+  iafactory "راجع هذا الكود" < "$file" > "${file}.review"
+done
+
+# ربط الأوامر
+curl https://api.example.com/data | \
+  iafactory "استخرج الرؤى الرئيسية" | \
+  iafactory "أنشئ ملخصاً تنفيذياً"</code></pre>
+
+            <h2 id="commands">📋 الأوامر</h2>
+
+            <h3 id="chat-cmd">chat</h3>
+
+            <pre><code class="language-bash">iafactory chat [OPTIONS]
+
+الخيارات:
+  --model MODEL        نموذج الذكاء الاصطناعي المراد استخدامه
+  --temperature TEMP   الإبداع (0-1)
+  --system PROMPT      مطالبة النظام
+  --history FILE       تحميل سجل المحادثة</code></pre>
+
+            <h3 id="generate">generate</h3>
+
+            <pre><code class="language-bash">iafactory generate [OPTIONS] PROMPT
+
+الخيارات:
+  --model MODEL        نموذج الذكاء الاصطناعي المراد استخدامه
+  --format FORMAT      تنسيق الإخراج (text, json, markdown)
+  --output FILE        الحفظ في ملف
+  --template NAME      استخدام قالب محفوظ</code></pre>
+
+            <h3 id="file-ops">file</h3>
+
+            <pre><code class="language-bash"># معالجة ملف واحد
+iafactory file process INPUT.txt --prompt "ترجم إلى الفرنسية"
+
+# معالجة دفعية للدليل
+iafactory file batch ./docs/ --pattern "*.md" \
+  --prompt "أضف جدول المحتويات"
+
+# إنشاء من ملف
+iafactory file generate template.txt --variables vars.json</code></pre>
+
+            <h3 id="template-ops">template</h3>
+
+            <pre><code class="language-bash"># سرد القوالب
+iafactory template list
+
+# إنشاء قالب
+iafactory template create code-review \
+  --prompt "راجع هذا الكود من حيث:\n1. الأخطاء\n2. الأداء\n3. أفضل الممارسات"
+
+# استخدام قالب
+iafactory template use code-review < mycode.js</code></pre>
+
+            <h2 id="automation">🔄 أمثلة الأتمتة</h2>
+
+            <h3 id="code-review">مراجعة الكود الآلية</h3>
+
+            <pre><code class="language-bash">#!/bin/bash
+# review-pr.sh
+
+PR_FILES=$(git diff --name-only main...HEAD)
+
+for file in $PR_FILES; do
+  echo "مراجعة $file..."
+  
+  iafactory --model gpt-4.1 \
+    --system "أنت مراجع كود كبير" \
+    "راجع هذا الكود وقدم ملاحظات" < "$file" \
+    > "reviews/${file}.review"
+done
+
+# تجميع المراجعات
+cat reviews/*.review | iafactory \
+  "لخص هذه المراجعات الكودية في تعليق PR"</code></pre>
+
+            <h3 id="log-analysis">تحليل السجل</h3>
+
+            <pre><code class="language-bash">#!/bin/bash
+# analyze-logs.sh
+
+# متابعة السجلات وتحليل الأخطاء
+tail -f /var/log/app.log | \
+  grep ERROR | \
+  while read line; do
+    echo "$line" | iafactory \
+      --model gpt-4.1-mini \
+      "اشرح هذا الخطأ واقترح إصلاحاً" \
+      >> error-analysis.txt
+  done</code></pre>
+
+            <h3 id="doc-generation">إنشاء التوثيق</h3>
+
+            <pre><code class="language-bash">#!/bin/bash
+# generate-docs.sh
+
+# إنشاء README من الكود
+iafactory file process src/ \
+  --pattern "*.py" \
+  --prompt "أنشئ توثيق API بتنسيق Markdown" \
+  --output docs/API.md
+
+# إنشاء سجل التغييرات من الالتزامات
+git log --since="1 month ago" --pretty=format:"%s" | \
+  iafactory "أنشئ سجل تغييرات مجمعاً حسب: الميزات، الإصلاحات، التحسينات" \
+  > CHANGELOG.md</code></pre>
+
+            <h2 id="shell-integration">🐚 تكامل Shell</h2>
+
+            <h3 id="bash">Bash</h3>
+
+            <pre><code class="language-bash"># أضف إلى ~/.bashrc
+eval "$(iafactory completion bash)"
+
+# اختصار للوصول السريع
+alias ai='iafactory'
+alias chat='iafactory chat'
+
+# دالة لشرح الكود السريع
+explain() {
+  cat "$1" | iafactory "اشرح هذا الكود"
+}</code></pre>
+
+            <h3 id="zsh">Zsh</h3>
+
+            <pre><code class="language-bash"># أضف إلى ~/.zshrc
+eval "$(iafactory completion zsh)"
+
+# مساعد الأوامر السريع
+function ask() {
+  iafactory "$*"
+}
+
+# مولد رسائل التزام Git
+function gcm() {
+  git diff --cached | iafactory \
+    --model gpt-4.1-mini \
+    --format text \
+    "أنشئ رسالة التزام تقليدية" | \
+    xargs git commit -m
+}</code></pre>
+
+            <h3 id="powershell">PowerShell</h3>
+
+            <pre><code class="language-powershell"># أضف إلى $PROFILE
+iafactory completion powershell | Out-String | Invoke-Expression
+
+# دالة لمساعدة الذكاء الاصطناعي
+function Ask-AI {
+    param([string]$Question)
+    iafactory $Question
+}
+
+# اختصار
+Set-Alias ai Ask-AI</code></pre>
+
+            <h2 id="best-practices">✨ أفضل الممارسات</h2>
+
+            <h3 id="scripting">1. البرمجة النصية</h3>
+
+            <ul>
+                <li>استخدم <code>--format json</code> للإخراج القابل للتحليل</li>
+                <li>اضبط <code>--temperature 0.1</code> للنتائج المتسقة</li>
+                <li>خزن الاستجابات بعلامة <code>--cache</code></li>
+                <li>تعامل مع أخطاء API برموز الخروج المناسبة</li>
+            </ul>
+
+            <h3 id="performance">2. الأداء</h3>
+
+            <ul>
+                <li>استخدم <code>gpt-4.1-mini</code> للمهام البسيطة</li>
+                <li>اجمع الطلبات المماثلة معاً</li>
+                <li>استخدم البث للاستجابات الطويلة</li>
+                <li>اضبط حدود <code>max_tokens</code> المناسبة</li>
+            </ul>
+
+            <h3 id="security">3. الأمان</h3>
+
+            <ul>
+                <li>لا تلتزم أبداً بمفاتيح API في التحكم في الإصدار</li>
+                <li>استخدم متغيرات البيئة أو ملفات التكوين الآمنة</li>
+                <li>قم بتعقيم الإدخال قبل التمرير إلى الذكاء الاصطناعي</li>
+                <li>راجع الكود المنشأ قبل التنفيذ</li>
+            </ul>
+
+            <h2 id="resources">📚 الموارد</h2>
+
+            <ul>
+                <li>📖 <a href="https://docs.iafactory-algeria.com/cli">توثيق CLI</a></li>
+                <li>🎥 <a href="../api/quick-start.html">البداية السريعة لـ API</a></li>
+                <li>💬 <a href="https://discord.gg/iafactory">مجتمع Discord</a></li>
+                <li>💻 <a href="https://github.com/iafactory-algeria/cli">مستودع GitHub</a></li>
+            </ul>
+
+            <div class="alert alert-success">
+                <strong>💻 هل أنت مستعد للذكاء الاصطناعي من Terminal؟</strong>
+                <p>احصل على مفتاح API الخاص بك: <a href="https://app.iafactory-algeria.com/api-keys">app.iafactory-algeria.com</a></p>
+            </div>
+        </main>
+
+        <aside class="docs-toc">
+            <h3 class="docs-toc-title">في هذه الصفحة</h3>
+            <ul></ul>
+        </aside>
+    </div>
+
+    <script src="../../assets/js/docs-theme.js"></script>
+</body>
+</html>

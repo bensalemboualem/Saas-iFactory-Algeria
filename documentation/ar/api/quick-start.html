@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>البدء السريع - واجهة برمجة التطبيقات - IAFactory Algeria</title>
+    <link rel="stylesheet" href="../../assets/css/docs-theme.css">
+</head>
+<body>
+    <header class="docs-header">
+        <div class="docs-logo"><img src="../../assets/images/logo.png" alt="IAFactory Algeria"><span>IAFactory Algeria</span></div>
+        <nav class="main-nav"><a href="../index.html">التوثيق</a><a href="./index.html" class="active">واجهة برمجة التطبيقات</a></nav>
+        <div class="docs-controls">
+            <div class="language-switcher"><button data-lang="fr">🇫🇷</button><button data-lang="en">🇬🇧</button><button data-lang="ar" class="active">🇸🇦</button></div>
+            <div class="theme-toggle"><div class="theme-toggle-slider">☀️</div></div>
+        </div>
+    </header>
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <div class="sidebar-section">
+                <h3 class="sidebar-section-title">🔌 واجهة برمجة التطبيقات</h3>
+                <ul class="sidebar-menu">
+                    <li><a href="./quick-start.html" class="active">البدء السريع</a></li>
+                    <li><a href="./response-format.html">تنسيق الاستجابة</a></li>
+                    <li><a href="./models-pricing.html">النماذج والأسعار</a></li>
+                    <li><a href="./error-codes.html">رموز الخطأ</a></li>
+                    <li><a href="./parameters.html">المعاملات</a></li>
+                    <li><a href="./optimization.html">نصائح التحسين</a></li>
+                    <li><a href="./migration-openai.html">الانتقال من OpenAI</a></li>
+                    <li><a href="./webhooks.html">Webhooks</a></li>
+                </ul>
+            </div>
+        </aside>
+        <main class="docs-main">
+            <h1>🚀 البدء السريع مع واجهة برمجة التطبيقات</h1>
+            <p class="lead">ابدأ باستخدام واجهة برمجة التطبيقات IAFactory Algeria في دقائق.</p>
+            <div class="alert alert-info">
+                <strong>➡️</strong> <a href="https://dashboard.iafactory-algeria.com/api">احصل على مفتاح API المجاني</a>
+            </div>
+            <h2>الخطوة 1: الحصول على مفتاح API</h2>
+            <p>جميع مشتركي IAFactory يحصلون على أرصدة API مجانية:</p>
+            <table>
+                <thead>
+                    <tr><th>الباقة</th><th>Starter</th><th>Standard</th><th>Expert</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>الأرصدة الشهرية</strong></td><td>2$</td><td>4$</td><td>10$</td></tr>
+                </tbody>
+            </table>
+            <h2>الخطوة 2: قم بأول طلب</h2>
+            <h3>Python</h3>
+            <pre><code class="language-python">import openai
+
+openai.api_base = "https://api.iafactory-algeria.com/v1"
+openai.api_key = "YOUR_API_KEY"
+
+response = openai.ChatCompletion.create(
+    model="gpt-4-turbo",
+    messages=[{"role": "user", "content": "اشرح الذكاء الاصطناعي في 3 جمل"}]
+)
+
+print(response.choices[0].message.content)</code></pre>
+            <h3>JavaScript</h3>
+            <pre><code class="language-javascript">const { Configuration, OpenAIApi } = require('openai');
+
+const configuration = new Configuration({
+    apiKey: 'YOUR_API_KEY',
+    basePath: 'https://api.iafactory-algeria.com/v1'
+});
+
+const openai = new OpenAIApi(configuration);
+
+const response = await openai.createChatCompletion({
+    model: 'gpt-4-turbo',
+    messages: [{role: 'user', content: 'اشرح الذكاء الاصطناعي'}]
+});
+
+console.log(response.data.choices[0].message.content);</code></pre>
+            <h2>الخطوات التالية</h2>
+            <ul>
+                <li><a href="./parameters.html">استكشف جميع المعاملات</a></li>
+                <li><a href="./models-pricing.html">شاهد النماذج والأسعار</a></li>
+                <li><a href="./optimization.html">قم بتحسين طلباتك</a></li>
+            </ul>
+        </main>
+    </div>
+    <script src="../../assets/js/docs-theme.js"></script>
+</body>
+</html>

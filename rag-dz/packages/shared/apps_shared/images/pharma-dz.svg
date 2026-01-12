@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <defs>
+    <linearGradient id="pharmaBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f0fdfa;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ccfbf1;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="cross" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="redCross" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ef4444;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#dc2626;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="pill" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#d21034;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#d21034;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="300" fill="url(#pharmaBg)"/>
+
+  <!-- Decorative elements -->
+  <circle cx="350" cy="50" r="30" fill="#10b981" opacity="0.1"/>
+  <circle cx="50" cy="250" r="40" fill="#d21034" opacity="0.1"/>
+
+  <!-- Pharmacy building -->
+  <rect x="100" y="80" width="200" height="140" rx="8" fill="#ffffff"/>
+  <rect x="105" y="85" width="190" height="130" rx="6" fill="#f8fafc"/>
+
+  <!-- Pharmacy sign with green cross -->
+  <rect x="150" y="40" width="100" height="60" rx="8" fill="#006233"/>
+  <g transform="translate(200, 70)">
+    <!-- Green crescent (Islamic health symbol) -->
+    <path d="M -15,-20 A 15,15 0 1,1 -15,0 A 12,12 0 1,0 -15,-20" fill="#10b981"/>
+    <!-- Medical cross -->
+    <rect x="5" y="-15" width="8" height="30" rx="2" fill="#ffffff"/>
+    <rect x="-5" y="-5" width="28" height="8" rx="2" fill="#ffffff"/>
+  </g>
+
+  <!-- Window -->
+  <rect x="120" y="100" width="60" height="50" rx="4" fill="#e0f2fe"/>
+  <line x1="150" y1="100" x2="150" y2="150" stroke="#cbd5e1" stroke-width="2"/>
+  <line x1="120" y1="125" x2="180" y2="125" stroke="#cbd5e1" stroke-width="2"/>
+
+  <!-- Door -->
+  <rect x="200" y="140" width="60" height="80" rx="4" fill="#1e40af"/>
+  <circle cx="245" cy="180" r="3" fill="#d4af37"/>
+
+  <!-- Medicine bottles on shelf -->
+  <g transform="translate(130, 180)">
+    <rect x="0" y="0" width="15" height="25" rx="2" fill="#3b82f6"/>
+    <rect x="0" y="0" width="15" height="8" rx="2" fill="#60a5fa"/>
+    <ellipse cx="7.5" cy="0" rx="8" ry="3" fill="#1e40af"/>
+
+    <rect x="20" y="-5" width="15" height="30" rx="2" fill="#10b981"/>
+    <rect x="20" y="-5" width="15" height="8" rx="2" fill="#34d399"/>
+    <ellipse cx="27.5" cy="-5" rx="8" ry="3" fill="#059669"/>
+
+    <rect x="40" y="3" width="15" height="22" rx="2" fill="#d21034"/>
+    <rect x="40" y="3" width="15" height="7" rx="2" fill="#f87171"/>
+    <ellipse cx="47.5" cy="3" rx="8" ry="3" fill="#b91c1c"/>
+  </g>
+
+  <!-- Pills and capsules -->
+  <g transform="translate(280, 140)">
+    <!-- Capsule -->
+    <rect x="0" y="0" width="30" height="15" rx="7.5" fill="url(#pill)"/>
+    <ellipse cx="7.5" cy="7.5" rx="2" ry="2" fill="#fca5a5" opacity="0.5"/>
+
+    <!-- Round pills -->
+    <circle cx="10" cy="25" r="6" fill="#ffffff" stroke="#10b981" stroke-width="2"/>
+    <circle cx="25" cy="25" r="6" fill="#ffffff" stroke="#3b82f6" stroke-width="2"/>
+  </g>
+
+  <!-- Digital screen (modern pharmacy) -->
+  <rect x="220" y="105" width="70" height="45" rx="4" fill="#1f2937"/>
+  <rect x="225" y="110" width="60" height="35" rx="2" fill="#0f172a"/>
+  <!-- Screen content -->
+  <rect x="230" y="115" width="20" height="3" fill="#10b981"/>
+  <rect x="230" y="122" width="30" height="3" fill="#60a5fa"/>
+  <rect x="230" y="129" width="25" height="3" fill="#d4af37"/>
+  <rect x="230" y="136" width="35" height="3" fill="#a78bfa"/>
+
+  <!-- Medical kit -->
+  <g transform="translate(50, 180)">
+    <rect x="0" y="10" width="60" height="40" rx="4" fill="#ffffff" stroke="#e5e7eb" stroke-width="2"/>
+    <rect x="10" y="0" width="40" height="15" rx="3" fill="#ef4444"/>
+    <!-- Red cross on kit -->
+    <rect x="26" y="22" width="8" height="20" rx="1" fill="#ef4444"/>
+    <rect x="20" y="28" width="20" height="8" rx="1" fill="#ef4444"/>
+  </g>
+
+  <!-- Prescription paper -->
+  <g transform="translate(320, 200)">
+    <rect x="0" y="0" width="50" height="60" rx="3" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+    <line x1="8" y1="12" x2="42" y2="12" stroke="#006233" stroke-width="2"/>
+    <line x1="8" y1="22" x2="42" y2="22" stroke="#94a3b8" stroke-width="1.5"/>
+    <line x1="8" y1="30" x2="35" y2="30" stroke="#94a3b8" stroke-width="1.5"/>
+    <line x1="8" y1="38" x2="40" y2="38" stroke="#94a3b8" stroke-width="1.5"/>
+    <!-- Stamp -->
+    <circle cx="38" cy="50" r="6" fill="none" stroke="#d21034" stroke-width="1.5"/>
+  </g>
+
+  <!-- DNA helix (medical science) -->
+  <g transform="translate(140, 250)">
+    <ellipse cx="0" cy="0" rx="8" ry="3" fill="#3b82f6" opacity="0.6" transform="rotate(20)"/>
+    <ellipse cx="8" cy="5" rx="8" ry="3" fill="#10b981" opacity="0.6" transform="rotate(-20)"/>
+    <ellipse cx="16" cy="10" rx="8" ry="3" fill="#3b82f6" opacity="0.6" transform="rotate(20)"/>
+  </g>
+
+  <!-- Algerian star -->
+  <g transform="translate(370, 270)">
+    <path d="M 0,-10 L 2.3,-3.1 L 9.5,-3.1 L 3.9,1.5 L 6.2,8.1 L 0,3.5 L -6.2,8.1 L -3.9,1.5 L -9.5,-3.1 L -2.3,-3.1 Z"
+          fill="#d4af37"/>
+  </g>
+</svg>

@@ -1,0 +1,702 @@
+"""
+Credit Service - Système de crédits unifié IA Factory Algeria
+Comme Abacus AI : 1 système de crédits pour tous les services
+
+Architecture:
+- Plans: free (1000), starter (10000), pro (30000), enterprise (100000)
+- Services gratuits: groq-llama, gemini-flash (illimités)
+- Services payants: claude, gpt-4, images, vidéos (coût en crédits)
+- Reset mensuel automatique des crédits
+"""
+
+from typing import Optional, Dict, Any, List
+from datetime import datetime, timedelta
+from fastapi import HTTPException
+import asyncpg
+import logging
+import json
+
+logger = logging.getLogger(__name__)
+
+
+class CreditService:
+    """
+    Service de gestion des crédits utilisateur
+
+    Fonctionnalités:
+    - Vérification du solde
+    - Déduction automatique après usage
+    - Historique des transactions
+    - Upgrade de plan
+    - Reset mensuel
+    """
+
+    def __init__(self, db_pool: asyncpg.Pool):
+        self.db = db_pool
+        self._pricing_cache: Dict[str, Dict] = {}
+        self._cache_ttl = 300  # 5 minutes
+        self._cache_time: Optional[datetime] = None
+
+    async def get_balance(self, tenant_id: str) -> Dict[str, Any]:
+        """
+        Récupère le solde de crédits d'un tenant
+
+        Returns:
+            {
+                "total": int,
+                "used": int,
+                "remaining": int,
+                "plan": str,
+                "resets_at": str (ISO format)
+            }
+        """
+        row = await self.db.fetchrow("""
+            SELECT total_credits, used_credits, plan, credits_reset_at
+            FROM user_credits WHERE tenant_id = $1
+        """, tenant_id)
+
+        if not row:
+            # Créer un compte crédits par défaut
+            await self._init_credits(tenant_id, 'free')
+            return await self.get_balance(tenant_id)
+
+        # Vérifier si reset nécessaire
+        if row['credits_reset_at'] and row['credits_reset_at'] <= datetime.utcnow():
+            await self._reset_credits(tenant_id)
+            return await self.get_balance(tenant_id)
+
+        return {
+            "total": row['total_credits'],
+            "used": row['used_credits'],
+            "remaining": row['total_credits'] - row['used_credits'],
+            "plan": row['plan'],
+            "resets_at": row['credits_reset_at'].isoformat() if row['credits_reset_at'] else None,
+            "percentage_used": round((row['used_credits'] / max(row['total_credits'], 1)) * 100, 1)
+        }
+
+    async def _init_credits(self, tenant_id: str, plan: str = 'free'):
+        """Initialise les crédits pour un nouveau tenant"""
+        plan_row = await self.db.fetchrow(
+            "SELECT credits_monthly FROM subscription_plans WHERE name = $1", plan
+        )
+        credits = plan_row['credits_monthly'] if plan_row else 1000
+
+        try:
+            await self.db.execute("""
+                INSERT INTO user_credits (tenant_id, total_credits, used_credits, plan, credits_reset_at)
+                VALUES ($1, $2, 0, $3, $4)
+                ON CONFLICT (tenant_id) DO NOTHING
+            """, tenant_id, credits, plan, datetime.utcnow() + timedelta(days=30))
+
+            # Log la création
+            await self._log_transaction(
+                tenant_id, credits, 'init', None,
+                f"Initialisation compte - Plan {plan}"
+            )
+
+            logger.info(f"Crédits initialisés pour tenant {tenant_id}: {credits} ({plan})")
+        except Exception as e:
+            logger.error(f"Erreur init crédits: {e}")
+
+    async def _reset_credits(self, tenant_id: str):
+        """Reset mensuel des crédits"""
+        row = await self.db.fetchrow(
+            "SELECT plan, total_credits FROM user_credits WHERE tenant_id = $1",
+            tenant_id
+        )
+
+        if row:
+            plan_row = await self.db.fetchrow(
+                "SELECT credits_monthly FROM subscription_plans WHERE name = $1",
+                row['plan']
+            )
+            new_credits = plan_row['credits_monthly'] if plan_row else row['total_credits']
+
+            await self.db.execute("""
+                UPDATE user_credits
+                SET used_credits = 0,
+                    total_credits = $1,
+                    credits_reset_at = $2,
+                    updated_at = NOW()
+                WHERE tenant_id = $3
+            """, new_credits, datetime.utcnow() + timedelta(days=30), tenant_id)
+
+            await self._log_transaction(
+                tenant_id, new_credits, 'reset', None,
+                f"Reset mensuel - Plan {row['plan']}"
+            )
+
+            logger.info(f"Reset crédits tenant {tenant_id}: {new_credits}")
+
+    async def get_service_cost(self, service_name: str) -> Dict[str, Any]:
+        """
+        Récupère le coût d'un service (avec cache)
+
+        Returns:
+            {"cost": int, "unlimited": bool, "type": str}
+        """
+        # Refresh cache si nécessaire
+        if not self._cache_time or (datetime.utcnow() - self._cache_time).seconds > self._cache_ttl:
+            await self._refresh_pricing_cache()
+
+        if service_name in self._pricing_cache:
+            return self._pricing_cache[service_name]
+
+        # Service inconnu = coût par défaut
+        logger.warning(f"Service inconnu: {service_name}, coût par défaut appliqué")
+        return {"cost": 5, "unlimited": False, "type": "unknown"}
+
+    async def _refresh_pricing_cache(self):
+        """Rafraîchit le cache des prix"""
+        rows = await self.db.fetch("""
+            SELECT service_name, credits_per_unit, is_unlimited, service_type
+            FROM service_pricing WHERE is_active = true
+        """)
+
+        self._pricing_cache = {
+            row['service_name']: {
+                "cost": row['credits_per_unit'],
+                "unlimited": row['is_unlimited'],
+                "type": row['service_type']
+            }
+            for row in rows
+        }
+        self._cache_time = datetime.utcnow()
+        logger.debug(f"Cache pricing rafraîchi: {len(self._pricing_cache)} services")
+
+    async def can_afford(self, tenant_id: str, service_name: str, quantity: int = 1) -> bool:
+        """
+        Vérifie si le tenant peut payer le service
+
+        Args:
+            tenant_id: ID du tenant
+            service_name: Nom du service (ex: "gpt-4o", "flux-image")
+            quantity: Nombre d'unités
+
+        Returns:
+            True si le tenant a assez de crédits
+        """
+        service = await self.get_service_cost(service_name)
+
+        # Services gratuits = toujours OK
+        if service['unlimited']:
+            return True
+
+        balance = await self.get_balance(tenant_id)
+        cost = service['cost'] * quantity
+
+        return balance['remaining'] >= cost
+
+    async def deduct_credits(
+        self,
+        tenant_id: str,
+        service_name: str,
+        quantity: int = 1,
+        metadata: Optional[Dict] = None
+    ) -> Dict[str, Any]:
+        """
+        Déduit les crédits après utilisation d'un service
+
+        Args:
+            tenant_id: ID du tenant
+            service_name: Nom du service utilisé
+            quantity: Nombre d'unités consommées
+            metadata: Données additionnelles (tokens, model, etc.)
+
+        Returns:
+            {"deducted": int, "service": str, "remaining": int}
+
+        Raises:
+            HTTPException 402 si crédits insuffisants
+        """
+        service = await self.get_service_cost(service_name)
+
+        # Services gratuits = pas de déduction
+        if service['unlimited']:
+            logger.debug(f"Service gratuit: {service_name} (tenant: {tenant_id})")
+            return {
+                "deducted": 0,
+                "service": service_name,
+                "unlimited": True,
+                "remaining": (await self.get_balance(tenant_id))['remaining']
+            }
+
+        cost = service['cost'] * quantity
+
+        # Vérifier le solde
+        balance = await self.get_balance(tenant_id)
+        if balance['remaining'] < cost:
+            logger.warning(f"Crédits insuffisants: {tenant_id} need {cost}, has {balance['remaining']}")
+            raise HTTPException(
+                status_code=402,
+                detail={
+                    "error": "insufficient_credits",
+                    "required": cost,
+                    "remaining": balance['remaining'],
+                    "service": service_name,
+                    "message": f"Crédits insuffisants. Besoin de {cost} crédits, reste {balance['remaining']}.",
+                    "upgrade_url": "/pricing"
+                }
+            )
+
+        # Déduire les crédits (transaction atomique)
+        async with self.db.acquire() as conn:
+            async with conn.transaction():
+                await conn.execute("""
+                    UPDATE user_credits
+                    SET used_credits = used_credits + $1, updated_at = NOW()
+                    WHERE tenant_id = $2
+                """, cost, tenant_id)
+
+                await conn.execute("""
+                    INSERT INTO credit_transactions
+                    (tenant_id, amount, type, service, description, metadata)
+                    VALUES ($1, $2, 'usage', $3, $4, $5)
+                """, tenant_id, -cost, service_name,
+                    f"Usage: {service_name} x{quantity}",
+                    json.dumps(metadata or {}))
+
+        new_balance = await self.get_balance(tenant_id)
+
+        logger.info(
+            f"Crédits déduits: {cost} pour {service_name} "
+            f"(tenant: {tenant_id}, reste: {new_balance['remaining']})"
+        )
+
+        return {
+            "deducted": cost,
+            "service": service_name,
+            "quantity": quantity,
+            "remaining": new_balance['remaining'],
+            "percentage_used": new_balance['percentage_used']
+        }
+
+    async def add_credits(
+        self,
+        tenant_id: str,
+        amount: int,
+        reason: str = "purchase",
+        metadata: Optional[Dict] = None
+    ) -> Dict[str, Any]:
+        """
+        Ajoute des crédits (achat, bonus, upgrade, promo)
+
+        Args:
+            tenant_id: ID du tenant
+            amount: Nombre de crédits à ajouter
+            reason: Raison (purchase, bonus, upgrade, promo, refund)
+            metadata: Données additionnelles
+
+        Returns:
+            {"added": int, "new_total": int, "remaining": int}
+        """
+        async with self.db.acquire() as conn:
+            async with conn.transaction():
+                await conn.execute("""
+                    UPDATE user_credits
+                    SET total_credits = total_credits + $1, updated_at = NOW()
+                    WHERE tenant_id = $2
+                """, amount, tenant_id)
+
+                await conn.execute("""
+                    INSERT INTO credit_transactions
+                    (tenant_id, amount, type, description, metadata)
+                    VALUES ($1, $2, $3, $4, $5)
+                """, tenant_id, amount, reason,
+                    f"Ajout crédits: {reason} (+{amount})",
+                    json.dumps(metadata or {}))
+
+        balance = await self.get_balance(tenant_id)
+
+        logger.info(f"Crédits ajoutés: {amount} pour {tenant_id} ({reason})")
+
+        return {
+            "added": amount,
+            "reason": reason,
+            "new_total": balance['total'],
+            "remaining": balance['remaining']
+        }
+
+    async def upgrade_plan(self, tenant_id: str, new_plan: str) -> Dict[str, Any]:
+        """
+        Upgrade le plan d'un tenant
+
+        Args:
+            tenant_id: ID du tenant
+            new_plan: Nouveau plan (starter, pro, enterprise)
+
+        Returns:
+            Nouveau solde avec détails du plan
+        """
+        plan_row = await self.db.fetchrow(
+            "SELECT credits_monthly, price_dzd, features FROM subscription_plans WHERE name = $1 AND is_active = true",
+            new_plan
+        )
+
+        if not plan_row:
+            raise HTTPException(400, f"Plan inconnu ou inactif: {new_plan}")
+
+        new_credits = plan_row['credits_monthly']
+
+        # Récupérer l'ancien plan
+        old_balance = await self.get_balance(tenant_id)
+        old_plan = old_balance['plan']
+
+        # Calculer les crédits bonus (différence + reste)
+        bonus = max(0, old_balance['remaining'])
+
+        async with self.db.acquire() as conn:
+            async with conn.transaction():
+                await conn.execute("""
+                    UPDATE user_credits
+                    SET plan = $1,
+                        total_credits = $2 + $3,
+                        credits_reset_at = $4,
+                        updated_at = NOW()
+                    WHERE tenant_id = $5
+                """, new_plan, new_credits, bonus,
+                    datetime.utcnow() + timedelta(days=30), tenant_id)
+
+                await conn.execute("""
+                    INSERT INTO credit_transactions
+                    (tenant_id, amount, type, description, metadata)
+                    VALUES ($1, $2, 'upgrade', $3, $4)
+                """, tenant_id, new_credits,
+                    f"Upgrade {old_plan} → {new_plan}",
+                    json.dumps({"old_plan": old_plan, "new_plan": new_plan, "bonus_kept": bonus}))
+
+        logger.info(f"Plan upgradé: {tenant_id} {old_plan} → {new_plan}")
+
+        return await self.get_balance(tenant_id)
+
+    async def get_history(
+        self,
+        tenant_id: str,
+        limit: int = 50,
+        offset: int = 0,
+        type_filter: Optional[str] = None
+    ) -> List[Dict[str, Any]]:
+        """
+        Récupère l'historique des transactions
+
+        Args:
+            tenant_id: ID du tenant
+            limit: Nombre max de transactions
+            offset: Offset pour pagination
+            type_filter: Filtrer par type (usage, purchase, upgrade, etc.)
+
+        Returns:
+            Liste des transactions
+        """
+        query = """
+            SELECT id, amount, type, service, description, metadata, created_at
+            FROM credit_transactions
+            WHERE tenant_id = $1
+        """
+        params = [tenant_id]
+
+        if type_filter:
+            query += " AND type = $2"
+            params.append(type_filter)
+            query += " ORDER BY created_at DESC LIMIT $3 OFFSET $4"
+            params.extend([limit, offset])
+        else:
+            query += " ORDER BY created_at DESC LIMIT $2 OFFSET $3"
+            params.extend([limit, offset])
+
+        rows = await self.db.fetch(query, *params)
+
+        return [
+            {
+                "id": str(row['id']),
+                "amount": row['amount'],
+                "type": row['type'],
+                "service": row['service'],
+                "description": row['description'],
+                "metadata": row['metadata'] if row['metadata'] else {},
+                "created_at": row['created_at'].isoformat()
+            }
+            for row in rows
+        ]
+
+    async def get_usage_stats(self, tenant_id: str, days: int = 30) -> Dict[str, Any]:
+        """
+        Statistiques d'utilisation sur une période
+
+        Args:
+            tenant_id: ID du tenant
+            days: Nombre de jours à analyser
+
+        Returns:
+            Statistiques par service et totaux
+        """
+        rows = await self.db.fetch("""
+            SELECT
+                service,
+                COUNT(*) as count,
+                SUM(ABS(amount)) as total_credits
+            FROM credit_transactions
+            WHERE tenant_id = $1
+              AND type = 'usage'
+              AND created_at >= NOW() - INTERVAL '%s days'
+            GROUP BY service
+            ORDER BY total_credits DESC
+        """ % days, tenant_id)
+
+        by_service = {
+            row['service']: {
+                "count": row['count'],
+                "credits": row['total_credits']
+            }
+            for row in rows
+        }
+
+        total_row = await self.db.fetchrow("""
+            SELECT
+                COUNT(*) as total_requests,
+                SUM(ABS(amount)) as total_credits
+            FROM credit_transactions
+            WHERE tenant_id = $1
+              AND type = 'usage'
+              AND created_at >= NOW() - INTERVAL '%s days'
+        """ % days, tenant_id)
+
+        return {
+            "period_days": days,
+            "total_requests": total_row['total_requests'] or 0,
+            "total_credits_used": total_row['total_credits'] or 0,
+            "by_service": by_service
+        }
+
+    async def _log_transaction(
+        self,
+        tenant_id: str,
+        amount: int,
+        type_: str,
+        service: Optional[str],
+        description: str
+    ):
+        """Log une transaction interne"""
+        try:
+            await self.db.execute("""
+                INSERT INTO credit_transactions
+                (tenant_id, amount, type, service, description)
+                VALUES ($1, $2, $3, $4, $5)
+            """, tenant_id, amount, type_, service, description)
+        except Exception as e:
+            logger.error(f"Erreur log transaction: {e}")
+
+    async def get_dynamic_cost(
+        self,
+        service_name: str,
+        params: Optional[Dict[str, Any]] = None
+    ) -> int:
+        """
+        Calcule le coût dynamique d'un service comme Abacus AI
+
+        Le coût peut varier selon :
+        - La durée de la vidéo
+        - La résolution
+        - Le modèle choisi
+        - D'autres paramètres spécifiques
+
+        Args:
+            service_name: Nom du service (ex: 'sora-2', 'kling-ai')
+            params: Paramètres optionnels {duration_seconds, resolution, etc.}
+
+        Returns:
+            Coût en crédits
+        """
+        base_cost = await self.get_service_cost(service_name)
+
+        # Services gratuits = 0 crédits
+        if base_cost.get('unlimited'):
+            return 0
+
+        cost = base_cost.get('cost', 5)
+        service_type = base_cost.get('type', 'unknown')
+
+        if not params:
+            return cost
+
+        # Multiplicateurs pour vidéos
+        if service_type == 'video':
+            duration = params.get('duration_seconds', 5)
+            resolution = params.get('resolution', '720p')
+
+            # Coût proportionnel à la durée (base = 5 secondes)
+            duration_multiplier = duration / 5.0
+            cost = cost * duration_multiplier
+
+            # Multiplicateur résolution
+            resolution_multipliers = {
+                '480p': 0.7,
+                '720p': 1.0,
+                '1080p': 1.5,
+                '4k': 2.5,
+                '2160p': 2.5
+            }
+            cost = cost * resolution_multipliers.get(resolution, 1.0)
+
+            # Multiplicateur qualité/style si présent
+            if params.get('high_quality'):
+                cost = cost * 1.3
+
+        # Multiplicateurs pour images
+        elif service_type == 'image':
+            resolution = params.get('resolution', '1024x1024')
+
+            # Images haute résolution coûtent plus
+            if '2048' in resolution or '4k' in resolution.lower():
+                cost = cost * 1.5
+            elif '512' in resolution:
+                cost = cost * 0.7
+
+            # Nombre d'images
+            num_images = params.get('num_images', 1)
+            cost = cost * num_images
+
+        return int(round(cost))
+
+    async def can_afford_amount(self, tenant_id: str, amount: int) -> bool:
+        """
+        Vérifie si le tenant peut payer un montant spécifique
+
+        Args:
+            tenant_id: ID du tenant
+            amount: Montant en crédits
+
+        Returns:
+            True si le tenant a assez de crédits
+        """
+        if amount <= 0:
+            return True
+
+        balance = await self.get_balance(tenant_id)
+        return balance['remaining'] >= amount
+
+    async def deduct_amount(
+        self,
+        tenant_id: str,
+        amount: int,
+        service: str,
+        metadata: Optional[Dict] = None
+    ) -> Dict[str, Any]:
+        """
+        Déduit un montant spécifique de crédits
+
+        Args:
+            tenant_id: ID du tenant
+            amount: Montant à déduire
+            service: Nom du service pour le log
+            metadata: Données additionnelles
+
+        Returns:
+            {"deducted": int, "service": str, "remaining": int}
+
+        Raises:
+            HTTPException 402 si crédits insuffisants
+        """
+        if amount <= 0:
+            balance = await self.get_balance(tenant_id)
+            return {
+                "deducted": 0,
+                "service": service,
+                "remaining": balance['remaining']
+            }
+
+        # Vérifier le solde
+        balance = await self.get_balance(tenant_id)
+        if balance['remaining'] < amount:
+            logger.warning(f"Crédits insuffisants: {tenant_id} need {amount}, has {balance['remaining']}")
+            raise HTTPException(
+                status_code=402,
+                detail={
+                    "error": "insufficient_credits",
+                    "required": amount,
+                    "remaining": balance['remaining'],
+                    "service": service,
+                    "message": f"Crédits insuffisants. Besoin de {amount} crédits, reste {balance['remaining']}.",
+                    "upgrade_url": "/pricing"
+                }
+            )
+
+        # Déduire les crédits (transaction atomique)
+        async with self.db.acquire() as conn:
+            async with conn.transaction():
+                await conn.execute("""
+                    UPDATE user_credits
+                    SET used_credits = used_credits + $1, updated_at = NOW()
+                    WHERE tenant_id = $2
+                """, amount, tenant_id)
+
+                await conn.execute("""
+                    INSERT INTO credit_transactions
+                    (tenant_id, amount, type, service, description, metadata)
+                    VALUES ($1, $2, 'usage', $3, $4, $5)
+                """, tenant_id, -amount, service,
+                    f"Usage: {service} ({amount} crédits)",
+                    json.dumps(metadata or {}))
+
+        new_balance = await self.get_balance(tenant_id)
+
+        logger.info(
+            f"Crédits déduits: {amount} pour {service} "
+            f"(tenant: {tenant_id}, reste: {new_balance['remaining']})"
+        )
+
+        return {
+            "deducted": amount,
+            "service": service,
+            "remaining": new_balance['remaining'],
+            "percentage_used": new_balance['percentage_used']
+        }
+
+    async def check_plan_feature(self, tenant_id: str, feature: str) -> bool:
+        """
+        Vérifie si le plan du tenant inclut une fonctionnalité
+
+        Args:
+            tenant_id: ID du tenant
+            feature: Nom de la feature (video, image, deep_agent, priority)
+
+        Returns:
+            True si la feature est incluse dans le plan
+        """
+        balance = await self.get_balance(tenant_id)
+        plan_name = balance['plan']
+
+        plan_row = await self.db.fetchrow(
+            "SELECT features FROM subscription_plans WHERE name = $1",
+            plan_name
+        )
+
+        if not plan_row or not plan_row['features']:
+            return False
+
+        features = plan_row['features']
+        if isinstance(features, str):
+            features = json.loads(features)
+
+        return features.get(feature, False)
+
+
+# ═══════════════════════════════════════════════════════════════════
+# SINGLETON & DEPENDENCY INJECTION
+# ═══════════════════════════════════════════════════════════════════
+
+_credit_service_instance: Optional[CreditService] = None
+
+
+def get_credit_service(db_pool: asyncpg.Pool) -> CreditService:
+    """Factory pour obtenir l'instance du CreditService"""
+    global _credit_service_instance
+    if _credit_service_instance is None:
+        _credit_service_instance = CreditService(db_pool)
+    return _credit_service_instance
+
+
+async def reset_credit_service():
+    """Reset le singleton (pour tests)"""
+    global _credit_service_instance
+    _credit_service_instance = None

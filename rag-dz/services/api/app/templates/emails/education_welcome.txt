@@ -1,0 +1,74 @@
+===============================================
+🇩🇿 IA Factory - Shaping the Future
+Innovation & Future
+===============================================
+
+Bienvenue, {{user_name}}! مرحبا
+
+Votre assistant IA pour l'éducation est maintenant prêt. Conçu spécifiquement
+pour les écoles et universités algériennes, IA Factory vous aide à capturer
+les connaissances, organiser vos cours, et préparer vos étudiants pour le futur.
+
+📚 Français / العربية Support Bilingue
+
+-----------------------------------------------
+🎁 CADEAU DE BIENVENUE
+-----------------------------------------------
+
+Nous avons crédité votre compte avec 100 JETONS GRATUITS pour commencer.
+
+Votre Code d'Activation:
+{{redeem_code}}
+
+Entrez ce code dans votre tableau de bord pour activer vos jetons.
+
+-----------------------------------------------
+FONCTIONNALITÉS CLÉS POUR L'ÉDUCATION
+-----------------------------------------------
+
+1. 📚 LEXIQUE PERSONNEL & TERMINOLOGIE
+   Détecte automatiquement les termes académiques clés (français et arabe)
+   pendant vos cours. Construit un lexique personnalisé avec fréquence
+   d'utilisation pour révisions et examens.
+
+2. 🌍 RÉSUMÉS BILINGUES FR/AR
+   {{innovation_note}}
+   Générez des résumés de cours dans les deux langues avec identification
+   automatique du domaine (Sciences, Littérature, Histoire, Langues, Technologie).
+
+3. 🎯 EXTRACTION DE CONNAISSANCES
+   Identifie les concepts clés, objectifs d'apprentissage, et recommandations
+   pédagogiques. Prêt pour vos fiches de révision et planification de cours.
+
+-----------------------------------------------
+GUIDE DE DÉMARRAGE RAPIDE (3 ÉTAPES)
+-----------------------------------------------
+
+ÉTAPE 1: ENREGISTRER (تسجيل)
+Cliquez sur le microphone central pendant votre cours ou session de révision.
+La forme d'onde montre que vous enregistrez.
+
+ÉTAPE 2: ANALYSER (تحليل)
+Arrêtez l'enregistrement pour recevoir instantanément la transcription avec
+extraction des termes académiques et concepts clés.
+
+ÉTAPE 3: EXPORTER (تصدير)
+Téléchargez votre résumé bilingue (PDF) ou copiez dans vos supports de cours.
+Partagez avec vos étudiants.
+
+-----------------------------------------------
+
+→ Accéder à Votre Tableau de Bord: {{dashboard_url}}
+
+-----------------------------------------------
+SUPPORT
+-----------------------------------------------
+
+🇩🇿 Éducation Algérienne • Innovation • Soutien Bilingue
+
+Des questions? Contactez-nous à {{support_email}}
+
+© {{current_year}} IA Factory Algeria. Tous droits réservés.
+Supporting Algerian schools, universities, and the future of education
+
+===============================================

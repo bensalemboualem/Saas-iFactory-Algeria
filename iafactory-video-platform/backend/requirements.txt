@@ -1,0 +1,75 @@
+# =============================================================================
+# IAFactory Video Platform - Backend Dependencies
+# =============================================================================
+
+# === FRAMEWORK ===
+fastapi>=0.109.0
+uvicorn[standard]>=0.27.0
+python-multipart>=0.0.9
+pydantic>=2.6.0
+pydantic-settings>=2.1.0
+
+# === DATABASE ===
+sqlalchemy>=2.0.25
+asyncpg>=0.29.0
+alembic>=1.13.1
+redis>=5.0.1
+celery>=5.3.6
+
+# === AI/LLM PROVIDERS ===
+openai>=1.12.0
+anthropic>=0.18.0
+google-generativeai>=0.3.2
+groq>=0.4.2
+mistralai>=0.1.3
+together>=0.2.11
+cohere>=4.47
+replicate>=0.25.0
+fal-client>=0.3.0
+
+# === IMAGE GENERATION ===
+stability-sdk>=0.8.0
+
+# === VOICE/AUDIO ===
+elevenlabs>=1.0.0
+# pydub for audio processing
+pydub>=0.25.1
+
+# === VIDEO PROCESSING ===
+moviepy>=1.0.3
+ffmpeg-python>=0.2.0
+opencv-python>=4.9.0.80
+
+# === STORAGE ===
+boto3>=1.34.0  # AWS S3 / R2 / MinIO
+aiofiles>=23.2.1
+
+# === HTTP CLIENT ===
+httpx>=0.26.0
+aiohttp>=3.9.3
+
+# === UTILITIES ===
+python-dotenv>=1.0.1
+python-jose[cryptography]>=3.3.0
+passlib[bcrypt]>=1.7.4
+tenacity>=8.2.3
+
+# === IMAGE PROCESSING ===
+pillow>=10.2.0
+rembg>=2.0.50
+
+# === LOGGING/MONITORING ===
+loguru>=0.7.2
+prometheus-client>=0.19.0
+
+# === TESTING ===
+pytest>=8.0.0
+pytest-asyncio>=0.23.0
+pytest-cov>=4.1.0
+httpx>=0.26.0
+
+# === DEV TOOLS ===
+black>=24.1.0
+isort>=5.13.0
+mypy>=1.8.0
+ruff>=0.2.0

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAG Assistants - IAFactory Algeria</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00c261;
+            --primary-dark: #00a050;
+            --bg: #0a0a0a;
+            --surface: #111;
+            --surface-light: #1a1a1a;
+            --text: #fff;
+            --text-muted: #888;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+        
+        /* Header */
+        .header { background: rgba(10,10,10,0.95); padding: 1rem 2rem; position: fixed; top: 0; left: 0; right: 0; z-index: 100; border-bottom: 1px solid #222; }
+        .header-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--primary); text-decoration: none; }
+        .nav-links { display: flex; gap: 2rem; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--primary); }
+        .back-btn { background: var(--primary); color: #000; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; transition: all 0.3s; }
+        .back-btn:hover { background: var(--primary-dark); transform: translateY(-2px); }
+
+        /* Main Content */
+        .main { max-width: 1200px; margin: 0 auto; padding: 120px 2rem 4rem; }
+        .page-header { text-align: center; margin-bottom: 4rem; }
+        .page-header h1 { font-size: 3rem; margin-bottom: 1rem; background: linear-gradient(135deg, var(--primary), #00ff88); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .page-header p { font-size: 1.2rem; color: var(--text-muted); max-width: 700px; margin: 0 auto; }
+
+        /* Features */
+        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; margin-bottom: 4rem; }
+        .feature-card { background: var(--surface); border: 1px solid #222; border-radius: 16px; padding: 2rem; transition: all 0.3s; }
+        .feature-card:hover { border-color: var(--primary); transform: translateY(-5px); box-shadow: 0 10px 40px rgba(0,194,97,0.1); }
+        .feature-icon { width: 60px; height: 60px; background: linear-gradient(135deg, var(--primary), #00ff88); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 1.5rem; }
+        .feature-card h3 { font-size: 1.3rem; margin-bottom: 1rem; }
+        .feature-card p { color: var(--text-muted); margin-bottom: 1rem; }
+        .feature-list { list-style: none; }
+        .feature-list li { padding: 0.5rem 0; color: var(--text-muted); display: flex; align-items: center; gap: 0.5rem; }
+        .feature-list li::before { content: "✓"; color: var(--primary); font-weight: bold; }
+
+        /* Use Cases */
+        .use-cases { background: var(--surface); border-radius: 20px; padding: 3rem; margin-bottom: 4rem; }
+        .use-cases h2 { text-align: center; margin-bottom: 2rem; font-size: 2rem; }
+        .cases-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
+        .case-item { background: var(--surface-light); border-radius: 12px; padding: 1.5rem; border: 1px solid #333; }
+        .case-item h4 { color: var(--primary); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        .case-item p { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* CTA Section */
+        .cta-section { text-align: center; background: linear-gradient(135deg, rgba(0,194,97,0.1), rgba(0,255,136,0.05)); border: 1px solid rgba(0,194,97,0.3); border-radius: 20px; padding: 3rem; }
+        .cta-section h2 { font-size: 2rem; margin-bottom: 1rem; }
+        .cta-section p { color: var(--text-muted); margin-bottom: 2rem; }
+        .cta-btn { display: inline-block; background: var(--primary); color: #000; padding: 1rem 2.5rem; border-radius: 12px; text-decoration: none; font-weight: 700; font-size: 1.1rem; transition: all 0.3s; }
+        .cta-btn:hover { background: var(--primary-dark); transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,194,97,0.3); }
+
+        /* Footer */
+        footer { background: var(--surface); border-top: 1px solid #222; padding: 2rem; text-align: center; color: var(--text-muted); margin-top: 4rem; }
+
+        @media (max-width: 768px) {
+            .page-header h1 { font-size: 2rem; }
+            .features { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+        }
+    </style>
+<link rel="stylesheet" href="/apps/shared/iafactory-unified.css">
+</head>
+<body>
+<!-- IAFactory Trilingue Controls -->
+<div class="iaf-controls-floating" style="position:fixed;top:20px;right:20px;z-index:9998;display:flex;gap:10px;align-items:center;">
+    <div class="iaf-lang-dropdown" style="position:relative;">
+        <button class="iaf-lang-btn" onclick="IAFUnified.toggleLangMenu()" 
+            style="background:#667eea;color:white;border:none;padding:8px 15px;border-radius:8px;cursor:pointer;font-size:14px;display:flex;align-items:center;gap:5px;">
+            🌐 <span id="current-lang-label">FR</span> ▼
+        </button>
+        <div class="iaf-lang-menu" id="lang-menu" 
+            style="display:none;position:absolute;top:100%;right:0;background:white;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,0.15);min-width:150px;margin-top:5px;overflow:hidden;">
+            <button onclick="IAFUnified.changeLang('fr')" style="width:100%;padding:10px 15px;border:none;background:none;text-align:left;cursor:pointer;">🇫🇷 Français</button>
+            <button onclick="IAFUnified.changeLang('ar')" style="width:100%;padding:10px 15px;border:none;background:none;text-align:left;cursor:pointer;">🇩🇿 العربية</button>
+            <button onclick="IAFUnified.changeLang('en')" style="width:100%;padding:10px 15px;border:none;background:none;text-align:left;cursor:pointer;">🇬🇧 English</button>
+        </div>
+    </div>
+    <button class="iaf-theme-toggle" onclick="IAFUnified.toggleTheme()" 
+        style="background:#667eea;color:white;border:none;padding:8px 12px;border-radius:8px;cursor:pointer;font-size:16px;" 
+        title="Toggle theme">🌓</button>
+</div>
+
+    <header class="header">
+        <div class="header-content">
+            <a href="../landing-complete-responsive.html" class="logo">🇩🇿 IAFactory</a>
+            <nav class="nav-links">
+                <a href="fonctionnalites.html">Fonctionnalités</a>
+                <a href="applications.html">Applications</a>
+                <a href="tarifs.html">Tarifs</a>
+                <a href="documentation.html">Documentation</a>
+            </nav>
+            <a href="../landing-complete-responsive.html" class="back-btn"><i class="fas fa-arrow-left"></i> Retour</a>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="page-header">
+            <h1>🤖 RAG Assistants</h1>
+            <p>Des assistants IA intelligents propulsés par la technologie RAG (Retrieval Augmented Generation) pour des réponses précises basées sur vos documents.</p>
+        </div>
+
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">📚</div>
+                <h3>Base de Connaissances</h3>
+                <p>Importez vos documents et créez une base de connaissances intelligente.</p>
+                <ul class="feature-list">
+                    <li>PDF, Word, Excel, PowerPoint</li>
+                    <li>Sites web et URLs</li>
+                    <li>Bases de données SQL</li>
+                    <li>APIs externes</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🔍</div>
+                <h3>Recherche Sémantique</h3>
+                <p>Trouvez l'information pertinente même avec des requêtes imprécises.</p>
+                <ul class="feature-list">
+                    <li>Embeddings vectoriels avancés</li>
+                    <li>Recherche multi-langue</li>
+                    <li>Filtrage par métadonnées</li>
+                    <li>Ranking intelligent</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">💬</div>
+                <h3>Génération Augmentée</h3>
+                <p>Réponses précises avec citations et sources vérifiables.</p>
+                <ul class="feature-list">
+                    <li>22+ modèles LLM supportés</li>
+                    <li>Citations avec numéros de page</li>
+                    <li>Réponses contextuelles</li>
+                    <li>Hallucinations minimisées</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>Sécurité Enterprise</h3>
+                <p>Vos données restent privées et sécurisées en Algérie.</p>
+                <ul class="feature-list">
+                    <li>Hébergement local</li>
+                    <li>Chiffrement AES-256</li>
+                    <li>Contrôle d'accès RBAC</li>
+                    <li>Audit logs complets</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Performance</h3>
+                <p>Réponses rapides même avec des millions de documents.</p>
+                <ul class="feature-list">
+                    <li>Indexation temps réel</li>
+                    <li>Cache intelligent</li>
+                    <li>Requêtes parallèles</li>
+                    <li>Auto-scaling</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🔧</div>
+                <h3>Personnalisation</h3>
+                <p>Adaptez les assistants à vos besoins spécifiques.</p>
+                <ul class="feature-list">
+                    <li>Prompts personnalisés</li>
+                    <li>Ton et style configurables</li>
+                    <li>Intégration API</li>
+                    <li>Webhooks et callbacks</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="use-cases">
+            <h2>Cas d'Usage</h2>
+            <div class="cases-grid">
+                <div class="case-item">
+                    <h4><i class="fas fa-building"></i> Administrations</h4>
+                    <p>Assistant pour répondre aux questions des citoyens sur les procédures administratives.</p>
+                </div>
+                <div class="case-item">
+                    <h4><i class="fas fa-balance-scale"></i> Juridique</h4>
+                    <p>Recherche dans les textes de loi et jurisprudence algérienne.</p>
+                </div>
+                <div class="case-item">
+                    <h4><i class="fas fa-graduation-cap"></i> Éducation</h4>
+                    <p>Tuteur intelligent basé sur les cours et manuels scolaires.</p>
+                </div>
+                <div class="case-item">
+                    <h4><i class="fas fa-hospital"></i> Santé</h4>
+                    <p>Assistant médical avec base documentaire clinique.</p>
+                </div>
+                <div class="case-item">
+                    <h4><i class="fas fa-industry"></i> Industrie</h4>
+                    <p>Documentation technique et maintenance assistée.</p>
+                </div>
+                <div class="case-item">
+                    <h4><i class="fas fa-headset"></i> Support Client</h4>
+                    <p>Chatbot intelligent pour répondre aux questions fréquentes.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <h2>Prêt à déployer votre RAG Assistant ?</h2>
+            <p>Contactez-nous pour une démonstration personnalisée adaptée à vos besoins.</p>
+            <a href="contact.html" class="cta-btn">Demander une démo</a>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2025 IAFactory Algeria. Tous droits réservés.</p>
+    </footer>
+<script src="/apps/shared/iafactory-unified.js"></script>
+<!-- IAFactory Chatbot -->
+<button class="iaf-chatbot-btn" onclick="IAFUnified.toggleChatbot()" title="Aide" aria-label="Aide">💬</button>
+<div data-iaf-footer></div>
+</body>
+</html>

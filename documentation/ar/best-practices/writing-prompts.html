@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>كتابة الأوامر - IAFactory Algeria</title>
+    <link rel="stylesheet" href="../../assets/css/docs-theme.css">
+</head>
+<body>
+    <header class="docs-header">
+        <div class="docs-logo">
+            <img src="../../assets/images/logo.png" alt="IAFactory Algeria">
+            <span>IAFactory Algeria</span>
+        </div>
+        <nav class="main-nav">
+            <a href="../index.html">التوثيق</a>
+            <a href="https://app.iafactory-algeria.com">التطبيق</a>
+            <a href="../api/index.html">واجهة برمجية</a>
+        </nav>
+        <div class="docs-controls">
+            <div class="language-switcher">
+                <button data-lang="fr">FR</button>
+                <button data-lang="en">EN</button>
+                <button data-lang="ar" class="active">AR</button>
+            </div>
+            <div class="theme-toggle">
+                <div class="theme-toggle-slider"></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <!-- ...existing sidebar... -->
+        </aside>
+
+        <main class="docs-main">
+            <h1>كتابة الأوامر</h1>
+
+            <p class="lead">أتقن فن التواصل مع الذكاء الاصطناعي للحصول على أفضل النتائج.</p>
+
+            <h2 id="fundamentals">الأساسيات</h2>
+
+            <h3 id="clarity">1. الوضوح</h3>
+
+            <div class="alert alert-success">
+                <strong>جيد</strong>
+                <pre><code>اكتب دالة Python تحسب متوسط قائمة من الأرقام.
+تعامل مع القوائم الفارغة بإرجاع 0.</code></pre>
+            </div>
+
+            <div class="alert alert-danger">
+                <strong>سيء</strong>
+                <pre><code>افعل شيئًا للحساب</code></pre>
+            </div>
+
+            <h3 id="context">2. السياق</h3>
+
+            <pre><code class="language-text">أنا مطور backend أستخدم Node.js.
+أعمل على REST API لموقع تجارة إلكترونية.
+أحتاج دالة middleware للتحقق من رموز JWT.
+
+القيود:
+- استخدم jsonwebtoken v9
+- تعامل مع انتهاء الصلاحية
+- سجّل الأخطاء
+- TypeScript</code></pre>
+
+            <h3 id="specificity">3. التحديد</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>غامض</th>
+                        <th>محدد</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>"ساعدني في SQL"</td>
+                        <td>"اكتب استعلام SQL للحصول على أفضل 10 عملاء حسب الإنفاق في 2024"</td>
+                    </tr>
+                    <tr>
+                        <td>"اشرح React"</td>
+                        <td>"اشرح مفهوم hooks في React مع مثال useState و useEffect"</td>
+                    </tr>
+                    <tr>
+                        <td>"صحح الكود"</td>
+                        <td>"هذا الكود Python يُرجع KeyError في السطر 15. إليك الكود: [الكود]. كيف أصلحه؟"</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 id="prompt-formulas">صيغ الأوامر</h2>
+
+            <h3 id="role-task-format">الصيغة: الدور + المهمة + التنسيق</h3>
+
+            <pre><code class="language-text">أنت [الدور].
+
+المهمة: [ما تريده]
+
+تنسيق المخرجات: [كيف تريده]</code></pre>
+
+            <strong>مثال عملي:</strong>
+            <pre><code class="language-text">أنت خبير أمن سيبراني.
+
+المهمة: حلل كود PHP هذا وحدد الثغرات الأمنية.
+
+تنسيق المخرجات:
+- قائمة مرقمة بالثغرات
+- مستوى الخطورة (منخفض/متوسط/حرج)
+- الحل الموصى به لكل ثغرة</code></pre>
+
+            <h3 id="context-action-constraints">الصيغة: السياق + الإجراء + القيود</h3>
+
+            <pre><code class="language-text">السياق: [الموقف]
+
+الإجراء: [ما يجب فعله]
+
+القيود:
+- [القيد 1]
+- [القيد 2]
+- [القيد 3]</code></pre>
+
+            <strong>مثال:</strong>
+            <pre><code class="language-text">السياق: تطبيق لياقة بدنية بـ React Native
+
+الإجراء: أنشئ مكون Timer للتمارين
+
+القيود:
+- استخدم React hooks
+- تنسيق العرض DD:SS
+- أزرار تشغيل/إيقاف/إعادة
+- إشعار صوتي في النهاية
+- تصميم Material Design</code></pre>
+
+            <h3 id="few-shot">الصيغة: التعلم بالأمثلة (Few-Shot)</h3>
+
+            <pre><code class="language-text">إليك أمثلة:
+
+مثال 1:
+المدخل: [مثال مدخل 1]
+المخرج: [مثال مخرج 1]
+
+مثال 2:
+المدخل: [مثال مدخل 2]
+المخرج: [مثال مخرج 2]
+
+الآن افعل نفس الشيء لـ:
+المدخل: [مدخلك]</code></pre>
+
+            <h2 id="advanced-techniques">تقنيات متقدمة</h2>
+
+            <h3 id="chain-of-thought">سلسلة التفكير</h3>
+
+            <pre><code class="language-text">حل هذه المشكلة خطوة بخطوة:
+
+المشكلة: احسب التكلفة الإجمالية لمشروع
+
+البيانات:
+- 3 مطورين بـ 500$/يوم
+- 2 مصممين بـ 400$/يوم
+- 20 يوم عمل
+- +20% تكاليف إضافية
+
+فكر في كل خطوة قبل الإجابة.</code></pre>
+
+            <h3 id="role-playing">لعب الأدوار</h3>
+
+            <pre><code class="language-text">أنت مراجع كود متمرس لديك 15 سنة من الخبرة.
+أنت صارم بشأن:
+- قابلية قراءة الكود
+- الأداء
+- الأمان
+- أفضل الممارسات
+
+راجع هذا الكود كما تفعل مع مطور مبتدئ في فريقك:
+
+[الكود هنا]</code></pre>
+
+            <h3 id="constraint-based">القيود المحددة</h3>
+
+            <pre><code class="language-text">أنشئ 5 أسماء علامات تجارية لشركة ناشئة في توصيل الطعام.
+
+القيود الإلزامية:
+- بحد أقصى 8 أحرف
+- سهلة النطق بالعربية والإنجليزية
+- متاحة كنطاق .com
+- توحي بالسرعة أو الطازجة
+- بدون أرقام
+
+لكل اسم، اشرح لماذا يستوفي القيود.</code></pre>
+
+            <h2 id="optimization">تحسين الأوامر</h2>
+
+            <h3 id="temperature-usage">استخدام درجة الحرارة</h3>
+
+            <pre><code class="language-json">{
+  "model": "gpt-4.1",
+  "messages": [...],
+  "temperature": 0.2  // للكود/استخراج البيانات
+}
+
+{
+  "model": "gpt-4.1",
+  "messages": [...],
+  "temperature": 1.3  // للعصف الذهني/الإبداع
+}</code></pre>
+
+            <h3 id="token-optimization">تحسين الرموز</h3>
+
+            <div class="alert alert-warning">
+                <strong>مُسهب (مكلف)</strong>
+                <pre><code>هل يمكنك من فضلك مساعدتي في فهم كيف يمكنني حل هذه المشكلة المعقدة...</code></pre>
+            </div>
+
+            <div class="alert alert-success">
+                <strong>مختصر (اقتصادي)</strong>
+                <pre><code>كيف أحل: [المشكلة المحددة]
+الكود: [المقتطف]
+الخطأ: [رسالة الخطأ]</code></pre>
+            </div>
+
+            <h2 id="anti-patterns">أنماط يجب تجنبها</h2>
+
+            <h3 id="too-vague">1. غامض جدًا</h3>
+            <pre><code>"ساعدني"
+"لا يعمل"
+"افعل شيئًا بهذا الكود"</code></pre>
+
+            <h3 id="too-complex">2. معقد جدًا دفعة واحدة</h3>
+            <pre><code>سيء: "أنشئ تطبيقًا كاملاً مع واجهة React، backend Node، MongoDB..."
+
+جيد: قسّم إلى خطوات:
+1. "صمم بنية backend Node.js مع Express"
+2. "أضف نظام مصادقة JWT"
+3. إلخ...</code></pre>
+
+            <h2 id="templates">قوالب جاهزة للاستخدام</h2>
+
+            <h3 id="template-documentation">التوثيق التقني</h3>
+
+            <pre><code class="language-text">وثّق هذه الدالة/الفئة:
+
+الكود:
+[الكود]
+
+أنشئ:
+1. وصف ما تفعله
+2. المعاملات (النوع، الوصف)
+3. القيمة المُرجعة
+4. الاستثناءات المحتملة
+5. مثال على الاستخدام
+6. ملاحظات تقنية
+
+التنسيق: Python Docstring (نمط Google)</code></pre>
+
+            <h3 id="template-api-design">تصميم API</h3>
+
+            <pre><code class="language-text">صمم REST API لـ [الميزة].
+
+المواصفات:
+- الموارد: [القائمة]
+- إجراءات CRUD المطلوبة
+- المصادقة: JWT
+- التصفح مطلوب
+- تحديد المعدل: 100 طلب/دقيقة
+
+قدم:
+1. نقاط النهاية مع طرق HTTP
+2. هيكل JSON للطلب/الاستجابة
+3. رموز حالة HTTP
+4. مثال cURL لكل نقطة نهاية</code></pre>
+
+            <h2 id="evaluation">تقييم جودة الأوامر</h2>
+
+            <h3 id="checklist">قائمة التحقق</h3>
+
+            <ul>
+                <li>هدف واضح؟</li>
+                <li>سياق مقدم؟</li>
+                <li>قيود محددة؟</li>
+                <li>تنسيق المخرجات معرّف؟</li>
+                <li>أمثلة إذا لزم الأمر؟</li>
+                <li>مستوى التفاصيل مناسب؟</li>
+                <li>مفردات دقيقة؟</li>
+            </ul>
+
+            <h2 id="resources">الأدوات والموارد</h2>
+
+            <ul>
+                <li><a href="https://promptbase.com">PromptBase</a> - سوق الأوامر</li>
+                <li><a href="https://learnprompting.org">Learn Prompting</a> - دورة مجانية</li>
+                <li><a href="https://www.promptingguide.ai">Prompting Guide</a> - دليل تفاعلي</li>
+                <li><a href="https://discord.gg/iafactory">IAFactory Discord</a> - المجتمع</li>
+            </ul>
+
+            <div class="alert alert-success">
+                <strong>الخطوة التالية:</strong> تدرب مع <a href="../tips-tricks.html">التمارين التفاعلية</a>!
+            </div>
+        </main>
+
+        <aside class="docs-toc">
+            <h3 class="docs-toc-title">في هذه الصفحة</h3>
+            <ul></ul>
+        </aside>
+    </div>
+
+    <script src="../../assets/js/docs-theme.js"></script>
+</body>
+</html>

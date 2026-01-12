@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modèles et Tarifs - IAFactory Algeria</title>
+    <link rel="stylesheet" href="../../assets/css/docs-theme.css">
+    <link rel="icon" href="../../assets/images/favicon.ico">
+</head>
+<body>
+    <header class="docs-header">
+        <div class="docs-logo">
+            <img src="../../assets/images/logo.png" alt="IAFactory Algeria">
+            <span>IAFactory Algeria</span>
+        </div>
+        
+        <nav class="main-nav">
+            <a href="../index.html">Documentation</a>
+            <a href="https://app.iafactory-algeria.com">App</a>
+            <a href="./index.html" class="active">API</a>
+            <a href="https://jobs.iafactory-algeria.com">Jobs</a>
+        </nav>
+        
+        <div class="docs-controls">
+            <div class="language-switcher">
+                <button data-lang="fr" class="active">🇫🇷 FR</button>
+                <button data-lang="en">🇬🇧 EN</button>
+                <button data-lang="ar">🇸🇦 AR</button>
+            </div>
+            
+            <div class="theme-toggle">
+                <div class="theme-toggle-slider">☀️</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" placeholder="Rechercher...">
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-section-title">🔌 API</h3>
+                <ul class="sidebar-menu">
+                    <li><a href="./quick-start.html">Démarrage rapide</a></li>
+                    <li><a href="./response-format.html">Format de réponse</a></li>
+                    <li><a href="./models-pricing.html" class="active">Modèles et tarifs</a></li>
+                    <li><a href="./error-codes.html">Codes d'erreur</a></li>
+                    <li><a href="./parameters.html">Paramètres</a></li>
+                    <li><a href="./optimization.html">Conseils d'optimisation</a></li>
+                    <li><a href="./migration-openai.html">Migration depuis OpenAI</a></li>
+                    <li><a href="./webhooks.html">Webhooks</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="docs-main">
+            <h1>💰 Modèles et Tarifs</h1>
+            
+            <p class="lead">Choisissez le modèle adapté à vos besoins et budget.</p>
+
+            <div class="alert alert-info">
+                <strong>🎁 Crédits Gratuits Inclus</strong><br>
+                Tous les abonnés reçoivent des crédits API mensuels : Starter (2$), Standard (4$), Expert (10$).
+            </div>
+
+            <h2 id="modeles-texte">Modèles de Texte (Chat)</h2>
+
+            <h3 id="gpt-4-turbo">GPT-4 Turbo (Recommandé)</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Modèle</th>
+                        <th>Input (1M tokens)</th>
+                        <th>Output (1M tokens)</th>
+                        <th>Context</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>gpt-4-turbo</code></td>
+                        <td>$10.00</td>
+                        <td>$30.00</td>
+                        <td>128K tokens</td>
+                    </tr>
+                    <tr>
+                        <td><code>gpt-4-turbo-preview</code></td>
+                        <td>$10.00</td>
+                        <td>$30.00</td>
+                        <td>128K tokens</td>
+                    </tr>
+                    <tr>
+                        <td><code>gpt-4-1106-preview</code></td>
+                        <td>$10.00</td>
+                        <td>$30.00</td>
+                        <td>128K tokens</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p><strong>Cas d'usage :</strong> Tâches complexes, analyse approfondie, raisonnement avancé, génération de code, traduction professionnelle.</p>
+
+            <h3 id="gpt-4">GPT-4 Classic</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Modèle</th>
+                        <th>Input (1M tokens)</th>
+                        <th>Output (1M tokens)</th>
+                        <th>Context</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>gpt-4</code></td>
+                        <td>$30.00</td>
+                        <td>$60.00</td>
+                        <td>8K tokens</td>
+                    </tr>
+                    <tr>
+                        <td><code>gpt-4-32k</code></td>
+                        <td>$60.00</td>
+                        <td>$120.00</td>
+                        <td>32K tokens</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p><strong>Note :</strong> Préférez GPT-4 Turbo pour de meilleures performances et prix.</p>
+
+            <h3 id="gpt-35-turbo">GPT-3.5 Turbo (Économique)</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Modèle</th>
+                        <th>Input (1M tokens)</th>
+                        <th>Output (1M tokens)</th>
+                        <th>Context</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>gpt-3.5-turbo</code></td>
+                        <td>$0.50</td>
+                        <td>$1.50</td>
+                        <td>16K tokens</td>
+                    </tr>
+                    <tr>
+                        <td><code>gpt-3.5-turbo-16k</code></td>
+                        <td>$3.00</td>
+                        <td>$4.00</td>
+                        <td>16K tokens</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p><strong>Cas d'usage :</strong> Chatbots simples, classification, extraction d'informations basiques, résumés courts.</p>
+
+            <h2 id="modeles-claude">Modèles Claude (Anthropic)</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Modèle</th>
+                        <th>Input (1M tokens)</th>
+                        <th>Output (1M tokens)</th>
+                        <th>Context</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>claude-3-opus</code></td>
+                        <td>$15.00</td>
+                        <td>$75.00</td>
+                        <td>200K tokens</td>
+                    </tr>
+                    <tr>
+                        <td><code>claude-3-sonnet</code></td>
+                        <td>$3.00</td>
+                        <td>$15.00</td>
+                        <td>200K tokens</td>
+                    </tr>
+                    <tr>
+                        <td><code>claude-3-haiku</code></td>
+                        <td>$0.25</td>
+                        <td>$1.25</td>
+                        <td>200K tokens</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p><strong>Avantages :</strong> Fenêtre de contexte très large (200K), excellent pour l'analyse de documents longs.</p>
+
+            <h2 id="modeles-gemini">Modèles Gemini (Google)</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Modèle</th>
+                        <th>Input (1M tokens)</th>
+                        <th>Output (1M tokens)</th>
+                        <th>Context</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>gemini-1.5-pro</code></td>
+                        <td>$3.50</td>
+                        <td>$10.50</td>
+                        <td>1M tokens</td>
+                    </tr>
+                    <tr>
+                        <td><code>gemini-1.5-flash</code></td>
+                        <td>$0.075</td>
+                        <td>$0.30</td>
+                        <td>1M tokens</td>
+                    </tr>
+                    <tr>
+                        <td><code>gemini-pro</code></td>
+                        <td>$0.50</td>
+                        <td>$1.50</td>
+                        <td>32K tokens</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p><strong>Avantages :</strong> Contexte immense (jusqu'à 1M tokens), excellent rapport qualité-prix pour Gemini Flash.</p>
+
+            <h2 id="modeles-mistral">Modèles Mistral AI</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Modèle</th>
+                        <th>Input (1M tokens)</th>
+                        <th>Output (1M tokens)</th>
+                        <th>Context</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>mistral-large</code></td>
+                        <td>$8.00</td>
+                        <td>$24.00</td>
+                        <td>32K tokens</td>
+                    </tr>
+                    <tr>
+                        <td><code>mistral-medium</code></td>
+                        <td>$2.70</td>
+                        <td>$8.10</td>
+                        <td>32K tokens</td>
+                    </tr>
+                    <tr>
+                        <td><code>mistral-small</code></td>
+                        <td>$1.00</td>
+                        <td>$3.00</td>
+                        <td>32K tokens</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p><strong>Avantages :</strong> Open-source, bon compromis performance/prix, excellents pour le français.</p>
+
+            <h2 id="modeles-image">Modèles de Génération d'Images</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Modèle</th>
+                        <th>Résolution</th>
+                        <th>Prix par image</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>dall-e-3</code></td>
+                        <td>1024x1024</td>
+                        <td>$0.040</td>
+                    </tr>
+                    <tr>
+                        <td><code>dall-e-3</code></td>
+                        <td>1024x1792, 1792x1024</td>
+                        <td>$0.080</td>
+                    </tr>
+                    <tr>
+                        <td><code>dall-e-2</code></td>
+                        <td>1024x1024</td>
+                        <td>$0.020</td>
+                    </tr>
+                    <tr>
+                        <td><code>dall-e-2</code></td>
+                        <td>512x512</td>
+                        <td>$0.018</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 id="embeddings">Modèles d'Embeddings</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Modèle</th>
+                        <th>Prix (1M tokens)</th>
+                        <th>Dimensions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>text-embedding-3-small</code></td>
+                        <td>$0.020</td>
+                        <td>1536</td>
+                    </tr>
+                    <tr>
+                        <td><code>text-embedding-3-large</code></td>
+                        <td>$0.130</td>
+                        <td>3072</td>
+                    </tr>
+                    <tr>
+                        <td><code>text-embedding-ada-002</code></td>
+                        <td>$0.100</td>
+                        <td>1536</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p><strong>Cas d'usage :</strong> Recherche sémantique, RAG (Retrieval Augmented Generation), clustering, classification.</p>
+
+            <h2 id="comparaison">Comparaison Rapide</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Usage</th>
+                        <th>Modèle Recommandé</th>
+                        <th>Prix Indicatif</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Tâches simples</td>
+                        <td><code>gpt-3.5-turbo</code></td>
+                        <td>$0.002 / 1K tokens</td>
+                    </tr>
+                    <tr>
+                        <td>Usage général</td>
+                        <td><code>gpt-4-turbo</code></td>
+                        <td>$0.01 / 1K tokens</td>
+                    </tr>
+                    <tr>
+                        <td>Analyse documents longs</td>
+                        <td><code>claude-3-sonnet</code></td>
+                        <td>$0.003 / 1K tokens</td>
+                    </tr>
+                    <tr>
+                        <td>Contexte immense</td>
+                        <td><code>gemini-1.5-pro</code></td>
+                        <td>$0.0035 / 1K tokens</td>
+                    </tr>
+                    <tr>
+                        <td>Maximum économie</td>
+                        <td><code>gemini-1.5-flash</code></td>
+                        <td>$0.000075 / 1K tokens</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 id="calculer-couts">Calculer vos Coûts</h2>
+
+            <p>Le coût dépend du nombre de tokens utilisés :</p>
+
+            <pre><code class="language-python"># Exemple : Calculer le coût d'une conversation
+prompt_tokens = 500  # Votre question + contexte
+completion_tokens = 1000  # Réponse générée
+
+# Avec GPT-4 Turbo
+input_cost = (prompt_tokens / 1_000_000) * 10  # $10 per 1M tokens
+output_cost = (completion_tokens / 1_000_000) * 30  # $30 per 1M tokens
+total_cost = input_cost + output_cost
+
+print(f"Coût total: ${total_cost:.6f}")  # ~$0.035</code></pre>
+
+            <div class="alert alert-warning">
+                <strong>💡 Astuce :</strong> Utilisez <code>max_tokens</code> pour limiter les coûts et surveiller <code>usage</code> dans les réponses.
+            </div>
+
+            <h2 id="credits-inclus">Crédits API Inclus</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Formule</th>
+                        <th>Crédits/mois</th>
+                        <th>Équivalent GPT-4</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Starter</td>
+                        <td>2 $</td>
+                        <td>~200K tokens output</td>
+                    </tr>
+                    <tr>
+                        <td>Standard</td>
+                        <td>4 $</td>
+                        <td>~400K tokens output</td>
+                    </tr>
+                    <tr>
+                        <td>Expert</td>
+                        <td>10 $</td>
+                        <td>~1M tokens output</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>Besoin de plus ? <a href="https://dashboard.iafactory-algeria.com/api">Passez au paiement à l'usage</a>.</p>
+
+            <h2 id="bonnes-pratiques">Bonnes Pratiques Tarification</h2>
+
+            <ul>
+                <li>✅ <strong>Commencez par GPT-3.5</strong> pour tester, puis passez à GPT-4 si nécessaire</li>
+                <li>✅ <strong>Utilisez max_tokens</strong> pour contrôler les coûts</li>
+                <li>✅ <strong>Cachez les réponses</strong> fréquentes (Redis/Memcached)</li>
+                <li>✅ <strong>Surveillez usage</strong> dans les réponses API</li>
+                <li>✅ <strong>Prétraitez les prompts</strong> pour réduire les tokens inutiles</li>
+            </ul>
+
+            <h2 id="voir-aussi">Voir Aussi</h2>
+
+            <ul>
+                <li><a href="./optimization.html">Guide d'optimisation des coûts</a></li>
+                <li><a href="./parameters.html">Tous les paramètres API</a></li>
+                <li><a href="../best-practices/choosing-models.html">Comment choisir le bon modèle</a></li>
+            </ul>
+
+        </main>
+
+        <aside class="docs-toc">
+            <h3 class="docs-toc-title">Sur cette page</h3>
+            <ul>
+                <!-- Generated dynamically by JS -->
+            </ul>
+        </aside>
+    </div>
+
+    <script src="../../assets/js/docs-theme.js"></script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+# IAFactory Video Studio Pro - Backend Dependencies
+
+# Framework Web
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
+python-multipart==0.0.6
+
+# Base de données
+sqlalchemy==2.0.25
+asyncpg==0.29.0
+alembic==1.13.1
+
+# Cache & Queues
+redis==5.0.1
+celery==5.3.6
+
+# IA & LLM
+anthropic==0.41.0
+openai==1.12.0  # Pour les fallbacks
+
+# Services Media
+httpx==0.26.0
+aiohttp==3.9.1
+aiofiles==23.2.1
+
+# Traitement Vidéo/Audio
+ffmpeg-python==0.2.0
+pydub==0.25.1
+moviepy==1.0.3
+
+# Génération de contenu
+elevenlabs==1.0.0
+fal-client==0.3.0
+
+# Stockage
+boto3==1.34.25
+minio==7.2.3
+
+# Utilitaires
+pydantic==2.6.0
+pydantic-settings==2.1.0
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-dotenv==1.0.1
+
+# Monitoring
+sentry-sdk[fastapi]==1.39.1
+prometheus-client==0.19.0
+
+# Testing
+pytest==8.0.0
+pytest-asyncio==0.23.4
+pytest-cov==4.1.0
+httpx==0.26.0
+
+# Développement
+black==24.1.1
+isort==5.13.2
+mypy==1.8.0
+ruff==0.1.14

@@ -1,0 +1,413 @@
+/**
+ * UNIFIED BOLT THEME - IA FACTORY
+ * Applique les couleurs de Studio (port 8184) à TOUTES les interfaces
+ * Dark mode par défaut
+ */
+
+/* ========================================
+   BOLT COLOR TOKENS - DARK THEME (Default)
+   ======================================== */
+:root {
+  /* Border */
+  --bolt-elements-borderColor: rgba(255, 255, 255, 0.1);
+  --bolt-elements-borderColorActive: #3B82F6;
+
+  /* Backgrounds */
+  --bolt-elements-bg-depth-1: #0A0A0F;
+  --bolt-elements-bg-depth-2: #18181B;
+  --bolt-elements-bg-depth-3: #27272A;
+  --bolt-elements-bg-depth-4: rgba(255, 255, 255, 0.05);
+
+  /* Text */
+  --bolt-elements-textPrimary: #FFFFFF;
+  --bolt-elements-textSecondary: #9CA3AF;
+  --bolt-elements-textTertiary: #6B7280;
+
+  /* Code */
+  --bolt-elements-code-background: #27272A;
+  --bolt-elements-code-text: #FFFFFF;
+
+  /* Buttons Primary */
+  --bolt-elements-button-primary-background: rgba(59, 130, 246, 0.1);
+  --bolt-elements-button-primary-backgroundHover: rgba(59, 130, 246, 0.2);
+  --bolt-elements-button-primary-text: #3B82F6;
+
+  /* Buttons Secondary */
+  --bolt-elements-button-secondary-background: rgba(255, 255, 255, 0.05);
+  --bolt-elements-button-secondary-backgroundHover: rgba(255, 255, 255, 0.1);
+  --bolt-elements-button-secondary-text: #FFFFFF;
+
+  /* Messages */
+  --bolt-elements-messages-background: #27272A;
+  --bolt-elements-messages-linkColor: #3B82F6;
+
+  /* Icons */
+  --bolt-elements-icon-success: #10B981;
+  --bolt-elements-icon-error: #EF4444;
+  --bolt-elements-icon-primary: #0A0A0F;
+
+  /* Divider */
+  --bolt-elements-dividerColor: rgba(255, 255, 255, 0.1);
+
+  /* Page/Header/Footer backgrounds */
+  --page-bg-start: var(--bolt-elements-bg-depth-1);
+  --page-bg-end: var(--bolt-elements-bg-depth-2);
+  --header-bg-start: var(--page-bg-start);
+  --header-bg-end: var(--page-bg-end);
+  --footer-bg-start: var(--page-bg-start);
+  --footer-bg-end: var(--page-bg-end);
+  --text-color: var(--bolt-elements-textPrimary);
+  --footer-text-color: var(--bolt-elements-textSecondary);
+}
+
+/* ========================================
+   LIGHT THEME (Optional)
+   ======================================== */
+:root[data-theme="light"],
+.light {
+  --bolt-elements-borderColor: rgba(0, 0, 0, 0.1);
+  --bolt-elements-borderColorActive: #2563EB;
+
+  --bolt-elements-bg-depth-1: #FFFFFF;
+  --bolt-elements-bg-depth-2: #F9FAFB;
+  --bolt-elements-bg-depth-3: #E5E7EB;
+  --bolt-elements-bg-depth-4: rgba(0, 0, 0, 0.05);
+
+  --bolt-elements-textPrimary: #0A0A0F;
+  --bolt-elements-textSecondary: #6B7280;
+  --bolt-elements-textTertiary: #9CA3AF;
+
+  --bolt-elements-code-background: #F3F4F6;
+  --bolt-elements-code-text: #0A0A0F;
+
+  --bolt-elements-button-primary-background: rgba(37, 99, 235, 0.1);
+  --bolt-elements-button-primary-backgroundHover: rgba(37, 99, 235, 0.2);
+  --bolt-elements-button-primary-text: #2563EB;
+
+  --bolt-elements-button-secondary-background: rgba(0, 0, 0, 0.05);
+  --bolt-elements-button-secondary-backgroundHover: rgba(0, 0, 0, 0.1);
+  --bolt-elements-button-secondary-text: #0A0A0F;
+
+  --bolt-elements-messages-background: #F3F4F6;
+
+  --page-bg-start: var(--bolt-elements-bg-depth-1);
+  --page-bg-end: var(--bolt-elements-bg-depth-2);
+  --text-color: var(--bolt-elements-textPrimary);
+  --footer-text-color: var(--bolt-elements-textSecondary);
+}
+
+/* ========================================
+   GLOBAL STYLES
+   ======================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: linear-gradient(135deg, var(--page-bg-start) 0%, var(--page-bg-end) 100%);
+  color: var(--text-color);
+  min-height: 100vh;
+}
+
+/* ========================================
+   HEADER STYLES
+   ======================================== */
+.header,
+.site-header,
+header {
+  background: linear-gradient(135deg, var(--header-bg-start) 0%, var(--header-bg-end) 100%);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--bolt-elements-borderColor);
+  color: var(--bolt-elements-textPrimary);
+}
+
+.header h1 {
+  font-size: 1.8rem;
+  color: var(--bolt-elements-textPrimary);
+  background: linear-gradient(135deg, #3B82F6 0%, #A855F7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ========================================
+   FOOTER STYLES
+   ======================================== */
+.site-footer,
+footer {
+  background: linear-gradient(180deg, var(--footer-bg-start) 0%, var(--footer-bg-end) 100%);
+  color: var(--footer-text-color);
+  border-top: 1px solid var(--bolt-elements-borderColor);
+}
+
+/* ========================================
+   CONTAINER & SECTIONS
+   ======================================== */
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bolt-elements-bg-depth-1);
+}
+
+.container {
+  flex: 1;
+}
+
+.upload-section,
+.chat-section,
+.config-section {
+  background: var(--bolt-elements-bg-depth-2);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--bolt-elements-borderColor);
+  border-radius: 1rem;
+  padding: 2rem;
+}
+
+.upload-section h2,
+.chat-section h2 {
+  margin-bottom: 1.5rem;
+  color: var(--bolt-elements-textPrimary);
+}
+
+/* ========================================
+   BUTTONS
+   ======================================== */
+button {
+  background: var(--bolt-elements-button-primary-background);
+  color: var(--bolt-elements-button-primary-text);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+button:hover:not(:disabled) {
+  background: var(--bolt-elements-button-primary-backgroundHover);
+  transform: translateY(-2px);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+button.secondary {
+  background: var(--bolt-elements-button-secondary-background);
+  color: var(--bolt-elements-button-secondary-text);
+}
+
+button.secondary:hover:not(:disabled) {
+  background: var(--bolt-elements-button-secondary-backgroundHover);
+}
+
+/* ========================================
+   LINKS
+   ======================================== */
+a,
+.links a {
+  color: var(--bolt-elements-button-primary-text);
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+a:hover {
+  color: var(--bolt-elements-textPrimary);
+}
+
+.links a {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--bolt-elements-button-primary-text);
+  border-radius: 0.5rem;
+}
+
+.links a:hover {
+  background: var(--bolt-elements-button-primary-background);
+}
+
+/* ========================================
+   MESSAGES & CHAT
+   ======================================== */
+.messages {
+  background: var(--bolt-elements-bg-depth-3);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  height: 400px;
+  overflow-y: auto;
+  margin-bottom: 1rem;
+}
+
+.message {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background: var(--bolt-elements-messages-background);
+  border-left: 3px solid var(--bolt-elements-button-primary-text);
+  color: var(--bolt-elements-textPrimary);
+}
+
+.message.user {
+  border-left-color: #3B82F6;
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.message.assistant {
+  border-left-color: #A855F7;
+  background: rgba(168, 85, 247, 0.1);
+}
+
+.message.system {
+  border-left-color: #10B981;
+  background: rgba(16, 185, 129, 0.1);
+}
+
+/* ========================================
+   INPUTS & FORMS
+   ======================================== */
+input,
+textarea,
+select,
+.query-form input,
+.url-upload input[type="url"],
+.upload-section input[type="file"] {
+  width: 100%;
+  padding: 1rem;
+  background: var(--bolt-elements-bg-depth-3);
+  border: 1px solid var(--bolt-elements-borderColor);
+  border-radius: 0.5rem;
+  color: var(--bolt-elements-textPrimary);
+  font-size: 1rem;
+  transition: all 0.3s;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--bolt-elements-borderColorActive);
+  background: var(--bolt-elements-bg-depth-2);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--bolt-elements-textTertiary);
+}
+
+/* ========================================
+   TOGGLES & SWITCHES
+   ======================================== */
+.source-toggle,
+.ithy-toggle label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: var(--bolt-elements-bg-depth-3);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.source-toggle button.active,
+.ithy-toggle input:checked + label {
+  background: var(--bolt-elements-button-primary-background);
+  color: var(--bolt-elements-button-primary-text);
+}
+
+/* ========================================
+   CARDS & PANELS
+   ======================================== */
+.preset-card,
+.expert-select,
+.file-info {
+  padding: 1rem;
+  background: var(--bolt-elements-bg-depth-2);
+  border: 1px solid var(--bolt-elements-borderColor);
+  border-radius: 0.75rem;
+  transition: all 0.3s;
+}
+
+.preset-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--bolt-elements-borderColorActive);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+}
+
+.preset-card.active {
+  border-color: var(--bolt-elements-borderColorActive);
+  background: var(--bolt-elements-button-primary-background);
+}
+
+/* ========================================
+   SCROLLBAR
+   ======================================== */
+.messages::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.messages::-webkit-scrollbar-track,
+*::-webkit-scrollbar-track {
+  background: var(--bolt-elements-bg-depth-2);
+  border-radius: 4px;
+}
+
+.messages::-webkit-scrollbar-thumb,
+*::-webkit-scrollbar-thumb {
+  background: var(--bolt-elements-bg-depth-3);
+  border-radius: 4px;
+}
+
+.messages::-webkit-scrollbar-thumb:hover,
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--bolt-elements-borderColor);
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.file-upload,
+.url-upload,
+.message {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (max-width: 1024px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ========================================
+   UTILITY CLASSES
+   ======================================== */
+.text-primary { color: var(--bolt-elements-textPrimary); }
+.text-secondary { color: var(--bolt-elements-textSecondary); }
+.text-tertiary { color: var(--bolt-elements-textTertiary); }
+
+.bg-depth-1 { background-color: var(--bolt-elements-bg-depth-1); }
+.bg-depth-2 { background-color: var(--bolt-elements-bg-depth-2); }
+.bg-depth-3 { background-color: var(--bolt-elements-bg-depth-3); }
+
+.border-bolt { border-color: var(--bolt-elements-borderColor); }
+.border-bolt-active { border-color: var(--bolt-elements-borderColorActive); }

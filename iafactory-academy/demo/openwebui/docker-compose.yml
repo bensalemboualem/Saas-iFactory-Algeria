@@ -1,0 +1,57 @@
+version: '3.8'
+
+# Open WebUI - Interface ChatGPT Complete pour IAFactory
+# Toutes les features: Login, Historique, Sidebar, RAG, etc.
+
+services:
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: iafactory-openwebui
+    restart: unless-stopped
+    ports:
+      - "8085:8080"
+    environment:
+      # Connexion Ollama (sur la machine hote)
+      OLLAMA_BASE_URL: http://host.docker.internal:11434
+
+      # Nom de l'application
+      WEBUI_NAME: "IAFactory-School"
+
+      # Activer l'inscription
+      ENABLE_SIGNUP: "true"
+
+      # Admin par defaut
+      WEBUI_SECRET_KEY: "iafactory-secret-2025"
+
+      # Desactiver telemetrie
+      SCARF_NO_ANALYTICS: "true"
+      DO_NOT_TRACK: "true"
+
+    volumes:
+      - ./data:/app/backend/data
+
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+# ============================================
+# FEATURES INCLUSES:
+# ============================================
+# - Login/Inscription utilisateurs
+# - Historique des conversations (sidebar)
+# - Multi-modeles (Ollama, OpenAI, etc.)
+# - RAG avec upload de documents
+# - Thinking mode
+# - Code interpreter
+# - Image generation
+# - Voice input/output
+# - Themes (dark/light)
+# - API keys management
+# - Admin panel
+# - Custom system prompts
+# - Model presets
+# ============================================
+
+# USAGE:
+# docker-compose up -d
+# Puis ouvrir http://localhost:8080
+# Premier utilisateur = Admin

@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intégration n8n - IAFactory Algeria</title>
+    <link rel="stylesheet" href="../../assets/css/docs-theme.css">
+</head>
+<body>
+    <header class="docs-header">
+        <div class="docs-logo">
+            <img src="../../assets/images/logo.png" alt="IAFactory Algeria">
+            <span>IAFactory Algeria</span>
+        </div>
+        <nav class="main-nav">
+            <a href="../index.html">Documentation</a>
+            <a href="https://app.iafactory-algeria.com">App</a>
+            <a href="../api/index.html">API</a>
+        </nav>
+        <div class="docs-controls">
+            <div class="language-switcher">
+                <button data-lang="fr" class="active">🇫🇷 FR</button>
+                <button data-lang="en">🇬🇧 EN</button>
+                <button data-lang="ar">🇸🇦 AR</button>
+            </div>
+            <div class="theme-toggle">
+                <div class="theme-toggle-slider">☀️</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <!-- Sidebar -->
+        </aside>
+
+        <main class="docs-main">
+            <h1>Intégration n8n</h1>
+            
+            <p class="lead">Automatisez vos workflows avec n8n et l'API IAFactory Algeria pour créer des scénarios d'automatisation puissants.</p>
+
+            <h2 id="introduction">🔄 Qu'est-ce que n8n ?</h2>
+
+            <p>n8n est une plateforme d'automatisation open-source qui vous permet de connecter différents services et d'automatiser vos tâches. Avec IAFactory Algeria, vous pouvez intégrer des modèles d'IA directement dans vos workflows.</p>
+
+            <div class="alert alert-info">
+                <strong>💡 Cas d'usage :</strong>
+                <ul>
+                    <li>Génération automatique de contenu à partir de formulaires</li>
+                    <li>Analyse de données entrantes avec l'IA</li>
+                    <li>Traduction automatique de documents</li>
+                    <li>Génération d'images pour vos campagnes marketing</li>
+                    <li>Résumé automatique d'emails ou de documents</li>
+                </ul>
+            </div>
+
+            <h2 id="installation">📦 Installation</h2>
+
+            <h3 id="self-hosted">Version Self-Hosted</h3>
+
+            <pre><code class="language-bash"># Via Docker
+docker run -it --rm \
+  --name n8n \
+  -p 5678:5678 \
+  -v ~/.n8n:/home/node/.n8n \
+  n8nio/n8n
+
+# Via npm
+npm install -g n8n
+n8n start</code></pre>
+
+            <h3 id="cloud">Version Cloud</h3>
+
+            <ol>
+                <li>Inscrivez-vous sur <a href="https://n8n.io">n8n.io</a></li>
+                <li>Créez votre premier workflow</li>
+                <li>Ajoutez les credentials IAFactory Algeria</li>
+            </ol>
+
+            <h2 id="configuration">⚙️ Configuration</h2>
+
+            <h3 id="ajouter-credentials">Ajouter vos Credentials IAFactory</h3>
+
+            <ol>
+                <li>Dans n8n, allez dans <strong>Settings → Credentials</strong></li>
+                <li>Cliquez sur <strong>Add Credentials</strong></li>
+                <li>Sélectionnez <strong>HTTP Request</strong></li>
+                <li>Configurez :
+                    <ul>
+                        <li><strong>Name</strong> : IAFactory Algeria API</li>
+                        <li><strong>Authentication</strong> : Header Auth</li>
+                        <li><strong>Name</strong> : Authorization</li>
+                        <li><strong>Value</strong> : Bearer VOTRE_CLE_API</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h2 id="premiers-workflows">🚀 Premiers Workflows</h2>
+
+            <h3 id="workflow-1">Workflow 1 : Génération de Contenu depuis Formulaire</h3>
+
+            <p><strong>Objectif :</strong> Recevoir un formulaire web et générer automatiquement du contenu marketing avec l'IA.</p>
+
+            <h4>Configuration du Workflow :</h4>
+
+            <ol>
+                <li><strong>Webhook Trigger</strong> : Recevoir les données du formulaire</li>
+                <li><strong>HTTP Request</strong> : Appeler l'API IAFactory
+                    <pre><code class="language-json">{
+  "method": "POST",
+  "url": "https://api.iafactory-algeria.com/v1/chat/completions",
+  "authentication": "IAFactory Algeria API",
+  "body": {
+    "model": "gpt-4.1",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Tu es un expert en copywriting. Génère un texte marketing persuasif."
+      },
+      {
+        "role": "user",
+        "content": "Produit: {{$json.product_name}}\nDescription: {{$json.description}}"
+      }
+    ],
+    "temperature": 0.7,
+    "max_tokens": 500
+  }
+}</code></pre>
+                </li>
+                <li><strong>Set Node</strong> : Extraire le contenu généré</li>
+                <li><strong>Email / Slack / Database</strong> : Envoyer le résultat</li>
+            </ol>
+
+            <h3 id="workflow-2">Workflow 2 : Analyse de Sentiment d'Emails</h3>
+
+            <p><strong>Objectif :</strong> Analyser automatiquement le sentiment des emails entrants et catégoriser.</p>
+
+            <pre><code class="language-json">{
+  "nodes": [
+    {
+      "name": "Email Trigger",
+      "type": "n8n-nodes-base.emailTrigger"
+    },
+    {
+      "name": "IAFactory Analysis",
+      "type": "n8n-nodes-base.httpRequest",
+      "parameters": {
+        "url": "https://api.iafactory-algeria.com/v1/chat/completions",
+        "method": "POST",
+        "body": {
+          "model": "gpt-4.1-mini",
+          "messages": [
+            {
+              "role": "system",
+              "content": "Analyse le sentiment de cet email. Réponds uniquement : POSITIF, NEGATIF ou NEUTRE"
+            },
+            {
+              "role": "user",
+              "content": "{{$json.body}}"
+            }
+          ],
+          "temperature": 0.1
+        }
+      }
+    },
+    {
+      "name": "Route by Sentiment",
+      "type": "n8n-nodes-base.switch",
+      "parameters": {
+        "mode": "expression",
+        "rules": [
+          {
+            "conditions": {
+              "string": [
+                {
+                  "value1": "={{$json.choices[0].message.content}}",
+                  "operation": "contains",
+                  "value2": "NEGATIF"
+                }
+              ]
+            },
+            "output": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "Alert Team",
+      "type": "n8n-nodes-base.slack"
+    }
+  ]
+}</code></pre>
+
+            <h3 id="workflow-3">Workflow 3 : Génération d'Images Automatique</h3>
+
+            <p><strong>Objectif :</strong> Générer des images automatiquement pour vos posts réseaux sociaux.</p>
+
+            <pre><code class="language-javascript">// Node HTTP Request - IAFactory Image Generation
+{
+  "method": "POST",
+  "url": "https://api.iafactory-algeria.com/v1/images/generations",
+  "authentication": "IAFactory Algeria API",
+  "body": {
+    "model": "dall-e-3",
+    "prompt": "{{$json.image_prompt}}",
+    "size": "1024x1024",
+    "quality": "hd"
+  }
+}
+
+// Node suivant : Télécharger l'image
+{
+  "method": "GET",
+  "url": "={{$json.data[0].url}}",
+  "responseFormat": "file"
+}
+
+// Node suivant : Poster sur réseaux sociaux
+// (Twitter, LinkedIn, Facebook, etc.)</code></pre>
+
+            <h2 id="exemples-avances">🎯 Exemples Avancés</h2>
+
+            <h3 id="workflow-multilingue">Workflow Multilingue</h3>
+
+            <pre><code class="language-json">{
+  "name": "Traduction Automatique Multilingue",
+  "nodes": [
+    {
+      "name": "Trigger",
+      "type": "n8n-nodes-base.webhook"
+    },
+    {
+      "name": "Traduction FR",
+      "type": "n8n-nodes-base.httpRequest",
+      "parameters": {
+        "url": "https://api.iafactory-algeria.com/v1/chat/completions",
+        "body": {
+          "model": "gpt-4.1",
+          "messages": [
+            {
+              "role": "system",
+              "content": "Traduis ce texte en français. Réponds uniquement avec la traduction."
+            },
+            {
+              "role": "user",
+              "content": "{{$json.text}}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Traduction AR",
+      "type": "n8n-nodes-base.httpRequest",
+      "parameters": {
+        "url": "https://api.iafactory-algeria.com/v1/chat/completions",
+        "body": {
+          "model": "gpt-4.1",
+          "messages": [
+            {
+              "role": "system",
+              "content": "Translate to Arabic. Reply only with translation."
+            },
+            {
+              "role": "user",
+              "content": "{{$json.text}}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Merge Results",
+      "type": "n8n-nodes-base.merge"
+    }
+  ]
+}</code></pre>
+
+            <h3 id="workflow-chatbot">Workflow Chatbot</h3>
+
+            <pre><code class="language-json">{
+  "name": "Chatbot Support Client",
+  "description": "Réponses automatiques avec contexte",
+  "nodes": [
+    {
+      "name": "Chat Trigger",
+      "type": "n8n-nodes-base.webhook"
+    },
+    {
+      "name": "Recherche Base Connaissance",
+      "type": "n8n-nodes-base.postgres",
+      "parameters": {
+        "query": "SELECT content FROM knowledge_base WHERE embedding <-> {{$json.query_embedding}} < 0.3 ORDER BY embedding <-> {{$json.query_embedding}} LIMIT 3"
+      }
+    },
+    {
+      "name": "IAFactory Response",
+      "type": "n8n-nodes-base.httpRequest",
+      "parameters": {
+        "url": "https://api.iafactory-algeria.com/v1/chat/completions",
+        "body": {
+          "model": "gpt-4.1",
+          "messages": [
+            {
+              "role": "system",
+              "content": "Tu es un agent support. Utilise ce contexte pour répondre : {{$node['Recherche Base Connaissance'].json.results}}"
+            },
+            {
+              "role": "user",
+              "content": "{{$json.user_message}}"
+            }
+          ],
+          "temperature": 0.3
+        }
+      }
+    },
+    {
+      "name": "Send Response",
+      "type": "n8n-nodes-base.httpRequest"
+    }
+  ]
+}</code></pre>
+
+            <h2 id="bonnes-pratiques">✨ Bonnes Pratiques</h2>
+
+            <h3 id="gestion-erreurs">1. Gestion des Erreurs</h3>
+
+            <ul>
+                <li>Ajoutez toujours un node <strong>Error Trigger</strong></li>
+                <li>Utilisez <strong>Retry on Fail</strong> pour les API calls</li>
+                <li>Loggez les erreurs dans une base de données</li>
+                <li>Configurez des alertes Slack/Email</li>
+            </ul>
+
+            <h3 id="optimisation">2. Optimisation des Coûts</h3>
+
+            <ul>
+                <li>Utilisez <strong>gpt-4.1-mini</strong> pour les tâches simples</li>
+                <li>Cachez les réponses fréquentes</li>
+                <li>Limitez max_tokens selon vos besoins</li>
+                <li>Utilisez des conditions pour éviter les appels inutiles</li>
+            </ul>
+
+            <h3 id="securite">3. Sécurité</h3>
+
+            <ul>
+                <li>Ne stockez jamais vos clés API en dur dans les workflows</li>
+                <li>Utilisez les Credentials Manager de n8n</li>
+                <li>Validez toujours les inputs avant envoi à l'API</li>
+                <li>Utilisez HTTPS pour les webhooks</li>
+            </ul>
+
+            <h2 id="templates">📦 Templates Prêts à l'Emploi</h2>
+
+            <div class="card">
+                <h3>🎨 Marketing Automation</h3>
+                <p>Génération automatique de posts réseaux sociaux avec images</p>
+                <a href="https://github.com/iafactory-algeria/n8n-templates/marketing-automation" class="btn btn-primary">Télécharger</a>
+            </div>
+
+            <div class="card">
+                <h3>📧 Email Assistant</h3>
+                <p>Réponses automatiques et catégorisation intelligente</p>
+                <a href="https://github.com/iafactory-algeria/n8n-templates/email-assistant" class="btn btn-primary">Télécharger</a>
+            </div>
+
+            <div class="card">
+                <h3>📊 Data Analysis Pipeline</h3>
+                <p>Analyse automatique de données avec génération de rapports</p>
+                <a href="https://github.com/iafactory-algeria/n8n-templates/data-analysis" class="btn btn-primary">Télécharger</a>
+            </div>
+
+            <h2 id="ressources">📚 Ressources</h2>
+
+            <ul>
+                <li>📖 <a href="https://docs.n8n.io">Documentation n8n</a></li>
+                <li>🎥 <a href="../api/quick-start.html">API Quick Start IAFactory</a></li>
+                <li>💬 <a href="https://discord.gg/iafactory">Communauté Discord</a></li>
+                <li>🔧 <a href="https://github.com/iafactory-algeria/n8n-templates">Templates GitHub</a></li>
+            </ul>
+
+            <div class="alert alert-success">
+                <strong>🚀 Prêt à automatiser ?</strong>
+                <p>Récupérez votre clé API sur <a href="https://app.iafactory-algeria.com/api-keys">app.iafactory-algeria.com</a></p>
+            </div>
+        </main>
+
+        <aside class="docs-toc">
+            <h3 class="docs-toc-title">Sur cette page</h3>
+            <ul></ul>
+        </aside>
+    </div>
+
+    <script src="../../assets/js/docs-theme.js"></script>
+</body>
+</html>

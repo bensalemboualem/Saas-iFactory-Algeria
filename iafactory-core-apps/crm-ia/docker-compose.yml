@@ -1,0 +1,79 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: crm_db
+    environment:
+      POSTGRES_DB: crmdb
+      POSTGRES_USER: crmuser
+      POSTGRES_PASSWORD: crmpassword
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    ports:
+      - "5435:5433"
+    networks:
+      - crm-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U crmuser -d crmdb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile # Refers to CRM's backend Dockerfile in the current directory
+    container_name: crm_backend
+    environment:
+      # These should typically be external service URLs or other Docker service names
+      # Point to backend service name for internal calls
+      LEGAL_API_URL: http://legal_service:8200 # Placeholder - update if legal is a separate service
+      FISCAL_API_URL: http://fiscal_service:8201 # Placeholder
+      RAG_API_URL: http://rag_service:8180 # Placeholder
+      PARK_API_URL: http://park_service:8195 # Placeholder
+      BILLING_API_URL: http://billing_service:8207 # Placeholder
+      DATABASE_URL: postgresql://crmuser:crmpassword@db:5433/crmdb
+      UPLOAD_DIR: /app/uploads
+      OPENAI_API_KEY: ${OPENAI_API_KEY} # For AI analysis
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY} # For AI analysis
+      CRM_AI_ANALYSIS_CREDITS: 8
+    ports:
+      - "8212:8212" # Exposes FastAPI backend
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - crm_uploads:/app/uploads # Persistent storage for uploaded files
+    networks:
+      - crm-network
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import httpx; httpx.get('http://localhost:8212/health', timeout=5)\""]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+
+  frontend:
+    build:
+      context: ./frontend-crm
+      dockerfile: Dockerfile # Refers to frontend-crm/Dockerfile
+    container_name: crm_frontend
+    environment:
+      NEXT_PUBLIC_API_BASE_URL: http://backend:8212 # Frontend talks to backend service name
+    ports:
+      - "8002:3000" # Exposes Next.js frontend on port 8002
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - crm-network
+
+networks:
+  crm-network:
+    driver: bridge
+
+volumes:
+  pg_data:
+  crm_uploads:

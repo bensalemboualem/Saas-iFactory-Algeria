@@ -1,0 +1,90 @@
+{
+  "common": {
+    "welcome": "Marhba bik",
+    "hello": "Salam",
+    "goodbye": "Bslama",
+    "yes": "Ih",
+    "no": "La",
+    "ok": "Wakha",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "loading": "Stenna...",
+    "error": "Kayn mochkil",
+    "success": "Temmam",
+    "warning": "Attention"
+  },
+  "auth": {
+    "login": "Dkhol",
+    "logout": "Khrej",
+    "register": "Inscri rouhek",
+    "password": "Mot de passe",
+    "email": "Email",
+    "forgot_password": "Nssit l'mot de passe?",
+    "create_account": "Dir compte jdid"
+  },
+  "dashboard": {
+    "dashboard": "Tableau de bord",
+    "home": "L'accueil",
+    "settings": "Paramètres",
+    "profile": "Profil dyalek",
+    "notifications": "Notifications"
+  },
+  "billing": {
+    "invoices": "Factures",
+    "payment": "Khlass",
+    "pay_now": "Khlass daba",
+    "balance": "Solde dyalek",
+    "credits": "Crédits",
+    "buy_credits": "Chri crédits",
+    "price": "L'prix",
+    "total": "Total"
+  },
+  "agents": {
+    "assistant": "L'assistant",
+    "chat": "Hder m3a l'assistant",
+    "ask_question": "Souwel soual",
+    "generating": "L'assistant kaykheddem...",
+    "response": "L'jawab"
+  },
+  "documents": {
+    "upload": "Tla3 fichier",
+    "download": "Hbbet fichier",
+    "documents": "L'wra9",
+    "search": "9elleb"
+  },
+  "gov": {
+    "cnas": "CNAS - Sécurité Sociale",
+    "cnrc": "CNRC - Registre de Commerce",
+    "dgi": "DGI - Impôts",
+    "sonelgaz": "Sonelgaz - Kahraba w Gaz",
+    "attestation": "Attestation",
+    "certificate": "Chahada"
+  },
+  "errors": {
+    "network_error": "Kayn mochkil f la connexion",
+    "server_error": "Kayn mochkil f serveur",
+    "not_found": "Mal9inahch",
+    "unauthorized": "Maandekch l'autorisation",
+    "invalid_input": "L'input machi sahih",
+    "try_again": "3awed jarreb"
+  },
+  "time": {
+    "today": "Lyoum",
+    "yesterday": "Lbareh",
+    "tomorrow": "Ghodwa",
+    "now": "Daba",
+    "later": "Men ba3d"
+  },
+  "numbers": {
+    "one": "Wahed",
+    "two": "Jouj",
+    "three": "Tlata",
+    "four": "Rb3a",
+    "five": "Khamsa",
+    "ten": "3achra",
+    "hundred": "Mya",
+    "thousand": "Alf"
+  }
+}

@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تكامل Xcode - IAFactory الجزائر</title>
+    <link rel="stylesheet" href="../../assets/css/docs-theme.css">
+</head>
+<body>
+    <header class="docs-header">
+        <div class="docs-logo">
+            <img src="../../assets/images/logo.png" alt="IAFactory الجزائر">
+            <span>IAFactory الجزائر</span>
+        </div>
+        <nav class="main-nav">
+            <a href="../index.html">التوثيق</a>
+            <a href="https://app.iafactory-algeria.com">التطبيق</a>
+            <a href="../api/index.html">API</a>
+        </nav>
+        <div class="docs-controls">
+            <div class="language-switcher">
+                <button data-lang="fr">🇫🇷 FR</button>
+                <button data-lang="en">🇬🇧 EN</button>
+                <button data-lang="ar" class="active">🇸🇦 AR</button>
+            </div>
+            <div class="theme-toggle">
+                <div class="theme-toggle-slider">☀️</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <!-- Sidebar -->
+        </aside>
+
+        <main class="docs-main">
+            <h1>تكامل Xcode</h1>
+            
+            <p class="lead">استخدم الذكاء الاصطناعي من IAFactory الجزائر مباشرة في Xcode للحصول على مساعدة ذكية في تطوير iOS/macOS.</p>
+
+            <h2 id="introduction">🍎 مقدمة</h2>
+
+            <p>قم بدمج IAFactory الجزائر في سير عمل Xcode الخاص بك للحصول على إنشاء كود Swift بالذكاء الاصطناعي، ومساعدة في تصحيح الأخطاء، وإنشاء الاختبارات، وإنشاء التوثيق لتطوير iOS وmacOS وwatchOS وtvOS.</p>
+
+            <div class="alert alert-info">
+                <strong>💡 الميزات:</strong>
+                <ul>
+                    <li>إنشاء كود Swift وSwiftUI</li>
+                    <li>إكمال الكود الذكي</li>
+                    <li>إنشاء اختبارات الوحدة الآلي</li>
+                    <li>كشف الأخطاء وإصلاحها</li>
+                    <li>إنشاء توثيق API</li>
+                    <li>اقتراحات إعادة الهيكلة</li>
+                </ul>
+            </div>
+
+            <h2 id="setup">📦 الإعداد</h2>
+
+            <h3 id="install-extension">1. تثبيت إضافة Xcode</h3>
+
+            <pre><code class="language-bash"># استنساخ مستودع الإضافة
+git clone https://github.com/iafactory-algeria/xcode-iafactory.git
+cd xcode-iafactory
+
+# البناء والتثبيت
+xcodebuild -scheme IAFactoryExtension
+open build/IAFactoryExtension.app</code></pre>
+
+            <h3 id="enable-extension">2. تفعيل الإضافة</h3>
+
+            <ol>
+                <li>افتح <strong>إعدادات النظام ← الخصوصية والأمان ← الإضافات</strong></li>
+                <li>فعّل <strong>Xcode Source Editor</strong></li>
+                <li>حدد <strong>IAFactory Extension</strong></li>
+                <li>أعد تشغيل Xcode</li>
+            </ol>
+
+            <h3 id="configure-api">3. تكوين مفتاح API</h3>
+
+            <pre><code class="language-bash"># تعيين مفتاح API في البيئة
+echo 'export IAFACTORY_API_KEY="your_api_key"' >> ~/.zshrc
+source ~/.zshrc
+
+# أو التكوين في Xcode
+defaults write com.iafactory.xcode-extension apiKey "your_api_key"</code></pre>
+
+            <h2 id="usage">🚀 الاستخدام</h2>
+
+            <h3 id="code-generation">إنشاء الكود</h3>
+
+            <p>حدد تعليقاً يصف ما تريد ← <strong>المحرر ← IAFactory ← إنشاء الكود</strong></p>
+
+            <pre><code class="language-swift">// أنشئ واجهة SwiftUI مع قائمة مستخدمين مجلوبة من API
+
+// الذكاء الاصطناعي ينشئ:
+import SwiftUI
+
+struct UserListView: View {
+    @State private var users: [User] = []
+    @State private var isLoading = false
+    @State private var errorMessage: String?
+    
+    var body: some View {
+        NavigationView {
+            Group {
+                if isLoading {
+                    ProgressView("جاري تحميل المستخدمين...")
+                } else if let error = errorMessage {
+                    VStack {
+                        Image(systemName: "exclamationmark.triangle")
+                            .font(.largeTitle)
+                        Text(error)
+                            .foregroundColor(.red)
+                        Button("إعادة المحاولة") {
+                            fetchUsers()
+                        }
+                    }
+                } else {
+                    List(users) { user in
+                        NavigationLink(destination: UserDetailView(user: user)) {
+                            UserRowView(user: user)
+                        }
+                    }
+                }
+            }
+            .navigationTitle("المستخدمون")
+            .onAppear {
+                fetchUsers()
+            }
+        }
+    }
+    
+    private func fetchUsers() {
+        isLoading = true
+        errorMessage = nil
+        
+        guard let url = URL(string: "https://api.example.com/users") else {
+            errorMessage = "عنوان URL غير صالح"
+            isLoading = false
+            return
+        }
+        
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            DispatchQueue.main.async {
+                isLoading = false
+                
+                if let error = error {
+                    errorMessage = error.localizedDescription
+                    return
+                }
+                
+                guard let data = data else {
+                    errorMessage = "لم يتم استلام بيانات"
+                    return
+                }
+                
+                do {
+                    users = try JSONDecoder().decode([User].self, from: data)
+                } catch {
+                    errorMessage = "فشل فك التشفير: \(error.localizedDescription)"
+                }
+            }
+        }.resume()
+    }
+}</code></pre>
+
+            <h3 id="test-generation">إنشاء اختبارات الوحدة</h3>
+
+            <p>حدد دالة ← <strong>IAFactory ← إنشاء الاختبارات</strong></p>
+
+            <pre><code class="language-swift">// الدالة الأصلية
+func calculateDiscount(price: Double, percentage: Double) throws -> Double {
+    guard percentage >= 0 && percentage <= 100 else {
+        throw DiscountError.invalidPercentage
+    }
+    return price * (1 - percentage / 100)
+}
+
+// الاختبارات المنشأة
+import XCTest
+@testable import YourApp
+
+class DiscountCalculatorTests: XCTestCase {
+    
+    func testCalculateDiscountWithValidPercentage() throws {
+        let result = try calculateDiscount(price: 100, percentage: 10)
+        XCTAssertEqual(result, 90, accuracy: 0.01)
+    }
+    
+    func testCalculateDiscountWithZeroPercentage() throws {
+        let result = try calculateDiscount(price: 100, percentage: 0)
+        XCTAssertEqual(result, 100, accuracy: 0.01)
+    }
+    
+    func testCalculateDiscountWithFullDiscount() throws {
+        let result = try calculateDiscount(price: 100, percentage: 100)
+        XCTAssertEqual(result, 0, accuracy: 0.01)
+    }
+    
+    func testCalculateDiscountWithNegativePercentage() {
+        XCTAssertThrowsError(try calculateDiscount(price: 100, percentage: -10)) { error in
+            XCTAssertEqual(error as? DiscountError, .invalidPercentage)
+        }
+    }
+    
+    func testCalculateDiscountWithPercentageOver100() {
+        XCTAssertThrowsError(try calculateDiscount(price: 100, percentage: 150)) { error in
+            XCTAssertEqual(error as? DiscountError, .invalidPercentage)
+        }
+    }
+    
+    func testCalculateDiscountWithLargeNumbers() throws {
+        let result = try calculateDiscount(price: 1_000_000, percentage: 25)
+        XCTAssertEqual(result, 750_000, accuracy: 0.01)
+    }
+}</code></pre>
+
+            <h3 id="documentation">إنشاء التوثيق</h3>
+
+            <p>حدد الكود ← <strong>IAFactory ← إنشاء التوثيق</strong></p>
+
+            <pre><code class="language-swift">// قبل
+func fetchUserProfile(userId: String, completion: @escaping (Result<User, Error>) -> Void) {
+    // ... التنفيذ
+}
+
+// بعد
+/// يجلب ملف تعريف المستخدم من API البعيد
+///
+/// تقوم هذه الدالة بإجراء طلب شبكة غير متزامن لاسترداد بيانات المستخدم
+/// من الخادم الخلفي. يتم تسليم النتيجة عبر معالج الإكمال.
+///
+/// - Parameters:
+///   - userId: المعرّف الفريد للمستخدم المراد جلبه
+///   - completion: إغلاق يتم استدعاؤه عند اكتمال الطلب
+///     - Parameter result: `Result` يحتوي إما على كائن `User` في حالة النجاح
+///       أو `Error` في حالة الفشل
+///
+/// - Important: يجب استدعاء هذه الدالة من الخيط الرئيسي
+///
+/// - Example:
+/// ```swift
+/// fetchUserProfile(userId: "123") { result in
+///     switch result {
+///     case .success(let user):
+///         print("اسم المستخدم: \(user.name)")
+///     case .failure(let error):
+///         print("خطأ: \(error.localizedDescription)")
+///     }
+/// }
+/// ```
+func fetchUserProfile(userId: String, completion: @escaping (Result<User, Error>) -> Void) {
+    // ... التنفيذ
+}</code></pre>
+
+            <h2 id="debugging">🐛 تصحيح الأخطاء بالذكاء الاصطناعي</h2>
+
+            <h3 id="error-explanation">شرح الخطأ</h3>
+
+            <p>انقر على الخطأ ← <strong>IAFactory ← شرح الخطأ</strong></p>
+
+            <pre><code class="language-swift">// خطأ: النوع 'ViewController' لا يتوافق مع البروتوكول 'UITableViewDataSource'
+
+// شرح الذكاء الاصطناعي:
+/*
+يحدث هذا الخطأ لأن ViewController يعلن التوافق مع UITableViewDataSource
+ولكن لا ينفذ جميع الطرق المطلوبة.
+
+الطرق المطلوبة للتنفيذ:
+1. tableView(_:numberOfRowsInSection:) -> Int
+2. tableView(_:cellForRowAt:) -> UITableViewCell
+
+الإصلاح السريع:
+*/
+
+extension ViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return items.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        cell.textLabel?.text = items[indexPath.row]
+        return cell
+    }
+}</code></pre>
+
+            <h2 id="shortcuts">⌨️ اختصارات لوحة المفاتيح</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>الاختصار</th>
+                        <th>الإجراء</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>⌘⇧G</code></td><td>إنشاء الكود</td></tr>
+                    <tr><td><code>⌘⇧T</code></td><td>إنشاء الاختبارات</td></tr>
+                    <tr><td><code>⌘⇧D</code></td><td>إنشاء التوثيق</td></tr>
+                    <tr><td><code>⌘⇧E</code></td><td>شرح الخطأ</td></tr>
+                    <tr><td><code>⌘⇧R</code></td><td>إعادة هيكلة الكود</td></tr>
+                </tbody>
+            </table>
+
+            <h2 id="best-practices">✨ أفضل الممارسات</h2>
+
+            <h3 id="context">1. توفير السياق</h3>
+
+            <ul>
+                <li>اكتب تعليقات وصفية قبل إنشاء الكود</li>
+                <li>قم بتضمين الأنواع والبروتوكولات ذات الصلة في التحديد</li>
+                <li>حافظ على تحديث توثيق بنية المشروع</li>
+            </ul>
+
+            <h3 id="review">2. مراجعة الكود</h3>
+
+            <ul>
+                <li>راجع دائماً الكود الذي ينشئه الذكاء الاصطناعي</li>
+                <li>قم بتشغيل الاختبارات قبل الالتزام</li>
+                <li>تحقق من تسرب الذاكرة باستخدام Instruments</li>
+            </ul>
+
+            <h3 id="security">3. الأمان</h3>
+
+            <ul>
+                <li>لا تقم بتضمين بيانات حساسة في المطالبات</li>
+                <li>راجع الآثار الأمنية للكود المنشأ</li>
+                <li>استخدم <code>.iafactoryignore</code> للملفات الحساسة</li>
+            </ul>
+
+            <h2 id="resources">📚 الموارد</h2>
+
+            <ul>
+                <li>📖 <a href="https://developer.apple.com/xcode/">توثيق Xcode</a></li>
+                <li>🎥 <a href="../api/quick-start.html">البداية السريعة لـ API IAFactory</a></li>
+                <li>💬 <a href="https://discord.gg/iafactory">مجتمع Discord</a></li>
+                <li>🍎 <a href="https://github.com/iafactory-algeria/xcode-iafactory">مستودع GitHub</a></li>
+            </ul>
+
+            <div class="alert alert-success">
+                <strong>🍎 هل أنت مستعد للبرمجة بالذكاء الاصطناعي في Xcode؟</strong>
+                <p>احصل على مفتاح API الخاص بك: <a href="https://app.iafactory-algeria.com/api-keys">app.iafactory-algeria.com</a></p>
+            </div>
+        </main>
+
+        <aside class="docs-toc">
+            <h3 class="docs-toc-title">في هذه الصفحة</h3>
+            <ul></ul>
+        </aside>
+    </div>
+
+    <script src="../../assets/js/docs-theme.js"></script>
+</body>
+</html>

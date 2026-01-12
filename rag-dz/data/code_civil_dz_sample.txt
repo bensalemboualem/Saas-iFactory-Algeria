@@ -1,0 +1,89 @@
+LIVRE II - DES OBLIGATIONS ET DES CONTRATS
+
+TITRE I - DES SOURCES DES OBLIGATIONS
+
+CHAPITRE I - DU CONTRAT
+
+Section 1 - Dispositions generales
+
+Article 54
+Le contrat est une convention par laquelle une ou plusieurs personnes s'obligent envers une ou plusieurs autres a donner, a faire ou a ne pas faire quelque chose.
+
+Article 55
+Le contrat se forme des que les parties echangent leurs volontes concordantes, sans prejudice des dispositions legales.
+
+Article 56
+Si les parties sont convenues de tous les elements essentiels du contrat et ont reserve certains details accessoires pour un accord ulterieur, le contrat est repute conclu et, faute d'accord sur ces points accessoires, le juge les regle conformement a la nature de l'affaire et aux dispositions legales.
+
+Article 57
+Le silence gardé par celui auquel l'offre est faite ne vaut pas acceptation.
+Toutefois, l'acceptation est censee donnee si en raison des circonstances le silence ne saurait s'expliquer autrement.
+
+Article 58
+Le contrat entre absents est cense conclu au lieu et au moment ou l'acceptation est parvenue a l'offrant.
+
+CHAPITRE III - DE LA RESPONSABILITE CIVILE
+
+Section 1 - De la responsabilite du fait personnel
+
+Article 124
+Tout fait quelconque de l'homme qui cause a autrui un dommage oblige celui par la faute duquel il est arrive a le reparer.
+
+Article 125
+Ne donne pas lieu a reparation le dommage qui resulte de l'exercice normal d'un droit, notamment lorsque cet exercice n'a pour but que de nuire a autrui.
+
+Article 126
+L'ordre de la loi ou l'ordre de l'autorite legitime justifie le dommage qui en resulte.
+Il en est de meme de la legitime defense et de l'etat de necessite si le moyen de defense etait proportionne a la gravite de l'agression.
+
+Article 127
+L'auteur du dommage est responsable bien qu'il fut en etat de demence lorsqu'il le causa.
+Toutefois, si la victime ne peut obtenir reparation de celui qui est charge de sa surveillance, le tribunal peut, en tenant compte de la fortune des deux parties, condamner l'auteur du dommage a une indemnite equitable.
+
+Article 128
+Celui qui est dans un etat de necessite peut etre condamne a une indemnite equitable s'il a cause un dommage a autrui pour eviter un dommage plus grave a lui-meme ou a autrui.
+
+Section 2 - De la responsabilite du fait d'autrui
+
+Article 134
+Le pere, et la mere apres le deces du pere, sont responsables du dommage cause par leurs enfants mineurs habitant avec eux.
+Les maitres et commettants sont responsables du dommage cause par leurs domestiques et preposes lorsque le fait dommageable a ete accompli par ceux-ci dans leurs fonctions.
+
+Article 135
+La personne chargee par une obligation legale ou conventionnelle de la surveillance d'un incapable en raison de son etat mental ou de sa minorite, est responsable du dommage cause par cet incapable a autrui.
+Toutefois, cette responsabilite cesse si cette personne prouve qu'elle a satisfait a son obligation de surveillance ou que le dommage se serait produit meme si elle avait exerce cette surveillance avec le soin requis.
+
+Section 3 - De la responsabilite du fait des choses
+
+Article 138
+Toute personne qui a la garde d'une chose et qui en assure le pouvoir d'usage, de direction et de controle est responsable du dommage cause par cette chose.
+
+Article 139
+Le gardien d'un animal ou celui qui s'en sert pendant qu'il est a son service est responsable du dommage que l'animal a cause, meme si l'animal s'est egare ou echappe.
+
+Article 140
+Toute personne qui detient a un titre quelconque tout ou partie d'un immeuble ou bien meuble, dans lequel un incendie a pris naissance, n'est responsable vis-a-vis des tiers des dommages causes par cet incendie que s'il est prouve que l'incendie doit etre attribue a sa faute ou a la faute des personnes dont il repond.
+
+TITRE II - DES EFFETS DE L'OBLIGATION
+
+CHAPITRE I - DE L'EXECUTION FORCEE
+
+Article 164
+Le debiteur est mis en demeure de s'executer par une sommation ou par tout autre acte equivalent ou par une stipulation du contrat, manifestant la volonte du creancier d'obtenir l'execution de l'obligation.
+
+Article 165
+En cas d'inexecution de l'obligation de donner une somme d'argent, le debiteur est condamne a payer au creancier, a titre de dommages-interets moratoires, le taux legal des interets a partir de la mise en demeure.
+
+Article 166
+Le creancier peut, apres mise en demeure, et sans prejudice de dommages-interets, demander l'autorisation de faire executer lui-meme l'obligation aux depens du debiteur.
+
+CHAPITRE II - DE LA REPARATION
+
+Article 182
+En cas d'inexecution totale ou partielle de l'obligation ou de retard dans son execution, le juge condamne le debiteur a des dommages-interets a raison du prejudice subi par le creancier.
+
+Article 183
+Si l'objet de l'obligation est une somme d'argent et que le debiteur en a retarde le paiement, les dommages-interets pour retard de paiement consistent dans le taux legal des interets sauf si les parties sont convenues d'un taux d'interet conventionnel plus eleve.
+
+Article 184
+Les dommages-interets compensatoires et les dommages-interets moratoires ne sont dus que si le debiteur est de mauvaise foi.

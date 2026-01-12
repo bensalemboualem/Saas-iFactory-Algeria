@@ -1,0 +1,101 @@
+version: "3.9"
+
+services:
+  # 1. Local RAG Agent (100% local - Ollama + Qdrant)
+  ai-local-rag:
+    build: ./ai-agents/rag-apps/local_rag_agent
+    container_name: iaf-ai-local-rag-prod
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OLLAMA_URL=http://iaf-dz-ollama:11435
+      - QDRANT_URL=http://qdrant:6334
+    ports:
+      - "9109:8501"
+    networks:
+      - iafactory-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+  ai-rag-as-service:
+    build: ./ai-agents/rag-apps/rag-as-a-service
+    container_name: iaf-ai-rag-as-service-prod
+    environment:
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - RAGIE_API_KEY=${RAGIE_API_KEY}
+    ports:
+      - "9110:8501"
+    networks:
+      - iafactory-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # 3. Agentic RAG with Reasoning (OpenAI + Google Gemini)
+  ai-agentic-rag:
+    build: ./ai-agents/rag-apps/agentic_rag_with_reasoning
+    container_name: iaf-ai-agentic-rag-prod
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+    ports:
+      - "9111:8501"
+    networks:
+      - iafactory-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # 4. Hybrid Search RAG (Anthropic Claude + raglite)
+  ai-hybrid-search-rag:
+    build: ./ai-agents/rag-apps/hybrid_search_rag
+    container_name: iaf-ai-hybrid-search-rag-prod
+    environment:
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+    ports:
+      - "9112:8501"
+    volumes:
+      - hybrid-search-data:/app/data
+    networks:
+      - iafactory-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # 5. Autonomous RAG (OpenAI + PostgreSQL + DuckDuckGo)
+  ai-autonomous-rag:
+    build: ./ai-agents/rag-apps/autonomous_rag
+    container_name: iaf-ai-autonomous-rag-prod
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - POSTGRES_URL=postgresql://postgres:${POSTGRES_PASSWORD}@iaf-dz-postgres:5433/iafactory
+    ports:
+      - "9113:8501"
+    networks:
+      - iafactory-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+networks:
+  iafactory-net:
+    external: true
+    name: iafactory-rag-dz_iafactory-net
+
+volumes:
+  hybrid-search-data:
+    name: iaf-ai-hybrid-search-data

@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  iafactory-hub:
+    image: iafactory_iafactory-hub:latest
+    container_name: iaf-hub-prod
+    environment:
+      VITE_API_URL: https://www.iafactoryalgeria.com/api
+      VITE_WS_URL: wss://www.iafactoryalgeria.com
+      VITE_ALLOWED_HOSTS: www.iafactoryalgeria.com,iafactoryalgeria.com,localhost,127.0.0.1
+      NODE_ENV: production
+    ports:
+      - 127.0.0.1:8182:3737
+    networks:
+      - iaf-prod-network
+    restart: unless-stopped
+
+  iafactory-docs:
+    image: iafactory_iafactory-docs:latest
+    container_name: iaf-docs-prod
+    environment:
+      VITE_API_URL: https://www.iafactoryalgeria.com/api
+      VITE_ALLOWED_HOSTS: www.iafactoryalgeria.com,iafactoryalgeria.com,localhost,127.0.0.1
+      NODE_ENV: production
+    ports:
+      - 127.0.0.1:8183:5173
+    networks:
+      - iaf-prod-network
+    restart: unless-stopped
+
+  iafactory-studio:
+    build:
+      context: ./bolt-diy
+      dockerfile: Dockerfile.dev
+    container_name: iaf-studio-prod
+    environment:
+      VITE_API_URL: https://www.iafactoryalgeria.com/api
+      VITE_ALLOWED_HOSTS: www.iafactoryalgeria.com,iafactoryalgeria.com,localhost,127.0.0.1
+      GROQ_API_KEY: ${GROQ_API_KEY}
+      NODE_ENV: development
+    ports:
+      - 127.0.0.1:8184:5173
+    networks:
+      - iaf-prod-network
+    restart: unless-stopped
+
+networks:
+  iaf-prod-network:
+    external: true

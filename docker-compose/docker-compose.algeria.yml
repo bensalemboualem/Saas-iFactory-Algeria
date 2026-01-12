@@ -1,0 +1,506 @@
+# =============================================================================
+# IAFACTORY ALGERIA - DOCKER COMPOSE DEVELOPMENT
+# =============================================================================
+# Region: DZ (Algerie)
+# Environment: Development
+# Stack: PostgreSQL 16 + PGVector, Redis 7, Qdrant, Meilisearch, Ollama
+# Ports: 5432 (DB), 6379 (Redis), 6333 (Qdrant), 8000 (API), 3000 (Frontend)
+# =============================================================================
+# Usage:
+#   cd deployments/algeria
+#   cp .env.example .env
+#   docker-compose -f docker-compose.yml up -d
+# =============================================================================
+
+services:
+  # ===========================================================================
+  # DATABASES & CACHE
+  # ===========================================================================
+
+  iaf-postgres:
+    image: pgvector/pgvector:pg16
+    container_name: iaf-dz-postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-iafactory_dz}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD requis}
+      POSTGRES_DB: ${POSTGRES_DB:-iafactory_dz}
+      TZ: Africa/Algiers
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ../../core/infrastructure/sql/init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+      - ../../core/infrastructure/sql/pgvector_migration.sql:/docker-entrypoint-initdb.d/02-pgvector.sql:ro
+    ports:
+      - "5432:5432"
+    command: postgres -c shared_preload_libraries=vector -c max_connections=200
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-iafactory_dz} -d ${POSTGRES_DB:-iafactory_dz}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - iaf-dz-network
+
+  iaf-redis:
+    image: redis:7-alpine
+    container_name: iaf-dz-redis
+    command: >
+      redis-server
+      --appendonly yes
+      --maxmemory 512mb
+      --maxmemory-policy allkeys-lru
+      ${REDIS_PASSWORD:+--requirepass ${REDIS_PASSWORD}}
+    volumes:
+      - redis-data:/data
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - iaf-dz-network
+
+  iaf-qdrant:
+    image: qdrant/qdrant:latest
+    container_name: iaf-dz-qdrant
+    volumes:
+      - qdrant-data:/qdrant/storage
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    environment:
+      QDRANT__LOG_LEVEL: ${LOG_LEVEL:-INFO}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:6333/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - iaf-dz-network
+
+  iaf-meilisearch:
+    image: getmeili/meilisearch:latest
+    container_name: iaf-dz-meilisearch
+    environment:
+      MEILI_MASTER_KEY: ${MEILI_MASTER_KEY:-masterKey123}
+      MEILI_ENV: development
+    volumes:
+      - meili-data:/meili_data
+    ports:
+      - "7700:7700"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7700/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - iaf-dz-network
+
+  # ===========================================================================
+  # RAG & AI SERVICES
+  # ===========================================================================
+
+  iaf-ollama:
+    image: ollama/ollama:latest
+    container_name: iaf-dz-ollama
+    volumes:
+      - ollama-data:/root/.ollama
+    ports:
+      - "11434:11434"
+    environment:
+      OLLAMA_HOST: 0.0.0.0
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - iaf-dz-network
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    profiles:
+      - ai-local
+
+  iaf-anythingllm:
+    image: mintplexlabs/anythingllm:latest
+    container_name: iaf-dz-anythingllm
+    ports:
+      - "3001:3001"
+    volumes:
+      - anythingllm-data:/app/server/storage
+    environment:
+      STORAGE_DIR: /app/server/storage
+      JWT_SECRET: ${JWT_SECRET_KEY:-change-me-jwt-secret}
+      VECTOR_DB: qdrant
+      QDRANT_ENDPOINT: http://iaf-qdrant:6333
+    depends_on:
+      iaf-qdrant:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - iaf-dz-network
+    profiles:
+      - extras
+
+  # ===========================================================================
+  # BACKEND API (FastAPI)
+  # ===========================================================================
+
+  iaf-backend:
+    build:
+      context: ../../core/services/api
+      dockerfile: Dockerfile
+    container_name: iaf-dz-backend
+    env_file:
+      - .env
+    depends_on:
+      iaf-postgres:
+        condition: service_healthy
+      iaf-redis:
+        condition: service_healthy
+      iaf-qdrant:
+        condition: service_healthy
+    environment:
+      # === REGION ===
+      REGION: algeria
+      REGION_CODE: DZ
+      SOVEREIGNTY_REGION: DZ
+      TZ: Africa/Algiers
+
+      # === DATABASE ===
+      POSTGRES_URL: postgresql://${POSTGRES_USER:-iafactory_dz}:${POSTGRES_PASSWORD}@iaf-postgres:5432/${POSTGRES_DB:-iafactory_dz}
+      DATABASE_URL: postgresql://${POSTGRES_USER:-iafactory_dz}:${POSTGRES_PASSWORD}@iaf-postgres:5432/${POSTGRES_DB:-iafactory_dz}
+      USE_PGVECTOR: "true"
+
+      # === REDIS ===
+      REDIS_URL: redis://${REDIS_PASSWORD:+:${REDIS_PASSWORD}@}iaf-redis:6379/0
+
+      # === QDRANT ===
+      QDRANT_HOST: iaf-qdrant
+      QDRANT_PORT: 6333
+
+      # === MEILISEARCH ===
+      MEILI_URL: http://iaf-meilisearch:7700
+      MEILI_MASTER_KEY: ${MEILI_MASTER_KEY:-masterKey123}
+
+      # === LLM PROVIDERS ===
+      ENABLE_LLM: "true"
+      LLM_PROVIDER: ${LLM_PROVIDER:-groq}
+      LLM_MODEL: ${LLM_MODEL:-llama-3.3-70b-versatile}
+      GROQ_API_KEY: ${GROQ_API_KEY:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY:-}
+      GOOGLE_GENERATIVE_AI_API_KEY: ${GOOGLE_GENERATIVE_AI_API_KEY:-}
+
+      # === OLLAMA (LOCAL) ===
+      OLLAMA_BASE_URL: http://iaf-ollama:11434
+
+      # === EMBEDDINGS ===
+      EMBEDDING_MODEL: ${EMBEDDING_MODEL:-sentence-transformers/paraphrase-multilingual-mpnet-base-v2}
+      EMBEDDING_DEVICE: ${EMBEDDING_DEVICE:-cpu}
+      EMBEDDING_BATCH_SIZE: ${EMBEDDING_BATCH_SIZE:-32}
+
+      # === RERANKING ===
+      USE_RERANKING: ${USE_RERANKING:-true}
+      RERANKING_MODEL: ${RERANKING_MODEL:-cross-encoder/ms-marco-MiniLM-L-6-v2}
+      RERANKING_TOP_K: ${RERANKING_TOP_K:-10}
+
+      # === PAYMENT (CHARGILY - ALGERIA) ===
+      PAYMENT_PROVIDER: chargily
+      CHARGILY_API_KEY: ${CHARGILY_API_KEY:-}
+      CHARGILY_SECRET_KEY: ${CHARGILY_SECRET_KEY:-}
+      CHARGILY_WEBHOOK_SECRET: ${CHARGILY_WEBHOOK_SECRET:-}
+      CHARGILY_MODE: ${CHARGILY_MODE:-test}
+      CHARGILY_API_URL: ${CHARGILY_API_URL:-https://pay.chargily.net/test/api/v2}
+      PAYMENT_CURRENCY: DZD
+      DEFAULT_CREDITS: ${DEFAULT_CREDITS:-100}
+      CREDITS_PER_DZD: ${CREDITS_PER_DZD:-1.0}
+
+      # === SECURITY ===
+      API_SECRET_KEY: ${API_SECRET_KEY:?API_SECRET_KEY requis}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY:-change-me-jwt-secret}
+      HASH_ALGORITHM: sha256
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-http://localhost:3000,http://localhost:5173,http://localhost:8180}
+
+      # === RATE LIMITING ===
+      ENABLE_RATE_LIMITING: "true"
+      RATE_LIMIT_PER_MINUTE: ${RATE_LIMIT_PER_MINUTE:-60}
+      RATE_LIMIT_PER_HOUR: ${RATE_LIMIT_PER_HOUR:-1000}
+      RATE_LIMIT_BURST: ${RATE_LIMIT_BURST:-10}
+
+      # === FEATURES ===
+      ENABLE_CORS: "true"
+      ENABLE_METRICS: "true"
+      ENABLE_API_KEY_AUTH: "true"
+      ENABLE_DARIJA: "true"
+      ENABLE_ARABIC_RTL: "true"
+      LEGAL_FRAMEWORK: algeria
+
+      # === SERVICE ===
+      SERVICE_NAME: iafactory-dz-api
+      SERVICE_VERSION: 1.0.0
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      ENVIRONMENT: ${ENVIRONMENT:-development}
+      DEFAULT_TENANT_ID: ${DEFAULT_TENANT_ID:-550e8400-e29b-41d4-a716-446655440000}
+      PORT: 8000
+      HOST: 0.0.0.0
+
+    ports:
+      - "8000:8000"
+    volumes:
+      - ../../core/services/api:/app
+      - ../../core/agents:/agents:ro
+      - backend-cache:/root/.cache
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    restart: unless-stopped
+    networks:
+      - iaf-dz-network
+
+  # ===========================================================================
+  # FRONTEND APPLICATIONS
+  # ===========================================================================
+
+  iaf-frontend:
+    build:
+      context: ../../core/frontend/main-ui
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: ${API_URL:-http://localhost:8000}
+        NEXT_PUBLIC_REGION: algeria
+    container_name: iaf-dz-frontend
+    depends_on:
+      - iaf-backend
+    environment:
+      NEXT_PUBLIC_API_URL: ${API_URL:-http://localhost:8000}
+      NEXT_PUBLIC_REGION: algeria
+      NEXT_PUBLIC_DEFAULT_LOCALE: fr
+      NEXT_PUBLIC_SUPPORTED_LOCALES: fr,ar,en,dz
+      NODE_ENV: ${ENVIRONMENT:-development}
+    volumes:
+      - ./messages:/app/messages:ro
+      - ./branding:/app/public/branding:ro
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    networks:
+      - iaf-dz-network
+
+  iaf-rag-ui:
+    build:
+      context: ../../core/frontend/rag-ui
+      dockerfile: Dockerfile
+    container_name: iaf-dz-rag-ui
+    depends_on:
+      - iaf-backend
+    environment:
+      VITE_API_URL: ${API_URL:-http://localhost:8000}
+      VITE_REGION: algeria
+    ports:
+      - "5173:5173"
+    restart: unless-stopped
+    networks:
+      - iaf-dz-network
+    profiles:
+      - full
+
+  # ===========================================================================
+  # WORKFLOW & AUTOMATION
+  # ===========================================================================
+
+  iaf-n8n:
+    image: docker.n8n.io/n8nio/n8n:latest
+    container_name: iaf-dz-n8n
+    depends_on:
+      iaf-postgres:
+        condition: service_healthy
+    environment:
+      # Database
+      DB_TYPE: postgresdb
+      DB_POSTGRESDB_HOST: iaf-postgres
+      DB_POSTGRESDB_PORT: 5432
+      DB_POSTGRESDB_DATABASE: ${POSTGRES_DB:-iafactory_dz}
+      DB_POSTGRESDB_USER: ${POSTGRES_USER:-iafactory_dz}
+      DB_POSTGRESDB_PASSWORD: ${POSTGRES_PASSWORD}
+      DB_POSTGRESDB_SCHEMA: n8n
+
+      # Auth
+      N8N_BASIC_AUTH_ACTIVE: "true"
+      N8N_BASIC_AUTH_USER: ${N8N_USER:-admin}
+      N8N_BASIC_AUTH_PASSWORD: ${N8N_PASSWORD:-admin}
+
+      # Config
+      WEBHOOK_URL: ${N8N_WEBHOOK_URL:-http://localhost:5678}
+      N8N_HOST: ${N8N_HOST:-localhost}
+      N8N_PORT: 5678
+      GENERIC_TIMEZONE: Africa/Algiers
+      TZ: Africa/Algiers
+
+      # Execution
+      EXECUTIONS_DATA_PRUNE: "true"
+      EXECUTIONS_DATA_MAX_AGE: 168
+
+    volumes:
+      - n8n-data:/home/node/.n8n
+      - ../../core/workflows:/home/node/workflows:ro
+    ports:
+      - "5678:5678"
+    restart: unless-stopped
+    networks:
+      - iaf-dz-network
+    profiles:
+      - automation
+
+  # ===========================================================================
+  # ADMIN & MONITORING
+  # ===========================================================================
+
+  iaf-adminer:
+    image: adminer:latest
+    container_name: iaf-dz-adminer
+    ports:
+      - "8080:8080"
+    environment:
+      ADMINER_DEFAULT_SERVER: iaf-postgres
+      ADMINER_DESIGN: dracula
+    depends_on:
+      iaf-postgres:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - iaf-dz-network
+    profiles:
+      - admin
+
+  iaf-prometheus:
+    image: prom/prometheus:latest
+    container_name: iaf-dz-prometheus
+    volumes:
+      - ../../core/infrastructure/observability/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=30d'
+    ports:
+      - "9090:9090"
+    restart: unless-stopped
+    networks:
+      - iaf-dz-network
+    profiles:
+      - monitoring
+
+  iaf-grafana:
+    image: grafana/grafana:latest
+    container_name: iaf-dz-grafana
+    depends_on:
+      - iaf-prometheus
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:-admin}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+    volumes:
+      - grafana-data:/var/lib/grafana
+    ports:
+      - "3002:3000"
+    restart: unless-stopped
+    networks:
+      - iaf-dz-network
+    profiles:
+      - monitoring
+
+  # ===========================================================================
+  # AI AGENTS (Streamlit)
+  # ===========================================================================
+
+  iaf-agent-consultant:
+    build: ../../core/agents/business/consultant
+    container_name: iaf-dz-agent-consultant
+    environment:
+      GOOGLE_API_KEY: ${GOOGLE_API_KEY:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      REGION: algeria
+    ports:
+      - "8501:8501"
+    restart: unless-stopped
+    networks:
+      - iaf-dz-network
+    profiles:
+      - agents
+
+  iaf-agent-data-analysis:
+    build: ../../core/agents/business/data-analysis
+    container_name: iaf-dz-agent-data-analysis
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      REGION: algeria
+    ports:
+      - "8502:8501"
+    restart: unless-stopped
+    networks:
+      - iaf-dz-network
+    profiles:
+      - agents
+
+  iaf-agent-customer-support:
+    build: ../../core/agents/business/customer-support
+    container_name: iaf-dz-agent-customer-support
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      REGION: algeria
+    ports:
+      - "8503:8501"
+    restart: unless-stopped
+    networks:
+      - iaf-dz-network
+    profiles:
+      - agents
+
+# =============================================================================
+# VOLUMES
+# =============================================================================
+volumes:
+  postgres-data:
+    name: iaf-dz-postgres-data
+  redis-data:
+    name: iaf-dz-redis-data
+  qdrant-data:
+    name: iaf-dz-qdrant-data
+  meili-data:
+    name: iaf-dz-meili-data
+  ollama-data:
+    name: iaf-dz-ollama-data
+  anythingllm-data:
+    name: iaf-dz-anythingllm-data
+  backend-cache:
+    name: iaf-dz-backend-cache
+  n8n-data:
+    name: iaf-dz-n8n-data
+  prometheus-data:
+    name: iaf-dz-prometheus-data
+  grafana-data:
+    name: iaf-dz-grafana-data
+
+# =============================================================================
+# NETWORKS
+# =============================================================================
+networks:
+  iaf-dz-network:
+    name: iafactory-dz-network
+    driver: bridge

@@ -1,0 +1,135 @@
+# IA Factory - Docker Compose Production Configuration
+version: '3.8'
+
+services:
+  # IA Factory Backend API
+  ia-factory-api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ia-factory-api
+    restart: unless-stopped
+    ports:
+      - "8087:8000"
+    environment:
+      - MONGODB_URL=mongodb://mongodb:27017
+      - MONGODB_DB_NAME=ia_factory
+      - REDIS_URL=redis://redis:6380/0
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - REPLICATE_API_TOKEN=${REPLICATE_API_TOKEN}
+      - DEBUG=false
+    volumes:
+      - ia-factory-uploads:/app/uploads
+      - ia-factory-outputs:/app/outputs
+      - ./backend/app:/app/app:ro
+    depends_on:
+      - mongodb
+      - redis
+    networks:
+      - ia-factory-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # Celery Worker for Background Tasks
+  ia-factory-worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ia-factory-worker
+    restart: unless-stopped
+    command: celery -A app.tasks.celery_app worker --loglevel=info
+    environment:
+      - MONGODB_URL=mongodb://mongodb:27017
+      - MONGODB_DB_NAME=ia_factory
+      - REDIS_URL=redis://redis:6380/0
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - REPLICATE_API_TOKEN=${REPLICATE_API_TOKEN}
+    volumes:
+      - ia-factory-uploads:/app/uploads
+      - ia-factory-outputs:/app/outputs
+    depends_on:
+      - mongodb
+      - redis
+      - ia-factory-api
+    networks:
+      - ia-factory-network
+
+  # Celery Beat Scheduler
+  ia-factory-scheduler:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ia-factory-scheduler
+    restart: unless-stopped
+    command: celery -A app.tasks.celery_app beat --loglevel=info
+    environment:
+      - MONGODB_URL=mongodb://mongodb:27017
+      - MONGODB_DB_NAME=ia_factory
+      - REDIS_URL=redis://redis:6380/0
+    depends_on:
+      - redis
+      - ia-factory-worker
+    networks:
+      - ia-factory-network
+
+  # MongoDB Database
+  mongodb:
+    image: mongo:7.0
+    container_name: ia-factory-mongodb
+    restart: unless-stopped
+    ports:
+      - "27018:27017"
+    volumes:
+      - ia-factory-mongodb-data:/data/db
+    networks:
+      - ia-factory-network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Redis Cache & Message Broker
+  redis:
+    image: redis:7-alpine
+    container_name: ia-factory-redis
+    restart: unless-stopped
+    ports:
+      - "6380:6380"
+    volumes:
+      - ia-factory-redis-data:/data
+    networks:
+      - ia-factory-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Frontend (React)
+  ia-factory-frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: ia-factory-frontend
+    restart: unless-stopped
+    ports:
+      - "3001:80"
+    depends_on:
+      - ia-factory-api
+    networks:
+      - ia-factory-network
+
+volumes:
+  ia-factory-mongodb-data:
+  ia-factory-redis-data:
+  ia-factory-uploads:
+  ia-factory-outputs:
+
+networks:
+  ia-factory-network:
+    driver: bridge

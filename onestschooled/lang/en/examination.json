@@ -1,0 +1,21 @@
+{
+    "marks_grade": "Marks Grade",
+    "exam_assign": "Exam Assign",
+    "marks_register": "Marks Register",
+    "select idcard": "Select Idcard",
+    "select certificate": "Select Certificate",
+    "exam_title": "Exam Title",
+    "class": "Class",
+    "section": "Section",
+    "subjects": "Subjects",
+    "total_mark": "Total Mark",
+    "mark_distribution": "Mark Distribution",
+    "select_exam_type": "Select Exam Type",
+    "exam_type": "Exam Type",
+    "point": "Point",
+    "percent_from": "Percent From",
+    "percent_upto": "Percent Upto",
+    "remarks": "Remarks",
+    "student": "Student",
+    "mark": "Mark"
+}

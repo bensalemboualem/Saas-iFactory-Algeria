@@ -1,0 +1,150 @@
+# =============================================================================
+# PROMTAIL CONFIGURATION - iaFactory Algeria
+# Collecte des logs Docker vers Loki
+# =============================================================================
+
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://loki:3100/loki/api/v1/push
+    tenant_id: iafactory
+    batchwait: 1s
+    batchsize: 1048576
+    timeout: 10s
+
+scrape_configs:
+  # ===========================================================================
+  # DOCKER CONTAINER LOGS
+  # ===========================================================================
+  - job_name: docker
+    docker_sd_configs:
+      - host: unix:///var/run/docker.sock
+        refresh_interval: 5s
+    relabel_configs:
+      # Extraire le nom du conteneur
+      - source_labels: ['__meta_docker_container_name']
+        regex: '/(.*)'
+        target_label: 'container_name'
+      
+      # Extraire l'ID du conteneur
+      - source_labels: ['__meta_docker_container_id']
+        target_label: 'container_id'
+      
+      # Extraire les labels Docker
+      - source_labels: ['__meta_docker_container_label_iafactory_service']
+        target_label: 'service'
+      
+      - source_labels: ['__meta_docker_container_label_iafactory_stack']
+        target_label: 'stack'
+      
+      - source_labels: ['__meta_docker_container_label_iafactory_module']
+        target_label: 'module'
+      
+      # Image du conteneur
+      - source_labels: ['__meta_docker_container_image']
+        target_label: 'image'
+      
+      # Network mode
+      - source_labels: ['__meta_docker_network_name']
+        target_label: 'network'
+      
+      # Job label
+      - replacement: 'docker'
+        target_label: 'job'
+      
+      # Environment label
+      - replacement: 'production'
+        target_label: 'environment'
+
+    pipeline_stages:
+      # Extraire le timestamp et le niveau de log si présent
+      - json:
+          expressions:
+            log: log
+            stream: stream
+            time: time
+      
+      # Essayer d'extraire le niveau de log
+      - regex:
+          expression: '(?P<level>(DEBUG|INFO|WARNING|ERROR|CRITICAL|WARN|FATAL))'
+      
+      - labels:
+          level:
+      
+      # Timestamp
+      - timestamp:
+          source: time
+          format: RFC3339Nano
+      
+      # Output final
+      - output:
+          source: log
+
+  # ===========================================================================
+  # SYSTEM LOGS
+  # ===========================================================================
+  - job_name: system
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: system
+          host: hetzner-vps
+          environment: production
+          __path__: /var/log/*.log
+
+    pipeline_stages:
+      - regex:
+          expression: '(?P<level>(DEBUG|INFO|WARNING|ERROR|CRITICAL|WARN|FATAL|warn|error|info|debug))'
+      - labels:
+          level:
+
+  # ===========================================================================
+  # NGINX LOGS
+  # ===========================================================================
+  - job_name: nginx
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: nginx
+          service: nginx
+          stack: infrastructure
+          environment: production
+          __path__: /var/log/nginx/*.log
+
+    pipeline_stages:
+      - regex:
+          expression: '^(?P<remote_addr>[^ ]*) - (?P<remote_user>[^ ]*) \[(?P<time_local>[^\]]*)\] "(?P<method>\S+)(?: +(?P<path>[^ ]*) +\S*)?" (?P<status>[^ ]*) (?P<body_bytes_sent>[^ ]*)'
+      - labels:
+          method:
+          status:
+          path:
+
+  # ===========================================================================
+  # IAFACTORY APPLICATION LOGS (if file-based)
+  # ===========================================================================
+  - job_name: iafactory-apps
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: iafactory
+          stack: iafactory
+          environment: production
+          __path__: /var/log/iafactory/**/*.log
+
+    pipeline_stages:
+      - multiline:
+          firstline: '^\d{4}-\d{2}-\d{2}'
+          max_wait_time: 3s
+      - regex:
+          expression: '^(?P<timestamp>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3}) - (?P<logger>[^ ]*) - (?P<level>[^ ]*) - (?P<message>.*)'
+      - labels:
+          level:
+          logger:

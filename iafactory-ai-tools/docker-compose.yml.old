@@ -1,0 +1,157 @@
+# ===================================
+# iafactory AI Tools - Docker Compose
+# ===================================
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: iafactory-postgres
+    environment:
+      POSTGRES_DB: iafactory_aitools
+      POSTGRES_USER: iafactory
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-iafactory2025}
+    ports:
+      - "5436:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U iafactory"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - iafactory-network
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: iafactory-redis
+    ports:
+      - "6381:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - iafactory-network
+
+  # Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: iafactory-backend
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql://iafactory:${DATABASE_PASSWORD:-iafactory2025}@postgres:5432/iafactory_aitools
+      REDIS_URL: redis://redis:6379/0
+    ports:
+      - "8002:8001"
+    volumes:
+      - ./backend/app:/app/app
+      - upload_data:/tmp/iafactory-uploads
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - iafactory-network
+
+  # MinIO (S3-compatible storage) - Optional local storage
+  minio:
+    image: minio/minio:latest
+    container_name: iafactory-minio
+    environment:
+      MINIO_ROOT_USER: ${S3_ACCESS_KEY_ID:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${S3_SECRET_ACCESS_KEY:-minioadmin}
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+    command: server /data --console-address ":9001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    networks:
+      - iafactory-network
+
+  # pgAdmin (Optional - Database management UI)
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: iafactory-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL:-admin@iafactory.com}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:-admin}
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    networks:
+      - iafactory-network
+    profiles:
+      - dev  # Only start with: docker-compose --profile dev up
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  minio_data:
+    driver: local
+  upload_data:
+    driver: local
+
+networks:
+  iafactory-network:
+    driver: bridge
+
+# ===================================
+# Usage Instructions
+# ===================================
+#
+# 1. Start all services:
+#    docker-compose up -d
+#
+# 2. Start with development tools (pgAdmin):
+#    docker-compose --profile dev up -d
+#
+# 3. View logs:
+#    docker-compose logs -f backend
+#
+# 4. Stop all services:
+#    docker-compose down
+#
+# 5. Reset everything (WARNING: deletes data):
+#    docker-compose down -v
+#
+# 6. Access points:
+#    - API: http://localhost:8002/api/v1/docs
+#    - MinIO Console: http://localhost:9001
+#    - pgAdmin: http://localhost:5050 (with --profile dev)
+#
+# 7. Test API:
+#    curl http://localhost:8002/api/v1/health
+#
+# ===================================
+# Port Mapping (avoiding conflicts)
+# ===================================
+#
+# Backend API:     8002 → 8001 (iafactory-video-platform uses 8001)
+# PostgreSQL:      5436 → 5432 (other projects use 5432-5435)
+# Redis:           6381 → 6379 (other projects use 6379-6380)
+# MinIO API:       9000 → 9000
+# MinIO Console:   9001 → 9001
+# pgAdmin:         5050 → 80
+#
+# ===================================

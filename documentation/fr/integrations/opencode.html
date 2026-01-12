@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intégration OpenCode - IAFactory Algeria</title>
+    <link rel="stylesheet" href="../../assets/css/docs-theme.css">
+</head>
+<body>
+    <header class="docs-header">
+        <div class="docs-logo">
+            <img src="../../assets/images/logo.png" alt="IAFactory Algeria">
+            <span>IAFactory Algeria</span>
+        </div>
+        <nav class="main-nav">
+            <a href="../index.html">Documentation</a>
+            <a href="https://app.iafactory-algeria.com">App</a>
+            <a href="../api/index.html">API</a>
+        </nav>
+        <div class="docs-controls">
+            <div class="language-switcher">
+                <button data-lang="fr" class="active">🇫🇷 FR</button>
+                <button data-lang="en">🇬🇧 EN</button>
+                <button data-lang="ar">🇸🇦 AR</button>
+            </div>
+            <div class="theme-toggle">
+                <div class="theme-toggle-slider">☀️</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <!-- Sidebar -->
+        </aside>
+
+        <main class="docs-main">
+            <h1>Intégration OpenCode (VS Code)</h1>
+            
+            <p class="lead">Utilisez l'IA d'IAFactory Algeria directement dans VS Code avec notre extension officielle.</p>
+
+            <h2 id="introduction">💻 Introduction</h2>
+
+            <p>L'extension IAFactory pour VS Code vous permet d'accéder à tous nos modèles d'IA sans quitter votre éditeur : complétion de code, génération, refactoring, documentation et plus.</p>
+
+            <div class="alert alert-info">
+                <strong>💡 Fonctionnalités :</strong>
+                <ul>
+                    <li>Complétion intelligente de code (inline)</li>
+                    <li>Chat IA intégré dans la sidebar</li>
+                    <li>Génération de tests unitaires</li>
+                    <li>Documentation automatique</li>
+                    <li>Refactoring assisté par IA</li>
+                    <li>Explication de code</li>
+                </ul>
+            </div>
+
+            <h2 id="installation">📦 Installation</h2>
+
+            <h3 id="via-marketplace">Via Marketplace</h3>
+
+            <ol>
+                <li>Ouvrez VS Code</li>
+                <li>Allez dans <strong>Extensions</strong> (Ctrl+Shift+X)</li>
+                <li>Recherchez <strong>IAFactory Algeria</strong></li>
+                <li>Cliquez sur <strong>Install</strong></li>
+            </ol>
+
+            <h3 id="via-cli">Via CLI</h3>
+
+            <pre><code class="language-bash">code --install-extension iafactory-algeria.vscode-iafactory</code></pre>
+
+            <h2 id="configuration">⚙️ Configuration</h2>
+
+            <h3 id="api-key">Configurer votre Clé API</h3>
+
+            <ol>
+                <li>Ouvrez les <strong>Settings</strong> (Ctrl+,)</li>
+                <li>Recherchez <strong>IAFactory</strong></li>
+                <li>Collez votre clé API dans <strong>IAFactory: API Key</strong></li>
+            </ol>
+
+            <p>Ou via settings.json :</p>
+
+            <pre><code class="language-json">{
+  "iafactory.apiKey": "VOTRE_CLE_API",
+  "iafactory.defaultModel": "gpt-4.1",
+  "iafactory.autoComplete": true,
+  "iafactory.temperature": 0.7
+}</code></pre>
+
+            <h3 id="parametres">Paramètres Disponibles</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Paramètre</th>
+                        <th>Description</th>
+                        <th>Défaut</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>apiKey</code></td>
+                        <td>Votre clé API IAFactory</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td><code>defaultModel</code></td>
+                        <td>Modèle par défaut</td>
+                        <td>gpt-4.1</td>
+                    </tr>
+                    <tr>
+                        <td><code>autoComplete</code></td>
+                        <td>Complétion automatique</td>
+                        <td>true</td>
+                    </tr>
+                    <tr>
+                        <td><code>temperature</code></td>
+                        <td>Créativité (0-1)</td>
+                        <td>0.7</td>
+                    </tr>
+                    <tr>
+                        <td><code>maxTokens</code></td>
+                        <td>Tokens maximum</td>
+                        <td>2000</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 id="fonctionnalites">🚀 Fonctionnalités</h2>
+
+            <h3 id="inline-completion">1. Complétion Inline</h3>
+
+            <p>Commencez à taper et l'IA suggère automatiquement la suite :</p>
+
+            <pre><code class="language-javascript">// Tapez simplement :
+function calculateFibonacci
+
+// L'IA complète :
+function calculateFibonacci(n) {
+    if (n <= 1) return n;
+    return calculateFibonacci(n - 1) + calculateFibonacci(n - 2);
+}</code></pre>
+
+            <p><strong>Raccourcis :</strong></p>
+            <ul>
+                <li><code>Tab</code> : Accepter la suggestion</li>
+                <li><code>Esc</code> : Rejeter</li>
+                <li><code>Alt+]</code> : Suggestion suivante</li>
+            </ul>
+
+            <h3 id="chat-sidebar">2. Chat Sidebar</h3>
+
+            <p>Ouvrez le chat IA avec <code>Ctrl+Shift+I</code> ou via l'icône dans la sidebar.</p>
+
+            <p><strong>Commandes rapides :</strong></p>
+
+            <ul>
+                <li><code>/explain</code> : Expliquer le code sélectionné</li>
+                <li><code>/doc</code> : Générer la documentation</li>
+                <li><code>/test</code> : Générer des tests</li>
+                <li><code>/refactor</code> : Suggestions de refactoring</li>
+                <li><code>/fix</code> : Corriger les erreurs</li>
+            </ul>
+
+            <h3 id="context-menu">3. Menu Contextuel</h3>
+
+            <p>Clic droit sur le code → <strong>IAFactory</strong> :</p>
+
+            <ul>
+                <li><strong>Explain Code</strong> : Explication détaillée</li>
+                <li><strong>Generate Tests</strong> : Tests unitaires automatiques</li>
+                <li><strong>Add Documentation</strong> : JSDoc/PyDoc/etc.</li>
+                <li><strong>Optimize Code</strong> : Suggestions d'optimisation</li>
+                <li><strong>Translate Comments</strong> : Traduction FR/EN/AR</li>
+            </ul>
+
+            <h3 id="code-actions">4. Code Actions</h3>
+
+            <p>Lightbulb (💡) sur les erreurs/warnings :</p>
+
+            <ul>
+                <li><strong>Fix with AI</strong> : Correction automatique</li>
+                <li><strong>Explain Error</strong> : Explication de l'erreur</li>
+                <li><strong>Suggest Alternative</strong> : Approches alternatives</li>
+            </ul>
+
+            <h2 id="exemples">🎯 Exemples d'Utilisation</h2>
+
+            <h3 id="exemple-1">Génération de Tests</h3>
+
+            <p>Sélectionnez une fonction → Clic droit → <strong>IAFactory: Generate Tests</strong></p>
+
+            <pre><code class="language-python"># Votre fonction
+def calculate_discount(price, percentage):
+    if percentage < 0 or percentage > 100:
+        raise ValueError("Percentage must be between 0 and 100")
+    return price * (1 - percentage / 100)
+
+# Tests générés automatiquement
+import pytest
+
+def test_calculate_discount_normal():
+    assert calculate_discount(100, 10) == 90
+    assert calculate_discount(50, 20) == 40
+
+def test_calculate_discount_zero():
+    assert calculate_discount(100, 0) == 100
+
+def test_calculate_discount_full():
+    assert calculate_discount(100, 100) == 0
+
+def test_calculate_discount_invalid():
+    with pytest.raises(ValueError):
+        calculate_discount(100, -10)
+    with pytest.raises(ValueError):
+        calculate_discount(100, 150)</code></pre>
+
+            <h3 id="exemple-2">Documentation Automatique</h3>
+
+            <p>Sélectionnez une fonction → <strong>IAFactory: Add Documentation</strong></p>
+
+            <pre><code class="language-javascript">// Avant
+function processUserData(users, filter) {
+    return users
+        .filter(u => filter(u))
+        .map(u => ({ id: u.id, name: u.name }));
+}
+
+// Après
+/**
+ * Processes user data by filtering and mapping to simplified objects
+ * 
+ * @param {Array<Object>} users - Array of user objects to process
+ * @param {Function} filter - Filter function to apply to users
+ * @returns {Array<Object>} Array of processed user objects with id and name only
+ * 
+ * @example
+ * const activeUsers = processUserData(allUsers, u => u.active);
+ * // Returns: [{ id: 1, name: 'John' }, { id: 2, name: 'Jane' }]
+ */
+function processUserData(users, filter) {
+    return users
+        .filter(u => filter(u))
+        .map(u => ({ id: u.id, name: u.name }));
+}</code></pre>
+
+            <h3 id="exemple-3">Refactoring Assisté</h3>
+
+            <p>Sélectionnez du code → <code>/refactor</code> dans le chat</p>
+
+            <pre><code class="language-python"># Code initial
+def get_user_status(user):
+    if user.age >= 18 and user.verified == True and user.banned == False:
+        if user.premium == True:
+            return "premium_adult"
+        else:
+            return "regular_adult"
+    elif user.age < 18 and user.verified == True and user.banned == False:
+        return "verified_minor"
+    else:
+        return "restricted"
+
+# Refactoré par IA
+from enum import Enum
+
+class UserStatus(Enum):
+    PREMIUM_ADULT = "premium_adult"
+    REGULAR_ADULT = "regular_adult"
+    VERIFIED_MINOR = "verified_minor"
+    RESTRICTED = "restricted"
+
+def get_user_status(user) -> UserStatus:
+    """Determine user status based on age, verification, and membership."""
+    if user.banned or not user.verified:
+        return UserStatus.RESTRICTED
+    
+    is_adult = user.age >= 18
+    
+    if is_adult:
+        return UserStatus.PREMIUM_ADULT if user.premium else UserStatus.REGULAR_ADULT
+    
+    return UserStatus.VERIFIED_MINOR</code></pre>
+
+            <h2 id="snippets">📝 Snippets Personnalisés</h2>
+
+            <p>Créez des snippets avec placeholders IA :</p>
+
+            <pre><code class="language-json">{
+  "React Component with AI": {
+    "prefix": "rcia",
+    "body": [
+      "// @iafactory: Generate a React component named ${1:ComponentName}",
+      "// with props: ${2:props description}",
+      "// functionality: ${3:component purpose}",
+      ""
+    ],
+    "description": "Generate React component with IAFactory"
+  }
+}</code></pre>
+
+            <h2 id="bonnes-pratiques">✨ Bonnes Pratiques</h2>
+
+            <h3 id="contexte">1. Fournir du Contexte</h3>
+
+            <ul>
+                <li>Sélectionnez le code pertinent avant d'utiliser les commandes</li>
+                <li>Ouvrez les fichiers liés pour meilleur contexte</li>
+                <li>Utilisez des commentaires descriptifs</li>
+            </ul>
+
+            <h3 id="verification">2. Vérification</h3>
+
+            <ul>
+                <li>Toujours vérifier le code généré</li>
+                <li>Tester avant de commiter</li>
+                <li>L'IA est un assistant, pas un remplacement</li>
+            </ul>
+
+            <h3 id="securite">3. Sécurité</h3>
+
+            <ul>
+                <li>Ne partagez jamais de code sensible sans review</li>
+                <li>Utilisez <code>.iafactoryignore</code> pour exclure fichiers</li>
+                <li>Désactivez l'autocomplétion sur code confidentiel</li>
+            </ul>
+
+            <h2 id="raccourcis">⌨️ Raccourcis Clavier</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Raccourci</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>Ctrl+Shift+I</code></td><td>Ouvrir Chat IA</td></tr>
+                    <tr><td><code>Ctrl+Shift+E</code></td><td>Expliquer sélection</td></tr>
+                    <tr><td><code>Ctrl+Shift+D</code></td><td>Générer docs</td></tr>
+                    <tr><td><code>Ctrl+Shift+T</code></td><td>Générer tests</td></tr>
+                    <tr><td><code>Alt+Enter</code></td><td>Code Actions</td></tr>
+                </tbody>
+            </table>
+
+            <h2 id="ressources">📚 Ressources</h2>
+
+            <ul>
+                <li>📖 <a href="https://marketplace.visualstudio.com/items?itemName=iafactory-algeria.vscode-iafactory">VS Code Marketplace</a></li>
+                <li>🎥 <a href="../api/quick-start.html">API Quick Start</a></li>
+                <li>💬 <a href="https://discord.gg/iafactory">Communauté Discord</a></li>
+                <li>🐛 <a href="https://github.com/iafactory-algeria/vscode-extension/issues">Report Issues</a></li>
+            </ul>
+
+            <div class="alert alert-success">
+                <strong>💻 Prêt à coder avec l'IA ?</strong>
+                <p>Récupérez votre clé API : <a href="https://app.iafactory-algeria.com/api-keys">app.iafactory-algeria.com</a></p>
+            </div>
+        </main>
+
+        <aside class="docs-toc">
+            <h3 class="docs-toc-title">Sur cette page</h3>
+            <ul></ul>
+        </aside>
+    </div>
+
+    <script src="../../assets/js/docs-theme.js"></script>
+</body>
+</html>

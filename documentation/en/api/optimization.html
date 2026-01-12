@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Optimization Tips - IAFactory Algeria</title>
+    <link rel="stylesheet" href="../../assets/css/docs-theme.css">
+</head>
+<body>
+    <header class="docs-header">
+        <div class="docs-logo"><img src="../../assets/images/logo.png" alt="IAFactory Algeria"><span>IAFactory Algeria</span></div>
+        <nav class="main-nav"><a href="../index.html">Documentation</a><a href="./index.html" class="active">API</a></nav>
+        <div class="docs-controls">
+            <div class="language-switcher"><button data-lang="fr">🇫🇷</button><button data-lang="en" class="active">🇬🇧</button><button data-lang="ar">🇸🇦</button></div>
+            <div class="theme-toggle"><div class="theme-toggle-slider">☀️</div></div>
+        </div>
+    </header>
+    <div class="docs-container">
+        <aside class="docs-sidebar"><div class="sidebar-section"><h3>🔌 API</h3><ul class="sidebar-menu"><li><a href="./quick-start.html">Quick Start</a></li><li><a href="./optimization.html" class="active">Optimization</a></li></ul></div></aside>
+        <main class="docs-main">
+            <h1>🚀 Optimization Tips</h1>
+            <h2>Reduce Costs</h2>
+            <ul><li>✅ Use <code>max_tokens</code> to limit responses</li><li>✅ Cache frequent responses (Redis)</li><li>✅ Start with GPT-3.5, upgrade to GPT-4 if needed</li><li>✅ Preprocess prompts (remove unnecessary spaces)</li></ul>
+            <h2>Improve Performance</h2>
+            <pre><code class="language-python">import redis
+cache = redis.Redis()
+
+def cached_completion(prompt):
+    key = hashlib.md5(prompt.encode()).hexdigest()
+    cached = cache.get(key)
+    if cached:
+        return cached.decode()
+    response = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=[{"role": "user", "content": prompt}])
+    result = response.choices[0].message.content
+    cache.setex(key, 3600, result)
+    return result</code></pre>
+        </main>
+    </div>
+    <script src="../../assets/js/docs-theme.js"></script>
+</body>
+</html>

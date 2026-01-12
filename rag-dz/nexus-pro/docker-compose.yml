@@ -1,0 +1,133 @@
+version: '3.9'
+
+services:
+  # ============ ORCHESTRATORS ============
+  meta-orchestrator:
+    build: ./orchestrators/meta
+    container_name: nexus-meta
+    ports:
+      - "${META_PORT:-8100}:8100"
+    environment:
+      - REDIS_URL=redis://redis:6380
+      - BMAD_URL=http://bmad-orchestrator:8052
+      - ARCHON_URL=http://archon-server:8181
+      - BOLT_URL=http://bolt-app:5173
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8100/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - nexus
+    restart: unless-stopped
+
+  bmad-orchestrator:
+    build: ./orchestrators/bmad
+    container_name: nexus-bmad
+    ports:
+      - "${BMAD_PORT:-8052}:8052"
+    volumes:
+      - ./bmad:/app/bmad:ro
+    environment:
+      - ARCHON_URL=http://archon-server:8181
+      - REDIS_URL=redis://redis:6380
+    depends_on:
+      - redis
+    networks:
+      - nexus
+    restart: unless-stopped
+
+  # ============ ARCHON ============
+  archon-server:
+    build: ./archon/python
+    container_name: nexus-archon-server
+    ports:
+      - "${ARCHON_SERVER_PORT:-8181}:8181"
+    environment:
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_SERVICE_KEY=${SUPABASE_SERVICE_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8181/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - nexus
+    restart: unless-stopped
+
+  archon-mcp:
+    build:
+      context: ./archon/python
+      target: mcp
+    container_name: nexus-archon-mcp
+    ports:
+      - "${ARCHON_MCP_PORT:-8051}:8051"
+    environment:
+      - ARCHON_SERVER_URL=http://archon-server:8181
+    depends_on:
+      - archon-server
+    networks:
+      - nexus
+    restart: unless-stopped
+
+  archon-ui:
+    build: ./archon/archon-ui-main
+    container_name: nexus-archon-ui
+    ports:
+      - "${ARCHON_UI_PORT:-3737}:3737"
+    environment:
+      - ARCHON_SERVER_URL=http://archon-server:8181
+    depends_on:
+      - archon-server
+    networks:
+      - nexus
+    restart: unless-stopped
+
+  # ============ BOLT ============
+  bolt-app:
+    build: ./bolt-diy
+    container_name: nexus-bolt
+    ports:
+      - "${BOLT_PORT:-5173}:5173"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - DEEPSEEK_API_KEY=${DEEPSEEK_API_KEY}
+      - GROQ_API_KEY=${GROQ_API_KEY}
+    networks:
+      - nexus
+    restart: unless-stopped
+
+  # ============ INFRASTRUCTURE ============
+  redis:
+    image: redis:7-alpine
+    container_name: nexus-redis
+    ports:
+      - "6379:6380"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - nexus
+    restart: unless-stopped
+
+volumes:
+  redis-data:
+    driver: local
+
+networks:
+  nexus:
+    driver: bridge
+    name: nexus-network

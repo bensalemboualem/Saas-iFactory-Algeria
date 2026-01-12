@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webhooks - IAFactory Algeria</title>
+    <link rel="stylesheet" href="../../assets/css/docs-theme.css">
+</head>
+<body>
+    <header class="docs-header">
+        <div class="docs-logo">
+            <img src="../../assets/images/logo.png" alt="IAFactory Algeria">
+            <span>IAFactory Algeria</span>
+        </div>
+        <nav class="main-nav">
+            <a href="../index.html">Documentation</a>
+            <a href="./index.html" class="active">API</a>
+        </nav>
+        <div class="docs-controls">
+            <div class="language-switcher">
+                <button data-lang="fr" class="active">🇫🇷 FR</button>
+                <button data-lang="en">🇬🇧 EN</button>
+                <button data-lang="ar">🇸🇦 AR</button>
+            </div>
+            <div class="theme-toggle">
+                <div class="theme-toggle-slider">☀️</div>
+            </div>
+        </div>
+    </header>
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <div class="sidebar-section">
+                <h3>🔌 API</h3>
+                <ul class="sidebar-menu">
+                    <li><a href="./quick-start.html">Démarrage rapide</a></li>
+                    <li><a href="./webhooks.html" class="active">Webhooks</a></li>
+                </ul>
+            </div>
+        </aside>
+        <main class="docs-main">
+            <h1>🔔 Webhooks</h1>
+            <p class="lead">Recevez des notifications en temps réel sur vos événements API.</p>
+            <h2>Configuration</h2>
+            <p>Configurez vos webhooks dans le <a href="https://dashboard.iafactory-algeria.com/api/webhooks">dashboard</a>.</p>
+            <h2>Événements Disponibles</h2>
+            <ul>
+                <li><code>completion.created</code> - Nouvelle complétion</li>
+                <li><code>completion.failed</code> - Erreur de complétion</li>
+                <li><code>quota.warning</code> - 80% du quota utilisé</li>
+                <li><code>quota.exceeded</code> - Quota dépassé</li>
+            </ul>
+            <h2>Format Payload</h2>
+            <pre><code class="language-json">{
+  "event": "completion.created",
+  "timestamp": 1704283200,
+  "data": {
+    "id": "chatcmpl-abc123",
+    "model": "gpt-4-turbo",
+    "tokens": 150,
+    "cost": 0.0045
+  }
+}</code></pre>
+            <h2>Vérification Signature</h2>
+            <pre><code class="language-python">import hmac
+import hashlib
+
+def verify_webhook(payload, signature, secret):
+    computed = hmac.new(
+        secret.encode(),
+        payload.encode(),
+        hashlib.sha256
+    ).hexdigest()
+    return hmac.compare_digest(computed, signature)
+</code></pre>
+        </main>
+    </div>
+    <script src="../../assets/js/docs-theme.js"></script>
+</body>
+</html>

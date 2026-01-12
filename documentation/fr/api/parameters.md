@@ -1,0 +1,3 @@
+# Paramètres API
+
+À compléter.

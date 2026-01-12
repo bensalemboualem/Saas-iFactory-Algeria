@@ -1,0 +1,708 @@
+/*
+====================================================================
+  IAFACTORY DESIGN SYSTEM - UNIFIED THEME CONFIGURATION
+  Version: 3.0 - Décembre 2025
+  Source: Landing Page iafactoryalgeria.com (Single Source of Truth)
+
+  Usage: Import this file FIRST in any IAFactory application
+  Compatible: React, Vue, Svelte, Plain HTML, Tailwind CSS
+====================================================================
+*/
+
+/* ==================== ROOT VARIABLES - DARK MODE (DEFAULT) ==================== */
+:root {
+    /* === BRAND COLORS - ALGERIAN FLAG === */
+    --iaf-green: #00a651;              /* Vert drapeau - Primary */
+    --iaf-green-light: #00c761;        /* Hover state */
+    --iaf-green-dark: #008c45;         /* Active state */
+    --iaf-red: #ef4444;                /* Rouge drapeau - Danger */
+    --iaf-red-light: #f87171;
+    --iaf-red-dark: #dc2626;
+
+    /* === PRIMARY ALIASES === */
+    --iaf-primary: var(--iaf-green);
+    --iaf-primary-hover: var(--iaf-green-light);
+    --iaf-primary-active: var(--iaf-green-dark);
+    --iaf-danger: var(--iaf-red);
+    --iaf-warning: #f59e0b;
+    --iaf-success: #10b981;
+    --iaf-info: #3b82f6;
+
+    /* === BACKGROUND COLORS (DARK MODE) === */
+    --iaf-bg: #020617;                 /* Main background - Very dark navy */
+    --iaf-bg-alt: #020617;             /* Alternative background */
+    --iaf-bg-card: #020617;            /* Card background */
+    --iaf-bg-header: #020617;          /* Header background */
+    --iaf-bg-sidebar: #020617;         /* Sidebar background */
+    --iaf-bg-modal: #020617;           /* Modal background */
+    --iaf-bg-input: rgba(255, 255, 255, 0.05);  /* Input background */
+    --iaf-bg-glass: rgba(255, 255, 255, 0.08);  /* Glassmorphism */
+    --iaf-bg-hover: rgba(255, 255, 255, 0.05);  /* Hover state */
+    --iaf-bg-active: rgba(255, 255, 255, 0.1);  /* Active state */
+    --iaf-bg-overlay: rgba(0, 0, 0, 0.5);       /* Modal overlay */
+
+    /* === TEXT COLORS (DARK MODE) === */
+    --iaf-text: #f8fafc;               /* Primary text - Off-white */
+    --iaf-text-primary: #ffffff;       /* Pure white for emphasis */
+    --iaf-text-secondary: rgba(255, 255, 255, 0.7);
+    --iaf-text-muted: rgba(255, 255, 255, 0.5);
+    --iaf-text-disabled: rgba(255, 255, 255, 0.3);
+    --iaf-text-inverse: #0f172a;       /* Text on light backgrounds */
+
+    /* === BORDER COLORS === */
+    --iaf-border: rgba(255, 255, 255, 0.12);
+    --iaf-border-light: rgba(255, 255, 255, 0.06);
+    --iaf-border-strong: rgba(255, 255, 255, 0.2);
+    --iaf-border-focus: var(--iaf-primary);
+
+    /* === SHADOWS (DARK MODE) === */
+    --iaf-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
+    --iaf-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+    --iaf-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.25);
+    --iaf-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.3);
+    --iaf-shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.55);
+    --iaf-shadow-glow: 0 0 20px rgba(0, 166, 81, 0.3);
+    --iaf-shadow-glow-intense: 0 0 30px rgba(0, 166, 81, 0.5);
+
+    /* === BORDER RADIUS === */
+    --iaf-radius-xs: 4px;
+    --iaf-radius-sm: 6px;
+    --iaf-radius-md: 8px;
+    --iaf-radius-lg: 10px;
+    --iaf-radius-xl: 12px;
+    --iaf-radius-2xl: 16px;
+    --iaf-radius-3xl: 24px;
+    --iaf-radius-full: 999px;
+
+    /* === SPACING === */
+    --iaf-spacing-xs: 4px;
+    --iaf-spacing-sm: 8px;
+    --iaf-spacing-md: 12px;
+    --iaf-spacing-lg: 16px;
+    --iaf-spacing-xl: 24px;
+    --iaf-spacing-2xl: 32px;
+    --iaf-spacing-3xl: 48px;
+    --iaf-spacing-4xl: 64px;
+
+    /* === TYPOGRAPHY === */
+    --iaf-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+    --iaf-font-mono: 'SF Mono', 'Fira Code', 'Consolas', 'Monaco', monospace;
+    --iaf-font-size-xs: 12px;
+    --iaf-font-size-sm: 13px;
+    --iaf-font-size-md: 14px;
+    --iaf-font-size-lg: 15px;
+    --iaf-font-size-xl: 16px;
+    --iaf-font-size-2xl: 18px;
+    --iaf-font-size-3xl: 20px;
+    --iaf-font-size-4xl: 24px;
+    --iaf-font-size-5xl: 30px;
+    --iaf-font-size-6xl: 36px;
+    --iaf-font-weight-normal: 400;
+    --iaf-font-weight-medium: 500;
+    --iaf-font-weight-semibold: 600;
+    --iaf-font-weight-bold: 700;
+    --iaf-line-height-tight: 1.25;
+    --iaf-line-height-normal: 1.5;
+    --iaf-line-height-relaxed: 1.75;
+
+    /* === TRANSITIONS === */
+    --iaf-transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    --iaf-transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    --iaf-transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+    --iaf-transition-slower: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* === LAYOUT === */
+    --iaf-header-height: 60px;
+    --iaf-sidebar-width: 260px;
+    --iaf-sidebar-collapsed: 60px;
+    --iaf-container-sm: 640px;
+    --iaf-container-md: 768px;
+    --iaf-container-lg: 1024px;
+    --iaf-container-xl: 1280px;
+    --iaf-container-2xl: 1400px;
+
+    /* === Z-INDEX LAYERS === */
+    --iaf-z-base: 0;
+    --iaf-z-dropdown: 100;
+    --iaf-z-sticky: 200;
+    --iaf-z-fixed: 300;
+    --iaf-z-sidebar: 900;
+    --iaf-z-header: 1000;
+    --iaf-z-modal-backdrop: 1100;
+    --iaf-z-modal: 1200;
+    --iaf-z-popover: 1300;
+    --iaf-z-tooltip: 1400;
+    --iaf-z-toast: 1500;
+
+    /* === GRADIENTS === */
+    --iaf-gradient-primary: linear-gradient(135deg, var(--iaf-green) 0%, var(--iaf-green-light) 100%);
+    --iaf-gradient-danger: linear-gradient(135deg, var(--iaf-red) 0%, var(--iaf-red-light) 100%);
+    --iaf-gradient-dark: linear-gradient(180deg, #020617 0%, #0f172a 100%);
+    --iaf-gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+
+    /* === BACKDROP FILTER === */
+    --iaf-backdrop-blur: blur(24px) saturate(180%);
+    --iaf-backdrop-blur-light: blur(12px) saturate(150%);
+}
+
+/* ==================== LIGHT MODE OVERRIDES ==================== */
+[data-theme="light"],
+.light,
+:root.light {
+    /* === BACKGROUND COLORS (LIGHT MODE) === */
+    --iaf-bg: #f7f5f0;                 /* Warm cream/off-white */
+    --iaf-bg-alt: #f7f5f0;
+    --iaf-bg-card: #ffffff;
+    --iaf-bg-header: #f7f5f0;
+    --iaf-bg-sidebar: #f7f5f0;
+    --iaf-bg-modal: #ffffff;
+    --iaf-bg-input: rgba(0, 0, 0, 0.03);
+    --iaf-bg-glass: rgba(0, 0, 0, 0.04);
+    --iaf-bg-hover: rgba(0, 0, 0, 0.04);
+    --iaf-bg-active: rgba(0, 0, 0, 0.08);
+    --iaf-bg-overlay: rgba(0, 0, 0, 0.3);
+
+    /* === TEXT COLORS (LIGHT MODE) === */
+    --iaf-text: #0f172a;               /* Dark navy */
+    --iaf-text-primary: #1a1a1a;
+    --iaf-text-secondary: rgba(0, 0, 0, 0.7);
+    --iaf-text-muted: rgba(0, 0, 0, 0.5);
+    --iaf-text-disabled: rgba(0, 0, 0, 0.3);
+    --iaf-text-inverse: #f8fafc;
+
+    /* === BORDER COLORS (LIGHT MODE) === */
+    --iaf-border: rgba(0, 0, 0, 0.08);
+    --iaf-border-light: rgba(0, 0, 0, 0.04);
+    --iaf-border-strong: rgba(0, 0, 0, 0.15);
+
+    /* === SHADOWS (LIGHT MODE) === */
+    --iaf-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+    --iaf-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+    --iaf-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
+    --iaf-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
+    --iaf-shadow-xl: 0 20px 60px rgba(15, 23, 42, 0.25);
+}
+
+/* ==================== BASE RESET & DEFAULTS ==================== */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+body {
+    font-family: var(--iaf-font-family);
+    font-size: var(--iaf-font-size-md);
+    line-height: var(--iaf-line-height-normal);
+    color: var(--iaf-text);
+    background: var(--iaf-bg);
+    transition: background var(--iaf-transition-base), color var(--iaf-transition-base);
+}
+
+/* ==================== TYPOGRAPHY CLASSES ==================== */
+.iaf-text-xs { font-size: var(--iaf-font-size-xs); }
+.iaf-text-sm { font-size: var(--iaf-font-size-sm); }
+.iaf-text-md { font-size: var(--iaf-font-size-md); }
+.iaf-text-lg { font-size: var(--iaf-font-size-lg); }
+.iaf-text-xl { font-size: var(--iaf-font-size-xl); }
+.iaf-text-2xl { font-size: var(--iaf-font-size-2xl); }
+.iaf-text-3xl { font-size: var(--iaf-font-size-3xl); }
+
+.iaf-text-primary { color: var(--iaf-text-primary); }
+.iaf-text-secondary { color: var(--iaf-text-secondary); }
+.iaf-text-muted { color: var(--iaf-text-muted); }
+.iaf-text-success { color: var(--iaf-success); }
+.iaf-text-danger { color: var(--iaf-danger); }
+.iaf-text-warning { color: var(--iaf-warning); }
+.iaf-text-brand { color: var(--iaf-primary); }
+
+.iaf-font-medium { font-weight: var(--iaf-font-weight-medium); }
+.iaf-font-semibold { font-weight: var(--iaf-font-weight-semibold); }
+.iaf-font-bold { font-weight: var(--iaf-font-weight-bold); }
+
+/* ==================== BUTTON COMPONENTS ==================== */
+.iaf-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 16px;
+    font-size: var(--iaf-font-size-sm);
+    font-weight: var(--iaf-font-weight-semibold);
+    font-family: inherit;
+    text-decoration: none;
+    border-radius: var(--iaf-radius-md);
+    border: none;
+    cursor: pointer;
+    transition: all var(--iaf-transition-fast);
+    white-space: nowrap;
+    user-select: none;
+}
+
+.iaf-btn:active {
+    transform: scale(0.97);
+}
+
+.iaf-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Primary Button - Green Gradient */
+.iaf-btn-primary {
+    background: var(--iaf-gradient-primary);
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 166, 81, 0.25);
+}
+
+.iaf-btn-primary:hover:not(:disabled) {
+    box-shadow: 0 4px 14px rgba(0, 166, 81, 0.35);
+    transform: translateY(-1px);
+}
+
+/* Secondary Button - Outline */
+.iaf-btn-secondary {
+    background: transparent;
+    border: 1px solid var(--iaf-border);
+    color: var(--iaf-text);
+}
+
+.iaf-btn-secondary:hover:not(:disabled) {
+    border-color: var(--iaf-primary);
+    color: var(--iaf-primary);
+}
+
+/* Ghost Button - No Border */
+.iaf-btn-ghost {
+    background: transparent;
+    color: var(--iaf-text-secondary);
+}
+
+.iaf-btn-ghost:hover:not(:disabled) {
+    background: var(--iaf-bg-hover);
+    color: var(--iaf-primary);
+}
+
+/* Danger Button */
+.iaf-btn-danger {
+    background: var(--iaf-gradient-danger);
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.25);
+}
+
+.iaf-btn-danger:hover:not(:disabled) {
+    box-shadow: 0 4px 14px rgba(239, 68, 68, 0.35);
+}
+
+/* Button Sizes */
+.iaf-btn-sm {
+    padding: 6px 12px;
+    font-size: var(--iaf-font-size-xs);
+}
+
+.iaf-btn-lg {
+    padding: 12px 24px;
+    font-size: var(--iaf-font-size-lg);
+}
+
+.iaf-btn-icon {
+    padding: 8px;
+    width: 36px;
+    height: 36px;
+}
+
+/* ==================== CARD COMPONENTS ==================== */
+.iaf-card {
+    background: var(--iaf-bg-card);
+    border: 1px solid var(--iaf-border);
+    border-radius: var(--iaf-radius-xl);
+    box-shadow: var(--iaf-shadow-md);
+    overflow: hidden;
+    transition: all var(--iaf-transition-fast);
+}
+
+.iaf-card:hover {
+    box-shadow: var(--iaf-shadow-lg);
+}
+
+.iaf-card-header {
+    padding: var(--iaf-spacing-lg) var(--iaf-spacing-xl);
+    border-bottom: 1px solid var(--iaf-border);
+}
+
+.iaf-card-body {
+    padding: var(--iaf-spacing-xl);
+}
+
+.iaf-card-footer {
+    padding: var(--iaf-spacing-lg) var(--iaf-spacing-xl);
+    border-top: 1px solid var(--iaf-border);
+    background: var(--iaf-bg-glass);
+}
+
+/* Glass Card Variant */
+.iaf-card-glass {
+    background: var(--iaf-bg-glass);
+    backdrop-filter: var(--iaf-backdrop-blur);
+    -webkit-backdrop-filter: var(--iaf-backdrop-blur);
+}
+
+/* ==================== INPUT COMPONENTS ==================== */
+.iaf-input {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: var(--iaf-font-size-md);
+    font-family: inherit;
+    color: var(--iaf-text);
+    background: var(--iaf-bg-input);
+    border: 1px solid var(--iaf-border);
+    border-radius: var(--iaf-radius-md);
+    transition: all var(--iaf-transition-fast);
+    outline: none;
+}
+
+.iaf-input::placeholder {
+    color: var(--iaf-text-muted);
+}
+
+.iaf-input:hover {
+    border-color: var(--iaf-border-strong);
+}
+
+.iaf-input:focus {
+    border-color: var(--iaf-primary);
+    box-shadow: 0 0 0 3px rgba(0, 166, 81, 0.15);
+}
+
+.iaf-input:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Textarea */
+.iaf-textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Select */
+.iaf-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23888' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 36px;
+}
+
+/* ==================== BADGE COMPONENTS ==================== */
+.iaf-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    font-size: var(--iaf-font-size-xs);
+    font-weight: var(--iaf-font-weight-semibold);
+    border-radius: var(--iaf-radius-full);
+    white-space: nowrap;
+}
+
+.iaf-badge-primary {
+    background: rgba(0, 166, 81, 0.15);
+    color: var(--iaf-primary);
+}
+
+.iaf-badge-secondary {
+    background: var(--iaf-bg-glass);
+    color: var(--iaf-text-secondary);
+}
+
+.iaf-badge-success {
+    background: rgba(16, 185, 129, 0.15);
+    color: var(--iaf-success);
+}
+
+.iaf-badge-danger {
+    background: rgba(239, 68, 68, 0.15);
+    color: var(--iaf-danger);
+}
+
+.iaf-badge-warning {
+    background: rgba(245, 158, 11, 0.15);
+    color: var(--iaf-warning);
+}
+
+/* ==================== MODAL / DIALOG ==================== */
+.iaf-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: var(--iaf-bg-overlay);
+    backdrop-filter: blur(4px);
+    z-index: var(--iaf-z-modal-backdrop);
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--iaf-transition-base);
+}
+
+.iaf-modal-backdrop.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.iaf-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.95);
+    max-width: 90vw;
+    max-height: 90vh;
+    background: var(--iaf-bg-modal);
+    border: 1px solid var(--iaf-border);
+    border-radius: var(--iaf-radius-2xl);
+    box-shadow: var(--iaf-shadow-xl);
+    z-index: var(--iaf-z-modal);
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--iaf-transition-base);
+    overflow: hidden;
+}
+
+.iaf-modal.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* ==================== TOOLTIP ==================== */
+.iaf-tooltip {
+    position: absolute;
+    padding: 6px 12px;
+    font-size: var(--iaf-font-size-xs);
+    color: #ffffff;
+    background: rgba(0, 0, 0, 0.9);
+    border-radius: var(--iaf-radius-sm);
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: var(--iaf-z-tooltip);
+    opacity: 0;
+    transition: opacity var(--iaf-transition-fast);
+}
+
+.iaf-tooltip.visible {
+    opacity: 1;
+}
+
+/* ==================== AVATAR ==================== */
+.iaf-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--iaf-gradient-primary);
+    color: #ffffff;
+    font-weight: var(--iaf-font-weight-bold);
+    font-size: var(--iaf-font-size-md);
+    text-transform: uppercase;
+    overflow: hidden;
+}
+
+.iaf-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.iaf-avatar-sm { width: 32px; height: 32px; font-size: var(--iaf-font-size-xs); }
+.iaf-avatar-lg { width: 48px; height: 48px; font-size: var(--iaf-font-size-lg); }
+.iaf-avatar-xl { width: 64px; height: 64px; font-size: var(--iaf-font-size-2xl); }
+
+/* ==================== DIVIDER ==================== */
+.iaf-divider {
+    height: 1px;
+    background: var(--iaf-border);
+    margin: var(--iaf-spacing-lg) 0;
+}
+
+.iaf-divider-vertical {
+    width: 1px;
+    height: auto;
+    background: var(--iaf-border);
+    margin: 0 var(--iaf-spacing-md);
+}
+
+/* ==================== SCROLLBAR ==================== */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--iaf-border-strong);
+    border-radius: var(--iaf-radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--iaf-text-muted);
+}
+
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--iaf-border-strong) transparent;
+}
+
+/* ==================== FOCUS STATES (ACCESSIBILITY) ==================== */
+:focus-visible {
+    outline: 2px solid var(--iaf-primary);
+    outline-offset: 2px;
+}
+
+/* ==================== SELECTION ==================== */
+::selection {
+    background: rgba(0, 166, 81, 0.3);
+    color: var(--iaf-text);
+}
+
+/* ==================== REDUCED MOTION ==================== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ==================== RTL SUPPORT (ARABIC) ==================== */
+[dir="rtl"] {
+    direction: rtl;
+    text-align: right;
+}
+
+[dir="rtl"] .iaf-input,
+[dir="rtl"] .iaf-select {
+    text-align: right;
+}
+
+[dir="rtl"] .iaf-select {
+    background-position: left 12px center;
+    padding-right: 14px;
+    padding-left: 36px;
+}
+
+/* ==================== PRINT STYLES ==================== */
+@media print {
+    body {
+        background: #ffffff;
+        color: #000000;
+    }
+
+    .iaf-sidebar,
+    .iaf-header,
+    .iaf-btn {
+        display: none !important;
+    }
+}
+
+/* ==================== ANIMATIONS ==================== */
+@keyframes iaf-fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes iaf-slide-up {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes iaf-slide-down {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes iaf-scale-in {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes iaf-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+@keyframes iaf-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.iaf-animate-fade-in { animation: iaf-fade-in var(--iaf-transition-base) ease-out; }
+.iaf-animate-slide-up { animation: iaf-slide-up var(--iaf-transition-base) ease-out; }
+.iaf-animate-slide-down { animation: iaf-slide-down var(--iaf-transition-base) ease-out; }
+.iaf-animate-scale-in { animation: iaf-scale-in var(--iaf-transition-base) ease-out; }
+.iaf-animate-pulse { animation: iaf-pulse 2s ease-in-out infinite; }
+.iaf-animate-spin { animation: iaf-spin 1s linear infinite; }
+
+/* ==================== UTILITY CLASSES ==================== */
+.iaf-flex { display: flex; }
+.iaf-flex-col { flex-direction: column; }
+.iaf-items-center { align-items: center; }
+.iaf-justify-center { justify-content: center; }
+.iaf-justify-between { justify-content: space-between; }
+.iaf-gap-xs { gap: var(--iaf-spacing-xs); }
+.iaf-gap-sm { gap: var(--iaf-spacing-sm); }
+.iaf-gap-md { gap: var(--iaf-spacing-md); }
+.iaf-gap-lg { gap: var(--iaf-spacing-lg); }
+.iaf-gap-xl { gap: var(--iaf-spacing-xl); }
+.iaf-p-sm { padding: var(--iaf-spacing-sm); }
+.iaf-p-md { padding: var(--iaf-spacing-md); }
+.iaf-p-lg { padding: var(--iaf-spacing-lg); }
+.iaf-p-xl { padding: var(--iaf-spacing-xl); }
+.iaf-m-auto { margin: auto; }
+.iaf-w-full { width: 100%; }
+.iaf-h-full { height: 100%; }
+.iaf-rounded { border-radius: var(--iaf-radius-md); }
+.iaf-rounded-lg { border-radius: var(--iaf-radius-lg); }
+.iaf-rounded-xl { border-radius: var(--iaf-radius-xl); }
+.iaf-rounded-full { border-radius: var(--iaf-radius-full); }
+.iaf-shadow { box-shadow: var(--iaf-shadow-md); }
+.iaf-shadow-lg { box-shadow: var(--iaf-shadow-lg); }
+.iaf-border { border: 1px solid var(--iaf-border); }
+.iaf-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

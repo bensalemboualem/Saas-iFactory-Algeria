@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tips & Tricks - IAFactory Algeria</title>
+    <link rel="stylesheet" href="../assets/css/docs-theme.css">
+</head>
+<body>
+    <header class="docs-header">
+        <div class="docs-logo">
+            <img src="../assets/images/logo.png" alt="IAFactory Algeria">
+            <span>IAFactory Algeria</span>
+        </div>
+        <nav class="main-nav">
+            <a href="./index.html">Documentation</a>
+            <a href="https://app.iafactory-algeria.com">App</a>
+            <a href="./api/index.html">API</a>
+        </nav>
+        <div class="docs-controls">
+            <div class="language-switcher">
+                <button data-lang="fr">FR</button>
+                <button data-lang="en" class="active">EN</button>
+                <button data-lang="ar">AR</button>
+            </div>
+            <div class="theme-toggle">
+                <div class="theme-toggle-slider"></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <!-- ...existing sidebar... -->
+        </aside>
+
+        <main class="docs-main">
+            <h1>Tips & Tricks</h1>
+
+            <p class="lead">Get the most out of IAFactory Algeria with these expert tips.</p>
+
+            <h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Shortcut</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>Ctrl+Enter</code></td><td>Send message</td></tr>
+                    <tr><td><code>Ctrl+Shift+N</code></td><td>New conversation</td></tr>
+                    <tr><td><code>Ctrl+K</code></td><td>Command palette</td></tr>
+                    <tr><td><code>Ctrl+/</code></td><td>Toggle sidebar</td></tr>
+                    <tr><td><code>Ctrl+L</code></td><td>Clear conversation</td></tr>
+                    <tr><td><code>Ctrl+S</code></td><td>Save conversation</td></tr>
+                    <tr><td><code>Ctrl+D</code></td><td>Toggle dark/light mode</td></tr>
+                    <tr><td><code>Escape</code></td><td>Stop generation</td></tr>
+                </tbody>
+            </table>
+
+            <h2 id="model-selection">Choosing the Right Model</h2>
+
+            <div class="alert alert-info">
+                <strong>Quick Guide:</strong>
+                <ul>
+                    <li><strong>GPT-4.1</strong> - Best overall quality</li>
+                    <li><strong>GPT-4.1-mini</strong> - Fast and affordable</li>
+                    <li><strong>Claude Sonnet 4</strong> - Long documents, coding</li>
+                    <li><strong>Codestral</strong> - Code-specific tasks</li>
+                    <li><strong>Perplexity</strong> - Web search, current events</li>
+                </ul>
+            </div>
+
+            <h2 id="prompt-techniques">Prompt Techniques</h2>
+
+            <h3 id="be-specific">1. Be Specific</h3>
+
+            <div class="alert alert-danger">
+                <strong>Bad:</strong>
+                <pre><code>Write something about Python</code></pre>
+            </div>
+
+            <div class="alert alert-success">
+                <strong>Good:</strong>
+                <pre><code>Write a Python function that:
+- Takes a list of integers
+- Returns the second largest number
+- Handles edge cases (empty list, duplicates)
+- Includes docstring and type hints</code></pre>
+            </div>
+
+            <h3 id="provide-context">2. Provide Context</h3>
+
+            <pre><code class="language-text">I'm building a React e-commerce app with TypeScript.
+I'm using Zustand for state management.
+I need a shopping cart component that:
+- Shows items with quantity controls
+- Calculates total with tax (10%)
+- Persists to localStorage</code></pre>
+
+            <h3 id="use-examples">3. Use Examples (Few-Shot)</h3>
+
+            <pre><code class="language-text">Convert these texts to JSON:
+
+Example 1:
+Input: "John Doe, 25 years old, lives in NYC"
+Output: {"name": "John Doe", "age": 25, "city": "NYC"}
+
+Example 2:
+Input: "Jane Smith from LA, age 30"
+Output: {"name": "Jane Smith", "age": 30, "city": "LA"}
+
+Now convert:
+Input: "Ahmed Ali, 28, based in Algiers"</code></pre>
+
+            <h3 id="chain-of-thought">4. Chain of Thought</h3>
+
+            <pre><code class="language-text">Solve this step by step:
+
+Problem: Calculate the monthly cost for a team of 5 developers
+- Base rate: $500/developer
+- 20% discount for teams > 3
+- Additional $100 for premium support
+- 10% tax
+
+Think through each step before giving the final answer.</code></pre>
+
+            <h3 id="role-assignment">5. Role Assignment</h3>
+
+            <pre><code class="language-text">You are a senior security auditor with 15 years of experience.
+Review this code for security vulnerabilities:
+
+[paste code]
+
+Focus on:
+- SQL injection
+- XSS vulnerabilities
+- Authentication flaws
+- Rate limiting issues</code></pre>
+
+            <h2 id="api-optimization">API Optimization</h2>
+
+            <h3 id="reduce-costs">Reduce Costs</h3>
+
+            <pre><code class="language-python"># Use mini models for simple tasks
+response = client.chat.completions.create(
+    model="gpt-4.1-mini",  # Cheaper, still good
+    messages=[...],
+    max_tokens=500  # Limit output
+)
+
+# Enable caching for repeated queries
+response = client.chat.completions.create(
+    model="gpt-4.1",
+    messages=[...],
+    cache=True  # Reuse cached responses
+)</code></pre>
+
+            <h3 id="improve-speed">Improve Speed</h3>
+
+            <pre><code class="language-python"># Use streaming for faster perceived response
+for chunk in client.chat.completions.create(
+    model="gpt-4.1-mini",
+    messages=[...],
+    stream=True
+):
+    print(chunk.choices[0].delta.content, end="")
+
+# Batch requests when possible
+responses = client.batch.create(
+    requests=[
+        {"model": "gpt-4.1-mini", "messages": [...]},
+        {"model": "gpt-4.1-mini", "messages": [...]},
+    ]
+)</code></pre>
+
+            <h3 id="temperature-settings">Temperature Settings</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Task</th>
+                        <th>Temperature</th>
+                        <th>Why</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Code generation</td>
+                        <td>0.0 - 0.2</td>
+                        <td>Precise, deterministic</td>
+                    </tr>
+                    <tr>
+                        <td>Data extraction</td>
+                        <td>0.0</td>
+                        <td>Consistent output</td>
+                    </tr>
+                    <tr>
+                        <td>General Q&A</td>
+                        <td>0.5 - 0.7</td>
+                        <td>Balanced</td>
+                    </tr>
+                    <tr>
+                        <td>Creative writing</td>
+                        <td>0.8 - 1.2</td>
+                        <td>More varied, creative</td>
+                    </tr>
+                    <tr>
+                        <td>Brainstorming</td>
+                        <td>1.0 - 1.5</td>
+                        <td>Maximum creativity</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 id="common-mistakes">Common Mistakes to Avoid</h2>
+
+            <h3 id="vague-prompts">1. Vague Prompts</h3>
+            <pre><code>Bad: "Help me with my code"
+Bad: "It doesn't work"
+Bad: "Make it better"
+
+Good: "Fix the TypeError on line 15 of this Python function: [code]"</code></pre>
+
+            <h3 id="overloading">2. Overloading Single Requests</h3>
+            <pre><code>Bad: "Build me a complete e-commerce site with React, Node, MongoDB,
+      authentication, payment processing, admin dashboard, and deploy it"
+
+Good: Break into steps:
+1. "Design the database schema for an e-commerce site"
+2. "Create the Express API routes for products"
+3. "Build the React product listing component"
+...</code></pre>
+
+            <h3 id="ignoring-context">3. Ignoring Context Limits</h3>
+            <pre><code class="language-python"># Bad: Sending entire codebase
+messages = [{"role": "user", "content": entire_project_code}]
+
+# Good: Send only relevant files
+messages = [
+    {"role": "user", "content": f"""
+    I have a bug in my checkout function.
+
+    Relevant file (checkout.py):
+    {checkout_code}
+
+    Error: {error_message}
+    """}
+]</code></pre>
+
+            <h2 id="productivity-tips">Productivity Tips</h2>
+
+            <h3 id="templates">Create Templates</h3>
+
+            <p>Save commonly used prompts as templates:</p>
+
+            <pre><code class="language-text"># Code Review Template
+Review this [LANGUAGE] code for:
+- Security vulnerabilities
+- Performance issues
+- Code style violations
+- Potential bugs
+
+Code:
+[PASTE CODE HERE]
+
+# Bug Fix Template
+Language: [LANGUAGE]
+Framework: [FRAMEWORK]
+Error: [ERROR MESSAGE]
+Expected: [EXPECTED BEHAVIOR]
+Actual: [ACTUAL BEHAVIOR]
+Code: [RELEVANT CODE]</code></pre>
+
+            <h3 id="iterative-refinement">Iterative Refinement</h3>
+
+            <pre><code class="language-text">Step 1: "Write a basic user authentication system"
+Step 2: "Add password hashing with bcrypt"
+Step 3: "Add JWT token generation"
+Step 4: "Add refresh token functionality"
+Step 5: "Add rate limiting for login attempts"</code></pre>
+
+            <h2 id="security-tips">Security Best Practices</h2>
+
+            <h3 id="api-key-safety">API Key Safety</h3>
+
+            <ul>
+                <li>Never commit API keys to version control</li>
+                <li>Use environment variables</li>
+                <li>Rotate keys regularly</li>
+                <li>Use different keys for dev/prod</li>
+            </ul>
+
+            <pre><code class="language-bash"># .env file (add to .gitignore!)
+IAFACTORY_API_KEY=sk_live_your_key_here
+
+# In code
+import os
+api_key = os.environ.get("IAFACTORY_API_KEY")</code></pre>
+
+            <h3 id="data-privacy">Data Privacy</h3>
+
+            <ul>
+                <li>Don't send sensitive personal data</li>
+                <li>Anonymize data before sending</li>
+                <li>Use local models (Ollama) for confidential data</li>
+                <li>Review IAFactory's data retention policies</li>
+            </ul>
+
+            <h2 id="resources">Additional Resources</h2>
+
+            <ul>
+                <li><a href="./api/quick-start.html">API Quick Start</a></li>
+                <li><a href="./best-practices/writing-prompts.html">Prompt Engineering Guide</a></li>
+                <li><a href="./best-practices/choosing-models.html">Model Selection Guide</a></li>
+                <li><a href="https://discord.gg/iafactory">Community Discord</a></li>
+                <li><a href="https://youtube.com/@iafactory">Video Tutorials</a></li>
+            </ul>
+
+            <div class="alert alert-success">
+                <strong>Pro Tip:</strong>
+                <p>Join our <a href="https://discord.gg/iafactory">Discord community</a> to share tips and get help from other users!</p>
+            </div>
+        </main>
+
+        <aside class="docs-toc">
+            <h3 class="docs-toc-title">On this page</h3>
+            <ul></ul>
+        </aside>
+    </div>
+
+    <script src="../assets/js/docs-theme.js"></script>
+</body>
+</html>

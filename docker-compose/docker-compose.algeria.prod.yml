@@ -1,0 +1,405 @@
+# =============================================================================
+# IAFACTORY ALGERIA - DOCKER COMPOSE PRODUCTION
+# =============================================================================
+# Region: DZ (Algerie)
+# Environment: Production
+# VPS: Hetzner / Algerie Telecom / OVH
+# Domain: iafactory-algeria.com
+# =============================================================================
+# Usage:
+#   cd deployments/algeria
+#   docker-compose -f docker-compose.prod.yml up -d
+# =============================================================================
+# IMPORTANT: Configurer .env.production AVANT deploiement
+# =============================================================================
+
+services:
+  # ===========================================================================
+  # DATABASES & CACHE (Production-ready)
+  # ===========================================================================
+
+  iaf-postgres:
+    image: pgvector/pgvector:pg16
+    container_name: iaf-dz-postgres-prod
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:?POSTGRES_USER requis}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD requis}
+      POSTGRES_DB: ${POSTGRES_DB:-iafactory_dz}
+      PGDATA: /var/lib/postgresql/data/pgdata
+      TZ: Africa/Algiers
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ../../core/infrastructure/sql/init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+      - ../../core/infrastructure/sql/pgvector_migration.sql:/docker-entrypoint-initdb.d/02-pgvector.sql:ro
+    ports:
+      - "127.0.0.1:5432:5432"
+    command: >
+      postgres
+      -c shared_preload_libraries=vector
+      -c max_connections=200
+      -c shared_buffers=256MB
+      -c effective_cache_size=768MB
+      -c maintenance_work_mem=128MB
+      -c checkpoint_completion_target=0.9
+      -c wal_buffers=16MB
+      -c default_statistics_target=100
+      -c random_page_cost=1.1
+      -c effective_io_concurrency=200
+      -c work_mem=4MB
+      -c min_wal_size=1GB
+      -c max_wal_size=4GB
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB:-iafactory_dz}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: always
+    networks:
+      - iaf-dz-prod-network
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '1.5'
+        reservations:
+          memory: 512M
+
+  iaf-redis:
+    image: redis:7-alpine
+    container_name: iaf-dz-redis-prod
+    command: >
+      redis-server
+      --appendonly yes
+      --maxmemory 1gb
+      --maxmemory-policy allkeys-lru
+      --requirepass ${REDIS_PASSWORD:?REDIS_PASSWORD requis}
+    volumes:
+      - redis-data:/data
+    ports:
+      - "127.0.0.1:6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    restart: always
+    networks:
+      - iaf-dz-prod-network
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: '0.5'
+
+  iaf-qdrant:
+    image: qdrant/qdrant:latest
+    container_name: iaf-dz-qdrant-prod
+    volumes:
+      - qdrant-data:/qdrant/storage
+    ports:
+      - "127.0.0.1:6333:6333"
+    environment:
+      QDRANT__LOG_LEVEL: WARN
+      QDRANT__SERVICE__API_KEY: ${QDRANT_API_KEY:-}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:6333/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: always
+    networks:
+      - iaf-dz-prod-network
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '1.0'
+
+  iaf-meilisearch:
+    image: getmeili/meilisearch:latest
+    container_name: iaf-dz-meilisearch-prod
+    environment:
+      MEILI_MASTER_KEY: ${MEILI_MASTER_KEY:?MEILI_MASTER_KEY requis}
+      MEILI_ENV: production
+      MEILI_NO_ANALYTICS: "true"
+    volumes:
+      - meili-data:/meili_data
+    ports:
+      - "127.0.0.1:7700:7700"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7700/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: always
+    networks:
+      - iaf-dz-prod-network
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: '0.5'
+
+  # ===========================================================================
+  # BACKEND API (FastAPI - Production)
+  # ===========================================================================
+
+  iaf-backend:
+    build:
+      context: ../../core/services/api
+      dockerfile: Dockerfile.prod
+    container_name: iaf-dz-backend-prod
+    env_file:
+      - .env.production
+    depends_on:
+      iaf-postgres:
+        condition: service_healthy
+      iaf-redis:
+        condition: service_healthy
+      iaf-qdrant:
+        condition: service_healthy
+    environment:
+      # === REGION ===
+      REGION: algeria
+      REGION_CODE: DZ
+      SOVEREIGNTY_REGION: DZ
+      TZ: Africa/Algiers
+      ENVIRONMENT: production
+
+      # === DATABASE ===
+      POSTGRES_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@iaf-postgres:5432/${POSTGRES_DB:-iafactory_dz}
+      USE_PGVECTOR: "true"
+
+      # === REDIS ===
+      REDIS_URL: redis://:${REDIS_PASSWORD}@iaf-redis:6379/0
+
+      # === QDRANT ===
+      QDRANT_HOST: iaf-qdrant
+      QDRANT_PORT: 6333
+
+      # === MEILISEARCH ===
+      MEILI_URL: http://iaf-meilisearch:7700
+      MEILI_MASTER_KEY: ${MEILI_MASTER_KEY}
+
+      # === PAYMENT (CHARGILY) ===
+      PAYMENT_PROVIDER: chargily
+      CHARGILY_MODE: live
+      PAYMENT_CURRENCY: DZD
+
+      # === SECURITY ===
+      ALLOWED_ORIGINS: https://app.iafactory-algeria.com,https://iafactory-algeria.com
+
+      # === RATE LIMITING (Production) ===
+      ENABLE_RATE_LIMITING: "true"
+      RATE_LIMIT_PER_MINUTE: 30
+      RATE_LIMIT_PER_HOUR: 500
+
+      # === FEATURES ===
+      ENABLE_DARIJA: "true"
+      ENABLE_ARABIC_RTL: "true"
+      LEGAL_FRAMEWORK: algeria
+
+      # === SERVICE ===
+      SERVICE_NAME: iafactory-dz-api-prod
+      LOG_LEVEL: WARNING
+
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - backend-cache:/root/.cache
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    restart: always
+    networks:
+      - iaf-dz-prod-network
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+          cpus: '2.0'
+        reservations:
+          memory: 1G
+
+  # ===========================================================================
+  # FRONTEND (Production Build)
+  # ===========================================================================
+
+  iaf-frontend:
+    build:
+      context: ../../core/frontend/main-ui
+      dockerfile: Dockerfile.prod
+      args:
+        NEXT_PUBLIC_API_URL: ${API_URL:-https://api.iafactory-algeria.com}
+        NEXT_PUBLIC_REGION: algeria
+        NODE_ENV: production
+    container_name: iaf-dz-frontend-prod
+    depends_on:
+      - iaf-backend
+    environment:
+      NODE_ENV: production
+    volumes:
+      - ./messages:/app/messages:ro
+      - ./branding:/app/public/branding:ro
+    ports:
+      - "127.0.0.1:3000:3000"
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: always
+    networks:
+      - iaf-dz-prod-network
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: '1.0'
+        reservations:
+          memory: 256M
+
+  # ===========================================================================
+  # NGINX REVERSE PROXY + SSL
+  # ===========================================================================
+
+  iaf-nginx:
+    image: nginx:alpine
+    container_name: iaf-dz-nginx-prod
+    volumes:
+      - ./nginx/nginx.prod.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+      - ./nginx/certbot:/var/www/certbot:ro
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - iaf-frontend
+      - iaf-backend
+    healthcheck:
+      test: ["CMD", "nginx", "-t"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: always
+    networks:
+      - iaf-dz-prod-network
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+          cpus: '0.25'
+
+  # ===========================================================================
+  # WORKFLOW AUTOMATION (Production)
+  # ===========================================================================
+
+  iaf-n8n:
+    image: docker.n8n.io/n8nio/n8n:latest
+    container_name: iaf-dz-n8n-prod
+    depends_on:
+      iaf-postgres:
+        condition: service_healthy
+    environment:
+      DB_TYPE: postgresdb
+      DB_POSTGRESDB_HOST: iaf-postgres
+      DB_POSTGRESDB_PORT: 5432
+      DB_POSTGRESDB_DATABASE: ${POSTGRES_DB:-iafactory_dz}
+      DB_POSTGRESDB_USER: ${POSTGRES_USER}
+      DB_POSTGRESDB_PASSWORD: ${POSTGRES_PASSWORD}
+      DB_POSTGRESDB_SCHEMA: n8n
+      N8N_BASIC_AUTH_ACTIVE: "true"
+      N8N_BASIC_AUTH_USER: ${N8N_USER:?N8N_USER requis}
+      N8N_BASIC_AUTH_PASSWORD: ${N8N_PASSWORD:?N8N_PASSWORD requis}
+      WEBHOOK_URL: https://n8n.iafactory-algeria.com
+      N8N_HOST: n8n.iafactory-algeria.com
+      N8N_PROTOCOL: https
+      GENERIC_TIMEZONE: Africa/Algiers
+      EXECUTIONS_DATA_PRUNE: "true"
+      EXECUTIONS_DATA_MAX_AGE: 168
+    volumes:
+      - n8n-data:/home/node/.n8n
+    ports:
+      - "127.0.0.1:5678:5678"
+    restart: always
+    networks:
+      - iaf-dz-prod-network
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: '0.5'
+
+  # ===========================================================================
+  # MONITORING (Production)
+  # ===========================================================================
+
+  iaf-prometheus:
+    image: prom/prometheus:latest
+    container_name: iaf-dz-prometheus-prod
+    volumes:
+      - ../../core/infrastructure/observability/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ../../core/infrastructure/observability/alerts.yml:/etc/prometheus/alerts.yml:ro
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=90d'
+    ports:
+      - "127.0.0.1:9090:9090"
+    restart: always
+    networks:
+      - iaf-dz-prod-network
+
+  iaf-grafana:
+    image: grafana/grafana:latest
+    container_name: iaf-dz-grafana-prod
+    depends_on:
+      - iaf-prometheus
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_USER:?GRAFANA_USER requis}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:?GRAFANA_PASSWORD requis}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_SERVER_ROOT_URL: https://grafana.iafactory-algeria.com
+    volumes:
+      - grafana-data:/var/lib/grafana
+    ports:
+      - "127.0.0.1:3002:3000"
+    restart: always
+    networks:
+      - iaf-dz-prod-network
+
+# =============================================================================
+# VOLUMES (Production)
+# =============================================================================
+volumes:
+  postgres-data:
+    name: iaf-dz-postgres-prod-data
+  redis-data:
+    name: iaf-dz-redis-prod-data
+  qdrant-data:
+    name: iaf-dz-qdrant-prod-data
+  meili-data:
+    name: iaf-dz-meili-prod-data
+  backend-cache:
+    name: iaf-dz-backend-prod-cache
+  n8n-data:
+    name: iaf-dz-n8n-prod-data
+  prometheus-data:
+    name: iaf-dz-prometheus-prod-data
+  grafana-data:
+    name: iaf-dz-grafana-prod-data
+
+# =============================================================================
+# NETWORKS (Production - isolated)
+# =============================================================================
+networks:
+  iaf-dz-prod-network:
+    name: iafactory-dz-production
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16

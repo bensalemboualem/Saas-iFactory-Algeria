@@ -1,0 +1,20 @@
+{
+  "hero": {
+    "title": "🚀 iaFactory API Portal | Developer Dashboard",
+    "desc": "iaFactory API Portal - Developer dashboard to manage your API keys, track usage, and test endpoints",
+    "status": "Service active"
+  },
+  "features": {
+    "1": {"title": "Feature 1", "desc": "Feature description."},
+    "2": {"title": "Feature 2", "desc": "Feature description."},
+    "3": {"title": "Feature 3", "desc": "Feature description."},
+    "4": {"title": "Feature 4", "desc": "Feature description."}
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "status": "Connected"
+  },
+  "ready": "Ready to start?",
+  "launch": "Launch the app",
+  "launch_alert": "iaFactory API Portal | Developer Dashboard - Feature in development"
+}

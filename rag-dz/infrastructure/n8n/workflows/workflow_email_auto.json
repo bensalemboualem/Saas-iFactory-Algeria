@@ -1,0 +1,308 @@
+{
+  "name": "Email Auto-Reply",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute",
+              "minute": 5
+            }
+          ]
+        },
+        "mailbox": "INBOX",
+        "format": "simple",
+        "options": {
+          "customEmailConfig": "={{ $env.IMAP_CONFIG || '' }}"
+        }
+      },
+      "id": "email-trigger",
+      "name": "Réception Email",
+      "type": "n8n-nodes-base.emailReadImap",
+      "typeVersion": 2.1,
+      "position": [240, 300],
+      "credentials": {
+        "imap": {
+          "id": "imap-credentials",
+          "name": "Email IMAP"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "leftValue": "={{ $json.subject + ' ' + $json.textPlain }}",
+              "rightValue": "rdv",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "or"
+        }
+      },
+      "id": "filter-rdv-keyword",
+      "name": "Filtrer mot-clé RDV",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "url": "={{ $env.BACKEND_URL || 'http://backend:8180' }}/api/agent/analyze",
+        "method": "POST",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "content",
+              "value": "={{ $json.textPlain || $json.textHtml }}"
+            },
+            {
+              "name": "from_email",
+              "value": "={{ $json.from }}"
+            },
+            {
+              "name": "subject",
+              "value": "={{ $json.subject }}"
+            },
+            {
+              "name": "task",
+              "value": "analyze_email_for_appointment"
+            }
+          ]
+        },
+        "headerParametersUi": {
+          "parameter": [
+            {
+              "name": "X-API-Key",
+              "value": "={{ $env.API_KEY || 'change-me-in-production' }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "ai-analyze",
+      "name": "Analyser par Agent IA",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "leftValue": "={{ $json.can_auto_reply }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "check-auto-reply",
+      "name": "Peut répondre auto?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [900, 300]
+    },
+    {
+      "parameters": {
+        "fromEmail": "={{ $env.SMTP_FROM || 'noreply@iafactory.local' }}",
+        "toEmail": "={{ $('Réception Email').item.json.from }}",
+        "subject": "Re: {{ $('Réception Email').item.json.subject }}",
+        "emailType": "html",
+        "message": "={{ $json.auto_reply_content }}",
+        "options": {
+          "replyTo": "={{ $env.REPLY_TO || $env.SMTP_FROM }}"
+        }
+      },
+      "id": "send-auto-reply",
+      "name": "Envoyer réponse auto",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [1120, 200],
+      "credentials": {
+        "smtp": {
+          "id": "smtp-credentials",
+          "name": "SMTP"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "channel": "={{ $env.SLACK_CHANNEL || '#support' }}",
+        "text": "📧 Nouvel email nécessitant attention manuelle\n\n*De:* {{ $('Réception Email').item.json.from }}\n*Sujet:* {{ $('Réception Email').item.json.subject }}\n*Résumé IA:* {{ $json.summary }}\n\n_Raison:_ {{ $json.reason_no_auto_reply }}",
+        "otherOptions": {}
+      },
+      "id": "notify-slack",
+      "name": "Notifier Slack",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [1120, 400],
+      "credentials": {
+        "slackApi": {
+          "id": "slack-credentials",
+          "name": "Slack"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $env.BACKEND_URL || 'http://backend:8180' }}/api/emails/log",
+        "method": "POST",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "from_email",
+              "value": "={{ $('Réception Email').item.json.from }}"
+            },
+            {
+              "name": "subject",
+              "value": "={{ $('Réception Email').item.json.subject }}"
+            },
+            {
+              "name": "ai_analysis",
+              "value": "={{ JSON.stringify($json) }}"
+            },
+            {
+              "name": "auto_replied",
+              "value": "={{ $('Peut répondre auto?').item.json.can_auto_reply }}"
+            },
+            {
+              "name": "processed_at",
+              "value": "={{ $now.toISO() }}"
+            }
+          ]
+        },
+        "headerParametersUi": {
+          "parameter": [
+            {
+              "name": "X-API-Key",
+              "value": "={{ $env.API_KEY || 'change-me-in-production' }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "log-email",
+      "name": "Logger traitement",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1340, 300]
+    }
+  ],
+  "connections": {
+    "Réception Email": {
+      "main": [
+        [
+          {
+            "node": "Filtrer mot-clé RDV",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filtrer mot-clé RDV": {
+      "main": [
+        [
+          {
+            "node": "Analyser par Agent IA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyser par Agent IA": {
+      "main": [
+        [
+          {
+            "node": "Peut répondre auto?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Peut répondre auto?": {
+      "main": [
+        [
+          {
+            "node": "Envoyer réponse auto",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Notifier Slack",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Envoyer réponse auto": {
+      "main": [
+        [
+          {
+            "node": "Logger traitement",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notifier Slack": {
+      "main": [
+        [
+          {
+            "node": "Logger traitement",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "Email"
+    },
+    {
+      "name": "AI"
+    },
+    {
+      "name": "Auto-Reply"
+    }
+  ],
+  "triggerCount": 0,
+  "versionId": "1"
+}

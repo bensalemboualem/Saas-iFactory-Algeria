@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer Tools - IAFactory Algeria</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00c261;
+            --primary-dark: #00a050;
+            --bg: #0a0a0a;
+            --surface: #111;
+            --surface-light: #1a1a1a;
+            --text: #fff;
+            --text-muted: #888;
+            --code-bg: #1e1e1e;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+        
+        .header { background: rgba(10,10,10,0.95); padding: 1rem 2rem; position: fixed; top: 0; left: 0; right: 0; z-index: 100; border-bottom: 1px solid #222; }
+        .header-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--primary); text-decoration: none; }
+        .nav-links { display: flex; gap: 2rem; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--primary); }
+        .back-btn { background: var(--primary); color: #000; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; }
+
+        .main { max-width: 1200px; margin: 0 auto; padding: 120px 2rem 4rem; }
+        .page-header { text-align: center; margin-bottom: 4rem; }
+        .page-header h1 { font-size: 3rem; margin-bottom: 1rem; background: linear-gradient(135deg, var(--primary), #00ff88); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .page-header p { font-size: 1.2rem; color: var(--text-muted); max-width: 700px; margin: 0 auto; }
+
+        /* Tools Grid */
+        .tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; margin-bottom: 4rem; }
+        .tool-card { background: var(--surface); border: 1px solid #222; border-radius: 16px; padding: 2rem; transition: all 0.3s; }
+        .tool-card:hover { border-color: var(--primary); transform: translateY(-5px); }
+        .tool-icon { width: 60px; height: 60px; background: linear-gradient(135deg, var(--primary), #00ff88); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 1.5rem; }
+        .tool-card h3 { font-size: 1.3rem; margin-bottom: 0.5rem; }
+        .tool-card p { color: var(--text-muted); margin-bottom: 1rem; }
+        .tool-features { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .tool-feature { background: var(--surface-light); padding: 0.25rem 0.75rem; border-radius: 6px; font-size: 0.8rem; color: var(--text-muted); }
+
+        /* API Section */
+        .api-section { background: var(--surface); border-radius: 20px; padding: 3rem; margin-bottom: 4rem; }
+        .api-section h2 { text-align: center; margin-bottom: 2rem; font-size: 2rem; }
+        
+        .code-block { background: var(--code-bg); border-radius: 12px; overflow: hidden; margin-bottom: 1.5rem; }
+        .code-header { background: #2d2d2d; padding: 0.75rem 1rem; display: flex; justify-content: space-between; align-items: center; }
+        .code-lang { color: var(--primary); font-size: 0.85rem; font-weight: 600; }
+        .copy-btn { background: transparent; border: 1px solid #444; color: var(--text-muted); padding: 0.25rem 0.75rem; border-radius: 6px; cursor: pointer; font-size: 0.8rem; transition: all 0.3s; }
+        .copy-btn:hover { border-color: var(--primary); color: var(--primary); }
+        .code-content { padding: 1.5rem; overflow-x: auto; }
+        .code-content pre { font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; line-height: 1.6; color: #e0e0e0; }
+        .code-content .keyword { color: #c586c0; }
+        .code-content .string { color: #ce9178; }
+        .code-content .function { color: #dcdcaa; }
+        .code-content .comment { color: #6a9955; }
+
+        /* Endpoints */
+        .endpoints { display: grid; gap: 1rem; margin-top: 2rem; }
+        .endpoint { background: var(--surface-light); border-radius: 10px; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 1rem; }
+        .method { padding: 0.25rem 0.75rem; border-radius: 6px; font-weight: 600; font-size: 0.85rem; }
+        .method.get { background: rgba(0,194,97,0.2); color: #00c261; }
+        .method.post { background: rgba(0,122,204,0.2); color: #007acc; }
+        .method.delete { background: rgba(220,53,69,0.2); color: #dc3545; }
+        .endpoint-path { font-family: 'JetBrains Mono', monospace; color: var(--text); }
+        .endpoint-desc { color: var(--text-muted); font-size: 0.9rem; margin-left: auto; }
+
+        /* SDKs */
+        .sdks { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+        .sdk-card { background: var(--surface-light); border: 1px solid #333; border-radius: 12px; padding: 1.5rem; text-align: center; transition: all 0.3s; }
+        .sdk-card:hover { border-color: var(--primary); }
+        .sdk-card i { font-size: 2.5rem; margin-bottom: 1rem; }
+        .sdk-card h4 { margin-bottom: 0.5rem; }
+        .sdk-card p { color: var(--text-muted); font-size: 0.85rem; }
+        .sdk-python { color: #3776ab; }
+        .sdk-js { color: #f7df1e; }
+        .sdk-java { color: #ed8b00; }
+        .sdk-csharp { color: #68217a; }
+
+        /* CTA */
+        .cta-section { text-align: center; background: linear-gradient(135deg, rgba(0,194,97,0.1), rgba(0,255,136,0.05)); border: 1px solid rgba(0,194,97,0.3); border-radius: 20px; padding: 3rem; }
+        .cta-section h2 { font-size: 2rem; margin-bottom: 1rem; }
+        .cta-section p { color: var(--text-muted); margin-bottom: 2rem; }
+        .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        .cta-btn { display: inline-block; padding: 1rem 2rem; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.3s; }
+        .cta-btn.primary { background: var(--primary); color: #000; }
+        .cta-btn.secondary { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
+        .cta-btn:hover { transform: translateY(-3px); }
+
+        footer { background: var(--surface); border-top: 1px solid #222; padding: 2rem; text-align: center; color: var(--text-muted); margin-top: 4rem; }
+
+        @media (max-width: 768px) {
+            .page-header h1 { font-size: 2rem; }
+            .tools-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+            .endpoint { flex-direction: column; align-items: flex-start; }
+            .endpoint-desc { margin-left: 0; margin-top: 0.5rem; }
+        }
+    </style>
+<link rel="stylesheet" href="/apps/shared/iafactory-unified.css">
+</head>
+<body>
+<!-- IAFactory Trilingue Controls -->
+<div class="iaf-controls-floating" style="position:fixed;top:20px;right:20px;z-index:9998;display:flex;gap:10px;align-items:center;">
+    <div class="iaf-lang-dropdown" style="position:relative;">
+        <button class="iaf-lang-btn" onclick="IAFUnified.toggleLangMenu()" 
+            style="background:#667eea;color:white;border:none;padding:8px 15px;border-radius:8px;cursor:pointer;font-size:14px;display:flex;align-items:center;gap:5px;">
+            🌐 <span id="current-lang-label">FR</span> ▼
+        </button>
+        <div class="iaf-lang-menu" id="lang-menu" 
+            style="display:none;position:absolute;top:100%;right:0;background:white;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,0.15);min-width:150px;margin-top:5px;overflow:hidden;">
+            <button onclick="IAFUnified.changeLang('fr')" style="width:100%;padding:10px 15px;border:none;background:none;text-align:left;cursor:pointer;">🇫🇷 Français</button>
+            <button onclick="IAFUnified.changeLang('ar')" style="width:100%;padding:10px 15px;border:none;background:none;text-align:left;cursor:pointer;">🇩🇿 العربية</button>
+            <button onclick="IAFUnified.changeLang('en')" style="width:100%;padding:10px 15px;border:none;background:none;text-align:left;cursor:pointer;">🇬🇧 English</button>
+        </div>
+    </div>
+    <button class="iaf-theme-toggle" onclick="IAFUnified.toggleTheme()" 
+        style="background:#667eea;color:white;border:none;padding:8px 12px;border-radius:8px;cursor:pointer;font-size:16px;" 
+        title="Toggle theme">🌓</button>
+</div>
+
+    <header class="header">
+        <div class="header-content">
+            <a href="../landing-complete-responsive.html" class="logo">🇩🇿 IAFactory</a>
+            <nav class="nav-links">
+                <a href="fonctionnalites.html">Fonctionnalités</a>
+                <a href="applications.html">Applications</a>
+                <a href="documentation.html">Documentation</a>
+            </nav>
+            <a href="../landing-complete-responsive.html" class="back-btn"><i class="fas fa-arrow-left"></i> Retour</a>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="page-header">
+            <h1>🛠️ Developer Tools</h1>
+            <p>APIs, SDKs et outils pour intégrer l'IA dans vos applications. Construisez des solutions intelligentes avec notre plateforme.</p>
+        </div>
+
+        <div class="tools-grid">
+            <div class="tool-card">
+                <div class="tool-icon">🔌</div>
+                <h3>REST API</h3>
+                <p>API RESTful complète pour accéder à tous nos services IA.</p>
+                <div class="tool-features">
+                    <span class="tool-feature">OpenAPI 3.0</span>
+                    <span class="tool-feature">JSON/XML</span>
+                    <span class="tool-feature">Rate Limiting</span>
+                    <span class="tool-feature">Webhooks</span>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <div class="tool-icon">⚡</div>
+                <h3>Streaming API</h3>
+                <p>Réponses en temps réel avec Server-Sent Events.</p>
+                <div class="tool-features">
+                    <span class="tool-feature">SSE</span>
+                    <span class="tool-feature">WebSocket</span>
+                    <span class="tool-feature">Low Latency</span>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <div class="tool-icon">🔧</div>
+                <h3>Code Generator</h3>
+                <p>Générateur de code intelligent multi-langage.</p>
+                <div class="tool-features">
+                    <span class="tool-feature">Python</span>
+                    <span class="tool-feature">JavaScript</span>
+                    <span class="tool-feature">SQL</span>
+                    <span class="tool-feature">HTML/CSS</span>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <div class="tool-icon">🔍</div>
+                <h3>Code Review AI</h3>
+                <p>Analyse et amélioration automatique du code.</p>
+                <div class="tool-features">
+                    <span class="tool-feature">Security Scan</span>
+                    <span class="tool-feature">Best Practices</span>
+                    <span class="tool-feature">Performance</span>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <div class="tool-icon">📚</div>
+                <h3>Doc Generator</h3>
+                <p>Génération automatique de documentation.</p>
+                <div class="tool-features">
+                    <span class="tool-feature">Docstrings</span>
+                    <span class="tool-feature">README</span>
+                    <span class="tool-feature">API Docs</span>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <div class="tool-icon">🧪</div>
+                <h3>Test Generator</h3>
+                <p>Génération de tests unitaires et d'intégration.</p>
+                <div class="tool-features">
+                    <span class="tool-feature">Unit Tests</span>
+                    <span class="tool-feature">E2E</span>
+                    <span class="tool-feature">Coverage</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="api-section">
+            <h2>Quick Start API</h2>
+            
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">Python</span>
+                    <button class="copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> Copier</button>
+                </div>
+                <div class="code-content">
+<pre><span class="keyword">import</span> requests
+
+<span class="comment"># Configuration API</span>
+API_KEY = <span class="string">"votre_cle_api"</span>
+BASE_URL = <span class="string">"https://api.iafactory.dz/v1"</span>
+
+<span class="comment"># Appel simple au chat</span>
+response = requests.<span class="function">post</span>(
+    f<span class="string">"{BASE_URL}/chat/completions"</span>,
+    headers={<span class="string">"Authorization"</span>: f<span class="string">"Bearer {API_KEY}"</span>},
+    json={
+        <span class="string">"model"</span>: <span class="string">"gpt-4"</span>,
+        <span class="string">"messages"</span>: [{<span class="string">"role"</span>: <span class="string">"user"</span>, <span class="string">"content"</span>: <span class="string">"Bonjour!"</span>}]
+    }
+)
+
+<span class="keyword">print</span>(response.json()[<span class="string">"choices"</span>][0][<span class="string">"message"</span>][<span class="string">"content"</span>])</pre>
+                </div>
+            </div>
+
+            <h3 style="margin-bottom: 1rem;">Endpoints Principaux</h3>
+            <div class="endpoints">
+                <div class="endpoint">
+                    <span class="method post">POST</span>
+                    <span class="endpoint-path">/v1/chat/completions</span>
+                    <span class="endpoint-desc">Chat avec modèles LLM</span>
+                </div>
+                <div class="endpoint">
+                    <span class="method post">POST</span>
+                    <span class="endpoint-path">/v1/embeddings</span>
+                    <span class="endpoint-desc">Génération d'embeddings</span>
+                </div>
+                <div class="endpoint">
+                    <span class="method post">POST</span>
+                    <span class="endpoint-path">/v1/rag/query</span>
+                    <span class="endpoint-desc">Requête RAG avec documents</span>
+                </div>
+                <div class="endpoint">
+                    <span class="method get">GET</span>
+                    <span class="endpoint-path">/v1/models</span>
+                    <span class="endpoint-desc">Liste des modèles disponibles</span>
+                </div>
+                <div class="endpoint">
+                    <span class="method post">POST</span>
+                    <span class="endpoint-path">/v1/documents/upload</span>
+                    <span class="endpoint-desc">Upload de documents</span>
+                </div>
+            </div>
+
+            <h3 style="margin: 2rem 0 1rem;">SDKs Officiels</h3>
+            <div class="sdks">
+                <div class="sdk-card">
+                    <i class="fab fa-python sdk-python"></i>
+                    <h4>Python SDK</h4>
+                    <p>pip install iafactory</p>
+                </div>
+                <div class="sdk-card">
+                    <i class="fab fa-js-square sdk-js"></i>
+                    <h4>JavaScript SDK</h4>
+                    <p>npm install @iafactory/sdk</p>
+                </div>
+                <div class="sdk-card">
+                    <i class="fab fa-java sdk-java"></i>
+                    <h4>Java SDK</h4>
+                    <p>Maven / Gradle</p>
+                </div>
+                <div class="sdk-card">
+                    <i class="fab fa-microsoft sdk-csharp"></i>
+                    <h4>C# SDK</h4>
+                    <p>NuGet Package</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <h2>Prêt à construire avec l'IA ?</h2>
+            <p>Obtenez votre clé API gratuite et commencez à intégrer l'IA dans vos projets.</p>
+            <div class="cta-buttons">
+                <a href="documentation.html" class="cta-btn primary">Documentation Complète</a>
+                <a href="contact.html" class="cta-btn secondary">Obtenir une API Key</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2025 IAFactory Algeria. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        function copyCode(btn) {
+            const code = btn.closest('.code-block').querySelector('pre').textContent;
+            navigator.clipboard.writeText(code);
+            btn.innerHTML = '<i class="fas fa-check"></i> Copié!';
+            setTimeout(() => btn.innerHTML = '<i class="fas fa-copy"></i> Copier', 2000);
+        }
+    </script>
+<script src="/apps/shared/iafactory-unified.js"></script>
+<!-- IAFactory Chatbot -->
+<button class="iaf-chatbot-btn" onclick="IAFUnified.toggleChatbot()" title="Aide" aria-label="Aide">💬</button>
+<div data-iaf-footer></div>
+</body>
+</html>

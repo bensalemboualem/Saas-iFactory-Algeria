@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VS Code / Cline - IAFactory Algeria</title>
+    <link rel="stylesheet" href="../../assets/css/docs-theme.css">
+</head>
+<body>
+    <header class="docs-header">
+        <div class="docs-logo">
+            <img src="../../assets/images/logo.png" alt="IAFactory Algeria">
+            <span>IAFactory Algeria</span>
+        </div>
+        <nav class="main-nav">
+            <a href="../index.html">Documentation</a>
+            <a href="https://app.iafactory-algeria.com">Application</a>
+            <a href="../api/index.html">API</a>
+        </nav>
+        <div class="docs-controls">
+            <div class="language-switcher">
+                <button data-lang="fr" class="active">FR</button>
+                <button data-lang="en">EN</button>
+                <button data-lang="ar">AR</button>
+            </div>
+            <div class="theme-toggle">
+                <div class="theme-toggle-slider"></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <!-- ...existing sidebar... -->
+        </aside>
+
+        <main class="docs-main">
+            <h1>Intégration VS Code / Cline</h1>
+
+            <p class="lead">Utilisez IAFactory Algeria directement dans votre IDE préféré avec Cline (anciennement Claude Dev).</p>
+
+            <h2 id="introduction">Introduction</h2>
+
+            <p>Cline est une extension VS Code puissante qui transforme votre éditeur en assistant de développement IA. Avec IAFactory Algeria, vous bénéficiez de tous nos modèles directement dans votre workflow de développement.</p>
+
+            <div class="alert alert-info">
+                <strong>Avantages :</strong>
+                <ul>
+                    <li>Code avec assistance IA en temps réel</li>
+                    <li>Génération de code contextuel</li>
+                    <li>Refactoring automatique</li>
+                    <li>Documentation auto-générée</li>
+                    <li>Tests unitaires créés automatiquement</li>
+                </ul>
+            </div>
+
+            <h2 id="installation">Installation</h2>
+
+            <h3 id="prerequis">Prérequis</h3>
+
+            <ul>
+                <li>VS Code (version 1.80+)</li>
+                <li>Node.js 16+ (pour certaines fonctionnalités)</li>
+                <li>Clé API IAFactory Algeria</li>
+            </ul>
+
+            <h3 id="etape-1">Étape 1 : Installer l'Extension</h3>
+
+            <ol>
+                <li>Ouvrez VS Code</li>
+                <li>Allez dans Extensions (<code>Ctrl+Shift+X</code>)</li>
+                <li>Cherchez "Cline"</li>
+                <li>Cliquez sur "Install"</li>
+            </ol>
+
+            <p><strong>Ou via la ligne de commande :</strong></p>
+            <pre><code class="language-bash">code --install-extension saoudrizwan.claude-dev</code></pre>
+
+            <h3 id="etape-2">Étape 2 : Configuration IAFactory</h3>
+
+            <ol>
+                <li>Ouvrez les paramètres de Cline (<code>Ctrl+Shift+P</code> → "Cline: Settings")</li>
+                <li>Sélectionnez "OpenAI Compatible"</li>
+                <li>Configurez les paramètres :</li>
+            </ol>
+
+            <pre><code class="language-json">{
+  "cline.apiProvider": "openai-compatible",
+  "cline.apiUrl": "https://api.iafactory-algeria.com/v1",
+  "cline.apiKey": "VOTRE_CLE_API",
+  "cline.model": "gpt-4.1"
+}</code></pre>
+
+            <h3 id="etape-3">Étape 3 : Variables d'Environnement (Recommandé)</h3>
+
+            <p>Pour plus de sécurité, utilisez un fichier <code>.env</code> :</p>
+
+            <pre><code class="language-bash"># .env
+IAFACTORY_API_KEY=sk_live_votre_cle
+IAFACTORY_API_URL=https://api.iafactory-algeria.com/v1</code></pre>
+
+            <p>Puis dans <code>settings.json</code> :</p>
+
+            <pre><code class="language-json">{
+  "cline.apiKey": "${env:IAFACTORY_API_KEY}",
+  "cline.apiUrl": "${env:IAFACTORY_API_URL}"
+}</code></pre>
+
+            <h2 id="configuration-avancee">Configuration Avancée</h2>
+
+            <h3 id="selection-modeles">Sélection des Modèles</h3>
+
+            <p>Configurez différents modèles selon vos besoins :</p>
+
+            <pre><code class="language-json">{
+  "cline.models": {
+    "default": "gpt-4.1",
+    "code": "codestral-2508",
+    "chat": "gpt-4.1-mini",
+    "analysis": "claude-sonnet-4-5"
+  }
+}</code></pre>
+
+            <h3 id="context-window">Context Window</h3>
+
+            <pre><code class="language-json">{
+  "cline.maxTokens": 8000,
+  "cline.temperature": 0.2,
+  "cline.contextLines": 50
+}</code></pre>
+
+            <h3 id="custom-instructions">Instructions Personnalisées</h3>
+
+            <pre><code class="language-json">{
+  "cline.systemPrompt": "Tu es un expert Python spécialisé en Django. Écris du code propre, testé et documenté. Suis les conventions PEP 8."
+}</code></pre>
+
+            <h2 id="utilisation">Utilisation</h2>
+
+            <h3 id="generer-code">Générer du Code</h3>
+
+            <ol>
+                <li>Ouvrez la palette de commandes (<code>Ctrl+Shift+P</code>)</li>
+                <li>Tapez "Cline: Generate Code"</li>
+                <li>Décrivez ce que vous voulez</li>
+            </ol>
+
+            <p><strong>Exemple :</strong></p>
+            <pre><code class="language-text">Crée une classe Python User avec :
+- Attributs : id, name, email, created_at
+- Méthode to_dict()
+- Validation email avec regex
+- Docstrings complètes</code></pre>
+
+            <p><strong>Résultat :</strong></p>
+            <pre><code class="language-python">from datetime import datetime
+import re
+from typing import Dict
+
+class User:
+    """
+    Représente un utilisateur de l'application.
+
+    Attributes:
+        id (int): Identifiant unique de l'utilisateur
+        name (str): Nom complet de l'utilisateur
+        email (str): Adresse email valide
+        created_at (datetime): Date de création du compte
+    """
+
+    EMAIL_REGEX = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+
+    def __init__(self, id: int, name: str, email: str):
+        """
+        Initialise un nouvel utilisateur.
+
+        Args:
+            id: Identifiant unique
+            name: Nom de l'utilisateur
+            email: Adresse email
+
+        Raises:
+            ValueError: Si l'email est invalide
+        """
+        if not re.match(self.EMAIL_REGEX, email):
+            raise ValueError(f"Email invalide: {email}")
+
+        self.id = id
+        self.name = name
+        self.email = email
+        self.created_at = datetime.now()
+
+    def to_dict(self) -> Dict:
+        """
+        Convertit l'utilisateur en dictionnaire.
+
+        Returns:
+            Dict contenant toutes les propriétés de l'utilisateur
+        """
+        return {
+            'id': self.id,
+            'name': self.name,
+            'email': self.email,
+            'created_at': self.created_at.isoformat()
+        }</code></pre>
+
+            <h3 id="refactoring">Refactoring</h3>
+
+            <ol>
+                <li>Sélectionnez le code à refactoriser</li>
+                <li><code>Ctrl+Shift+P</code> → "Cline: Refactor"</li>
+                <li>Spécifiez les améliorations souhaitées</li>
+            </ol>
+
+            <p><strong>Exemple :</strong></p>
+            <pre><code class="language-text">Refactorise ce code pour :
+- Utiliser list comprehension
+- Ajouter type hints
+- Améliorer les noms de variables
+- Optimiser la performance</code></pre>
+
+            <h3 id="documentation">Générer la Documentation</h3>
+
+            <pre><code class="language-text">Sélectionner fonction → Cline: Generate Docstring</code></pre>
+
+            <p><strong>Avant :</strong></p>
+            <pre><code class="language-python">def calc(a, b, op):
+    if op == '+':
+        return a + b
+    elif op == '-':
+        return a - b</code></pre>
+
+            <p><strong>Après :</strong></p>
+            <pre><code class="language-python">def calc(a: float, b: float, op: str) -> float:
+    """
+    Effectue une opération arithmétique entre deux nombres.
+
+    Args:
+        a: Premier opérande
+        b: Second opérande
+        op: Opérateur ('+' ou '-')
+
+    Returns:
+        Résultat de l'opération
+
+    Raises:
+        ValueError: Si l'opérateur n'est pas supporté
+
+    Examples:
+        >>> calc(5, 3, '+')
+        8
+        >>> calc(10, 4, '-')
+        6
+    """
+    if op == '+':
+        return a + b
+    elif op == '-':
+        return a - b
+    else:
+        raise ValueError(f"Opérateur non supporté: {op}")</code></pre>
+
+            <h3 id="tests-unitaires">Générer des Tests</h3>
+
+            <pre><code class="language-text">Cline: Generate Tests for Current File</code></pre>
+
+            <p><strong>Pour la classe User ci-dessus :</strong></p>
+            <pre><code class="language-python">import unittest
+from datetime import datetime
+from user import User
+
+class TestUser(unittest.TestCase):
+    """Tests pour la classe User"""
+
+    def test_user_creation_valid(self):
+        """Test création utilisateur avec données valides"""
+        user = User(1, "Ahmed Ben Ali", "ahmed@example.com")
+        self.assertEqual(user.id, 1)
+        self.assertEqual(user.name, "Ahmed Ben Ali")
+        self.assertEqual(user.email, "ahmed@example.com")
+        self.assertIsInstance(user.created_at, datetime)
+
+    def test_user_creation_invalid_email(self):
+        """Test création avec email invalide"""
+        with self.assertRaises(ValueError):
+            User(1, "Ahmed", "invalid-email")
+
+    def test_to_dict(self):
+        """Test conversion en dictionnaire"""
+        user = User(1, "Ahmed", "ahmed@example.com")
+        user_dict = user.to_dict()
+
+        self.assertEqual(user_dict['id'], 1)
+        self.assertEqual(user_dict['name'], "Ahmed")
+        self.assertIn('created_at', user_dict)
+
+    def test_email_validation_edge_cases(self):
+        """Test validation email cas limites"""
+        # Email trop court
+        with self.assertRaises(ValueError):
+            User(1, "Test", "a@b.c")
+
+        # Email sans @
+        with self.assertRaises(ValueError):
+            User(1, "Test", "invalidemail.com")
+
+if __name__ == '__main__':
+    unittest.main()</code></pre>
+
+            <h2 id="raccourcis">Raccourcis Clavier</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Raccourci</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>Ctrl+Shift+L</code></td><td>Ouvrir chat Cline</td></tr>
+                    <tr><td><code>Ctrl+Shift+G</code></td><td>Générer code</td></tr>
+                    <tr><td><code>Ctrl+Shift+R</code></td><td>Refactorer sélection</td></tr>
+                    <tr><td><code>Ctrl+Shift+D</code></td><td>Générer docstring</td></tr>
+                    <tr><td><code>Ctrl+Shift+T</code></td><td>Générer tests</td></tr>
+                    <tr><td><code>Ctrl+Shift+E</code></td><td>Expliquer code</td></tr>
+                </tbody>
+            </table>
+
+            <h2 id="workflows">Workflows Avancés</h2>
+
+            <h3 id="workflow-tdd">Workflow TDD (Test-Driven Development)</h3>
+
+            <ol>
+                <li><strong>Écrire le test</strong> (avec Cline ou manuellement)</li>
+                <li><strong>Générer l'implémentation</strong> : "Cline: Implement to Pass Tests"</li>
+                <li><strong>Refactorer</strong> : "Cline: Refactor While Keeping Tests Green"</li>
+            </ol>
+
+            <h3 id="workflow-bug-fix">Workflow Bug Fix</h3>
+
+            <pre><code class="language-text">1. Sélectionner le code problématique
+2. Cline: Find Bug
+3. Cline: Suggest Fix
+4. Review et Apply
+5. Cline: Generate Test to Prevent Regression</code></pre>
+
+            <h3 id="workflow-code-review">Workflow Code Review</h3>
+
+            <pre><code class="language-text">Cline: Review Current File
+
+Analyse :
+- Bonnes pratiques respectées
+- Complexité cyclomatique élevée (ligne 45-67)
+- Pas de gestion d'erreurs (ligne 23)
+- Suggestion : Extraire en fonction séparée
+
+Voulez-vous que j'applique ces corrections ?</code></pre>
+
+            <h2 id="exemples">Exemples Pratiques</h2>
+
+            <h3 id="exemple-api-rest">Créer une API REST</h3>
+
+            <p><strong>Prompt :</strong></p>
+            <pre><code class="language-text">Crée une API REST Flask pour gérer des produits :
+- Endpoints CRUD complets
+- Validation avec marshmallow
+- SQLAlchemy models
+- Tests pytest
+- Documentation OpenAPI</code></pre>
+
+            <p><strong>Cline générera :</strong></p>
+            <ul>
+                <li><code>app.py</code> - Application Flask</li>
+                <li><code>models.py</code> - Modèles SQLAlchemy</li>
+                <li><code>schemas.py</code> - Schémas validation</li>
+                <li><code>routes.py</code> - Routes API</li>
+                <li><code>tests/test_api.py</code> - Tests complets</li>
+                <li><code>swagger.yaml</code> - Documentation OpenAPI</li>
+            </ul>
+
+            <h3 id="exemple-scraper">Web Scraper</h3>
+
+            <pre><code class="language-text">Crée un scraper Python pour extraire :
+- Titre, prix, description des produits
+- Site : https://example.com/products
+- Export CSV et JSON
+- Gestion rate limiting
+- Logs détaillés</code></pre>
+
+            <h3 id="exemple-data-pipeline">Data Pipeline</h3>
+
+            <pre><code class="language-text">Pipeline ETL avec pandas :
+1. Lire CSV (1M+ lignes)
+2. Nettoyer données manquantes
+3. Transformer colonnes (dates, nombres)
+4. Calculer métriques agrégées
+5. Export vers PostgreSQL
+Performance optimisée avec chunks</code></pre>
+
+            <h2 id="troubleshooting">Dépannage</h2>
+
+            <h3 id="erreur-connexion">Erreur de Connexion</h3>
+
+            <div class="alert alert-danger">
+                <strong>Erreur :</strong> "Unable to connect to API"
+            </div>
+
+            <p><strong>Solutions :</strong></p>
+            <ol>
+                <li>Vérifiez votre clé API</li>
+                <li>Testez l'URL : <code>curl https://api.iafactory-algeria.com/v1/models</code></li>
+                <li>Vérifiez votre firewall/proxy</li>
+                <li>Confirmez que votre abonnement est actif</li>
+            </ol>
+
+            <h3 id="reponses-lentes">Réponses Lentes</h3>
+
+            <pre><code class="language-json">{
+  "cline.timeout": 30000,
+  "cline.maxTokens": 4000,
+  "cline.model": "gpt-4.1-mini"  // Plus rapide
+}</code></pre>
+
+            <h3 id="context-trop-grand">Contexte Trop Grand</h3>
+
+            <pre><code class="language-json">{
+  "cline.contextLines": 30,
+  "cline.maxFiles": 5,
+  "cline.excludePatterns": [
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/__pycache__/**"
+  ]
+}</code></pre>
+
+            <h2 id="bonnes-pratiques">Bonnes Pratiques</h2>
+
+            <h3 id="prompts-efficaces">Prompts Efficaces</h3>
+
+            <div class="alert alert-success">
+                <strong>Bon</strong>
+                <pre><code>Crée une fonction Python qui :
+- Prend une liste de nombres
+- Retourne la médiane
+- Gère les cas pairs/impairs
+- Type hints + docstring
+- Tests unitaires inclus</code></pre>
+            </div>
+
+            <div class="alert alert-danger">
+                <strong>Mauvais</strong>
+                <pre><code>fais une fonction médiane</code></pre>
+            </div>
+
+            <h3 id="securite">Sécurité</h3>
+
+            <ul>
+                <li>Ne committez JAMAIS votre clé API</li>
+                <li>Utilisez <code>.env</code> + <code>.gitignore</code></li>
+                <li>Rotation régulière des clés</li>
+                <li>Clés différentes dev/prod</li>
+            </ul>
+
+            <h3 id="performance">Performance</h3>
+
+            <pre><code class="language-json">{
+  "cline.cacheResponses": true,
+  "cline.batchRequests": true,
+  "cline.modelRouter": {
+    "simple": "gpt-4.1-nano",
+    "medium": "gpt-4.1-mini",
+    "complex": "gpt-4.1"
+  }
+}</code></pre>
+
+            <h2 id="ressources">Ressources</h2>
+
+            <ul>
+                <li><a href="https://github.com/saoudrizwan/claude-dev">Documentation officielle Cline</a></li>
+                <li><a href="https://youtube.com/@iafactory">Tutoriels vidéo IAFactory</a></li>
+                <li><a href="https://discord.gg/iafactory">Support Discord</a></li>
+                <li><a href="mailto:support@iafactory-algeria.com">Support Email</a></li>
+            </ul>
+
+            <div class="alert alert-success">
+                <strong>Prêt à coder avec l'IA ?</strong>
+                <p>Téléchargez Cline et connectez-vous à IAFactory Algeria pour une expérience de développement révolutionnaire !</p>
+            </div>
+        </main>
+
+        <aside class="docs-toc">
+            <h3 class="docs-toc-title">Sur cette page</h3>
+            <ul></ul>
+        </aside>
+    </div>
+
+    <script src="../../assets/js/docs-theme.js"></script>
+</body>
+</html>

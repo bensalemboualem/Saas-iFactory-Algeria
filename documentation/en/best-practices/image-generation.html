@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Image Generation - IAFactory Algeria</title>
+    <link rel="stylesheet" href="../../assets/css/docs-theme.css">
+</head>
+<body>
+    <header class="docs-header">
+        <div class="docs-logo">
+            <img src="../../assets/images/logo.png" alt="IAFactory Algeria">
+            <span>IAFactory Algeria</span>
+        </div>
+        <nav class="main-nav">
+            <a href="../index.html">Documentation</a>
+            <a href="https://app.iafactory-algeria.com">App</a>
+            <a href="../api/index.html">API</a>
+        </nav>
+        <div class="docs-controls">
+            <div class="language-switcher">
+                <button data-lang="fr">🇫🇷 FR</button>
+                <button data-lang="en" class="active">🇬🇧 EN</button>
+                <button data-lang="ar">🇸🇦 AR</button>
+            </div>
+            <div class="theme-toggle">
+                <div class="theme-toggle-slider">☀️</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <!-- Sidebar -->
+        </aside>
+
+        <main class="docs-main">
+            <h1>AI Image Generation</h1>
+            
+            <p class="lead">Create professional images with our state-of-the-art AI image generation models.</p>
+
+            <h2 id="introduction">🎨 Introduction</h2>
+
+            <p>IAFactory Algeria gives you access to the best AI image generation models on the market, including DALL-E, Midjourney, Stable Diffusion, and more.</p>
+
+            <div class="alert alert-info">
+                <strong>💡 Use Cases:</strong>
+                <ul>
+                    <li>Illustrations for articles and blogs</li>
+                    <li>Game assets</li>
+                    <li>Product mockups</li>
+                    <li>Concept art and design</li>
+                    <li>Marketing and advertising</li>
+                    <li>Rapid prototyping</li>
+                </ul>
+            </div>
+
+            <h2 id="modeles-disponibles">🖼️ Available Models</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Model</th>
+                        <th>Strengths</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>DALL-E 3</strong></td>
+                        <td>High quality, accurate text</td>
+                        <td>$0.040 / image</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Midjourney V6</strong></td>
+                        <td>Artistic style, photorealism</td>
+                        <td>$0.030 / image</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Stable Diffusion XL</strong></td>
+                        <td>Fast, customizable</td>
+                        <td>$0.010 / image</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Flux Pro</strong></td>
+                        <td>Ultra-realistic, fine details</td>
+                        <td>$0.050 / image</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 id="premiers-pas">🚀 Getting Started</h2>
+
+            <h3 id="via-api">Via API</h3>
+
+            <pre><code class="language-python">import requests
+
+url = "https://api.iafactory-algeria.com/v1/images/generations"
+headers = {
+    "Authorization": "Bearer YOUR_API_KEY",
+    "Content-Type": "application/json"
+}
+
+data = {
+    "model": "dall-e-3",
+    "prompt": "Algerian landscape at sunset, impressionist style",
+    "size": "1024x1024",
+    "quality": "hd",
+    "n": 1
+}
+
+response = requests.post(url, headers=headers, json=data)
+image_url = response.json()['data'][0]['url']
+print(f"Generated image: {image_url}")</code></pre>
+
+            <h3 id="via-interface">Via Web Interface</h3>
+
+            <ol>
+                <li>Go to <a href="https://app.iafactory-algeria.com">app.iafactory-algeria.com</a></li>
+                <li>Select "Image Generation"</li>
+                <li>Enter your prompt</li>
+                <li>Choose model and parameters</li>
+                <li>Click "Generate"</li>
+            </ol>
+
+            <h2 id="prompts-efficaces">✍️ Writing Effective Prompts</h2>
+
+            <h3 id="structure-prompt">Structure of a Good Prompt</h3>
+
+            <pre><code class="language-text">[SUBJECT] + [STYLE] + [DETAILS] + [QUALITY] + [TECHNICAL PARAMETERS]
+
+Example:
+"Humanoid robot, cyberpunk style, blue and pink neons,
+futuristic city in background, ultra detailed, 8K,
+cinematic lighting, octane render"</code></pre>
+
+            <h3 id="formules-types">Standard Formulas</h3>
+
+            <h4>Professional Portrait</h4>
+            <pre><code>"Professional portrait of a [profession], [age] years old,
+neutral background, studio lighting, high resolution,
+photographed with Canon EOS R5, 85mm f/1.4 lens"</code></pre>
+
+            <h4>Artistic Landscape</h4>
+            <pre><code>"Landscape of [location], [season], [time of day],
+style [artist or artistic movement],
+colors [palette], composition [composition rule],
+natural light, ultra detailed"</code></pre>
+
+            <h4>Product Illustration</h4>
+            <pre><code>"Product photo of [product], minimalist white background,
+professional studio lighting, soft shadows,
+ultra high definition, e-commerce catalog style"</code></pre>
+
+            <h4>Concept Art</h4>
+            <pre><code>"Concept art of [subject], style [game or film],
+color palette [colors], perspective [angle],
+intricate details, dramatic lighting,
+artstation trending, digital painting"</code></pre>
+
+            <h2 id="exemples-avances">🎯 Advanced Examples</h2>
+
+            <h3 id="variations">Create Variations</h3>
+
+            <pre><code class="language-python">def generate_variations(base_prompt, variations):
+    """Generate multiple variations of the same concept"""
+    results = []
+    
+    for style in variations:
+        prompt = f"{base_prompt}, style {style}"
+        
+        response = requests.post(url, headers=headers, json={
+            "model": "dall-e-3",
+            "prompt": prompt,
+            "size": "1024x1024"
+        })
+        
+        results.append({
+            'style': style,
+            'url': response.json()['data'][0]['url']
+        })
+    
+    return results
+
+# Usage
+base = "Traditional Algerian café"
+styles = ["watercolor", "photorealistic", "art deco", "minimalist"]
+
+variations = generate_variations(base, styles)</code></pre>
+
+            <h3 id="batch-generation">Batch Generation</h3>
+
+            <pre><code class="language-python">import asyncio
+import aiohttp
+
+async def generate_image_async(session, prompt):
+    """Generate an image asynchronously"""
+    async with session.post(url, headers=headers, json={
+        "model": "stable-diffusion-xl",
+        "prompt": prompt
+    }) as response:
+        data = await response.json()
+        return data['data'][0]['url']
+
+async def batch_generate(prompts):
+    """Generate multiple images in parallel"""
+    async with aiohttp.ClientSession() as session:
+        tasks = [generate_image_async(session, p) for p in prompts]
+        return await asyncio.gather(*tasks)
+
+# Usage
+prompts = [
+    "Modern logo for tech startup",
+    "Minimalist icon for mobile app",
+    "Web banner for e-commerce"
+]
+
+images = asyncio.run(batch_generate(prompts))</code></pre>
+
+            <h2 id="parametres">⚙️ Important Parameters</h2>
+
+            <h3 id="taille">Size</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Size</th>
+                        <th>Usage</th>
+                        <th>Relative Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>256x256</td><td>Thumbnails, icons</td><td>0.5x</td></tr>
+                    <tr><td>512x512</td><td>Social media, posts</td><td>1x</td></tr>
+                    <tr><td>1024x1024</td><td>Standard, versatile</td><td>1.5x</td></tr>
+                    <tr><td>1024x1792</td><td>Portrait, mobile</td><td>2x</td></tr>
+                    <tr><td>1792x1024</td><td>Landscape, desktop</td><td>2x</td></tr>
+                </tbody>
+            </table>
+
+            <h3 id="qualite">Quality</h3>
+
+            <ul>
+                <li><strong>standard</strong>: Normal quality, fast</li>
+                <li><strong>hd</strong>: High definition, more details (2x price)</li>
+            </ul>
+
+            <h3 id="style">Style</h3>
+
+            <ul>
+                <li><strong>vivid</strong>: Bright and saturated colors</li>
+                <li><strong>natural</strong>: Natural and realistic tones</li>
+            </ul>
+
+            <h2 id="optimisation">💰 Cost Optimization</h2>
+
+            <h3 id="conseils-economie">Saving Tips</h3>
+
+            <ol>
+                <li><strong>Test at low resolution</strong>
+                    <pre><code>// Test with 512x512 then generate at 1024x1024</code></pre>
+                </li>
+                <li><strong>Use the right model</strong>
+                    <ul>
+                        <li>Stable Diffusion XL: Prototyping ($0.010/image)</li>
+                        <li>DALL-E 3: Final production ($0.040/image)</li>
+                    </ul>
+                </li>
+                <li><strong>Cache results</strong>
+                    <pre><code class="language-python">import hashlib
+
+def get_cached_or_generate(prompt):
+    cache_key = hashlib.md5(prompt.encode()).hexdigest()
+    
+    if cache_key in image_cache:
+        return image_cache[cache_key]
+    
+    image_url = generate_image(prompt)
+    image_cache[cache_key] = image_url
+    return image_url</code></pre>
+                </li>
+            </ol>
+
+            <h2 id="bonnes-pratiques">✨ Best Practices</h2>
+
+            <h3 id="prompts-negatifs">Negative Prompts</h3>
+
+            <p>Specify what you DON'T want in the image:</p>
+
+            <pre><code class="language-json">{
+  "prompt": "Professional portrait, studio lighting",
+  "negative_prompt": "blur, distortion, low quality, watermark, text, deformed hands"
+}</code></pre>
+
+            <h3 id="iterations">Progressive Iteration</h3>
+
+            <ol>
+                <li><strong>Basic prompt</strong>: "A cat"</li>
+                <li><strong>Add style</strong>: "A cat, watercolor style"</li>
+                <li><strong>Add details</strong>: "Black and white cat, watercolor style, floral background"</li>
+                <li><strong>Add technical</strong>: "Black and white cat, watercolor style, floral background, soft lighting, 4K"</li>
+            </ol>
+
+            <h3 id="references">Use References</h3>
+
+            <pre><code class="language-text">Style of [famous artist]
+Like [well-known work]
+In the manner of [artistic movement]
+Inspired by [film/game]
+
+Examples:
+- "Studio Ghibli style"
+- "like Blade Runner 2049"
+- "in the manner of Van Gogh"
+- "inspired by Cyberpunk 2077"</code></pre>
+
+            <h2 id="troubleshooting">🔧 Troubleshooting</h2>
+
+            <h3 id="image-floue">Blurry or Low Quality Image</h3>
+
+            <p><strong>Solutions:</strong></p>
+            <ul>
+                <li>Add "ultra detailed, 8K, sharp focus"</li>
+                <li>Use quality="hd"</li>
+                <li>Increase resolution</li>
+                <li>Try a different model (Flux Pro)</li>
+            </ul>
+
+            <h3 id="style-incorrect">Style Not Respected</h3>
+
+            <p><strong>Solutions:</strong></p>
+            <ul>
+                <li>Be more specific about style</li>
+                <li>Add artistic references</li>
+                <li>Use negative prompt</li>
+                <li>Try Midjourney for artistic styles</li>
+            </ul>
+
+            <h3 id="texte-illisible">Illegible Text in Image</h3>
+
+            <p><strong>Solutions:</strong></p>
+            <ul>
+                <li>Use DALL-E 3 (better for text)</li>
+                <li>Specify "clear readable text"</li>
+                <li>Simplify requested text</li>
+                <li>Generate text separately then compose</li>
+            </ul>
+
+            <h2 id="ressources">📚 Additional Resources</h2>
+
+            <ul>
+                <li>📖 <a href="./writing-prompts.html">Prompt Writing Guide</a></li>
+                <li>🎨 <a href="https://lexica.art">Lexica - Prompt Gallery</a></li>
+                <li>💬 <a href="https://discord.gg/iafactory">Discord Community</a></li>
+                <li>🎥 <a href="https://youtube.com/@iafactory">Video Tutorials</a></li>
+            </ul>
+
+            <div class="alert alert-success">
+                <strong>🎨 Ready to create?</strong>
+                <p>Start generating images on <a href="https://app.iafactory-algeria.com">app.iafactory-algeria.com</a></p>
+            </div>
+        </main>
+
+        <aside class="docs-toc">
+            <h3 class="docs-toc-title">On this page</h3>
+            <ul></ul>
+        </aside>
+    </div>
+
+    <script src="../../assets/js/docs-theme.js"></script>
+</body>
+</html>

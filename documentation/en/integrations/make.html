@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make.com Integration - IAFactory Algeria</title>
+    <link rel="stylesheet" href="../../assets/css/docs-theme.css">
+</head>
+<body>
+    <header class="docs-header">
+        <div class="docs-logo">
+            <img src="../../assets/images/logo.png" alt="IAFactory Algeria">
+            <span>IAFactory Algeria</span>
+        </div>
+        <nav class="main-nav">
+            <a href="../index.html">Documentation</a>
+            <a href="https://app.iafactory-algeria.com">App</a>
+            <a href="../api/index.html">API</a>
+        </nav>
+        <div class="docs-controls">
+            <div class="language-switcher">
+                <button data-lang="fr">🇫🇷 FR</button>
+                <button data-lang="en" class="active">🇬🇧 EN</button>
+                <button data-lang="ar">🇸🇦 AR</button>
+            </div>
+            <div class="theme-toggle">
+                <div class="theme-toggle-slider">☀️</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <!-- Sidebar -->
+        </aside>
+
+        <main class="docs-main">
+            <h1>Make.com Integration</h1>
+            
+            <p class="lead">Integrate IAFactory Algeria AI into your Make.com scenarios for intelligent workflow automation.</p>
+
+            <h2 id="introduction">🔄 Introduction</h2>
+
+            <p>Make.com (formerly Integromat) is a powerful visual automation platform. Connect it with IAFactory Algeria to add AI capabilities to your workflows: text processing, image generation, intelligent decision-making, and more.</p>
+
+            <div class="alert alert-info">
+                <strong>💡 Use Cases:</strong>
+                <ul>
+                    <li>Process emails with AI and auto-respond</li>
+                    <li>Generate content from structured data</li>
+                    <li>Intelligent classification and routing</li>
+                    <li>Automated translations</li>
+                    <li>AI-powered data extraction</li>
+                    <li>Chatbot workflows</li>
+                </ul>
+            </div>
+
+            <h2 id="setup">📦 Setup</h2>
+
+            <h3 id="create-account">1. Create Make Account</h3>
+
+            <ol>
+                <li>Go to <a href="https://www.make.com">make.com</a></li>
+                <li>Sign up for a free account</li>
+                <li>Verify your email</li>
+            </ol>
+
+            <h3 id="get-api-key">2. Get IAFactory API Key</h3>
+
+            <ol>
+                <li>Log in to <a href="https://app.iafactory-algeria.com">app.iafactory-algeria.com</a></li>
+                <li>Navigate to <strong>Settings → API Keys</strong></li>
+                <li>Click <strong>Create New Key</strong></li>
+                <li>Copy your key (keep it secure!)</li>
+            </ol>
+
+            <h2 id="http-module">⚙️ HTTP Module Configuration</h2>
+
+            <h3 id="basic-setup">Basic Setup</h3>
+
+            <p>Use the <strong>HTTP → Make a Request</strong> module:</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Field</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>URL</strong></td><td><code>https://api.iafactory-algeria.com/v1/chat/completions</code></td></tr>
+                    <tr><td><strong>Method</strong></td><td>POST</td></tr>
+                    <tr><td><strong>Headers</strong></td><td>See below</td></tr>
+                    <tr><td><strong>Body type</strong></td><td>Raw (JSON)</td></tr>
+                </tbody>
+            </table>
+
+            <h3 id="headers">Headers</h3>
+
+            <pre><code class="language-json">{
+  "Authorization": "Bearer YOUR_API_KEY",
+  "Content-Type": "application/json"
+}</code></pre>
+
+            <h3 id="request-body">Request Body</h3>
+
+            <pre><code class="language-json">{
+  "model": "gpt-4.1",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are a helpful assistant."
+    },
+    {
+      "role": "user",
+      "content": "{{1.prompt}}"
+    }
+  ],
+  "temperature": 0.7,
+  "max_tokens": 1000
+}</code></pre>
+
+            <h2 id="scenarios">🎯 Scenario Examples</h2>
+
+            <h3 id="scenario-1">1. Intelligent Email Processing</h3>
+
+            <p><strong>Workflow:</strong></p>
+
+            <ol>
+                <li><strong>Gmail → Watch Emails</strong> (trigger)</li>
+                <li><strong>HTTP → IAFactory API</strong> (analyze email)</li>
+                <li><strong>Router</strong> (route based on AI classification)</li>
+                <li><strong>Gmail → Send Email</strong> (auto-respond)</li>
+            </ol>
+
+            <p><strong>AI Prompt:</strong></p>
+
+            <pre><code class="language-json">{
+  "model": "gpt-4.1-mini",
+  "messages": [{
+    "role": "system",
+    "content": "Classify this email into: URGENT, IMPORTANT, NORMAL, SPAM. Return only the category."
+  }, {
+    "role": "user",
+    "content": "Subject: {{1.subject}}\n\nBody: {{1.textPlain}}"
+  }],
+  "temperature": 0.1
+}</code></pre>
+
+            <h3 id="scenario-2">2. Content Generation from Database</h3>
+
+            <p><strong>Workflow:</strong></p>
+
+            <ol>
+                <li><strong>Airtable → Watch Records</strong></li>
+                <li><strong>HTTP → IAFactory API</strong> (generate content)</li>
+                <li><strong>Airtable → Update Record</strong></li>
+                <li><strong>WordPress → Create Post</strong></li>
+            </ol>
+
+            <p><strong>AI Configuration:</strong></p>
+
+            <pre><code class="language-json">{
+  "model": "gpt-4.1",
+  "messages": [{
+    "role": "system",
+    "content": "Generate a 500-word blog post in HTML format with SEO optimization."
+  }, {
+    "role": "user",
+    "content": "Title: {{1.title}}\nKeywords: {{1.keywords}}\nOutline: {{1.outline}}"
+  }],
+  "temperature": 0.8,
+  "max_tokens": 2000
+}</code></pre>
+
+            <h3 id="scenario-3">3. Automated Translation</h3>
+
+            <p><strong>Workflow:</strong></p>
+
+            <ol>
+                <li><strong>Webhook</strong> (receive text)</li>
+                <li><strong>HTTP → IAFactory</strong> (translate)</li>
+                <li><strong>Slack → Send Message</strong> (notify)</li>
+            </ol>
+
+            <p><strong>Translation Prompt:</strong></p>
+
+            <pre><code class="language-json">{
+  "model": "gpt-4.1-mini",
+  "messages": [{
+    "role": "system",
+    "content": "Translate to {{2.targetLanguage}}. Return ONLY the translation, no explanations."
+  }, {
+    "role": "user",
+    "content": "{{1.text}}"
+  }],
+  "temperature": 0.2
+}</code></pre>
+
+            <h2 id="advanced">🚀 Advanced Features</h2>
+
+            <h3 id="iterators">Using Iterators</h3>
+
+            <p>Process multiple items with AI:</p>
+
+            <ol>
+                <li><strong>Array Aggregator</strong> → collect items</li>
+                <li><strong>Iterator</strong> → loop through items</li>
+                <li><strong>HTTP → IAFactory</strong> → process each item</li>
+                <li><strong>Array Aggregator</strong> → collect results</li>
+            </ol>
+
+            <h3 id="error-handling">Error Handling</h3>
+
+            <pre><code class="language-json">{
+  "error": {
+    "handler": [
+      {
+        "module": "Slack",
+        "action": "sendMessage",
+        "parameters": {
+          "channel": "#alerts",
+          "text": "AI API Error: {{error.message}}"
+        }
+      },
+      {
+        "module": "DataStore",
+        "action": "add",
+        "parameters": {
+          "key": "failed_requests",
+          "data": "{{bundle}}"
+        }
+      }
+    ],
+    "directive": "resume"
+  }
+}</code></pre>
+
+            <h3 id="rate-limiting">Rate Limiting & Retry</h3>
+
+            <ul>
+                <li><strong>Sleep</strong> module: Add delays between requests</li>
+                <li><strong>Repeater</strong>: Retry failed requests</li>
+                <li><strong>Error handler</strong>: Exponential backoff</li>
+            </ul>
+
+            <h2 id="best-practices">✨ Best Practices</h2>
+
+            <h3 id="optimization">1. Optimization</h3>
+
+            <ul>
+                <li>Use <code>gpt-4.1-mini</code> for simple tasks (faster & cheaper)</li>
+                <li>Use <code>gpt-4.1</code> for complex reasoning</li>
+                <li>Set appropriate <code>max_tokens</code> to avoid waste</li>
+                <li>Cache responses when possible</li>
+            </ul>
+
+            <h3 id="security">2. Security</h3>
+
+            <ul>
+                <li>Store API key in Make's <strong>Connection</strong> (not in scenario)</li>
+                <li>Use <strong>Data Store</strong> to encrypt sensitive data</li>
+                <li>Validate webhook signatures</li>
+                <li>Never log API keys in scenario history</li>
+            </ul>
+
+            <h3 id="monitoring">3. Monitoring</h3>
+
+            <ul>
+                <li>Set up <strong>Error Notifications</strong> (Slack/Email)</li>
+                <li>Use <strong>Data Store</strong> to track usage</li>
+                <li>Monitor execution time and optimize</li>
+                <li>Regular scenario testing</li>
+            </ul>
+
+            <h2 id="troubleshooting">🔧 Troubleshooting</h2>
+
+            <h3 id="error-401">Error 401: Unauthorized</h3>
+
+            <ul>
+                <li>Check API key is correct</li>
+                <li>Verify Authorization header format: <code>Bearer YOUR_KEY</code></li>
+                <li>Ensure key hasn't expired</li>
+            </ul>
+
+            <h3 id="error-429">Error 429: Rate Limit</h3>
+
+            <ul>
+                <li>Add <strong>Sleep</strong> modules between requests</li>
+                <li>Implement exponential backoff</li>
+                <li>Upgrade your IAFactory plan</li>
+            </ul>
+
+            <h3 id="timeout">Timeout Errors</h3>
+
+            <ul>
+                <li>Reduce <code>max_tokens</code></li>
+                <li>Split large requests into smaller chunks</li>
+                <li>Increase timeout in HTTP module settings</li>
+            </ul>
+
+            <h2 id="resources">📚 Resources</h2>
+
+            <ul>
+                <li>📖 <a href="https://www.make.com/en/help">Make.com Documentation</a></li>
+                <li>🎥 <a href="../api/quick-start.html">IAFactory API Quick Start</a></li>
+                <li>💬 <a href="https://discord.gg/iafactory">Community Discord</a></li>
+                <li>🔄 <a href="https://www.make.com/en/integrations">Make Integrations</a></li>
+            </ul>
+
+            <div class="alert alert-success">
+                <strong>🔄 Ready to automate with AI?</strong>
+                <p>Get your API key: <a href="https://app.iafactory-algeria.com/api-keys">app.iafactory-algeria.com</a></p>
+            </div>
+        </main>
+
+        <aside class="docs-toc">
+            <h3 class="docs-toc-title">On this page</h3>
+            <ul></ul>
+        </aside>
+    </div>
+
+    <script src="../../assets/js/docs-theme.js"></script>
+</body>
+</html>

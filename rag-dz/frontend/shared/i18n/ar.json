@@ -1,0 +1,85 @@
+{
+  "common": {
+    "app_name": "مصنع الذكاء",
+    "loading": "جاري التحميل...",
+    "error": "خطأ",
+    "success": "نجاح",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "create": "إنشاء",
+    "search": "بحث",
+    "filter": "تصفية",
+    "back": "رجوع",
+    "next": "التالي",
+    "previous": "السابق",
+    "submit": "إرسال",
+    "confirm": "تأكيد",
+    "close": "إغلاق"
+  },
+  "navigation": {
+    "dashboard": "لوحة التحكم",
+    "cockpit": "قمرة القيادة",
+    "chat": "المحادثة",
+    "voice": "المساعد الصوتي",
+    "documents": "المستندات",
+    "workflows": "الأتمتة",
+    "billing": "الفواتير",
+    "settings": "الإعدادات",
+    "profile": "الملف الشخصي",
+    "logout": "تسجيل الخروج"
+  },
+  "auth": {
+    "login": "تسجيل الدخول",
+    "register": "إنشاء حساب",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "forgot_password": "نسيت كلمة المرور؟",
+    "remember_me": "تذكرني",
+    "no_account": "ليس لديك حساب؟",
+    "has_account": "لديك حساب بالفعل؟"
+  },
+  "dashboard": {
+    "welcome": "مرحباً",
+    "credits_remaining": "الأرصدة المتبقية",
+    "tasks_completed": "المهام المنجزة",
+    "time_saved": "الوقت الموفر",
+    "money_saved": "التوفير المحقق",
+    "recent_activity": "النشاط الأخير",
+    "quick_actions": "إجراءات سريعة"
+  },
+  "pricing": {
+    "title": "أسعار شفافة، قيمة قصوى",
+    "subtitle": "ادفع مقابل الإنتاجية، وليس الوصول",
+    "monthly": "شهري",
+    "annual": "سنوي",
+    "credits": "رصيد/شهر",
+    "choose_plan": "اختر هذه الخطة",
+    "current_plan": "الخطة الحالية",
+    "upgrade": "الترقية",
+    "popular": "شائع"
+  },
+  "features": {
+    "chat": "محادثة ذكاء اصطناعي غير محدودة",
+    "rag": "بحث RAG متقدم",
+    "voice": "مساعد صوتي",
+    "documents": "إنشاء المستندات",
+    "workflows": "أتمتة n8n",
+    "video": "إنشاء الفيديو",
+    "api": "الوصول إلى API"
+  },
+  "errors": {
+    "network": "خطأ في الاتصال بالشبكة",
+    "unauthorized": "غير مصرح",
+    "not_found": "الصفحة غير موجودة",
+    "server_error": "خطأ في الخادم",
+    "validation": "خطأ في التحقق"
+  },
+  "footer": {
+    "copyright": "© 2025 مصنع الذكاء الجزائر. جميع الحقوق محفوظة.",
+    "privacy": "الخصوصية",
+    "terms": "شروط الاستخدام",
+    "contact": "اتصل بنا"
+  }
+}

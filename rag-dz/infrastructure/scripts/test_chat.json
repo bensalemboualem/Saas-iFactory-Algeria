@@ -1,0 +1,10 @@
+{
+  "agent_id": "bmm-architect",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Bonjour! Je veux créer une application de chat."
+    }
+  ],
+  "temperature": 0.7
+}

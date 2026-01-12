@@ -1,0 +1,226 @@
+{
+  "name": "DZ-Connectors Workflows",
+  "version": "1.0.0",
+  "description": "Workflows n8n pour ingestion automatique des données algériennes",
+  "workflows": [
+    {
+      "id": "dz-joradp-weekly",
+      "name": "📜 JORADP - Journal Officiel (Hebdomadaire)",
+      "description": "Scrape le Journal Officiel chaque semaine",
+      "trigger": "cron",
+      "schedule": "0 6 * * 1",
+      "nodes": [
+        {
+          "type": "n8n-nodes-base.cron",
+          "name": "Trigger Hebdomadaire",
+          "parameters": {
+            "triggerTimes": {
+              "item": [{ "mode": "everyWeek", "hour": 6, "minute": 0, "weekday": 1 }]
+            }
+          }
+        },
+        {
+          "type": "n8n-nodes-base.httpRequest",
+          "name": "Lancer Scraping JORADP",
+          "parameters": {
+            "url": "http://iaf-dz-connectors-prod:8195/api/scrape/DZ_JO",
+            "method": "POST",
+            "responseFormat": "json"
+          }
+        },
+        {
+          "type": "n8n-nodes-base.slack",
+          "name": "Notifier Slack",
+          "parameters": {
+            "channel": "#data-dz",
+            "text": "✅ JORADP scraping terminé: {{ $json.message }}"
+          }
+        }
+      ]
+    },
+    {
+      "id": "dz-dgi-weekly",
+      "name": "💰 DGI - Impôts (Hebdomadaire)",
+      "description": "Scrape la Direction Générale des Impôts",
+      "trigger": "cron",
+      "schedule": "0 7 * * 2",
+      "nodes": [
+        {
+          "type": "n8n-nodes-base.cron",
+          "name": "Trigger Hebdomadaire",
+          "parameters": {
+            "triggerTimes": {
+              "item": [{ "mode": "everyWeek", "hour": 7, "minute": 0, "weekday": 2 }]
+            }
+          }
+        },
+        {
+          "type": "n8n-nodes-base.httpRequest",
+          "name": "Lancer Scraping DGI",
+          "parameters": {
+            "url": "http://iaf-dz-connectors-prod:8195/api/scrape/DZ_DGI",
+            "method": "POST"
+          }
+        }
+      ]
+    },
+    {
+      "id": "dz-news-daily",
+      "name": "📰 Actualités DZ (Quotidien)",
+      "description": "Scrape les actualités économiques chaque jour",
+      "trigger": "cron",
+      "schedule": "0 8 * * *",
+      "nodes": [
+        {
+          "type": "n8n-nodes-base.cron",
+          "name": "Trigger Quotidien",
+          "parameters": {
+            "triggerTimes": {
+              "item": [{ "mode": "everyDay", "hour": 8, "minute": 0 }]
+            }
+          }
+        },
+        {
+          "type": "n8n-nodes-base.httpRequest",
+          "name": "Lancer Scraping News",
+          "parameters": {
+            "url": "http://iaf-dz-connectors-prod:8195/api/scrape/DZ_NEWS",
+            "method": "POST"
+          }
+        }
+      ]
+    },
+    {
+      "id": "dz-ons-monthly",
+      "name": "📊 ONS - Statistiques (Mensuel)",
+      "description": "Scrape l'Office National des Statistiques",
+      "trigger": "cron",
+      "schedule": "0 9 1 * *",
+      "nodes": [
+        {
+          "type": "n8n-nodes-base.cron",
+          "name": "Trigger Mensuel",
+          "parameters": {
+            "triggerTimes": {
+              "item": [{ "mode": "everyMonth", "dayOfMonth": 1, "hour": 9, "minute": 0 }]
+            }
+          }
+        },
+        {
+          "type": "n8n-nodes-base.httpRequest",
+          "name": "Lancer Scraping ONS",
+          "parameters": {
+            "url": "http://iaf-dz-connectors-prod:8195/api/scrape/DZ_ONS",
+            "method": "POST"
+          }
+        }
+      ]
+    },
+    {
+      "id": "dz-bank-weekly",
+      "name": "🏦 Banque d'Algérie (Hebdomadaire)",
+      "description": "Scrape la Banque d'Algérie",
+      "trigger": "cron",
+      "schedule": "0 10 * * 3",
+      "nodes": [
+        {
+          "type": "n8n-nodes-base.cron",
+          "name": "Trigger Hebdomadaire",
+          "parameters": {
+            "triggerTimes": {
+              "item": [{ "mode": "everyWeek", "hour": 10, "minute": 0, "weekday": 3 }]
+            }
+          }
+        },
+        {
+          "type": "n8n-nodes-base.httpRequest",
+          "name": "Lancer Scraping Banque",
+          "parameters": {
+            "url": "http://iaf-dz-connectors-prod:8195/api/scrape/DZ_BANK",
+            "method": "POST"
+          }
+        }
+      ]
+    },
+    {
+      "id": "dz-all-sources",
+      "name": "🔄 Toutes Sources DZ (Manuel)",
+      "description": "Workflow manuel pour scraper toutes les sources",
+      "trigger": "webhook",
+      "nodes": [
+        {
+          "type": "n8n-nodes-base.webhook",
+          "name": "Webhook Trigger",
+          "parameters": {
+            "path": "dz-scrape-all",
+            "httpMethod": "POST"
+          }
+        },
+        {
+          "type": "n8n-nodes-base.httpRequest",
+          "name": "Scrape JORADP",
+          "parameters": {
+            "url": "http://iaf-dz-connectors-prod:8195/api/scrape/DZ_JO",
+            "method": "POST"
+          }
+        },
+        {
+          "type": "n8n-nodes-base.wait",
+          "name": "Attendre 30s",
+          "parameters": { "amount": 30, "unit": "seconds" }
+        },
+        {
+          "type": "n8n-nodes-base.httpRequest",
+          "name": "Scrape DGI",
+          "parameters": {
+            "url": "http://iaf-dz-connectors-prod:8195/api/scrape/DZ_DGI",
+            "method": "POST"
+          }
+        },
+        {
+          "type": "n8n-nodes-base.wait",
+          "name": "Attendre 30s",
+          "parameters": { "amount": 30, "unit": "seconds" }
+        },
+        {
+          "type": "n8n-nodes-base.httpRequest",
+          "name": "Scrape ONS",
+          "parameters": {
+            "url": "http://iaf-dz-connectors-prod:8195/api/scrape/DZ_ONS",
+            "method": "POST"
+          }
+        },
+        {
+          "type": "n8n-nodes-base.wait",
+          "name": "Attendre 30s",
+          "parameters": { "amount": 30, "unit": "seconds" }
+        },
+        {
+          "type": "n8n-nodes-base.httpRequest",
+          "name": "Scrape News",
+          "parameters": {
+            "url": "http://iaf-dz-connectors-prod:8195/api/scrape/DZ_NEWS",
+            "method": "POST"
+          }
+        },
+        {
+          "type": "n8n-nodes-base.httpRequest",
+          "name": "Récupérer Stats",
+          "parameters": {
+            "url": "http://iaf-dz-connectors-prod:8195/api/stats",
+            "method": "GET",
+            "responseFormat": "json"
+          }
+        },
+        {
+          "type": "n8n-nodes-base.respondToWebhook",
+          "name": "Répondre",
+          "parameters": {
+            "respondWith": "json",
+            "responseBody": "={{ $json }}"
+          }
+        }
+      ]
+    }
+  ]
+}

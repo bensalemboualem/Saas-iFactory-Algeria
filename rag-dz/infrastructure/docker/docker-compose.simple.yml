@@ -1,0 +1,94 @@
+# ==============================================
+# IA FACTORY ALGÉRIE (RAG-DZ) - Docker Compose Simplifié
+# ==============================================
+# Seulement les services essentiels sans build
+# ==============================================
+
+services:
+  # PostgreSQL avec PGVector
+  iafactory-postgres:
+    image: pgvector/pgvector:pg16
+    container_name: iaf-dz-postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-archon}
+      TZ: Africa/Algiers
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "127.0.0.1:6330:5433"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - iafactory-net
+    restart: unless-stopped
+
+  # Redis Cache
+  iafactory-redis:
+    image: redis:7-alpine
+    container_name: iaf-dz-redis
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6331:6380"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    networks:
+      - iafactory-net
+    restart: unless-stopped
+
+  # Qdrant Vector Database
+  iafactory-qdrant:
+    image: qdrant/qdrant:latest
+    container_name: iaf-dz-qdrant
+    volumes:
+      - qdrant_data:/qdrant/storage
+    ports:
+      - "6332:6334"
+    networks:
+      - iafactory-net
+    restart: unless-stopped
+
+  # API FastAPI (image Python)
+  iafactory-api:
+    image: python:3.11-slim
+    container_name: iaf-dz-api
+    working_dir: /app
+    volumes:
+      - ./services/api:/app
+    command: >
+      bash -c "pip install -q fastapi uvicorn[standard] pydantic python-dotenv httpx redis asyncpg qdrant-client &&
+               uvicorn app.main:app --host 0.0.0.0 --port 8000"
+    ports:
+      - "8180:8000"
+    environment:
+      SOVEREIGNTY_REGION: DZ
+      POSTGRES_URL: postgresql://postgres:postgres@iafactory-postgres:5433/archon
+      REDIS_URL: redis://iafactory-redis:6380/0
+      QDRANT_HOST: iafactory-qdrant
+      QDRANT_PORT: 6333
+    depends_on:
+      iafactory-postgres:
+        condition: service_healthy
+      iafactory-redis:
+        condition: service_healthy
+    networks:
+      - iafactory-net
+    restart: unless-stopped
+
+networks:
+  iafactory-net:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  redis_data:
+  qdrant_data:

@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تكامل Goose - IAFactory الجزائر</title>
+    <link rel="stylesheet" href="../../assets/css/docs-theme.css">
+</head>
+<body>
+    <header class="docs-header">
+        <div class="docs-logo">
+            <img src="../../assets/images/logo.png" alt="IAFactory الجزائر">
+            <span>IAFactory الجزائر</span>
+        </div>
+        <nav class="main-nav">
+            <a href="../index.html">التوثيق</a>
+            <a href="https://app.iafactory-algeria.com">التطبيق</a>
+            <a href="../api/index.html">API</a>
+        </nav>
+        <div class="docs-controls">
+            <div class="language-switcher">
+                <button data-lang="fr">🇫🇷 FR</button>
+                <button data-lang="en">🇬🇧 EN</button>
+                <button data-lang="ar" class="active">🇸🇦 AR</button>
+            </div>
+            <div class="theme-toggle">
+                <div class="theme-toggle-slider">☀️</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <!-- Sidebar -->
+        </aside>
+
+        <main class="docs-main">
+            <h1>تكامل Goose</h1>
+            
+            <p class="lead">استخدم Goose AI مع نماذج IAFactory الجزائر للحصول على مساعد تطوير قوي في Terminal.</p>
+
+            <h2 id="introduction">🦢 ما هو Goose؟</h2>
+
+            <p>Goose هو مساعد تطوير في سطر الأوامر يمكنه قراءة قاعدة الكود الخاصة بك، وتنفيذ الأوامر، ومساعدتك في مهام التطوير. قم بتوصيله بـ IAFactory الجزائر لاستخدام نماذجنا.</p>
+
+            <div class="alert alert-info">
+                <strong>💡 القدرات:</strong>
+                <ul>
+                    <li>مساعد تطوير محادثة</li>
+                    <li>قراءة الملفات وتعديلها</li>
+                    <li>تنفيذ أوامر Shell</li>
+                    <li>إنشاء الكود وإعادة الهيكلة</li>
+                    <li>تصحيح الأخطاء بمساعدة</li>
+                    <li>أتمتة Git</li>
+                </ul>
+            </div>
+
+            <h2 id="installation">📦 التثبيت</h2>
+
+            <h3 id="via-pip">عبر pip</h3>
+
+            <pre><code class="language-bash">pip install goose-ai
+
+# التحقق من التثبيت
+goose --version</code></pre>
+
+            <h3 id="via-homebrew">عبر Homebrew (macOS)</h3>
+
+            <pre><code class="language-bash">brew install goose-ai</code></pre>
+
+            <h2 id="configuration">⚙️ تكوين IAFactory</h2>
+
+            <h3 id="config-file">ملف التكوين</h3>
+
+            <p>أنشئ <code>~/.goose/config.yaml</code>:</p>
+
+            <pre><code class="language-yaml">providers:
+  iafactory:
+    type: openai
+    base_url: https://api.iafactory-algeria.com/v1
+    api_key: ${IAFACTORY_API_KEY}
+    models:
+      - gpt-4.1
+      - gpt-4.1-mini
+      - claude-3.7-sonnet
+
+default_provider: iafactory
+default_model: gpt-4.1
+
+settings:
+  temperature: 0.7
+  max_tokens: 4000
+  stream: true</code></pre>
+
+            <h3 id="environment">متغيرات البيئة</h3>
+
+            <pre><code class="language-bash"># في ~/.bashrc أو ~/.zshrc
+export IAFACTORY_API_KEY="your_api_key"
+
+# أو لجلسة واحدة
+export IAFACTORY_API_KEY="your_api_key"
+goose</code></pre>
+
+            <h2 id="usage">🚀 الاستخدام</h2>
+
+            <h3 id="startup">بدء Goose</h3>
+
+            <pre><code class="language-bash"># تشغيل Goose في الدليل الحالي
+goose
+
+# مع نموذج محدد
+goose --model gpt-4.1
+
+# مع مطالبة أولية
+goose --prompt "حلل هذا المشروع واقترح تحسينات"</code></pre>
+
+            <h3 id="commands">أوامر Goose</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>الأمر</th>
+                        <th>الوصف</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>/files</code></td><td>سرد ملفات المشروع</td></tr>
+                    <tr><td><code>/read &lt;file&gt;</code></td><td>قراءة ملف</td></tr>
+                    <tr><td><code>/edit &lt;file&gt;</code></td><td>تحرير ملف</td></tr>
+                    <tr><td><code>/run &lt;cmd&gt;</code></td><td>تنفيذ أمر</td></tr>
+                    <tr><td><code>/git</code></td><td>عمليات Git</td></tr>
+                    <tr><td><code>/reset</code></td><td>إعادة تعيين المحادثة</td></tr>
+                    <tr><td><code>/exit</code></td><td>خروج</td></tr>
+                </tbody>
+            </table>
+
+            <h2 id="scenarios">🎯 سيناريوهات الاستخدام</h2>
+
+            <h3 id="scenario-1">1. مراجعة الكود التلقائية</h3>
+
+            <pre><code class="language-bash">$ goose
+
+أنت: راجع جميع الملفات المعدلة منذ الأمس
+
+Goose: سأقوم بتحليل التغييرات الأخيرة...
+
+[Goose يقرأ الملفات تلقائياً]
+[ينشئ تقرير مراجعة الكود]
+
+✓ src/api/users.js
+  - معالجة ممتازة للأخطاء
+  - ⚠️ اختبارات الوحدة مفقودة
+  - اقتراح: إضافة التحقق من الإدخال
+
+✓ src/components/Dashboard.jsx  
+  - ✅ كود نظيف وقابل للقراءة
+  - الأداء: جيد
+  - اقتراح: حفظ الحسابات الثقيلة في الذاكرة المؤقتة
+
+هل تريد مني إنشاء الاختبارات المفقودة؟</code></pre>
+
+            <h3 id="scenario-2">2. تصحيح الأخطاء التفاعلي</h3>
+
+            <pre><code class="language-bash">أنت: اختبار users.test.js الخاص بي فشل، ساعدني
+
+Goose: جارٍ قراءة ملف الاختبار...
+
+[Goose يقرأ users.test.js و users.js]
+
+وجدت المشكلة:
+- السطر 45: expect(user.age).toBe(25) 
+- لكن API ترجع سلسلة نصية "25" وليس رقماً
+
+الحلول:
+1. تحويل إلى رقم في API
+2. تعديل الاختبار للسلسلة النصية
+
+أي نهج تفضل؟
+
+أنت: الخيار 1
+
+Goose: عدلت src/api/users.js:
+- أضفت parseInt(data.age, 10)
+- شغّلت الاختبارات: ✅ نجح
+
+هل تريد إيداع هذه التغييرات؟</code></pre>
+
+            <h3 id="scenario-3">3. ميزة كاملة</h3>
+
+            <pre><code class="language-bash">أنت: أنشئ REST API لإدارة مقالات المدونة
+
+Goose: سأقوم بإنشاء:
+1. نموذج Article (Mongoose)
+2. مسارات CRUD
+3. وحدات التحكم
+4. Middleware للتحقق
+5. الاختبارات
+
+موافق؟
+
+أنت: نعم
+
+Goose:
+✓ أنشأت models/Article.js
+✓ أنشأت routes/articles.js  
+✓ أنشأت controllers/articles.js
+✓ أنشأت middleware/validation.js
+✓ أنشأت tests/articles.test.js
+✓ حدثت app.js
+
+الاختبارات: ✅ 12/12 نجحت
+
+الملفات جاهزة للإيداع. هل تريد مني إنشاء PR؟</code></pre>
+
+            <h2 id="workflows">🔄 سير العمل المتقدم</h2>
+
+            <h3 id="auto-pr">طلب سحب تلقائي</h3>
+
+            <pre><code class="language-bash">أنت: أعد هيكلة الكود القديم في /old-api
+
+Goose: [يحلل ويعيد الهيكلة]
+
+✓ أعيدت هيكلة 15 ملفاً
+✓ الاختبارات: 98% تغطية
+✓ الأداء: +40%
+
+إنشاء PR؟
+
+أنت: نعم
+
+Goose:
+✓ الفرع المنشأ: refactor/old-api-modernization
+✓ الالتزامات: 3 التزامات برسائل وصفية
+✓ PR المنشأ: #142
+✓ CI/CD: ✅ جميع الفحوصات نجحت
+
+PR: https://github.com/yourrepo/pull/142</code></pre>
+
+            <h3 id="migration">الترحيل بمساعدة</h3>
+
+            <pre><code class="language-bash">أنت: رحّل هذا المشروع من JavaScript إلى TypeScript
+
+Goose: خطة الترحيل:
+1. إعداد تكوين TypeScript
+2. تثبيت @types
+3. تحويل الملفات واحداً تلو الآخر
+4. إصلاح أخطاء النوع
+5. الاختبارات
+
+البدء؟
+
+أنت: انطلق
+
+Goose:
+[1/5] ✓ أنشئ tsconfig.json
+[2/5] ✓ ثُبِّتت @types (35 حزمة)
+[3/5] ⏳ جارٍ التحويل...
+  ✓ src/index.js → index.ts
+  ✓ src/api/*.js → api/*.ts (12 ملف)
+  ✓ src/utils/*.js → utils/*.ts (8 ملفات)
+[4/5] ⏳ حل أخطاء النوع...
+  ✓ 47 خطأ تم حله
+  ⚠️ 3 أخطاء يدوية مطلوبة
+[5/5] ✓ الاختبارات: 145/145 نجحت
+
+الترحيل 94% مكتمل. هل تريد مني إرشادك خلال الأخطاء الثلاثة المتبقية؟</code></pre>
+
+            <h2 id="customization">🎨 التخصيص</h2>
+
+            <h3 id="goosefile">Goosefile (تكوين المشروع)</h3>
+
+            <p>أنشئ <code>.goosefile.yaml</code> في جذر المشروع:</p>
+
+            <pre><code class="language-yaml">name: مشروعي
+description: Node.js REST API
+
+context:
+  - README.md
+  - docs/architecture.md
+  - package.json
+
+rules:
+  - "اكتب الاختبارات دائماً"
+  - "اتبع اتفاقية ESLint"
+  - "وثّق الدوال العامة"
+  - "الالتزامات بالإنجليزية"
+
+commands:
+  test: npm test
+  lint: npm run lint
+  build: npm run build
+
+ai_model: gpt-4.1
+temperature: 0.3</code></pre>
+
+            <h3 id="custom-prompts">مطالبات مخصصة</h3>
+
+            <p>أنشئ <code>~/.goose/prompts/</code>:</p>
+
+            <pre><code class="language-yaml"># prompts/code-review.yaml
+name: code-review-expert
+description: خبير مراجعة الكود
+
+system_prompt: |
+  أنت مطور كبير خبير في مراجعة الكود.
+  
+  لكل ملف:
+  1. جودة الكود (1-10)
+  2. نقاط القوة (3)
+  3. نقاط التحسين (الأولويات)
+  4. اقتراحات محددة
+  5. مشاكل الأمان
+  
+  التنسيق: Markdown مع رموز تعبيرية
+
+temperature: 0.2</code></pre>
+
+            <p>الاستخدام:</p>
+
+            <pre><code class="language-bash">goose --prompt code-review-expert</code></pre>
+
+            <h2 id="best-practices">✨ أفضل الممارسات</h2>
+
+            <h3 id="context">1. سياق المشروع</h3>
+
+            <ul>
+                <li>أنشئ <code>.goosefile.yaml</code> جيداً</li>
+                <li>حافظ على تحديث <code>README.md</code> والتوثيق</li>
+                <li>استخدم <code>.gooseignore</code> لاستبعاد الملفات</li>
+            </ul>
+
+            <h3 id="collaboration">2. التعاون</h3>
+
+            <ul>
+                <li>شارك <code>.goosefile.yaml</code> مع الفريق</li>
+                <li>وثّق المطالبات المخصصة</li>
+                <li>راجع دائماً الكود المنشأ</li>
+            </ul>
+
+            <h3 id="security">3. الأمان</h3>
+
+            <ul>
+                <li>لا تلتزم أبداً بـ <code>config.yaml</code> مع مفاتيح API</li>
+                <li>استخدم متغيرات البيئة</li>
+                <li>أضف الملفات الحساسة إلى <code>.gooseignore</code></li>
+            </ul>
+
+            <h2 id="resources">📚 الموارد</h2>
+
+            <ul>
+                <li>📖 <a href="https://goose.ai/docs">توثيق Goose</a></li>
+                <li>🎥 <a href="../api/quick-start.html">البداية السريعة لـ API IAFactory</a></li>
+                <li>💬 <a href="https://discord.gg/iafactory">مجتمع Discord</a></li>
+                <li>🦢 <a href="https://github.com/block/goose">Goose GitHub</a></li>
+            </ul>
+
+            <div class="alert alert-success">
+                <strong>🦢 هل أنت مستعد للبرمجة مع Goose؟</strong>
+                <p>احصل على مفتاح API الخاص بك: <a href="https://app.iafactory-algeria.com/api-keys">app.iafactory-algeria.com</a></p>
+            </div>
+        </main>
+
+        <aside class="docs-toc">
+            <h3 class="docs-toc-title">في هذه الصفحة</h3>
+            <ul></ul>
+        </aside>
+    </div>
+
+    <script src="../../assets/js/docs-theme.js"></script>
+</body>
+</html>

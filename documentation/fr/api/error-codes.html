@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Codes d'Erreur API - IAFactory Algeria</title>
+    <link rel="stylesheet" href="../../assets/css/docs-theme.css">
+    <link rel="icon" href="../../assets/images/favicon.ico">
+</head>
+<body>
+    <header class="docs-header">
+        <div class="docs-logo">
+            <img src="../../assets/images/logo.png" alt="IAFactory Algeria">
+            <span>IAFactory Algeria</span>
+        </div>
+        
+        <nav class="main-nav">
+            <a href="../index.html">Documentation</a>
+            <a href="https://app.iafactory-algeria.com">App</a>
+            <a href="./index.html" class="active">API</a>
+            <a href="https://jobs.iafactory-algeria.com">Jobs</a>
+        </nav>
+        
+        <div class="docs-controls">
+            <div class="language-switcher">
+                <button data-lang="fr" class="active">🇫🇷 FR</button>
+                <button data-lang="en">🇬🇧 EN</button>
+                <button data-lang="ar">🇸🇦 AR</button>
+            </div>
+            
+            <div class="theme-toggle">
+                <div class="theme-toggle-slider">☀️</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" placeholder="Rechercher...">
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-section-title">🔌 API</h3>
+                <ul class="sidebar-menu">
+                    <li><a href="./quick-start.html">Démarrage rapide</a></li>
+                    <li><a href="./response-format.html">Format de réponse</a></li>
+                    <li><a href="./models-pricing.html">Modèles et tarifs</a></li>
+                    <li><a href="./error-codes.html" class="active">Codes d'erreur</a></li>
+                    <li><a href="./parameters.html">Paramètres</a></li>
+                    <li><a href="./optimization.html">Conseils d'optimisation</a></li>
+                    <li><a href="./migration-openai.html">Migration depuis OpenAI</a></li>
+                    <li><a href="./webhooks.html">Webhooks</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="docs-main">
+            <h1>⚠️ Codes d'Erreur API</h1>
+            
+            <p class="lead">Guide de résolution des erreurs courantes de l'API IAFactory Algeria.</p>
+
+            <h2 id="format-erreur">Format des Erreurs</h2>
+
+            <p>Toutes les erreurs suivent ce format JSON :</p>
+
+            <pre><code class="language-json">{
+  "error": {
+    "message": "Description lisible de l'erreur",
+    "type": "invalid_request_error",
+    "param": "temperature",
+    "code": "invalid_parameter"
+  }
+}</code></pre>
+
+            <h2 id="codes-http">Codes HTTP</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Signification</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>200</code></td>
+                        <td>✅ Succès</td>
+                        <td>Requête traitée correctement</td>
+                    </tr>
+                    <tr>
+                        <td><code>400</code></td>
+                        <td>❌ Bad Request</td>
+                        <td>Vérifiez le format de votre requête</td>
+                    </tr>
+                    <tr>
+                        <td><code>401</code></td>
+                        <td>🔒 Unauthorized</td>
+                        <td>Clé API invalide ou manquante</td>
+                    </tr>
+                    <tr>
+                        <td><code>403</code></td>
+                        <td>🚫 Forbidden</td>
+                        <td>Accès refusé (quota dépassé)</td>
+                    </tr>
+                    <tr>
+                        <td><code>404</code></td>
+                        <td>❓ Not Found</td>
+                        <td>Endpoint ou ressource introuvable</td>
+                    </tr>
+                    <tr>
+                        <td><code>429</code></td>
+                        <td>⏱️ Too Many Requests</td>
+                        <td>Rate limit atteint, ralentissez</td>
+                    </tr>
+                    <tr>
+                        <td><code>500</code></td>
+                        <td>💥 Internal Server Error</td>
+                        <td>Erreur côté serveur, réessayez</td>
+                    </tr>
+                    <tr>
+                        <td><code>503</code></td>
+                        <td>🔧 Service Unavailable</td>
+                        <td>Maintenance en cours</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 id="erreurs-authentication">Erreurs d'Authentification</h2>
+
+            <h3 id="invalid-api-key"><code>invalid_api_key</code></h3>
+
+            <pre><code class="language-json">{
+  "error": {
+    "message": "Invalid API key provided",
+    "type": "invalid_request_error",
+    "code": "invalid_api_key"
+  }
+}</code></pre>
+
+            <p><strong>Cause :</strong> Clé API incorrecte, expirée ou mal formatée.</p>
+
+            <p><strong>Solution :</strong></p>
+            <ul>
+                <li>Vérifiez que vous utilisez <code>Bearer VOTRE_CLE_API</code> dans le header</li>
+                <li>Régénérez une clé depuis le <a href="https://dashboard.iafactory-algeria.com/api">dashboard</a></li>
+                <li>Vérifiez qu'il n'y a pas d'espaces avant/après la clé</li>
+            </ul>
+
+            <h3 id="missing-api-key"><code>missing_api_key</code></h3>
+
+            <pre><code class="language-json">{
+  "error": {
+    "message": "You didn't provide an API key",
+    "type": "invalid_request_error",
+    "code": "missing_api_key"
+  }
+}</code></pre>
+
+            <p><strong>Solution :</strong> Ajoutez le header <code>Authorization: Bearer VOTRE_CLE</code></p>
+
+            <h2 id="erreurs-quota">Erreurs de Quota</h2>
+
+            <h3 id="insufficient-quota"><code>insufficient_quota</code></h3>
+
+            <pre><code class="language-json">{
+  "error": {
+    "message": "You exceeded your current quota, please check your plan and billing details",
+    "type": "insufficient_quota",
+    "code": "insufficient_quota"
+  }
+}</code></pre>
+
+            <p><strong>Solution :</strong></p>
+            <ul>
+                <li>Consultez votre <a href="https://dashboard.iafactory-algeria.com/usage">consommation</a></li>
+                <li>Rechargez votre compte ou passez au paiement à l'usage</li>
+                <li>Attendez le renouvellement mensuel de vos crédits</li>
+            </ul>
+
+            <h3 id="rate-limit"><code>rate_limit_exceeded</code></h3>
+
+            <pre><code class="language-json">{
+  "error": {
+    "message": "Rate limit reached for requests",
+    "type": "rate_limit_error",
+    "code": "rate_limit_exceeded"
+  }
+}</code></pre>
+
+            <p><strong>Limites :</strong></p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Plan</th>
+                        <th>Requêtes/min</th>
+                        <th>Tokens/min</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Starter</td>
+                        <td>60</td>
+                        <td>90,000</td>
+                    </tr>
+                    <tr>
+                        <td>Standard</td>
+                        <td>120</td>
+                        <td>180,000</td>
+                    </tr>
+                    <tr>
+                        <td>Expert</td>
+                        <td>300</td>
+                        <td>500,000</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p><strong>Solution :</strong> Implémentez un système de retry avec backoff exponentiel :</p>
+
+            <pre><code class="language-python">import time
+import openai
+
+def api_call_with_retry(max_retries=3):
+    for attempt in range(max_retries):
+        try:
+            response = openai.ChatCompletion.create(
+                model="gpt-4-turbo",
+                messages=[{"role": "user", "content": "Hello"}]
+            )
+            return response
+        except openai.error.RateLimitError:
+            if attempt < max_retries - 1:
+                wait_time = 2 ** attempt  # 1s, 2s, 4s...
+                print(f"Rate limit hit, waiting {wait_time}s...")
+                time.sleep(wait_time)
+            else:
+                raise</code></pre>
+
+            <h2 id="erreurs-requete">Erreurs de Requête</h2>
+
+            <h3 id="invalid-model"><code>model_not_found</code></h3>
+
+            <pre><code class="language-json">{
+  "error": {
+    "message": "The model 'gpt-5' does not exist",
+    "type": "invalid_request_error",
+    "param": "model",
+    "code": "model_not_found"
+  }
+}</code></pre>
+
+            <p><strong>Solution :</strong> Utilisez un nom de modèle valide. <a href="./models-pricing.html">Voir la liste complète</a></p>
+
+            <h3 id="invalid-parameter"><code>invalid_parameter</code></h3>
+
+            <pre><code class="language-json">{
+  "error": {
+    "message": "temperature must be between 0 and 2",
+    "type": "invalid_request_error",
+    "param": "temperature",
+    "code": "invalid_parameter"
+  }
+}</code></pre>
+
+            <p><strong>Paramètres courants :</strong></p>
+            <ul>
+                <li><code>temperature</code> : 0 à 2</li>
+                <li><code>top_p</code> : 0 à 1</li>
+                <li><code>max_tokens</code> : 1 à context_length</li>
+                <li><code>n</code> : 1 à 10</li>
+            </ul>
+
+            <h3 id="context-length"><code>context_length_exceeded</code></h3>
+
+            <pre><code class="language-json">{
+  "error": {
+    "message": "This model's maximum context length is 4096 tokens. However, your messages resulted in 5000 tokens.",
+    "type": "invalid_request_error",
+    "param": "messages",
+    "code": "context_length_exceeded"
+  }
+}</code></pre>
+
+            <p><strong>Solution :</strong></p>
+            <ul>
+                <li>Réduisez la longueur de vos messages</li>
+                <li>Utilisez un modèle avec contexte plus grand (GPT-4 Turbo, Claude, Gemini)</li>
+                <li>Résumez les anciens messages de conversation</li>
+            </ul>
+
+            <h3 id="invalid-json"><code>invalid_json</code></h3>
+
+            <pre><code class="language-json">{
+  "error": {
+    "message": "Invalid JSON in request body",
+    "type": "invalid_request_error",
+    "code": "invalid_json"
+  }
+}</code></pre>
+
+            <p><strong>Solution :</strong> Vérifiez que votre JSON est valide (guillemets, virgules, accolades)</p>
+
+            <h2 id="erreurs-contenu">Erreurs de Contenu</h2>
+
+            <h3 id="content-filter"><code>content_filter</code></h3>
+
+            <pre><code class="language-json">{
+  "error": {
+    "message": "Your request was rejected as a result of our safety system",
+    "type": "invalid_request_error",
+    "code": "content_filter"
+  }
+}</code></pre>
+
+            <p><strong>Cause :</strong> Contenu détecté comme dangereux, violent, illégal ou inapproprié.</p>
+
+            <p><strong>Solution :</strong> Reformulez votre prompt de manière plus neutre.</p>
+
+            <h2 id="erreurs-serveur">Erreurs Serveur</h2>
+
+            <h3 id="server-error"><code>server_error</code></h3>
+
+            <pre><code class="language-json">{
+  "error": {
+    "message": "The server had an error processing your request",
+    "type": "server_error",
+    "code": "server_error"
+  }
+}</code></pre>
+
+            <p><strong>Solution :</strong></p>
+            <ul>
+                <li>Réessayez après quelques secondes</li>
+                <li>Si l'erreur persiste, vérifiez le <a href="https://status.iafactory-algeria.com">status</a></li>
+                <li>Contactez le <a href="mailto:support@iafactory-algeria.com">support</a></li>
+            </ul>
+
+            <h3 id="timeout"><code>timeout</code></h3>
+
+            <pre><code class="language-json">{
+  "error": {
+    "message": "Request timed out",
+    "type": "timeout",
+    "code": "timeout"
+  }
+}</code></pre>
+
+            <p><strong>Solution :</strong></p>
+            <ul>
+                <li>Réduisez <code>max_tokens</code></li>
+                <li>Simplifiez votre prompt</li>
+                <li>Utilisez le streaming pour éviter les timeouts</li>
+            </ul>
+
+            <h2 id="gestion-erreurs">Bonne Pratique : Gestion des Erreurs</h2>
+
+            <pre><code class="language-python">import openai
+import time
+
+def safe_api_call(prompt, max_retries=3):
+    """Appel API robuste avec gestion d'erreurs"""
+    
+    for attempt in range(max_retries):
+        try:
+            response = openai.ChatCompletion.create(
+                model="gpt-4-turbo",
+                messages=[{"role": "user", "content": prompt}],
+                timeout=30
+            )
+            return response.choices[0].message.content
+            
+        except openai.error.RateLimitError:
+            # Rate limit : attendre et réessayer
+            wait = 2 ** attempt
+            print(f"Rate limit, attente {wait}s...")
+            time.sleep(wait)
+            
+        except openai.error.InvalidRequestError as e:
+            # Erreur de requête : ne pas réessayer
+            print(f"Requête invalide: {e}")
+            return None
+            
+        except openai.error.AuthenticationError:
+            # Clé API invalide : ne pas réessayer
+            print("Erreur d'authentification - vérifiez votre clé API")
+            return None
+            
+        except openai.error.APIError as e:
+            # Erreur serveur : réessayer
+            print(f"Erreur API (tentative {attempt+1}/{max_retries}): {e}")
+            if attempt < max_retries - 1:
+                time.sleep(2)
+            
+        except Exception as e:
+            # Autre erreur inattendue
+            print(f"Erreur inattendue: {e}")
+            return None
+    
+    print("Échec après plusieurs tentatives")
+    return None
+
+# Utilisation
+result = safe_api_call("Explique l'IA en 3 phrases")</code></pre>
+
+            <h2 id="debug">Déboguer les Erreurs</h2>
+
+            <div class="alert alert-info">
+                <strong>💡 Conseils de débogage :</strong>
+                <ul>
+                    <li>Loggez toujours le message d'erreur complet</li>
+                    <li>Vérifiez votre consommation dans le dashboard</li>
+                    <li>Testez avec cURL pour isoler les problèmes</li>
+                    <li>Utilisez <code>try/except</code> pour capturer toutes les erreurs</li>
+                </ul>
+            </div>
+
+            <h2 id="voir-aussi">Voir Aussi</h2>
+
+            <ul>
+                <li><a href="./quick-start.html">Guide de démarrage rapide</a></li>
+                <li><a href="./parameters.html">Tous les paramètres API</a></li>
+                <li><a href="https://status.iafactory-algeria.com">Statut du service</a></li>
+            </ul>
+
+        </main>
+
+        <aside class="docs-toc">
+            <h3 class="docs-toc-title">Sur cette page</h3>
+            <ul>
+                <!-- Generated dynamically by JS -->
+            </ul>
+        </aside>
+    </div>
+
+    <script src="../../assets/js/docs-theme.js"></script>
+</body>
+</html>

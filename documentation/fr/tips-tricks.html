@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trucs et Astuces - IAFactory Algeria</title>
+    <link rel="stylesheet" href="../assets/css/docs-theme.css">
+    <link rel="icon" href="../assets/images/favicon.ico">
+</head>
+<body>
+    <header class="docs-header">
+        <div class="docs-logo">
+            <img src="../assets/images/logo.png" alt="IAFactory Algeria">
+            <span>IAFactory Algeria</span>
+        </div>
+
+        <nav class="main-nav">
+            <a href="./index.html">Documentation</a>
+            <a href="https://app.iafactory-algeria.com">App</a>
+            <a href="./api/index.html">API</a>
+            <a href="https://jobs.iafactory-algeria.com">Jobs</a>
+        </nav>
+
+        <div class="docs-controls">
+            <div class="language-switcher">
+                <button data-lang="fr" class="active">FR</button>
+                <button data-lang="en">EN</button>
+                <button data-lang="ar">AR</button>
+            </div>
+            <div class="theme-toggle">
+                <div class="theme-toggle-slider"></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <div class="search-box">
+                <span class="search-icon"></span>
+                <input type="text" placeholder="Rechercher...">
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-section-title">Premiers pas</h3>
+                <ul class="sidebar-menu">
+                    <li><a href="./introduction.html">Introduction</a></li>
+                    <li><a href="./tips-tricks.html" class="active">Trucs et astuces</a></li>
+                    <li><a href="./installation.html">Installation</a></li>
+                    <li><a href="./custom-agents.html">Agents personnalisés</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-section-title">Bonnes pratiques</h3>
+                <ul class="sidebar-menu">
+                    <li><a href="./best-practices/writing-prompts.html">Rédiger ses prompts</a></li>
+                    <li><a href="./best-practices/choosing-models.html">Choisir le bon modèle</a></li>
+                    <li><a href="./best-practices/image-generation.html">Générer des images</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-section-title">API</h3>
+                <ul class="sidebar-menu">
+                    <li><a href="./api/quick-start.html">Démarrage rapide</a></li>
+                    <li><a href="./api/response-format.html">Format de réponse</a></li>
+                    <li><a href="./api/models-pricing.html">Modèles et tarifs</a></li>
+                    <li><a href="./api/error-codes.html">Codes d'erreur</a></li>
+                    <li><a href="./api/parameters.html">Paramètres</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-section-title">Intégrations</h3>
+                <ul class="sidebar-menu">
+                    <li><a href="./integrations/n8n.html">n8n</a></li>
+                    <li><a href="./integrations/vscode-cline.html">VS Code / Cline</a></li>
+                    <li><a href="./integrations/make.html">Make</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="docs-main">
+            <h1>Trucs et Astuces</h1>
+
+            <p class="lead">Optimisez votre utilisation d'IAFactory Algeria avec ces conseils pratiques.</p>
+
+            <h2 id="raccourcis-clavier">Raccourcis Clavier</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Raccourci</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>Ctrl + Enter</code></td><td>Envoyer le message</td></tr>
+                    <tr><td><code>Ctrl + K</code></td><td>Nouvelle conversation</td></tr>
+                    <tr><td><code>Ctrl + /</code></td><td>Rechercher dans les conversations</td></tr>
+                    <tr><td><code>Ctrl + D</code></td><td>Changer le thème (dark/light)</td></tr>
+                    <tr><td><code>Ctrl + M</code></td><td>Changer de modèle</td></tr>
+                    <tr><td><code>↑/↓</code></td><td>Naviguer dans l'historique des messages</td></tr>
+                </tbody>
+            </table>
+
+            <h2 id="optimiser-prompts">Optimiser vos Prompts</h2>
+
+            <h3 id="structure-claire">Structurez clairement</h3>
+
+            <div class="alert alert-success">
+                <strong>Bon exemple :</strong>
+                <pre><code>Tu es un expert en Python.
+
+Tâche : Écris une fonction qui calcule la suite de Fibonacci.
+
+Contraintes :
+- Utilise la récursion
+- Ajoute des commentaires
+- Inclus des tests unitaires
+
+Format de sortie : Code Python avec docstrings</code></pre>
+            </div>
+
+            <div class="alert alert-danger">
+                <strong>Mauvais exemple :</strong>
+                <pre><code>fais moi un code fibonacci</code></pre>
+            </div>
+
+            <h3 id="contexte">Fournissez du contexte</h3>
+
+            <pre><code class="language-text">Je développe une application e-commerce en React.
+J'ai besoin d'un composant panier d'achat qui :
+- Affiche les produits ajoutés
+- Calcule le total
+- Permet de modifier les quantités
+- Gère le local storage
+
+Technos utilisées : React 18, TypeScript, Tailwind CSS</code></pre>
+
+            <h3 id="iterations">Itérez progressivement</h3>
+
+            <ol>
+                <li>Commencez simple : "Explique-moi le concept X"</li>
+                <li>Approfondissez : "Donne-moi un exemple pratique"</li>
+                <li>Personnalisez : "Adapte cet exemple à mon cas : Y"</li>
+                <li>Optimisez : "Comment améliorer cette solution ?"</li>
+            </ol>
+
+            <h2 id="gestion-conversations">Gestion des Conversations</h2>
+
+            <h3 id="nommer-conversations">Nommez vos conversations</h3>
+
+            <p>Cliquez sur le titre de la conversation pour le renommer. Utilisez des noms descriptifs :</p>
+            <ul>
+                <li>Évitez : "Nouvelle conversation"</li>
+                <li>Préférez : "API REST - Projet E-commerce"</li>
+                <li>Préférez : "Débug - Erreur JWT Token"</li>
+            </ul>
+
+            <h3 id="organiser-dossiers">Organisez en dossiers</h3>
+
+            <p>Créez des dossiers thématiques :</p>
+            <ul>
+                <li>Projets clients</li>
+                <li>Formation</li>
+                <li>Recherche</li>
+                <li>Code review</li>
+            </ul>
+
+            <h3 id="partager-conversations">Partagez intelligemment</h3>
+
+            <div class="alert alert-warning">
+                <strong>Attention :</strong> Avant de partager une conversation, vérifiez qu'elle ne contient pas d'informations sensibles (clés API, mots de passe, données personnelles).
+            </div>
+
+            <h2 id="selection-modeles">Sélection des Modèles</h2>
+
+            <h3 id="modeles-cas-usage">Par cas d'usage</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Cas d'usage</th>
+                        <th>Modèle recommandé</th>
+                        <th>Raison</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Code complexe</td>
+                        <td>codestral-2508</td>
+                        <td>Spécialisé programmation</td>
+                    </tr>
+                    <tr>
+                        <td>Analyse longue</td>
+                        <td>claude-sonnet-4-5</td>
+                        <td>Grand contexte (200k tokens)</td>
+                    </tr>
+                    <tr>
+                        <td>Tâche rapide</td>
+                        <td>gpt-4.1-mini</td>
+                        <td>Rapide et économique</td>
+                    </tr>
+                    <tr>
+                        <td>Créativité</td>
+                        <td>gpt-5.2-chat</td>
+                        <td>Meilleure qualité</td>
+                    </tr>
+                    <tr>
+                        <td>Recherche</td>
+                        <td>deepseek-r1-0528</td>
+                        <td>Raisonnement approfondi</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 id="temperature-optimale">Température optimale</h3>
+
+            <pre><code class="language-json">{
+  "temperature": 0.0,  // Code, extraction de données
+  "temperature": 0.7,  // Équilibré (défaut)
+  "temperature": 1.2   // Créativité, brainstorming
+}</code></pre>
+
+            <h2 id="economiser-credits">Économiser vos Crédits</h2>
+
+            <h3 id="tokens">Comprendre les tokens</h3>
+
+            <div class="alert alert-info">
+                <strong>Règle approximative :</strong>
+                <ul>
+                    <li>1 token ≈ 4 caractères en français</li>
+                    <li>1 mot ≈ 1.3 tokens en moyenne</li>
+                    <li>100 mots ≈ 130 tokens</li>
+                </ul>
+            </div>
+
+            <h3 id="astuces-economie">Astuces d'économie</h3>
+
+            <ol>
+                <li><strong>Utilisez max_tokens</strong>
+                    <pre><code class="language-json">{
+  "max_tokens": 500  // Limite la longueur de réponse
+}</code></pre>
+                </li>
+                <li><strong>Choisissez le bon modèle</strong>
+                    <ul>
+                        <li>Nano pour les tâches simples (0.1$/M)</li>
+                        <li>GPT-4.1 pour l'équilibre (2$/M)</li>
+                    </ul>
+                </li>
+                <li><strong>Soyez concis</strong>
+                    <ul>
+                        <li>Évitez : "Peux-tu s'il te plaît m'aider à comprendre..."</li>
+                        <li>Préférez : "Explique X"</li>
+                    </ul>
+                </li>
+                <li><strong>Évitez les répétitions</strong>
+                    <pre><code>// Au lieu de recoller tout le code à chaque fois
+"Modifie la fonction getUserData() : ajoute validation email"
+
+// Plutôt que
+"Voici mon code complet [1000 lignes]... modifie getUserData()"</code></pre>
+                </li>
+            </ol>
+
+            <h2 id="api-tips">Astuces API</h2>
+
+            <h3 id="caching">Implémentez du caching</h3>
+
+            <pre><code class="language-python">import hashlib
+from functools import lru_cache
+
+@lru_cache(maxsize=100)
+def call_api_cached(prompt):
+    # Hash le prompt comme clé de cache
+    return call_iafactory_api(prompt)
+
+# Utilisation
+response1 = call_api_cached("Explique Python")  # Appel API
+response2 = call_api_cached("Explique Python")  # Depuis cache</code></pre>
+
+            <h3 id="retry-logic">Retry logic avec backoff</h3>
+
+            <pre><code class="language-python">import time
+import requests
+
+def call_with_retry(url, data, max_retries=3):
+    for attempt in range(max_retries):
+        try:
+            response = requests.post(url, json=data)
+
+            if response.status_code == 429:
+                wait = 2 ** attempt  # Backoff exponentiel
+                print(f"Rate limit. Attente {wait}s...")
+                time.sleep(wait)
+                continue
+
+            return response.json()
+
+        except Exception as e:
+            if attempt == max_retries - 1:
+                raise
+            time.sleep(2 ** attempt)
+
+    return None</code></pre>
+
+            <h3 id="batch-requests">Batch requests</h3>
+
+            <pre><code class="language-python"># Inefficace
+for item in items:
+    response = api_call(item)
+
+# Efficace
+batch = "\n".join([f"{i+1}. {item}" for i, item in enumerate(items)])
+response = api_call(f"Traite ces éléments:\n{batch}")</code></pre>
+
+            <h2 id="securite">Sécurité</h2>
+
+            <h3 id="protection-api-key">Protégez votre clé API</h3>
+
+            <div class="alert alert-danger">
+                <strong>Ne JAMAIS faire :</strong>
+                <pre><code class="language-javascript">// Dans le code frontend
+const apiKey = "sk_live_abc123";  // EXPOSÉ</code></pre>
+            </div>
+
+            <div class="alert alert-success">
+                <strong>À faire :</strong>
+                <pre><code class="language-javascript">// Variables d'environnement
+const apiKey = process.env.IAFACTORY_API_KEY;
+
+// Backend uniquement
+app.post('/api/chat', async (req, res) => {
+  const response = await callIAFactory(apiKey, req.body);
+  res.json(response);
+});</code></pre>
+            </div>
+
+            <h3 id="validation-input">Validation des entrées</h3>
+
+            <pre><code class="language-python">def sanitize_input(user_input):
+    # Limite la longueur
+    if len(user_input) > 10000:
+        return user_input[:10000]
+
+    # Supprime les caractères dangereux
+    dangerous = ["&lt;script", "javascript:", "onerror="]
+    for d in dangerous:
+        user_input = user_input.replace(d, "")
+
+    return user_input</code></pre>
+
+            <h2 id="debugging">Debugging</h2>
+
+            <h3 id="logs-structure">Logs structurés</h3>
+
+            <pre><code class="language-python">import logging
+import json
+from datetime import datetime
+
+logging.basicConfig(level=logging.INFO)
+
+def log_api_call(prompt, response, tokens):
+    log_data = {
+        "timestamp": datetime.now().isoformat(),
+        "prompt_length": len(prompt),
+        "response_length": len(response),
+        "tokens_used": tokens,
+        "model": "gpt-4.1"
+    }
+    logging.info(json.dumps(log_data))</code></pre>
+
+            <h3 id="test-mode">Mode test</h3>
+
+            <pre><code class="language-python">import os
+
+TEST_MODE = os.getenv("TEST_MODE", "false") == "true"
+
+def call_api(prompt):
+    if TEST_MODE:
+        return "Réponse de test simulée"
+
+    return real_api_call(prompt)</code></pre>
+
+            <h2 id="performance">Performance</h2>
+
+            <h3 id="streaming-ui">Streaming pour l'UX</h3>
+
+            <pre><code class="language-javascript">async function streamResponse(prompt) {
+    const response = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            model: 'gpt-4.1',
+            messages: [{ role: 'user', content: prompt }],
+            stream: true  // Streaming activé
+        })
+    });
+
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+
+    while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        const chunk = decoder.decode(value);
+        updateUI(chunk);  // Mise à jour en temps réel
+    }
+}</code></pre>
+
+            <h3 id="parallel-requests">Requêtes parallèles</h3>
+
+            <pre><code class="language-python">import asyncio
+
+async def process_items(items):
+    tasks = [call_api_async(item) for item in items]
+    results = await asyncio.gather(*tasks)
+    return results
+
+# Au lieu de séquentiel (lent)
+# for item in items:
+#     result = call_api(item)</code></pre>
+
+            <h2 id="workflows">Workflows Avancés</h2>
+
+            <h3 id="chaining">Chaînage de prompts</h3>
+
+            <pre><code class="language-python">def research_pipeline(topic):
+    # Étape 1 : Plan
+    plan = call_api(f"Crée un plan détaillé sur : {topic}")
+
+    # Étape 2 : Rédaction par section
+    sections = []
+    for section in parse_plan(plan):
+        content = call_api(f"Rédige cette section : {section}")
+        sections.append(content)
+
+    # Étape 3 : Synthèse
+    final = call_api(f"Synthétise ces sections : {sections}")
+
+    return final</code></pre>
+
+            <h3 id="validation-loop">Boucle de validation</h3>
+
+            <pre><code class="language-python">def generate_with_validation(prompt, validator):
+    max_attempts = 3
+
+    for attempt in range(max_attempts):
+        response = call_api(prompt)
+
+        if validator(response):
+            return response
+
+        # Améliorer le prompt
+        prompt = f"{prompt}\n\nPrécédente réponse incorrecte: {response}\nCorrection nécessaire."
+
+    return None</code></pre>
+
+            <h2 id="ressources">Ressources Complémentaires</h2>
+
+            <ul>
+                <li><a href="./best-practices/writing-prompts.html">Guide complet des prompts</a></li>
+                <li><a href="https://youtube.com/@iafactory">Tutoriels vidéo</a></li>
+                <li><a href="https://discord.gg/iafactory">Communauté Discord</a></li>
+                <li><a href="mailto:support@iafactory-algeria.com">Support technique</a></li>
+            </ul>
+
+            <div class="alert alert-success">
+                <strong>Astuce finale :</strong> Rejoignez notre Discord pour partager vos astuces et apprendre des autres utilisateurs !
+            </div>
+        </main>
+
+        <aside class="docs-toc">
+            <h3 class="docs-toc-title">Sur cette page</h3>
+            <ul>
+                <li><a href="#raccourcis-clavier">Raccourcis Clavier</a></li>
+                <li><a href="#optimiser-prompts">Optimiser vos Prompts</a></li>
+                <li><a href="#gestion-conversations">Gestion des Conversations</a></li>
+                <li><a href="#selection-modeles">Sélection des Modèles</a></li>
+                <li><a href="#economiser-credits">Économiser vos Crédits</a></li>
+                <li><a href="#api-tips">Astuces API</a></li>
+                <li><a href="#securite">Sécurité</a></li>
+                <li><a href="#debugging">Debugging</a></li>
+                <li><a href="#performance">Performance</a></li>
+                <li><a href="#workflows">Workflows Avancés</a></li>
+                <li><a href="#ressources">Ressources</a></li>
+            </ul>
+        </aside>
+    </div>
+
+    <script src="../assets/js/docs-theme.js"></script>
+</body>
+</html>

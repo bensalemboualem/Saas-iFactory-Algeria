@@ -1,0 +1,247 @@
+{
+  "name": "Nouveau RDV Cal.com",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "calcom-webhook",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-calcom",
+      "name": "Webhook Cal.com",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300],
+      "webhookId": "calcom-new-booking"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "leftValue": "={{ $json.triggerEvent }}",
+              "rightValue": "BOOKING_CREATED",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "filter-new-booking",
+      "name": "Filtrer nouveau RDV",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "resource": "event",
+        "operation": "create",
+        "calendar": {
+          "__rl": true,
+          "value": "primary",
+          "mode": "list"
+        },
+        "summary": "RDV: {{ $json.payload.title }}",
+        "start": "={{ $json.payload.startTime }}",
+        "end": "={{ $json.payload.endTime }}",
+        "additionalFields": {
+          "attendees": [
+            {
+              "email": "={{ $json.payload.attendees[0].email }}"
+            }
+          ],
+          "description": "Réservé via Cal.com\n\nPatient: {{ $json.payload.attendees[0].name }}\nEmail: {{ $json.payload.attendees[0].email }}\n\nNotes: {{ $json.payload.description || 'Aucune note' }}"
+        }
+      },
+      "id": "google-calendar",
+      "name": "Créer Google Calendar",
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.2,
+      "position": [680, 200],
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "google-calendar-credentials",
+          "name": "Google Calendar"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "={{ $env.SMTP_FROM || 'noreply@iafactory.local' }}",
+        "toEmail": "={{ $json.payload.attendees[0].email }}",
+        "subject": "Confirmation de votre RDV - {{ $json.payload.title }}",
+        "emailType": "html",
+        "message": "<html><body><h2>Confirmation de RDV</h2><p>Bonjour {{ $json.payload.attendees[0].name }},</p><p>Votre rendez-vous a été confirmé :</p><ul><li><strong>Date:</strong> {{ $json.payload.startTime }}</li><li><strong>Durée:</strong> {{ $json.payload.metadata.duration }} minutes</li></ul><p>À bientôt,<br>L'équipe IA Factory</p></body></html>",
+        "options": {}
+      },
+      "id": "send-email",
+      "name": "Envoyer email confirmation",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [680, 400],
+      "credentials": {
+        "smtp": {
+          "id": "smtp-credentials",
+          "name": "SMTP"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $env.BACKEND_URL || 'http://backend:8180' }}/api/appointments",
+        "method": "POST",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "external_id",
+              "value": "={{ $json.payload.uid }}"
+            },
+            {
+              "name": "title",
+              "value": "={{ $json.payload.title }}"
+            },
+            {
+              "name": "start_time",
+              "value": "={{ $json.payload.startTime }}"
+            },
+            {
+              "name": "end_time",
+              "value": "={{ $json.payload.endTime }}"
+            },
+            {
+              "name": "attendee_name",
+              "value": "={{ $json.payload.attendees[0].name }}"
+            },
+            {
+              "name": "attendee_email",
+              "value": "={{ $json.payload.attendees[0].email }}"
+            },
+            {
+              "name": "source",
+              "value": "calcom"
+            },
+            {
+              "name": "status",
+              "value": "confirmed"
+            }
+          ]
+        },
+        "headerParametersUi": {
+          "parameter": [
+            {
+              "name": "X-API-Key",
+              "value": "={{ $env.API_KEY || 'change-me-in-production' }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "log-iafactory",
+      "name": "Logger dans IA Factory",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [900, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ success: true, message: 'Booking processed', booking_id: $json.payload.uid }) }}"
+      },
+      "id": "respond-webhook",
+      "name": "Réponse Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [1120, 300]
+    }
+  ],
+  "connections": {
+    "Webhook Cal.com": {
+      "main": [
+        [
+          {
+            "node": "Filtrer nouveau RDV",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filtrer nouveau RDV": {
+      "main": [
+        [
+          {
+            "node": "Créer Google Calendar",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Envoyer email confirmation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Créer Google Calendar": {
+      "main": [
+        [
+          {
+            "node": "Logger dans IA Factory",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Envoyer email confirmation": {
+      "main": [
+        [
+          {
+            "node": "Logger dans IA Factory",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Logger dans IA Factory": {
+      "main": [
+        [
+          {
+            "node": "Réponse Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "Webhook"
+    },
+    {
+      "name": "Calendar"
+    },
+    {
+      "name": "Cal.com"
+    }
+  ],
+  "triggerCount": 0,
+  "versionId": "1"
+}

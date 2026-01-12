@@ -1,0 +1,417 @@
+{
+  "system_info": {
+    "name": "OnestSchool - BBC School Algeria",
+    "version": "2.0",
+    "school_name": "Best Bridge for Creation School",
+    "country": "Algeria",
+    "default_language": "ar",
+    "available_languages": ["ar", "fr", "en"],
+    "rtl_enabled": true
+  },
+
+  "school_locations": [
+    {
+      "name": "Direction Générale",
+      "name_ar": "المديرية العامة",
+      "address": "Bouchaoui, Alger",
+      "phone": "+213 23 35 28 74",
+      "email": "info@bbcschool.net"
+    },
+    {
+      "name": "École Principale",
+      "name_ar": "المدرسة الرئيسية",
+      "address": "Ain Benian, Alger",
+      "phone": "+213 23 35 28 75",
+      "email": "info@bbcschool.net"
+    },
+    {
+      "name": "Annexe Maternelle",
+      "name_ar": "ملحق الروضة",
+      "address": "Chéraga, Alger",
+      "phone": "+213 23 35 28 76",
+      "email": "info@bbcschool.net"
+    }
+  ],
+
+  "education_levels": [
+    "Maternelle",
+    "Primaire",
+    "Cycle Moyen (jusqu'à 4ème année moyenne)"
+  ],
+
+  "statistics": {
+    "students": 4,
+    "parents": 304,
+    "teachers": 54,
+    "sessions": 22
+  },
+
+  "modules": [
+    {
+      "id": "dashboard",
+      "name": "Dashboard",
+      "name_ar": "لوحة التحكم",
+      "name_fr": "Tableau de bord",
+      "description": "Vue d'ensemble des statistiques de l'école",
+      "features": [
+        "Compteurs étudiants/parents/enseignants",
+        "Graphiques financiers",
+        "Événements à venir",
+        "Présence du jour"
+      ]
+    },
+    {
+      "id": "student_info",
+      "name": "Student Info",
+      "name_ar": "معلومات الطالب",
+      "name_fr": "Info étudiant",
+      "description": "Gestion complète des étudiants",
+      "features": [
+        "Liste des étudiants",
+        "Admission en ligne",
+        "Promotion",
+        "Cartes d'identité",
+        "Certificats"
+      ]
+    },
+    {
+      "id": "academic",
+      "name": "Academic",
+      "name_ar": "الأكاديمي",
+      "name_fr": "Académique",
+      "description": "Gestion académique",
+      "features": [
+        "Classes",
+        "Sections",
+        "Matières",
+        "Affectation enseignants",
+        "Salles de classe"
+      ]
+    },
+    {
+      "id": "attendance",
+      "name": "Attendance",
+      "name_ar": "الحضور",
+      "name_fr": "Présence",
+      "description": "Gestion de la présence",
+      "features": [
+        "Présence quotidienne",
+        "Présence par matière",
+        "Rapports de présence"
+      ]
+    },
+    {
+      "id": "leave",
+      "name": "Leave",
+      "name_ar": "الإجازة",
+      "name_fr": "Congé",
+      "description": "Gestion des congés",
+      "features": [
+        "Demandes de congé",
+        "Types de congé",
+        "Approbation",
+        "Liste des congés"
+      ]
+    },
+    {
+      "id": "fees",
+      "name": "Fees",
+      "name_ar": "الرسوم",
+      "name_fr": "Frais",
+      "description": "Gestion financière",
+      "features": [
+        "Groupes de frais",
+        "Types de frais",
+        "Affectation",
+        "Collecte",
+        "Rapports"
+      ]
+    },
+    {
+      "id": "examination",
+      "name": "Examination",
+      "name_ar": "الامتحان",
+      "name_fr": "Examen",
+      "description": "Gestion des examens",
+      "features": [
+        "Configuration examen",
+        "Horaires",
+        "Saisie des notes",
+        "Niveaux",
+        "Examens en ligne"
+      ]
+    },
+    {
+      "id": "library",
+      "name": "Library",
+      "name_ar": "المكتبة",
+      "name_fr": "Bibliothèque",
+      "description": "Gestion de la bibliothèque",
+      "features": [
+        "Livres",
+        "Catégories",
+        "Membres",
+        "Prêts"
+      ]
+    },
+    {
+      "id": "accounts",
+      "name": "Accounts",
+      "name_ar": "الحسابات",
+      "name_fr": "Comptes",
+      "description": "Comptabilité",
+      "features": [
+        "Revenus",
+        "Dépenses",
+        "Rapports comptables",
+        "Soldes"
+      ]
+    },
+    {
+      "id": "report",
+      "name": "Report",
+      "name_ar": "التقرير",
+      "name_fr": "Rapport",
+      "description": "Rapports et statistiques",
+      "features": [
+        "Rapports étudiants",
+        "Rapports de présence",
+        "Rapports financiers",
+        "Bulletins de notes"
+      ]
+    },
+    {
+      "id": "staff",
+      "name": "Staff",
+      "name_ar": "الموظفون",
+      "name_fr": "Personnel",
+      "description": "Gestion du personnel",
+      "features": [
+        "Liste du personnel",
+        "Ajout de personnel",
+        "Rôles",
+        "Permissions"
+      ]
+    },
+    {
+      "id": "settings",
+      "name": "Settings",
+      "name_ar": "الإعدادات",
+      "name_fr": "Paramètres",
+      "description": "Configuration système",
+      "features": [
+        "Paramètres généraux",
+        "Email",
+        "SMS",
+        "Site web",
+        "Galerie"
+      ]
+    }
+  ],
+
+  "common_issues": [
+    {
+      "id": "interface_english",
+      "problem": "Interface en anglais",
+      "symptoms": [
+        "Menu en anglais",
+        "Modules en anglais",
+        "Dashboard en anglais"
+      ],
+      "solutions": [
+        "Se déconnecter et se reconnecter",
+        "Recharger avec Ctrl+Shift+R",
+        "Exécuter: set_default_language.php",
+        "Nettoyer les caches"
+      ]
+    },
+    {
+      "id": "wrong_counters",
+      "problem": "Compteurs incorrects",
+      "symptoms": [
+        "Affichage de 804 au lieu de 4"
+      ],
+      "solutions": [
+        "Nettoyer les caches",
+        "Recharger la page",
+        "Vérifier la base de données"
+      ]
+    },
+    {
+      "id": "text_direction",
+      "problem": "Direction du texte incorrecte",
+      "symptoms": [
+        "Texte de gauche à droite",
+        "Texte arabe mal aligné"
+      ],
+      "solutions": [
+        "Vérifier RTL: VERIFICATION_FINALE_ARABE.php",
+        "Réinitialiser: set_default_language.php"
+      ]
+    },
+    {
+      "id": "partial_translation",
+      "problem": "Modules partiellement traduits",
+      "symptoms": [
+        "Certains éléments en anglais"
+      ],
+      "solutions": [
+        "Exécuter: maintenance/traduire_tous_modules.php",
+        "Nettoyer les caches",
+        "Se déconnecter et se reconnecter"
+      ]
+    },
+    {
+      "id": "cache_not_cleared",
+      "problem": "Caches non nettoyés",
+      "symptoms": [
+        "Changements non visibles",
+        "Ancienne interface"
+      ],
+      "solutions": [
+        "Exécuter: CLEAR_ALL_CACHES_FINAL.php",
+        "Se déconnecter et se reconnecter",
+        "Recharger avec Ctrl+Shift+R"
+      ]
+    }
+  ],
+
+  "scripts": {
+    "essential": [
+      {
+        "name": "CLEAR_ALL_CACHES_FINAL.php",
+        "description": "Nettoie tous les caches",
+        "usage": "Après chaque modification",
+        "command": "\"C:/xampp/php/php.exe\" CLEAR_ALL_CACHES_FINAL.php"
+      },
+      {
+        "name": "VERIFICATION_FINALE_ARABE.php",
+        "description": "Vérifie la configuration arabe",
+        "usage": "Diagnostic",
+        "command": "\"C:/xampp/php/php.exe\" VERIFICATION_FINALE_ARABE.php"
+      },
+      {
+        "name": "set_default_language.php",
+        "description": "Réinitialise la langue par défaut",
+        "usage": "Si langue incorrecte",
+        "command": "\"C:/xampp/php/php.exe\" set_default_language.php"
+      }
+    ],
+    "maintenance": [
+      {
+        "name": "scanner_modules_anglais.php",
+        "description": "Scan les modules pour l'anglais",
+        "usage": "Vérification",
+        "command": "\"C:/xampp/php/php.exe\" maintenance/scanner_modules_anglais.php"
+      },
+      {
+        "name": "traduire_tous_modules.php",
+        "description": "Traduit tous les modules en arabe",
+        "usage": "Retraduction",
+        "command": "\"C:/xampp/php/php.exe\" maintenance/traduire_tous_modules.php"
+      },
+      {
+        "name": "activer_francais.php",
+        "description": "Active/traduit le français",
+        "usage": "Configuration français",
+        "command": "\"C:/xampp/php/php.exe\" maintenance/activer_francais.php"
+      }
+    ]
+  },
+
+  "user_roles": [
+    {
+      "role": "Super Admin",
+      "permissions": "Toutes les permissions",
+      "description": "Administrateur principal du système"
+    },
+    {
+      "role": "Admin",
+      "permissions": "Gestion de l'école",
+      "description": "Administrateur de l'établissement"
+    },
+    {
+      "role": "Teacher",
+      "permissions": "Modules pédagogiques",
+      "description": "Enseignant"
+    },
+    {
+      "role": "Student",
+      "permissions": "Consultation uniquement",
+      "description": "Étudiant"
+    },
+    {
+      "role": "Parent",
+      "permissions": "Suivi de l'enfant",
+      "description": "Parent d'élève"
+    }
+  ],
+
+  "quick_actions": {
+    "add_student": {
+      "module": "Student Info",
+      "steps": [
+        "Aller dans Student Info → Student List",
+        "Cliquer sur 'Add Student'",
+        "Remplir le formulaire",
+        "Enregistrer"
+      ]
+    },
+    "record_attendance": {
+      "module": "Attendance",
+      "steps": [
+        "Aller dans Attendance → Daily Attendance",
+        "Sélectionner date et classe",
+        "Marquer présent/absent",
+        "Enregistrer"
+      ]
+    },
+    "collect_fees": {
+      "module": "Fees",
+      "steps": [
+        "Aller dans Fees → Collect Fees",
+        "Sélectionner l'étudiant",
+        "Saisir le montant",
+        "Sélectionner mode de paiement",
+        "Enregistrer"
+      ]
+    },
+    "generate_report": {
+      "module": "Report",
+      "steps": [
+        "Aller dans Report",
+        "Sélectionner type de rapport",
+        "Choisir critères",
+        "Cliquer sur 'Generate'",
+        "Télécharger PDF"
+      ]
+    },
+    "change_language": {
+      "module": "Dashboard",
+      "steps": [
+        "Cliquer sur menu 'اللغة' (Langue)",
+        "Sélectionner langue souhaitée",
+        "Page se recharge automatiquement"
+      ]
+    }
+  },
+
+  "glossary": {
+    "dashboard": {"ar": "لوحة التحكم", "fr": "Tableau de bord", "en": "Dashboard"},
+    "student": {"ar": "الطالب", "fr": "Étudiant", "en": "Student"},
+    "parent": {"ar": "ولي الأمر", "fr": "Parent", "en": "Parent"},
+    "teacher": {"ar": "المعلم", "fr": "Enseignant", "en": "Teacher"},
+    "class": {"ar": "الصف", "fr": "Classe", "en": "Class"},
+    "section": {"ar": "القسم", "fr": "Section", "en": "Section"},
+    "subject": {"ar": "المادة", "fr": "Matière", "en": "Subject"},
+    "attendance": {"ar": "الحضور", "fr": "Présence", "en": "Attendance"},
+    "leave": {"ar": "الإجازة", "fr": "Congé", "en": "Leave"},
+    "fees": {"ar": "الرسوم", "fr": "Frais", "en": "Fees"},
+    "examination": {"ar": "الامتحان", "fr": "Examen", "en": "Examination"},
+    "library": {"ar": "المكتبة", "fr": "Bibliothèque", "en": "Library"},
+    "accounts": {"ar": "الحسابات", "fr": "Comptes", "en": "Accounts"},
+    "report": {"ar": "التقرير", "fr": "Rapport", "en": "Report"},
+    "staff": {"ar": "الموظفون", "fr": "Personnel", "en": "Staff"},
+    "settings": {"ar": "الإعدادات", "fr": "Paramètres", "en": "Settings"}
+  }
+}

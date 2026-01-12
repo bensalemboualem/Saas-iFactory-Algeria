@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation - IAFactory RAG Algérie</title>
+    <meta name="description" content="Documentation technique complète de IAFactory RAG : guides d'installation, API, intégrations et tutoriels.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --bg-secondary: #111111;
+            --card: #1a1a1a;
+            --border: #2a2a2a;
+            --text: #ffffff;
+            --text-secondary: #a0a0a0;
+            --primary: #00c261;
+            --primary-hover: #00a351;
+            --accent: #3b82f6;
+            --code-bg: #1e1e1e;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 24px;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 18px;
+        }
+
+        .logo-text { font-weight: 700; font-size: 20px; }
+        .logo-text span { color: var(--primary); }
+
+        nav { display: flex; gap: 32px; align-items: center; }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover, .nav-link.active { color: var(--primary); }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+
+        /* Layout */
+        .docs-layout {
+            display: flex;
+            margin-top: 73px;
+            min-height: calc(100vh - 73px);
+        }
+
+        /* Sidebar */
+        .docs-sidebar {
+            width: 280px;
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border);
+            padding: 24px;
+            position: fixed;
+            top: 73px;
+            left: 0;
+            bottom: 0;
+            overflow-y: auto;
+        }
+
+        .sidebar-section {
+            margin-bottom: 24px;
+        }
+
+        .sidebar-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        .sidebar-links {
+            list-style: none;
+        }
+
+        .sidebar-links li {
+            margin-bottom: 4px;
+        }
+
+        .sidebar-links a {
+            display: block;
+            padding: 8px 12px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .sidebar-links a:hover {
+            background: var(--card);
+            color: var(--text);
+        }
+
+        .sidebar-links a.active {
+            background: rgba(0, 194, 97, 0.1);
+            color: var(--primary);
+        }
+
+        /* Main Content */
+        .docs-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 48px;
+            max-width: 900px;
+        }
+
+        .docs-content h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, var(--text), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .docs-content .intro {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 48px;
+            line-height: 1.7;
+        }
+
+        .docs-content h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin: 48px 0 16px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        .docs-content h2:first-of-type {
+            border-top: none;
+            margin-top: 0;
+        }
+
+        .docs-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 32px 0 12px;
+        }
+
+        .docs-content p {
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            line-height: 1.7;
+        }
+
+        .docs-content ul, .docs-content ol {
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            padding-left: 24px;
+        }
+
+        .docs-content li {
+            margin-bottom: 8px;
+        }
+
+        .docs-content a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .docs-content a:hover {
+            text-decoration: underline;
+        }
+
+        /* Code Blocks */
+        .code-block {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin: 24px 0;
+            overflow: hidden;
+        }
+
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .code-lang {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .copy-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        pre {
+            padding: 16px;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        code {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .inline-code {
+            background: var(--card);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: var(--primary);
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 24px 0;
+        }
+
+        .doc-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .doc-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+            text-decoration: none;
+        }
+
+        .doc-card-icon {
+            font-size: 2rem;
+            margin-bottom: 12px;
+        }
+
+        .doc-card h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .doc-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        /* Alert Boxes */
+        .alert {
+            padding: 16px 20px;
+            border-radius: 10px;
+            margin: 24px 0;
+            display: flex;
+            gap: 12px;
+        }
+
+        .alert-icon {
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .alert-info {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .alert-warning {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+        }
+
+        .alert-success {
+            background: rgba(0, 194, 97, 0.1);
+            border: 1px solid rgba(0, 194, 97, 0.3);
+        }
+
+        .alert-content h5 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .alert-content p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        /* Table */
+        .docs-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+        }
+
+        .docs-table th,
+        .docs-table td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .docs-table th {
+            background: var(--card);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .docs-table td {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            margin-left: 280px;
+            border-top: 1px solid var(--border);
+            padding: 40px 48px;
+            color: var(--text-secondary);
+        }
+
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .docs-sidebar {
+                display: none;
+            }
+            .docs-content, footer {
+                margin-left: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav { display: none; }
+            .docs-content {
+                padding: 24px;
+            }
+            .docs-content h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+<link rel="stylesheet" href="/apps/shared/iafactory-unified.css">
+</head>
+<body>
+<!-- IAFactory Trilingue Controls -->
+<div class="iaf-controls-floating" style="position:fixed;top:20px;right:20px;z-index:9998;display:flex;gap:10px;align-items:center;">
+    <div class="iaf-lang-dropdown" style="position:relative;">
+        <button class="iaf-lang-btn" onclick="IAFUnified.toggleLangMenu()" 
+            style="background:#667eea;color:white;border:none;padding:8px 15px;border-radius:8px;cursor:pointer;font-size:14px;display:flex;align-items:center;gap:5px;">
+            🌐 <span id="current-lang-label">FR</span> ▼
+        </button>
+        <div class="iaf-lang-menu" id="lang-menu" 
+            style="display:none;position:absolute;top:100%;right:0;background:white;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,0.15);min-width:150px;margin-top:5px;overflow:hidden;">
+            <button onclick="IAFUnified.changeLang('fr')" style="width:100%;padding:10px 15px;border:none;background:none;text-align:left;cursor:pointer;">🇫🇷 Français</button>
+            <button onclick="IAFUnified.changeLang('ar')" style="width:100%;padding:10px 15px;border:none;background:none;text-align:left;cursor:pointer;">🇩🇿 العربية</button>
+            <button onclick="IAFUnified.changeLang('en')" style="width:100%;padding:10px 15px;border:none;background:none;text-align:left;cursor:pointer;">🇬🇧 English</button>
+        </div>
+    </div>
+    <button class="iaf-theme-toggle" onclick="IAFUnified.toggleTheme()" 
+        style="background:#667eea;color:white;border:none;padding:8px 12px;border-radius:8px;cursor:pointer;font-size:16px;" 
+        title="Toggle theme">🌓</button>
+</div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="../landing-complete-responsive.html" class="logo">
+                <div class="logo-icon">IA</div>
+                <div class="logo-text">IA<span>Factory</span></div>
+            </a>
+            <nav>
+                <a class="nav-link" href="../landing-complete-responsive.html">Accueil</a>
+                <a class="nav-link" href="fonctionnalites.html">Fonctionnalités</a>
+                <a class="nav-link" href="applications.html">Applications</a>
+                <a class="nav-link" href="tarifs.html">Tarifs</a>
+                <a class="nav-link active" href="documentation.html">Documentation</a>
+            </nav>
+            <a href="../landing-complete-responsive.html" class="btn-primary">Essayer Gratuitement</a>
+        </div>
+    </header>
+
+    <div class="docs-layout">
+        <!-- Sidebar -->
+        <aside class="docs-sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">Démarrage</div>
+                <ul class="sidebar-links">
+                    <li><a href="#introduction" class="active">Introduction</a></li>
+                    <li><a href="#quickstart">Démarrage Rapide</a></li>
+                    <li><a href="#installation">Installation</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">Chat & LLMs</div>
+                <ul class="sidebar-links">
+                    <li><a href="#providers">Providers Supportés</a></li>
+                    <li><a href="#api-keys">Configuration API Keys</a></li>
+                    <li><a href="#local-llms">LLMs Locaux (Ollama)</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">RAG</div>
+                <ul class="sidebar-links">
+                    <li><a href="#rag-intro">Introduction au RAG</a></li>
+                    <li><a href="#documents">Import de Documents</a></li>
+                    <li><a href="#embeddings">Embeddings</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">API</div>
+                <ul class="sidebar-links">
+                    <li><a href="#api-overview">Vue d'ensemble</a></li>
+                    <li><a href="#api-auth">Authentification</a></li>
+                    <li><a href="#api-endpoints">Endpoints</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">Déploiement</div>
+                <ul class="sidebar-links">
+                    <li><a href="#docker">Docker</a></li>
+                    <li><a href="#on-premise">On-Premise</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="docs-content">
+            <h1>📚 Documentation IAFactory RAG</h1>
+            <p class="intro">
+                Bienvenue dans la documentation officielle de IAFactory RAG. Vous trouverez ici tous les guides, tutoriels et références API pour exploiter pleinement la plateforme.
+            </p>
+
+            <!-- Quick Start Cards -->
+            <div class="cards-grid">
+                <a href="#quickstart" class="doc-card">
+                    <div class="doc-card-icon">🚀</div>
+                    <h4>Démarrage Rapide</h4>
+                    <p>Commencez en moins de 5 minutes</p>
+                </a>
+                <a href="#providers" class="doc-card">
+                    <div class="doc-card-icon">🤖</div>
+                    <h4>Providers LLM</h4>
+                    <p>22 providers, 500+ modèles</p>
+                </a>
+                <a href="#rag-intro" class="doc-card">
+                    <div class="doc-card-icon">📚</div>
+                    <h4>Guide RAG</h4>
+                    <p>Base de connaissances IA</p>
+                </a>
+                <a href="#api-overview" class="doc-card">
+                    <div class="doc-card-icon">🔌</div>
+                    <h4>API Reference</h4>
+                    <p>Intégrez IAFactory</p>
+                </a>
+            </div>
+
+            <h2 id="introduction">Introduction</h2>
+            <p>
+                IAFactory RAG est une plateforme d'intelligence artificielle conçue pour le marché algérien et maghrébin. Elle combine un chat multi-LLM puissant avec une base de connaissances RAG (Retrieval-Augmented Generation) et plus de 56 applications métier prêtes à l'emploi.
+            </p>
+
+            <h3>Fonctionnalités principales</h3>
+            <ul>
+                <li><strong>Chat Multi-LLM</strong> - Accès à 22 providers (OpenAI, Anthropic, Google, Mistral, etc.)</li>
+                <li><strong>RAG</strong> - Importez vos documents pour des réponses contextuelles précises</li>
+                <li><strong>94+ Applications</strong> - Outils métier pour rédaction, business, éducation, code...</li>
+                <li><strong>LLMs Locaux</strong> - Support Ollama, LM Studio, LocalAI pour une confidentialité totale</li>
+                <li><strong>API REST</strong> - Intégrez IAFactory dans vos propres applications</li>
+            </ul>
+
+            <h2 id="quickstart">Démarrage Rapide</h2>
+            <p>Commencez à utiliser IAFactory RAG en quelques étapes simples :</p>
+
+            <h3>1. Créer un compte</h3>
+            <p>Rendez-vous sur la <a href="../landing-complete-responsive.html">page d'accueil</a> et cliquez sur "Essayer Gratuitement". Aucune carte bancaire requise.</p>
+
+            <h3>2. Choisir un provider</h3>
+            <p>Sélectionnez le provider LLM de votre choix dans le menu déroulant :</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">Providers disponibles</span>
+                </div>
+<pre>Cloud Providers:
+├── OpenAI (GPT-4o, GPT-4 Turbo, o1)
+├── Anthropic (Claude 3.5 Sonnet, Claude 3 Opus)
+├── Google (Gemini 2.0, Gemini Pro)
+├── Mistral (Mistral Large, Codestral)
+├── Cohere (Command R+)
+├── xAI (Grok 2)
+└── DeepSeek (V3)
+
+Local Providers:
+├── Ollama
+├── LM Studio
+├── LocalAI
+├── Jan.ai
+└── GPT4All</pre>
+            </div>
+
+            <h3>3. Envoyer votre premier message</h3>
+            <p>Tapez votre question dans le chat et appuyez sur Entrée. C'est aussi simple que ça !</p>
+
+            <div class="alert alert-info">
+                <span class="alert-icon">💡</span>
+                <div class="alert-content">
+                    <h5>Astuce</h5>
+                    <p>Utilisez le raccourci <span class="inline-code">Ctrl + Enter</span> pour envoyer un message sans cliquer sur le bouton.</p>
+                </div>
+            </div>
+
+            <h2 id="providers">Providers Supportés</h2>
+            <p>IAFactory RAG supporte 22 providers LLM avec plus de 500 modèles disponibles.</p>
+
+            <h3>Providers Cloud</h3>
+            <table class="docs-table">
+                <thead>
+                    <tr>
+                        <th>Provider</th>
+                        <th>Modèles Populaires</th>
+                        <th>Spécialité</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>OpenAI</strong></td>
+                        <td>GPT-4o, GPT-4 Turbo, o1-preview</td>
+                        <td>Polyvalent, code</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Anthropic</strong></td>
+                        <td>Claude 3.5 Sonnet, Claude 3 Opus</td>
+                        <td>Analyse, rédaction longue</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Google</strong></td>
+                        <td>Gemini 2.0 Flash, Gemini Pro</td>
+                        <td>Multimodal, rapide</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mistral</strong></td>
+                        <td>Mistral Large, Codestral</td>
+                        <td>Français, code</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Meta</strong></td>
+                        <td>Llama 3.1 405B</td>
+                        <td>Open source</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cohere</strong></td>
+                        <td>Command R+</td>
+                        <td>RAG, entreprise</td>
+                    </tr>
+                    <tr>
+                        <td><strong>xAI</strong></td>
+                        <td>Grok 2</td>
+                        <td>Temps réel</td>
+                    </tr>
+                    <tr>
+                        <td><strong>DeepSeek</strong></td>
+                        <td>DeepSeek V3</td>
+                        <td>Raisonnement</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 id="api-keys">Configuration des Clés API</h2>
+            <p>Vous pouvez utiliser IAFactory avec ou sans vos propres clés API :</p>
+
+            <h3>Option 1 : Sans clé API (recommandé pour débuter)</h3>
+            <p>Les plans Pro et Business incluent l'accès aux LLMs sans configuration. Commencez immédiatement.</p>
+
+            <h3>Option 2 : Avec vos propres clés</h3>
+            <p>Cliquez sur l'icône clé 🔑 dans le chat pour configurer vos clés API :</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">Configuration</span>
+                    <button class="copy-btn">Copier</button>
+                </div>
+<pre>{
+  "openai": {
+    "apiKey": "sk-xxxxxxxxxxxxxxxxxxxxxxxx"
+  },
+  "anthropic": {
+    "apiKey": "sk-ant-xxxxxxxxxxxxxxxxxxxxxxxx"
+  },
+  "google": {
+    "apiKey": "AIzaxxxxxxxxxxxxxxxxxxxxxxxx"
+  }
+}</pre>
+            </div>
+
+            <div class="alert alert-warning">
+                <span class="alert-icon">⚠️</span>
+                <div class="alert-content">
+                    <h5>Sécurité</h5>
+                    <p>Vos clés API sont stockées localement dans votre navigateur et chiffrées. Elles ne sont jamais envoyées à nos serveurs.</p>
+                </div>
+            </div>
+
+            <h2 id="local-llms">LLMs Locaux (Ollama)</h2>
+            <p>Exécutez des modèles sur votre propre machine pour une confidentialité totale.</p>
+
+            <h3>Installation d'Ollama</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">Terminal</span>
+                    <button class="copy-btn">Copier</button>
+                </div>
+<pre># Windows (PowerShell)
+winget install Ollama.Ollama
+
+# Linux
+curl -fsSL https://ollama.com/install.sh | sh
+
+# macOS
+brew install ollama</pre>
+            </div>
+
+            <h3>Télécharger un modèle</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">Terminal</span>
+                    <button class="copy-btn">Copier</button>
+                </div>
+<pre># Modèles recommandés
+ollama pull llama3.1:8b      # Léger, rapide
+ollama pull mistral:7b       # Bon pour le français
+ollama pull codellama:13b    # Spécialisé code
+ollama pull qwen2.5:14b      # Multilingue</pre>
+            </div>
+
+            <h3>Connexion à IAFactory</h3>
+            <p>Une fois Ollama installé et un modèle téléchargé :</p>
+            <ol>
+                <li>Sélectionnez "Ollama" dans le menu des providers</li>
+                <li>Entrez l'URL de votre serveur (par défaut : <span class="inline-code">http://localhost:11434</span>)</li>
+                <li>Choisissez le modèle dans la liste</li>
+            </ol>
+
+            <div class="alert alert-success">
+                <span class="alert-icon">✅</span>
+                <div class="alert-content">
+                    <h5>100% Local</h5>
+                    <p>Avec Ollama, aucune donnée ne quitte votre machine. Parfait pour les données sensibles.</p>
+                </div>
+            </div>
+
+            <h2 id="rag-intro">Introduction au RAG</h2>
+            <p>
+                Le RAG (Retrieval-Augmented Generation) permet à l'IA de répondre en se basant sur vos propres documents. Au lieu d'inventer des réponses, l'IA cite directement vos sources.
+            </p>
+
+            <h3>Comment ça marche ?</h3>
+            <ol>
+                <li><strong>Import</strong> - Vous uploadez vos documents (PDF, Word, TXT...)</li>
+                <li><strong>Indexation</strong> - Les documents sont découpés et convertis en vecteurs (embeddings)</li>
+                <li><strong>Recherche</strong> - Quand vous posez une question, le système trouve les passages pertinents</li>
+                <li><strong>Génération</strong> - Le LLM génère une réponse basée sur ces passages</li>
+            </ol>
+
+            <h2 id="documents">Import de Documents</h2>
+            <p>Formats supportés pour l'import :</p>
+
+            <table class="docs-table">
+                <thead>
+                    <tr>
+                        <th>Format</th>
+                        <th>Extension</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>PDF</td>
+                        <td>.pdf</td>
+                        <td>OCR inclus pour les scans</td>
+                    </tr>
+                    <tr>
+                        <td>Word</td>
+                        <td>.docx, .doc</td>
+                        <td>Tableaux supportés</td>
+                    </tr>
+                    <tr>
+                        <td>Excel</td>
+                        <td>.xlsx, .xls, .csv</td>
+                        <td>Données tabulaires</td>
+                    </tr>
+                    <tr>
+                        <td>Texte</td>
+                        <td>.txt, .md, .json</td>
+                        <td>Tous formats texte</td>
+                    </tr>
+                    <tr>
+                        <td>Code</td>
+                        <td>.py, .js, .java...</td>
+                        <td>50+ langages</td>
+                    </tr>
+                    <tr>
+                        <td>Web</td>
+                        <td>URL</td>
+                        <td>Scraping automatique</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 id="api-overview">API REST</h2>
+            <p>Intégrez IAFactory RAG dans vos applications via notre API REST.</p>
+
+            <h3>Base URL</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">URL</span>
+                </div>
+<pre>https://api.iafactory.dz/v1</pre>
+            </div>
+
+            <h3>Exemple : Chat Completion</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">cURL</span>
+                    <button class="copy-btn">Copier</button>
+                </div>
+<pre>curl -X POST https://api.iafactory.dz/v1/chat/completions \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "gpt-4o",
+    "messages": [
+      {"role": "user", "content": "Bonjour, comment vas-tu ?"}
+    ]
+  }'</pre>
+            </div>
+
+            <h3>Exemple : Python</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">Python</span>
+                    <button class="copy-btn">Copier</button>
+                </div>
+<pre>import requests
+
+response = requests.post(
+    "https://api.iafactory.dz/v1/chat/completions",
+    headers={
+        "Authorization": "Bearer YOUR_API_KEY",
+        "Content-Type": "application/json"
+    },
+    json={
+        "model": "gpt-4o",
+        "messages": [
+            {"role": "user", "content": "Explique le RAG"}
+        ]
+    }
+)
+
+print(response.json()["choices"][0]["message"]["content"])</pre>
+            </div>
+
+            <h2 id="docker">Déploiement Docker</h2>
+            <p>Déployez IAFactory RAG avec Docker en quelques commandes :</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">docker-compose.yml</span>
+                    <button class="copy-btn">Copier</button>
+                </div>
+<pre>version: '3.8'
+
+services:
+  iafactory:
+    image: iafactory/rag:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@db:5432/iafactory
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - db
+      - redis
+
+  db:
+    image: pgvector/pgvector:pg16
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=iafactory
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  redis:
+    image: redis:alpine
+
+volumes:
+  pgdata:</pre>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">Terminal</span>
+                    <button class="copy-btn">Copier</button>
+                </div>
+<pre># Lancer IAFactory
+docker-compose up -d
+
+# Accéder à l'interface
+open http://localhost:3000</pre>
+            </div>
+
+            <div class="alert alert-info">
+                <span class="alert-icon">📖</span>
+                <div class="alert-content">
+                    <h5>Documentation complète</h5>
+                    <p>Cette page est un aperçu. La documentation complète avec tous les endpoints API, guides avancés et exemples sera disponible prochainement.</p>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2024 IAFactory Algeria - Plateforme RAG pour l'Algérie et le Maghreb</p>
+        <p style="margin-top: 8px;">
+            <a href="fonctionnalites.html">Fonctionnalités</a> · 
+            <a href="applications.html">Applications</a> · 
+            <a href="tarifs.html">Tarifs</a> · 
+            <a href="documentation.html">Documentation</a>
+        </p>
+    </footer>
+
+    <script>
+        // Copy button functionality
+        document.querySelectorAll('.copy-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const code = btn.closest('.code-block').querySelector('pre').textContent;
+                navigator.clipboard.writeText(code);
+                btn.textContent = 'Copié !';
+                setTimeout(() => btn.textContent = 'Copier', 2000);
+            });
+        });
+
+        // Sidebar active link
+        document.querySelectorAll('.sidebar-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.sidebar-links a.active')?.classList.remove('active');
+                link.classList.add('active');
+            });
+        });
+    </script>
+<script src="/apps/shared/iafactory-unified.js"></script>
+<!-- IAFactory Chatbot -->
+<button class="iaf-chatbot-btn" onclick="IAFUnified.toggleChatbot()" title="Aide" aria-label="Aide">💬</button>
+<div data-iaf-footer></div>
+</body>
+</html>

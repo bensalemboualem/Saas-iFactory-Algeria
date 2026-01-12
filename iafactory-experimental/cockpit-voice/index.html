@@ -1,0 +1,1891 @@
+﻿<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cockpit Voice - Mon Double IA | IAFactory Algeria</title>
+    <meta name="description" content="Agent vocal intelligent multilingue - Votre double IA personnel. Parlez en Francais, Arabe, Darija, Amazigh ou Anglais.">
+
+    <!-- Favicon -->
+    <link rel="icon" href="https://flagcdn.com/dz.svg" type="image/svg+xml">
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- IAFactory Unified Components -->
+    <link rel="stylesheet" href="../shared/iafactory-unified.css">
+
+    <style>
+        /* ==================== COCKPIT VOICE STYLES ==================== */
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding-top: var(--iaf-header-height, 60px);
+            min-height: 100vh;
+            font-family: var(--iaf-font-primary);
+            background: var(--iaf-bg);
+            color: var(--iaf-text);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cockpit-container {
+            flex: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 2rem;
+        }
+
+        @media (max-width: 1024px) {
+            .cockpit-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ==================== MAIN VOICE PANEL ==================== */
+        .voice-panel {
+            background: var(--iaf-bg-card);
+            border: 1px solid var(--iaf-border);
+            border-radius: 24px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .voice-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #00a651, #00c761, #00a651);
+            background-size: 200% 100%;
+            animation: gradientFlow 3s ease infinite;
+        }
+
+        @keyframes gradientFlow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .voice-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .voice-title {
+            font-size: 2rem;
+            font-weight: 800;
+            margin: 0 0 0.5rem 0;
+            background: linear-gradient(135deg, #00a651, #00c761);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .voice-subtitle {
+            color: var(--iaf-text-secondary);
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        /* ==================== LANGUAGE AUTO-DETECT ==================== */
+        .lang-detect-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: rgba(0, 166, 81, 0.1);
+            border-radius: 12px;
+            border: 1px solid rgba(0, 166, 81, 0.2);
+        }
+
+        .lang-detect-label {
+            font-size: 0.9rem;
+            color: var(--iaf-text-secondary);
+        }
+
+        .lang-detect-value {
+            font-weight: 700;
+            color: #00a651;
+            font-size: 1.1rem;
+        }
+
+        .lang-flags {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .lang-flag {
+            width: 32px;
+            height: 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            opacity: 0.4;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .lang-flag:hover { opacity: 0.7; }
+        .lang-flag.active {
+            opacity: 1;
+            border-color: #00a651;
+            box-shadow: 0 0 10px rgba(0, 166, 81, 0.5);
+        }
+
+        /* ==================== VOICE ORB ==================== */
+        .voice-orb-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 2rem 0;
+        }
+
+        .voice-orb {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+            border: 3px solid rgba(0, 166, 81, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .voice-orb:hover {
+            transform: scale(1.05);
+            border-color: #00a651;
+            box-shadow: 0 0 40px rgba(0, 166, 81, 0.3);
+        }
+
+        .voice-orb.listening {
+            animation: pulseOrb 1.5s ease-in-out infinite;
+            border-color: #00a651;
+            box-shadow: 0 0 60px rgba(0, 166, 81, 0.5);
+        }
+
+        .voice-orb.processing {
+            animation: spinOrb 2s linear infinite;
+            border-color: #3b82f6;
+            box-shadow: 0 0 60px rgba(59, 130, 246, 0.5);
+        }
+
+        .voice-orb.speaking {
+            animation: pulseOrb 0.8s ease-in-out infinite;
+            border-color: #f59e0b;
+            box-shadow: 0 0 60px rgba(245, 158, 11, 0.5);
+        }
+
+        @keyframes pulseOrb {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+
+        @keyframes spinOrb {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .voice-orb-icon {
+            font-size: 4rem;
+            color: #00a651;
+            transition: all 0.3s;
+        }
+
+        .voice-orb.listening .voice-orb-icon { color: #00a651; }
+        .voice-orb.processing .voice-orb-icon { color: #3b82f6; }
+        .voice-orb.speaking .voice-orb-icon { color: #f59e0b; }
+
+        /* Sound waves */
+        .sound-waves {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .wave {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 2px solid rgba(0, 166, 81, 0.4);
+            border-radius: 50%;
+            opacity: 0;
+        }
+
+        .voice-orb.listening .wave {
+            animation: waveExpand 2s ease-out infinite;
+        }
+
+        .wave:nth-child(1) { animation-delay: 0s; }
+        .wave:nth-child(2) { animation-delay: 0.5s; }
+        .wave:nth-child(3) { animation-delay: 1s; }
+
+        @keyframes waveExpand {
+            0% { width: 180px; height: 180px; opacity: 0.6; }
+            100% { width: 300px; height: 300px; opacity: 0; }
+        }
+
+        /* ==================== STATUS ==================== */
+        .voice-status {
+            text-align: center;
+            margin: 1.5rem 0;
+        }
+
+        .status-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--iaf-text);
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+            background: #00a651;
+            animation: blink 1s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* ==================== TRANSCRIPT ==================== */
+        .transcript-area {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            min-height: 120px;
+        }
+
+        .transcript-label {
+            font-size: 0.85rem;
+            color: var(--iaf-text-secondary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .transcript-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: var(--iaf-text);
+            min-height: 60px;
+        }
+
+        .transcript-text.interim {
+            color: var(--iaf-text-secondary);
+            font-style: italic;
+        }
+
+        /* ==================== AI RESPONSE ==================== */
+        .ai-response-area {
+            background: linear-gradient(135deg, rgba(0, 166, 81, 0.1), rgba(0, 199, 97, 0.05));
+            border: 1px solid rgba(0, 166, 81, 0.2);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .ai-response-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
+        /* ==================== DOUBLE MODE PANEL ==================== */
+        .double-panel {
+            background: var(--iaf-bg-card);
+            border: 1px solid var(--iaf-border);
+            border-radius: 24px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .panel-section {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 16px;
+            padding: 1.25rem;
+        }
+
+        .panel-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 0 0 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #00a651;
+        }
+
+        /* Mode Double Toggle */
+        .double-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(139, 92, 246, 0.05));
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 12px;
+        }
+
+        .double-toggle-info h4 {
+            margin: 0 0 0.25rem 0;
+            font-size: 1rem;
+            color: #8b5cf6;
+        }
+
+        .double-toggle-info p {
+            margin: 0;
+            font-size: 0.85rem;
+            color: var(--iaf-text-secondary);
+        }
+
+        .toggle-switch {
+            width: 56px;
+            height: 28px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            cursor: pointer;
+            position: relative;
+            transition: background 0.3s;
+        }
+
+        .toggle-switch.active {
+            background: #8b5cf6;
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        .toggle-switch.active::after {
+            transform: translateX(28px);
+        }
+
+        /* Task Type Selector */
+        .task-types {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+        }
+
+        .task-type {
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--iaf-border);
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .task-type:hover {
+            background: rgba(0, 166, 81, 0.1);
+            border-color: rgba(0, 166, 81, 0.3);
+        }
+
+        .task-type.active {
+            background: rgba(0, 166, 81, 0.15);
+            border-color: #00a651;
+        }
+
+        .task-type-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .task-type-label {
+            font-size: 0.8rem;
+            color: var(--iaf-text-secondary);
+        }
+
+        /* Output Area */
+        .output-area {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 1rem;
+            min-height: 200px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .output-content {
+            font-family: monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            color: var(--iaf-text);
+        }
+
+        .output-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .output-btn {
+            flex: 1;
+            padding: 0.75rem;
+            background: rgba(0, 166, 81, 0.1);
+            border: 1px solid rgba(0, 166, 81, 0.3);
+            border-radius: 8px;
+            color: #00a651;
+            cursor: pointer;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .output-btn:hover {
+            background: rgba(0, 166, 81, 0.2);
+        }
+
+        /* History */
+        .history-list {
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .history-item {
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            font-size: 0.85rem;
+        }
+
+        .history-item-lang {
+            font-size: 0.7rem;
+            color: #00a651;
+            margin-bottom: 0.25rem;
+        }
+
+        .history-item-text {
+            color: var(--iaf-text-secondary);
+        }
+
+        /* ==================== SUPPORTED LANGUAGES ==================== */
+        .languages-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .lang-badge {
+            padding: 0.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            text-align: center;
+            font-size: 0.75rem;
+        }
+
+        .lang-badge-flag {
+            font-size: 1.25rem;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        /* Footer spacer */
+        .footer-spacer {
+            height: 2rem;
+        }
+    </style>
+    <script src="../shared/footer-inject.js" defer></script>
+</head>
+<body data-theme="dark">
+
+<!-- Header - IAFactory Algeria Harmonized -->
+<header class="iaf-header" role="banner">
+    <div class="iaf-header-container">
+        <a href="../iafactory-landing/index.html" class="header-logo" dir="ltr">
+            <!-- IAFactory Algeria Logo - Contour Neural -->
+            <svg width="48" height="48" viewBox="0 0 100 100" style="margin-right: 10px;">
+                <style>
+                    @keyframes pulse { 0%, 100% { r: 5; opacity: 1; } 50% { r: 7; opacity: 0.7; } }
+                    @keyframes pulse2 { 0%, 100% { r: 5; opacity: 0.7; } 50% { r: 7; opacity: 1; } }
+                    .node1 { animation: pulse 2s ease-in-out infinite; }
+                    .node2 { animation: pulse2 2s ease-in-out infinite 0.25s; }
+                    .node3 { animation: pulse 2s ease-in-out infinite 0.5s; }
+                    .node4 { animation: pulse2 2s ease-in-out infinite 0.75s; }
+                    .node5 { animation: pulse 2s ease-in-out infinite 1s; }
+                    .node6 { animation: pulse2 2s ease-in-out infinite 1.25s; }
+                    .node7 { animation: pulse 2s ease-in-out infinite 1.5s; }
+                    .node8 { animation: pulse2 2s ease-in-out infinite 1.75s; }
+                </style>
+                <line x1="50" y1="5" x2="85" y2="20" stroke="#00a651" stroke-width="2"/>
+                <line x1="85" y1="20" x2="95" y2="50" stroke="#00a651" stroke-width="2"/>
+                <line x1="95" y1="50" x2="85" y2="80" stroke="#00a651" stroke-width="2"/>
+                <line x1="85" y1="80" x2="50" y2="95" stroke="#00a651" stroke-width="2"/>
+                <line x1="50" y1="95" x2="15" y2="80" stroke="#00a651" stroke-width="2"/>
+                <line x1="15" y1="80" x2="5" y2="50" stroke="#00a651" stroke-width="2"/>
+                <line x1="5" y1="50" x2="15" y2="20" stroke="#00a651" stroke-width="2"/>
+                <line x1="15" y1="20" x2="50" y2="5" stroke="#00a651" stroke-width="2"/>
+                <circle cx="50" cy="5" r="5" fill="#00a651" class="node1"/>
+                <circle cx="85" cy="20" r="5" fill="#ef4444" class="node2"/>
+                <circle cx="95" cy="50" r="5" fill="#00a651" class="node3"/>
+                <circle cx="85" cy="80" r="5" fill="#ef4444" class="node4"/>
+                <circle cx="50" cy="95" r="5" fill="#00a651" class="node5"/>
+                <circle cx="15" cy="80" r="5" fill="#ef4444" class="node6"/>
+                <circle cx="5" cy="50" r="5" fill="#00a651" class="node7"/>
+                <circle cx="15" cy="20" r="5" fill="#ef4444" class="node8"/>
+                <circle cx="50" cy="50" r="32" fill="#00a651"/>
+                <text x="50" y="52" font-family="Arial Black, sans-serif" font-size="28" font-weight="900" text-anchor="middle" dominant-baseline="middle" fill="white">
+                    <tspan font-size="22">i</tspan><tspan font-size="28">AF</tspan>
+                </text>
+            </svg>
+            <span class="logo-text" style="font-size: 16px; position: relative; display: inline-block;">
+                <span style="position: relative; display: inline-block; overflow: hidden;">
+                    <span class="letter i-bounce" style="color: #00a651;">i</span><span class="letter" style="color: #00a651;">A</span><span class="letter" style="color: var(--text);">F</span><span class="letter" style="color: var(--text);">a</span><span class="letter" style="color: var(--text);">c</span><span class="letter" style="color: var(--text);">t</span><span class="letter" style="color: var(--text);">o</span><span class="letter" style="color: #ef4444; animation: bounce 1.5s ease-in-out infinite;">r</span><span class="letter" style="color: #ef4444; animation: bounce 1.5s ease-in-out infinite 0.15s;">y</span>
+                </span>
+                <span> </span>
+                <span style="position: relative; display: inline-block; overflow: hidden;">
+                    <span class="letter" style="color: var(--text);">A</span><span class="letter" style="color: var(--text);">l</span><span class="letter" style="color: var(--text);">g</span><span class="letter" style="color: var(--text);">e</span><span class="letter" style="color: var(--text);">r</span><span class="letter i-bounce" style="color: #00a651;">i</span><span class="letter" style="color: #00a651;">a</span>
+                </span>
+            </span>
+        </a>
+        <nav class="iaf-nav" role="navigation">
+            <a href="../iafactory-landing/index.html" class="iaf-nav-link"><i class="fa-solid fa-home iaf-nav-icon"></i><span data-i18n="nav_home">Accueil</span></a>
+            <a href="../iafactory-landing/apps.html" class="iaf-nav-link"><i class="fa-solid fa-th iaf-nav-icon"></i><span data-i18n="nav_apps">Applications</span></a>
+            <a href="../iafactory-landing/docs/directory/agents.html" class="iaf-nav-link"><i class="fa-solid fa-robot iaf-nav-icon"></i><span data-i18n="nav_agents">Agents IA</span></a>
+            <a href="../iafactory-landing/workflows.html" class="iaf-nav-link"><i class="fa-solid fa-diagram-project iaf-nav-icon"></i><span data-i18n="nav_workflows">Workflows</span></a>
+        </nav>
+
+        <!-- Header Actions -->
+        <div class="iaf-header-actions">
+            <!-- Theme Toggle -->
+            <button class="iaf-theme-toggle" id="theme-toggle" onclick="IAFactoryUI.toggleTheme()" aria-label="Toggle theme">
+                <i class="fa-solid fa-moon" id="theme-icon"></i>
+            </button>
+
+            <!-- Language Selector -->
+            <div class="iaf-language-selector">
+                <button class="iaf-lang-btn" id="lang-btn" onclick="IAFactoryUI.toggleLangMenu()" aria-expanded="false" aria-haspopup="true">
+                    <i class="fa-solid fa-globe iaf-lang-icon"></i>
+                    <span class="iaf-lang-label" id="current-lang-label">FR</span>
+                    <i class="fa-solid fa-chevron-down iaf-lang-chevron"></i>
+                </button>
+                <div class="iaf-lang-menu" id="lang-menu">
+                    <button class="iaf-lang-option active" data-lang="fr" onclick="IAFactoryUI.setLanguage('fr')">
+                        <span class="iaf-lang-flag">🇫🇷</span>
+                        <span>Francais</span>
+                        <i class="fa-solid fa-check iaf-lang-check"></i>
+                    </button>
+                    <button class="iaf-lang-option" data-lang="en" onclick="IAFactoryUI.setLanguage('en')">
+                        <span class="iaf-lang-flag">🇬🇧</span>
+                        <span>English</span>
+                        <i class="fa-solid fa-check iaf-lang-check"></i>
+                    </button>
+                    <button class="iaf-lang-option" data-lang="ar" onclick="IAFactoryUI.setLanguage('ar')">
+                        <span class="iaf-lang-flag">🇩🇿</span>
+                        <span>العربية</span>
+                        <i class="fa-solid fa-check iaf-lang-check"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Social Links -->
+            <div class="iaf-social-links">
+                <a href="https://github.com/IAFactory-Algeria" class="iaf-social-link" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+                <a href="https://huggingface.co/IAFactory-Algeria" class="iaf-social-link" target="_blank" rel="noopener noreferrer" aria-label="Hugging Face">
+                    <span class="hf-icon">🤗</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button class="iaf-mobile-menu-btn" id="mobile-menu-btn" onclick="IAFactoryUI.toggleMobileMenu()" aria-label="Menu mobile" aria-expanded="false">
+            <span class="iaf-burger-line"></span>
+            <span class="iaf-burger-line"></span>
+            <span class="iaf-burger-line"></span>
+        </button>
+    </div>
+</header>
+
+<!-- Mobile Menu -->
+<div class="iaf-mobile-menu" id="mobile-menu">
+    <div class="iaf-mobile-menu-header">
+        <div class="iaf-mobile-logo">
+            <svg width="32" height="32" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="32" fill="#00a651"/>
+                <text x="50" y="52" font-family="Arial Black, sans-serif" font-size="28" font-weight="900" text-anchor="middle" dominant-baseline="middle" fill="white">
+                    <tspan font-size="22">i</tspan><tspan font-size="28">AF</tspan>
+                </text>
+            </svg>
+            <span>IAFactory Algeria</span>
+        </div>
+        <button class="iaf-mobile-close" onclick="IAFactoryUI.toggleMobileMenu()">
+            <i class="fa-solid fa-times"></i>
+        </button>
+    </div>
+    <nav class="iaf-mobile-nav">
+        <a href="../iafactory-landing/index.html" class="iaf-mobile-link" onclick="IAFactoryUI.toggleMobileMenu()">
+            <i class="fa-solid fa-home iaf-mobile-icon"></i>
+            <span data-i18n="nav_home">Accueil</span>
+        </a>
+        <a href="../iafactory-landing/apps.html" class="iaf-mobile-link" onclick="IAFactoryUI.toggleMobileMenu()">
+            <i class="fa-solid fa-th iaf-mobile-icon"></i>
+            <span data-i18n="nav_apps">Applications</span>
+        </a>
+        <a href="../iafactory-landing/docs/directory/agents.html" class="iaf-mobile-link" onclick="IAFactoryUI.toggleMobileMenu()">
+            <i class="fa-solid fa-robot iaf-mobile-icon"></i>
+            <span data-i18n="nav_agents">Agents IA</span>
+        </a>
+        <a href="../iafactory-landing/workflows.html" class="iaf-mobile-link" onclick="IAFactoryUI.toggleMobileMenu()">
+            <i class="fa-solid fa-diagram-project iaf-mobile-icon"></i>
+            <span data-i18n="nav_workflows">Workflows</span>
+        </a>
+
+        <div class="iaf-mobile-divider"></div>
+
+        <!-- Mobile Quick Settings -->
+        <div class="iaf-mobile-settings-row">
+            <button class="iaf-mobile-quick-btn" onclick="IAFactoryUI.toggleTheme()">
+                <i class="fa-solid fa-moon" id="mobile-theme-icon"></i>
+            </button>
+            <div class="iaf-mobile-lang-dropdown" id="mobile-lang-dropdown">
+                <button class="iaf-mobile-quick-btn" onclick="IAFactoryUI.toggleMobileLangMenu()">
+                    <span id="mobile-current-lang">FR</span>
+                    <i class="fa-solid fa-chevron-up iaf-mobile-lang-arrow"></i>
+                </button>
+                <div class="iaf-mobile-lang-menu" id="mobile-lang-menu">
+                    <button class="iaf-mobile-lang-option active" data-lang="fr" onclick="IAFactoryUI.setLanguage('fr'); IAFactoryUI.toggleMobileLangMenu();">
+                        <span>🇫🇷</span> Francais
+                    </button>
+                    <button class="iaf-mobile-lang-option" data-lang="en" onclick="IAFactoryUI.setLanguage('en'); IAFactoryUI.toggleMobileLangMenu();">
+                        <span>🇬🇧</span> English
+                    </button>
+                    <button class="iaf-mobile-lang-option" data-lang="ar" onclick="IAFactoryUI.setLanguage('ar'); IAFactoryUI.toggleMobileLangMenu();">
+                        <span>🇩🇿</span> العربية
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<!-- Main Content -->
+<div class="cockpit-container">
+    <!-- Left: Voice Panel -->
+    <div class="voice-panel">
+        <div class="voice-header">
+            <h1 class="voice-title"><i class="fas fa-user-astronaut"></i> Cockpit Voice</h1>
+            <p class="voice-subtitle">Votre Double IA Personnel - Parlez dans n'importe quelle langue</p>
+        </div>
+
+        <!-- Language Auto-Detect -->
+        <div class="lang-detect-bar">
+            <span class="lang-detect-label"><i class="fas fa-language"></i> Langue detectee:</span>
+            <span class="lang-detect-value" id="detected-lang">En attente...</span>
+            <div class="lang-flags">
+                <img src="https://flagcdn.com/w40/fr.png" class="lang-flag" data-lang="fr-FR" title="Francais" alt="FR">
+                <img src="https://flagcdn.com/w40/dz.png" class="lang-flag" data-lang="ar-DZ" title="Arabe/Darija" alt="DZ">
+                <img src="https://flagcdn.com/w40/ma.png" class="lang-flag" data-lang="ar-MA" title="Amazigh" alt="Amazigh">
+                <img src="https://flagcdn.com/w40/sa.png" class="lang-flag" data-lang="ar-SA" title="Arabe Classique" alt="AR">
+                <img src="https://flagcdn.com/w40/gb.png" class="lang-flag" data-lang="en-US" title="English" alt="EN">
+            </div>
+        </div>
+
+        <!-- Voice Orb -->
+        <div class="voice-orb-container">
+            <div class="voice-orb" id="voice-orb" onclick="CockpitVoice.toggleListening()">
+                <div class="sound-waves">
+                    <div class="wave"></div>
+                    <div class="wave"></div>
+                    <div class="wave"></div>
+                </div>
+                <i class="fas fa-microphone voice-orb-icon" id="orb-icon"></i>
+            </div>
+        </div>
+
+        <!-- Status -->
+        <div class="voice-status">
+            <span class="status-indicator" id="status-indicator"></span>
+            <span class="status-text" id="status-text">Cliquez sur l'orbe pour parler</span>
+        </div>
+
+        <!-- Transcript -->
+        <div class="transcript-area">
+            <div class="transcript-label">
+                <i class="fas fa-comment-dots"></i> Vous dites:
+            </div>
+            <div class="transcript-text" id="transcript">...</div>
+        </div>
+
+        <!-- AI Response -->
+        <div class="ai-response-area">
+            <div class="transcript-label">
+                <i class="fas fa-robot"></i> Reponse IA:
+            </div>
+            <div class="ai-response-text" id="ai-response">En attente de votre commande vocale...</div>
+        </div>
+
+        <!-- Supported Languages -->
+        <div class="languages-grid">
+            <div class="lang-badge"><span class="lang-badge-flag">🇫🇷</span>Francais</div>
+            <div class="lang-badge"><span class="lang-badge-flag">🇩🇿</span>Darija</div>
+            <div class="lang-badge"><span class="lang-badge-flag">🇸🇦</span>Arabe</div>
+            <div class="lang-badge"><span class="lang-badge-flag">ⵣ</span>Amazigh</div>
+            <div class="lang-badge"><span class="lang-badge-flag">🇬🇧</span>English</div>
+        </div>
+    </div>
+
+    <!-- Right: Double Panel -->
+    <div class="double-panel">
+        <!-- Mode Double Toggle -->
+        <div class="panel-section">
+            <div class="double-toggle">
+                <div class="double-toggle-info">
+                    <h4><i class="fas fa-clone"></i> Mode Double</h4>
+                    <p>L'IA apprend votre style</p>
+                </div>
+                <div class="toggle-switch" id="double-toggle" onclick="CockpitVoice.toggleDoubleMode()"></div>
+            </div>
+            <!-- Profil utilisateur -->
+            <div id="user-profile" class="user-profile" style="display: none; margin-top: 1rem; padding: 0.75rem; background: rgba(139, 92, 246, 0.1); border-radius: 8px; font-size: 0.8rem;">
+                <div style="color: #8b5cf6; font-weight: 600; margin-bottom: 0.5rem;">
+                    <i class="fas fa-user-circle"></i> Votre Profil Vocal
+                </div>
+                <div id="profile-tone" style="color: var(--iaf-text-secondary);">Ton: --</div>
+                <div id="profile-expressions" style="color: var(--iaf-text-secondary);">Expressions: --</div>
+                <div id="profile-greetings" style="color: var(--iaf-text-secondary);">Salutations: --</div>
+                <div id="profile-interactions" style="color: var(--iaf-text-secondary);">Interactions: 0</div>
+                <button onclick="CockpitVoice.resetUserStyle()" style="margin-top: 0.5rem; padding: 0.4rem 0.8rem; background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 6px; color: #ef4444; cursor: pointer; font-size: 0.75rem;">
+                    <i class="fas fa-trash"></i> Réinitialiser
+                </button>
+            </div>
+        </div>
+
+        <!-- Task Types -->
+        <div class="panel-section">
+            <h3 class="panel-title"><i class="fas fa-tasks"></i> Type de Tache</h3>
+            <div class="task-types">
+                <div class="task-type active" data-task="prompt" onclick="CockpitVoice.setTaskType('prompt')">
+                    <div class="task-type-icon">✨</div>
+                    <div class="task-type-label">Prompt</div>
+                </div>
+                <div class="task-type" data-task="letter" onclick="CockpitVoice.setTaskType('letter')">
+                    <div class="task-type-icon">✉️</div>
+                    <div class="task-type-label">Lettre</div>
+                </div>
+                <div class="task-type" data-task="email" onclick="CockpitVoice.setTaskType('email')">
+                    <div class="task-type-icon">📧</div>
+                    <div class="task-type-label">Email</div>
+                </div>
+                <div class="task-type" data-task="document" onclick="CockpitVoice.setTaskType('document')">
+                    <div class="task-type-icon">📄</div>
+                    <div class="task-type-label">Document</div>
+                </div>
+                <div class="task-type" data-task="code" onclick="CockpitVoice.setTaskType('code')">
+                    <div class="task-type-icon">💻</div>
+                    <div class="task-type-label">Code</div>
+                </div>
+                <div class="task-type" data-task="chat" onclick="CockpitVoice.setTaskType('chat')">
+                    <div class="task-type-icon">💬</div>
+                    <div class="task-type-label">Chat</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Output Area -->
+        <div class="panel-section" style="flex: 1;">
+            <h3 class="panel-title"><i class="fas fa-file-alt"></i> Resultat Genere</h3>
+            <div class="output-area">
+                <div class="output-content" id="output-content">
+Parlez pour generer du contenu...
+
+Exemples de commandes:
+- "Ecris-moi un prompt pour generer des images"
+- "اكتب لي رسالة رسمية"
+- "Write me a professional email"
+- "ⴰⵔⵉ ⵢⵉⵙⵉ ⵢⵉⵡⵏ ⵓⴱⵔⵉⴷ"
+                </div>
+            </div>
+            <div class="output-actions">
+                <button class="output-btn" onclick="CockpitVoice.copyOutput()">
+                    <i class="fas fa-copy"></i> Copier
+                </button>
+                <button class="output-btn" onclick="CockpitVoice.speakOutput()">
+                    <i class="fas fa-volume-up"></i> Lire
+                </button>
+                <button class="output-btn" onclick="CockpitVoice.downloadOutput()">
+                    <i class="fas fa-download"></i> Telecharger
+                </button>
+            </div>
+        </div>
+
+        <!-- History -->
+        <div class="panel-section">
+            <h3 class="panel-title"><i class="fas fa-history"></i> Historique</h3>
+            <div class="history-list" id="history-list">
+                <div class="history-item">
+                    <div class="history-item-lang">Aucun historique</div>
+                    <div class="history-item-text">Commencez a parler...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="footer-spacer"></div>
+
+<!-- Footer - IAFactory Algeria Harmonized -->
+<div data-iaf-footer></div>
+<script>document.getElementById('current-year').textContent = new Date().getFullYear();</script>
+
+<!-- IAFactory UI System (Theme, Language, Mobile Menu) -->
+<script>
+const IAFactoryUI = {
+    // Current state
+    currentLang: localStorage.getItem('iafactory_lang') || 'fr',
+    currentTheme: localStorage.getItem('iafactory_theme') || 'dark',
+
+    // Translations
+    translations: {
+        nav_home: { fr: 'Accueil', en: 'Home', ar: 'الرئيسية' },
+        nav_apps: { fr: 'Applications', en: 'Applications', ar: 'التطبيقات' },
+        nav_agents: { fr: 'Agents IA', en: 'AI Agents', ar: 'وكلاء الذكاء' },
+        nav_workflows: { fr: 'Workflows', en: 'Workflows', ar: 'سير العمل' },
+        rights: { fr: 'Tous droits reserves.', en: 'All rights reserved.', ar: 'جميع الحقوق محفوظة.' },
+        made: { fr: 'Fait avec', en: 'Made with', ar: 'صنع بـ' },
+        for: { fr: "pour l'Algerie", en: 'for Algeria', ar: 'للجزائر' }
+    },
+
+    // Initialize
+    init() {
+        this.applyTheme(this.currentTheme);
+        this.applyLanguage(this.currentLang);
+        this.setupClickOutside();
+    },
+
+    // Theme toggle
+    toggleTheme() {
+        this.currentTheme = this.currentTheme === 'dark' ? 'light' : 'dark';
+        this.applyTheme(this.currentTheme);
+        localStorage.setItem('iafactory_theme', this.currentTheme);
+    },
+
+    applyTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        document.body.setAttribute('data-theme', theme);
+
+        // Update icons
+        const icon = theme === 'dark' ? 'fa-moon' : 'fa-sun';
+        const themeIcon = document.getElementById('theme-icon');
+        const mobileThemeIcon = document.getElementById('mobile-theme-icon');
+
+        if (themeIcon) {
+            themeIcon.className = `fa-solid ${icon}`;
+        }
+        if (mobileThemeIcon) {
+            mobileThemeIcon.className = `fa-solid ${icon}`;
+        }
+    },
+
+    // Language menu
+    toggleLangMenu() {
+        const menu = document.getElementById('lang-menu');
+        const btn = document.getElementById('lang-btn');
+        if (menu && btn) {
+            const isOpen = menu.classList.toggle('show');
+            btn.setAttribute('aria-expanded', isOpen);
+        }
+    },
+
+    toggleMobileLangMenu() {
+        const dropdown = document.getElementById('mobile-lang-dropdown');
+        const menu = document.getElementById('mobile-lang-menu');
+        if (dropdown && menu) {
+            dropdown.classList.toggle('open');
+            menu.classList.toggle('show');
+        }
+    },
+
+    setLanguage(lang) {
+        this.currentLang = lang;
+        localStorage.setItem('iafactory_lang', lang);
+        this.applyLanguage(lang);
+
+        // Close menus
+        const menu = document.getElementById('lang-menu');
+        const btn = document.getElementById('lang-btn');
+        if (menu) menu.classList.remove('show');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+    },
+
+    applyLanguage(lang) {
+        // Update direction
+        document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+        document.documentElement.setAttribute('lang', lang);
+
+        // Update language labels
+        const labels = { fr: 'FR', en: 'EN', ar: 'AR' };
+        const currentLangLabel = document.getElementById('current-lang-label');
+        const mobileLangLabel = document.getElementById('mobile-current-lang');
+        if (currentLangLabel) currentLangLabel.textContent = labels[lang];
+        if (mobileLangLabel) mobileLangLabel.textContent = labels[lang];
+
+        // Update active states
+        document.querySelectorAll('.iaf-lang-option, .iaf-mobile-lang-option').forEach(opt => {
+            opt.classList.toggle('active', opt.dataset.lang === lang);
+        });
+
+        // Update i18n text
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (this.translations[key] && this.translations[key][lang]) {
+                el.textContent = this.translations[key][lang];
+            }
+        });
+    },
+
+    // Mobile menu
+    toggleMobileMenu() {
+        const menu = document.getElementById('mobile-menu');
+        const btn = document.getElementById('mobile-menu-btn');
+        if (menu && btn) {
+            const isOpen = menu.classList.toggle('open');
+            btn.classList.toggle('active', isOpen);
+            btn.setAttribute('aria-expanded', isOpen);
+            document.body.style.overflow = isOpen ? 'hidden' : '';
+        }
+    },
+
+    // Close menus when clicking outside
+    setupClickOutside() {
+        document.addEventListener('click', (e) => {
+            // Language menu
+            const langSelector = document.querySelector('.iaf-language-selector');
+            const langMenu = document.getElementById('lang-menu');
+            if (langSelector && langMenu && !langSelector.contains(e.target)) {
+                langMenu.classList.remove('show');
+                const btn = document.getElementById('lang-btn');
+                if (btn) btn.setAttribute('aria-expanded', 'false');
+            }
+
+            // Mobile language menu
+            const mobileLangDropdown = document.getElementById('mobile-lang-dropdown');
+            const mobileLangMenu = document.getElementById('mobile-lang-menu');
+            if (mobileLangDropdown && mobileLangMenu && !mobileLangDropdown.contains(e.target)) {
+                mobileLangDropdown.classList.remove('open');
+                mobileLangMenu.classList.remove('show');
+            }
+        });
+    }
+};
+
+// Initialize on load
+document.addEventListener('DOMContentLoaded', () => {
+    IAFactoryUI.init();
+});
+
+// Make globally available
+window.IAFactoryUI = IAFactoryUI;
+</script>
+
+<!-- Cockpit Voice Script -->
+<script>
+const CockpitVoice = {
+    // State
+    isListening: false,
+    isProcessing: false,
+    isSpeaking: false,
+    doubleMode: false,
+    currentTask: 'prompt',
+    detectedLang: 'fr-FR',
+    recognition: null,
+    synthesis: window.speechSynthesis,
+    history: [],
+    userStyle: {},
+
+    // Language mapping for detection - IMPROVED with weighted scoring
+    langPatterns: {
+        'fr-FR': {
+            name: 'Francais',
+            flag: '🇫🇷',
+            // Mots très français avec poids
+            strongWords: /\b(je|tu|il|elle|nous|vous|ils|elles|suis|est|sont|avez|avons|être|avoir|faire|aller|venir|dire|voir|vouloir|pouvoir|savoir|falloir|devoir|mettre|prendre|donner|trouver|parler|aimer|passer|rester|penser|croire|demander|répondre|attendre|entendre|comprendre|commencer|finir|partir|arriver|sortir|rentrer|monter|descendre|tomber|naître|mourir|bonjour|bonsoir|merci|s'il vous plaît|excusez|pardon|comment|pourquoi|quand|où|combien|quel|quelle|quels|quelles)\b/gi,
+            // Caractères spécifiques
+            chars: /[àâäéèêëïîôùûüÿçœæ]/g,
+            weight: 2
+        },
+        'ar-DZ': {
+            name: 'Darija Algérienne',
+            flag: '🇩🇿',
+            // Mots typiques de la darija algérienne - Y COMPRIS en transcription latine
+            strongWords: /كيفاش|واش|وين|علاش|شحال|كيما|هذا|هذي|هادا|هادي|نتاع|ديال|ديالي|ديالك|راني|راه|راهي|بصح|والو|والله|كاين|ماكانش|ماشي|مليح|باهي|درك|دوك|قاع|برك|زيد|بركا|يسر|خلاص|صح|غير|حتى|كل|شي|واحد|زوج|تلاتة|ربعة|خمسة/g,
+            // Mots Darija en transcription latine (arabizi)
+            latinWords: /\b(salam|aleykoum|labès|labes|habibi|habiba|wesh|khouya|khoya|sahbi|sahba|kifash|wach|wahed|zouj|tlata|rba|khamsa|setta|sba|tmanya|tessa|achra|yallah|inshallah|hamdoulah|mabrouk|tbarkallah|wallah|bessah|bessa7|hna|tema|hada|hadi|ntaa|dyali|dyalk|rani|rahi|rah|kayen|makanch|machi|mlih|bahi|bark|zid|baraka|khlass|sah|ghi|hta|kol|chi|wahd)\b/gi,
+            weight: 3
+        },
+        'ar-SA': {
+            name: 'Arabe Classique',
+            flag: '🇸🇦',
+            // Mots arabes classiques/littéraires
+            strongWords: /\b(الذي|التي|الذين|اللواتي|هذا|هذه|ذلك|تلك|هؤلاء|أولئك|إن|أن|كان|يكون|سوف|قد|لقد|حيث|إذ|إذا|لما|كما|مثل|نحو|خلال|ضمن|فوق|تحت|أمام|خلف|بين|عند|لدى|إلى|على|من|في|عن|مع|حول|بعد|قبل|منذ|لكن|بل|أو|ثم|حتى|كي|لأن|بسبب|نتيجة|بالتالي)\b/g,
+            weight: 2
+        },
+        'en-US': {
+            name: 'English',
+            flag: '🇬🇧',
+            strongWords: /\b(the|a|an|is|are|was|were|be|been|being|have|has|had|do|does|did|will|would|could|should|can|may|might|must|shall|this|that|these|those|what|which|who|whom|whose|where|when|why|how|I|you|he|she|it|we|they|me|him|her|us|them|my|your|his|its|our|their|mine|yours|hers|ours|theirs|hello|hi|thanks|thank|please|sorry|excuse|yes|no|okay|well|just|also|very|really|quite|pretty|too|enough|always|never|often|sometimes|usually|already|still|yet|again|here|there|now|then|today|tomorrow|yesterday)\b/gi,
+            weight: 2
+        },
+        'ber': {
+            name: 'Tamazight',
+            flag: 'ⵣ',
+            // Caractères Tifinagh + mots amazighs communs
+            strongWords: /[ⴰ-ⵯ]|ⴰⵎⴰⵣⵉⵖ|ⵜⴰⵎⴰⵣⵉⵖⵜ|ⴰⵢⵓⵣ|ⵜⴰⵏⵎⵎⵉⵔⵜ|ⴰⵣⵓⵍ|ⵜⴰⵏⵎⵎⵉⵔⵜ|ⵎⵓⵃ|ⵄⵉⵛ|ⴰⵎⴽ|ⵎⴰⵏⵉ|ⵎⵍⵎⵉ|ⴰⵛⵃⴰⵍ/g,
+            weight: 5  // Très distinctif
+        }
+    },
+
+    // Nettoyer le texte de la ponctuation lue par le speech recognition
+    cleanTranscript(text) {
+        return text
+            // Supprimer la ponctuation dictée en français
+            .replace(/\s*(virgule|point|point d'interrogation|point d'exclamation|deux points|point-virgule|guillemets?|parenthèse ouvrante?|parenthèse fermante?|tiret|apostrophe)\s*/gi, ' ')
+            // Supprimer la ponctuation dictée en anglais
+            .replace(/\s*(comma|period|full stop|question mark|exclamation mark|colon|semicolon|quote|open paren|close paren|dash|apostrophe)\s*/gi, ' ')
+            // Supprimer la ponctuation dictée en arabe
+            .replace(/\s*(فاصلة|نقطة|علامة استفهام|علامة تعجب|نقطتان)\s*/gi, ' ')
+            // Nettoyer les espaces multiples
+            .replace(/\s+/g, ' ')
+            .trim();
+    },
+
+    // Task templates
+    taskPrompts: {
+        prompt: "Tu es un expert en creation de prompts IA. Genere un prompt professionnel base sur la demande suivante:",
+        letter: "Tu es un expert en redaction. Ecris une lettre formelle base sur la demande suivante:",
+        email: "Tu es un expert en communication professionnelle. Redige un email base sur la demande suivante:",
+        document: "Tu es un expert en redaction de documents. Cree un document structure base sur la demande suivante:",
+        code: "Tu es un expert en programmation. Ecris du code base sur la demande suivante:",
+        chat: "Tu es un assistant conversationnel intelligent. Reponds a la demande suivante:"
+    },
+
+    // API Configuration
+    API_BASE: (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+        ? 'http://localhost:8000'
+        : window.location.origin,
+
+    // Initialize
+    init() {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SpeechRecognition) {
+            this.setStatus('Reconnaissance vocale non supportee', 'error');
+            return;
+        }
+
+        this.recognition = new SpeechRecognition();
+        this.recognition.continuous = true;
+        this.recognition.interimResults = true;
+        this.recognition.maxAlternatives = 3; // Plus d'alternatives pour meilleure détection
+        this.recognition.lang = 'fr-FR'; // Par défaut français
+
+        this.recognition.onresult = (event) => this.handleResult(event);
+        this.recognition.onerror = (event) => this.handleError(event);
+        this.recognition.onend = () => this.handleEnd();
+        this.recognition.onspeechend = () => {
+            // Arrêter automatiquement après la fin de la parole
+            console.log('Speech ended');
+        };
+
+        // Load history and user style from localStorage
+        this.loadHistory();
+        this.loadUserStyle();
+
+        // Setup language flag clicks - cliquer pour forcer une langue
+        document.querySelectorAll('.lang-flag').forEach(flag => {
+            flag.addEventListener('click', () => {
+                const lang = flag.dataset.lang;
+                this.setLanguage(lang);
+                // Changer aussi la langue de reconnaissance
+                if (this.recognition) {
+                    this.recognition.lang = lang === 'ber' ? 'fr-FR' : lang; // Amazigh n'est pas supporté, utiliser FR
+                }
+                this.setStatus(`Langue forcée: ${this.langPatterns[lang]?.name || lang}`, 'ready');
+            });
+        });
+
+        this.setStatus('Prêt - Cliquez sur l\'orbe pour parler', 'ready');
+        console.log('CockpitVoice initialized');
+    },
+
+    // Detect language from text - IMPROVED with weighted scoring
+    detectLanguage(text) {
+        const textLower = text.toLowerCase();
+
+        // Si le texte contient des caractères Tifinagh, c'est Amazigh
+        const hasTifinaghChars = /[ⴰ-ⵯ]/.test(text);
+        if (hasTifinaghChars) {
+            this.updateLangUI('ber');
+            return 'ber';
+        }
+
+        // Si le texte contient des caractères arabes, c'est arabe/darija
+        const hasArabicChars = /[\u0600-\u06FF]/.test(text);
+
+        // VÉRIFIER D'ABORD les mots Darija en LATIN (arabizi)
+        const dziPattern = this.langPatterns['ar-DZ'];
+        const dziLatinMatches = textLower.match(dziPattern.latinWords) || [];
+
+        // Si on trouve des mots darija latins, c'est Darija!
+        if (dziLatinMatches.length >= 2) {
+            console.log(`Darija détectée (latin): ${dziLatinMatches.join(', ')}`);
+            this.updateLangUI('ar-DZ');
+            return 'ar-DZ';
+        }
+
+        if (hasArabicChars) {
+            // Distinguer entre Darija et Arabe classique
+            const saPattern = this.langPatterns['ar-SA'];
+
+            const dziMatches = text.match(dziPattern.strongWords) || [];
+            const saMatches = text.match(saPattern.strongWords) || [];
+
+            // La darija a plus de mots spécifiques
+            if (dziMatches.length >= saMatches.length) {
+                this.updateLangUI('ar-DZ');
+                return 'ar-DZ';
+            } else {
+                this.updateLangUI('ar-SA');
+                return 'ar-SA';
+            }
+        }
+
+        // Pour le français et l'anglais - compter les mots distinctifs
+        const frConfig = this.langPatterns['fr-FR'];
+        const enConfig = this.langPatterns['en-US'];
+
+        // Score français
+        const frWordMatches = text.match(frConfig.strongWords) || [];
+        const frCharMatches = text.match(frConfig.chars) || [];
+        const frScore = (frWordMatches.length * frConfig.weight) + (frCharMatches.length * 3);
+
+        // Score anglais
+        const enWordMatches = text.match(enConfig.strongWords) || [];
+        const enScore = enWordMatches.length * enConfig.weight;
+
+        // Score Darija latin (même avec 1 mot)
+        const dziLatinScore = dziLatinMatches.length * 5; // Poids élevé
+
+        // Choisir la meilleure langue
+        let bestMatch = 'fr-FR';
+        let bestScore = frScore;
+
+        if (enScore > bestScore) {
+            bestMatch = 'en-US';
+            bestScore = enScore;
+        }
+        if (dziLatinScore > bestScore) {
+            bestMatch = 'ar-DZ';
+            bestScore = dziLatinScore;
+        }
+
+        // Debug log
+        console.log(`Lang detection: FR=${frScore}, EN=${enScore}, DZ-Latin=${dziLatinScore}, Winner=${bestMatch}`);
+
+        this.updateLangUI(bestMatch);
+        return bestMatch;
+    },
+
+    // Update language UI
+    updateLangUI(lang) {
+        const langConfig = this.langPatterns[lang];
+        if (langConfig) {
+            document.getElementById('detected-lang').textContent = `${langConfig.flag} ${langConfig.name}`;
+        }
+
+        // Update active flag
+        document.querySelectorAll('.lang-flag').forEach(f => f.classList.remove('active'));
+        const activeFlag = document.querySelector(`.lang-flag[data-lang="${lang}"]`);
+        if (activeFlag) activeFlag.classList.add('active');
+
+        this.detectedLang = lang;
+    },
+
+    // Set language manually
+    setLanguage(lang) {
+        this.detectedLang = lang;
+        if (this.recognition) {
+            this.recognition.lang = lang;
+        }
+
+        const langConfig = this.langPatterns[lang];
+        if (langConfig) {
+            document.getElementById('detected-lang').textContent = `${langConfig.flag} ${langConfig.name}`;
+        }
+
+        document.querySelectorAll('.lang-flag').forEach(f => f.classList.remove('active'));
+        const activeFlag = document.querySelector(`.lang-flag[data-lang="${lang}"]`);
+        if (activeFlag) activeFlag.classList.add('active');
+    },
+
+    // Toggle listening
+    toggleListening() {
+        if (this.isListening) {
+            this.stopListening();
+        } else {
+            this.startListening();
+        }
+    },
+
+    // Start listening
+    startListening() {
+        if (!this.recognition) return;
+
+        try {
+            this.recognition.start();
+            this.isListening = true;
+            document.getElementById('voice-orb').classList.add('listening');
+            document.getElementById('orb-icon').className = 'fas fa-microphone-alt voice-orb-icon';
+            this.setStatus('Je vous ecoute...', 'listening');
+        } catch (e) {
+            console.error('Error starting recognition:', e);
+        }
+    },
+
+    // Stop listening
+    stopListening() {
+        if (!this.recognition) return;
+
+        this.recognition.stop();
+        this.isListening = false;
+        document.getElementById('voice-orb').classList.remove('listening');
+        document.getElementById('orb-icon').className = 'fas fa-microphone voice-orb-icon';
+    },
+
+    // Handle speech result
+    handleResult(event) {
+        let interimTranscript = '';
+        let finalTranscript = '';
+
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+            const transcript = event.results[i][0].transcript;
+            if (event.results[i].isFinal) {
+                finalTranscript += transcript;
+            } else {
+                interimTranscript += transcript;
+            }
+        }
+
+        // Update transcript display
+        const transcriptEl = document.getElementById('transcript');
+        if (finalTranscript) {
+            // NETTOYER le transcript des ponctuations lues
+            const cleanedTranscript = this.cleanTranscript(finalTranscript);
+            transcriptEl.textContent = cleanedTranscript;
+            transcriptEl.classList.remove('interim');
+
+            // Auto-detect language
+            this.detectLanguage(cleanedTranscript);
+
+            // Process the command
+            this.processCommand(cleanedTranscript);
+        } else if (interimTranscript) {
+            // Nettoyer aussi l'interim
+            const cleanedInterim = this.cleanTranscript(interimTranscript);
+            transcriptEl.textContent = cleanedInterim;
+            transcriptEl.classList.add('interim');
+
+            // Try to detect language from interim
+            this.detectLanguage(cleanedInterim);
+        }
+    },
+
+    // Handle recognition error
+    handleError(event) {
+        console.error('Speech recognition error:', event.error);
+        this.setStatus('Erreur: ' + event.error, 'error');
+        this.stopListening();
+    },
+
+    // Handle recognition end
+    handleEnd() {
+        if (this.isListening) {
+            // Restart if we're still supposed to be listening
+            try {
+                this.recognition.start();
+            } catch (e) {
+                this.isListening = false;
+                document.getElementById('voice-orb').classList.remove('listening');
+            }
+        }
+    },
+
+    // Process voice command
+    async processCommand(text) {
+        this.stopListening();
+        this.isProcessing = true;
+
+        document.getElementById('voice-orb').classList.remove('listening');
+        document.getElementById('voice-orb').classList.add('processing');
+        document.getElementById('orb-icon').className = 'fas fa-brain voice-orb-icon';
+        this.setStatus('Reflexion en cours...', 'processing');
+
+        try {
+            // Build prompt based on task type and double mode
+            let systemPrompt = this.taskPrompts[this.currentTask];
+
+            if (this.doubleMode && Object.keys(this.userStyle).length > 0) {
+                systemPrompt += `\n\nIMPORTANT: Adopte le style de l'utilisateur:\n`;
+                systemPrompt += `- Ton: ${this.userStyle.tone || 'professionnel'}\n`;
+                systemPrompt += `- Vocabulaire prefere: ${this.userStyle.vocabulary || 'standard'}\n`;
+                systemPrompt += `- Longueur: ${this.userStyle.length || 'moyenne'}\n`;
+            }
+
+            // Add language instruction
+            const langConfig = this.langPatterns[this.detectedLang];
+            if (langConfig) {
+                systemPrompt += `\n\nReponds en ${langConfig.name}.`;
+            }
+
+            // Call API
+            const response = await this.callLLM(systemPrompt, text);
+
+            // Learn user style if double mode is on
+            if (this.doubleMode) {
+                this.learnUserStyle(text);
+            }
+
+            // Appliquer le style utilisateur à la réponse si Mode Double actif
+            const styledResponse = this.applyUserStyle(response);
+
+            // Display response
+            document.getElementById('ai-response').textContent = styledResponse;
+            document.getElementById('output-content').textContent = styledResponse;
+
+            // Add to history
+            this.addToHistory(text, styledResponse, this.detectedLang);
+
+            // Speak response
+            this.speakText(response);
+
+        } catch (error) {
+            console.error('Error processing command:', error);
+            document.getElementById('ai-response').textContent = 'Erreur: ' + error.message;
+            this.setStatus('Erreur de traitement', 'error');
+        }
+
+        this.isProcessing = false;
+        document.getElementById('voice-orb').classList.remove('processing');
+        document.getElementById('orb-icon').className = 'fas fa-microphone voice-orb-icon';
+    },
+
+    // Call LLM API
+    async callLLM(systemPrompt, userMessage) {
+        // Try Groq first, fallback to local
+        const providers = [
+            { url: `${this.API_BASE}/api/chat`, body: { message: userMessage, system: systemPrompt } },
+            { url: 'https://api.groq.com/openai/v1/chat/completions', groq: true }
+        ];
+
+        // Générer une réponse intelligente basée sur l'analyse du message
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                const lang = this.detectedLang;
+                const isArabic = lang === 'ar-DZ' || lang === 'ar-SA';
+                const isEnglish = lang === 'en-US';
+                const msg = userMessage.toLowerCase();
+
+                // Analyser le contenu pour personnaliser la réponse
+                const isBonneAnnee = /bonne année|nouvelle année|new year|سنة سعيدة|عام سعيد|meilleurs voeux/i.test(msg);
+                const isFamily = /frère|sœur|famille|parents|mère|père|brother|sister|family|أخ|أخت|عائلة/i.test(msg);
+                const isFormal = /monsieur|madame|cher|respecté|formal|رسمي/i.test(msg);
+                const isThank = /merci|thank|شكر|remerci/i.test(msg);
+
+                let response = '';
+
+                if (this.currentTask === 'letter') {
+                    if (isBonneAnnee && isFamily) {
+                        response = isArabic
+                            ? `أعزائي إخوتي وأخواتي،
+
+بمناسبة حلول العام الجديد، أبعث إليكم بأحر التهاني وأصدق الأمنيات.
+
+أتمنى لكم سنة مليئة بالصحة والسعادة والنجاح. أسأل الله أن يحفظكم ويرعاكم، وأن يجمعنا دائماً على خير.
+
+كل عام وأنتم بألف خير.
+
+أخوكم/أختكم المحب(ة)`
+                            : isEnglish
+                            ? `Dear Brothers and Sisters,
+
+As we welcome the New Year, I want to send you my warmest wishes and heartfelt greetings.
+
+May this year bring you health, happiness, and success in all your endeavors. May God bless and protect you always.
+
+Wishing you a wonderful year ahead!
+
+With all my love,
+Your loving sibling`
+                            : `Mes chers frères et sœurs,
+
+En cette nouvelle année qui commence, je vous adresse mes vœux les plus sincères et les plus chaleureux.
+
+Je vous souhaite une année remplie de bonheur, de santé et de réussite. Que Dieu vous garde et vous protège, et qu'Il nous réunisse toujours dans la joie.
+
+Bonne et heureuse année à vous tous !
+
+Avec tout mon amour,
+Votre frère/sœur qui vous aime`;
+                    } else if (isBonneAnnee) {
+                        response = `Chers tous,
+
+Je vous souhaite une excellente année remplie de joie, de santé et de prospérité.
+
+Que cette nouvelle année vous apporte tout ce que votre cœur désire.
+
+Meilleurs vœux !`;
+                    } else if (isFamily) {
+                        response = `Ma chère famille,
+
+Je prends un moment pour vous écrire et vous dire combien vous comptez pour moi.
+
+J'espère que vous allez tous bien et que la vie vous sourit.
+
+Avec tout mon amour et mes pensées les plus affectueuses.`;
+                    } else {
+                        response = `${isFormal ? 'Madame, Monsieur,' : 'Bonjour,'}\n\n${userMessage}\n\n${isFormal ? 'Je vous prie d\'agréer l\'expression de mes salutations distinguées.' : 'Bien cordialement,'}`;
+                    }
+                } else if (this.currentTask === 'email') {
+                    if (isBonneAnnee) {
+                        response = `Objet: Meilleurs vœux pour la nouvelle année
+
+Bonjour à tous,
+
+Je vous souhaite une excellente année ! Que 2025 vous apporte santé, bonheur et réussite.
+
+Au plaisir de vous revoir bientôt.
+
+Chaleureusement`;
+                    } else {
+                        response = `Objet: ${userMessage.substring(0, 40)}\n\nBonjour,\n\n${userMessage}\n\nCordialement`;
+                    }
+                } else if (this.currentTask === 'prompt') {
+                    response = `Tu es un assistant expert. L'utilisateur demande:\n"${userMessage}"\n\nRéponds de manière professionnelle et détaillée.`;
+                } else if (this.currentTask === 'document') {
+                    response = `DOCUMENT\n\nTitre: ${userMessage.substring(0, 50)}\n\nContenu:\n${userMessage}\n\nConclusion:\nDocument généré avec succès.`;
+                } else if (this.currentTask === 'code') {
+                    response = `// Demande: ${userMessage}\n\nfunction processRequest() {\n  // TODO: Implémenter selon la demande\n  console.log("Processing...");\n  return true;\n}`;
+                } else {
+                    // Chat mode - réponse conversationnelle
+                    if (isBonneAnnee) {
+                        response = isArabic
+                            ? `وعليكم السلام! سنة سعيدة لك أيضاً! أتمنى لك عاماً مليئاً بالخير والبركة.`
+                            : isEnglish
+                            ? `Happy New Year to you too! I wish you a wonderful year ahead filled with joy and success!`
+                            : `Bonne année à toi aussi ! Je te souhaite une merveilleuse année pleine de joie et de réussite !`;
+                    } else if (isThank) {
+                        response = isArabic ? `العفو! أنا هنا لمساعدتك.` : isEnglish ? `You're welcome! I'm here to help.` : `De rien ! Je suis là pour t'aider.`;
+                    } else {
+                        response = isArabic
+                            ? `فهمت طلبك. كيف يمكنني مساعدتك أكثر؟`
+                            : isEnglish
+                            ? `I understand. How can I help you further?`
+                            : `J'ai bien compris. Comment puis-je t'aider davantage ?`;
+                    }
+                }
+
+                resolve(response);
+            }, 1000);
+        });
+    },
+
+    // Nettoyer le texte pour la synthèse vocale
+    cleanTextForSpeech(text) {
+        return text
+            // Supprimer les lignes de tirets/séparateurs
+            .replace(/^[-=_*]{3,}$/gm, '')
+            .replace(/---+/g, ' ')
+            .replace(/===+/g, ' ')
+            .replace(/\*\*\*+/g, ' ')
+            // Supprimer les marqueurs markdown
+            .replace(/^#+\s*/gm, '')  // Headers
+            .replace(/\*\*([^*]+)\*\*/g, '$1')  // Bold
+            .replace(/\*([^*]+)\*/g, '$1')  // Italic
+            .replace(/`([^`]+)`/g, '$1')  // Code
+            .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')  // Links
+            // Supprimer les lignes vides multiples
+            .replace(/\n{3,}/g, '\n\n')
+            // Nettoyer les espaces
+            .replace(/\s+/g, ' ')
+            .trim();
+    },
+
+    // Speak text using TTS
+    speakText(text) {
+        if (!this.synthesis) return;
+
+        this.synthesis.cancel();
+        this.isSpeaking = true;
+
+        document.getElementById('voice-orb').classList.add('speaking');
+        this.setStatus('Je parle...', 'speaking');
+
+        // NETTOYER le texte avant de le lire
+        const cleanText = this.cleanTextForSpeech(text);
+
+        const utterance = new SpeechSynthesisUtterance(cleanText);
+
+        // Utiliser la bonne langue pour la synthèse
+        const langMap = {
+            'fr-FR': 'fr-FR',
+            'en-US': 'en-US',
+            'ar-DZ': 'ar-SA',  // Utiliser arabe standard pour la synthèse
+            'ar-SA': 'ar-SA',
+            'ber': 'fr-FR'    // Pas de TTS amazigh, utiliser français
+        };
+        utterance.lang = langMap[this.detectedLang] || 'fr-FR';
+        utterance.rate = 0.9;  // Un peu plus lent pour plus de clarté
+        utterance.pitch = 1;
+
+        utterance.onend = () => {
+            this.isSpeaking = false;
+            document.getElementById('voice-orb').classList.remove('speaking');
+            this.setStatus('Prêt', 'ready');
+        };
+
+        utterance.onerror = (e) => {
+            console.error('TTS error:', e);
+            this.isSpeaking = false;
+            document.getElementById('voice-orb').classList.remove('speaking');
+            this.setStatus('Prêt', 'ready');
+        };
+
+        this.synthesis.speak(utterance);
+    },
+
+    // Toggle Double Mode
+    toggleDoubleMode() {
+        this.doubleMode = !this.doubleMode;
+        const toggle = document.getElementById('double-toggle');
+        toggle.classList.toggle('active', this.doubleMode);
+
+        const profileEl = document.getElementById('user-profile');
+        if (this.doubleMode) {
+            this.setStatus('Mode Double activé - J\'apprends votre style', 'ready');
+            profileEl.style.display = 'block';
+            this.updateProfileDisplay();
+        } else {
+            profileEl.style.display = 'none';
+            this.setStatus('Mode Double désactivé', 'ready');
+        }
+    },
+
+    // Mettre à jour l'affichage du profil
+    updateProfileDisplay() {
+        const toneEl = document.getElementById('profile-tone');
+        const expEl = document.getElementById('profile-expressions');
+        const greetEl = document.getElementById('profile-greetings');
+        const interEl = document.getElementById('profile-interactions');
+
+        if (toneEl) {
+            toneEl.textContent = `Ton: ${this.userStyle.tone || 'Non défini'}`;
+        }
+        if (expEl) {
+            const exps = this.userStyle.expressionsFavorites || [];
+            expEl.textContent = `Expressions: ${exps.length > 0 ? exps.slice(0, 5).join(', ') : 'Aucune encore'}`;
+        }
+        if (greetEl) {
+            const greets = this.userStyle.greetings || [];
+            greetEl.textContent = `Salutations: ${greets.length > 0 ? greets.join(', ') : 'Aucune encore'}`;
+        }
+        if (interEl) {
+            interEl.textContent = `Interactions: ${this.userStyle.interactionCount || 0}`;
+        }
+    },
+
+    // Réinitialiser le style utilisateur
+    resetUserStyle() {
+        this.userStyle = {};
+        localStorage.removeItem('cockpit_voice_style');
+        this.updateProfileDisplay();
+        this.setStatus('Profil réinitialisé - Je repars de zéro !', 'ready');
+    },
+
+    // Set task type
+    setTaskType(task) {
+        this.currentTask = task;
+        document.querySelectorAll('.task-type').forEach(t => t.classList.remove('active'));
+        document.querySelector(`.task-type[data-task="${task}"]`).classList.add('active');
+    },
+
+    // Learn user style from their speech - APPRENTISSAGE AVANCÉ
+    learnUserStyle(text) {
+        const words = text.split(/\s+/);
+        const wordCount = words.length;
+
+        // Analyser les patterns de style
+        const hasFormality = /vous|votre|madame|monsieur|cordialement|respectueusement/i.test(text);
+        const hasCasual = /tu|ton|ta|salut|ciao|salam|habibi|khouya|sahbi/i.test(text);
+        const hasDarija = /salam|labès|habibi|khouya|wesh|inshallah|hamdoulah|wallah/i.test(text);
+        const hasEmoji = /[\u{1F600}-\u{1F64F}]|[\u{1F300}-\u{1F5FF}]|[\u{1F680}-\u{1F6FF}]/u.test(text);
+
+        // Extraire les expressions favorites
+        const expressions = text.match(/\b(donc|alors|en fait|du coup|genre|voilà|quoi|hein|bon|bref|ok|okay|d'accord)\b/gi) || [];
+        const greetings = text.match(/\b(salam|bonjour|bonsoir|salut|hello|hi|coucou|hey)\b/gi) || [];
+        const closings = text.match(/\b(merci|thanks|bye|ciao|à\+|bisous|tchao|bslama)\b/gi) || [];
+
+        // Mettre à jour le profil utilisateur
+        if (!this.userStyle.expressionsFavorites) {
+            this.userStyle.expressionsFavorites = [];
+        }
+        if (!this.userStyle.greetings) {
+            this.userStyle.greetings = [];
+        }
+        if (!this.userStyle.closings) {
+            this.userStyle.closings = [];
+        }
+        if (!this.userStyle.samplePhrases) {
+            this.userStyle.samplePhrases = [];
+        }
+
+        // Ajouter les nouvelles expressions (sans doublons)
+        expressions.forEach(exp => {
+            if (!this.userStyle.expressionsFavorites.includes(exp.toLowerCase())) {
+                this.userStyle.expressionsFavorites.push(exp.toLowerCase());
+            }
+        });
+        greetings.forEach(g => {
+            if (!this.userStyle.greetings.includes(g.toLowerCase())) {
+                this.userStyle.greetings.push(g.toLowerCase());
+            }
+        });
+        closings.forEach(c => {
+            if (!this.userStyle.closings.includes(c.toLowerCase())) {
+                this.userStyle.closings.push(c.toLowerCase());
+            }
+        });
+
+        // Sauvegarder des exemples de phrases (max 10)
+        if (text.length > 20 && this.userStyle.samplePhrases.length < 10) {
+            this.userStyle.samplePhrases.push(text.substring(0, 100));
+        }
+
+        // Calculer le style global
+        this.userStyle.tone = hasFormality ? 'formel' : (hasCasual ? 'décontracté' : 'neutre');
+        this.userStyle.useDarija = hasDarija;
+        this.userStyle.useEmoji = hasEmoji;
+        this.userStyle.avgWordCount = Math.round((this.userStyle.avgWordCount || wordCount + wordCount) / 2);
+        this.userStyle.length = this.userStyle.avgWordCount > 25 ? 'détaillé' : (this.userStyle.avgWordCount < 12 ? 'concis' : 'moyen');
+        this.userStyle.interactionCount = (this.userStyle.interactionCount || 0) + 1;
+        this.userStyle.lastUpdated = new Date().toISOString();
+
+        // Sauvegarder
+        localStorage.setItem('cockpit_voice_style', JSON.stringify(this.userStyle));
+
+        // Mettre à jour l'affichage du profil
+        this.updateProfileDisplay();
+
+        // Log pour debug
+        console.log('Style utilisateur mis à jour:', this.userStyle);
+    },
+
+    // Générer du texte dans le style de l'utilisateur
+    applyUserStyle(text) {
+        if (!this.doubleMode || !this.userStyle.interactionCount) {
+            return text;
+        }
+
+        let styledText = text;
+
+        // Ajouter une salutation favorite si l'utilisateur en utilise
+        if (this.userStyle.greetings && this.userStyle.greetings.length > 0) {
+            const greeting = this.userStyle.greetings[Math.floor(Math.random() * this.userStyle.greetings.length)];
+            // Remplacer les salutations génériques
+            styledText = styledText.replace(/^(Bonjour|Cher|Dear|Hello)/i, greeting.charAt(0).toUpperCase() + greeting.slice(1));
+        }
+
+        // Ajouter des expressions favorites
+        if (this.userStyle.expressionsFavorites && this.userStyle.expressionsFavorites.length > 0) {
+            const exp = this.userStyle.expressionsFavorites[Math.floor(Math.random() * this.userStyle.expressionsFavorites.length)];
+            // Ajouter une expression au milieu si le texte est assez long
+            if (styledText.length > 100 && Math.random() > 0.5) {
+                const sentences = styledText.split(/\.\s+/);
+                if (sentences.length > 2) {
+                    sentences[1] = exp.charAt(0).toUpperCase() + exp.slice(1) + ', ' + sentences[1].charAt(0).toLowerCase() + sentences[1].slice(1);
+                    styledText = sentences.join('. ');
+                }
+            }
+        }
+
+        // Adapter la longueur
+        if (this.userStyle.length === 'concis' && styledText.length > 200) {
+            // Raccourcir en gardant l'essentiel
+            const sentences = styledText.split(/\.\s+/);
+            styledText = sentences.slice(0, Math.min(3, sentences.length)).join('. ') + '.';
+        }
+
+        return styledText;
+    },
+
+    // Load user style
+    loadUserStyle() {
+        try {
+            const saved = localStorage.getItem('cockpit_voice_style');
+            if (saved) {
+                this.userStyle = JSON.parse(saved);
+            }
+        } catch (e) {
+            console.error('Error loading user style:', e);
+        }
+    },
+
+    // Add to history
+    addToHistory(userText, aiResponse, lang) {
+        const item = {
+            user: userText,
+            ai: aiResponse,
+            lang: lang,
+            task: this.currentTask,
+            timestamp: new Date().toISOString()
+        };
+
+        this.history.unshift(item);
+        if (this.history.length > 20) {
+            this.history = this.history.slice(0, 20);
+        }
+
+        this.saveHistory();
+        this.renderHistory();
+    },
+
+    // Save history
+    saveHistory() {
+        try {
+            localStorage.setItem('cockpit_voice_history', JSON.stringify(this.history));
+        } catch (e) {
+            console.error('Error saving history:', e);
+        }
+    },
+
+    // Load history
+    loadHistory() {
+        try {
+            const saved = localStorage.getItem('cockpit_voice_history');
+            if (saved) {
+                this.history = JSON.parse(saved);
+                this.renderHistory();
+            }
+        } catch (e) {
+            console.error('Error loading history:', e);
+        }
+    },
+
+    // Render history
+    renderHistory() {
+        const list = document.getElementById('history-list');
+        if (this.history.length === 0) {
+            list.innerHTML = '<div class="history-item"><div class="history-item-text">Aucun historique</div></div>';
+            return;
+        }
+
+        list.innerHTML = this.history.slice(0, 5).map(item => {
+            const langConfig = this.langPatterns[item.lang];
+            return `
+                <div class="history-item">
+                    <div class="history-item-lang">${langConfig ? langConfig.flag : ''} ${item.task}</div>
+                    <div class="history-item-text">${item.user.substring(0, 50)}...</div>
+                </div>
+            `;
+        }).join('');
+    },
+
+    // Set status
+    setStatus(text, type = 'ready') {
+        document.getElementById('status-text').textContent = text;
+        const indicator = document.getElementById('status-indicator');
+
+        switch (type) {
+            case 'listening':
+                indicator.style.background = '#00a651';
+                break;
+            case 'processing':
+                indicator.style.background = '#3b82f6';
+                break;
+            case 'speaking':
+                indicator.style.background = '#f59e0b';
+                break;
+            case 'error':
+                indicator.style.background = '#ef4444';
+                break;
+            default:
+                indicator.style.background = '#00a651';
+        }
+    },
+
+    // Copy output
+    copyOutput() {
+        const text = document.getElementById('output-content').textContent;
+        navigator.clipboard.writeText(text).then(() => {
+            this.setStatus('Copie!', 'ready');
+            setTimeout(() => this.setStatus('Pret', 'ready'), 2000);
+        });
+    },
+
+    // Speak output
+    speakOutput() {
+        const text = document.getElementById('output-content').textContent;
+        this.speakText(text);
+    },
+
+    // Download output
+    downloadOutput() {
+        const text = document.getElementById('output-content').textContent;
+        const blob = new Blob([text], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `cockpit-voice-${this.currentTask}-${Date.now()}.txt`;
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+};
+
+// Initialize on DOM ready
+document.addEventListener('DOMContentLoaded', () => {
+    CockpitVoice.init();
+});
+
+// Make globally available
+window.CockpitVoice = CockpitVoice;
+</script>
+<script>
+    fetch('../shared/help-chatbot.html').then(r => r.text()).then(html => document.body.insertAdjacentHTML('beforeend', html));
+</script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: iafactory-postgres
+    environment:
+      POSTGRES_USER: academy_user
+      POSTGRES_PASSWORD: academy_password_dev
+      POSTGRES_DB: iafactory_academy_db
+    ports:
+      - "5433:5434"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U academy_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - iafactory-network
+
+  # Redis Cache & Message Broker
+  redis:
+    image: redis:7-alpine
+    container_name: iafactory-redis
+    ports:
+      - "6385:6381"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - iafactory-network
+
+  # FastAPI Backend
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: iafactory-backend
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    ports:
+      - "8200:8000"
+    volumes:
+      - ./backend:/app
+      - /app/__pycache__
+    env_file:
+      - ./backend/.env
+    environment:
+      - DATABASE_URL=postgresql://academy_user:academy_password_dev@postgres:5432/iafactory_academy_db
+      - REDIS_URL=redis://redis:6381/0
+      - CELERY_BROKER_URL=redis://redis:6381/1
+      - CELERY_RESULT_BACKEND=redis://redis:6381/2
+      - ENVIRONMENT=development
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - iafactory-network
+
+  # Celery Worker
+  celery_worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: iafactory-celery-worker
+    command: celery -A app.tasks.celery_app worker --loglevel=info --concurrency=2
+    volumes:
+      - ./backend:/app
+    environment:
+      - DATABASE_URL=postgresql://academy_user:academy_password_dev@postgres:5432/iafactory_academy_db
+      - REDIS_URL=redis://redis:6381/0
+      - CELERY_BROKER_URL=redis://redis:6381/1
+      - CELERY_RESULT_BACKEND=redis://redis:6381/2
+      - ENVIRONMENT=development
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - iafactory-network
+
+  # Celery Beat (Scheduler)
+  celery_beat:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: iafactory-celery-beat
+    command: celery -A app.tasks.celery_app beat --loglevel=info
+    volumes:
+      - ./backend:/app
+    environment:
+      - DATABASE_URL=postgresql://academy_user:academy_password_dev@postgres:5432/iafactory_academy_db
+      - REDIS_URL=redis://redis:6381/0
+      - CELERY_BROKER_URL=redis://redis:6381/1
+      - CELERY_RESULT_BACKEND=redis://redis:6381/2
+      - ENVIRONMENT=development
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - iafactory-network
+
+  # Flower - Celery Monitoring
+  flower:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: iafactory-flower
+    command: celery -A app.tasks.celery_app flower --port=5555
+    ports:
+      - "5555:5555"
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6381/1
+      - CELERY_RESULT_BACKEND=redis://redis:6381/2
+    depends_on:
+      - redis
+      - celery_worker
+    networks:
+      - iafactory-network
+
+  # pgAdmin - PostgreSQL Admin Interface
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: iafactory-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@iafactory.ch
+      PGADMIN_DEFAULT_PASSWORD: admin_password_dev
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - postgres
+    networks:
+      - iafactory-network
+
+  # Redis Commander - Redis Admin Interface
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: iafactory-redis-commander
+    environment:
+      - REDIS_HOSTS=local:redis:6381
+    ports:
+      - "8081:8081"
+    depends_on:
+      - redis
+    networks:
+      - iafactory-network
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  pgadmin_data:
+    driver: local
+
+networks:
+  iafactory-network:
+    driver: bridge
+
+
+

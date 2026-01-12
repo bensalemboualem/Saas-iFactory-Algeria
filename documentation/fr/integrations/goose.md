@@ -1,0 +1,3 @@
+# Intégration Goose
+
+À compléter.

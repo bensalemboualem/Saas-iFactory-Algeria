@@ -1,0 +1,38 @@
+services:
+  ai-consultant:
+    build: ./ai-agents/business-core/consultant
+    container_name: iaf-ai-consultant-prod
+    environment:
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY:-dummy-key}
+    ports:
+      - "9101:8501"
+    networks:
+      - iafactory-net
+    restart: unless-stopped
+
+  ai-customer-support:
+    build: ./ai-agents/business-core/customer-support
+    container_name: iaf-ai-customer-support-prod
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-dummy-key}
+    ports:
+      - "9102:8501"
+    networks:
+      - iafactory-net
+    restart: unless-stopped
+
+  ai-data-analysis:
+    build: ./ai-agents/business-core/data-analysis
+    container_name: iaf-ai-data-analysis-prod
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-dummy-key}
+    ports:
+      - "9103:8501"
+    networks:
+      - iafactory-net
+    restart: unless-stopped
+
+networks:
+  iafactory-net:
+    external: true
+    name: iafactory-rag-dz_iafactory-net

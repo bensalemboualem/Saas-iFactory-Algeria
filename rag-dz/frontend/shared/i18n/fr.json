@@ -1,0 +1,85 @@
+{
+  "common": {
+    "app_name": "IAFactory",
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "create": "Créer",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "back": "Retour",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "submit": "Soumettre",
+    "confirm": "Confirmer",
+    "close": "Fermer"
+  },
+  "navigation": {
+    "dashboard": "Tableau de bord",
+    "cockpit": "Cockpit IA",
+    "chat": "Chat",
+    "voice": "Assistant Vocal",
+    "documents": "Documents",
+    "workflows": "Automatisations",
+    "billing": "Facturation",
+    "settings": "Paramètres",
+    "profile": "Profil",
+    "logout": "Déconnexion"
+  },
+  "auth": {
+    "login": "Connexion",
+    "register": "Inscription",
+    "email": "Email",
+    "password": "Mot de passe",
+    "forgot_password": "Mot de passe oublié ?",
+    "remember_me": "Se souvenir de moi",
+    "no_account": "Pas encore de compte ?",
+    "has_account": "Déjà un compte ?"
+  },
+  "dashboard": {
+    "welcome": "Bienvenue",
+    "credits_remaining": "Crédits restants",
+    "tasks_completed": "Tâches accomplies",
+    "time_saved": "Temps économisé",
+    "money_saved": "Économies réalisées",
+    "recent_activity": "Activité récente",
+    "quick_actions": "Actions rapides"
+  },
+  "pricing": {
+    "title": "Tarifs Transparents, Valeur Maximale",
+    "subtitle": "Payez pour la productivité, pas pour l'accès",
+    "monthly": "Mensuel",
+    "annual": "Annuel",
+    "credits": "crédits/mois",
+    "choose_plan": "Choisir ce plan",
+    "current_plan": "Plan actuel",
+    "upgrade": "Passer au supérieur",
+    "popular": "Populaire"
+  },
+  "features": {
+    "chat": "Chat IA illimité",
+    "rag": "Recherche RAG avancée",
+    "voice": "Assistant vocal",
+    "documents": "Génération de documents",
+    "workflows": "Automatisations n8n",
+    "video": "Génération vidéo",
+    "api": "Accès API"
+  },
+  "errors": {
+    "network": "Erreur de connexion réseau",
+    "unauthorized": "Non autorisé",
+    "not_found": "Page non trouvée",
+    "server_error": "Erreur serveur",
+    "validation": "Erreur de validation"
+  },
+  "footer": {
+    "copyright": "© 2025 IAFactory Algeria. Tous droits réservés.",
+    "privacy": "Confidentialité",
+    "terms": "Conditions d'utilisation",
+    "contact": "Contact"
+  }
+}

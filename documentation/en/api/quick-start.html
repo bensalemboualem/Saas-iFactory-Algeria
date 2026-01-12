@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Quick Start - IAFactory Algeria</title>
+    <link rel="stylesheet" href="../../assets/css/docs-theme.css">
+</head>
+<body>
+    <header class="docs-header">
+        <div class="docs-logo">
+            <img src="../../assets/images/logo.png" alt="IAFactory Algeria">
+            <span>IAFactory Algeria</span>
+        </div>
+        <nav class="main-nav">
+            <a href="../index.html">Documentation</a>
+            <a href="./index.html" class="active">API</a>
+        </nav>
+        <div class="docs-controls">
+            <div class="language-switcher">
+                <button data-lang="fr">🇫🇷 FR</button>
+                <button data-lang="en" class="active">🇬🇧 EN</button>
+                <button data-lang="ar">🇸🇦 AR</button>
+            </div>
+            <div class="theme-toggle">
+                <div class="theme-toggle-slider">☀️</div>
+            </div>
+        </div>
+    </header>
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <div class="sidebar-section">
+                <h3>🔌 API</h3>
+                <ul class="sidebar-menu">
+                    <li><a href="./quick-start.html" class="active">Quick Start</a></li>
+                    <li><a href="./response-format.html">Response Format</a></li>
+                    <li><a href="./models-pricing.html">Models & Pricing</a></li>
+                    <li><a href="./error-codes.html">Error Codes</a></li>
+                    <li><a href="./parameters.html">Parameters</a></li>
+                    <li><a href="./optimization.html">Optimization Tips</a></li>
+                    <li><a href="./migration-openai.html">Migrate from OpenAI</a></li>
+                    <li><a href="./webhooks.html">Webhooks</a></li>
+                </ul>
+            </div>
+        </aside>
+        <main class="docs-main">
+            <h1>🚀 API Quick Start</h1>
+            <p class="lead">Start using IAFactory Algeria API in minutes.</p>
+            <div class="alert alert-info">
+                <strong>➡️</strong> <a href="https://dashboard.iafactory-algeria.com/api">Get your free API key</a>
+            </div>
+            <h2>Step 1: Get Your API Key</h2>
+            <p>All IAFactory subscribers receive free API credits:</p>
+            <table>
+                <tr><th>Plan</th><th>Starter</th><th>Standard</th><th>Expert</th></tr>
+                <tr><td><strong>Monthly Credits</strong></td><td>$2</td><td>$4</td><td>$10</td></tr>
+            </table>
+            <h2>Step 2: Make Your First Request</h2>
+            <h3>Python</h3>
+            <pre><code class="language-python">import openai
+
+openai.api_base = "https://api.iafactory-algeria.com/v1"
+openai.api_key = "YOUR_API_KEY"
+
+response = openai.ChatCompletion.create(
+    model="gpt-4-turbo",
+    messages=[{"role": "user", "content": "Explain AI in 3 sentences"}]
+)
+
+print(response.choices[0].message.content)</code></pre>
+            <h3>JavaScript</h3>
+            <pre><code class="language-javascript">const { Configuration, OpenAIApi } = require('openai');
+
+const configuration = new Configuration({
+    apiKey: 'YOUR_API_KEY',
+    basePath: 'https://api.iafactory-algeria.com/v1'
+});
+
+const openai = new OpenAIApi(configuration);
+
+const response = await openai.createChatCompletion({
+    model: 'gpt-4-turbo',
+    messages: [{role: 'user', content: 'Explain AI'}]
+});
+
+console.log(response.data.choices[0].message.content);</code></pre>
+            <h2>Next Steps</h2>
+            <ul>
+                <li><a href="./parameters.html">Explore all parameters</a></li>
+                <li><a href="./models-pricing.html">See models and pricing</a></li>
+                <li><a href="./optimization.html">Optimize your requests</a></li>
+            </ul>
+        </main>
+    </div>
+    <script src="../../assets/js/docs-theme.js"></script>
+</body>
+</html>

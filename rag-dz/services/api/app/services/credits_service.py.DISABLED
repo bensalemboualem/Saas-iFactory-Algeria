@@ -1,0 +1,347 @@
+"""
+Credits Service - Manage user credits for IA Factory
+"""
+import logging
+from typing import Optional, Dict, Any, List
+from datetime import datetime
+from enum import Enum
+from pydantic import BaseModel
+from ..config import get_settings
+from ..db import get_db_connection
+
+logger = logging.getLogger(__name__)
+settings = get_settings()
+
+
+class ServiceType(str, Enum):
+    """Service types that consume credits"""
+    RAG_QUERY = "rag_query"
+    IMAGE_GEN = "image_gen"
+    VIDEO_GEN = "video_gen"
+    VOICE_GEN = "voice_gen"
+    CHAT = "chat"
+    AGENT = "agent"
+    TRANSLATION = "translation"
+    OCR = "ocr"
+
+
+class TransactionType(str, Enum):
+    """Credit transaction types"""
+    PURCHASE = "purchase"
+    CONSUMPTION = "consumption"
+    REFUND = "refund"
+    BONUS = "bonus"
+    ADMIN_ADJUSTMENT = "admin_adjustment"
+
+
+# Default service costs (in credits)
+SERVICE_COSTS = {
+    ServiceType.RAG_QUERY: 1,
+    ServiceType.IMAGE_GEN: 10,
+    ServiceType.VIDEO_GEN: 50,
+    ServiceType.VOICE_GEN: 5,
+    ServiceType.CHAT: 1,
+    ServiceType.AGENT: 5,
+    ServiceType.TRANSLATION: 2,
+    ServiceType.OCR: 3,
+}
+
+
+class CreditBalance(BaseModel):
+    """User credit balance"""
+    user_id: str
+    balance: int
+    total_purchased: int
+    total_consumed: int
+    last_updated: datetime
+
+
+class CreditTransaction(BaseModel):
+    """Credit transaction record"""
+    id: str
+    user_id: str
+    amount: int
+    transaction_type: TransactionType
+    service_type: Optional[ServiceType] = None
+    description: str
+    metadata: Optional[Dict[str, Any]] = None
+    created_at: datetime
+
+
+class CreditsService:
+    """
+    Service for managing user credits
+
+    Usage:
+        # Check balance
+        balance = await credits_service.get_balance(user_id)
+
+        # Consume credits
+        success = await credits_service.consume(user_id, ServiceType.RAG_QUERY)
+
+        # Add credits after payment
+        await credits_service.add_credits(user_id, 100, "purchase", checkout_id="xxx")
+    """
+
+    def __init__(self):
+        self.default_credits = settings.default_credits
+        self.credits_per_dzd = settings.credits_per_dzd
+
+    async def get_balance(self, user_id: str) -> CreditBalance:
+        """Get user's credit balance"""
+        query = """
+            SELECT user_id, balance, total_purchased, total_consumed, updated_at
+            FROM user_credits
+            WHERE user_id = %s
+        """
+
+        with get_db_connection() as conn, conn.cursor() as cur:
+            cur.execute(query, (user_id,))
+            row = cur.fetchone()
+
+            if row:
+                return CreditBalance(
+                    user_id=str(row[0]),
+                    balance=row[1],
+                    total_purchased=row[2],
+                    total_consumed=row[3],
+                    last_updated=row[4]
+                )
+
+            # Create new balance record for user
+            return await self._create_user_credits(user_id)
+
+    async def _create_user_credits(self, user_id: str) -> CreditBalance:
+        """Create initial credit balance for new user"""
+        now = datetime.utcnow()
+        query = """
+            INSERT INTO user_credits (user_id, balance, total_purchased, total_consumed, created_at, updated_at)
+            VALUES (%s, %s, 0, 0, %s, %s)
+            ON CONFLICT (user_id) DO NOTHING
+            RETURNING user_id, balance, total_purchased, total_consumed, updated_at
+        """
+
+        with get_db_connection() as conn, conn.cursor() as cur:
+            cur.execute(query, (user_id, self.default_credits, now, now))
+            row = cur.fetchone()
+
+            if row:
+                # Record the initial bonus
+                await self._record_transaction(
+                    user_id=user_id,
+                    amount=self.default_credits,
+                    transaction_type=TransactionType.BONUS,
+                    description="Welcome bonus credits"
+                )
+
+                return CreditBalance(
+                    user_id=str(row[0]),
+                    balance=row[1],
+                    total_purchased=row[2],
+                    total_consumed=row[3],
+                    last_updated=row[4]
+                )
+
+            # If ON CONFLICT triggered, fetch existing record
+            return await self.get_balance(user_id)
+
+    async def has_sufficient_credits(self, user_id: str, service_type: ServiceType) -> bool:
+        """Check if user has enough credits for a service"""
+        balance = await self.get_balance(user_id)
+        cost = SERVICE_COSTS.get(service_type, 1)
+        return balance.balance >= cost
+
+    async def consume(
+        self,
+        user_id: str,
+        service_type: ServiceType,
+        description: Optional[str] = None,
+        metadata: Optional[Dict[str, Any]] = None
+    ) -> bool:
+        """
+        Consume credits for a service
+
+        Returns:
+            True if credits were consumed, False if insufficient balance
+        """
+        cost = SERVICE_COSTS.get(service_type, 1)
+
+        # Check balance first
+        if not await self.has_sufficient_credits(user_id, service_type):
+            logger.warning(f"Insufficient credits for user {user_id}, service {service_type}")
+            return False
+
+        # Deduct credits atomically
+        query = """
+            UPDATE user_credits
+            SET balance = balance - %s,
+                total_consumed = total_consumed + %s,
+                updated_at = %s
+            WHERE user_id = %s AND balance >= %s
+            RETURNING balance
+        """
+
+        now = datetime.utcnow()
+
+        with get_db_connection() as conn, conn.cursor() as cur:
+            cur.execute(query, (cost, cost, now, user_id, cost))
+            row = cur.fetchone()
+
+            if row:
+                # Record transaction
+                await self._record_transaction(
+                    user_id=user_id,
+                    amount=-cost,
+                    transaction_type=TransactionType.CONSUMPTION,
+                    service_type=service_type,
+                    description=description or f"Used {service_type.value}",
+                    metadata=metadata
+                )
+                logger.info(f"Consumed {cost} credits for user {user_id}, service {service_type}")
+                return True
+
+            return False
+
+    async def add_credits(
+        self,
+        user_id: str,
+        amount: int,
+        transaction_type: TransactionType = TransactionType.PURCHASE,
+        description: Optional[str] = None,
+        metadata: Optional[Dict[str, Any]] = None
+    ) -> CreditBalance:
+        """
+        Add credits to user account
+
+        Args:
+            user_id: User ID
+            amount: Number of credits to add
+            transaction_type: Type of transaction (purchase, bonus, refund)
+            description: Transaction description
+            metadata: Additional data (checkout_id, etc.)
+
+        Returns:
+            Updated credit balance
+        """
+        # Ensure user has credits record
+        await self.get_balance(user_id)
+
+        now = datetime.utcnow()
+
+        # Update balance
+        if transaction_type == TransactionType.PURCHASE:
+            query = """
+                UPDATE user_credits
+                SET balance = balance + %s,
+                    total_purchased = total_purchased + %s,
+                    updated_at = %s
+                WHERE user_id = %s
+                RETURNING balance
+            """
+            params = (amount, amount, now, user_id)
+        else:
+            query = """
+                UPDATE user_credits
+                SET balance = balance + %s,
+                    updated_at = %s
+                WHERE user_id = %s
+                RETURNING balance
+            """
+            params = (amount, now, user_id)
+
+        with get_db_connection() as conn, conn.cursor() as cur:
+            cur.execute(query, params)
+
+        # Record transaction
+        await self._record_transaction(
+            user_id=user_id,
+            amount=amount,
+            transaction_type=transaction_type,
+            description=description or f"Added {amount} credits",
+            metadata=metadata
+        )
+
+        logger.info(f"Added {amount} credits to user {user_id}")
+        return await self.get_balance(user_id)
+
+    async def _record_transaction(
+        self,
+        user_id: str,
+        amount: int,
+        transaction_type: TransactionType,
+        service_type: Optional[ServiceType] = None,
+        description: str = "",
+        metadata: Optional[Dict[str, Any]] = None
+    ) -> None:
+        """Record a credit transaction"""
+        import json
+
+        query = """
+            INSERT INTO credit_transactions
+            (user_id, amount, transaction_type, service_type, description, metadata, created_at)
+            VALUES (%s, %s, %s, %s, %s, %s, %s)
+        """
+
+        now = datetime.utcnow()
+        service_type_value = service_type.value if service_type else None
+        metadata_json = json.dumps(metadata) if metadata else None
+
+        with get_db_connection() as conn, conn.cursor() as cur:
+            cur.execute(query, (
+                user_id,
+                amount,
+                transaction_type.value,
+                service_type_value,
+                description,
+                metadata_json,
+                now
+            ))
+
+    async def get_transactions(
+        self,
+        user_id: str,
+        limit: int = 50,
+        offset: int = 0
+    ) -> List[CreditTransaction]:
+        """Get user's transaction history"""
+        import json
+
+        query = """
+            SELECT id, user_id, amount, transaction_type, service_type, description, metadata, created_at
+            FROM credit_transactions
+            WHERE user_id = %s
+            ORDER BY created_at DESC
+            LIMIT %s OFFSET %s
+        """
+
+        transactions = []
+
+        with get_db_connection() as conn, conn.cursor() as cur:
+            cur.execute(query, (user_id, limit, offset))
+            rows = cur.fetchall()
+
+            for row in rows:
+                transactions.append(CreditTransaction(
+                    id=str(row[0]),
+                    user_id=str(row[1]),
+                    amount=row[2],
+                    transaction_type=TransactionType(row[3]),
+                    service_type=ServiceType(row[4]) if row[4] else None,
+                    description=row[5],
+                    metadata=json.loads(row[6]) if row[6] else None,
+                    created_at=row[7]
+                ))
+
+        return transactions
+
+    def calculate_credits_from_dzd(self, amount_dzd: int) -> int:
+        """Calculate credits from DZD amount"""
+        return int(amount_dzd * self.credits_per_dzd)
+
+    def get_service_cost(self, service_type: ServiceType) -> int:
+        """Get the credit cost for a service"""
+        return SERVICE_COSTS.get(service_type, 1)
+
+
+# Global instance
+credits_service = CreditsService()

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VS Code / Cline - IAFactory Algeria</title>
+    <link rel="stylesheet" href="../../assets/css/docs-theme.css">
+</head>
+<body>
+    <header class="docs-header">
+        <div class="docs-logo">
+            <img src="../../assets/images/logo.png" alt="IAFactory Algeria">
+            <span>IAFactory Algeria</span>
+        </div>
+        <nav class="main-nav">
+            <a href="../index.html">التوثيق</a>
+            <a href="https://app.iafactory-algeria.com">التطبيق</a>
+            <a href="../api/index.html">واجهة برمجية</a>
+        </nav>
+        <div class="docs-controls">
+            <div class="language-switcher">
+                <button data-lang="fr">FR</button>
+                <button data-lang="en">EN</button>
+                <button data-lang="ar" class="active">AR</button>
+            </div>
+            <div class="theme-toggle">
+                <div class="theme-toggle-slider"></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <!-- ...existing sidebar... -->
+        </aside>
+
+        <main class="docs-main">
+            <h1>تكامل VS Code / Cline</h1>
+
+            <p class="lead">استخدم IAFactory Algeria مباشرة في IDE المفضل لديك مع Cline (سابقًا Claude Dev).</p>
+
+            <h2 id="introduction">مقدمة</h2>
+
+            <p>Cline هو إضافة VS Code قوية تحول محررك إلى مساعد تطوير بالذكاء الاصطناعي. مع IAFactory Algeria، تحصل على وصول إلى جميع نماذجنا مباشرة في سير عمل التطوير الخاص بك.</p>
+
+            <div class="alert alert-info">
+                <strong>المزايا:</strong>
+                <ul>
+                    <li>مساعدة الكود بالذكاء الاصطناعي في الوقت الحقيقي</li>
+                    <li>توليد الكود السياقي</li>
+                    <li>إعادة الهيكلة التلقائية</li>
+                    <li>التوثيق المولد تلقائيًا</li>
+                    <li>إنشاء اختبارات الوحدة تلقائيًا</li>
+                </ul>
+            </div>
+
+            <h2 id="installation">التثبيت</h2>
+
+            <h3 id="prerequisites">المتطلبات الأساسية</h3>
+
+            <ul>
+                <li>VS Code (الإصدار 1.80+)</li>
+                <li>Node.js 16+ (لبعض الميزات)</li>
+                <li>مفتاح API من IAFactory Algeria</li>
+            </ul>
+
+            <h3 id="step-1">الخطوة 1: تثبيت الإضافة</h3>
+
+            <ol>
+                <li>افتح VS Code</li>
+                <li>اذهب إلى الإضافات (<code>Ctrl+Shift+X</code>)</li>
+                <li>ابحث عن "Cline"</li>
+                <li>انقر على "تثبيت"</li>
+            </ol>
+
+            <p><strong>أو عبر سطر الأوامر:</strong></p>
+            <pre><code class="language-bash">code --install-extension saoudrizwan.claude-dev</code></pre>
+
+            <h3 id="step-2">الخطوة 2: تكوين IAFactory</h3>
+
+            <ol>
+                <li>افتح إعدادات Cline (<code>Ctrl+Shift+P</code> → "Cline: Settings")</li>
+                <li>اختر "OpenAI Compatible"</li>
+                <li>كوّن الإعدادات:</li>
+            </ol>
+
+            <pre><code class="language-json">{
+  "cline.apiProvider": "openai-compatible",
+  "cline.apiUrl": "https://api.iafactory-algeria.com/v1",
+  "cline.apiKey": "YOUR_API_KEY",
+  "cline.model": "gpt-4.1"
+}</code></pre>
+
+            <h3 id="step-3">الخطوة 3: متغيرات البيئة (موصى به)</h3>
+
+            <p>لأمان أفضل، استخدم ملف <code>.env</code>:</p>
+
+            <pre><code class="language-bash"># .env
+IAFACTORY_API_KEY=sk_live_your_key
+IAFACTORY_API_URL=https://api.iafactory-algeria.com/v1</code></pre>
+
+            <p>ثم في <code>settings.json</code>:</p>
+
+            <pre><code class="language-json">{
+  "cline.apiKey": "${env:IAFACTORY_API_KEY}",
+  "cline.apiUrl": "${env:IAFACTORY_API_URL}"
+}</code></pre>
+
+            <h2 id="advanced-configuration">التكوين المتقدم</h2>
+
+            <h3 id="model-selection">اختيار النموذج</h3>
+
+            <p>كوّن نماذج مختلفة حسب احتياجاتك:</p>
+
+            <pre><code class="language-json">{
+  "cline.models": {
+    "default": "gpt-4.1",
+    "code": "codestral-2508",
+    "chat": "gpt-4.1-mini",
+    "analysis": "claude-sonnet-4-5"
+  }
+}</code></pre>
+
+            <h3 id="context-window">نافذة السياق</h3>
+
+            <pre><code class="language-json">{
+  "cline.maxTokens": 8000,
+  "cline.temperature": 0.2,
+  "cline.contextLines": 50
+}</code></pre>
+
+            <h3 id="custom-instructions">تعليمات مخصصة</h3>
+
+            <pre><code class="language-json">{
+  "cline.systemPrompt": "أنت خبير Python متخصص في Django. اكتب كودًا نظيفًا ومُختبرًا وموثقًا. اتبع اتفاقيات PEP 8."
+}</code></pre>
+
+            <h2 id="usage">الاستخدام</h2>
+
+            <h3 id="generate-code">توليد الكود</h3>
+
+            <ol>
+                <li>افتح لوحة الأوامر (<code>Ctrl+Shift+P</code>)</li>
+                <li>اكتب "Cline: Generate Code"</li>
+                <li>صِف ما تريده</li>
+            </ol>
+
+            <p><strong>مثال:</strong></p>
+            <pre><code class="language-text">أنشئ فئة User في Python مع:
+- السمات: id، name، email، created_at
+- طريقة to_dict()
+- التحقق من البريد الإلكتروني باستخدام regex
+- docstrings كاملة</code></pre>
+
+            <h3 id="refactoring">إعادة الهيكلة</h3>
+
+            <ol>
+                <li>حدد الكود المراد إعادة هيكلته</li>
+                <li><code>Ctrl+Shift+P</code> → "Cline: Refactor"</li>
+                <li>حدد التحسينات المطلوبة</li>
+            </ol>
+
+            <h3 id="documentation">توليد التوثيق</h3>
+
+            <pre><code class="language-text">حدد الدالة → Cline: Generate Docstring</code></pre>
+
+            <h3 id="unit-tests">توليد الاختبارات</h3>
+
+            <pre><code class="language-text">Cline: Generate Tests for Current File</code></pre>
+
+            <h2 id="shortcuts">اختصارات لوحة المفاتيح</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>الاختصار</th>
+                        <th>الإجراء</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>Ctrl+Shift+L</code></td><td>فتح محادثة Cline</td></tr>
+                    <tr><td><code>Ctrl+Shift+G</code></td><td>توليد الكود</td></tr>
+                    <tr><td><code>Ctrl+Shift+R</code></td><td>إعادة هيكلة التحديد</td></tr>
+                    <tr><td><code>Ctrl+Shift+D</code></td><td>توليد docstring</td></tr>
+                    <tr><td><code>Ctrl+Shift+T</code></td><td>توليد الاختبارات</td></tr>
+                    <tr><td><code>Ctrl+Shift+E</code></td><td>شرح الكود</td></tr>
+                </tbody>
+            </table>
+
+            <h2 id="troubleshooting">استكشاف الأخطاء</h2>
+
+            <h3 id="connection-error">خطأ في الاتصال</h3>
+
+            <div class="alert alert-danger">
+                <strong>خطأ:</strong> "Unable to connect to API"
+            </div>
+
+            <p><strong>الحلول:</strong></p>
+            <ol>
+                <li>تحقق من مفتاح API الخاص بك</li>
+                <li>اختبر الرابط: <code>curl https://api.iafactory-algeria.com/v1/models</code></li>
+                <li>تحقق من جدار الحماية/البروكسي</li>
+                <li>تأكد من أن اشتراكك نشط</li>
+            </ol>
+
+            <h3 id="slow-responses">استجابات بطيئة</h3>
+
+            <pre><code class="language-json">{
+  "cline.timeout": 30000,
+  "cline.maxTokens": 4000,
+  "cline.model": "gpt-4.1-mini"  // أسرع
+}</code></pre>
+
+            <h2 id="best-practices">أفضل الممارسات</h2>
+
+            <h3 id="effective-prompts">أوامر فعالة</h3>
+
+            <div class="alert alert-success">
+                <strong>جيد</strong>
+                <pre><code>أنشئ دالة Python تقوم بـ:
+- أخذ قائمة من الأرقام
+- إرجاع الوسيط
+- التعامل مع الحالات الزوجية/الفردية
+- تلميحات الأنواع + docstring
+- اختبارات الوحدة مضمنة</code></pre>
+            </div>
+
+            <div class="alert alert-danger">
+                <strong>سيء</strong>
+                <pre><code>اعمل دالة وسيط</code></pre>
+            </div>
+
+            <h3 id="security">الأمان</h3>
+
+            <ul>
+                <li>لا تقم أبدًا بحفظ مفتاح API في التحكم بالإصدار</li>
+                <li>استخدم <code>.env</code> + <code>.gitignore</code></li>
+                <li>قم بتدوير المفاتيح بانتظام</li>
+                <li>استخدم مفاتيح مختلفة للتطوير/الإنتاج</li>
+            </ul>
+
+            <h2 id="resources">الموارد</h2>
+
+            <ul>
+                <li><a href="https://github.com/saoudrizwan/claude-dev">وثائق Cline الرسمية</a></li>
+                <li><a href="https://youtube.com/@iafactory">دروس فيديو IAFactory</a></li>
+                <li><a href="https://discord.gg/iafactory">دعم Discord</a></li>
+                <li><a href="mailto:support@iafactory-algeria.com">دعم البريد الإلكتروني</a></li>
+            </ul>
+
+            <div class="alert alert-success">
+                <strong>جاهز للبرمجة مع الذكاء الاصطناعي؟</strong>
+                <p>حمّل Cline واتصل بـ IAFactory Algeria لتجربة تطوير ثورية!</p>
+            </div>
+        </main>
+
+        <aside class="docs-toc">
+            <h3 class="docs-toc-title">في هذه الصفحة</h3>
+            <ul></ul>
+        </aside>
+    </div>
+
+    <script src="../../assets/js/docs-theme.js"></script>
+</body>
+</html>

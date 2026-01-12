@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitKraken Integration - IAFactory Algeria</title>
+    <link rel="stylesheet" href="../../assets/css/docs-theme.css">
+</head>
+<body>
+    <header class="docs-header">
+        <div class="docs-logo">
+            <img src="../../assets/images/logo.png" alt="IAFactory Algeria">
+            <span>IAFactory Algeria</span>
+        </div>
+        <nav class="main-nav">
+            <a href="../index.html">Documentation</a>
+            <a href="https://app.iafactory-algeria.com">App</a>
+            <a href="../api/index.html">API</a>
+        </nav>
+        <div class="docs-controls">
+            <div class="language-switcher">
+                <button data-lang="fr">🇫🇷 FR</button>
+                <button data-lang="en" class="active">🇬🇧 EN</button>
+                <button data-lang="ar">🇸🇦 AR</button>
+            </div>
+            <div class="theme-toggle">
+                <div class="theme-toggle-slider">☀️</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <!-- Sidebar -->
+        </aside>
+
+        <main class="docs-main">
+            <h1>GitKraken Integration</h1>
+            
+            <p class="lead">Use IAFactory Algeria AI in GitKraken for intelligent commits, automated code reviews, and assisted Git workflows.</p>
+
+            <h2 id="introduction">🐙 Introduction</h2>
+
+            <p>GitKraken is a powerful graphical Git client. With IAFactory Algeria integration, add AI for generating commit messages, analyzing diffs, and automating Git workflows.</p>
+
+            <div class="alert alert-info">
+                <strong>💡 AI Features:</strong>
+                <ul>
+                    <li>Automatic commit message generation</li>
+                    <li>Intelligent PR code reviews</li>
+                    <li>Merge conflict resolution suggestions</li>
+                    <li>History analysis and insights</li>
+                    <li>Automatic change documentation</li>
+                </ul>
+            </div>
+
+            <h2 id="installation">📦 Installation</h2>
+
+            <h3 id="gitkraken">Install GitKraken</h3>
+
+            <ol>
+                <li>Download from <a href="https://gitkraken.com">gitkraken.com</a></li>
+                <li>Install for your OS (Windows/Mac/Linux)</li>
+                <li>Launch GitKraken</li>
+            </ol>
+
+            <h3 id="cli-integration">CLI Integration (gitkraken-cli)</h3>
+
+            <pre><code class="language-bash"># Via npm
+npm install -g gitkraken-cli
+
+# Or via binary
+curl -sSL https://cli.gitkraken.com/install.sh | bash</code></pre>
+
+            <h2 id="configuration">⚙️ Configuration</h2>
+
+            <h3 id="api-setup">IAFactory API Setup</h3>
+
+            <p>Create a Git hook script with IAFactory:</p>
+
+            <pre><code class="language-bash"># .git/hooks/prepare-commit-msg
+#!/bin/bash
+
+# Get staged changes
+DIFF=$(git diff --cached)
+
+# Call IAFactory to generate commit message
+COMMIT_MSG=$(curl -s -X POST https://api.iafactory-algeria.com/v1/chat/completions \
+  -H "Authorization: Bearer $IAFACTORY_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d "{
+    \"model\": \"gpt-4.1-mini\",
+    \"messages\": [{
+      \"role\": \"system\",
+      \"content\": \"Generate a concise git commit message in conventional commits format (type(scope): description). Be specific about what changed.\"
+    }, {
+      \"role\": \"user\",
+      \"content\": \"Git diff:\n$DIFF\"
+    }],
+    \"temperature\": 0.3,
+    \"max_tokens\": 100
+  }" | jq -r '.choices[0].message.content')
+
+# Write to commit file
+echo "$COMMIT_MSG" > "$1"</code></pre>
+
+            <pre><code class="language-bash"># Make executable
+chmod +x .git/hooks/prepare-commit-msg</code></pre>
+
+            <h3 id="gitkraken-config">GitKraken Configuration</h3>
+
+            <ol>
+                <li>Open <strong>Preferences → Integrations</strong></li>
+                <li>Add <strong>Custom Integration</strong></li>
+                <li>Configure hook scripts</li>
+            </ol>
+
+            <h2 id="features">🚀 Features</h2>
+
+            <h3 id="auto-commit">1. Automatic Commit Messages</h3>
+
+            <p><strong>Workflow:</strong></p>
+
+            <ol>
+                <li>Stage your files in GitKraken</li>
+                <li>Click <strong>Commit</strong></li>
+                <li>Message is auto-generated</li>
+                <li>Edit if needed and commit</li>
+            </ol>
+
+            <p><strong>Generated examples:</strong></p>
+
+            <pre><code class="language-text">feat(auth): add JWT authentication middleware
+fix(api): resolve null pointer in user endpoint  
+docs(readme): update installation instructions
+refactor(utils): simplify date formatting logic
+perf(db): add index on user_email column</code></pre>
+
+            <h3 id="pr-review">2. Pull Request Review</h3>
+
+            <p>Script for automatic PR review:</p>
+
+            <pre><code class="language-bash">#!/bin/bash
+# review-pr.sh
+
+PR_NUMBER=$1
+REPO_PATH=$2
+
+# Get PR diff
+cd "$REPO_PATH"
+git fetch origin pull/$PR_NUMBER/head:pr-$PR_NUMBER
+git diff main...pr-$PR_NUMBER > pr-diff.txt
+
+# Analyze with IAFactory
+curl -X POST https://api.iafactory-algeria.com/v1/chat/completions \
+  -H "Authorization: Bearer $IAFACTORY_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d "{
+    \"model\": \"gpt-4.1\",
+    \"messages\": [{
+      \"role\": \"system\",
+      \"content\": \"You are an expert code reviewer. Analyze this PR and provide:\n1. Overall assessment\n2. Security issues (if any)\n3. Performance concerns\n4. Best practices violations\n5. Suggested improvements\n\nFormat in Markdown.\"
+    }, {
+      \"role\": \"user\",
+      \"content\": \"$(cat pr-diff.txt)\"
+    }],
+    \"temperature\": 0.2,
+    \"max_tokens\": 2000
+  }" | jq -r '.choices[0].message.content' > pr-review.md
+
+# Display review
+cat pr-review.md</code></pre>
+
+            <h3 id="conflict-resolution">3. Conflict Resolution</h3>
+
+            <pre><code class="language-bash">#!/bin/bash
+# resolve-conflict.sh
+
+CONFLICT_FILE=$1
+
+# Extract conflict sections
+CONFLICT_CONTENT=$(cat "$CONFLICT_FILE")
+
+# Ask AI to resolve
+curl -X POST https://api.iafactory-algeria.com/v1/chat/completions \
+  -H "Authorization: Bearer $IAFACTORY_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d "{
+    \"model\": \"gpt-4.1\",
+    \"messages\": [{
+      \"role\": \"system\",
+      \"content\": \"Resolve this git merge conflict. Keep the best parts from both versions. Return ONLY the resolved code, no explanations.\"
+    }, {
+      \"role\": \"user\",
+      \"content\": \"$CONFLICT_CONTENT\"
+    }],
+    \"temperature\": 0.1
+  }" | jq -r '.choices[0].message.content' > "$CONFLICT_FILE.resolved"
+
+echo "Suggested resolution in $CONFLICT_FILE.resolved"
+echo "Review before applying!"</code></pre>
+
+            <h3 id="changelog">4. Automatic Changelog</h3>
+
+            <pre><code class="language-bash">#!/bin/bash
+# generate-changelog.sh
+
+FROM_TAG=$1
+TO_TAG=$2
+
+# Get commits between tags
+git log $FROM_TAG..$TO_TAG --oneline > commits.txt
+
+# Generate changelog with AI
+curl -X POST https://api.iafactory-algeria.com/v1/chat/completions \
+  -H "Authorization: Bearer $IAFACTORY_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d "{
+    \"model\": \"gpt-4.1\",
+    \"messages\": [{
+      \"role\": \"system\",
+      \"content\": \"Transform these git commits into a clean CHANGELOG.md format. Group by: Features, Bug Fixes, Performance, Documentation, Refactoring.\"
+    }, {
+      \"role\": \"user\",
+      \"content\": \"$(cat commits.txt)\"
+    }],
+    \"temperature\": 0.3,
+    \"max_tokens\": 1500
+  }" | jq -r '.choices[0].message.content' > CHANGELOG-$TO_TAG.md
+
+echo "Changelog generated: CHANGELOG-$TO_TAG.md"</code></pre>
+
+            <h2 id="workflows">🔄 GitKraken + AI Workflows</h2>
+
+            <h3 id="feature-workflow">Complete Feature Workflow</h3>
+
+            <pre><code class="language-bash"># 1. Create feature branch
+git checkout -b feature/user-authentication
+
+# 2. Development with AI commits
+# (Messages auto-generated by hook)
+
+# 3. Before PR: Auto-review
+./scripts/self-review.sh
+
+# 4. Create PR with AI description
+gh pr create --title "$(generate-pr-title.sh)" \
+             --body "$(generate-pr-body.sh)"
+
+# 5. CI/CD with AI review
+# (Configured in .github/workflows/)
+
+# 6. Merge and changelog
+git checkout main
+git merge feature/user-authentication
+./scripts/generate-changelog.sh v1.0.0 v1.1.0</code></pre>
+
+            <h3 id="release-workflow">Release Workflow</h3>
+
+            <pre><code class="language-bash">#!/bin/bash
+# release.sh
+
+VERSION=$1
+
+# 1. Generate changelog
+./scripts/generate-changelog.sh $(git describe --tags --abbrev=0) HEAD
+
+# 2. Generate release notes
+curl -X POST https://api.iafactory-algeria.com/v1/chat/completions \
+  -H "Authorization: Bearer $IAFACTORY_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d "{
+    \"model\": \"gpt-4.1\",
+    \"messages\": [{
+      \"role\": \"system\",
+      \"content\": \"Create release notes from this changelog. Highlight major features, breaking changes, and migration guides.\"
+    }, {
+      \"role\": \"user\",
+      \"content\": \"$(cat CHANGELOG-HEAD.md)\"
+    }]
+  }" | jq -r '.choices[0].message.content' > RELEASE-NOTES-$VERSION.md
+
+# 3. Tag and push
+git tag -a v$VERSION -m "Release v$VERSION"
+git push origin v$VERSION
+
+# 4. Create GitHub release
+gh release create v$VERSION --notes-file RELEASE-NOTES-$VERSION.md
+
+echo "✅ Release v$VERSION created!"</code></pre>
+
+            <h2 id="gitkraken-cli">🖥️ GitKraken CLI with AI</h2>
+
+            <pre><code class="language-bash"># Install AI wrapper
+npm install -g gitkraken-ai-wrapper
+
+# AI-enhanced commands
+gk commit --ai-message   # Auto-generate message
+gk pr --ai-description   # Auto-generate PR description
+gk review --ai          # Auto-review
+gk changelog --ai       # Generate changelog
+
+# Configuration
+gk config set ai.provider iafactory
+gk config set ai.api_key $IAFACTORY_API_KEY
+gk config set ai.model gpt-4.1</code></pre>
+
+            <h2 id="best-practices">✨ Best Practices</h2>
+
+            <h3 id="commit-quality">1. Commit Quality</h3>
+
+            <ul>
+                <li>Always review generated messages</li>
+                <li>Commit small logical changes</li>
+                <li>Use conventional commits (feat, fix, docs, etc.)</li>
+            </ul>
+
+            <h3 id="security">2. Security</h3>
+
+            <ul>
+                <li>Never commit API keys</li>
+                <li>Use <code>git-secrets</code> for automatic scanning</li>
+                <li>Configure <code>.gitignore</code> for sensitive files</li>
+            </ul>
+
+            <h3 id="collaboration">3. Collaboration</h3>
+
+            <ul>
+                <li>Share AI scripts with the team</li>
+                <li>Document workflows in README</li>
+                <li>Create PR templates with AI review</li>
+            </ul>
+
+            <h2 id="resources">📚 Resources</h2>
+
+            <ul>
+                <li>📖 <a href="https://help.gitkraken.com">GitKraken Documentation</a></li>
+                <li>🎥 <a href="../api/quick-start.html">IAFactory API Quick Start</a></li>
+                <li>💬 <a href="https://discord.gg/iafactory">Community Discord</a></li>
+                <li>🐙 <a href="https://github.com/gitkraken">GitKraken GitHub</a></li>
+            </ul>
+
+            <div class="alert alert-success">
+                <strong>🐙 Ready to Git with AI?</strong>
+                <p>Get your API key: <a href="https://app.iafactory-algeria.com/api-keys">app.iafactory-algeria.com</a></p>
+            </div>
+        </main>
+
+        <aside class="docs-toc">
+            <h3 class="docs-toc-title">On this page</h3>
+            <ul></ul>
+        </aside>
+    </div>
+
+    <script src="../../assets/js/docs-theme.js"></script>
+</body>
+</html>

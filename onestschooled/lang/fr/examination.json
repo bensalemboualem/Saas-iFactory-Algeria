@@ -1,0 +1,13 @@
+{
+    "exam_assign": "Affectation examen",
+    "select idcard": "Sélectionner carte ID",
+    "select certificate": "Sélectionner certificat",
+    "exam_title": "Titre examen",
+    "section": "Section",
+    "total_mark": "Note totale",
+    "select_exam_type": "Sélectionner type examen",
+    "exam_type": "Type examen",
+    "percent_from": "Pourcentage de",
+    "marks_grade": "Marks Grade",
+    "marks_register": "Marks Register"
+}

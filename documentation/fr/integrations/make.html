@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intégration Make.com - IAFactory Algeria</title>
+    <link rel="stylesheet" href="../../assets/css/docs-theme.css">
+</head>
+<body>
+    <header class="docs-header">
+        <div class="docs-logo">
+            <img src="../../assets/images/logo.png" alt="IAFactory Algeria">
+            <span>IAFactory Algeria</span>
+        </div>
+        <nav class="main-nav">
+            <a href="../index.html">Documentation</a>
+            <a href="https://app.iafactory-algeria.com">App</a>
+            <a href="../api/index.html">API</a>
+        </nav>
+        <div class="docs-controls">
+            <div class="language-switcher">
+                <button data-lang="fr" class="active">🇫🇷 FR</button>
+                <button data-lang="en">🇬🇧 EN</button>
+                <button data-lang="ar">🇸🇦 AR</button>
+            </div>
+            <div class="theme-toggle">
+                <div class="theme-toggle-slider">☀️</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <!-- Sidebar -->
+        </aside>
+
+        <main class="docs-main">
+            <h1>Intégration Make (anciennement Integromat)</h1>
+            
+            <p class="lead">Automatisez vos processus métier avec Make.com et l'IA d'IAFactory Algeria sans écrire une ligne de code.</p>
+
+            <h2 id="introduction">🎯 Qu'est-ce que Make ?</h2>
+
+            <p>Make est une plateforme d'automatisation no-code visuelle qui permet de connecter applications et services via une interface glisser-déposer. Intégrez IAFactory Algeria pour ajouter l'IA à vos workflows.</p>
+
+            <div class="alert alert-info">
+                <strong>💡 Cas d'usage :</strong>
+                <ul>
+                    <li>Modération automatique de contenu</li>
+                    <li>Génération de descriptions produits e-commerce</li>
+                    <li>Enrichissement de données CRM avec l'IA</li>
+                    <li>Création automatique de visuels marketing</li>
+                    <li>Analyse sentiment des avis clients</li>
+                </ul>
+            </div>
+
+            <h2 id="configuration">⚙️ Configuration</h2>
+
+            <h3 id="etape-1">Étape 1 : Créer un Scénario</h3>
+
+            <ol>
+                <li>Connectez-vous à <a href="https://make.com">make.com</a></li>
+                <li>Cliquez sur <strong>Create a new scenario</strong></li>
+                <li>Ajoutez un module déclencheur (Google Sheets, Webhook, etc.)</li>
+            </ol>
+
+            <h3 id="etape-2">Étape 2 : Ajouter le Module HTTP</h3>
+
+            <ol>
+                <li>Cliquez sur le <strong>+</strong> pour ajouter un module</li>
+                <li>Recherchez <strong>HTTP</strong> et sélectionnez <strong>Make a request</strong></li>
+                <li>Configurez :
+                    <ul>
+                        <li><strong>URL</strong> : https://api.iafactory-algeria.com/v1/chat/completions</li>
+                        <li><strong>Method</strong> : POST</li>
+                        <li><strong>Headers</strong> :
+                            <pre><code>Authorization: Bearer VOTRE_CLE_API
+Content-Type: application/json</code></pre>
+                        </li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h2 id="scenarios">🚀 Scénarios Prêts à l'Emploi</h2>
+
+            <h3 id="scenario-1">Scénario 1 : E-commerce Product Descriptions</h3>
+
+            <p><strong>Déclencheur :</strong> Nouveau produit dans Shopify<br>
+            <strong>Action :</strong> Générer description automatique</p>
+
+            <h4>Configuration du Module HTTP :</h4>
+
+            <pre><code class="language-json">{
+  "url": "https://api.iafactory-algeria.com/v1/chat/completions",
+  "method": "POST",
+  "headers": {
+    "Authorization": "Bearer {{YOUR_API_KEY}}",
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "model": "gpt-4.1",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Tu es un expert en rédaction de fiches produits e-commerce. Crée des descriptions persuasives et optimisées SEO."
+      },
+      {
+        "role": "user",
+        "content": "Produit: {{shopify.product_title}}\nCaractéristiques: {{shopify.features}}\nCatégorie: {{shopify.category}}"
+      }
+    ],
+    "temperature": 0.7,
+    "max_tokens": 400
+  }
+}</code></pre>
+
+            <h3 id="scenario-2">Scénario 2 : Support Client Automatisé</h3>
+
+            <p><strong>Déclencheur :</strong> Nouveau ticket Zendesk<br>
+            <strong>Action :</strong> Réponse automatique intelligente</p>
+
+            <pre><code class="language-json">{
+  "body": {
+    "model": "gpt-4.1-mini",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Tu es un agent support client. Réponds de manière professionnelle et empathique. Si tu ne connais pas la réponse, propose d'escalader au niveau 2."
+      },
+      {
+        "role": "user",
+        "content": "Client: {{zendesk.requester_name}}\nSujet: {{zendesk.ticket_subject}}\nMessage: {{zendesk.ticket_description}}"
+      }
+    ],
+    "temperature": 0.3,
+    "max_tokens": 300
+  }
+}</code></pre>
+
+            <h3 id="scenario-3">Scénario 3 : Génération d'Images Marketing</h3>
+
+            <p><strong>Déclencheur :</strong> Nouvelle ligne Google Sheets<br>
+            <strong>Action :</strong> Créer visuel marketing automatiquement</p>
+
+            <pre><code class="language-json">{
+  "url": "https://api.iafactory-algeria.com/v1/images/generations",
+  "method": "POST",
+  "headers": {
+    "Authorization": "Bearer {{YOUR_API_KEY}}",
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "model": "dall-e-3",
+    "prompt": "{{sheets.campaign_description}}, professional marketing style, high quality, 4K",
+    "size": "1024x1024",
+    "quality": "hd"
+  }
+}</code></pre>
+
+            <h2 id="modules-avances">🎯 Modules Avancés</h2>
+
+            <h3 id="traitement-batch">Traitement en Batch</h3>
+
+            <p>Utilisez les <strong>Iterators</strong> et <strong>Aggregators</strong> pour traiter plusieurs éléments :</p>
+
+            <ol>
+                <li><strong>Array Aggregator</strong> : Collecter plusieurs inputs</li>
+                <li><strong>Iterator</strong> : Boucler sur chaque élément</li>
+                <li><strong>HTTP Module</strong> : Appeler IAFactory pour chaque item</li>
+                <li><strong>Array Aggregator</strong> : Regrouper les résultats</li>
+            </ol>
+
+            <h3 id="gestion-erreurs">Gestion des Erreurs</h3>
+
+            <pre><code class="language-text">1. Clic droit sur le module HTTP
+2. Ajouter "Error handler"
+3. Configurer actions de fallback :
+   - Retry (réessayer)
+   - Ignore (ignorer)
+   - Commit (logger l'erreur)
+   - Rollback (annuler le scénario)</code></pre>
+
+            <h3 id="data-stores">Data Stores pour Cache</h3>
+
+            <p>Économisez des tokens en cachant les réponses fréquentes :</p>
+
+            <ol>
+                <li>Créer un <strong>Data Store</strong> "IA_Cache"</li>
+                <li>Avant l'appel API : <strong>Search records</strong> avec la question</li>
+                <li>Si trouvé : Utiliser la réponse cachée</li>
+                <li>Sinon : Appeler API et <strong>Add record</strong> au cache</li>
+            </ol>
+
+            <h2 id="optimisation">💰 Optimisation</h2>
+
+            <h3 id="gestion-tokens">Gestion des Tokens</h3>
+
+            <ul>
+                <li><strong>Limitez max_tokens</strong> : Économisez sur chaque requête</li>
+                <li><strong>Utilisez gpt-4.1-mini</strong> : Pour tâches simples (classification, extraction)</li>
+                <li><strong>Cachez les résultats</strong> : Data Stores Make + TTL</li>
+                <li><strong>Filtrez avant appel</strong> : Utilisez les <strong>Filters</strong> Make</li>
+            </ul>
+
+            <h3 id="performances">Performances</h3>
+
+            <ul>
+                <li>Utilisez <strong>Flow Control</strong> → <strong>Sleep</strong> pour respecter rate limits</li>
+                <li>Activez <strong>Auto-commit</strong> pour sauvegarder l'état</li>
+                <li>Configurez <strong>Max number of cycles</strong> pour éviter les boucles infinies</li>
+            </ul>
+
+            <h2 id="templates">📦 Templates Make × IAFactory</h2>
+
+            <div class="card">
+                <h3>🛍️ E-commerce Automation</h3>
+                <p>Génération automatique de descriptions, images et traductions produits</p>
+                <a href="#" class="btn btn-primary">Importer Template</a>
+            </div>
+
+            <div class="card">
+                <h3>📧 Email Marketing AI</h3>
+                <p>Personnalisation de masse d'emails avec IA</p>
+                <a href="#" class="btn btn-primary">Importer Template</a>
+            </div>
+
+            <div class="card">
+                <h3>📊 Data Enrichment</h3>
+                <p>Enrichissement automatique de bases de données CRM</p>
+                <a href="#" class="btn btn-primary">Importer Template</a>
+            </div>
+
+            <h2 id="bonnes-pratiques">✨ Bonnes Pratiques</h2>
+
+            <h3 id="securite">1. Sécurité</h3>
+
+            <ul>
+                <li>Stockez votre clé API dans les <strong>Variables d'environnement</strong> Make</li>
+                <li>Ne partagez jamais vos blueprints avec clés API</li>
+                <li>Utilisez des <strong>Webhooks sécurisés</strong> (Basic Auth minimum)</li>
+            </ul>
+
+            <h3 id="monitoring">2. Monitoring</h3>
+
+            <ul>
+                <li>Activez <strong>Notifications</strong> pour les erreurs</li>
+                <li>Utilisez le <strong>History</strong> pour débugger</li>
+                <li>Configurez des <strong>Alertes Slack</strong> pour scénarios critiques</li>
+            </ul>
+
+            <h3 id="scalabilite">3. Scalabilité</h3>
+
+            <ul>
+                <li>Utilisez <strong>Webhooks</strong> au lieu de polling</li>
+                <li>Planifiez aux heures creuses si possible</li>
+                <li>Passez à un plan supérieur si > 10K opérations/mois</li>
+            </ul>
+
+            <h2 id="ressources">📚 Ressources</h2>
+
+            <ul>
+                <li>📖 <a href="https://www.make.com/en/help">Documentation Make</a></li>
+                <li>🎥 <a href="../api/quick-start.html">API Quick Start IAFactory</a></li>
+                <li>💬 <a href="https://discord.gg/iafactory">Communauté Discord</a></li>
+                <li>🎓 <a href="https://www.make.com/en/academy">Make Academy</a></li>
+            </ul>
+
+            <div class="alert alert-success">
+                <strong>🚀 Prêt à créer vos automatisations ?</strong>
+                <p>Récupérez votre clé API : <a href="https://app.iafactory-algeria.com/api-keys">app.iafactory-algeria.com</a></p>
+            </div>
+        </main>
+
+        <aside class="docs-toc">
+            <h3 class="docs-toc-title">Sur cette page</h3>
+            <ul></ul>
+        </aside>
+    </div>
+
+    <script src="../../assets/js/docs-theme.js"></script>
+</body>
+</html>

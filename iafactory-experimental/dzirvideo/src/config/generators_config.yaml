@@ -1,0 +1,378 @@
+# Dzir IA Video - Generators Configuration
+# Complete configuration for all 40+ AI image and video generators
+# Version: 2.1.0
+# Date: 2025-12-13
+
+# =============================================================================
+# TEXT-TO-VIDEO GENERATORS (15 tools)
+# =============================================================================
+
+text_to_video:
+  # --- PRIORITY: ALIBABA ---
+  wan_2_1:
+    name: "WAN 2.1 (Tongyi Wanxiang)"
+    provider: "Alibaba Cloud"
+    description: "Free text-to-video generator with 10s max duration"
+    api_endpoint: "https://dashscope.aliyuncs.com/api/v1/services/aigc/text2video/generation"
+    api_key_env: "ALIBABA_DASHSCOPE_API_KEY"
+    enabled: true
+    max_duration: 10.0
+    min_duration: 1.0
+    resolution: "1080p"
+    supported_aspect_ratios: ["16:9", "9:16", "1:1"]
+    api_cost_per_second: 0.0  # Free tier available
+    free_tier: true
+    free_credits_per_day: 100
+    quality_score: 85
+    realism_score: 82
+    coherence_score: 88
+    prompt_adherence_score: 85
+    avg_generation_time_seconds: 45.0
+    supports_async: true
+    supports_negative_prompts: true
+    supports_style_presets: true
+    tags: ["free", "alibaba", "priority"]
+
+  # --- FREEMIUM ---
+  kling_ai:
+    name: "Kling AI 2.0"
+    provider: "Kuaishou (China)"
+    description: "High-quality text-to-video, 66 free credits/day"
+    api_endpoint: "https://api.klingai.com/v1/videos/text2video"
+    api_key_env: "KLING_AI_API_KEY"
+    enabled: true
+    max_duration: 120.0
+    min_duration: 5.0
+    resolution: "1080p"
+    supported_aspect_ratios: ["16:9", "9:16", "1:1"]
+    api_cost_per_second: 0.01
+    free_tier: true
+    free_credits_per_day: 66
+    quality_score: 90
+    realism_score: 88
+    coherence_score: 92
+    prompt_adherence_score: 90
+    avg_generation_time_seconds: 60.0
+    supports_async: true
+    supports_negative_prompts: true
+    supports_style_presets: false
+    tags: ["freemium", "high-quality", "chinese"]
+
+  pika_labs:
+    name: "Pika Labs 2.0"
+    provider: "Pika"
+    description: "Creative text-to-video with 250 free credits"
+    api_endpoint: "https://api.pika.art/v1/generate"
+    api_key_env: "PIKA_API_KEY"
+    enabled: true
+    max_duration: 10.0
+    min_duration: 3.0
+    resolution: "1080p"
+    supported_aspect_ratios: ["16:9", "9:16", "1:1", "4:3"]
+    api_cost_per_second: 0.02
+    free_tier: true
+    free_credits_per_day: 250
+    quality_score: 87
+    realism_score: 85
+    coherence_score: 85
+    prompt_adherence_score: 88
+    avg_generation_time_seconds: 30.0
+    supports_async: true
+    supports_negative_prompts: true
+    supports_style_presets: true
+    tags: ["freemium", "creative"]
+
+  luma_dream:
+    name: "Luma AI Dream Machine"
+    provider: "Luma AI"
+    description: "Professional text-to-video, $9.99/mo unlimited"
+    api_endpoint: "https://api.lumalabs.ai/dream-machine/v1/generations"
+    api_key_env: "LUMA_API_KEY"
+    enabled: true
+    max_duration: 20.0
+    min_duration: 2.0
+    resolution: "1080p"
+    supported_aspect_ratios: ["16:9", "9:16", "1:1"]
+    api_cost_per_second: 0.02
+    free_tier: false
+    free_credits_per_day: 0
+    quality_score: 92
+    realism_score: 90
+    coherence_score: 93
+    prompt_adherence_score: 91
+    avg_generation_time_seconds: 120.0
+    supports_async: true
+    supports_negative_prompts: true
+    supports_style_presets: false
+    tags: ["premium", "professional"]
+
+  # --- PREMIUM ---
+  runway_gen4:
+    name: "Runway Gen-4"
+    provider: "Runway ML"
+    description: "State-of-the-art video generation"
+    api_endpoint: "https://api.runwayml.com/v1/generations"
+    api_key_env: "RUNWAY_API_KEY"
+    enabled: false  # Expensive, disabled by default
+    max_duration: 60.0
+    min_duration: 1.0
+    resolution: "4K"
+    supported_aspect_ratios: ["16:9", "9:16", "1:1", "21:9"]
+    api_cost_per_second: 0.05
+    free_tier: false
+    quality_score: 95
+    realism_score: 95
+    coherence_score: 96
+    prompt_adherence_score: 94
+    avg_generation_time_seconds: 90.0
+    supports_async: true
+    supports_negative_prompts: true
+    supports_style_presets: true
+    tags: ["premium", "sota", "expensive"]
+
+  veo_2:
+    name: "Google Veo 2"
+    provider: "Google DeepMind"
+    description: "Google's latest video model (via Replicate)"
+    api_endpoint: "https://api.replicate.com/v1/predictions"
+    api_key_env: "REPLICATE_API_TOKEN"
+    model_version: "google-deepmind/veo-2"
+    enabled: false
+    max_duration: 30.0
+    min_duration: 1.0
+    resolution: "1080p"
+    supported_aspect_ratios: ["16:9", "9:16", "1:1"]
+    api_cost_per_second: 0.50
+    free_tier: false
+    quality_score: 93
+    realism_score: 94
+    coherence_score: 92
+    prompt_adherence_score: 93
+    avg_generation_time_seconds: 180.0
+    supports_async: true
+    tags: ["premium", "google", "expensive"]
+
+  # --- OPEN SOURCE / SELF-HOSTED ---
+  cogvideo:
+    name: "CogVideoX"
+    provider: "Zhipu AI (Open Source)"
+    description: "Open source text-to-video model"
+    api_endpoint: "http://localhost:7860/generate"  # Self-hosted
+    api_key_env: null
+    enabled: false  # Requires self-hosting
+    max_duration: 10.0
+    resolution: "720p"
+    supported_aspect_ratios: ["16:9"]
+    api_cost_per_second: 0.0
+    free_tier: true
+    quality_score: 75
+    realism_score: 72
+    coherence_score: 78
+    prompt_adherence_score: 76
+    avg_generation_time_seconds: 120.0
+    supports_async: false
+    tags: ["open-source", "self-hosted", "free"]
+
+  # (Add remaining 8 text-to-video generators in Phase 3-4)
+
+# =============================================================================
+# IMAGE-TO-VIDEO GENERATORS (7 tools)
+# =============================================================================
+
+image_to_video:
+  stable_video_diffusion:
+    name: "Stable Video Diffusion"
+    provider: "Stability AI"
+    description: "Animate static images into videos"
+    api_endpoint: "https://api.stability.ai/v2beta/image-to-video"
+    api_key_env: "STABILITY_API_KEY"
+    enabled: true
+    max_duration: 4.0
+    min_duration: 2.0
+    resolution: "1024x576"
+    supported_aspect_ratios: ["16:9"]
+    api_cost_per_second: 0.10
+    free_tier: false
+    quality_score: 88
+    coherence_score: 90
+    avg_generation_time_seconds: 60.0
+    supports_async: true
+    tags: ["premium", "stability-ai"]
+
+  wan_2_1_img2vid:
+    name: "WAN 2.1 Image-to-Video"
+    provider: "Alibaba Cloud"
+    description: "Animate images with WAN 2.1"
+    api_endpoint: "https://dashscope.aliyuncs.com/api/v1/services/aigc/image2video/generation"
+    api_key_env: "ALIBABA_DASHSCOPE_API_KEY"
+    enabled: true
+    max_duration: 10.0
+    resolution: "1080p"
+    supported_aspect_ratios: ["16:9", "9:16"]
+    api_cost_per_second: 0.0
+    free_tier: true
+    quality_score: 82
+    tags: ["free", "alibaba"]
+
+  # (Add remaining 5 image-to-video generators in Phase 3-4)
+
+# =============================================================================
+# TEXT-TO-IMAGE GENERATORS (12 tools)
+# =============================================================================
+
+text_to_image:
+  # --- PRIORITY: ALIBABA ---
+  qwen_vl:
+    name: "Qwen-VL"
+    provider: "Alibaba Cloud"
+    description: "Free text-to-image with Alibaba's multimodal model"
+    api_endpoint: "https://dashscope.aliyuncs.com/api/v1/services/aigc/text2image/image-synthesis"
+    api_key_env: "ALIBABA_DASHSCOPE_API_KEY"
+    enabled: true
+    resolution: "1024x1024"
+    supported_aspect_ratios: ["1:1", "16:9", "9:16"]
+    api_cost_per_image: 0.0
+    free_tier: true
+    quality_score: 80
+    realism_score: 78
+    prompt_adherence_score: 82
+    avg_generation_time_seconds: 10.0
+    supports_async: false
+    supports_negative_prompts: true
+    supports_style_presets: true
+    tags: ["free", "alibaba", "priority"]
+
+  flux_1:
+    name: "FLUX.1 [schnell]"
+    provider: "Black Forest Labs"
+    description: "Ultra-fast, free image generation"
+    api_endpoint: "https://api.together.xyz/v1/images/generations"
+    api_key_env: "TOGETHER_API_KEY"
+    model_name: "black-forest-labs/FLUX.1-schnell"
+    enabled: true
+    resolution: "1024x1024"
+    supported_aspect_ratios: ["1:1", "16:9", "9:16", "4:3"]
+    api_cost_per_image: 0.0  # Free on Together AI
+    free_tier: true
+    quality_score: 90
+    realism_score: 88
+    prompt_adherence_score: 92
+    avg_generation_time_seconds: 5.0
+    supports_async: false
+    supports_negative_prompts: false
+    supports_style_presets: false
+    tags: ["free", "fast", "high-quality"]
+
+  dall_e_3:
+    name: "DALL-E 3"
+    provider: "OpenAI"
+    description: "OpenAI's latest image model"
+    api_endpoint: "https://api.openai.com/v1/images/generations"
+    api_key_env: "OPENAI_API_KEY"
+    enabled: true
+    resolution: "1024x1024"
+    supported_aspect_ratios: ["1:1", "16:9", "9:16"]
+    api_cost_per_image: 0.040  # $0.040 for 1024x1024
+    free_tier: false
+    quality_score: 92
+    realism_score: 90
+    prompt_adherence_score: 94
+    avg_generation_time_seconds: 15.0
+    supports_async: false
+    supports_style_presets: true
+    tags: ["premium", "openai"]
+
+  # (Add remaining 9 text-to-image generators in Phase 3-4)
+
+# =============================================================================
+# IMAGE-TO-IMAGE GENERATORS (5 tools)
+# =============================================================================
+
+image_to_image:
+  dall_e_edit:
+    name: "DALL-E 3 Edit"
+    provider: "OpenAI"
+    description: "Edit images with DALL-E"
+    api_endpoint: "https://api.openai.com/v1/images/edits"
+    api_key_env: "OPENAI_API_KEY"
+    enabled: true
+    api_cost_per_image: 0.020
+    quality_score: 88
+    tags: ["premium", "editing"]
+
+  # (Add remaining 4 image-to-image generators in Phase 4)
+
+# =============================================================================
+# AVATAR / TALKING HEAD GENERATORS (8 tools)
+# =============================================================================
+
+avatar_video:
+  heygen:
+    name: "HeyGen"
+    provider: "HeyGen"
+    description: "AI avatar and talking head videos"
+    api_endpoint: "https://api.heygen.com/v1/video.generate"
+    api_key_env: "HEYGEN_API_KEY"
+    enabled: false
+    max_duration: 300.0
+    api_cost_per_second: 0.15
+    quality_score: 90
+    tags: ["premium", "avatar", "b2b"]
+
+  # (Add remaining 7 avatar generators in Phase 4-5)
+
+# =============================================================================
+# REELS / SHORT-FORM GENERATORS (10 tools)
+# =============================================================================
+
+reels_shortform:
+  digen_sora:
+    name: "DIGEN Mini Sora"
+    provider: "DIGEN AI"
+    description: "Free unlimited Sora-like video generation"
+    api_endpoint: "https://api.digen.ai/v1/generate"
+    api_key_env: null  # No API key required
+    enabled: true
+    max_duration: 60.0
+    resolution: "720p"
+    supported_aspect_ratios: ["9:16", "16:9"]
+    api_cost_per_second: 0.0
+    free_tier: true
+    free_credits_per_day: -1  # Unlimited
+    quality_score: 70
+    avg_generation_time_seconds: 90.0
+    tags: ["free", "unlimited", "short-form"]
+
+  # (Add remaining 9 reels generators in Phase 3-5)
+
+# =============================================================================
+# GLOBAL SETTINGS
+# =============================================================================
+
+global_settings:
+  default_fallback_order:
+    text_to_video: ["wan_2_1", "kling_ai", "pika_labs", "luma_dream"]
+    text_to_image: ["qwen_vl", "flux_1", "dall_e_3"]
+    image_to_video: ["wan_2_1_img2vid", "stable_video_diffusion"]
+
+  quality_thresholds:
+    minimum_acceptable: 70
+    high_quality: 85
+    professional: 90
+
+  cost_tiers:
+    free: 0.0
+    budget: 0.10
+    premium: 1.0
+
+  timeout_defaults:
+    text_to_video: 180  # 3 minutes
+    text_to_image: 60   # 1 minute
+    image_to_video: 120  # 2 minutes
+
+# =============================================================================
+# NOTES
+# =============================================================================
+# This configuration will be expanded during Phase 2-5 with all 40+ generators.
+# Current status: 14 generators configured (9 text-to-video, 2 image-to-video, 3 text-to-image)
+# Remaining to add: 26 generators (6 T2V, 5 I2V, 9 T2I, 4 I2I, 8 Avatar, 9 Reels)

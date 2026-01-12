@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IA Factory - AI-Powered Content Automation Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .card-hover:hover { transform: translateY(-5px); transition: transform 0.3s ease; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Language Switcher -->
+    <div class="fixed top-4 right-4 z-50 flex space-x-2">
+        <a href="index.html" class="px-3 py-1 bg-gray-200 text-gray-700 rounded-md text-sm font-medium hover:bg-gray-300">FR</a>
+        <a href="index_en.html" class="px-3 py-1 bg-indigo-600 text-white rounded-md text-sm font-medium">EN</a>
+        <a href="index_ar.html" class="px-3 py-1 bg-gray-200 text-gray-700 rounded-md text-sm font-medium hover:bg-gray-300">AR</a>
+    </div>
+
+    <!-- Hero Section -->
+    <header class="gradient-bg text-white">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold">🎬 IA Factory</div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#features" class="hover:text-indigo-200">Features</a>
+                <a href="#phases" class="hover:text-indigo-200">Phases</a>
+                <a href="#pricing" class="hover:text-indigo-200">Pricing</a>
+                <a href="#api" class="hover:text-indigo-200">API</a>
+            </div>
+            <button class="bg-white text-indigo-600 px-6 py-2 rounded-lg font-semibold hover:bg-indigo-100">
+                Get Started
+            </button>
+        </nav>
+        
+        <div class="container mx-auto px-6 py-20 text-center">
+            <h1 class="text-5xl md:text-6xl font-bold mb-6">
+                Automate Your Content<br>with AI
+            </h1>
+            <p class="text-xl md:text-2xl mb-10 text-indigo-100 max-w-3xl mx-auto">
+                Create, edit, and distribute professional videos across all platforms with a single AI-powered tool.
+            </p>
+            <div class="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-4">
+                <button class="bg-white text-indigo-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-indigo-100">
+                    Free Trial
+                </button>
+                <button class="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-indigo-600">
+                    Watch Demo
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-16 text-gray-800">Why IA Factory?</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-xl shadow-lg card-hover">
+                    <div class="text-4xl mb-4">🤖</div>
+                    <h3 class="text-xl font-semibold mb-3">Advanced AI</h3>
+                    <p class="text-gray-600">Claude AI for scripts, VEO 3 for videos. Professional-quality content generation in minutes.</p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-lg card-hover">
+                    <div class="text-4xl mb-4">🌐</div>
+                    <h3 class="text-xl font-semibold mb-3">Multi-Platform</h3>
+                    <p class="text-gray-600">Publish simultaneously to Instagram, TikTok, YouTube, and LinkedIn with auto-adapted formats.</p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-lg card-hover">
+                    <div class="text-4xl mb-4">📊</div>
+                    <h3 class="text-xl font-semibold mb-3">Smart Analytics</h3>
+                    <p class="text-gray-600">Unified dashboard with AI recommendations to optimize your performance.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Phases Section -->
+    <section id="phases" class="py-20 bg-gray-100">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-16 text-gray-800">The 4 Phases</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <div class="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600 font-bold text-xl mb-4">1</div>
+                    <h3 class="text-lg font-semibold mb-2">🏢 Brand</h3>
+                    <p class="text-gray-600 text-sm">Configure your brand identity, voice, tone, and content pillars.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 font-bold text-xl mb-4">2</div>
+                    <h3 class="text-lg font-semibold mb-2">📝 Creation</h3>
+                    <p class="text-gray-600 text-sm">Generate scripts with Claude and videos with VEO 3.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <div class="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center text-pink-600 font-bold text-xl mb-4">3</div>
+                    <h3 class="text-lg font-semibold mb-2">🚀 Distribution</h3>
+                    <p class="text-gray-600 text-sm">Publish to all platforms with intelligent scheduling.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-green-600 font-bold text-xl mb-4">4</div>
+                    <h3 class="text-lg font-semibold mb-2">📊 Analytics</h3>
+                    <p class="text-gray-600 text-sm">Analyze your performance and receive AI recommendations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- API Section -->
+    <section id="api" class="py-20">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-8 text-gray-800">Powerful REST API</h2>
+            <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+                Integrate IA Factory into your applications with our comprehensive and well-documented API.
+            </p>
+            <div class="bg-gray-900 rounded-xl p-6 max-w-4xl mx-auto overflow-x-auto">
+                <pre class="text-green-400 text-sm"><code># Create a brand
+curl -X POST https://www.iafactoryalgeria.com/ia-factory/api/brand/setup \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "My Brand",
+    "industry": "tech",
+    "tone": "professional"
+  }'
+
+# Generate a script
+curl -X POST https://www.iafactoryalgeria.com/ia-factory/api/content/generate-scripts \
+  -H "Content-Type: application/json" \
+  -d '{
+    "brand_id": "brand_123",
+    "topic": "Introduction to AI",
+    "content_type": "short_video"
+  }'</code></pre>
+            </div>
+            <div class="text-center mt-8">
+                <a href="https://www.iafactoryalgeria.com/ia-factory/docs" class="bg-indigo-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-indigo-700">
+                    API Documentation
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-20 bg-gray-100">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-16 text-gray-800">Simple Pricing</h2>
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <h3 class="text-xl font-semibold mb-2">Starter</h3>
+                    <p class="text-gray-500 mb-4">For individual creators</p>
+                    <div class="text-4xl font-bold mb-6">$29<span class="text-lg text-gray-500">/month</span></div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span> 10 videos/month</li>
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span> 2 platforms</li>
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span> Basic analytics</li>
+                    </ul>
+                    <button class="w-full bg-gray-100 text-gray-800 py-3 rounded-lg font-semibold hover:bg-gray-200">
+                        Get Started
+                    </button>
+                </div>
+                <div class="bg-indigo-600 text-white p-8 rounded-xl shadow-lg transform scale-105">
+                    <div class="text-xs bg-indigo-500 inline-block px-3 py-1 rounded-full mb-4">POPULAR</div>
+                    <h3 class="text-xl font-semibold mb-2">Pro</h3>
+                    <p class="text-indigo-200 mb-4">For teams</p>
+                    <div class="text-4xl font-bold mb-6">$99<span class="text-lg text-indigo-200">/month</span></div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center"><span class="mr-2">✓</span> 50 videos/month</li>
+                        <li class="flex items-center"><span class="mr-2">✓</span> All platforms</li>
+                        <li class="flex items-center"><span class="mr-2">✓</span> Advanced analytics</li>
+                        <li class="flex items-center"><span class="mr-2">✓</span> 5 team members</li>
+                    </ul>
+                    <button class="w-full bg-white text-indigo-600 py-3 rounded-lg font-semibold hover:bg-indigo-100">
+                        Free Trial
+                    </button>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <h3 class="text-xl font-semibold mb-2">Enterprise</h3>
+                    <p class="text-gray-500 mb-4">Custom solutions</p>
+                    <div class="text-4xl font-bold mb-6">Custom</div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span> Unlimited videos</li>
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span> Dedicated API</li>
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span> Priority support</li>
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span> Training included</li>
+                    </ul>
+                    <button class="w-full bg-gray-100 text-gray-800 py-3 rounded-lg font-semibold hover:bg-gray-200">
+                        Contact Us
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="text-2xl font-bold mb-4">🎬 IA Factory</div>
+                    <p class="text-gray-400">AI-powered content automation for modern creators.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Product</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#features" class="hover:text-white">Features</a></li>
+                        <li><a href="#pricing" class="hover:text-white">Pricing</a></li>
+                        <li><a href="#api" class="hover:text-white">API</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Resources</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="https://www.iafactoryalgeria.com/ia-factory/docs" class="hover:text-white">Documentation</a></li>
+                        <li><a href="#" class="hover:text-white">Tutorials</a></li>
+                        <li><a href="#" class="hover:text-white">Blog</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Contact</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>support@iafactory.dz</li>
+                        <li>Algiers, Algeria</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                © 2025 IA Factory. All rights reserved.
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

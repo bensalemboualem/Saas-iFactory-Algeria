@@ -1,0 +1,180 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <defs>
+    <linearGradient id="bgDouanes" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#dbeafe;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#bfdbfe;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="container" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#dc2626;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#b91c1c;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="official" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e40af;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e3a8a;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="300" fill="url(#bgDouanes)"/>
+
+  <!-- Ocean/Sky -->
+  <rect x="0" y="180" width="400" height="120" fill="#0ea5e9" opacity="0.2"/>
+
+  <!-- Ground/Dock -->
+  <rect x="0" y="220" width="400" height="80" fill="#78716c"/>
+  <rect x="0" y="220" width="400" height="5" fill="#57534e"/>
+
+  <!-- Shipping container (main) with Algerian flag -->
+  <g transform="translate(120, 140)">
+    <!-- Container body -->
+    <rect x="0" y="0" width="120" height="80" fill="url(#container)"/>
+    <rect x="2" y="2" width="116" height="76" fill="#dc2626"/>
+
+    <!-- Corrugation lines -->
+    <line x1="15" y1="0" x2="15" y2="80" stroke="#b91c1c" stroke-width="2"/>
+    <line x1="30" y1="0" x2="30" y2="80" stroke="#b91c1c" stroke-width="2"/>
+    <line x1="45" y1="0" x2="45" y2="80" stroke="#b91c1c" stroke-width="2"/>
+    <line x1="60" y1="0" x2="60" y2="80" stroke="#b91c1c" stroke-width="2"/>
+    <line x1="75" y1="0" x2="75" y2="80" stroke="#b91c1c" stroke-width="2"/>
+    <line x1="90" y1="0" x2="90" y2="80" stroke="#b91c1c" stroke-width="2"/>
+    <line x1="105" y1="0" x2="105" y2="80" stroke="#b91c1c" stroke-width="2"/>
+
+    <!-- Algerian flag on container -->
+    <rect x="30" y="20" width="30" height="20" fill="#006233"/>
+    <rect x="60" y="20" width="30" height="20" fill="#ffffff"/>
+    <!-- Crescent and star -->
+    <path d="M 65,30 A 6,6 0 1,1 65,38 A 5,5 0 1,0 65,30" fill="#d21034"/>
+    <path d="M 75,34 L 76,31 L 79,31 L 77,29 L 78,26 L 75,28 L 72,26 L 73,29 L 71,31 L 74,31 Z" fill="#d21034"/>
+
+    <!-- Container ID -->
+    <text x="10" y="72" font-family="monospace" font-size="10" fill="#ffffff" font-weight="bold">DZA-2025-4152</text>
+
+    <!-- Lock -->
+    <rect x="108" y="35" width="8" height="12" rx="1" fill="#fbbf24"/>
+    <circle cx="112" cy="41" r="2" fill="#92400e"/>
+  </g>
+
+  <!-- Second container (background) -->
+  <g transform="translate(250, 150)">
+    <rect x="0" y="0" width="100" height="70" fill="#3b82f6"/>
+    <line x1="12" y1="0" x2="12" y2="70" stroke="#2563eb" stroke-width="2"/>
+    <line x1="25" y1="0" x2="25" y2="70" stroke="#2563eb" stroke-width="2"/>
+    <line x1="38" y1="0" x2="38" y2="70" stroke="#2563eb" stroke-width="2"/>
+    <line x1="50" y1="0" x2="50" y2="70" stroke="#2563eb" stroke-width="2"/>
+    <line x1="62" y1="0" x2="62" y2="70" stroke="#2563eb" stroke-width="2"/>
+    <line x1="75" y1="0" x2="75" y2="70" stroke="#2563eb" stroke-width="2"/>
+    <line x1="88" y1="0" x2="88" y2="70" stroke="#2563eb" stroke-width="2"/>
+  </g>
+
+  <!-- Official customs stamp -->
+  <g transform="translate(80, 80)">
+    <circle cx="0" cy="0" r="35" fill="#dc2626"/>
+    <circle cx="0" cy="0" r="32" fill="none" stroke="#ffffff" stroke-width="3"/>
+    <circle cx="0" cy="0" r="25" fill="none" stroke="#ffffff" stroke-width="2"/>
+
+    <!-- Text on stamp -->
+    <text x="0" y="-8" font-family="Arial" font-size="10" fill="#ffffff" text-anchor="middle" font-weight="bold">DOUANES</text>
+    <text x="0" y="3" font-family="Arial" font-size="8" fill="#ffffff" text-anchor="middle" font-weight="bold">ALGÉRIE</text>
+    <text x="0" y="12" font-family="Arial" font-size="7" fill="#fef3c7" text-anchor="middle" font-weight="bold">2025</text>
+
+    <!-- Star -->
+    <path d="M 0,-25 L 1,-22 L 4,-22 L 2,-20 L 3,-17 L 0,-19 L -3,-17 L -2,-20 L -4,-22 L -1,-22 Z" fill="#fef3c7"/>
+  </g>
+
+  <!-- Official documents -->
+  <g transform="translate(280, 50)">
+    <rect x="5" y="5" width="70" height="90" rx="4" fill="#cbd5e1"/>
+    <rect x="0" y="0" width="70" height="90" rx="4" fill="#ffffff"/>
+    <rect x="2" y="2" width="66" height="86" fill="#f8fafc"/>
+
+    <!-- Header -->
+    <rect x="8" y="8" width="54" height="15" fill="url(#official)"/>
+    <text x="35" y="18" font-family="Arial" font-size="8" fill="#ffffff" text-anchor="middle" font-weight="bold">DOCUMENT</text>
+
+    <!-- Algerian emblem -->
+    <g transform="translate(35, 35)">
+      <path d="M 0,-8 A 6,6 0 1,1 0,4 A 5,5 0 1,0 0,-8" fill="#006233"/>
+      <path d="M 8,-2 L 9,1 L 12,1 L 10,3 L 11,6 L 8,4 L 5,6 L 6,3 L 4,1 L 7,1 Z" fill="#d4af37"/>
+    </g>
+
+    <!-- Document lines -->
+    <line x1="10" y1="50" x2="60" y2="50" stroke="#1e40af" stroke-width="2"/>
+    <line x1="10" y1="58" x2="55" y2="58" stroke="#94a3b8" stroke-width="1.5"/>
+    <line x1="10" y1="65" x2="58" y2="65" stroke="#94a3b8" stroke-width="1.5"/>
+    <line x1="10" y1="72" x2="50" y2="72" stroke="#94a3b8" stroke-width="1.5"/>
+
+    <!-- Official seal -->
+    <circle cx="55" cy="80" r="7" fill="none" stroke="#dc2626" stroke-width="2"/>
+    <path d="M 55,74 L 56,77 L 59,77 L 57,79 L 58,82 L 55,80 L 52,82 L 53,79 L 51,77 L 54,77 Z" fill="#dc2626"/>
+  </g>
+
+  <!-- Barcode scanner -->
+  <g transform="translate(50, 190)">
+    <rect x="0" y="0" width="60" height="40" rx="4" fill="#1f2937"/>
+    <rect x="3" y="3" width="54" height="34" rx="3" fill="#374151"/>
+
+    <!-- Screen -->
+    <rect x="8" y="8" width="44" height="20" rx="2" fill="#0ea5e9"/>
+
+    <!-- Barcode on screen -->
+    <line x1="12" y1="12" x2="12" y2="24" stroke="#000000" stroke-width="2"/>
+    <line x1="16" y1="12" x2="16" y2="24" stroke="#000000" stroke-width="1"/>
+    <line x1="19" y1="12" x2="19" y2="24" stroke="#000000" stroke-width="2"/>
+    <line x1="23" y1="12" x2="23" y2="24" stroke="#000000" stroke-width="1"/>
+    <line x1="26" y1="12" x2="26" y2="24" stroke="#000000" stroke-width="3"/>
+    <line x1="31" y1="12" x2="31" y2="24" stroke="#000000" stroke-width="1"/>
+    <line x1="34" y1="12" x2="34" y2="24" stroke="#000000" stroke-width="2"/>
+    <line x1="38" y1="12" x2="38" y2="24" stroke="#000000" stroke-width="1"/>
+    <line x1="41" y1="12" x2="41" y2="24" stroke="#000000" stroke-width="2"/>
+    <line x1="45" y1="12" x2="45" y2="24" stroke="#000000" stroke-width="1"/>
+    <line x1="48" y1="12" x2="48" y2="24" stroke="#000000" stroke-width="2"/>
+
+    <!-- Button -->
+    <circle cx="30" cy="32" r="3" fill="#10b981"/>
+  </g>
+
+  <!-- Globe/International -->
+  <g transform="translate(150, 60)">
+    <circle cx="0" cy="0" r="25" fill="#3b82f6" opacity="0.2"/>
+    <circle cx="0" cy="0" r="22" fill="none" stroke="#1e40af" stroke-width="2"/>
+
+    <!-- Latitude lines -->
+    <ellipse cx="0" cy="0" rx="22" ry="8" fill="none" stroke="#1e40af" stroke-width="1"/>
+    <ellipse cx="0" cy="0" rx="22" ry="15" fill="none" stroke="#1e40af" stroke-width="1"/>
+
+    <!-- Longitude line -->
+    <ellipse cx="0" cy="0" rx="8" ry="22" fill="none" stroke="#1e40af" stroke-width="1"/>
+
+    <!-- Plane icon -->
+    <g transform="translate(12, -12) rotate(45)">
+      <polygon points="0,-8 2,-6 8,0 2,2 2,6 0,6 0,2 -8,6 -8,4 -2,0 -8,-4 -8,-6 0,-2" fill="#10b981"/>
+    </g>
+  </g>
+
+  <!-- Truck/Transport -->
+  <g transform="translate(340, 250)">
+    <!-- Cabin -->
+    <rect x="0" y="-15" width="25" height="20" rx="2" fill="#1e40af"/>
+    <rect x="2" y="-13" width="10" height="8" fill="#38bdf8" opacity="0.5"/>
+
+    <!-- Container back -->
+    <rect x="-40" y="-20" width="40" height="25" fill="#6b7280"/>
+
+    <!-- Wheels -->
+    <circle cx="-30" cy="8" r="5" fill="#1f2937"/>
+    <circle cx="-10" cy="8" r="5" fill="#1f2937"/>
+    <circle cx="15" cy="8" r="5" fill="#1f2937"/>
+  </g>
+
+  <!-- Checkmark approved -->
+  <g transform="translate(200, 250)">
+    <circle cx="0" cy="0" r="18" fill="#10b981"/>
+    <path d="M -6,0 L -2,6 L 8,-6" stroke="#ffffff" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Star of Algeria -->
+  <g transform="translate(370, 20)">
+    <path d="M 0,-12 L 2.8,-3.7 L 11.4,-3.7 L 4.7,1.7 L 7.4,9.7 L 0,4.3 L -7.4,9.7 L -4.7,1.7 L -11.4,-3.7 L -2.8,-3.7 Z"
+          fill="#d4af37"/>
+  </g>
+</svg>

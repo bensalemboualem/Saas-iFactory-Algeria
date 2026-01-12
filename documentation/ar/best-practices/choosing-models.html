@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختيار النماذج - IAFactory Algeria</title>
+    <link rel="stylesheet" href="../../assets/css/docs-theme.css">
+</head>
+<body>
+    <header class="docs-header">
+        <div class="docs-logo">
+            <img src="../../assets/images/logo.png" alt="IAFactory Algeria">
+            <span>IAFactory Algeria</span>
+        </div>
+        <nav class="main-nav">
+            <a href="../index.html">التوثيق</a>
+            <a href="https://app.iafactory-algeria.com">التطبيق</a>
+            <a href="../api/index.html">واجهة برمجية</a>
+        </nav>
+        <div class="docs-controls">
+            <div class="language-switcher">
+                <button data-lang="fr">FR</button>
+                <button data-lang="en">EN</button>
+                <button data-lang="ar" class="active">AR</button>
+            </div>
+            <div class="theme-toggle">
+                <div class="theme-toggle-slider"></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <!-- ...existing sidebar... -->
+        </aside>
+
+        <main class="docs-main">
+            <h1>اختيار النماذج</h1>
+
+            <p class="lead">دليل لاختيار نموذج الذكاء الاصطناعي الأمثل بناءً على حالة الاستخدام والميزانية ومتطلبات الأداء.</p>
+
+            <h2 id="overview">نظرة عامة على النماذج</h2>
+
+            <p>توفر IAFactory Algeria الوصول إلى مجموعة واسعة من نماذج الذكاء الاصطناعي. لكل نموذج نقاط قوته وحالات الاستخدام المثالية.</p>
+
+            <h3 id="categories">فئات النماذج</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>الفئة</th>
+                        <th>النماذج</th>
+                        <th>الاستخدام الأساسي</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>الرائدة</strong></td>
+                        <td>GPT-4.1، Claude Sonnet 4، Gemini 2.5 Pro</td>
+                        <td>المهام المعقدة، التفكير المتقدم</td>
+                    </tr>
+                    <tr>
+                        <td><strong>السريعة</strong></td>
+                        <td>GPT-4.1-mini، Claude Haiku، Gemini Flash</td>
+                        <td>استجابات سريعة، تكلفة منخفضة</td>
+                    </tr>
+                    <tr>
+                        <td><strong>الكود</strong></td>
+                        <td>Codestral، DeepSeek Coder، Claude Code</td>
+                        <td>البرمجة، تصحيح الأخطاء، إعادة الهيكلة</td>
+                    </tr>
+                    <tr>
+                        <td><strong>البحث</strong></td>
+                        <td>Perplexity، Grok</td>
+                        <td>البحث على الويب، الأحداث الجارية</td>
+                    </tr>
+                    <tr>
+                        <td><strong>المحلية</strong></td>
+                        <td>Ollama (Llama 3.3، Mistral، Qwen)</td>
+                        <td>الخصوصية، الاستخدام دون اتصال</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 id="selection-criteria">معايير الاختيار</h2>
+
+            <h3 id="performance">1. الأداء والجودة</h3>
+
+            <div class="alert alert-info">
+                <strong>القاعدة العامة:</strong> النماذج الأكبر تنتج استجابات أفضل جودة لكنها أبطأ وأغلى.
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>النموذج</th>
+                        <th>الجودة</th>
+                        <th>السرعة</th>
+                        <th>التكلفة</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>GPT-4.1</td>
+                        <td>ممتازة</td>
+                        <td>متوسطة</td>
+                        <td>$$$</td>
+                    </tr>
+                    <tr>
+                        <td>Claude Sonnet 4</td>
+                        <td>ممتازة</td>
+                        <td>سريعة</td>
+                        <td>$$$</td>
+                    </tr>
+                    <tr>
+                        <td>GPT-4.1-mini</td>
+                        <td>جيدة جدًا</td>
+                        <td>سريعة جدًا</td>
+                        <td>$</td>
+                    </tr>
+                    <tr>
+                        <td>Claude Haiku</td>
+                        <td>جيدة</td>
+                        <td>فائقة السرعة</td>
+                        <td>$</td>
+                    </tr>
+                    <tr>
+                        <td>Llama 3.3 70B</td>
+                        <td>جيدة جدًا</td>
+                        <td>متغيرة</td>
+                        <td>مجاني (محلي)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 id="use-case">2. حالة الاستخدام</h3>
+
+            <h4>التطوير والكود</h4>
+
+            <pre><code class="language-json">{
+  "task": "code_generation",
+  "recommended": ["codestral-2508", "claude-sonnet-4", "gpt-4.1"],
+  "budget": ["deepseek-coder", "gpt-4.1-mini"]
+}</code></pre>
+
+            <p><strong>لماذا:</strong></p>
+            <ul>
+                <li><strong>Codestral</strong>: مُحسّن خصيصًا للكود</li>
+                <li><strong>Claude Sonnet 4</strong>: ممتاز في فهم سياق المشروع</li>
+                <li><strong>GPT-4.1</strong>: متعدد الاستخدامات مع قدرات برمجة قوية</li>
+            </ul>
+
+            <h4>الكتابة والمحتوى</h4>
+
+            <pre><code class="language-json">{
+  "task": "content_writing",
+  "recommended": ["claude-sonnet-4", "gpt-4.1"],
+  "budget": ["gpt-4.1-mini", "mistral-large"]
+}</code></pre>
+
+            <h4>تحليل البيانات</h4>
+
+            <pre><code class="language-json">{
+  "task": "data_analysis",
+  "recommended": ["gpt-4.1", "claude-sonnet-4"],
+  "for_code": ["codestral-2508", "deepseek-coder"]
+}</code></pre>
+
+            <h4>الدردشة ودعم العملاء</h4>
+
+            <pre><code class="language-json">{
+  "task": "customer_support",
+  "recommended": ["gpt-4.1-mini", "claude-haiku"],
+  "reason": "سريع، اقتصادي، كافٍ للأسئلة الشائعة"
+}</code></pre>
+
+            <h4>البحث والأخبار</h4>
+
+            <pre><code class="language-json">{
+  "task": "web_search",
+  "recommended": ["perplexity-sonar", "grok"],
+  "note": "هذه النماذج لديها وصول مباشر للويب"
+}</code></pre>
+
+            <h3 id="context-window">3. نافذة السياق</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>النموذج</th>
+                        <th>نافذة السياق</th>
+                        <th>مثالي لـ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Claude Sonnet 4</td>
+                        <td>200 ألف رمز</td>
+                        <td>المستندات الطويلة، قواعد الكود</td>
+                    </tr>
+                    <tr>
+                        <td>GPT-4.1</td>
+                        <td>128 ألف رمز</td>
+                        <td>المستندات المتوسطة</td>
+                    </tr>
+                    <tr>
+                        <td>Gemini 2.5 Pro</td>
+                        <td>1 مليون رمز</td>
+                        <td>المستندات الطويلة جدًا</td>
+                    </tr>
+                    <tr>
+                        <td>GPT-4.1-mini</td>
+                        <td>128 ألف رمز</td>
+                        <td>الاستخدام العام</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 id="cost">4. التكلفة</h3>
+
+            <div class="alert alert-warning">
+                <strong>تحسين التكلفة:</strong>
+                <ul>
+                    <li>استخدم نماذج mini/flash للنماذج الأولية</li>
+                    <li>احتفظ بالنماذج الرائدة للإنتاج</li>
+                    <li>فعّل التخزين المؤقت للاستعلامات المتكررة</li>
+                </ul>
+            </div>
+
+            <h2 id="recommendations">التوصيات حسب السيناريو</h2>
+
+            <h3 id="startup">الشركة الناشئة / MVP</h3>
+
+            <pre><code class="language-yaml">development:
+  model: gpt-4.1-mini
+  reason: نسبة جودة/سعر جيدة
+
+production:
+  model: gpt-4.1
+  fallback: gpt-4.1-mini
+
+cost_optimization:
+  cache: true
+  batch_requests: true</code></pre>
+
+            <h3 id="enterprise">المؤسسات</h3>
+
+            <pre><code class="language-yaml">primary:
+  model: claude-sonnet-4
+  reason: أفضل جودة، أمان
+
+code_tasks:
+  model: codestral-2508
+
+support_chat:
+  model: gpt-4.1-mini
+
+sensitive_data:
+  model: ollama/llama3.3
+  reason: البيانات تبقى محلية</code></pre>
+
+            <h3 id="research">البحث / التعليم</h3>
+
+            <pre><code class="language-yaml">analysis:
+  model: gpt-4.1
+  reason: تفكير متقدم
+
+literature_review:
+  model: perplexity-sonar
+  reason: وصول للويب، اقتباسات
+
+local_experiments:
+  model: ollama/mistral
+  reason: مجاني، تحكم كامل</code></pre>
+
+            <h2 id="model-routing">التوجيه الذكي</h2>
+
+            <p>تدعم IAFactory التوجيه التلقائي للطلبات إلى النموذج الأمثل:</p>
+
+            <pre><code class="language-python">from iafactory import IAFactory
+
+client = IAFactory(api_key="your_key")
+
+# تكوين الموجه
+router_config = {
+    "rules": [
+        {
+            "condition": "task == 'code'",
+            "model": "codestral-2508"
+        },
+        {
+            "condition": "tokens > 50000",
+            "model": "claude-sonnet-4"
+        },
+        {
+            "condition": "urgency == 'high'",
+            "model": "gpt-4.1-mini"
+        }
+    ],
+    "default": "gpt-4.1"
+}
+
+response = client.chat.completions.create(
+    model="auto",  # توجيه تلقائي
+    messages=[...],
+    router_config=router_config
+)</code></pre>
+
+            <h2 id="testing">اختبار النماذج</h2>
+
+            <p>قبل الاختيار، اختبر عدة نماذج على حالات الاستخدام الحقيقية:</p>
+
+            <pre><code class="language-python">models_to_test = [
+    "gpt-4.1",
+    "claude-sonnet-4",
+    "gpt-4.1-mini",
+    "codestral-2508"
+]
+
+test_prompt = "أمر الاختبار الخاص بك"
+
+for model in models_to_test:
+    response = client.chat.completions.create(
+        model=model,
+        messages=[{"role": "user", "content": test_prompt}]
+    )
+    print(f"=== {model} ===")
+    print(f"الوقت: {response.usage.total_time}ms")
+    print(f"الرموز: {response.usage.total_tokens}")
+    print(f"التكلفة: ${response.usage.cost}")
+    print(response.choices[0].message.content[:500])
+    print()</code></pre>
+
+            <h2 id="best-practices">أفضل الممارسات</h2>
+
+            <ul>
+                <li><strong>ابدأ صغيرًا</strong>: اختبر مع gpt-4.1-mini قبل الانتقال إلى نماذج أقوى</li>
+                <li><strong>قِس</strong>: تتبع المقاييس (الوقت، التكلفة، الجودة) لكل نموذج</li>
+                <li><strong>تكيّف</strong>: قد تتطلب المهام المختلفة نماذج مختلفة</li>
+                <li><strong>خزّن مؤقتًا</strong>: فعّل التخزين المؤقت للاستعلامات المتكررة</li>
+                <li><strong>احتياطي</strong>: كوّن نماذج احتياطية للتوافر</li>
+            </ul>
+
+            <div class="alert alert-success">
+                <strong>الخطوة التالية:</strong>
+                <p>راجع دليلنا حول <a href="./writing-prompts.html">كتابة أوامر فعالة</a> لتعظيم نتائج النموذج.</p>
+            </div>
+        </main>
+
+        <aside class="docs-toc">
+            <h3 class="docs-toc-title">في هذه الصفحة</h3>
+            <ul></ul>
+        </aside>
+    </div>
+
+    <script src="../../assets/js/docs-theme.js"></script>
+</body>
+</html>

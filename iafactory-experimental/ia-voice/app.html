@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎤 Agent Vocal Pro - IAFactory Algeria</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #10b981;
+      --primary-dark: #059669;
+      --secondary: #3b82f6;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --success: #10b981;
+      --bg: #0f172a;
+      --bg-card: #1e293b;
+      --bg-elevated: #334155;
+      --text: #f1f5f9;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+      --border: #334155;
+      --shadow: rgba(0, 0, 0, 0.3);
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* Header */
+    header {
+      background: var(--bg-card);
+      border-bottom: 2px solid var(--primary);
+      padding: 20px 0;
+      margin-bottom: 30px;
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .lang-selector {
+      display: flex;
+      gap: 8px;
+      background: var(--bg-elevated);
+      padding: 4px;
+      border-radius: 8px;
+    }
+
+    .lang-btn {
+      padding: 8px 16px;
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+
+    .lang-btn.active {
+      background: var(--primary);
+      color: white;
+    }
+
+    .lang-btn:hover:not(.active) {
+      background: var(--border);
+      color: var(--text);
+    }
+
+    /* Main Grid */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 968px) {
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Card */
+    .card {
+      background: var(--bg-card);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 6px var(--shadow);
+    }
+
+    .card-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Recorder Section */
+    .recorder-area {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .mic-button {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: none;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      font-size: 3rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 8px 16px rgba(16, 185, 129, 0.3);
+      position: relative;
+    }
+
+    .mic-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 24px rgba(16, 185, 129, 0.4);
+    }
+
+    .mic-button.recording {
+      background: linear-gradient(135deg, var(--danger), #dc2626);
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.9; }
+    }
+
+    .mic-button.processing {
+      background: linear-gradient(135deg, var(--warning), #d97706);
+      cursor: not-allowed;
+    }
+
+    .recorder-status {
+      margin-top: 20px;
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+    }
+
+    .recording-timer {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--danger);
+      margin-top: 10px;
+    }
+
+    /* Upload Section */
+    .upload-area {
+      border: 2px dashed var(--border);
+      border-radius: 12px;
+      padding: 40px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin: 20px 0;
+    }
+
+    .upload-area:hover {
+      border-color: var(--primary);
+      background: rgba(16, 185, 129, 0.05);
+    }
+
+    .upload-area.drag-over {
+      border-color: var(--primary);
+      background: rgba(16, 185, 129, 0.1);
+    }
+
+    #fileInput {
+      display: none;
+    }
+
+    .upload-icon {
+      font-size: 3rem;
+      margin-bottom: 12px;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: var(--secondary);
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      background: #2563eb;
+    }
+
+    .btn-danger {
+      background: var(--danger);
+      color: white;
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Context Selector */
+    .context-selector {
+      margin: 20px 0;
+    }
+
+    select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--bg-elevated);
+      color: var(--text);
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    /* Transcription Display */
+    .transcription-box {
+      background: var(--bg-elevated);
+      border-radius: 8px;
+      padding: 20px;
+      min-height: 200px;
+      max-height: 400px;
+      overflow-y: auto;
+      margin: 20px 0;
+      white-space: pre-wrap;
+      line-height: 1.8;
+    }
+
+    .transcription-box:empty::before {
+      content: "La transcription apparaîtra ici...";
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    /* Segments Timeline */
+    .segments-container {
+      margin-top: 20px;
+    }
+
+    .segment-item {
+      background: var(--bg-elevated);
+      padding: 12px;
+      margin-bottom: 8px;
+      border-radius: 6px;
+      border-left: 3px solid var(--primary);
+    }
+
+    .segment-time {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-bottom: 4px;
+    }
+
+    .segment-text {
+      color: var(--text);
+    }
+
+    /* Actions */
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    /* Loading Spinner */
+    .spinner {
+      border: 3px solid var(--border);
+      border-top: 3px solid var(--primary);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+      display: none;
+    }
+
+    .spinner.active {
+      display: block;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Status Messages */
+    .status-message {
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin: 12px 0;
+      display: none;
+    }
+
+    .status-message.show {
+      display: block;
+    }
+
+    .status-message.success {
+      background: rgba(16, 185, 129, 0.2);
+      border-left: 4px solid var(--success);
+      color: var(--success);
+    }
+
+    .status-message.error {
+      background: rgba(239, 68, 68, 0.2);
+      border-left: 4px solid var(--danger);
+      color: var(--danger);
+    }
+
+    .status-message.info {
+      background: rgba(59, 130, 246, 0.2);
+      border-left: 4px solid var(--secondary);
+      color: var(--secondary);
+    }
+
+    /* Audio Player */
+    audio {
+      width: 100%;
+      margin: 12px 0;
+    }
+
+    /* Stats */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    .stat-card {
+      background: var(--bg-elevated);
+      padding: 16px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <div class="brand">
+          <span style="font-size: 2rem;">🎤</span>
+          <h1>Agent Vocal Professionnel</h1>
+        </div>
+        <div class="lang-selector">
+          <button class="lang-btn active" data-lang="fr">🇫🇷 Français</button>
+          <button class="lang-btn" data-lang="ar">🇩🇿 العربية</button>
+          <button class="lang-btn" data-lang="en">🇬🇧 English</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="main-grid">
+      <!-- Recording Section -->
+      <div class="card">
+        <h2 class="card-title">🎙️ Enregistrement Audio</h2>
+
+        <div class="recorder-area">
+          <button id="micButton" class="mic-button" title="Cliquer pour enregistrer">
+            🎤
+          </button>
+          <div class="recorder-status" id="recorderStatus">
+            Cliquez sur le micro pour commencer
+          </div>
+          <div class="recording-timer" id="recordingTimer" style="display: none;">
+            00:00
+          </div>
+        </div>
+
+        <div class="context-selector">
+          <label>Contexte professionnel:</label>
+          <select id="contextSelect">
+            <option value="">Général</option>
+            <option value="medical">🏥 Médical</option>
+            <option value="legal">⚖️ Juridique</option>
+            <option value="accounting">💼 Comptabilité</option>
+          </select>
+        </div>
+
+        <audio id="audioPlayer" controls style="display: none;"></audio>
+      </div>
+
+      <!-- Upload Section -->
+      <div class="card">
+        <h2 class="card-title">📁 Upload Fichier Audio</h2>
+
+        <div class="upload-area" id="uploadArea">
+          <div class="upload-icon">📤</div>
+          <p>Glissez un fichier audio ici</p>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">
+            ou cliquez pour parcourir
+          </p>
+          <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 12px;">
+            Formats: WAV, MP3, M4A, FLAC, OGG, MP4, WEBM, AVI
+          </p>
+        </div>
+        <input type="file" id="fileInput" accept="audio/*,video/*">
+
+        <div id="fileInfo" style="display: none; margin-top: 12px;">
+          <p><strong>Fichier:</strong> <span id="fileName"></span></p>
+          <button class="btn btn-primary" id="transcribeBtn" style="margin-top: 12px;">
+            ⚡ Transcrire
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Status Messages -->
+    <div id="statusMessage" class="status-message"></div>
+
+    <!-- Loading -->
+    <div id="spinner" class="spinner"></div>
+
+    <!-- Transcription Results -->
+    <div class="card" id="resultsCard" style="display: none;">
+      <h2 class="card-title">✨ Résultats</h2>
+
+      <!-- Stats -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value" id="statDuration">-</div>
+          <div class="stat-label">Durée (s)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="statLanguage">-</div>
+          <div class="stat-label">Langue</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="statConfidence">-</div>
+          <div class="stat-label">Confiance</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="statWords">-</div>
+          <div class="stat-label">Mots</div>
+        </div>
+      </div>
+
+      <!-- Transcription Text -->
+      <h3 style="margin-top: 24px; margin-bottom: 12px;">📝 Transcription:</h3>
+      <div class="transcription-box" id="transcriptionText"></div>
+
+      <!-- Cleaned Text (avec LLM) -->
+      <div id="cleanedSection" style="display: none;">
+        <h3 style="margin-top: 24px; margin-bottom: 12px;">✨ Texte Nettoyé (IA):</h3>
+        <div class="transcription-box" id="cleanedText"></div>
+      </div>
+
+      <!-- Segments Timeline -->
+      <div id="segmentsSection" style="display: none;">
+        <h3 style="margin-top: 24px; margin-bottom: 12px;">⏱️ Timeline:</h3>
+        <div class="segments-container" id="segmentsContainer"></div>
+      </div>
+
+      <!-- Actions -->
+      <div class="actions">
+        <button class="btn btn-primary" id="copyBtn">
+          📋 Copier
+        </button>
+        <button class="btn btn-secondary" id="exportPdfBtn">
+          📄 Export PDF
+        </button>
+        <button class="btn btn-secondary" id="exportDocxBtn">
+          📝 Export DOCX
+        </button>
+        <button class="btn btn-secondary" id="cleanWithAI">
+          ✨ Nettoyer avec IA
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Configuration
+    const API_URL = window.location.hostname === 'localhost'
+      ? 'http://localhost:8180'
+      : 'https://voice.iafactoryalgeria.com';
+
+    // State
+    let mediaRecorder = null;
+    let audioChunks = [];
+    let recordingStartTime = null;
+    let timerInterval = null;
+    let currentLanguage = 'fr';
+    let currentTranscription = null;
+    let currentAudioBlob = null;
+
+    // Elements
+    const micButton = document.getElementById('micButton');
+    const recorderStatus = document.getElementById('recorderStatus');
+    const recordingTimer = document.getElementById('recordingTimer');
+    const audioPlayer = document.getElementById('audioPlayer');
+    const uploadArea = document.getElementById('uploadArea');
+    const fileInput = document.getElementById('fileInput');
+    const fileInfo = document.getElementById('fileInfo');
+    const fileName = document.getElementById('fileName');
+    const transcribeBtn = document.getElementById('transcribeBtn');
+    const contextSelect = document.getElementById('contextSelect');
+    const statusMessage = document.getElementById('statusMessage');
+    const spinner = document.getElementById('spinner');
+    const resultsCard = document.getElementById('resultsCard');
+    const transcriptionText = document.getElementById('transcriptionText');
+    const cleanedText = document.getElementById('cleanedText');
+    const cleanedSection = document.getElementById('cleanedSection');
+    const segmentsContainer = document.getElementById('segmentsContainer');
+    const segmentsSection = document.getElementById('segmentsSection');
+    const copyBtn = document.getElementById('copyBtn');
+    const exportPdfBtn = document.getElementById('exportPdfBtn');
+    const exportDocxBtn = document.getElementById('exportDocxBtn');
+    const cleanWithAI = document.getElementById('cleanWithAI');
+
+    // Language selector
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentLanguage = btn.dataset.lang;
+        showStatus(`Langue sélectionnée: ${btn.textContent}`, 'info');
+      });
+    });
+
+    // Microphone Recording
+    micButton.addEventListener('click', async () => {
+      if (!mediaRecorder || mediaRecorder.state === 'inactive') {
+        await startRecording();
+      } else {
+        stopRecording();
+      }
+    });
+
+    async function startRecording() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaRecorder = new MediaRecorder(stream);
+        audioChunks = [];
+
+        mediaRecorder.ondataavailable = (event) => {
+          audioChunks.push(event.data);
+        };
+
+        mediaRecorder.onstop = async () => {
+          const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+          currentAudioBlob = audioBlob;
+
+          const audioUrl = URL.createObjectURL(audioBlob);
+          audioPlayer.src = audioUrl;
+          audioPlayer.style.display = 'block';
+
+          // Auto-transcribe
+          await transcribeAudio(audioBlob, 'recording.webm');
+        };
+
+        mediaRecorder.start();
+        micButton.classList.add('recording');
+        micButton.textContent = '⏹️';
+        recorderStatus.textContent = '🔴 Enregistrement en cours...';
+
+        recordingStartTime = Date.now();
+        recordingTimer.style.display = 'block';
+        updateTimer();
+        timerInterval = setInterval(updateTimer, 1000);
+
+      } catch (error) {
+        console.error('Erreur micro:', error);
+        showStatus('❌ Impossible d\'accéder au microphone', 'error');
+      }
+    }
+
+    function stopRecording() {
+      if (mediaRecorder && mediaRecorder.state === 'recording') {
+        mediaRecorder.stop();
+        mediaRecorder.stream.getTracks().forEach(track => track.stop());
+
+        micButton.classList.remove('recording');
+        micButton.textContent = '🎤';
+        recorderStatus.textContent = 'Enregistrement terminé';
+
+        clearInterval(timerInterval);
+        recordingTimer.style.display = 'none';
+      }
+    }
+
+    function updateTimer() {
+      const elapsed = Math.floor((Date.now() - recordingStartTime) / 1000);
+      const minutes = Math.floor(elapsed / 60).toString().padStart(2, '0');
+      const seconds = (elapsed % 60).toString().padStart(2, '0');
+      recordingTimer.textContent = `${minutes}:${seconds}`;
+    }
+
+    // File Upload
+    uploadArea.addEventListener('click', () => fileInput.click());
+
+    uploadArea.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      uploadArea.classList.add('drag-over');
+    });
+
+    uploadArea.addEventListener('dragleave', () => {
+      uploadArea.classList.remove('drag-over');
+    });
+
+    uploadArea.addEventListener('drop', (e) => {
+      e.preventDefault();
+      uploadArea.classList.remove('drag-over');
+
+      const file = e.dataTransfer.files[0];
+      if (file && (file.type.startsWith('audio/') || file.type.startsWith('video/'))) {
+        handleFileSelect(file);
+      } else {
+        showStatus('❌ Fichier audio/vidéo requis', 'error');
+      }
+    });
+
+    fileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        handleFileSelect(file);
+      }
+    });
+
+    function handleFileSelect(file) {
+      currentAudioBlob = file;
+      fileName.textContent = file.name;
+      fileInfo.style.display = 'block';
+      showStatus(`✅ Fichier chargé: ${file.name}`, 'success');
+    }
+
+    transcribeBtn.addEventListener('click', () => {
+      if (currentAudioBlob) {
+        transcribeAudio(currentAudioBlob, fileName.textContent);
+      }
+    });
+
+    // Transcription
+    async function transcribeAudio(audioBlob, filename) {
+      try {
+        spinner.classList.add('active');
+        micButton.classList.add('processing');
+        showStatus('⏳ Transcription en cours...', 'info');
+
+        const formData = new FormData();
+        formData.append('file', audioBlob, filename);
+        formData.append('language', currentLanguage);
+
+        const context = contextSelect.value;
+        if (context) {
+          formData.append('professional_context', context);
+        }
+
+        const response = await fetch(`${API_URL}/api/voice-agent/transcribe`, {
+          method: 'POST',
+          body: formData
+        });
+
+        if (!response.ok) {
+          throw new Error(`Erreur ${response.status}: ${response.statusText}`);
+        }
+
+        const result = await response.json();
+        currentTranscription = result;
+
+        displayTranscription(result);
+        showStatus('✅ Transcription terminée!', 'success');
+
+      } catch (error) {
+        console.error('Erreur transcription:', error);
+        showStatus(`❌ Erreur: ${error.message}`, 'error');
+      } finally {
+        spinner.classList.remove('active');
+        micButton.classList.remove('processing');
+      }
+    }
+
+    function displayTranscription(result) {
+      // Show results
+      resultsCard.style.display = 'block';
+      resultsCard.scrollIntoView({ behavior: 'smooth' });
+
+      // Stats
+      document.getElementById('statDuration').textContent = result.duration.toFixed(1);
+      document.getElementById('statLanguage').textContent = result.language.toUpperCase();
+      document.getElementById('statConfidence').textContent = (result.language_probability * 100).toFixed(0) + '%';
+      document.getElementById('statWords').textContent = result.text.split(/\s+/).length;
+
+      // Transcription
+      transcriptionText.textContent = result.text;
+
+      // Cleaned text (si disponible)
+      if (result.cleaned_text) {
+        cleanedSection.style.display = 'block';
+        cleanedText.textContent = result.cleaned_text;
+      }
+
+      // Segments
+      if (result.segments && result.segments.length > 0) {
+        segmentsSection.style.display = 'block';
+        segmentsContainer.innerHTML = result.segments.map(seg => `
+          <div class="segment-item">
+            <div class="segment-time">${formatTime(seg.start)} → ${formatTime(seg.end)}</div>
+            <div class="segment-text">${seg.text}</div>
+          </div>
+        `).join('');
+      }
+    }
+
+    function formatTime(seconds) {
+      const mins = Math.floor(seconds / 60);
+      const secs = Math.floor(seconds % 60);
+      return `${mins}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    // Copy to Clipboard
+    copyBtn.addEventListener('click', () => {
+      const text = cleanedText.textContent || transcriptionText.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        showStatus('✅ Copié dans le presse-papier!', 'success');
+      });
+    });
+
+    // Export PDF (simple version)
+    exportPdfBtn.addEventListener('click', () => {
+      const text = cleanedText.textContent || transcriptionText.textContent;
+      const blob = new Blob([text], { type: 'text/plain' });
+      downloadFile(blob, 'transcription.txt');
+      showStatus('✅ Fichier téléchargé!', 'success');
+    });
+
+    // Export DOCX (simple version)
+    exportDocxBtn.addEventListener('click', () => {
+      const text = cleanedText.textContent || transcriptionText.textContent;
+      const blob = new Blob([text], { type: 'text/plain' });
+      downloadFile(blob, 'transcription.txt');
+      showStatus('✅ Fichier téléchargé!', 'success');
+    });
+
+    function downloadFile(blob, filename) {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    // Clean with AI
+    cleanWithAI.addEventListener('click', async () => {
+      if (!currentTranscription) return;
+
+      try {
+        showStatus('✨ Nettoyage avec IA...', 'info');
+        spinner.classList.add('active');
+
+        // TODO: Appeler API LLM pour nettoyer le texte
+        const cleaned = currentTranscription.text; // Placeholder
+
+        cleanedSection.style.display = 'block';
+        cleanedText.textContent = cleaned;
+        showStatus('✅ Texte nettoyé!', 'success');
+
+      } catch (error) {
+        showStatus(`❌ Erreur: ${error.message}`, 'error');
+      } finally {
+        spinner.classList.remove('active');
+      }
+    });
+
+    // Show Status
+    function showStatus(message, type = 'info') {
+      statusMessage.textContent = message;
+      statusMessage.className = `status-message show ${type}`;
+
+      setTimeout(() => {
+        statusMessage.classList.remove('show');
+      }, 5000);
+    }
+
+    // Initialize
+    console.log('🎤 Agent Vocal Pro initialisé');
+    console.log('API:', API_URL);
+  </script>
+</body>
+</html>

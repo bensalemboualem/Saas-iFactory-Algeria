@@ -1,0 +1,36 @@
+﻿version: '3.8'
+
+services:
+  # PostgreSQL partagé
+  postgres-shared:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: iafactory
+      POSTGRES_PASSWORD: iafactory2026secure
+      POSTGRES_DB: iafactory_shared
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_shared_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U iafactory"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  
+  # Redis partagé
+  redis-shared:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_shared_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+volumes:
+  postgres_shared_data:
+  redis_shared_data:

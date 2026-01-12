@@ -1,0 +1,13 @@
+{
+    "short_view": "عرض مختصر",
+    "details_view": "عرض تفصيلي",
+    "roll_number": "الرقم الدراسي",
+    "subject_code": "رمز المادة",
+    "subject_name": "اسم المادة",
+    "Type": "النوع",
+    "Mark": "Mark",
+    "Grade": "الدرجة",
+    "student_report": "تقرير الطالب",
+    "attendance_report": "تقرير الحضور",
+    "fees_report": "تقرير الرسوم"
+}

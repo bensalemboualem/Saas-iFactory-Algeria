@@ -1,0 +1,94 @@
+version: "3.9"
+
+services:
+  # xAI Finance Agent
+  ai-xai-finance:
+    build: ./ai-agents/productivity/xai-finance
+    container_name: iaf-ai-xai-finance-prod
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-dummy-key}
+      - GROQ_API_KEY=${GROQ_API_KEY:-dummy-key}
+    ports:
+      - "9104:8501"
+    networks:
+      - iafactory-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # AI Meeting Agent
+  ai-meeting:
+    build: ./ai-agents/productivity/meeting
+    container_name: iaf-ai-meeting-prod
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-dummy-key}
+    ports:
+      - "9105:8501"
+    networks:
+      - iafactory-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # AI Journalist Agent
+  ai-journalist:
+    build: ./ai-agents/productivity/journalist
+    container_name: iaf-ai-journalist-prod
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-dummy-key}
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY:-dummy-key}
+    ports:
+      - "9106:8501"
+    networks:
+      - iafactory-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Web Scraping Agent
+  ai-web-scraping:
+    build: ./ai-agents/productivity/web-scraping
+    container_name: iaf-ai-web-scraping-prod
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-dummy-key}
+    ports:
+      - "9107:8501"
+    networks:
+      - iafactory-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Product Launch Intelligence Agent
+  ai-product-launch:
+    build: ./ai-agents/productivity/product-launch
+    container_name: iaf-ai-product-launch-prod
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-dummy-key}
+    ports:
+      - "9108:8501"
+    networks:
+      - iafactory-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+networks:
+  iafactory-net:
+    external: true
+    name: iafactory-rag-dz_iafactory-net

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark" data-iaf-auto-init>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Composants Unifiés - IAFactory Algeria</title>
+    <link rel="stylesheet" href="/apps/shared/iafactory-unified.css">
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--iaf-bg-dark);
+            color: var(--iaf-text-dark);
+        }
+        [data-theme="light"] body {
+            background: var(--iaf-bg-light);
+            color: var(--iaf-text-light);
+        }
+        main {
+            flex: 1;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            background: var(--iaf-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .test-box {
+            background: var(--iaf-bg-card-dark);
+            border: 1px solid var(--iaf-border-dark);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 1rem 0;
+        }
+        [data-theme="light"] .test-box {
+            background: var(--iaf-bg-card-light);
+            border-color: var(--iaf-border-light);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER UNIFIÉ (auto-injecté) -->
+    <div data-iaf-header></div>
+
+    <main>
+        <h1>✅ Test Composants Unifiés IAFactory</h1>
+        
+        <div class="test-box">
+            <h2>🌐 Test Langue (i18n)</h2>
+            <p>Cliquez sur le bouton langue dans le header pour changer FR/EN/AR</p>
+            <p>L'arabe active automatiquement le mode RTL</p>
+        </div>
+
+        <div class="test-box">
+            <h2>🎨 Test Thème</h2>
+            <p>Cliquez sur ☀️/🌙 dans le header pour basculer clair/sombre</p>
+        </div>
+
+        <div class="test-box">
+            <h2>💬 Test Chatbot</h2>
+            <p>Cliquez sur le bouton 💬 en bas à droite pour ouvrir Dzir IA</p>
+            <p>Le chatbot est trilingue et suit la langue sélectionnée</p>
+        </div>
+
+        <div class="test-box">
+            <h2>📝 Textes Traduits</h2>
+            <p data-i18n="home">Accueil</p>
+            <p data-i18n="apps">Applications</p>
+            <p data-i18n="chatbotWelcome" data-i18n-html>Message de bienvenue</p>
+        </div>
+    </main>
+
+    <!-- FOOTER UNIFIÉ (auto-injecté) -->
+    <div data-iaf-footer></div>
+
+    <!-- CHATBOT HELP (auto-injecté) -->
+    <div data-iaf-chatbot></div>
+
+    <script src="/apps/shared/iafactory-unified.js"></script>
+</body>
+</html>

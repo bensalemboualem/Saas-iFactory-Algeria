@@ -1,0 +1,4356 @@
+[
+    {
+        "lang": "ar",
+        "file": "academic.json",
+        "key": "time_schedule",
+        "current": "Time Schedule",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "academic.json",
+        "key": "theory",
+        "current": "Theory",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "academic.json",
+        "key": "subject\/teacher",
+        "current": "Subject\/teacher",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "academic.json",
+        "key": "already_exam_assigned_they_will_also_be_deleted!",
+        "current": "Already Exam Assigned They Will Also Be Deleted!",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "academic.json",
+        "key": "start_time",
+        "current": "Start Time",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "academic.json",
+        "key": "end_time",
+        "current": "End Time",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "academic.json",
+        "key": "enter_start_time",
+        "current": "Enter Start Time",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "academic.json",
+        "key": "create_class",
+        "current": "Create Class",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "academic.json",
+        "key": "create_section",
+        "current": "Create Section",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "academic.json",
+        "key": "create_subject",
+        "current": "Create Subject",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "academic.json",
+        "key": "subject_and_teacher",
+        "current": "Subject And Teacher",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "academic.json",
+        "key": "select_subject",
+        "current": "Select Subject",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "academic.json",
+        "key": "select_teacher",
+        "current": "Select Teacher",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "academic.json",
+        "key": "add",
+        "current": "Add",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "academic.json",
+        "key": "you_cannot_edit_this",
+        "current": "You Cannot Edit This",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "account.json",
+        "key": "Enter Sibling Order",
+        "current": "Enter Sibling Order",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "addon.json",
+        "key": "Addon",
+        "current": "Addon",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "alert.json",
+        "key": "submitted_successfully",
+        "current": "Submitted Successfully",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "alert.json",
+        "key": "updated_successfully",
+        "current": "Updated Successfully",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "alert.json",
+        "key": "deleted",
+        "current": "Deleted",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "alert.json",
+        "key": "deleted_successfully",
+        "current": "Deleted Successfully",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "alert.json",
+        "key": "general_settings_updated_successfully",
+        "current": "General Settings Updated Successfully",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "alert.json",
+        "key": "something_went_wrong_please_try_again",
+        "current": "Something Went Wrong Please Try Again",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "alert.json",
+        "key": "created_successfully",
+        "current": "Created Successfully",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "alert.json",
+        "key": "user_created_successfully",
+        "current": "User Created Successfully",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "alert.json",
+        "key": "user_updated_successfully",
+        "current": "User Updated Successfully",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "attendance.json",
+        "key": "Monthly Attendance",
+        "current": "Monthly Attendance",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "attendance.json",
+        "key": "Note",
+        "current": "Note",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "attendance.json",
+        "key": "Late",
+        "current": "Late",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "attendance.json",
+        "key": "attendance_already_collected_you_can_edit_record",
+        "current": "Attendance Already Collected You Can Edit Record",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "SMS\/Mail_template",
+        "current": "SMS\/Mail Template",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "enter_name",
+        "current": "Enter Name",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "short desc",
+        "current": "Short Desc",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Select leave type",
+        "current": "Select Leave Type",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Select Class",
+        "current": "Select Class",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Select Section",
+        "current": "Select Section",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Select Student",
+        "current": "Select Student",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Select Status",
+        "current": "Select Status",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Pending",
+        "current": "Pending",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Approved",
+        "current": "Approved",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Rejected",
+        "current": "Rejected",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Start Date",
+        "current": "Start Date",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "End Date",
+        "current": "End Date",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Attachment",
+        "current": "Attachment",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Description",
+        "current": "Description",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Status",
+        "current": "Status",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Approved by",
+        "current": "Approved By",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Action",
+        "current": "Action",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "No Attachment",
+        "current": "No Attachment",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Import Fees",
+        "current": "Import Fees",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Enter discount title",
+        "current": "Enter Discount Title",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Date",
+        "current": "Date",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Note",
+        "current": "Note",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Approved By",
+        "current": "Approved By",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "add_new",
+        "current": "Add New",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "designation",
+        "current": "Designation",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "print_now",
+        "current": "Print Now",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Class (Section)",
+        "current": "Class (Section)",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "student_name",
+        "current": "Student Name",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Admission no",
+        "current": "Admission No",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Late",
+        "current": "Late",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Approval Action",
+        "current": "Approval Action",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Name",
+        "current": "Name",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Expiry Date",
+        "current": "Expiry Date",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "View",
+        "current": "View",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "e_mail_address",
+        "current": "E Mail Address",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "date_of_birth",
+        "current": "Date Of Birth",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Enter Name",
+        "current": "Enter Name",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Short Desc",
+        "current": "Short Desc",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Enter Title",
+        "current": "Enter Title",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Content Source",
+        "current": "Content Source",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Generate Url",
+        "current": "Generate Url",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Share Selected",
+        "current": "Share Selected",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Students",
+        "current": "Students",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Teachers",
+        "current": "Teachers",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Share Date",
+        "current": "Share Date",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Generate",
+        "current": "Generate",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "please_add_new_entity_regarding_this",
+        "current": "Please Add New Entity Regarding This",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "login",
+        "current": "Login",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "welcome_back_please_login_to_your_account",
+        "current": "Welcome Back Please Login To Your Account",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "mobile_or_email",
+        "current": "Mobile Or Email",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "enter_mobile_or_email",
+        "current": "Enter Mobile Or Email",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "password",
+        "current": "Password",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "forgot_password",
+        "current": "Forgot Password",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "login_as_superadmin",
+        "current": "Login As Superadmin",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "login_as_admin",
+        "current": "Login As Admin",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "login_as_student",
+        "current": "Login As Student",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "login_as_parent",
+        "current": "Login As Parent",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "login_as_teacher",
+        "current": "Login As Teacher",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "profile",
+        "current": "Profile",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "change permission",
+        "current": "Change Permission",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "update",
+        "current": "Update",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Profile",
+        "current": "Profile",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Message \/ Reason",
+        "current": "Message \/ Reason",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "attachment",
+        "current": "Attachment",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Fees list",
+        "current": "Fees List",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Fees List",
+        "current": "Fees List",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Edit",
+        "current": "Edit",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Leave Date",
+        "current": "Leave Date",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Present Address",
+        "current": "Present Address",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Expire Date",
+        "current": "Expire Date",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Color",
+        "current": "Color",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Estimate Time (Minutes)",
+        "current": "Estimate Time (Minutes)",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "create_language",
+        "current": "Create Language",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "enter_start_date",
+        "current": "Enter Start Date",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "enter_end_date",
+        "current": "Enter End Date",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "enter_your_email",
+        "current": "Enter Your Email",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Select One",
+        "current": "Select One",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "select class",
+        "current": "Select Class",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Import",
+        "current": "Import",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "category",
+        "current": "Category",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Health Status",
+        "current": "Health Status",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Rank in family",
+        "current": "Rank In Family",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Number of brothers\/sisters",
+        "current": "Number Of Brothers\/sisters",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "common.json",
+        "key": "Student_Image",
+        "current": "Student Image",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "error.json",
+        "key": "you_were_trying_to_reach_couldn_t_be_found_on_the_server",
+        "current": "You Were Trying To Reach Couldn T Be Found On The Server",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "error.json",
+        "key": "back_to_homepage",
+        "current": "Back To Homepage",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "examination.json",
+        "key": "exam_assign",
+        "current": "Exam Assign",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "examination.json",
+        "key": "select certificate",
+        "current": "Select Certificate",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "examination.json",
+        "key": "exam_title",
+        "current": "Exam Title",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "examination.json",
+        "key": "subjects",
+        "current": "Subjects",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "examination.json",
+        "key": "total_mark",
+        "current": "Total Mark",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "examination.json",
+        "key": "mark_distribution",
+        "current": "Mark Distribution",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "examination.json",
+        "key": "select_exam_type",
+        "current": "Select Exam Type",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "examination.json",
+        "key": "exam_type",
+        "current": "Exam Type",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "examination.json",
+        "key": "point",
+        "current": "Point",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "examination.json",
+        "key": "percent_upto",
+        "current": "Percent Upto",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "fees.json",
+        "key": "Discount Setup",
+        "current": "Discount Setup",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "fees.json",
+        "key": "description",
+        "current": "Description",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "fees.json",
+        "key": "enter_description",
+        "current": "Enter Description",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "fees.json",
+        "key": "due_date",
+        "current": "Due Date",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "fees.json",
+        "key": "fine_type",
+        "current": "Fine Type",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "fees.json",
+        "key": "fine_amount",
+        "current": "Fine Amount",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "fees.json",
+        "key": "none",
+        "current": "None",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "fees.json",
+        "key": "Category",
+        "current": "Category",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "fees.json",
+        "key": "students_list",
+        "current": "Students List",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "fees.json",
+        "key": "Fees Discount Setup",
+        "current": "Fees Discount Setup",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "fees.json",
+        "key": "Siblings Discount",
+        "current": "Siblings Discount",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "fees.json",
+        "key": "Set up sibling-based discounts that scale with each child added",
+        "current": "Set Up Sibling-based Discounts That Scale With Each Child Added",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "fees.json",
+        "key": "Sibling Order",
+        "current": "Sibling Order",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "fees.json",
+        "key": "Discount Title",
+        "current": "Discount Title",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "fees.json",
+        "key": "Discount Percentage",
+        "current": "Discount Percentage",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "fees.json",
+        "key": "Early Payment Discount",
+        "current": "Early Payment Discount",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "fees.json",
+        "key": "Set up early payment discounts",
+        "current": "Set Up Early Payment Discounts",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "fees.json",
+        "key": "Start Date",
+        "current": "Start Date",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "fees.json",
+        "key": "End Date",
+        "current": "End Date",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "fees.json",
+        "key": "fees_details",
+        "current": "Fees Details",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "fees.json",
+        "key": "Discount",
+        "current": "Discount",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "fees.json",
+        "key": "Fine",
+        "current": "Fine",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "frontend.json",
+        "key": "please_fill_out_the_form_for_admission_guidance_and_information",
+        "current": "Please Fill Out The Form For Admission Guidance And Information",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "frontend.json",
+        "key": "first_name",
+        "current": "First Name",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "frontend.json",
+        "key": "enter_first_name",
+        "current": "Enter First Name",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "frontend.json",
+        "key": "last_name",
+        "current": "Last Name",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "frontend.json",
+        "key": "enter_last_name",
+        "current": "Enter Last Name",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "frontend.json",
+        "key": "phone_no",
+        "current": "Phone No",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "frontend.json",
+        "key": "email_address",
+        "current": "Email Address",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "frontend.json",
+        "key": "date_of_birth",
+        "current": "Date Of Birth",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "frontend.json",
+        "key": "enter_date_of_birth",
+        "current": "Enter Date Of Birth",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "frontend.json",
+        "key": "academic_year_session",
+        "current": "Academic Year Session",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "frontend.json",
+        "key": "select_year_session",
+        "current": "Select Year Session",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "frontend.json",
+        "key": "select_class",
+        "current": "Select Class",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "frontend.json",
+        "key": "select_section",
+        "current": "Select Section",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "frontend.json",
+        "key": "Religion",
+        "current": "Religion",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "frontend.json",
+        "key": "select_religion",
+        "current": "Select Religion",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "frontend.json",
+        "key": "attend_school_previously",
+        "current": "Attend School Previously",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "frontend.json",
+        "key": "previous_school_information",
+        "current": "Previous School Information",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "frontend.json",
+        "key": "Place_Of_Birth",
+        "current": "Place Of Birth",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "frontend.json",
+        "key": "Student_Nationality",
+        "current": "Student Nationality",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "frontend.json",
+        "key": "Student_Sponken_Language_At_Home",
+        "current": "Student Sponken Language At Home",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "frontend.json",
+        "key": "Residance_Address",
+        "current": "Residance Address",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "frontend.json",
+        "key": "document_name",
+        "current": "Document Name",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "frontend.json",
+        "key": "Enter_Document_Name",
+        "current": "Enter Document Name",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "frontend.json",
+        "key": "guardian_name",
+        "current": "Guardian Name",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "frontend.json",
+        "key": "enter_guardian_name",
+        "current": "Enter Guardian Name",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "frontend.json",
+        "key": "guardian_phone",
+        "current": "Guardian Phone",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "frontend.json",
+        "key": "enter_guardian_phone",
+        "current": "Enter Guardian Phone",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "frontend.json",
+        "key": "Guardian_Profession",
+        "current": "Guardian Profession",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "frontend.json",
+        "key": "Father_Image",
+        "current": "Father Image",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "frontend.json",
+        "key": "Submit",
+        "current": "Submit",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "installer.json",
+        "key": "Welcome To Installation",
+        "current": "Welcome To Installation",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "installer.json",
+        "key": "Welcome to Ischool, to complete the installation, please proceed to the next step!",
+        "current": "Welcome To Ischool, To Complete The Installation, Please Proceed To The Next Step!",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "installer.json",
+        "key": "Check Your Environment For Ischool Installation",
+        "current": "Check Your Environment For Ischool Installation",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "installer.json",
+        "key": "Please make sure that all the requirements are met before proceeding to the next step.",
+        "current": "Please Make Sure That All The Requirements Are Met Before Proceeding To The Next Step.",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "installer.json",
+        "key": "It looks like everything meets the requirements, Please click the button below to continue.",
+        "current": "It Looks Like Everything Meets The Requirements, Please Click The Button Below To Continue.",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "installer.json",
+        "key": "Continue",
+        "current": "Continue",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "installer.json",
+        "key": "License Verification",
+        "current": "License Verification",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "installer.json",
+        "key": "Please enter your access code to verify your license.",
+        "current": "Please Enter Your Access Code To Verify Your License.",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "installer.json",
+        "key": "Envato Email",
+        "current": "Envato Email",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "installer.json",
+        "key": "Installed Domain",
+        "current": "Installed Domain",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "installer.json",
+        "key": " NB:Enter your purchase code to verify your license, the temporary code for your license is",
+        "current": " NB:Enter Your Purchase Code To Verify Your License, The Temporary Code For Your License Is",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "installer.json",
+        "key": " NB: To verify your authorization, use your Envato account email address",
+        "current": " NB: To Verify Your Authorization, Use Your Envato Account Email Address",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "installer.json",
+        "key": " NB: What domain or subdomain are you using to access this project?",
+        "current": " NB: What Domain Or Subdomain Are You Using To Access This Project?",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "installer.json",
+        "key": " It depends on whether you want to install this project in the main domain like",
+        "current": " It Depends On Whether You Want To Install This Project In The Main Domain Like",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "installer.json",
+        "key": "or in a subdomain like ",
+        "current": "Or In A Subdomain Like ",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "installer.json",
+        "key": "Submitting",
+        "current": "Submitting",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "installer.json",
+        "key": "Valid License for initial installation",
+        "current": "Valid License For Initial Installation",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "installer.json",
+        "key": "Check Database Setup and Connection",
+        "current": "Check Database Setup And Connection",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "installer.json",
+        "key": "DB PORT",
+        "current": "DB PORT",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "installer.json",
+        "key": "DB DATABASE",
+        "current": "DB DATABASE",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "installer.json",
+        "key": "DB USERNAME",
+        "current": "DB USERNAME",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "installer.json",
+        "key": "DB PASSWORD",
+        "current": "DB PASSWORD",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "installer.json",
+        "key": "Force Delete Previous Table",
+        "current": "Force Delete Previous Table",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "installer.json",
+        "key": "Write DB Name",
+        "current": "Write DB Name",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "installer.json",
+        "key": "Write DB Username",
+        "current": "Write DB Username",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "installer.json",
+        "key": "Write DB Password",
+        "current": "Write DB Password",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "installer.json",
+        "key": "submitting",
+        "current": "Submitting",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "installer.json",
+        "key": "Connection Established",
+        "current": "Connection Established",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "installer.json",
+        "key": "Admin Setup",
+        "current": "Admin Setup",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "installer.json",
+        "key": "Email",
+        "current": "Email",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "installer.json",
+        "key": "Password",
+        "current": "Password",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "installer.json",
+        "key": "Password Confirmation",
+        "current": "Password Confirmation",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "installer.json",
+        "key": "Install With Demo Data",
+        "current": "Install With Demo Data",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "installer.json",
+        "key": "Ready To Go",
+        "current": "Ready To Go",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "installer.json",
+        "key": "Please do not refresh or close the browser",
+        "current": "Please Do Not Refresh Or Close The Browser",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "installer.json",
+        "key": "Admin Setup & Import SQL",
+        "current": "Admin Setup & Import SQL",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "installer.json",
+        "key": "Complete Installation and Configuration",
+        "current": "Complete Installation And Configuration",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "installer.json",
+        "key": "Congratulations! You successfully installed the application. Please login to your account to start using the application.",
+        "current": "Congratulations! You Successfully Installed The Application. Please Login To Your Account To Start Using The Application.",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "instller.json",
+        "key": "Email",
+        "current": "Email",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "instller.json",
+        "key": "Password",
+        "current": "Password",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "language.json",
+        "key": "icon",
+        "current": "Icon",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "language.json",
+        "key": "edit_terms",
+        "current": "Edit Terms",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "language.json",
+        "key": "flag_icon",
+        "current": "Flag Icon",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "language.json",
+        "key": "common",
+        "current": "Common",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "language.json",
+        "key": "error",
+        "current": "Error",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "language.json",
+        "key": "frontend",
+        "current": "Frontend",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "language.json",
+        "key": "insights",
+        "current": "Insights",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "language.json",
+        "key": "profile",
+        "current": "Profile",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "language.json",
+        "key": "translated_language",
+        "current": "Translated Language",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "language.json",
+        "key": "direction",
+        "current": "Direction",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "leave.json",
+        "key": "Add Leave Request",
+        "current": "Add Leave Request",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "leave.json",
+        "key": "Edit Leave Request",
+        "current": "Edit Leave Request",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "live_chat.json",
+        "key": "Active",
+        "current": "Active",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "live_chat.json",
+        "key": "Search",
+        "current": "Search",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "live_chat.json",
+        "key": "Conversation List",
+        "current": "Conversation List",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "livechat.json",
+        "key": "Conversaiton List",
+        "current": "Conversaiton List",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "mainapp_language.json",
+        "key": "direction",
+        "current": "Direction",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "online-examination.json",
+        "key": "question_group",
+        "current": "Question Group",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "online-examination.json",
+        "key": "question_bank",
+        "current": "Question Bank",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "online-examination.json",
+        "key": "online_exam",
+        "current": "Online Exam",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "online-examination.json",
+        "key": "homeworks",
+        "current": "Homeworks",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "parent.json",
+        "key": "Father Details",
+        "current": "Father Details",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "parent.json",
+        "key": "Mother Details",
+        "current": "Mother Details",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "parent.json",
+        "key": "Name",
+        "current": "Name",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "parent.json",
+        "key": "Phone",
+        "current": "Phone",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "parent.json",
+        "key": "Email",
+        "current": "Email",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "parent.json",
+        "key": "Profession",
+        "current": "Profession",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "parent.json",
+        "key": "Relation",
+        "current": "Relation",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "report.json",
+        "key": "short_view",
+        "current": "Short View",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "report.json",
+        "key": "details_view",
+        "current": "Details View",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "report.json",
+        "key": "subject_code",
+        "current": "Subject Code",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "report.json",
+        "key": "subject_name",
+        "current": "Subject Name",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "setting.json",
+        "key": "My Forums",
+        "current": "My Forums",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "setting.json",
+        "key": "Forum Feeds",
+        "current": "Forum Feeds",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "setting.json",
+        "key": "My Memories",
+        "current": "My Memories",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "settings.json",
+        "key": "enter_you_address",
+        "current": "Enter You Address",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "settings.json",
+        "key": "enter_you_phone",
+        "current": "Enter You Phone",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "settings.json",
+        "key": "enter_you_email",
+        "current": "Enter You Email",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "settings.json",
+        "key": "aws_s3_info",
+        "current": "Aws S3 Info",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "settings.json",
+        "key": "aws_default_region",
+        "current": "Aws Default Region",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "settings.json",
+        "key": "aws_endpoint",
+        "current": "Aws Endpoint",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "settings.json",
+        "key": "twilio_auth_token",
+        "current": "Twilio Auth Token",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "settings.json",
+        "key": "twilio_phone_number",
+        "current": "Twilio Phone Number",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "settings.json",
+        "key": "edit_session",
+        "current": "Edit Session",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "staff.json",
+        "key": "create_staff",
+        "current": "Create Staff",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "staff.json",
+        "key": "designations",
+        "current": "Designations",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "staff.json",
+        "key": "select_designation",
+        "current": "Select Designation",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "staff.json",
+        "key": "first_name",
+        "current": "First Name",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "staff.json",
+        "key": "enter_first_name",
+        "current": "Enter First Name",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "staff.json",
+        "key": "last_name",
+        "current": "Last Name",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "staff.json",
+        "key": "enter_last_name",
+        "current": "Enter Last Name",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "staff.json",
+        "key": "father_name",
+        "current": "Father Name",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "staff.json",
+        "key": "enter_father_name",
+        "current": "Enter Father Name",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "staff.json",
+        "key": "mother_name",
+        "current": "Mother Name",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "staff.json",
+        "key": "enter_mother_name",
+        "current": "Enter Mother Name",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "staff.json",
+        "key": "date_of_birth",
+        "current": "Date Of Birth",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "staff.json",
+        "key": "enter_date_of_birth",
+        "current": "Enter Date Of Birth",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "staff.json",
+        "key": "enter_joining_date",
+        "current": "Enter Joining Date",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "staff.json",
+        "key": "phone",
+        "current": "Phone",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "staff.json",
+        "key": "enter_phone",
+        "current": "Enter Phone",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "staff.json",
+        "key": "emergency_contact",
+        "current": "Emergency Contact",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "staff.json",
+        "key": "enter_emergency_contact",
+        "current": "Enter Emergency Contact",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "staff.json",
+        "key": "marital_status",
+        "current": "Marital Status",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "staff.json",
+        "key": "current_address",
+        "current": "Current Address",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "staff.json",
+        "key": "enter_current_address",
+        "current": "Enter Current Address",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "staff.json",
+        "key": "permanent_address",
+        "current": "Permanent Address",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "staff.json",
+        "key": "enter_permanent_address",
+        "current": "Enter Permanent Address",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "staff.json",
+        "key": "update_staff",
+        "current": "Update Staff",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student.json",
+        "key": "Student Details",
+        "current": "Student Details",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student.json",
+        "key": "Admission No",
+        "current": "Admission No",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student.json",
+        "key": "Class Section",
+        "current": "Class Section",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student.json",
+        "key": "Leaves",
+        "current": "Leaves",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student.json",
+        "key": "Admission Date",
+        "current": "Admission Date",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student.json",
+        "key": "Personal Info",
+        "current": "Personal Info",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student.json",
+        "key": "Months",
+        "current": "Months",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student.json",
+        "key": "Phone",
+        "current": "Phone",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student.json",
+        "key": "Guardian Info",
+        "current": "Guardian Info",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student.json",
+        "key": "Profession",
+        "current": "Profession",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student.json",
+        "key": "Academic Info",
+        "current": "Academic Info",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student.json",
+        "key": "Profile",
+        "current": "Profile",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student.json",
+        "key": "Siblings",
+        "current": "Siblings",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student.json",
+        "key": "Personal Details",
+        "current": "Personal Details",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student.json",
+        "key": "Name",
+        "current": "Name",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student.json",
+        "key": "Admission Number",
+        "current": "Admission Number",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student.json",
+        "key": "Date of Birth",
+        "current": "Date Of Birth",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student.json",
+        "key": "Contact Details",
+        "current": "Contact Details",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student.json",
+        "key": "Email",
+        "current": "Email",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student.json",
+        "key": "Nationality",
+        "current": "Nationality",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student.json",
+        "key": "Address",
+        "current": "Address",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student.json",
+        "key": "Place Of Birth",
+        "current": "Place Of Birth",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student.json",
+        "key": "Fees Overview",
+        "current": "Fees Overview",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student.json",
+        "key": "Total Fees",
+        "current": "Total Fees",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student.json",
+        "key": "Total Paid",
+        "current": "Total Paid",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student.json",
+        "key": "Total Due",
+        "current": "Total Due",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student.json",
+        "key": "Total Discount",
+        "current": "Total Discount",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student.json",
+        "key": "Total Fine",
+        "current": "Total Fine",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student.json",
+        "key": "Result Overview",
+        "current": "Result Overview",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student.json",
+        "key": "Total Marks",
+        "current": "Total Marks",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student.json",
+        "key": "Examination Details",
+        "current": "Examination Details",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student.json",
+        "key": "Attendance Overview",
+        "current": "Attendance Overview",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student.json",
+        "key": "Total",
+        "current": "Total",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student.json",
+        "key": "Attended",
+        "current": "Attended",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student.json",
+        "key": "Late",
+        "current": "Late",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student.json",
+        "key": "Leave Overview",
+        "current": "Leave Overview",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student.json",
+        "key": "Total Request",
+        "current": "Total Request",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student.json",
+        "key": "Approved",
+        "current": "Approved",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student.json",
+        "key": "Pending",
+        "current": "Pending",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student.json",
+        "key": "Rejected",
+        "current": "Rejected",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student.json",
+        "key": "Leave Request Log",
+        "current": "Leave Request Log",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student.json",
+        "key": "Others",
+        "current": "Others",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student.json",
+        "key": "Category",
+        "current": "Category",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student.json",
+        "key": "Relation",
+        "current": "Relation",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student.json",
+        "key": "Transport",
+        "current": "Transport",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "student_category",
+        "current": "Student Category",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "promote_students",
+        "current": "Promote Students",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "select_class",
+        "current": "Select Class",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "select_section",
+        "current": "Select Section",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "enter_keyword",
+        "current": "Enter Keyword",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "student_name",
+        "current": "Student Name",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "date_of_birth",
+        "current": "Date Of Birth",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "guardian_name",
+        "current": "Guardian Name",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "online_admission_setting",
+        "current": "Online Admission Setting",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "select_fees_group",
+        "current": "Select Fees Group",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "admission_no",
+        "current": "Admission No",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "category_list",
+        "current": "Category List",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "promote_list",
+        "current": "Promote List",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "promote_student",
+        "current": "Promote Student",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "promote_students_in_next_session",
+        "current": "Promote Students In Next Session",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "promote_session",
+        "current": "Promote Session",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "select_session",
+        "current": "Select Session",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "promote_class",
+        "current": "Promote Class",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "promote_section",
+        "current": "Promote Section",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "disabled_list",
+        "current": "Disabled List",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "parent_list",
+        "current": "Parent List",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "select_student",
+        "current": "Select Student",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "select subject",
+        "current": "Select Subject",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "Siblings",
+        "current": "Siblings",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "parent_edit",
+        "current": "Parent Edit",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "father_name",
+        "current": "Father Name",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "enter_father_name",
+        "current": "Enter Father Name",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "father_mobile",
+        "current": "Father Mobile",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "enter_father_mobile",
+        "current": "Enter Father Mobile",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "father_profession",
+        "current": "Father Profession",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "enter_father_profession",
+        "current": "Enter Father Profession",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "father_image",
+        "current": "Father Image",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "mother_name",
+        "current": "Mother Name",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "enter_mother_name",
+        "current": "Enter Mother Name",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "mother_mobile",
+        "current": "Mother Mobile",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "enter_mother_mobile",
+        "current": "Enter Mother Mobile",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "mother_profession",
+        "current": "Mother Profession",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "mother_image",
+        "current": "Mother Image",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "enter_guardian_name",
+        "current": "Enter Guardian Name",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "guardian_profession",
+        "current": "Guardian Profession",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "enter_guardian_profession",
+        "current": "Enter Guardian Profession",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "guardian_email",
+        "current": "Guardian Email",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "enter_guardian_email",
+        "current": "Enter Guardian Email",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "guardian_address",
+        "current": "Guardian Address",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "enter_guardian_address",
+        "current": "Enter Guardian Address",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "guardian_relation",
+        "current": "Guardian Relation",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "enter_guardian_relation",
+        "current": "Enter Guardian Relation",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "status",
+        "current": "Status",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "active",
+        "current": "Active",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "inactive",
+        "current": "Inactive",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "Job title or designation",
+        "current": "Job Title Or Designation",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "Company\/Organization name",
+        "current": "Company\/Organization Name",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "submit",
+        "current": "Submit",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "parent_create",
+        "current": "Parent Create",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "Profile Info",
+        "current": "Profile Info",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "enter_name",
+        "current": "Enter Name",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "student_create",
+        "current": "Student Create",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "enter_admission_no",
+        "current": "Enter Admission No",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "first_name",
+        "current": "First Name",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "enter_first_name",
+        "current": "Enter First Name",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "last_name",
+        "current": "Last Name",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "enter_last_name",
+        "current": "Enter Last Name",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "enter_email",
+        "current": "Enter Email",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "religion",
+        "current": "Religion",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "select_religion",
+        "current": "Select Religion",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "select_category",
+        "current": "Select Category",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "admission_date",
+        "current": "Admission Date",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "student_info.json",
+        "key": "select_parent",
+        "current": "Select Parent",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "study-material.json",
+        "key": "Study Material",
+        "current": "Study Material",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "study_material.json",
+        "key": "Content Type",
+        "current": "Content Type",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "study_material.json",
+        "key": "Contents",
+        "current": "Contents",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "study_material.json",
+        "key": "Content Share",
+        "current": "Content Share",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "study_material.json",
+        "key": "Content List",
+        "current": "Content List",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "study_material.json",
+        "key": "Shared Content",
+        "current": "Shared Content",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "study_material.json",
+        "key": "My Content",
+        "current": "My Content",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "studymaterial.json",
+        "key": "My Content List",
+        "current": "My Content List",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "studymaterial.json",
+        "key": "Shared Content Group",
+        "current": "Shared Content Group",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "studymaterial.json",
+        "key": "Study Material Group",
+        "current": "Study Material Group",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "tax.json",
+        "key": "Enter discount Percentage",
+        "current": "Enter Discount Percentage",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "tax.json",
+        "key": "Enter start date",
+        "current": "Enter Start Date",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "tax.json",
+        "key": "Enter end date",
+        "current": "Enter End Date",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "tax.json",
+        "key": "Tax Income Head",
+        "current": "Tax Income Head",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "tax.json",
+        "key": "Min Tax Eligible Amount",
+        "current": "Min Tax Eligible Amount",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "users_roles.json",
+        "key": "create",
+        "current": "Create",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "users_roles.json",
+        "key": "update",
+        "current": "Update",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "users_roles.json",
+        "key": "delete",
+        "current": "Delete",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "users_roles.json",
+        "key": "student_category",
+        "current": "Student Category",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "users_roles.json",
+        "key": "promote_students",
+        "current": "Promote Students",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "users_roles.json",
+        "key": "parent",
+        "current": "Parent",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "users_roles.json",
+        "key": "classes",
+        "current": "Classes",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "users_roles.json",
+        "key": "time_schedule",
+        "current": "Time Schedule",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "users_roles.json",
+        "key": "discount_setup",
+        "current": "Discount Setup",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "users_roles.json",
+        "key": "siblings_discount",
+        "current": "Siblings Discount",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "users_roles.json",
+        "key": "early_payment_discount",
+        "current": "Early Payment Discount",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "users_roles.json",
+        "key": "exam_type",
+        "current": "Exam Type",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "users_roles.json",
+        "key": "exam_assign",
+        "current": "Exam Assign",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "users_roles.json",
+        "key": "homework",
+        "current": "Homework",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "users_roles.json",
+        "key": "exam_setting",
+        "current": "Exam Setting",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "users_roles.json",
+        "key": "update terms",
+        "current": "Update Terms",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "users_roles.json",
+        "key": "designation",
+        "current": "Designation",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "users_roles.json",
+        "key": "contact_info",
+        "current": "Contact Info",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "users_roles.json",
+        "key": "dep_contact",
+        "current": "Dep Contact",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "users_roles.json",
+        "key": "gallery_category",
+        "current": "Gallery Category",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "users_roles.json",
+        "key": "sessions",
+        "current": "Sessions",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "users_roles.json",
+        "key": "online_exam_type",
+        "current": "Online Exam Type",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "users_roles.json",
+        "key": "question_group",
+        "current": "Question Group",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "users_roles.json",
+        "key": "question_bank",
+        "current": "Question Bank",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "users_roles.json",
+        "key": "online_exam",
+        "current": "Online Exam",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "users_roles.json",
+        "key": "id_card_generate",
+        "current": "Id Card Generate",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "users_roles.json",
+        "key": "certificate",
+        "current": "Certificate",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "users_roles.json",
+        "key": "certificate_generate",
+        "current": "Certificate Generate",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "users_roles.json",
+        "key": "sms_mail_template",
+        "current": "Sms Mail Template",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "users_roles.json",
+        "key": "forum_feeds",
+        "current": "Forum Feeds",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "users_roles.json",
+        "key": "forum_comment",
+        "current": "Forum Comment",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "users_roles.json",
+        "key": "add_role",
+        "current": "Add Role",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "users_roles.json",
+        "key": "permissions",
+        "current": "Permissions",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "vehicle_tracker.json",
+        "key": "Driver List",
+        "current": "Driver List",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "vehicle_tracker.json",
+        "key": "Photo",
+        "current": "Photo",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "vehicle_tracker.json",
+        "key": "Name",
+        "current": "Name",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "vehicle_tracker.json",
+        "key": "Email",
+        "current": "Email",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "vehicle_tracker.json",
+        "key": "Phone",
+        "current": "Phone",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "vehicle_tracker.json",
+        "key": "Emergency Contact",
+        "current": "Emergency Contact",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "vehicle_tracker.json",
+        "key": "Permanent Address",
+        "current": "Permanent Address",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "vehicle_tracker.json",
+        "key": "Driving License",
+        "current": "Driving License",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "vehicle_tracker.json",
+        "key": "Vehicle List",
+        "current": "Vehicle List",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "vehicle_tracker.json",
+        "key": "Display Name",
+        "current": "Display Name",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "vehicle_tracker.json",
+        "key": "Nameplate",
+        "current": "Nameplate",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "vehicle_tracker.json",
+        "key": "Vehicle Route List",
+        "current": "Vehicle Route List",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "vehicle_tracker.json",
+        "key": "Start Point",
+        "current": "Start Point",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "vehicle_tracker.json",
+        "key": "End Point",
+        "current": "End Point",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "ar",
+        "file": "vehicle_tracker.json",
+        "key": "Distance",
+        "current": "Distance",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "academic.json",
+        "key": "class",
+        "current": "classe",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "academic.json",
+        "key": "section",
+        "current": "section",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "academic.json",
+        "key": "class_setup",
+        "current": "Configuration de classe",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "academic.json",
+        "key": "sections",
+        "current": "Sections",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "academic.json",
+        "key": "subject\/teacher",
+        "current": "Subject\/teacher",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "academic.json",
+        "key": "already_exam_assigned_they_will_also_be_deleted!",
+        "current": "Already Exam Assigned They Will Also Be Deleted!",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "academic.json",
+        "key": "class_room",
+        "current": "salle de classe",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "academic.json",
+        "key": "class_routine",
+        "current": "Horaire de classe",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "academic.json",
+        "key": "exam_routine",
+        "current": "Horaire d'examen",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "alert.json",
+        "key": "updated_successfully",
+        "current": "Updated Successfully",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "alert.json",
+        "key": "deleted",
+        "current": "Deleted",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "alert.json",
+        "key": "deleted_successfully",
+        "current": "Deleted Successfully",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "alert.json",
+        "key": "general_settings_updated_successfully",
+        "current": "General Settings Updated Successfully",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "alert.json",
+        "key": "profile_updated_successfully",
+        "current": "Profile Updated Successfully",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "attendance.json",
+        "key": "Subject Attendance",
+        "current": "Subject Attendance",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "attendance.json",
+        "key": "Monthly Attendance",
+        "current": "Monthly Attendance",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "attendance.json",
+        "key": "attendance_already_collected_you_can_edit_record",
+        "current": "Attendance Already Collected You Can Edit Record",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "common.json",
+        "key": "yes_delete_it",
+        "current": "Yes Delete It",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "common.json",
+        "key": "search_page",
+        "current": "Search Page",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "common.json",
+        "key": "admission_fees",
+        "current": "Admission Fees",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "common.json",
+        "key": "Student Enrollments",
+        "current": "Student Enrollments",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "common.json",
+        "key": "Fees Management",
+        "current": "Fees Management",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "common.json",
+        "key": "live_class",
+        "current": "Live Class",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "common.json",
+        "key": "Filtering",
+        "current": "Filtering",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "common.json",
+        "key": "please_add_new_entity_regarding_this_table",
+        "current": "Please Add New Entity Regarding This Table",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "common.json",
+        "key": "Admission_Fees_Setting",
+        "current": "Admission Fees Setting",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "common.json",
+        "key": "Before_Enabling_Online_Admission_Fees_Please_Assigned_Admission_Fees_From",
+        "current": "Before Enabling Online Admission Fees Please Assigned Admission Fees From",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "common.json",
+        "key": "Preview",
+        "current": "Preview",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "common.json",
+        "key": "preview",
+        "current": "Preview",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "common.json",
+        "key": "certificate list",
+        "current": "Certificate List",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "common.json",
+        "key": "Online Class Routine 2023",
+        "current": "Online Class Routine 2023",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "common.json",
+        "key": "Select leave type",
+        "current": "Select Leave Type",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "common.json",
+        "key": "Select Class",
+        "current": "Select Class",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "common.json",
+        "key": "Select Section",
+        "current": "Select Section",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "common.json",
+        "key": "Select Student",
+        "current": "Select Student",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "common.json",
+        "key": "Import Fees",
+        "current": "Import Fees",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "common.json",
+        "key": "add_new",
+        "current": "Add New",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "common.json",
+        "key": "Class (Section)",
+        "current": "Class (Section)",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "common.json",
+        "key": "student_name",
+        "current": "Student Name",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "common.json",
+        "key": "View",
+        "current": "View",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "common.json",
+        "key": "Students",
+        "current": "Students",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "common.json",
+        "key": "Teachers",
+        "current": "Teachers",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "common.json",
+        "key": "please_add_new_entity_regarding_this",
+        "current": "Please Add New Entity Regarding This",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "common.json",
+        "key": "login",
+        "current": "Login",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "common.json",
+        "key": "welcome_back_please_login_to_your_account",
+        "current": "Welcome Back Please Login To Your Account",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "common.json",
+        "key": "login_as_superadmin",
+        "current": "Login As Superadmin",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "common.json",
+        "key": "login_as_admin",
+        "current": "Login As Admin",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "common.json",
+        "key": "login_as_student",
+        "current": "Login As Student",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "common.json",
+        "key": "login_as_parent",
+        "current": "Login As Parent",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "common.json",
+        "key": "login_as_teacher",
+        "current": "Login As Teacher",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "common.json",
+        "key": "profile",
+        "current": "Profile",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "common.json",
+        "key": "update",
+        "current": "Update",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "common.json",
+        "key": "Profile",
+        "current": "Profile",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "common.json",
+        "key": "Fees list",
+        "current": "Fees List",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "common.json",
+        "key": "Fees List",
+        "current": "Fees List",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "common.json",
+        "key": "Edit",
+        "current": "Edit",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "common.json",
+        "key": "Leave Date",
+        "current": "Leave Date",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "common.json",
+        "key": "storage_settings",
+        "current": "Storage Settings",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "common.json",
+        "key": "create_language",
+        "current": "Create Language",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "common.json",
+        "key": "menu_show",
+        "current": "Menu Show",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "common.json",
+        "key": "edit_my_profile",
+        "current": "Edit My Profile",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "common.json",
+        "key": "Student_Image",
+        "current": "Student Image",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "dashboard.json",
+        "key": "Parent",
+        "current": "Parent",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "examination.json",
+        "key": "exam_assign",
+        "current": "Exam Assign",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "examination.json",
+        "key": "exam_title",
+        "current": "Exam Title",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "examination.json",
+        "key": "class",
+        "current": "classe",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "examination.json",
+        "key": "section",
+        "current": "section",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "examination.json",
+        "key": "subjects",
+        "current": "Subjects",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "examination.json",
+        "key": "select_exam_type",
+        "current": "Select Exam Type",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "examination.json",
+        "key": "exam_type",
+        "current": "Exam Type",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "fees.json",
+        "key": "students_list",
+        "current": "Students List",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "fees.json",
+        "key": "Fees Discount Setup",
+        "current": "Fees Discount Setup",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "fees.json",
+        "key": "fees_details",
+        "current": "Fees Details",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "frontend.json",
+        "key": "class",
+        "current": "classe",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "frontend.json",
+        "key": "section",
+        "current": "section",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "frontend.json",
+        "key": "search_result",
+        "current": "Search Result",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "frontend.json",
+        "key": "select_class",
+        "current": "Select Class",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "frontend.json",
+        "key": "select_section",
+        "current": "Select Section",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "frontend.json",
+        "key": "select_exam",
+        "current": "Select Exam",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "frontend.json",
+        "key": "Class",
+        "current": "Classe",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "frontend.json",
+        "key": "Section",
+        "current": "Section",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "frontend.json",
+        "key": "Student_Nationality",
+        "current": "Student Nationality",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "frontend.json",
+        "key": "Student_Sponken_Language_At_Home",
+        "current": "Student Sponken Language At Home",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "installer.json",
+        "key": "Force Delete Previous Table",
+        "current": "Force Delete Previous Table",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "installer.json",
+        "key": "Congratulations! You successfully installed the application. Please login to your account to start using the application.",
+        "current": "Congratulations! You Successfully Installed The Application. Please Login To Your Account To Start Using The Application.",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "language.json",
+        "key": "edit_terms",
+        "current": "Edit Terms",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "language.json",
+        "key": "examination",
+        "current": "examen",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "language.json",
+        "key": "profile",
+        "current": "Profile",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "leave.json",
+        "key": "Add Leave Request",
+        "current": "Add Leave Request",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "leave.json",
+        "key": "Edit Leave Request",
+        "current": "Edit Leave Request",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "live_chat.json",
+        "key": "Conversation List",
+        "current": "Conversation List",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "livechat.json",
+        "key": "Conversaiton List",
+        "current": "Conversaiton List",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "online-examination.json",
+        "key": "online_examination",
+        "current": "Examen en ligne",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "online-examination.json",
+        "key": "online_exam",
+        "current": "Online Exam",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "report.json",
+        "key": "short_view",
+        "current": "Short View",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "report.json",
+        "key": "details_view",
+        "current": "Details View",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "report.json",
+        "key": "subject_code",
+        "current": "Subject Code",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "report.json",
+        "key": "subject_name",
+        "current": "Subject Name",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "setting.json",
+        "key": "Forum Feeds",
+        "current": "Forum Feeds",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "settings.json",
+        "key": "class",
+        "current": "classe",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "settings.json",
+        "key": "section",
+        "current": "section",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "settings.json",
+        "key": "class_setup",
+        "current": "Configuration de classe",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "settings.json",
+        "key": "class_room",
+        "current": "salle de classe",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "settings.json",
+        "key": "class_routine",
+        "current": "Horaire de classe",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "settings.json",
+        "key": "exam_routine",
+        "current": "Horaire d'examen",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "settings.json",
+        "key": "Daily Attendance",
+        "current": "Daily Attendance",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "settings.json",
+        "key": "Subject Attendance",
+        "current": "Subject Attendance",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "settings.json",
+        "key": "Daily Attendance Report",
+        "current": "Daily Attendance Report",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "settings.json",
+        "key": "examination",
+        "current": "examen",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "settings.json",
+        "key": "merit_list",
+        "current": "Merit List",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "settings.json",
+        "key": "due_fees",
+        "current": "Due Fees",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "settings.json",
+        "key": "sections",
+        "current": "Sections",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "settings.json",
+        "key": "storage_settings",
+        "current": "Storage Settings",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "settings.json",
+        "key": "software_update",
+        "current": "Software Update",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "settings.json",
+        "key": "recaptcha_settings",
+        "current": "Recaptcha Settings",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "settings.json",
+        "key": "payment_gateway_settings",
+        "current": "Payment Gateway Settings",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "settings.json",
+        "key": "subject_list",
+        "current": "Subject List",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "settings.json",
+        "key": "edit_religion",
+        "current": "Edit Religion",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "student.json",
+        "key": "Student Details",
+        "current": "Student Details",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "student.json",
+        "key": "Class Section",
+        "current": "Class Section",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "student.json",
+        "key": "Leaves",
+        "current": "Leaves",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "student.json",
+        "key": "Due Fees",
+        "current": "Due Fees",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "student.json",
+        "key": "Class",
+        "current": "Classe",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "student.json",
+        "key": "Section",
+        "current": "Section",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "student.json",
+        "key": "Profile",
+        "current": "Profile",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "student.json",
+        "key": "Exam",
+        "current": "Examen",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "student.json",
+        "key": "Fees Overview",
+        "current": "Fees Overview",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "student.json",
+        "key": "Total Fees",
+        "current": "Total Fees",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "student.json",
+        "key": "Result Overview",
+        "current": "Result Overview",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "student.json",
+        "key": "Examination Details",
+        "current": "Examination Details",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "student.json",
+        "key": "Attendance Overview",
+        "current": "Attendance Overview",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "student.json",
+        "key": "Leave Overview",
+        "current": "Leave Overview",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "student.json",
+        "key": "Leave Request Log",
+        "current": "Leave Request Log",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "student_info.json",
+        "key": "student_category",
+        "current": "Student Category",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "student_info.json",
+        "key": "promote_students",
+        "current": "Promote Students",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "student_info.json",
+        "key": "select_class",
+        "current": "Select Class",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "student_info.json",
+        "key": "select_section",
+        "current": "Select Section",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "student_info.json",
+        "key": "student_name",
+        "current": "Student Name",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "student_info.json",
+        "key": "select_fees_group",
+        "current": "Select Fees Group",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "student_info.json",
+        "key": "class",
+        "current": "classe",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "student_info.json",
+        "key": "section",
+        "current": "section",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "student_info.json",
+        "key": "category_list",
+        "current": "Category List",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "student_info.json",
+        "key": "promote_list",
+        "current": "Promote List",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "student_info.json",
+        "key": "promote_student",
+        "current": "Promote Student",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "student_info.json",
+        "key": "promote_students_in_next_session",
+        "current": "Promote Students In Next Session",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "student_info.json",
+        "key": "promote_class",
+        "current": "Promote Class",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "student_info.json",
+        "key": "promote_section",
+        "current": "Promote Section",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "student_info.json",
+        "key": "disabled_list",
+        "current": "Disabled List",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "student_info.json",
+        "key": "parent_list",
+        "current": "Parent List",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "student_info.json",
+        "key": "select_student",
+        "current": "Select Student",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "student_info.json",
+        "key": "select subject",
+        "current": "Select Subject",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "student_info.json",
+        "key": "parent_edit",
+        "current": "Parent Edit",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "student_info.json",
+        "key": "parent_create",
+        "current": "Parent Create",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "student_info.json",
+        "key": "Profile Info",
+        "current": "Profile Info",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "study_material.json",
+        "key": "Content List",
+        "current": "Content List",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "studymaterial.json",
+        "key": "My Content List",
+        "current": "My Content List",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "vehicle_tracker.json",
+        "key": "Driver List",
+        "current": "Driver List",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "vehicle_tracker.json",
+        "key": "Vehicle List",
+        "current": "Vehicle List",
+        "needed": "CORRECTION REQUISE"
+    },
+    {
+        "lang": "fr",
+        "file": "vehicle_tracker.json",
+        "key": "Vehicle Route List",
+        "current": "Vehicle Route List",
+        "needed": "CORRECTION REQUISE"
+    }
+]

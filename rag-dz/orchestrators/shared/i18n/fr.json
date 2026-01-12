@@ -1,0 +1,80 @@
+{
+  "common": {
+    "welcome": "Bienvenue",
+    "hello": "Bonjour",
+    "goodbye": "Au revoir",
+    "yes": "Oui",
+    "no": "Non",
+    "ok": "OK",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès",
+    "warning": "Attention"
+  },
+  "auth": {
+    "login": "Connexion",
+    "logout": "Déconnexion",
+    "register": "Inscription",
+    "password": "Mot de passe",
+    "email": "Email",
+    "forgot_password": "Mot de passe oublié?",
+    "create_account": "Créer un compte"
+  },
+  "dashboard": {
+    "dashboard": "Tableau de bord",
+    "home": "Accueil",
+    "settings": "Paramètres",
+    "profile": "Profil",
+    "notifications": "Notifications"
+  },
+  "billing": {
+    "invoices": "Factures",
+    "payment": "Paiement",
+    "pay_now": "Payer maintenant",
+    "balance": "Solde",
+    "credits": "Crédits",
+    "buy_credits": "Acheter des crédits",
+    "price": "Prix",
+    "total": "Total"
+  },
+  "agents": {
+    "assistant": "Assistant",
+    "chat": "Discuter avec l'assistant",
+    "ask_question": "Poser une question",
+    "generating": "L'assistant génère une réponse...",
+    "response": "Réponse"
+  },
+  "documents": {
+    "upload": "Téléverser",
+    "download": "Télécharger",
+    "documents": "Documents",
+    "search": "Rechercher"
+  },
+  "gov": {
+    "cnas": "CNAS - Sécurité Sociale",
+    "cnrc": "CNRC - Registre de Commerce",
+    "dgi": "DGI - Impôts",
+    "sonelgaz": "Sonelgaz - Électricité et Gaz",
+    "attestation": "Attestation",
+    "certificate": "Certificat"
+  },
+  "errors": {
+    "network_error": "Erreur de connexion",
+    "server_error": "Erreur serveur",
+    "not_found": "Non trouvé",
+    "unauthorized": "Non autorisé",
+    "invalid_input": "Entrée invalide",
+    "try_again": "Réessayer"
+  },
+  "time": {
+    "today": "Aujourd'hui",
+    "yesterday": "Hier",
+    "tomorrow": "Demain",
+    "now": "Maintenant",
+    "later": "Plus tard"
+  }
+}

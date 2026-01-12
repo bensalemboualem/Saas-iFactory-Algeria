@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VS Code / Cline - IAFactory Algeria</title>
+    <link rel="stylesheet" href="../../assets/css/docs-theme.css">
+</head>
+<body>
+    <header class="docs-header">
+        <div class="docs-logo">
+            <img src="../../assets/images/logo.png" alt="IAFactory Algeria">
+            <span>IAFactory Algeria</span>
+        </div>
+        <nav class="main-nav">
+            <a href="../index.html">Documentation</a>
+            <a href="https://app.iafactory-algeria.com">App</a>
+            <a href="../api/index.html">API</a>
+        </nav>
+        <div class="docs-controls">
+            <div class="language-switcher">
+                <button data-lang="fr">FR</button>
+                <button data-lang="en" class="active">EN</button>
+                <button data-lang="ar">AR</button>
+            </div>
+            <div class="theme-toggle">
+                <div class="theme-toggle-slider"></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <!-- ...existing sidebar... -->
+        </aside>
+
+        <main class="docs-main">
+            <h1>VS Code / Cline Integration</h1>
+
+            <p class="lead">Use IAFactory Algeria directly in your favorite IDE with Cline (formerly Claude Dev).</p>
+
+            <h2 id="introduction">Introduction</h2>
+
+            <p>Cline is a powerful VS Code extension that transforms your editor into an AI development assistant. With IAFactory Algeria, you get access to all our models directly in your development workflow.</p>
+
+            <div class="alert alert-info">
+                <strong>Benefits:</strong>
+                <ul>
+                    <li>Real-time AI-assisted coding</li>
+                    <li>Contextual code generation</li>
+                    <li>Automatic refactoring</li>
+                    <li>Auto-generated documentation</li>
+                    <li>Automatic unit test creation</li>
+                </ul>
+            </div>
+
+            <h2 id="installation">Installation</h2>
+
+            <h3 id="prerequisites">Prerequisites</h3>
+
+            <ul>
+                <li>VS Code (version 1.80+)</li>
+                <li>Node.js 16+ (for some features)</li>
+                <li>IAFactory Algeria API key</li>
+            </ul>
+
+            <h3 id="step-1">Step 1: Install the Extension</h3>
+
+            <ol>
+                <li>Open VS Code</li>
+                <li>Go to Extensions (<code>Ctrl+Shift+X</code>)</li>
+                <li>Search for "Cline"</li>
+                <li>Click "Install"</li>
+            </ol>
+
+            <p><strong>Or via command line:</strong></p>
+            <pre><code class="language-bash">code --install-extension saoudrizwan.claude-dev</code></pre>
+
+            <h3 id="step-2">Step 2: IAFactory Configuration</h3>
+
+            <ol>
+                <li>Open Cline settings (<code>Ctrl+Shift+P</code> → "Cline: Settings")</li>
+                <li>Select "OpenAI Compatible"</li>
+                <li>Configure the settings:</li>
+            </ol>
+
+            <pre><code class="language-json">{
+  "cline.apiProvider": "openai-compatible",
+  "cline.apiUrl": "https://api.iafactory-algeria.com/v1",
+  "cline.apiKey": "YOUR_API_KEY",
+  "cline.model": "gpt-4.1"
+}</code></pre>
+
+            <h3 id="step-3">Step 3: Environment Variables (Recommended)</h3>
+
+            <p>For better security, use a <code>.env</code> file:</p>
+
+            <pre><code class="language-bash"># .env
+IAFACTORY_API_KEY=sk_live_your_key
+IAFACTORY_API_URL=https://api.iafactory-algeria.com/v1</code></pre>
+
+            <p>Then in <code>settings.json</code>:</p>
+
+            <pre><code class="language-json">{
+  "cline.apiKey": "${env:IAFACTORY_API_KEY}",
+  "cline.apiUrl": "${env:IAFACTORY_API_URL}"
+}</code></pre>
+
+            <h2 id="advanced-configuration">Advanced Configuration</h2>
+
+            <h3 id="model-selection">Model Selection</h3>
+
+            <p>Configure different models based on your needs:</p>
+
+            <pre><code class="language-json">{
+  "cline.models": {
+    "default": "gpt-4.1",
+    "code": "codestral-2508",
+    "chat": "gpt-4.1-mini",
+    "analysis": "claude-sonnet-4-5"
+  }
+}</code></pre>
+
+            <h3 id="context-window">Context Window</h3>
+
+            <pre><code class="language-json">{
+  "cline.maxTokens": 8000,
+  "cline.temperature": 0.2,
+  "cline.contextLines": 50
+}</code></pre>
+
+            <h3 id="custom-instructions">Custom Instructions</h3>
+
+            <pre><code class="language-json">{
+  "cline.systemPrompt": "You are a Python expert specializing in Django. Write clean, tested, and documented code. Follow PEP 8 conventions."
+}</code></pre>
+
+            <h2 id="usage">Usage</h2>
+
+            <h3 id="generate-code">Generate Code</h3>
+
+            <ol>
+                <li>Open the command palette (<code>Ctrl+Shift+P</code>)</li>
+                <li>Type "Cline: Generate Code"</li>
+                <li>Describe what you want</li>
+            </ol>
+
+            <p><strong>Example:</strong></p>
+            <pre><code class="language-text">Create a Python User class with:
+- Attributes: id, name, email, created_at
+- to_dict() method
+- Email validation with regex
+- Complete docstrings</code></pre>
+
+            <h3 id="refactoring">Refactoring</h3>
+
+            <ol>
+                <li>Select code to refactor</li>
+                <li><code>Ctrl+Shift+P</code> → "Cline: Refactor"</li>
+                <li>Specify desired improvements</li>
+            </ol>
+
+            <h3 id="documentation">Generate Documentation</h3>
+
+            <pre><code class="language-text">Select function → Cline: Generate Docstring</code></pre>
+
+            <h3 id="unit-tests">Generate Tests</h3>
+
+            <pre><code class="language-text">Cline: Generate Tests for Current File</code></pre>
+
+            <h2 id="shortcuts">Keyboard Shortcuts</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Shortcut</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>Ctrl+Shift+L</code></td><td>Open Cline chat</td></tr>
+                    <tr><td><code>Ctrl+Shift+G</code></td><td>Generate code</td></tr>
+                    <tr><td><code>Ctrl+Shift+R</code></td><td>Refactor selection</td></tr>
+                    <tr><td><code>Ctrl+Shift+D</code></td><td>Generate docstring</td></tr>
+                    <tr><td><code>Ctrl+Shift+T</code></td><td>Generate tests</td></tr>
+                    <tr><td><code>Ctrl+Shift+E</code></td><td>Explain code</td></tr>
+                </tbody>
+            </table>
+
+            <h2 id="troubleshooting">Troubleshooting</h2>
+
+            <h3 id="connection-error">Connection Error</h3>
+
+            <div class="alert alert-danger">
+                <strong>Error:</strong> "Unable to connect to API"
+            </div>
+
+            <p><strong>Solutions:</strong></p>
+            <ol>
+                <li>Verify your API key</li>
+                <li>Test the URL: <code>curl https://api.iafactory-algeria.com/v1/models</code></li>
+                <li>Check your firewall/proxy</li>
+                <li>Confirm your subscription is active</li>
+            </ol>
+
+            <h3 id="slow-responses">Slow Responses</h3>
+
+            <pre><code class="language-json">{
+  "cline.timeout": 30000,
+  "cline.maxTokens": 4000,
+  "cline.model": "gpt-4.1-mini"  // Faster
+}</code></pre>
+
+            <h2 id="best-practices">Best Practices</h2>
+
+            <h3 id="effective-prompts">Effective Prompts</h3>
+
+            <div class="alert alert-success">
+                <strong>Good</strong>
+                <pre><code>Create a Python function that:
+- Takes a list of numbers
+- Returns the median
+- Handles even/odd cases
+- Type hints + docstring
+- Unit tests included</code></pre>
+            </div>
+
+            <div class="alert alert-danger">
+                <strong>Bad</strong>
+                <pre><code>make a median function</code></pre>
+            </div>
+
+            <h3 id="security">Security</h3>
+
+            <ul>
+                <li>NEVER commit your API key</li>
+                <li>Use <code>.env</code> + <code>.gitignore</code></li>
+                <li>Rotate keys regularly</li>
+                <li>Use different keys for dev/prod</li>
+            </ul>
+
+            <h2 id="resources">Resources</h2>
+
+            <ul>
+                <li><a href="https://github.com/saoudrizwan/claude-dev">Official Cline Documentation</a></li>
+                <li><a href="https://youtube.com/@iafactory">IAFactory Video Tutorials</a></li>
+                <li><a href="https://discord.gg/iafactory">Discord Support</a></li>
+                <li><a href="mailto:support@iafactory-algeria.com">Email Support</a></li>
+            </ul>
+
+            <div class="alert alert-success">
+                <strong>Ready to code with AI?</strong>
+                <p>Download Cline and connect to IAFactory Algeria for a revolutionary development experience!</p>
+            </div>
+        </main>
+
+        <aside class="docs-toc">
+            <h3 class="docs-toc-title">On this page</h3>
+            <ul></ul>
+        </aside>
+    </div>
+
+    <script src="../../assets/js/docs-theme.js"></script>
+</body>
+</html>

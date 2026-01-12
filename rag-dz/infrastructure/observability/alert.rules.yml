@@ -1,0 +1,220 @@
+# =============================================================================
+# ALERT RULES - iaFactory Algeria
+# Règles d'alerte pour Prometheus
+# =============================================================================
+
+groups:
+  # ===========================================================================
+  # INFRASTRUCTURE ALERTS - VPS Hetzner
+  # ===========================================================================
+  - name: infrastructure
+    interval: 30s
+    rules:
+      # CPU trop élevé
+      - alert: HighCPUUsage
+        expr: 100 - (avg(irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 80
+        for: 5m
+        labels:
+          severity: warning
+          team: devops
+        annotations:
+          summary: "🔥 CPU élevé sur VPS iaFactory"
+          description: "CPU usage is {{ $value | printf \"%.1f\" }}% (seuil: 80%)"
+          
+      - alert: CriticalCPUUsage
+        expr: 100 - (avg(irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 95
+        for: 2m
+        labels:
+          severity: critical
+          team: devops
+        annotations:
+          summary: "🚨 CPU CRITIQUE sur VPS iaFactory"
+          description: "CPU usage is {{ $value | printf \"%.1f\" }}% (seuil: 95%)"
+
+      # Mémoire
+      - alert: HighMemoryUsage
+        expr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100 > 85
+        for: 5m
+        labels:
+          severity: warning
+          team: devops
+        annotations:
+          summary: "💾 Mémoire élevée sur VPS iaFactory"
+          description: "Memory usage is {{ $value | printf \"%.1f\" }}% (seuil: 85%)"
+
+      - alert: CriticalMemoryUsage
+        expr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100 > 95
+        for: 2m
+        labels:
+          severity: critical
+          team: devops
+        annotations:
+          summary: "🚨 MÉMOIRE CRITIQUE sur VPS iaFactory"
+          description: "Memory usage is {{ $value | printf \"%.1f\" }}% (seuil: 95%)"
+
+      # Disque
+      - alert: DiskSpaceWarning
+        expr: (1 - (node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"})) * 100 > 80
+        for: 5m
+        labels:
+          severity: warning
+          team: devops
+        annotations:
+          summary: "💿 Espace disque faible sur VPS iaFactory"
+          description: "Disk usage is {{ $value | printf \"%.1f\" }}% (seuil: 80%)"
+
+      - alert: DiskSpaceCritical
+        expr: (1 - (node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"})) * 100 > 95
+        for: 2m
+        labels:
+          severity: critical
+          team: devops
+        annotations:
+          summary: "🚨 DISQUE PRESQUE PLEIN sur VPS iaFactory"
+          description: "Disk usage is {{ $value | printf \"%.1f\" }}% (seuil: 95%)"
+
+      # Réseau
+      - alert: HighNetworkTraffic
+        expr: rate(node_network_receive_bytes_total{device!="lo"}[5m]) / 1024 / 1024 > 100
+        for: 10m
+        labels:
+          severity: warning
+          team: devops
+        annotations:
+          summary: "🌐 Trafic réseau élevé"
+          description: "Network receive rate is {{ $value | printf \"%.1f\" }} MB/s"
+
+  # ===========================================================================
+  # DOCKER / CONTAINER ALERTS
+  # ===========================================================================
+  - name: containers
+    interval: 30s
+    rules:
+      # Conteneur en restart loop
+      - alert: ContainerRestarting
+        expr: increase(container_restart_count{name=~"iaf-.*"}[1h]) > 3
+        for: 5m
+        labels:
+          severity: warning
+          team: devops
+        annotations:
+          summary: "🔄 Conteneur {{ $labels.name }} en restart"
+          description: "Le conteneur {{ $labels.name }} a redémarré {{ $value }} fois dans la dernière heure"
+
+      # Conteneur down
+      - alert: ContainerDown
+        expr: absent(container_last_seen{name=~"iaf-.*"}) or (time() - container_last_seen{name=~"iaf-.*"}) > 300
+        for: 2m
+        labels:
+          severity: critical
+          team: devops
+        annotations:
+          summary: "⚠️ Conteneur {{ $labels.name }} DOWN"
+          description: "Le conteneur {{ $labels.name }} n'est plus visible depuis plus de 5 minutes"
+
+      # CPU conteneur élevé
+      - alert: ContainerHighCPU
+        expr: rate(container_cpu_usage_seconds_total{name=~"iaf-.*"}[5m]) * 100 > 80
+        for: 10m
+        labels:
+          severity: warning
+          team: devops
+        annotations:
+          summary: "🔥 CPU élevé sur conteneur {{ $labels.name }}"
+          description: "Container {{ $labels.name }} CPU usage is {{ $value | printf \"%.1f\" }}%"
+
+      # RAM conteneur élevée
+      - alert: ContainerHighMemory
+        expr: (container_memory_usage_bytes{name=~"iaf-.*"} / container_spec_memory_limit_bytes{name=~"iaf-.*"}) * 100 > 90
+        for: 5m
+        labels:
+          severity: warning
+          team: devops
+        annotations:
+          summary: "💾 Mémoire élevée sur conteneur {{ $labels.name }}"
+          description: "Container {{ $labels.name }} memory usage is {{ $value | printf \"%.1f\" }}%"
+
+  # ===========================================================================
+  # IAFACTORY APPLICATION ALERTS
+  # ===========================================================================
+  - name: iafactory-apps
+    interval: 60s
+    rules:
+      # Service non joignable
+      - alert: ServiceDown
+        expr: up{job=~"iafactory-.*"} == 0
+        for: 2m
+        labels:
+          severity: critical
+          team: backend
+        annotations:
+          summary: "🚨 Service {{ $labels.service }} DOWN"
+          description: "Le service {{ $labels.service }} ne répond plus depuis 2 minutes"
+
+      # Latence API élevée (si instrumenté)
+      - alert: HighAPILatency
+        expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket{job=~"iafactory-.*"}[5m])) > 2
+        for: 5m
+        labels:
+          severity: warning
+          team: backend
+        annotations:
+          summary: "🐢 Latence élevée sur {{ $labels.service }}"
+          description: "95th percentile latency is {{ $value | printf \"%.2f\" }}s"
+
+      # Erreurs HTTP 5xx
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~"5.*", job=~"iafactory-.*"}[5m]) > 0.1
+        for: 5m
+        labels:
+          severity: warning
+          team: backend
+        annotations:
+          summary: "❌ Taux d'erreurs élevé sur {{ $labels.service }}"
+          description: "Error rate is {{ $value | printf \"%.2f\" }} req/s"
+
+  # ===========================================================================
+  # OBSERVABILITY STACK ALERTS
+  # ===========================================================================
+  - name: observability
+    interval: 60s
+    rules:
+      - alert: PrometheusDown
+        expr: up{job="prometheus"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          team: devops
+        annotations:
+          summary: "🚨 Prometheus DOWN"
+          description: "Prometheus monitoring is not running"
+
+      - alert: GrafanaDown
+        expr: up{job="grafana"} == 0
+        for: 2m
+        labels:
+          severity: warning
+          team: devops
+        annotations:
+          summary: "📊 Grafana DOWN"
+          description: "Grafana dashboards are not accessible"
+
+      - alert: LokiDown
+        expr: up{job="loki"} == 0
+        for: 2m
+        labels:
+          severity: warning
+          team: devops
+        annotations:
+          summary: "📝 Loki DOWN"
+          description: "Log aggregation is not working"
+
+      - alert: AlertmanagerDown
+        expr: up{job="alertmanager"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          team: devops
+        annotations:
+          summary: "🔔 Alertmanager DOWN"
+          description: "Alert notifications will not be sent"

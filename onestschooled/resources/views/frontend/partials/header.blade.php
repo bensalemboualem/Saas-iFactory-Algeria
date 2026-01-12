@@ -1,0 +1,43 @@
+
+<!doctype html>
+<!-- class="rtl" dir="rtl" => will add on rtl mode  -->
+<html class="no-js {{ @findDirectionOfLang() }}" dir="{{ @findDirectionOfLang() }}" lang="zxx">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ @globalAsset(setting('favicon'), '40X40.webp')}}">
+    <title>@yield('title')</title>
+    <meta name="description" content="École bilingue français-arabe en Algérie. Programmes conformes au ministère, préparation au BEM, transport scolaire, infrastructure moderne.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    @if(findDirectionOfLang()== "rtl")
+    <link rel="stylesheet" href="{{global_asset('frontend')}}/css/bootstrap-rtl.min.css">
+    @else
+    <link rel="stylesheet" href="{{global_asset('frontend')}}/css/bootstrap.min.css">
+    @endif
+    <link rel="stylesheet" href="{{global_asset('frontend')}}/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="{{global_asset('frontend')}}/css/magnific-popup.css">
+    <link rel="stylesheet" href="{{global_asset('frontend')}}/css/fontawesome.css ">
+    <link rel="stylesheet" href="{{global_asset('frontend')}}/css/themify-icons.css">
+    <link rel="stylesheet" href="{{global_asset('frontend')}}/css/flaticon.css">
+    <link rel="stylesheet" href="{{global_asset('frontend')}}/css/nice-select.css">
+    <link rel="stylesheet" href="{{global_asset('frontend')}}/css/animate.min.css">
+    <link rel="stylesheet" href="{{global_asset('frontend')}}/css/slicknav.css">
+    <link rel="stylesheet" href="{{global_asset('frontend')}}/css/style.css">
+    <link rel="stylesheet" href="{{global_asset('frontend')}}/css/custom.css">
+    <link rel="stylesheet" href="{{global_asset('frontend')}}/css/sweetalert2.min.css">
+
+    @stack('css')
+
+    @stack('styles')
+
+    <!-- BBC School Algeria - Styles personnalisés -->
+    <link rel="stylesheet" href="{{ asset('css/bbc-style.css') }}">
+    <meta name="theme-color" content="#392C7D">
+    <meta name="keywords" content="école algérie, enseignement bilingue, bem algérie, école privée, cycle moyen, transport scolaire, cantine halal">
+</head>
+
+<body class="default-theme">
+    <input type="hidden" name="url" id="url" value="{{ url('') }}">

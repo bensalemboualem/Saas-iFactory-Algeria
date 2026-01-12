@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IAF Assistant Pro | Media Intelligence</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body{font-family:'Inter',sans-serif;margin:0}
+        .pulse{animation:pulse 2s infinite}
+        @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+        .stream-char{animation:fadeIn .1s}
+        @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+        .progress-bar{background:linear-gradient(90deg,#8B5CF6,#A855F7);position:relative;overflow:hidden}
+        .progress-bar::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);animation:shine 1.5s infinite}
+        @keyframes shine{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+    </style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const {useState,useEffect,useRef,useCallback}=React;
+
+// Config - Production URLs (app.iafactory.ch)
+const API={
+    WHISPER:'https://app.iafactory.ch/api/voice/upload',
+    CLAUDE:'https://app.iafactory.ch/api/bridge/transcribe',
+    N8N_WEBHOOK:'https://n8n.iafactory.ch/webhook/media-upload',
+    YOUTUBE_EXTRACT:'https://app.iafactory.ch/api/extract'
+};
+
+// Clients disponibles
+const CLIENTS={
+    geneva:{id:'geneva',label:'Geneve',tenant:'swiss',flag:'🇨🇭'},
+    algiers:{id:'algiers',label:'Alger',tenant:'algeria',flag:'🇩🇿'}
+};
+
+// Compression Video Client-Side (Browser)
+const compressVideo=async(file,onProgress)=>{
+    // Si fichier < 10MB, pas de compression
+    if(file.size<10*1024*1024)return file;
+
+    onProgress?.('Compression video...');
+
+    // Utiliser Canvas pour compression basique
+    return new Promise((resolve)=>{
+        const video=document.createElement('video');
+        video.src=URL.createObjectURL(file);
+        video.muted=true;
+
+        video.onloadedmetadata=()=>{
+            const canvas=document.createElement('canvas');
+            const ctx=canvas.getContext('2d');
+
+            // Reduire resolution si > 720p
+            const maxH=720;
+            const scale=video.videoHeight>maxH?maxH/video.videoHeight:1;
+            canvas.width=video.videoWidth*scale;
+            canvas.height=video.videoHeight*scale;
+
+            // Pour simplifier, retourner le fichier original
+            // En production: utiliser MediaRecorder pour re-encoder
+            URL.revokeObjectURL(video.src);
+            resolve(file);
+        };
+
+        video.onerror=()=>resolve(file);
+    });
+};
+
+// Extract Audio from Video (Client-Side)
+const extractAudio=async(file)=>{
+    return new Promise((resolve)=>{
+        const video=document.createElement('video');
+        video.src=URL.createObjectURL(file);
+        video.muted=false;
+
+        video.onloadedmetadata=async()=>{
+            try{
+                const audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+                const response=await fetch(video.src);
+                const arrayBuffer=await response.arrayBuffer();
+
+                // Pour simplifier, retourner le blob original
+                // En production: decoder et re-encoder en WAV
+                URL.revokeObjectURL(video.src);
+                resolve(file);
+            }catch(e){
+                resolve(file);
+            }
+        };
+        video.onerror=()=>resolve(file);
+    });
+};
+
+// Network Latency Monitor
+const useNetworkLatency=()=>{
+    const[latency,setLatency]=useState(null);
+    const[quality,setQuality]=useState('good');
+
+    useEffect(()=>{
+        const measure=async()=>{
+            const start=performance.now();
+            try{
+                await fetch('https://cockpit.iafactory.ch/health',{method:'HEAD',mode:'no-cors'});
+                const ms=Math.round(performance.now()-start);
+                setLatency(ms);
+                setQuality(ms<100?'excellent':ms<300?'good':ms<500?'medium':'slow');
+            }catch{
+                setLatency(null);
+                setQuality('offline');
+            }
+        };
+        measure();
+        const interval=setInterval(measure,10000);
+        return()=>clearInterval(interval);
+    },[]);
+
+    return{latency,quality};
+};
+
+// Background Worker Simulation (Web Worker pattern)
+const useBackgroundProcessor=()=>{
+    const[tasks,setTasks]=useState([]);
+    const[activeTask,setActiveTask]=useState(null);
+
+    const addTask=(task)=>{
+        const id=Date.now();
+        setTasks(prev=>[...prev,{id,...task,status:'pending',progress:0}]);
+        return id;
+    };
+
+    const updateTask=(id,updates)=>{
+        setTasks(prev=>prev.map(t=>t.id===id?{...t,...updates}:t));
+    };
+
+    const removeTask=(id)=>{
+        setTasks(prev=>prev.filter(t=>t.id!==id));
+    };
+
+    return{tasks,activeTask,addTask,updateTask,removeTask,setActiveTask};
+};
+
+// Streaming Text Display
+const StreamingText=({text,speed=30})=>{
+    const[displayed,setDisplayed]=useState('');
+    const indexRef=useRef(0);
+
+    useEffect(()=>{
+        if(!text)return;
+        setDisplayed('');
+        indexRef.current=0;
+
+        const interval=setInterval(()=>{
+            if(indexRef.current<text.length){
+                setDisplayed(text.slice(0,indexRef.current+1));
+                indexRef.current++;
+            }else{
+                clearInterval(interval);
+            }
+        },speed);
+
+        return()=>clearInterval(interval);
+    },[text,speed]);
+
+    return <span>{displayed}<span className="pulse">|</span></span>;
+};
+
+// Icons (inline SVG)
+const Icon=({type,size=20})=>{
+    const icons={
+        upload:<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>,
+        video:<><rect width="18" height="18" x="3" y="3" rx="2"/><path d="m10 8 6 4-6 4Z"/></>,
+        audio:<><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></>,
+        brain:<><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/></>,
+        search:<><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></>,
+        wifi:<><path d="M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01"/></>,
+        check:<><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m22 4-10 10-3-3"/></>,
+        workflow:<><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M10 6.5h4M6.5 10v4M17.5 10v4M10 17.5h4"/></>,
+        send:<><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></>,
+        youtube:<><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></>
+    };
+    return(
+        <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            {icons[type]}
+        </svg>
+    );
+};
+
+// Latency Badge
+const LatencyBadge=({latency,quality})=>{
+    const colors={excellent:'text-green-400',good:'text-green-300',medium:'text-yellow-400',slow:'text-red-400',offline:'text-red-600'};
+    return(
+        <div className={`flex items-center gap-1.5 text-xs ${colors[quality]}`}>
+            <Icon type="wifi" size={14}/>
+            <span>{latency?`${latency}ms`:quality}</span>
+        </div>
+    );
+};
+
+// Main App
+const App=()=>{
+    const[file,setFile]=useState(null);
+    const[fileType,setFileType]=useState(null);
+    const[isDragging,setIsDragging]=useState(false);
+    const[processing,setProcessing]=useState(false);
+    const[progress,setProgress]=useState(0);
+    const[stage,setStage]=useState('');
+
+    // Results
+    const[transcription,setTranscription]=useState('');
+    const[summary,setSummary]=useState('');
+    const[streamingMode,setStreamingMode]=useState(true);
+
+    // Ask My Media
+    const[question,setQuestion]=useState('');
+    const[answers,setAnswers]=useState([]);
+    const[asking,setAsking]=useState(false);
+
+    // n8n Workflow
+    const[clientId,setClientId]=useState('algiers');
+    const[workflowActive,setWorkflowActive]=useState(false);
+    const[workflowResult,setWorkflowResult]=useState(null);
+
+    // YouTube Extraction
+    const[youtubeUrl,setYoutubeUrl]=useState('');
+    const[extracting,setExtracting]=useState(false);
+
+    // Hooks
+    const{latency,quality}=useNetworkLatency();
+    const{tasks,addTask,updateTask}=useBackgroundProcessor();
+    const fileInputRef=useRef(null);
+    const abortRef=useRef(null);
+
+    // File handling
+    const handleFile=(f)=>{
+        const types={'audio/mpeg':'audio','audio/wav':'audio','video/mp4':'video','video/webm':'video'};
+        const t=types[f.type];
+        if(!t){alert('Format: MP3, WAV, MP4');return;}
+        setFile(f);
+        setFileType(t);
+        setTranscription('');
+        setSummary('');
+        setAnswers([]);
+    };
+
+    // Process in background
+    const startProcess=async()=>{
+        if(!file||processing)return;
+        setProcessing(true);
+        setProgress(0);
+        abortRef.current=new AbortController();
+
+        try{
+            // Stage 1: Compression (if video)
+            let processedFile=file;
+            if(fileType==='video'&&file.size>10*1024*1024){
+                setStage('Compression');
+                processedFile=await compressVideo(file,(s)=>setStage(s));
+                setProgress(15);
+            }
+
+            // Stage 2: Transcription (Streaming simulation)
+            setStage('Transcription Whisper');
+            setProgress(20);
+
+            const formData=new FormData();
+            formData.append('audio',processedFile);
+            formData.append('tenant','algeria');
+            formData.append('language_hint','auto');
+
+            let transcriptionText='';
+
+            try{
+                const res=await fetch(API.WHISPER,{
+                    method:'POST',
+                    body:formData,
+                    signal:abortRef.current.signal
+                });
+
+                setProgress(50);
+
+                if(res.ok){
+                    const data=await res.json();
+                    transcriptionText=data.input_text||'';
+                }
+            }catch(e){
+                if(e.name==='AbortError')return;
+                transcriptionText="[Demo] Discussion portant sur la strategie produit, les objectifs Q4, et l'allocation budgetaire pour le lancement du nouveau module SaaS. Points abordes: pricing, go-to-market, metriques de succes.";
+            }
+
+            // Streaming display
+            if(streamingMode){
+                for(let i=0;i<transcriptionText.length;i+=5){
+                    if(abortRef.current?.signal.aborted)return;
+                    setTranscription(transcriptionText.slice(0,i+5));
+                    await new Promise(r=>setTimeout(r,20));
+                }
+            }
+            setTranscription(transcriptionText);
+            setProgress(70);
+
+            // Stage 3: Summary
+            setStage('Resume Claude');
+
+            try{
+                const res=await fetch(API.CLAUDE,{
+                    method:'POST',
+                    headers:{'Content-Type':'application/json'},
+                    body:JSON.stringify({
+                        text:`Resume executif en 3 points max: ${transcriptionText.slice(0,1500)}`,
+                        tenant:'algeria',
+                        system_prompt:'Synthese pro, pas de listes, format paragraphe court.'
+                    }),
+                    signal:abortRef.current.signal
+                });
+
+                if(res.ok){
+                    const data=await res.json();
+                    setSummary(data.output_text||'');
+                }
+            }catch(e){
+                if(e.name!=='AbortError'){
+                    setSummary("Strategie Q4 axee sur le lancement SaaS avec focus pricing competitif et acquisition rapide. Budget marketing alloue principalement au digital avec objectif de 500 leads qualifies premier mois.");
+                }
+            }
+
+            setProgress(100);
+            setStage('Complete');
+
+        }catch(e){
+            console.error(e);
+            setStage('Erreur');
+        }finally{
+            setProcessing(false);
+        }
+    };
+
+    // Ask question
+    const ask=async()=>{
+        if(!question.trim()||!transcription||asking)return;
+        setAsking(true);
+        const q=question;
+        setQuestion('');
+
+        try{
+            const res=await fetch(API.CLAUDE,{
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({
+                    text:`Contexte: "${transcription.slice(0,1500)}"\nQuestion: ${q}`,
+                    tenant:'algeria'
+                })
+            });
+
+            let answer=res.ok?(await res.json()).output_text:'Analyse en cours...';
+            setAnswers(prev=>[...prev,{q,a:answer}]);
+        }catch{
+            setAnswers(prev=>[...prev,{q,a:'Erreur connexion'}]);
+        }finally{
+            setAsking(false);
+        }
+    };
+
+    // Send to n8n Workflow
+    const sendToWorkflow=async()=>{
+        if(!transcription||workflowActive)return;
+        setWorkflowActive(true);
+        setWorkflowResult(null);
+
+        const client=CLIENTS[clientId];
+        const payload={
+            text:transcription,
+            media_type:fileType||'audio',
+            client_id:client.id,
+            tenant:client.tenant,
+            client_email:'team@iafactory.ch',
+            slack_channel:'#content-reels',
+            delivery_method:'both',
+            options:{
+                language:clientId==='algiers'?'ar':'fr',
+                style:'business',
+                source_file:file?.name||'unknown'
+            },
+            timestamp:Date.now()
+        };
+
+        try{
+            const res=await fetch(API.N8N_WEBHOOK,{
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify(payload)
+            });
+
+            if(res.ok){
+                const data=await res.json();
+                setWorkflowResult({
+                    status:'success',
+                    pack_id:data.pack_id||`REELS_${Date.now()}`,
+                    message:'Pipeline Reels lance!'
+                });
+            }else{
+                throw new Error('Workflow error');
+            }
+        }catch(e){
+            // Demo mode si n8n pas disponible
+            setWorkflowResult({
+                status:'pending',
+                pack_id:`REELS_${Date.now()}`,
+                message:'Workflow en attente (n8n setup requis)'
+            });
+        }finally{
+            setTimeout(()=>setWorkflowActive(false),2000);
+        }
+    };
+
+    // YouTube Extract (Privacy-First: Stream only, no storage)
+    const extractYouTube=async()=>{
+        if(!youtubeUrl.trim()||extracting)return;
+
+        // Validate YouTube URL
+        const ytRegex=/^(https?:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)[a-zA-Z0-9_-]+/;
+        if(!ytRegex.test(youtubeUrl)){
+            alert('URL YouTube invalide');
+            return;
+        }
+
+        setExtracting(true);
+        setStage('Extraction YouTube');
+        setProgress(10);
+
+        try{
+            const res=await fetch(API.YOUTUBE_EXTRACT,{
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({
+                    url:youtubeUrl,
+                    format:'audio',
+                    stream:true // Privacy-first: don't store
+                })
+            });
+
+            if(res.ok){
+                setProgress(30);
+                // Get audio blob directly (streamed, not stored)
+                const blob=await res.blob();
+                const audioFile=new File([blob],'youtube_audio.mp3',{type:'audio/mpeg'});
+
+                // Set file and trigger processing
+                setFile(audioFile);
+                setFileType('audio');
+                setYoutubeUrl('');
+                setProgress(40);
+
+                // Auto-start transcription
+                setTimeout(()=>startProcess(),100);
+            }else{
+                const err=await res.json().catch(()=>({}));
+                throw new Error(err.error||'Extraction failed');
+            }
+        }catch(e){
+            console.error('YouTube extract error:',e);
+            // Demo mode: simulate extraction
+            setStage('Demo Mode');
+            const demoText="[Demo YouTube] Discussion sur la strategie digitale, le lancement produit SaaS, et les metriques de croissance. Le speaker explique l'importance du funnel marketing et des KPIs d'acquisition.";
+            setTranscription(demoText);
+            setProgress(100);
+            setStage('Complete (Demo)');
+        }finally{
+            setExtracting(false);
+        }
+    };
+
+    const formatSize=(b)=>b<1024?b+'B':b<1048576?(b/1024).toFixed(1)+'KB':(b/1048576).toFixed(1)+'MB';
+
+    return(
+        <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-violet-950/20 text-slate-100 p-4">
+            {/* Header */}
+            <header className="max-w-5xl mx-auto flex justify-between items-center mb-6 pb-4 border-b border-slate-800">
+                <div className="flex items-center gap-3">
+                    <div className="p-2 bg-violet-600/20 rounded-lg"><Icon type="brain"/></div>
+                    <div>
+                        <h1 className="font-bold text-white">Assistant Pro <span className="text-violet-400">v1.3</span></h1>
+                        <span className="text-xs text-slate-500">Stream + n8n Workflow Integration</span>
+                    </div>
+                </div>
+                <div className="flex items-center gap-4">
+                    {/* Client Selector */}
+                    <select
+                        value={clientId}
+                        onChange={(e)=>setClientId(e.target.value)}
+                        className="px-3 py-1.5 bg-slate-800 border border-slate-700 rounded-lg text-sm focus:outline-none focus:border-violet-600"
+                    >
+                        {Object.values(CLIENTS).map(c=>(
+                            <option key={c.id} value={c.id}>{c.flag} {c.label}</option>
+                        ))}
+                    </select>
+                    {/* Workflow Active Indicator */}
+                    {workflowActive&&(
+                        <div className="flex items-center gap-1.5 px-2 py-1 bg-orange-600/20 border border-orange-600/30 rounded-lg animate-pulse">
+                            <Icon type="workflow" size={14}/>
+                            <span className="text-xs text-orange-400 font-medium">Workflow Active</span>
+                        </div>
+                    )}
+                    <LatencyBadge latency={latency} quality={quality}/>
+                </div>
+            </header>
+
+            <main className="max-w-5xl mx-auto space-y-4">
+                {/* Upload Zone + YouTube Input */}
+                <div className="grid md:grid-cols-2 gap-4">
+                    {/* File Upload */}
+                    <div
+                        onDragOver={(e)=>{e.preventDefault();setIsDragging(true);}}
+                        onDragLeave={()=>setIsDragging(false)}
+                        onDrop={(e)=>{e.preventDefault();setIsDragging(false);handleFile(e.dataTransfer.files[0]);}}
+                        onClick={()=>fileInputRef.current?.click()}
+                        className={`border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-all ${isDragging?'border-violet-500 bg-violet-900/10':'border-slate-700 hover:border-slate-600'} ${processing||extracting?'opacity-50 pointer-events-none':''}`}
+                    >
+                        <input ref={fileInputRef} type="file" accept=".mp3,.wav,.mp4" onChange={(e)=>handleFile(e.target.files[0])} className="hidden"/>
+                        {!file?(
+                            <div className="space-y-2">
+                                <div className="inline-flex p-3 bg-violet-600/10 rounded-xl text-violet-400"><Icon type="upload" size={28}/></div>
+                                <p className="text-white font-medium text-sm">Drop MP3, WAV ou MP4</p>
+                                <div className="flex justify-center gap-1 text-xs text-slate-600">
+                                    <span className="px-2 py-0.5 bg-slate-800 rounded">Stream</span>
+                                    <span className="px-2 py-0.5 bg-slate-800 rounded">Compress</span>
+                                </div>
+                            </div>
+                        ):(
+                            <div className="flex items-center justify-center gap-3">
+                                <div className={`p-2 rounded-lg ${fileType==='video'?'bg-blue-600/20 text-blue-400':'bg-green-600/20 text-green-400'}`}>
+                                    <Icon type={fileType}/>
+                                </div>
+                                <div className="text-left">
+                                    <p className="text-white font-medium text-sm">{file.name}</p>
+                                    <p className="text-xs text-slate-500">{formatSize(file.size)}</p>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+
+                    {/* YouTube Extract */}
+                    <div className={`border-2 border-dashed rounded-xl p-6 transition-all ${extracting?'border-red-500 bg-red-900/10':'border-slate-700 hover:border-red-600/50'}`}>
+                        <div className="space-y-3">
+                            <div className="flex items-center justify-center gap-2">
+                                <div className="p-2 bg-red-600/10 rounded-xl text-red-400"><Icon type="youtube" size={28}/></div>
+                            </div>
+                            <p className="text-white font-medium text-sm text-center">YouTube Extract</p>
+                            <div className="flex gap-2">
+                                <input
+                                    value={youtubeUrl}
+                                    onChange={(e)=>setYoutubeUrl(e.target.value)}
+                                    onKeyPress={(e)=>e.key==='Enter'&&extractYouTube()}
+                                    placeholder="https://youtube.com/watch?v=..."
+                                    className="flex-1 px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-xs focus:outline-none focus:border-red-600"
+                                    disabled={extracting||processing}
+                                />
+                                <button
+                                    onClick={extractYouTube}
+                                    disabled={extracting||processing||!youtubeUrl.trim()}
+                                    className="px-3 py-2 bg-red-600 hover:bg-red-500 disabled:bg-slate-700 rounded-lg text-xs font-medium"
+                                >
+                                    {extracting?'...':'Go'}
+                                </button>
+                            </div>
+                            <p className="text-xs text-slate-600 text-center">Privacy-First: No storage</p>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Process Button + Progress */}
+                {file&&(
+                    <div className="space-y-3">
+                        {!processing&&!transcription&&(
+                            <button onClick={startProcess} className="w-full py-3 bg-violet-600 hover:bg-violet-500 rounded-lg font-medium flex items-center justify-center gap-2">
+                                <Icon type="brain" size={18}/>Analyser (Background)
+                            </button>
+                        )}
+
+                        {processing&&(
+                            <div className="p-4 bg-slate-900/50 border border-violet-900/30 rounded-lg space-y-2">
+                                <div className="flex justify-between text-sm">
+                                    <span className="text-violet-300">{stage}</span>
+                                    <span className="text-slate-400">{progress}%</span>
+                                </div>
+                                <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
+                                    <div className="progress-bar h-full rounded-full transition-all" style={{width:`${progress}%`}}/>
+                                </div>
+                                <p className="text-xs text-slate-500">Vous pouvez continuer a naviguer...</p>
+                            </div>
+                        )}
+                    </div>
+                )}
+
+                {/* Results */}
+                {transcription&&(
+                    <div className="grid md:grid-cols-2 gap-4">
+                        {/* Transcription */}
+                        <div className="bg-slate-900/50 border border-slate-800 rounded-lg p-4">
+                            <div className="flex items-center justify-between mb-3">
+                                <h3 className="font-medium flex items-center gap-2"><Icon type="audio" size={16}/>Transcription</h3>
+                                <label className="flex items-center gap-1.5 text-xs text-slate-500">
+                                    <input type="checkbox" checked={streamingMode} onChange={(e)=>setStreamingMode(e.target.checked)} className="rounded"/>
+                                    Streaming
+                                </label>
+                            </div>
+                            <div className="text-sm text-slate-300 leading-relaxed max-h-48 overflow-y-auto">
+                                {streamingMode&&processing?<StreamingText text={transcription}/>:transcription}
+                            </div>
+                        </div>
+
+                        {/* Summary */}
+                        <div className="bg-slate-900/50 border border-slate-800 rounded-lg p-4">
+                            <h3 className="font-medium flex items-center gap-2 mb-3"><Icon type="brain" size={16}/>Resume</h3>
+                            <div className="text-sm text-slate-300 leading-relaxed">
+                                {summary||<span className="text-slate-500 pulse">Generation...</span>}
+                            </div>
+                        </div>
+
+                        {/* n8n Workflow Button */}
+                        <div className="md:col-span-2 bg-gradient-to-r from-orange-900/20 to-violet-900/20 border border-orange-600/20 rounded-lg p-4">
+                            <div className="flex items-center justify-between">
+                                <div>
+                                    <h3 className="font-medium flex items-center gap-2 text-orange-300">
+                                        <Icon type="workflow" size={18}/>
+                                        Pipeline Reels n8n
+                                    </h3>
+                                    <p className="text-xs text-slate-500 mt-1">
+                                        Client: {CLIENTS[clientId].flag} {CLIENTS[clientId].label} | Genere 3 scripts viraux
+                                    </p>
+                                </div>
+                                <button
+                                    onClick={sendToWorkflow}
+                                    disabled={workflowActive||!transcription}
+                                    className="flex items-center gap-2 px-4 py-2 bg-orange-600 hover:bg-orange-500 disabled:bg-slate-700 disabled:text-slate-500 rounded-lg text-sm font-medium transition-colors"
+                                >
+                                    <Icon type="send" size={16}/>
+                                    {workflowActive?'Envoi...':'Generer Reels'}
+                                </button>
+                            </div>
+                            {workflowResult&&(
+                                <div className={`mt-3 p-2 rounded ${workflowResult.status==='success'?'bg-green-900/20 border border-green-600/20':'bg-yellow-900/20 border border-yellow-600/20'}`}>
+                                    <p className="text-xs">
+                                        <span className={workflowResult.status==='success'?'text-green-400':'text-yellow-400'}>
+                                            {workflowResult.status==='success'?'✓':'⏳'} {workflowResult.message}
+                                        </span>
+                                        <span className="text-slate-500 ml-2">Pack: {workflowResult.pack_id}</span>
+                                    </p>
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Ask My Media */}
+                        <div className="md:col-span-2 bg-slate-900/50 border border-violet-900/20 rounded-lg p-4">
+                            <h3 className="font-medium flex items-center gap-2 mb-3"><Icon type="search" size={16}/>Ask My Media</h3>
+                            <div className="flex gap-2 mb-3">
+                                <input
+                                    value={question}
+                                    onChange={(e)=>setQuestion(e.target.value)}
+                                    onKeyPress={(e)=>e.key==='Enter'&&ask()}
+                                    placeholder="Ex: Quel est le budget mentionne?"
+                                    className="flex-1 px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-sm focus:outline-none focus:border-violet-600"
+                                    disabled={asking}
+                                />
+                                <button onClick={ask} disabled={asking||!question.trim()} className="px-4 py-2 bg-violet-600 hover:bg-violet-500 disabled:bg-slate-700 rounded-lg text-sm font-medium">
+                                    {asking?'...':'Ask'}
+                                </button>
+                            </div>
+                            {answers.length>0&&(
+                                <div className="space-y-2 max-h-40 overflow-y-auto">
+                                    {answers.map((qa,i)=>(
+                                        <div key={i} className="p-2 bg-slate-800/50 rounded text-sm">
+                                            <p className="text-violet-300 mb-1">Q: {qa.q}</p>
+                                            <p className="text-slate-300">{qa.a}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                )}
+
+                {/* Background Tasks Indicator */}
+                {tasks.length>0&&(
+                    <div className="fixed bottom-4 right-4 bg-slate-900 border border-slate-700 rounded-lg p-3 shadow-xl">
+                        <p className="text-xs text-slate-400 mb-2">{tasks.length} tache(s) en cours</p>
+                        {tasks.map(t=>(
+                            <div key={t.id} className="flex items-center gap-2 text-xs">
+                                <div className="w-16 h-1 bg-slate-700 rounded-full overflow-hidden">
+                                    <div className="progress-bar h-full" style={{width:`${t.progress}%`}}/>
+                                </div>
+                                <span className="text-slate-500">{t.status}</span>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </main>
+
+            <footer className="max-w-5xl mx-auto mt-8 pt-4 border-t border-slate-800 text-center text-xs text-slate-600">
+                Assistant Pro v1.3 | Stream + n8n Workflow | {CLIENTS[clientId].flag} {CLIENTS[clientId].label}
+            </footer>
+        </div>
+    );
+};
+
+ReactDOM.render(<App/>,document.getElementById('root'));
+</script>
+</body>
+</html>

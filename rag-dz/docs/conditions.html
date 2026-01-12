@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conditions d'Utilisation - IAFactory Algeria</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00c261;
+            --bg: #0a0a0a;
+            --surface: #111;
+            --text: #fff;
+            --text-muted: #888;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; }
+        
+        .header { background: rgba(10,10,10,0.95); padding: 1rem 2rem; position: fixed; top: 0; left: 0; right: 0; z-index: 100; border-bottom: 1px solid #222; }
+        .header-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--primary); text-decoration: none; }
+        .back-btn { background: var(--primary); color: #000; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; }
+
+        .main { max-width: 900px; margin: 0 auto; padding: 120px 2rem 4rem; }
+        .page-header { text-align: center; margin-bottom: 3rem; }
+        .page-header h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .page-header .update { color: var(--text-muted); font-size: 0.95rem; }
+
+        .content { background: var(--surface); border: 1px solid #222; border-radius: 16px; padding: 3rem; }
+        .content h2 { color: var(--primary); margin: 2rem 0 1rem; font-size: 1.5rem; }
+        .content h2:first-child { margin-top: 0; }
+        .content p { color: var(--text-muted); margin-bottom: 1rem; }
+        .content ul, .content ol { margin: 1rem 0 1rem 2rem; color: var(--text-muted); }
+        .content li { margin-bottom: 0.5rem; }
+        .content strong { color: var(--text); }
+
+        .highlight-box { background: rgba(0,194,97,0.1); border: 1px solid rgba(0,194,97,0.3); border-radius: 10px; padding: 1.5rem; margin: 1.5rem 0; }
+        .warning-box { background: rgba(255,193,7,0.1); border: 1px solid rgba(255,193,7,0.3); border-radius: 10px; padding: 1.5rem; margin: 1.5rem 0; }
+
+        footer { background: var(--surface); border-top: 1px solid #222; padding: 2rem; text-align: center; color: var(--text-muted); margin-top: 4rem; }
+
+        @media (max-width: 768px) {
+            .page-header h1 { font-size: 2rem; }
+            .content { padding: 1.5rem; }
+        }
+    </style>
+<link rel="stylesheet" href="/apps/shared/iafactory-unified.css">
+</head>
+<body>
+<!-- IAFactory Trilingue Controls -->
+<div class="iaf-controls-floating" style="position:fixed;top:20px;right:20px;z-index:9998;display:flex;gap:10px;align-items:center;">
+    <div class="iaf-lang-dropdown" style="position:relative;">
+        <button class="iaf-lang-btn" onclick="IAFUnified.toggleLangMenu()" 
+            style="background:#667eea;color:white;border:none;padding:8px 15px;border-radius:8px;cursor:pointer;font-size:14px;display:flex;align-items:center;gap:5px;">
+            🌐 <span id="current-lang-label">FR</span> ▼
+        </button>
+        <div class="iaf-lang-menu" id="lang-menu" 
+            style="display:none;position:absolute;top:100%;right:0;background:white;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,0.15);min-width:150px;margin-top:5px;overflow:hidden;">
+            <button onclick="IAFUnified.changeLang('fr')" style="width:100%;padding:10px 15px;border:none;background:none;text-align:left;cursor:pointer;">🇫🇷 Français</button>
+            <button onclick="IAFUnified.changeLang('ar')" style="width:100%;padding:10px 15px;border:none;background:none;text-align:left;cursor:pointer;">🇩🇿 العربية</button>
+            <button onclick="IAFUnified.changeLang('en')" style="width:100%;padding:10px 15px;border:none;background:none;text-align:left;cursor:pointer;">🇬🇧 English</button>
+        </div>
+    </div>
+    <button class="iaf-theme-toggle" onclick="IAFUnified.toggleTheme()" 
+        style="background:#667eea;color:white;border:none;padding:8px 12px;border-radius:8px;cursor:pointer;font-size:16px;" 
+        title="Toggle theme">🌓</button>
+</div>
+
+    <header class="header">
+        <div class="header-content">
+            <a href="../landing-complete-responsive.html" class="logo">🇩🇿 IAFactory</a>
+            <a href="../landing-complete-responsive.html" class="back-btn"><i class="fas fa-arrow-left"></i> Retour</a>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="page-header">
+            <h1>📜 Conditions d'Utilisation</h1>
+            <p class="update">Dernière mise à jour : 15 janvier 2025</p>
+        </div>
+
+        <div class="content">
+            <h2>1. Acceptation des Conditions</h2>
+            <p>En accédant et en utilisant la plateforme IAFactory Algeria ("la Plateforme"), vous acceptez d'être lié par les présentes Conditions d'Utilisation. Si vous n'acceptez pas ces conditions, veuillez ne pas utiliser nos services.</p>
+
+            <h2>2. Description des Services</h2>
+            <p>IAFactory Algeria fournit une plateforme d'intelligence artificielle comprenant :</p>
+            <ul>
+                <li>Des assistants IA basés sur la technologie RAG (Retrieval Augmented Generation)</li>
+                <li>Plus de 56 applications IA pour divers cas d'usage</li>
+                <li>Un accès à 22+ fournisseurs de modèles de langage (LLM)</li>
+                <li>Des APIs pour l'intégration dans vos systèmes</li>
+                <li>Un hébergement sécurisé en Algérie</li>
+            </ul>
+
+            <h2>3. Inscription et Compte</h2>
+            <p>Pour utiliser nos services, vous devez :</p>
+            <ul>
+                <li>Avoir au moins 18 ans ou l'âge légal dans votre juridiction</li>
+                <li>Fournir des informations exactes et complètes lors de l'inscription</li>
+                <li>Maintenir la confidentialité de vos identifiants de connexion</li>
+                <li>Notifier immédiatement toute utilisation non autorisée de votre compte</li>
+            </ul>
+
+            <h2>4. Utilisation Acceptable</h2>
+            <p>Vous vous engagez à utiliser la Plateforme de manière légale et éthique. Il est strictement interdit de :</p>
+            <ul>
+                <li>Générer du contenu illégal, haineux, discriminatoire ou diffamatoire</li>
+                <li>Violer les droits de propriété intellectuelle de tiers</li>
+                <li>Tenter de contourner les mesures de sécurité</li>
+                <li>Utiliser la Plateforme pour du spam ou des activités malveillantes</li>
+                <li>Revendre l'accès à nos services sans autorisation</li>
+                <li>Surcharger intentionnellement nos systèmes</li>
+            </ul>
+
+            <div class="warning-box">
+                <p><strong>⚠️ Avertissement :</strong> L'IA peut produire des erreurs. Vérifiez toujours les informations importantes auprès de sources fiables avant de prendre des décisions critiques.</p>
+            </div>
+
+            <h2>5. Propriété Intellectuelle</h2>
+            <p><strong>Nos droits :</strong> La Plateforme, son code source, son design et son contenu sont la propriété d'IAFactory Algeria et sont protégés par les lois sur la propriété intellectuelle.</p>
+            <p><strong>Vos droits :</strong> Vous conservez tous les droits sur le contenu que vous uploadez. En utilisant nos services, vous nous accordez une licence limitée pour traiter ce contenu aux fins de fournir les services.</p>
+            <p><strong>Contenu généré :</strong> Le contenu généré par l'IA à partir de vos requêtes vous appartient, sous réserve des droits des tiers et de notre licence d'utilisation des modèles.</p>
+
+            <h2>6. Tarification et Paiement</h2>
+            <p>Les détails des tarifs sont disponibles sur notre page <a href="tarifs.html" style="color: var(--primary);">Tarifs</a>. En souscrivant à un plan payant :</p>
+            <ul>
+                <li>Vous vous engagez à payer les frais selon la périodicité choisie</li>
+                <li>Les prix sont en DZD sauf indication contraire</li>
+                <li>La TVA est incluse conformément à la réglementation algérienne</li>
+                <li>Les remboursements sont traités au cas par cas</li>
+            </ul>
+
+            <h2>7. Disponibilité des Services</h2>
+            <p>Nous nous efforçons de maintenir une disponibilité de 99.9% mais ne garantissons pas un service ininterrompu. Des maintenances programmées seront annoncées à l'avance.</p>
+
+            <h2>8. Limitation de Responsabilité</h2>
+            <p>Dans les limites permises par la loi algérienne :</p>
+            <ul>
+                <li>Nos services sont fournis "en l'état"</li>
+                <li>Nous ne garantissons pas l'exactitude des réponses générées par l'IA</li>
+                <li>Notre responsabilité est limitée au montant des frais payés sur les 12 derniers mois</li>
+                <li>Nous ne sommes pas responsables des dommages indirects ou consécutifs</li>
+            </ul>
+
+            <h2>9. Résiliation</h2>
+            <p>Vous pouvez résilier votre compte à tout moment depuis les paramètres. Nous nous réservons le droit de suspendre ou résilier votre accès en cas de violation de ces conditions, avec notification préalable sauf en cas d'urgence.</p>
+
+            <h2>10. Modifications</h2>
+            <p>Nous pouvons modifier ces conditions avec un préavis de 30 jours. Votre utilisation continue après modification vaut acceptation des nouvelles conditions.</p>
+
+            <h2>11. Droit Applicable</h2>
+            <p>Ces conditions sont régies par le droit algérien. Tout litige sera soumis aux tribunaux compétents d'Alger.</p>
+
+            <h2>12. Contact</h2>
+            <p>Pour toute question concernant ces conditions :</p>
+            <ul>
+                <li>Email : <strong>legal@iafactory.dz</strong></li>
+                <li>Adresse : Centre d'Affaires, Boulevard Mohamed V, Alger, Algérie</li>
+            </ul>
+
+            <div class="highlight-box">
+                <p><strong>✅ En utilisant IAFactory Algeria, vous confirmez avoir lu, compris et accepté ces Conditions d'Utilisation.</strong></p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2025 IAFactory Algeria. Tous droits réservés.</p>
+    </footer>
+<script src="/apps/shared/iafactory-unified.js"></script>
+<!-- IAFactory Chatbot -->
+<button class="iaf-chatbot-btn" onclick="IAFUnified.toggleChatbot()" title="Aide" aria-label="Aide">💬</button>
+<div data-iaf-footer></div>
+</body>
+</html>

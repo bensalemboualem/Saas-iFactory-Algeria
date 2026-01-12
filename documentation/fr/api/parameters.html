@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paramètres API - IAFactory Algeria</title>
+    <link rel="stylesheet" href="../../assets/css/docs-theme.css">
+</head>
+<body>
+    <header class="docs-header">
+        <div class="docs-logo">
+            <img src="../../assets/images/logo.png" alt="IAFactory Algeria">
+            <span>IAFactory Algeria</span>
+        </div>
+        <nav class="main-nav">
+            <a href="../index.html">Documentation</a>
+            <a href="./index.html" class="active">API</a>
+        </nav>
+        <div class="docs-controls">
+            <div class="language-switcher">
+                <button data-lang="fr" class="active">🇫🇷 FR</button>
+                <button data-lang="en">🇬🇧 EN</button>
+                <button data-lang="ar">🇸🇦 AR</button>
+            </div>
+            <div class="theme-toggle">
+                <div class="theme-toggle-slider">☀️</div>
+            </div>
+        </div>
+    </header>
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <div class="sidebar-section">
+                <h3 class="sidebar-section-title">🔌 API</h3>
+                <ul class="sidebar-menu">
+                    <li><a href="./quick-start.html">Démarrage rapide</a></li>
+                    <li><a href="./parameters.html" class="active">Paramètres</a></li>
+                    <li><a href="./models-pricing.html">Modèles et tarifs</a></li>
+                    <li><a href="./error-codes.html">Codes d'erreur</a></li>
+                </ul>
+            </div>
+        </aside>
+        <main class="docs-main">
+            <h1>⚙️ Paramètres API</h1>
+            <h2>Paramètres Principaux</h2>
+            <table>
+                <tr><th>Paramètre</th><th>Type</th><th>Description</th></tr>
+                <tr><td><code>model</code></td><td>string</td><td>Modèle à utiliser (gpt-4-turbo, claude-3, etc.)</td></tr>
+                <tr><td><code>messages</code></td><td>array</td><td>Liste des messages de conversation</td></tr>
+                <tr><td><code>temperature</code></td><td>number</td><td>0-2. Contrôle la créativité (défaut: 0.7)</td></tr>
+                <tr><td><code>max_tokens</code></td><td>integer</td><td>Nombre maximum de tokens à générer</td></tr>
+                <tr><td><code>stream</code></td><td>boolean</td><td>Activer le streaming (défaut: false)</td></tr>
+            </table>
+            <h2>Exemple Complet</h2>
+            <pre><code class="language-json">{
+  "model": "gpt-4-turbo",
+  "messages": [{"role": "user", "content": "Hello"}],
+  "temperature": 0.7,
+  "max_tokens": 500,
+  "top_p": 1,
+  "frequency_penalty": 0,
+  "presence_penalty": 0,
+  "stream": false
+}</code></pre>
+        </main>
+    </div>
+    <script src="../../assets/js/docs-theme.js"></script>
+</body>
+</html>

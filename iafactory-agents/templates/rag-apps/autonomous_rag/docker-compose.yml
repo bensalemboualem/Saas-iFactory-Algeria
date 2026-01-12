@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  db:
+    image: phidata/pgvector:16
+    container_name: autorag_pgvector_db
+    environment:
+      POSTGRES_DB: ai
+      POSTGRES_USER: ai
+      POSTGRES_PASSWORD: ai
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - pgvolume:/var/lib/postgresql/data
+    ports:
+      - "5532:5433" # Expose the PG port to host for external access if needed
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ai -d ai"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  rag-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: autorag_api_service
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      DB_URL: postgresql+psycopg://ai:ai@db:5433/ai
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./tmp/lancedb:/app/tmp/lancedb # Ensure LanceDB persistence inside the service container if used
+
+volumes:
+  pgvolume:

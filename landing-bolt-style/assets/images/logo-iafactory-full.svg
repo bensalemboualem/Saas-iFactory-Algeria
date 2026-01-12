@@ -1,0 +1,114 @@
+<svg width="1000" height="460" viewBox="0 0 1000 460" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- Background transparent pour intégration web -->
+  <rect width="1000" height="460" fill="transparent"/>
+
+  <!-- Lettre A avec circuits (Gauche = Vert, Droite = Rouge) -->
+  <g id="logoA">
+
+    <!-- Partie GAUCHE VERTE -->
+    <g id="leftGreen">
+      <!-- Jambe gauche du A -->
+      <path d="M 180 380 L 230 160 L 260 160 L 220 360 Z" fill="#00913A" opacity="0.95"/>
+
+      <!-- Circuits verts -->
+      <!-- Circuit 1 -->
+      <circle cx="210" cy="210" r="8" fill="none" stroke="#00913A" stroke-width="3"/>
+      <line x1="210" y1="218" x2="210" y2="250" stroke="#00913A" stroke-width="3"/>
+      <circle cx="210" cy="255" r="5" fill="#00913A"/>
+
+      <!-- Circuit 2 -->
+      <line x1="195" y1="270" x2="175" y2="270" stroke="#00913A" stroke-width="3"/>
+      <circle cx="170" cy="270" r="5" fill="#00913A"/>
+
+      <!-- Circuit 3 -->
+      <circle cx="240" cy="220" r="6" fill="none" stroke="#00913A" stroke-width="2"/>
+      <line x1="246" y1="220" x2="265" y2="220" stroke="#00913A" stroke-width="2"/>
+      <circle cx="270" cy="220" r="4" fill="#00913A"/>
+
+      <!-- Petit circuit node -->
+      <circle cx="195" cy="340" r="6" fill="#00913A"/>
+      <circle cx="225" cy="310" r="4" fill="#00913A"/>
+    </g>
+
+    <!-- BARRE HORIZONTALE du A (Vert foncé) -->
+    <rect x="220" y="290" width="150" height="18" fill="#006B2D" rx="2"/>
+
+    <!-- Partie DROITE ROUGE -->
+    <g id="rightRed">
+      <!-- Jambe droite du A -->
+      <path d="M 400 380 L 360 160 L 330 160 L 365 360 Z" fill="#CE1126" opacity="0.95"/>
+
+      <!-- Circuits rouges -->
+      <!-- Circuit 1 -->
+      <circle cx="350" cy="210" r="8" fill="none" stroke="#CE1126" stroke-width="3"/>
+      <line x1="350" y1="218" x2="350" y2="250" stroke="#CE1126" stroke-width="3"/>
+      <circle cx="350" cy="255" r="5" fill="#CE1126"/>
+
+      <!-- Circuit 2 -->
+      <line x1="365" y1="270" x2="385" y2="270" stroke="#CE1126" stroke-width="3"/>
+      <circle cx="390" cy="270" r="5" fill="#CE1126"/>
+
+      <!-- Circuit 3 -->
+      <circle cx="320" cy="220" r="6" fill="none" stroke="#CE1126" stroke-width="2"/>
+      <line x1="314" y1="220" x2="295" y2="220" stroke="#CE1126" stroke-width="2"/>
+      <circle cx="290" cy="220" r="4" fill="#CE1126"/>
+
+      <!-- Petit circuit node -->
+      <circle cx="365" cy="340" r="6" fill="#CE1126"/>
+      <circle cx="335" cy="310" r="4" fill="#CE1126"/>
+    </g>
+
+    <!-- DRAPEAU ALGÉRIEN (Croissant + Étoile) au sommet du A -->
+    <g id="algerianFlag" transform="translate(280, 180)">
+      <!-- Cercle extérieur -->
+      <circle cx="0" cy="0" r="28" fill="none" stroke="#CE1126" stroke-width="3"/>
+
+      <!-- Croissant -->
+      <path d="M -8 -15 Q -12 0 -8 15 Q 8 8 8 0 Q 8 -8 -8 -15" fill="#CE1126"/>
+
+      <!-- Étoile à 5 branches -->
+      <path d="M 5 0 L 7 6 L 14 6 L 9 10 L 11 16 L 5 12 L -1 16 L 1 10 L -4 6 L 3 6 Z"
+            fill="#CE1126" transform="scale(0.9)"/>
+    </g>
+
+  </g>
+
+  <!-- LIGNES TECHNOLOGIQUES (grises) -->
+  <g id="techLines" opacity="0.5">
+    <!-- Ligne principale -->
+    <line x1="430" y1="260" x2="950" y2="260" stroke="#B0B0B0" stroke-width="2"/>
+
+    <!-- Ligne secondaire -->
+    <line x1="430" y1="300" x2="920" y2="300" stroke="#B0B0B0" stroke-width="1.5"/>
+
+    <!-- Petits points de connexion -->
+    <circle cx="600" cy="260" r="3" fill="#7FB3D5"/>
+    <circle cx="750" cy="260" r="3" fill="#7FB3D5"/>
+    <circle cx="850" cy="300" r="3" fill="#00913A"/>
+
+    <!-- Mini circuits décoratifs -->
+    <line x1="880" y1="250" x2="910" y2="250" stroke="#B0B0B0" stroke-width="2"/>
+    <circle cx="915" cy="250" r="4" fill="#7FB3D5"/>
+
+    <line x1="920" y1="290" x2="940" y2="290" stroke="#B0B0B0" stroke-width="1.5"/>
+    <circle cx="945" cy="290" r="3" fill="#00913A"/>
+  </g>
+
+  <!-- TEXTE IAFACTORY (Noir, Bold) -->
+  <text x="440" y="260"
+        font-family="Arial Black, Arial, sans-serif"
+        font-size="80"
+        font-weight="900"
+        fill="#3A3A3A"
+        letter-spacing="-2">IAFACTORY</text>
+
+  <!-- TEXTE ALGERIA (Gris, Light) -->
+  <text x="440" y="330"
+        font-family="Arial, sans-serif"
+        font-size="55"
+        font-weight="300"
+        fill="#6E6E6E"
+        letter-spacing="12">ALGERIA</text>
+
+</svg>

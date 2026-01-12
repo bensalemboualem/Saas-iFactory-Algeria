@@ -1,0 +1,12 @@
+﻿{
+    "Qdrant-gRPC":  6334,
+    "Frontend":  5173,
+    "Prometheus":  9090,
+    "Backend":  8180,
+    "Qdrant":  6333,
+    "Postgres-Exporter":  9187,
+    "PostgreSQL":  5432,
+    "Grafana":  3001,
+    "Redis-Exporter":  9121,
+    "Redis":  6379
+}

@@ -1,0 +1,17 @@
+{
+    "Attendance": "الحضور",
+    "Subject Attendance": "حضور المادة",
+    "Monthly Attendance": "الحضور الشهري",
+    "Holiday": "Holiday",
+    "Note": "Note",
+    "Present": "حاضر",
+    "Late": "متأخر",
+    "Absent": "غائب",
+    "Half Day": "نصف يوم",
+    "half_day": "نصف يوم",
+    "attendance_already_collected_you_can_edit_record": "تم جمع الحضور بالفعل، يمكنك تعديل السجل",
+    "Leave": "الإجازة",
+    "attendance": "الحضور",
+    "student_attendance": "حضور الطالب",
+    "attendance_report": "تقرير الحضور"
+}

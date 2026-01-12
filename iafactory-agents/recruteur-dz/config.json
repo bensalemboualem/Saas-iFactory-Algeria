@@ -1,0 +1,209 @@
+{
+  "agent_id": "ia-recruteur-dz",
+  "name": "IA Recruteur DZ",
+  "name_ar": "ذكاء التوظيف",
+  "version": "1.0.0",
+  "description": "Agent d'entretien de recrutement et pré-qualification pour le marché algérien",
+  "category": "b2b",
+  "icon": "👔",
+  "color": "#8B5CF6",
+  
+  "model": {
+    "provider": "anthropic",
+    "model_id": "claude-sonnet-4-20250514",
+    "temperature": 0.5,
+    "max_tokens": 1024
+  },
+  
+  "modes": [
+    {
+      "id": "evaluation",
+      "name": "Évaluation Candidat",
+      "description": "Entretien complet pour évaluer un candidat",
+      "target": "recruiters"
+    },
+    {
+      "id": "simulation",
+      "name": "Simulation Entretien",
+      "description": "Préparation candidat avec simulation réaliste",
+      "target": "candidates"
+    },
+    {
+      "id": "screening",
+      "name": "Screening Rapide",
+      "description": "Pré-qualification rapide (5-7 questions)",
+      "target": "recruiters"
+    }
+  ],
+  
+  "interview": {
+    "type": "recruitment",
+    "methodology": "star_behavioral",
+    "phases": [
+      {
+        "id": "introduction",
+        "name": "Introduction",
+        "min_exchanges": 1,
+        "max_exchanges": 2,
+        "objectives": ["ice_breaker", "presentation", "motivation"]
+      },
+      {
+        "id": "experience",
+        "name": "Parcours & Expérience",
+        "min_exchanges": 3,
+        "max_exchanges": 4,
+        "objectives": ["background", "achievements", "career_moves"]
+      },
+      {
+        "id": "technical",
+        "name": "Compétences Techniques",
+        "min_exchanges": 3,
+        "max_exchanges": 5,
+        "objectives": ["hard_skills", "technical_depth", "problem_solving"]
+      },
+      {
+        "id": "soft_skills",
+        "name": "Soft Skills & Culture",
+        "min_exchanges": 2,
+        "max_exchanges": 3,
+        "objectives": ["communication", "teamwork", "adaptability", "stress_management"]
+      },
+      {
+        "id": "motivation",
+        "name": "Motivations & Projet",
+        "min_exchanges": 2,
+        "max_exchanges": 3,
+        "objectives": ["career_goals", "expectations", "salary"]
+      },
+      {
+        "id": "closing",
+        "name": "Questions & Clôture",
+        "min_exchanges": 1,
+        "max_exchanges": 2,
+        "objectives": ["candidate_questions", "next_steps"]
+      }
+    ],
+    "estimated_duration_minutes": 20,
+    "languages": ["fr", "ar", "en", "fr-dz"]
+  },
+  
+  "evaluation_framework": {
+    "technical_skills": {
+      "weight": 0.35,
+      "scale": 5,
+      "customizable": true
+    },
+    "soft_skills": {
+      "weight": 0.35,
+      "scale": 5,
+      "categories": [
+        "communication",
+        "teamwork",
+        "adaptability",
+        "problem_solving",
+        "leadership",
+        "stress_management"
+      ]
+    },
+    "culture_fit": {
+      "weight": 0.30,
+      "scale": 5,
+      "categories": [
+        "motivation",
+        "values_alignment",
+        "growth_potential"
+      ]
+    },
+    "red_flags": [
+      "inconsistencies",
+      "excessive_criticism",
+      "vague_answers",
+      "no_questions",
+      "unrealistic_expectations"
+    ]
+  },
+  
+  "output": {
+    "generate_report": true,
+    "report_format": "markdown",
+    "include_scores": true,
+    "include_recommendation": true,
+    "include_verbatims": true,
+    "exportable": true
+  },
+  
+  "job_categories": [
+    {
+      "id": "tech",
+      "name": "IT & Tech",
+      "skills": ["programming", "architecture", "devops", "data", "security"]
+    },
+    {
+      "id": "commercial",
+      "name": "Commercial & Vente",
+      "skills": ["negotiation", "prospection", "account_management", "closing"]
+    },
+    {
+      "id": "finance",
+      "name": "Finance & Comptabilité",
+      "skills": ["accounting", "analysis", "reporting", "compliance"]
+    },
+    {
+      "id": "marketing",
+      "name": "Marketing & Communication",
+      "skills": ["digital", "content", "branding", "analytics"]
+    },
+    {
+      "id": "management",
+      "name": "Management & Direction",
+      "skills": ["leadership", "strategy", "team_building", "decision_making"]
+    },
+    {
+      "id": "operations",
+      "name": "Opérations & Logistique",
+      "skills": ["planning", "optimization", "quality", "supply_chain"]
+    },
+    {
+      "id": "rh",
+      "name": "Ressources Humaines",
+      "skills": ["recruitment", "training", "employee_relations", "payroll"]
+    }
+  ],
+  
+  "compliance": {
+    "gdpr_compliant": true,
+    "no_discrimination": true,
+    "blocked_questions": [
+      "age",
+      "religion",
+      "family_status",
+      "origin",
+      "health",
+      "disability",
+      "political_views"
+    ],
+    "data_retention_days": 90
+  },
+  
+  "ui": {
+    "welcome_message": "Bienvenue - Entretien de pré-qualification",
+    "completion_message": "Entretien terminé - Rapport généré",
+    "show_progress": true,
+    "show_timer": true,
+    "mode_selector": true
+  },
+  
+  "integrations": {
+    "export_pdf": true,
+    "export_ats": true,
+    "webhook_on_complete": true,
+    "email_report": true
+  },
+  
+  "analytics": {
+    "track_interviews_count": true,
+    "track_avg_scores": true,
+    "track_recommendation_rate": true,
+    "track_by_job_category": true
+  }
+}

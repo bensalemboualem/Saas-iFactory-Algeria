@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agents d'Interview IA - IAFactory Algeria</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #020617;
+            color: #f8fafc;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .badge {
+            color: #00a651;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        h1 {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #f8fafc;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: rgba(248, 250, 252, 0.75);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .agents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .agent-card {
+            background: linear-gradient(135deg, rgba(0, 166, 81, 0.08) 0%, rgba(0, 166, 81, 0.02) 100%);
+            border: 2px solid rgba(0, 166, 81, 0.3);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(0, 166, 81, 0.15);
+            text-decoration: none;
+            display: block;
+        }
+
+        .agent-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: #00a651;
+            box-shadow: 0 8px 32px rgba(0, 166, 81, 0.3);
+            background: linear-gradient(135deg, rgba(0, 166, 81, 0.12) 0%, rgba(0, 166, 81, 0.04) 100%);
+        }
+
+        .agent-header {
+            background: linear-gradient(135deg, #00a651 0%, #008c45 100%);
+            padding: 30px;
+            text-align: center;
+        }
+
+        .agent-icon {
+            font-size: 56px;
+            margin-bottom: 12px;
+        }
+
+        .agent-name {
+            font-size: 22px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 4px;
+        }
+
+        .agent-name-ar {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .agent-body {
+            padding: 24px;
+        }
+
+        .agent-description {
+            color: rgba(248, 250, 252, 0.75);
+            margin-bottom: 20px;
+            min-height: 60px;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .agent-category {
+            display: inline-block;
+            padding: 6px 14px;
+            background: rgba(0, 166, 81, 0.15);
+            color: #00a651;
+            border: 1px solid rgba(0, 166, 81, 0.3);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .agent-phases {
+            margin-bottom: 24px;
+        }
+
+        .phases-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #f8fafc;
+            margin-bottom: 10px;
+        }
+
+        .phases-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .phase-tag {
+            padding: 4px 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            font-size: 11px;
+            color: rgba(248, 250, 252, 0.75);
+        }
+
+        .agent-button {
+            width: 100%;
+            padding: 14px;
+            background: #00a651;
+            color: #021014;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .agent-card:hover .agent-button {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 166, 81, 0.4);
+        }
+
+        .footer-info {
+            text-align: center;
+        }
+
+        .info-box {
+            display: inline-block;
+            padding: 20px 30px;
+            background: rgba(0, 166, 81, 0.08);
+            border: 1px solid rgba(0, 166, 81, 0.2);
+            border-radius: 16px;
+        }
+
+        .info-box p {
+            font-size: 14px;
+            color: rgba(248, 250, 252, 0.75);
+        }
+
+        .info-box strong {
+            color: #00a651;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 32px;
+            }
+
+            .agents-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <span class="badge">🎙️ IA FACTORY ALGERIA</span>
+            <h1>Agents d'Interview IA</h1>
+            <p class="subtitle">
+                Conduisez des interviews structurées avec nos agents IA spécialisés.
+                Collectez des insights, validez votre marché ou évaluez des candidats.
+            </p>
+        </div>
+
+        <div class="agents-grid">
+            <!-- Agent 1: UX Research -->
+            <a href="chat.html?agent=ia-ux-research" class="agent-card">
+                <div class="agent-header">
+                    <div class="agent-icon">🔬</div>
+                    <div class="agent-name">IA UX Research</div>
+                    <div class="agent-name-ar">ذكاء بحث المستخدم</div>
+                </div>
+                <div class="agent-body">
+                    <p class="agent-description">
+                        Collectez les feedbacks utilisateurs pour améliorer vos produits
+                    </p>
+                    <span class="agent-category">📂 Interne</span>
+                    <div class="agent-phases">
+                        <div class="phases-title">Phases de l'interview :</div>
+                        <div class="phases-list">
+                            <span class="phase-tag">1. Accueil</span>
+                            <span class="phase-tag">2. Exploration Usage</span>
+                            <span class="phase-tag">3. Points de Friction</span>
+                            <span class="phase-tag">4. Suggestions</span>
+                            <span class="phase-tag">5. Clôture</span>
+                        </div>
+                    </div>
+                    <div class="agent-button">Démarrer l'Interview →</div>
+                </div>
+            </a>
+
+            <!-- Agent 2: Discovery DZ -->
+            <a href="chat.html?agent=ia-discovery-dz" class="agent-card">
+                <div class="agent-header">
+                    <div class="agent-icon">🎯</div>
+                    <div class="agent-name">IA Discovery DZ</div>
+                    <div class="agent-name-ar">ذكاء اكتشاف السوق</div>
+                </div>
+                <div class="agent-body">
+                    <p class="agent-description">
+                        Validez votre marché et découvrez les besoins clients
+                    </p>
+                    <span class="agent-category">📂 Startups & Entreprises</span>
+                    <div class="agent-phases">
+                        <div class="phases-title">Phases de l'interview :</div>
+                        <div class="phases-list">
+                            <span class="phase-tag">1. Qualification</span>
+                            <span class="phase-tag">2. Exploration Problème</span>
+                            <span class="phase-tag">3. Solutions Actuelles</span>
+                            <span class="phase-tag">4. Validation Valeur</span>
+                            <span class="phase-tag">5. Clôture</span>
+                        </div>
+                    </div>
+                    <div class="agent-button">Démarrer l'Interview →</div>
+                </div>
+            </a>
+
+            <!-- Agent 3: Recruteur DZ -->
+            <a href="chat.html?agent=ia-recruteur-dz" class="agent-card">
+                <div class="agent-header">
+                    <div class="agent-icon">👔</div>
+                    <div class="agent-name">IA Recruteur DZ</div>
+                    <div class="agent-name-ar">ذكاء التوظيف</div>
+                </div>
+                <div class="agent-body">
+                    <p class="agent-description">
+                        Pré-qualifiez les candidats ou préparez vos entretiens
+                    </p>
+                    <span class="agent-category">📂 RH & Recrutement</span>
+                    <div class="agent-phases">
+                        <div class="phases-title">Phases de l'interview :</div>
+                        <div class="phases-list">
+                            <span class="phase-tag">1. Introduction</span>
+                            <span class="phase-tag">2. Expérience</span>
+                            <span class="phase-tag">3. Technique</span>
+                            <span class="phase-tag">4. Soft Skills</span>
+                            <span class="phase-tag">5. Motivation</span>
+                            <span class="phase-tag">6. Clôture</span>
+                        </div>
+                    </div>
+                    <div class="agent-button">Démarrer l'Interview →</div>
+                </div>
+            </a>
+        </div>
+
+        <div class="footer-info">
+            <div class="info-box">
+                <p>
+                    💡 <strong>Astuce :</strong> Chaque interview génère un rapport structuré
+                    que vous pouvez télécharger en fin de session.
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

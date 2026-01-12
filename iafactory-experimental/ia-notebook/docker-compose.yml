@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  ia-notebook-backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: iaf-ia-notebook-api
+    environment:
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+    ports:
+      - "8300:8300"
+    volumes:
+      - notebook-uploads:/app/uploads
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8300/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+  ia-notebook-frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: iaf-ia-notebook-ui
+    depends_on:
+      - ia-notebook-backend
+    environment:
+      API_URL: http://ia-notebook-backend:8300
+    ports:
+      - "8301:80"
+    restart: unless-stopped
+
+volumes:
+  notebook-uploads:

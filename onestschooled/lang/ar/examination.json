@@ -1,0 +1,23 @@
+{
+    "marks_grade": "درجة العلامات",
+    "exam_assign": "تعيين الامتحان",
+    "marks_register": "سجل الدرجات",
+    "select idcard": "اختر بطاقة الهوية",
+    "select certificate": "اختر الشهادة",
+    "exam_title": "عنوان الامتحان",
+    "class": "الصف",
+    "section": "القسم",
+    "subjects": "المواد",
+    "total_mark": "إجمالي العلامات",
+    "mark_distribution": "Mark Distribution",
+    "select_exam_type": "اختر نوع الامتحان",
+    "exam_type": "نوع الامتحان",
+    "point": "Point",
+    "percent_from": "النسبة المئوية من",
+    "percent_upto": "Percent Upto",
+    "remarks": "Remarks",
+    "examination": "الامتحان",
+    "exam": "امتحان",
+    "exam_setup": "إعداد الامتحان",
+    "exam_routine": "جدول الامتحان"
+}

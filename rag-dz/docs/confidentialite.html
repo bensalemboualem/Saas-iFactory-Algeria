@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Politique de Confidentialité - IAFactory Algeria</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00c261;
+            --bg: #0a0a0a;
+            --surface: #111;
+            --text: #fff;
+            --text-muted: #888;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; }
+        
+        .header { background: rgba(10,10,10,0.95); padding: 1rem 2rem; position: fixed; top: 0; left: 0; right: 0; z-index: 100; border-bottom: 1px solid #222; }
+        .header-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--primary); text-decoration: none; }
+        .back-btn { background: var(--primary); color: #000; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; }
+
+        .main { max-width: 900px; margin: 0 auto; padding: 120px 2rem 4rem; }
+        .page-header { text-align: center; margin-bottom: 3rem; }
+        .page-header h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .page-header .update { color: var(--text-muted); font-size: 0.95rem; }
+
+        .content { background: var(--surface); border: 1px solid #222; border-radius: 16px; padding: 3rem; }
+        .content h2 { color: var(--primary); margin: 2rem 0 1rem; font-size: 1.5rem; }
+        .content h2:first-child { margin-top: 0; }
+        .content p { color: var(--text-muted); margin-bottom: 1rem; }
+        .content ul { margin: 1rem 0 1rem 2rem; color: var(--text-muted); }
+        .content li { margin-bottom: 0.5rem; }
+        .content strong { color: var(--text); }
+
+        .highlight-box { background: rgba(0,194,97,0.1); border: 1px solid rgba(0,194,97,0.3); border-radius: 10px; padding: 1.5rem; margin: 1.5rem 0; }
+        .highlight-box p { margin: 0; }
+
+        footer { background: var(--surface); border-top: 1px solid #222; padding: 2rem; text-align: center; color: var(--text-muted); margin-top: 4rem; }
+
+        @media (max-width: 768px) {
+            .page-header h1 { font-size: 2rem; }
+            .content { padding: 1.5rem; }
+        }
+    </style>
+<link rel="stylesheet" href="/apps/shared/iafactory-unified.css">
+</head>
+<body>
+<!-- IAFactory Trilingue Controls -->
+<div class="iaf-controls-floating" style="position:fixed;top:20px;right:20px;z-index:9998;display:flex;gap:10px;align-items:center;">
+    <div class="iaf-lang-dropdown" style="position:relative;">
+        <button class="iaf-lang-btn" onclick="IAFUnified.toggleLangMenu()" 
+            style="background:#667eea;color:white;border:none;padding:8px 15px;border-radius:8px;cursor:pointer;font-size:14px;display:flex;align-items:center;gap:5px;">
+            🌐 <span id="current-lang-label">FR</span> ▼
+        </button>
+        <div class="iaf-lang-menu" id="lang-menu" 
+            style="display:none;position:absolute;top:100%;right:0;background:white;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,0.15);min-width:150px;margin-top:5px;overflow:hidden;">
+            <button onclick="IAFUnified.changeLang('fr')" style="width:100%;padding:10px 15px;border:none;background:none;text-align:left;cursor:pointer;">🇫🇷 Français</button>
+            <button onclick="IAFUnified.changeLang('ar')" style="width:100%;padding:10px 15px;border:none;background:none;text-align:left;cursor:pointer;">🇩🇿 العربية</button>
+            <button onclick="IAFUnified.changeLang('en')" style="width:100%;padding:10px 15px;border:none;background:none;text-align:left;cursor:pointer;">🇬🇧 English</button>
+        </div>
+    </div>
+    <button class="iaf-theme-toggle" onclick="IAFUnified.toggleTheme()" 
+        style="background:#667eea;color:white;border:none;padding:8px 12px;border-radius:8px;cursor:pointer;font-size:16px;" 
+        title="Toggle theme">🌓</button>
+</div>
+
+    <header class="header">
+        <div class="header-content">
+            <a href="../landing-complete-responsive.html" class="logo">🇩🇿 IAFactory</a>
+            <a href="../landing-complete-responsive.html" class="back-btn"><i class="fas fa-arrow-left"></i> Retour</a>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="page-header">
+            <h1>🔒 Politique de Confidentialité</h1>
+            <p class="update">Dernière mise à jour : 15 janvier 2025</p>
+        </div>
+
+        <div class="content">
+            <h2>1. Introduction</h2>
+            <p>IAFactory Algeria ("nous", "notre", "nos") s'engage à protéger la vie privée de ses utilisateurs. Cette politique de confidentialité explique comment nous collectons, utilisons, stockons et protégeons vos données personnelles lorsque vous utilisez notre plateforme d'intelligence artificielle.</p>
+            
+            <div class="highlight-box">
+                <p><strong>🇩🇿 Engagement de Souveraineté :</strong> Toutes vos données sont hébergées exclusivement en Algérie et ne sont jamais transférées vers des serveurs étrangers.</p>
+            </div>
+
+            <h2>2. Données Collectées</h2>
+            <p>Nous collectons les types de données suivants :</p>
+            <ul>
+                <li><strong>Informations d'identification :</strong> nom, prénom, adresse email, numéro de téléphone</li>
+                <li><strong>Informations professionnelles :</strong> nom de l'entreprise, fonction, secteur d'activité</li>
+                <li><strong>Données d'utilisation :</strong> logs de connexion, historique des requêtes, préférences</li>
+                <li><strong>Documents uploadés :</strong> fichiers que vous chargez pour la fonctionnalité RAG</li>
+                <li><strong>Conversations :</strong> échanges avec les assistants IA (si vous choisissez de les sauvegarder)</li>
+            </ul>
+
+            <h2>3. Utilisation des Données</h2>
+            <p>Vos données sont utilisées pour :</p>
+            <ul>
+                <li>Fournir et améliorer nos services d'intelligence artificielle</li>
+                <li>Personnaliser votre expérience utilisateur</li>
+                <li>Répondre à vos demandes de support</li>
+                <li>Vous envoyer des communications importantes (mises à jour, sécurité)</li>
+                <li>Améliorer nos modèles IA (données anonymisées uniquement)</li>
+                <li>Respecter nos obligations légales</li>
+            </ul>
+
+            <h2>4. Stockage et Sécurité</h2>
+            <p>Nous mettons en œuvre des mesures de sécurité robustes :</p>
+            <ul>
+                <li><strong>Chiffrement AES-256</strong> pour toutes les données au repos</li>
+                <li><strong>TLS 1.3</strong> pour les données en transit</li>
+                <li><strong>Authentification multi-facteurs</strong> disponible pour tous les comptes</li>
+                <li><strong>Audits de sécurité</strong> réguliers par des experts indépendants</li>
+                <li><strong>Sauvegarde quotidienne</strong> avec réplication géographique en Algérie</li>
+            </ul>
+
+            <h2>5. Partage des Données</h2>
+            <p>Nous ne vendons jamais vos données personnelles. Nous pouvons partager vos données uniquement avec :</p>
+            <ul>
+                <li>Nos sous-traitants techniques (hébergeurs algériens uniquement)</li>
+                <li>Les autorités compétentes si la loi l'exige</li>
+                <li>Votre organisation (pour les comptes entreprise)</li>
+            </ul>
+
+            <h2>6. Vos Droits</h2>
+            <p>Conformément à la réglementation applicable, vous disposez des droits suivants :</p>
+            <ul>
+                <li><strong>Droit d'accès :</strong> obtenir une copie de vos données</li>
+                <li><strong>Droit de rectification :</strong> corriger vos données inexactes</li>
+                <li><strong>Droit à l'effacement :</strong> demander la suppression de vos données</li>
+                <li><strong>Droit à la portabilité :</strong> recevoir vos données dans un format structuré</li>
+                <li><strong>Droit d'opposition :</strong> vous opposer à certains traitements</li>
+            </ul>
+            <p>Pour exercer ces droits, contactez-nous à : <strong>privacy@iafactory.dz</strong></p>
+
+            <h2>7. Conservation des Données</h2>
+            <p>Nous conservons vos données selon les durées suivantes :</p>
+            <ul>
+                <li>Données de compte : pendant la durée de votre abonnement + 3 ans</li>
+                <li>Documents uploadés : jusqu'à suppression par vos soins</li>
+                <li>Historique de conversations : 90 jours (configurable)</li>
+                <li>Logs techniques : 12 mois</li>
+            </ul>
+
+            <h2>8. Cookies</h2>
+            <p>Nous utilisons des cookies essentiels pour le fonctionnement de la plateforme. Vous pouvez configurer vos préférences de cookies dans les paramètres de votre compte.</p>
+
+            <h2>9. Modifications</h2>
+            <p>Nous pouvons mettre à jour cette politique de confidentialité. Vous serez notifié par email de tout changement significatif au moins 30 jours avant son entrée en vigueur.</p>
+
+            <h2>10. Contact</h2>
+            <p>Pour toute question concernant cette politique ou vos données personnelles :</p>
+            <ul>
+                <li>Email : <strong>privacy@iafactory.dz</strong></li>
+                <li>Adresse : Centre d'Affaires, Boulevard Mohamed V, Alger, Algérie</li>
+            </ul>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2025 IAFactory Algeria. Tous droits réservés.</p>
+    </footer>
+<script src="/apps/shared/iafactory-unified.js"></script>
+<!-- IAFactory Chatbot -->
+<button class="iaf-chatbot-btn" onclick="IAFUnified.toggleChatbot()" title="Aide" aria-label="Aide">💬</button>
+<div data-iaf-footer></div>
+</body>
+</html>

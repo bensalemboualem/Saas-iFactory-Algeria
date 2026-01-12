@@ -1,0 +1,195 @@
+version: '3.8'
+
+# =============================================================================
+# iaFactory Algeria - Observability Stack
+# Monitoring & Logs pour 30+ conteneurs sur VPS Hetzner
+# =============================================================================
+
+networks:
+  observability_net:
+    driver: bridge
+  # Connexion au réseau principal iaFactory
+  iaf-prod-network:
+    external: true
+
+volumes:
+  prometheus_data:
+  grafana_data:
+  loki_data:
+  alertmanager_data:
+
+services:
+  # ===========================================================================
+  # PROMETHEUS - Métriques centralisées
+  # ===========================================================================
+  prometheus:
+    image: prom/prometheus:v2.48.0
+    container_name: iaf-prometheus
+    restart: unless-stopped
+    user: root
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=30d'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+      - '--web.enable-lifecycle'
+      - '--web.enable-admin-api'
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./alert.rules.yml:/etc/prometheus/alert.rules.yml:ro
+      - prometheus_data:/prometheus
+    ports:
+      - "9090:9090"
+    networks:
+      - observability_net
+      - iaf-prod-network
+    depends_on:
+      - node-exporter
+      - cadvisor
+    labels:
+      - "iafactory.service=prometheus"
+      - "iafactory.stack=observability"
+
+  # ===========================================================================
+  # GRAFANA - Dashboards
+  # ===========================================================================
+  grafana:
+    image: grafana/grafana:10.2.2
+    container_name: iaf-grafana
+    restart: unless-stopped
+    user: root
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=iaFactoryDZ2024!
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_SERVER_ROOT_URL=https://www.iafactoryalgeria.com/grafana/
+      - GF_SERVER_SERVE_FROM_SUB_PATH=true
+      - GF_AUTH_ANONYMOUS_ENABLED=false
+      - GF_ALERTING_ENABLED=true
+      - GF_UNIFIED_ALERTING_ENABLED=true
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+    ports:
+      - "3033:3000"
+    networks:
+      - observability_net
+      - iaf-prod-network
+    depends_on:
+      - prometheus
+      - loki
+    labels:
+      - "iafactory.service=grafana"
+      - "iafactory.stack=observability"
+
+  # ===========================================================================
+  # NODE EXPORTER - Métriques système (CPU, RAM, Disk, Network)
+  # ===========================================================================
+  node-exporter:
+    image: prom/node-exporter:v1.7.0
+    container_name: iaf-node-exporter
+    restart: unless-stopped
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--path.rootfs=/rootfs'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    ports:
+      - "9100:9100"
+    networks:
+      - observability_net
+    labels:
+      - "iafactory.service=node-exporter"
+      - "iafactory.stack=observability"
+
+  # ===========================================================================
+  # CADVISOR - Métriques Docker / Conteneurs
+  # ===========================================================================
+  cadvisor:
+    image: zcube/cadvisor:latest
+    container_name: iaf-cadvisor
+    restart: unless-stopped
+    privileged: true
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    ports:
+      - "8888:8080"
+    networks:
+      - observability_net
+    labels:
+      - "iafactory.service=cadvisor"
+      - "iafactory.stack=observability"
+
+  # ===========================================================================
+  # LOKI - Centralisation des logs
+  # ===========================================================================
+  loki:
+    image: grafana/loki:2.9.2
+    container_name: iaf-loki
+    restart: unless-stopped
+    user: root
+    command: -config.file=/etc/loki/local-config.yaml
+    volumes:
+      - ./loki-config.yml:/etc/loki/local-config.yaml:ro
+      - loki_data:/loki
+    ports:
+      - "3100:3100"
+    networks:
+      - observability_net
+      - iaf-prod-network
+    labels:
+      - "iafactory.service=loki"
+      - "iafactory.stack=observability"
+
+  # ===========================================================================
+  # PROMTAIL - Collecte logs Docker vers Loki
+  # ===========================================================================
+  promtail:
+    image: grafana/promtail:2.9.2
+    container_name: iaf-promtail
+    restart: unless-stopped
+    command: -config.file=/etc/promtail/config.yml
+    volumes:
+      - ./promtail-config.yml:/etc/promtail/config.yml:ro
+      - /var/log:/var/log:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - observability_net
+      - iaf-prod-network
+    depends_on:
+      - loki
+    labels:
+      - "iafactory.service=promtail"
+      - "iafactory.stack=observability"
+
+  # ===========================================================================
+  # ALERTMANAGER - Gestion des alertes
+  # ===========================================================================
+  alertmanager:
+    image: prom/alertmanager:v0.26.0
+    container_name: iaf-alertmanager
+    restart: unless-stopped
+    command:
+      - '--config.file=/etc/alertmanager/alertmanager.yml'
+      - '--storage.path=/alertmanager'
+      - '--web.external-url=https://www.iafactoryalgeria.com/alertmanager/'
+    volumes:
+      - ./alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
+      - alertmanager_data:/alertmanager
+    ports:
+      - "9093:9093"
+    networks:
+      - observability_net
+    labels:
+      - "iafactory.service=alertmanager"
+      - "iafactory.stack=observability"

@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agents IA - Directory | IAFactory Algérie</title>
+    <meta name="description" content="Découvrez les meilleurs agents IA autonomes. Productivité, ventes, service client, coding et plus. Le plus grand annuaire d'agents IA en Algérie.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00c261;
+            --primary-dark: #00a050;
+            --primary-light: #00e070;
+            --bg-dark: #0a0a0a;
+            --bg-card: #111111;
+            --bg-card-hover: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-muted: #666666;
+            --border-color: #222222;
+            --gradient-primary: linear-gradient(135deg, #00c261 0%, #00a050 100%);
+            --gradient-premium: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%);
+            --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.3);
+            --shadow-hover: 0 8px 40px rgba(0, 194, 97, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .logo-text {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .logo-text span {
+            color: var(--primary);
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 0.95rem;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--primary);
+        }
+
+        .nav-cta {
+            background: var(--gradient-primary);
+            color: white !important;
+            padding: 0.6rem 1.25rem;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .nav-cta:hover {
+            opacity: 0.9;
+            color: white !important;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 4rem 2rem;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(0, 194, 97, 0.05) 0%, transparent 100%);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero h1 span {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .hero-stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Search Box */
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            position: relative;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 1rem 1.5rem 1rem 3.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 194, 97, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1.25rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .search-hint {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .search-tag {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .search-tag:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem 4rem;
+        }
+
+        /* Section Header */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title i {
+            color: var(--primary);
+        }
+
+        .section-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: gap 0.3s;
+        }
+
+        .section-link:hover {
+            gap: 0.75rem;
+        }
+
+        /* Categories Bar */
+        .categories-bar {
+            display: flex;
+            gap: 0.75rem;
+            overflow-x: auto;
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+            scrollbar-width: none;
+        }
+
+        .categories-bar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .category-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 0.6rem 1.25rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .category-btn:hover, .category-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .category-btn .count {
+            background: rgba(255,255,255,0.2);
+            padding: 0.15rem 0.5rem;
+            border-radius: 10px;
+            font-size: 0.75rem;
+        }
+
+        /* Agent Cards Grid */
+        .agents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .agent-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .agent-card:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-4px);
+        }
+
+        .agent-card.premium {
+            border-color: #ffd700;
+        }
+
+        .agent-card.premium::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-premium);
+        }
+
+        .agent-header {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .agent-logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .agent-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .agent-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .agent-name a {
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .agent-name a:hover {
+            color: var(--primary);
+        }
+
+        .verified-badge {
+            color: #ffd700;
+            font-size: 0.9rem;
+        }
+
+        .new-badge {
+            background: var(--primary);
+            color: white;
+            font-size: 0.65rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .agent-category {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .category-tag {
+            background: rgba(0, 194, 97, 0.1);
+            color: var(--primary);
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .agent-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .agent-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .agent-stats {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .agent-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .agent-stat i {
+            font-size: 0.9rem;
+        }
+
+        .agent-stat.upvotes {
+            color: var(--primary);
+        }
+
+        .pricing-badge {
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .pricing-badge.free {
+            background: rgba(0, 194, 97, 0.15);
+            color: #00e070;
+        }
+
+        .pricing-badge.freemium {
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+        }
+
+        .pricing-badge.paid {
+            background: rgba(168, 85, 247, 0.15);
+            color: #c084fc;
+        }
+
+        /* Trending Section */
+        .trending-section {
+            margin-top: 3rem;
+        }
+
+        /* Popular Categories */
+        .popular-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .category-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .category-card:hover {
+            border-color: var(--primary);
+            background: var(--bg-card-hover);
+        }
+
+        .category-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, rgba(0, 194, 97, 0.2) 0%, rgba(0, 194, 97, 0.05) 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        .category-info h3 {
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .category-info span {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        /* Submit CTA */
+        .submit-cta {
+            background: linear-gradient(135deg, rgba(0, 194, 97, 0.1) 0%, rgba(0, 194, 97, 0.02) 100%);
+            border: 1px solid rgba(0, 194, 97, 0.3);
+            border-radius: 16px;
+            padding: 3rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .submit-cta h2 {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .submit-cta p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .submit-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 194, 97, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr repeat(3, 1fr);
+            gap: 3rem;
+        }
+
+        .footer-brand p {
+            color: var(--text-secondary);
+            margin: 1rem 0;
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            background: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            transition: all 0.3s;
+        }
+
+        .footer-social a:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .footer-column h4 {
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            color: var(--text-primary);
+        }
+
+        .footer-column a {
+            display: block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.4rem 0;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .footer-column a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 2rem auto 0;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero-stats {
+                gap: 1.5rem;
+            }
+
+            .hero-stat-number {
+                font-size: 1.75rem;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .agents-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .popular-categories {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">IA</div>
+                <div class="logo-text">IAFactory<span>.dz</span></div>
+            </a>
+            <nav>
+                <a href="index.html">Directory</a>
+                <a href="ia-tools.html">Outils IA</a>
+                <a href="agents.html" class="active">Agents</a>
+                <a href="workflows.html">Workflows</a>
+                <a href="daily-news.html">Daily News</a>
+                <a href="#submit" class="nav-cta">Soumettre un Agent</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Agents <span>IA</span> Autonomes</h1>
+        <p>Découvrez les meilleurs agents IA qui transforment votre façon de travailler. Productivité, ventes, service client et plus encore.</p>
+        
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <div class="hero-stat-number">150+</div>
+                <div class="hero-stat-label">Agents IA</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-number">25</div>
+                <div class="hero-stat-label">Catégories</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-number">50K+</div>
+                <div class="hero-stat-label">Utilisateurs</div>
+            </div>
+        </div>
+
+        <div class="search-container">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" class="search-box" placeholder="Rechercher un agent IA...">
+            <div class="search-hint">
+                <span class="search-tag">Productivité</span>
+                <span class="search-tag">Ventes</span>
+                <span class="search-tag">Marketing</span>
+                <span class="search-tag">Coding</span>
+                <span class="search-tag">Service Client</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Categories Bar -->
+        <div class="categories-bar">
+            <button class="category-btn active">
+                <i class="fas fa-fire"></i> Tous <span class="count">150</span>
+            </button>
+            <button class="category-btn">
+                <i class="fas fa-bolt"></i> Productivité <span class="count">32</span>
+            </button>
+            <button class="category-btn">
+                <i class="fas fa-chart-line"></i> Ventes <span class="count">28</span>
+            </button>
+            <button class="category-btn">
+                <i class="fas fa-headset"></i> Service Client <span class="count">24</span>
+            </button>
+            <button class="category-btn">
+                <i class="fas fa-code"></i> Coding <span class="count">22</span>
+            </button>
+            <button class="category-btn">
+                <i class="fas fa-bullhorn"></i> Marketing <span class="count">18</span>
+            </button>
+            <button class="category-btn">
+                <i class="fas fa-microphone"></i> Voice AI <span class="count">15</span>
+            </button>
+            <button class="category-btn">
+                <i class="fas fa-robot"></i> Automatisation <span class="count">11</span>
+            </button>
+        </div>
+
+        <!-- Newly Added Section -->
+        <section class="newly-added">
+            <div class="section-header">
+                <h2 class="section-title"><i class="fas fa-sparkles"></i> Nouveaux Agents</h2>
+                <a href="#all" class="section-link">Voir tout <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="agents-grid">
+                <!-- Agent Card 1 - Premium New -->
+                <div class="agent-card premium">
+                    <div class="agent-header">
+                        <div class="agent-logo">🤖</div>
+                        <div class="agent-info">
+                            <div class="agent-name">
+                                <a href="#">AssistPro DZ</a>
+                                <i class="fas fa-check-circle verified-badge"></i>
+                                <span class="new-badge">New</span>
+                            </div>
+                            <div class="agent-category">
+                                <span class="category-tag">Productivité</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="agent-description">Assistant IA personnel qui gère votre agenda, répond aux emails et organise vos tâches quotidiennes automatiquement.</p>
+                    <div class="agent-footer">
+                        <div class="agent-stats">
+                            <div class="agent-stat upvotes"><i class="fas fa-arrow-up"></i> 412</div>
+                            <div class="agent-stat"><i class="fas fa-eye"></i> 5.2K</div>
+                            <div class="agent-stat"><i class="fas fa-star"></i> 4.8</div>
+                        </div>
+                        <span class="pricing-badge freemium">Freemium</span>
+                    </div>
+                </div>
+
+                <!-- Agent Card 2 -->
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <div class="agent-logo">💬</div>
+                        <div class="agent-info">
+                            <div class="agent-name">
+                                <a href="#">SalesBot AI</a>
+                                <span class="new-badge">New</span>
+                            </div>
+                            <div class="agent-category">
+                                <span class="category-tag">Ventes</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="agent-description">Agent de vente automatisé qui qualifie les leads, répond aux questions clients et planifie des rendez-vous 24/7.</p>
+                    <div class="agent-footer">
+                        <div class="agent-stats">
+                            <div class="agent-stat upvotes"><i class="fas fa-arrow-up"></i> 287</div>
+                            <div class="agent-stat"><i class="fas fa-eye"></i> 3.8K</div>
+                            <div class="agent-stat"><i class="fas fa-star"></i> 4.6</div>
+                        </div>
+                        <span class="pricing-badge paid">Payant</span>
+                    </div>
+                </div>
+
+                <!-- Agent Card 3 -->
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <div class="agent-logo">🎯</div>
+                        <div class="agent-info">
+                            <div class="agent-name">
+                                <a href="#">MarketGenius</a>
+                                <span class="new-badge">New</span>
+                            </div>
+                            <div class="agent-category">
+                                <span class="category-tag">Marketing</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="agent-description">Agent marketing qui crée du contenu, gère les réseaux sociaux et analyse les performances de vos campagnes.</p>
+                    <div class="agent-footer">
+                        <div class="agent-stats">
+                            <div class="agent-stat upvotes"><i class="fas fa-arrow-up"></i> 195</div>
+                            <div class="agent-stat"><i class="fas fa-eye"></i> 2.4K</div>
+                            <div class="agent-stat"><i class="fas fa-star"></i> 4.5</div>
+                        </div>
+                        <span class="pricing-badge freemium">Freemium</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Trending Section -->
+        <section class="trending-section">
+            <div class="section-header">
+                <h2 class="section-title"><i class="fas fa-fire-flame-curved"></i> Tendances</h2>
+                <a href="#all" class="section-link">Voir tout <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="agents-grid">
+                <!-- Trending Agent 1 -->
+                <div class="agent-card premium">
+                    <div class="agent-header">
+                        <div class="agent-logo">📚</div>
+                        <div class="agent-info">
+                            <div class="agent-name">
+                                <a href="#">TheLibrarian.dz</a>
+                                <i class="fas fa-check-circle verified-badge"></i>
+                            </div>
+                            <div class="agent-category">
+                                <span class="category-tag">Productivité</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="agent-description">Assistant WhatsApp IA personnel qui vous aide à organiser votre journée, gérer vos rappels et accéder à vos documents.</p>
+                    <div class="agent-footer">
+                        <div class="agent-stats">
+                            <div class="agent-stat upvotes"><i class="fas fa-arrow-up"></i> 19.6K</div>
+                            <div class="agent-stat"><i class="fas fa-eye"></i> 45K</div>
+                            <div class="agent-stat"><i class="fas fa-star"></i> 4.9</div>
+                        </div>
+                        <span class="pricing-badge free">Gratuit</span>
+                    </div>
+                </div>
+
+                <!-- Trending Agent 2 -->
+                <div class="agent-card premium">
+                    <div class="agent-header">
+                        <div class="agent-logo">🌐</div>
+                        <div class="agent-info">
+                            <div class="agent-name">
+                                <a href="#">AgentVerse</a>
+                                <i class="fas fa-check-circle verified-badge"></i>
+                            </div>
+                            <div class="agent-category">
+                                <span class="category-tag">Plateforme</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="agent-description">Plateforme pour découvrir, connecter et faire collaborer des agents IA entre eux pour des workflows complexes.</p>
+                    <div class="agent-footer">
+                        <div class="agent-stats">
+                            <div class="agent-stat upvotes"><i class="fas fa-arrow-up"></i> 16.8K</div>
+                            <div class="agent-stat"><i class="fas fa-eye"></i> 38K</div>
+                            <div class="agent-stat"><i class="fas fa-star"></i> 4.8</div>
+                        </div>
+                        <span class="pricing-badge free">Gratuit</span>
+                    </div>
+                </div>
+
+                <!-- Trending Agent 3 -->
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <div class="agent-logo">👥</div>
+                        <div class="agent-info">
+                            <div class="agent-name">
+                                <a href="#">DigitalWorkers</a>
+                            </div>
+                            <div class="agent-category">
+                                <span class="category-tag">Digital Workers</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="agent-description">Employés digitaux pour TechOps & QA - augmentent vos équipes, automatisent les workflows et accélèrent la livraison.</p>
+                    <div class="agent-footer">
+                        <div class="agent-stats">
+                            <div class="agent-stat upvotes"><i class="fas fa-arrow-up"></i> 7.9K</div>
+                            <div class="agent-stat"><i class="fas fa-eye"></i> 22K</div>
+                            <div class="agent-stat"><i class="fas fa-star"></i> 4.7</div>
+                        </div>
+                        <span class="pricing-badge freemium">Freemium</span>
+                    </div>
+                </div>
+
+                <!-- Trending Agent 4 -->
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <div class="agent-logo">💼</div>
+                        <div class="agent-info">
+                            <div class="agent-name">
+                                <a href="#">DoozerAI</a>
+                            </div>
+                            <div class="agent-category">
+                                <span class="category-tag">Digital Workers</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="agent-description">Transformez votre efficacité opérationnelle avec des co-équipiers digitaux agentiques qui travaillent 24/7.</p>
+                    <div class="agent-footer">
+                        <div class="agent-stats">
+                            <div class="agent-stat upvotes"><i class="fas fa-arrow-up"></i> 5.9K</div>
+                            <div class="agent-stat"><i class="fas fa-eye"></i> 18K</div>
+                            <div class="agent-stat"><i class="fas fa-star"></i> 4.6</div>
+                        </div>
+                        <span class="pricing-badge paid">Payant</span>
+                    </div>
+                </div>
+
+                <!-- Trending Agent 5 -->
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <div class="agent-logo">💬</div>
+                        <div class="agent-info">
+                            <div class="agent-name">
+                                <a href="#">Chatvolt</a>
+                            </div>
+                            <div class="agent-category">
+                                <span class="category-tag">Plateforme</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="agent-description">Révolutionnez la communication business avec des chatbots IA avancés, intégration multi-canal et analytics.</p>
+                    <div class="agent-footer">
+                        <div class="agent-stats">
+                            <div class="agent-stat upvotes"><i class="fas fa-arrow-up"></i> 3.8K</div>
+                            <div class="agent-stat"><i class="fas fa-eye"></i> 12K</div>
+                            <div class="agent-stat"><i class="fas fa-star"></i> 4.5</div>
+                        </div>
+                        <span class="pricing-badge freemium">Freemium</span>
+                    </div>
+                </div>
+
+                <!-- Trending Agent 6 -->
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <div class="agent-logo">🎨</div>
+                        <div class="agent-info">
+                            <div class="agent-name">
+                                <a href="#">OctoComics</a>
+                            </div>
+                            <div class="agent-category">
+                                <span class="category-tag">Images</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="agent-description">Outil de création de comics IA - générez des bandes dessinées professionnelles à partir de descriptions textuelles.</p>
+                    <div class="agent-footer">
+                        <div class="agent-stats">
+                            <div class="agent-stat upvotes"><i class="fas fa-arrow-up"></i> 4.7K</div>
+                            <div class="agent-stat"><i class="fas fa-eye"></i> 15K</div>
+                            <div class="agent-stat"><i class="fas fa-star"></i> 4.4</div>
+                        </div>
+                        <span class="pricing-badge free">Gratuit</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Popular Categories -->
+        <section style="margin-top: 3rem;">
+            <div class="section-header">
+                <h2 class="section-title"><i class="fas fa-th-large"></i> Catégories Populaires</h2>
+                <a href="#categories" class="section-link">Voir tout <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="popular-categories">
+                <a href="#" class="category-card">
+                    <div class="category-icon"><i class="fas fa-bolt"></i></div>
+                    <div class="category-info">
+                        <h3>Productivité</h3>
+                        <span>32 agents</span>
+                    </div>
+                </a>
+                <a href="#" class="category-card">
+                    <div class="category-icon"><i class="fas fa-chart-line"></i></div>
+                    <div class="category-info">
+                        <h3>Ventes</h3>
+                        <span>28 agents</span>
+                    </div>
+                </a>
+                <a href="#" class="category-card">
+                    <div class="category-icon"><i class="fas fa-headset"></i></div>
+                    <div class="category-info">
+                        <h3>Service Client</h3>
+                        <span>24 agents</span>
+                    </div>
+                </a>
+                <a href="#" class="category-card">
+                    <div class="category-icon"><i class="fas fa-code"></i></div>
+                    <div class="category-info">
+                        <h3>Coding</h3>
+                        <span>22 agents</span>
+                    </div>
+                </a>
+                <a href="#" class="category-card">
+                    <div class="category-icon"><i class="fas fa-microphone"></i></div>
+                    <div class="category-info">
+                        <h3>Voice AI</h3>
+                        <span>15 agents</span>
+                    </div>
+                </a>
+                <a href="#" class="category-card">
+                    <div class="category-icon"><i class="fas fa-bullhorn"></i></div>
+                    <div class="category-info">
+                        <h3>Marketing</h3>
+                        <span>18 agents</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Submit CTA -->
+        <section class="submit-cta" id="submit">
+            <h2>Vous avez développé un Agent IA ?</h2>
+            <p>Soumettez votre agent pour le faire découvrir à des milliers d'utilisateurs en Algérie et dans le monde francophone.</p>
+            <a href="#" class="submit-btn">
+                <i class="fas fa-plus"></i> Soumettre un Agent
+            </a>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <a href="../index.html" class="logo">
+                    <div class="logo-icon">IA</div>
+                    <div class="logo-text">IAFactory<span>.dz</span></div>
+                </a>
+                <p>Le plus grand annuaire d'agents IA en Algérie. Découvrez, testez et connectez-vous avec les meilleurs agents IA autonomes.</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-discord"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4>Directory</h4>
+                <a href="ia-tools.html">Outils IA</a>
+                <a href="agents.html">Agents IA</a>
+                <a href="workflows.html">Workflows</a>
+                <a href="daily-news.html">Daily News</a>
+                <a href="#">Leaderboard</a>
+            </div>
+            <div class="footer-column">
+                <h4>Ressources</h4>
+                <a href="#">Soumettre un Agent</a>
+                <a href="#">Demander un Agent</a>
+                <a href="#">API Data</a>
+                <a href="../blog.html">Blog</a>
+            </div>
+            <div class="footer-column">
+                <h4>Entreprise</h4>
+                <a href="../a-propos.html">À Propos</a>
+                <a href="../contact.html">Contact</a>
+                <a href="../confidentialite.html">Confidentialité</a>
+                <a href="../conditions.html">Conditions</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 - 2025 IAFactory Algérie. Tous droits réservés.</p>
+            <p>Fait avec ❤️ en Algérie</p>
+        </div>
+    </footer>
+</body>
+</html>

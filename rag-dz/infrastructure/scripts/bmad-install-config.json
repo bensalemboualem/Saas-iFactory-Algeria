@@ -1,0 +1,9 @@
+{
+  "installationDirectory": "C:\\Users\\bbens\\rag-dz\\bmad",
+  "modules": ["bmm", "bmb", "cis"],
+  "userName": "Developer",
+  "communicationLanguage": "fr",
+  "outputLanguage": "fr",
+  "ide": "claude-code",
+  "gameDevEnabled": false
+}

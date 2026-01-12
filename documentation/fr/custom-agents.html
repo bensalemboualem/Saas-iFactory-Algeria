@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agents IA Personnalisés - IAFactory Algeria</title>
+    <link rel="stylesheet" href="../assets/css/docs-theme.css">
+</head>
+<body>
+    <header class="docs-header">
+        <div class="docs-logo">
+            <img src="../assets/images/logo.png" alt="IAFactory Algeria">
+            <span>IAFactory Algeria</span>
+        </div>
+        <nav class="main-nav">
+            <a href="./index.html">Documentation</a>
+            <a href="https://app.iafactory-algeria.com">App</a>
+            <a href="./api/index.html">API</a>
+        </nav>
+        <div class="docs-controls">
+            <div class="language-switcher">
+                <button data-lang="fr" class="active">🇫🇷 FR</button>
+                <button data-lang="en">🇬🇧 EN</button>
+                <button data-lang="ar">🇸🇦 AR</button>
+            </div>
+            <div class="theme-toggle">
+                <div class="theme-toggle-slider">☀️</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <!-- Sidebar content -->
+        </aside>
+
+        <main class="docs-main">
+            <h1>Agents IA Personnalisés</h1>
+            
+            <p class="lead">Créez vos propres agents IA spécialisés pour automatiser vos tâches répétitives et améliorer votre productivité.</p>
+
+            <h2 id="introduction">🤖 Qu'est-ce qu'un Agent IA ?</h2>
+
+            <p>Un agent IA est un assistant virtuel intelligent configuré pour effectuer des tâches spécifiques de manière autonome. Avec IAFactory Algeria, vous pouvez créer des agents personnalisés adaptés à vos besoins professionnels.</p>
+
+            <div class="alert alert-info">
+                <strong>💡 Cas d'usage courants :</strong>
+                <ul>
+                    <li>Rédaction de rapports automatisés</li>
+                    <li>Analyse de données et génération de insights</li>
+                    <li>Support client automatisé</li>
+                    <li>Génération de code et code review</li>
+                    <li>Traduction de documents</li>
+                    <li>Résumé de réunions et notes</li>
+                </ul>
+            </div>
+
+            <h2 id="creer-agent">📝 Créer votre Premier Agent</h2>
+
+            <h3 id="etape-1">Étape 1 : Définir le Rôle</h3>
+
+            <p>Donnez un rôle clair et spécifique à votre agent :</p>
+
+            <pre><code class="language-text">Tu es un expert en rédaction technique spécialisé dans la documentation logicielle.
+Ton objectif est de transformer des notes techniques brutes en documentation claire et professionnelle.
+
+Compétences clés :
+- Structuration de contenu
+- Clarté et précision
+- Adaptation au public cible
+- Respect des standards de documentation</code></pre>
+
+            <h3 id="etape-2">Étape 2 : Définir les Instructions</h3>
+
+            <pre><code class="language-text">Pour chaque document que je te donne :
+
+1. ANALYSE
+   - Identifie le public cible
+   - Détermine le niveau technique requis
+   - Repère les informations manquantes
+
+2. STRUCTURE
+   - Crée un plan logique
+   - Organise par sections claires
+   - Ajoute une table des matières
+
+3. RÉDACTION
+   - Utilise un langage clair
+   - Ajoute des exemples concrets
+   - Inclus des diagrammes si nécessaire
+
+4. FORMAT
+   - Markdown professionnel
+   - Code avec coloration syntaxique
+   - Tableaux pour données structurées</code></pre>
+
+            <h3 id="etape-3">Étape 3 : Configurer les Paramètres</h3>
+
+            <pre><code class="language-json">{
+  "name": "DocumentationWriter",
+  "model": "gpt-4.1",
+  "temperature": 0.3,
+  "max_tokens": 4000,
+  "system_prompt": "[Votre rôle et instructions]",
+  "response_format": "markdown"
+}</code></pre>
+
+            <h2 id="exemples-agents">🎯 Exemples d'Agents Prêts à l'Emploi</h2>
+
+            <h3 id="agent-code-review">Agent Code Reviewer</h3>
+
+            <pre><code class="language-text">Tu es un senior developer spécialisé en code review.
+
+Pour chaque code soumis, analyse :
+
+✅ QUALITÉ
+- Lisibilité et clarté
+- Respect des conventions
+- Commentaires pertinents
+
+⚡ PERFORMANCE
+- Complexité algorithmique
+- Optimisations possibles
+- Gestion mémoire
+
+🔒 SÉCURITÉ
+- Vulnérabilités potentielles
+- Validation des entrées
+- Gestion des erreurs
+
+📝 BONNES PRATIQUES
+- Patterns de conception
+- Tests unitaires
+- Documentation
+
+FORMAT DE SORTIE:
+1. Score global (/10)
+2. Points forts (3)
+3. Points à améliorer (priorités)
+4. Suggestions de refactoring
+5. Code amélioré si nécessaire</code></pre>
+
+            <h3 id="agent-data-analyst">Agent Data Analyst</h3>
+
+            <pre><code class="language-text">Tu es un data analyst expert en Python et visualisation.
+
+Pour chaque dataset :
+
+1. EXPLORATION
+   - Statistiques descriptives
+   - Distribution des données
+   - Valeurs manquantes
+   - Outliers
+
+2. ANALYSE
+   - Corrélations
+   - Tendances
+   - Patterns significatifs
+
+3. INSIGHTS
+   - Découvertes clés
+   - Recommandations actionnables
+   - Graphiques pertinents
+
+4. CODE
+   - Python pandas/matplotlib
+   - Commenté et reproductible
+   - Prêt à exécuter</code></pre>
+
+            <h3 id="agent-customer-support">Agent Support Client</h3>
+
+            <pre><code class="language-text">Tu es un agent de support client professionnel et empathique.
+
+RÈGLES :
+- Toujours commencer par saluer chaleureusement
+- Reformuler le problème pour confirmer compréhension
+- Proposer solutions étape par étape
+- Être patient et pédagogue
+- Terminer en demandant si le problème est résolu
+
+STRUCTURE RÉPONSE :
+1. Salutation personnalisée
+2. Confirmation du problème
+3. Solution détaillée
+4. Vérification compréhension
+5. Proposition aide supplémentaire
+
+TON : Professionnel mais chaleureux, jamais robotique</code></pre>
+
+            <h2 id="api-agents">🔌 Utiliser les Agents via API</h2>
+
+            <h3 id="python-exemple">Exemple Python</h3>
+
+            <pre><code class="language-python">import requests
+
+class IAFactoryAgent:
+    def __init__(self, api_key, agent_config):
+        self.api_key = api_key
+        self.config = agent_config
+        self.url = "https://api.iafactory-algeria.com/v1/chat/completions"
+    
+    def run(self, user_input):
+        """Exécute l'agent avec l'entrée utilisateur"""
+        headers = {
+            "Authorization": f"Bearer {self.api_key}",
+            "Content-Type": "application/json"
+        }
+        
+        data = {
+            "model": self.config['model'],
+            "temperature": self.config['temperature'],
+            "max_tokens": self.config['max_tokens'],
+            "messages": [
+                {
+                    "role": "system",
+                    "content": self.config['system_prompt']
+                },
+                {
+                    "role": "user",
+                    "content": user_input
+                }
+            ]
+        }
+        
+        response = requests.post(self.url, headers=headers, json=data)
+        return response.json()['choices'][0]['message']['content']
+
+# Configuration de l'agent
+code_reviewer_config = {
+    "name": "CodeReviewer",
+    "model": "gpt-4.1",
+    "temperature": 0.2,
+    "max_tokens": 3000,
+    "system_prompt": "Tu es un senior developer spécialisé en code review..."
+}
+
+# Utilisation
+agent = IAFactoryAgent("votre_cle_api", code_reviewer_config)
+review = agent.run("""
+def calculate_sum(numbers):
+    total = 0
+    for n in numbers:
+        total = total + n
+    return total
+""")
+
+print(review)</code></pre>
+
+            <h3 id="workflow-multi-agents">Workflow Multi-Agents</h3>
+
+            <pre><code class="language-python">class AgentWorkflow:
+    def __init__(self, api_key):
+        self.api_key = api_key
+        self.agents = {}
+    
+    def add_agent(self, name, config):
+        """Ajoute un agent au workflow"""
+        self.agents[name] = IAFactoryAgent(self.api_key, config)
+    
+    def run_pipeline(self, input_data):
+        """Exécute une chaîne d'agents"""
+        result = input_data
+        
+        # Agent 1: Extraction
+        result = self.agents['extractor'].run(result)
+        
+        # Agent 2: Analyse
+        result = self.agents['analyst'].run(result)
+        
+        # Agent 3: Rédaction
+        final_output = self.agents['writer'].run(result)
+        
+        return final_output
+
+# Exemple: Pipeline de traitement de feedback client
+workflow = AgentWorkflow("votre_cle_api")
+
+workflow.add_agent('extractor', {
+    "model": "gpt-4.1-mini",
+    "temperature": 0.1,
+    "max_tokens": 2000,
+    "system_prompt": "Extrais les points clés et sentiments des feedbacks clients"
+})
+
+workflow.add_agent('analyst', {
+    "model": "gpt-4.1",
+    "temperature": 0.3,
+    "max_tokens": 2000,
+    "system_prompt": "Analyse les patterns et tendances dans les feedbacks"
+})
+
+workflow.add_agent('writer', {
+    "model": "gpt-4.1",
+    "temperature": 0.5,
+    "max_tokens": 3000,
+    "system_prompt": "Rédige un rapport exécutif avec recommandations"
+})
+
+# Utilisation
+feedbacks = """
+[100+ feedbacks clients]
+"""
+
+rapport = workflow.run_pipeline(feedbacks)
+print(rapport)</code></pre>
+
+            <h2 id="best-practices">✨ Bonnes Pratiques</h2>
+
+            <h3 id="prompts-efficaces">1. Prompts Efficaces</h3>
+
+            <div class="alert alert-success">
+                <strong>✅ Bon :</strong>
+                <pre><code>Tu es un expert en [domaine spécifique].
+Objectif : [tâche précise]
+Contraintes : [liste détaillée]
+Format attendu : [structure claire]</code></pre>
+            </div>
+
+            <div class="alert alert-danger">
+                <strong>❌ Mauvais :</strong>
+                <pre><code>Tu es un assistant. Aide-moi.</code></pre>
+            </div>
+
+            <h3 id="gestion-contexte">2. Gestion du Contexte</h3>
+
+            <ul>
+                <li>Limitez la taille du contexte (< 8000 tokens)</li>
+                <li>Priorisez les informations pertinentes</li>
+                <li>Utilisez des résumés pour longs documents</li>
+                <li>Implémentez du caching pour économiser</li>
+            </ul>
+
+            <h3 id="monitoring">3. Monitoring et Amélioration</h3>
+
+            <pre><code class="language-python">import logging
+
+class MonitoredAgent(IAFactoryAgent):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.metrics = {
+            'calls': 0,
+            'errors': 0,
+            'total_tokens': 0
+        }
+    
+    def run(self, user_input):
+        self.metrics['calls'] += 1
+        
+        try:
+            result = super().run(user_input)
+            # Loguer les métriques
+            logging.info(f"Agent {self.config['name']}: Success")
+            return result
+        except Exception as e:
+            self.metrics['errors'] += 1
+            logging.error(f"Agent error: {e}")
+            raise
+    
+    def get_metrics(self):
+        return self.metrics</code></pre>
+
+            <h2 id="ressources">📚 Ressources Complémentaires</h2>
+
+            <ul>
+                <li>📖 <a href="./best-practices/writing-prompts.html">Guide de rédaction de prompts</a></li>
+                <li>🎯 <a href="./best-practices/choosing-models.html">Choisir le bon modèle</a></li>
+                <li>🔌 <a href="./api/quick-start.html">API Quick Start</a></li>
+                <li>💬 <a href="https://discord.gg/iafactory">Communauté Discord</a></li>
+            </ul>
+
+            <div class="alert alert-success">
+                <strong>🚀 Prêt à créer votre agent ?</strong>
+                <p>Commencez dès maintenant sur <a href="https://app.iafactory-algeria.com">app.iafactory-algeria.com</a></p>
+            </div>
+        </main>
+
+        <aside class="docs-toc">
+            <h3 class="docs-toc-title">Sur cette page</h3>
+            <ul></ul>
+        </aside>
+    </div>
+
+    <script src="../assets/js/docs-theme.js"></script>
+</body>
+</html>

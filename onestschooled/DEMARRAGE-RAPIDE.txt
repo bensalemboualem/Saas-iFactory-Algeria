@@ -1,0 +1,89 @@
+═══════════════════════════════════════════════════════════════
+
+   🚀 DÉMARRAGE RAPIDE - OneStSchooled
+
+═══════════════════════════════════════════════════════════════
+
+
+▶️  MÉTHODE 1 : LA PLUS SIMPLE (RECOMMANDÉE)
+───────────────────────────────────────────────────────────────
+
+   Double-cliquer sur :  start-project.bat
+
+   ✓ Le script démarre tout automatiquement
+   ✓ Ouvre le navigateur sur votre projet
+
+
+▶️  MÉTHODE 2 : MANUELLE
+───────────────────────────────────────────────────────────────
+
+   1. Ouvrir XAMPP Control Panel
+
+   2. Cliquer sur "Start" pour :
+      • Apache
+      • MySQL
+
+   3. Ouvrir votre navigateur et aller sur :
+      http://onestschooled.local
+
+
+═══════════════════════════════════════════════════════════════
+
+🌐 URL DU PROJET
+
+   http://onestschooled.local
+
+═══════════════════════════════════════════════════════════════
+
+⚠️  IMPORTANT
+
+   ❌ NE PLUS UTILISER : php artisan serve
+   ✅ UTILISER : Apache (via XAMPP ou start-project.bat)
+
+═══════════════════════════════════════════════════════════════
+
+🛠️  COMMANDES UTILES (depuis XAMPP Shell)
+
+   # Aller dans le projet
+   cd /c/xampp/htdocs/onestschooled-test
+
+   # Migrations
+   php artisan migrate
+
+   # Vider le cache
+   php artisan cache:clear
+   php artisan config:clear
+   php artisan route:clear
+
+   # Générer la clé de l'application
+   php artisan key:generate
+
+═══════════════════════════════════════════════════════════════
+
+🐛 EN CAS DE PROBLÈME
+
+   1. Vérifier qu'Apache et MySQL tournent dans XAMPP
+
+   2. Redémarrer Apache :
+      • Stop puis Start dans XAMPP Control Panel
+
+   3. Vérifier les logs :
+      C:\xampp\apache\logs\onestschooled-error.log
+
+   4. Vérifier le fichier .env :
+      • DB_HOST=127.0.0.1
+      • DB_DATABASE=votre_base
+      • DB_USERNAME=root
+      • DB_PASSWORD=
+
+═══════════════════════════════════════════════════════════════
+
+✨ RACCOURCIS BUREAU (Optionnel)
+
+   Pour aller encore plus vite :
+
+   1. Clic droit sur "start-project.bat"
+   2. Envoyer vers > Bureau (créer un raccourci)
+   3. Renommer en "🚀 OneStSchooled"
+
+═══════════════════════════════════════════════════════════════

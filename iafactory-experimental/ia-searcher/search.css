@@ -1,0 +1,213 @@
+/* IAFactory Searcher Styles */
+
+.search-wrapper {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.search-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.search-header h1 {
+    font-size: 2.5rem;
+    background: linear-gradient(135deg, var(--iaf-primary), #a855f7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem;
+}
+
+.search-header p {
+    color: var(--iaf-text-secondary);
+    font-size: 1.1rem;
+}
+
+.search-box {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    background: var(--iaf-bg-card);
+    padding: 1rem;
+    border-radius: 1rem;
+    border: 1px solid var(--iaf-border);
+}
+
+#search-input {
+    flex: 1;
+    padding: 1rem 1.5rem;
+    border: 1px solid var(--iaf-border);
+    border-radius: 0.75rem;
+    background: var(--iaf-bg);
+    color: var(--iaf-text);
+    font-size: 1.1rem;
+}
+
+#search-input:focus {
+    outline: none;
+    border-color: var(--iaf-primary);
+}
+
+#search-button {
+    padding: 1rem 2rem;
+    background: var(--iaf-gradient);
+    color: white;
+    border: none;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: transform 0.2s;
+}
+
+#search-button:hover {
+    transform: scale(1.05);
+}
+
+#search-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Loading */
+#loading {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--iaf-border);
+    border-top-color: var(--iaf-primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* AI Answer */
+.ai-answer-card {
+    background: linear-gradient(135deg, rgba(0, 166, 81, 0.1), rgba(168, 85, 247, 0.1));
+    border: 1px solid var(--iaf-primary);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.answer-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    color: var(--iaf-primary);
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.answer-content {
+    line-height: 1.8;
+    color: var(--iaf-text);
+}
+
+/* Search Results */
+#search-results {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.search-result-card {
+    background: var(--iaf-bg-card);
+    border: 1px solid var(--iaf-border);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.search-result-card:hover {
+    border-color: var(--iaf-primary);
+    transform: translateX(5px);
+}
+
+.result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.result-title {
+    font-weight: 600;
+    color: var(--iaf-text);
+    font-size: 1.1rem;
+}
+
+.result-score {
+    background: var(--iaf-primary);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+}
+
+.result-content {
+    color: var(--iaf-text-secondary);
+    line-height: 1.6;
+    margin-bottom: 0.75rem;
+}
+
+.result-meta {
+    font-size: 0.85rem;
+    color: var(--iaf-text-secondary);
+    opacity: 0.7;
+}
+
+/* No Results */
+.no-results {
+    text-align: center;
+    padding: 3rem;
+    color: var(--iaf-text-secondary);
+}
+
+.no-results i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+/* Error */
+.error-card {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid var(--iaf-error);
+    color: var(--iaf-error);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* RTL */
+[dir="rtl"] .search-result-card:hover {
+    transform: translateX(-5px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .search-box {
+        flex-direction: column;
+    }
+
+    .search-header h1 {
+        font-size: 1.75rem;
+    }
+}

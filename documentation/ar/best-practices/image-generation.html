@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء الصور بالذكاء الاصطناعي - IAFactory الجزائر</title>
+    <link rel="stylesheet" href="../../assets/css/docs-theme.css">
+</head>
+<body>
+    <header class="docs-header">
+        <div class="docs-logo">
+            <img src="../../assets/images/logo.png" alt="IAFactory الجزائر">
+            <span>IAFactory الجزائر</span>
+        </div>
+        <nav class="main-nav">
+            <a href="../index.html">التوثيق</a>
+            <a href="https://app.iafactory-algeria.com">التطبيق</a>
+            <a href="../api/index.html">واجهة برمجة التطبيقات</a>
+        </nav>
+        <div class="docs-controls">
+            <div class="language-switcher">
+                <button data-lang="fr">🇫🇷 FR</button>
+                <button data-lang="en">🇬🇧 EN</button>
+                <button data-lang="ar" class="active">🇸🇦 AR</button>
+            </div>
+            <div class="theme-toggle">
+                <div class="theme-toggle-slider">☀️</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <!-- الشريط الجانبي -->
+        </aside>
+
+        <main class="docs-main">
+            <h1>إنشاء الصور بالذكاء الاصطناعي</h1>
+            
+            <p class="lead">أنشئ صورًا احترافية باستخدام نماذج الذكاء الاصطناعي المتقدمة لإنشاء الصور.</p>
+
+            <h2 id="introduction">🎨 مقدمة</h2>
+
+            <p>يمنحك IAFactory الجزائر وصولاً إلى أفضل نماذج إنشاء الصور بالذكاء الاصطناعي في السوق، بما في ذلك DALL-E وMidjourney وStable Diffusion والمزيد.</p>
+
+            <div class="alert alert-info">
+                <strong>💡 حالات الاستخدام:</strong>
+                <ul>
+                    <li>رسوم توضيحية للمقالات والمدونات</li>
+                    <li>أصول ألعاب الفيديو</li>
+                    <li>نماذج بالحجم الطبيعي للمنتجات</li>
+                    <li>الفن المفاهيمي والتصميم</li>
+                    <li>التسويق والإعلان</li>
+                    <li>النماذج الأولية السريعة</li>
+                </ul>
+            </div>
+
+            <h2 id="modeles-disponibles">🖼️ النماذج المتاحة</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>النموذج</th>
+                        <th>نقاط القوة</th>
+                        <th>السعر</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>DALL-E 3</strong></td>
+                        <td>جودة عالية، نص دقيق</td>
+                        <td>0.040$ / صورة</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Midjourney V6</strong></td>
+                        <td>أسلوب فني، واقعية تصويرية</td>
+                        <td>0.030$ / صورة</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Stable Diffusion XL</strong></td>
+                        <td>سريع، قابل للتخصيص</td>
+                        <td>0.010$ / صورة</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Flux Pro</strong></td>
+                        <td>واقعي للغاية، تفاصيل دقيقة</td>
+                        <td>0.050$ / صورة</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 id="premiers-pas">🚀 البدء</h2>
+
+            <h3 id="via-api">عبر API</h3>
+
+            <pre><code class="language-python">import requests
+
+url = "https://api.iafactory-algeria.com/v1/images/generations"
+headers = {
+    "Authorization": "Bearer مفتاح_API_الخاص_بك",
+    "Content-Type": "application/json"
+}
+
+data = {
+    "model": "dall-e-3",
+    "prompt": "منظر طبيعي جزائري عند غروب الشمس، أسلوب انطباعي",
+    "size": "1024x1024",
+    "quality": "hd",
+    "n": 1
+}
+
+response = requests.post(url, headers=headers, json=data)
+image_url = response.json()['data'][0]['url']
+print(f"الصورة المُنشأة: {image_url}")</code></pre>
+
+            <h3 id="via-interface">عبر واجهة الويب</h3>
+
+            <ol>
+                <li>انتقل إلى <a href="https://app.iafactory-algeria.com">app.iafactory-algeria.com</a></li>
+                <li>اختر "إنشاء الصور"</li>
+                <li>أدخل مطالبتك</li>
+                <li>اختر النموذج والمعاملات</li>
+                <li>انقر على "إنشاء"</li>
+            </ol>
+
+            <h2 id="prompts-efficaces">✍️ كتابة مطالبات فعالة</h2>
+
+            <h3 id="structure-prompt">هيكل المطالبة الجيدة</h3>
+
+            <pre><code class="language-text">[الموضوع] + [الأسلوب] + [التفاصيل] + [الجودة] + [المعاملات التقنية]
+
+مثال:
+"روبوت بشري، أسلوب سايبربانك، نيونات زرقاء ووردية،
+مدينة مستقبلية في الخلفية، مفصلة للغاية، 8K،
+إضاءة سينمائية، عرض أوكتان"</code></pre>
+
+            <h3 id="formules-types">الصيغ القياسية</h3>
+
+            <h4>صورة شخصية احترافية</h4>
+            <pre><code>"صورة احترافية لـ [مهنة]، [العمر] سنة،
+خلفية محايدة، إضاءة استوديو، دقة عالية،
+مصورة بكاميرا Canon EOS R5، عدسة 85mm f/1.4"</code></pre>
+
+            <h4>منظر طبيعي فني</h4>
+            <pre><code>"منظر طبيعي لـ [موقع]، [موسم]، [وقت من اليوم]،
+أسلوب [فنان أو حركة فنية]،
+ألوان [لوحة]، تكوين [قاعدة التكوين]،
+ضوء طبيعي، مفصل للغاية"</code></pre>
+
+            <h4>رسم توضيحي للمنتج</h4>
+            <pre><code>"صورة منتج لـ [منتج]، خلفية بيضاء بسيطة،
+إضاءة استوديو احترافية، ظلال ناعمة،
+دقة عالية جدًا، أسلوب كتالوج التجارة الإلكترونية"</code></pre>
+
+            <h4>فن مفاهيمي</h4>
+            <pre><code>"فن مفاهيمي لـ [موضوع]، أسلوب [لعبة أو فيلم]،
+لوحة ألوان [ألوان]، منظور [زاوية]،
+تفاصيل معقدة، إضاءة درامية،
+رائج في artstation، رسم رقمي"</code></pre>
+
+            <h2 id="exemples-avances">🎯 أمثلة متقدمة</h2>
+
+            <h3 id="variations">إنشاء تنويعات</h3>
+
+            <pre><code class="language-python">def generate_variations(base_prompt, variations):
+    """إنشاء تنويعات متعددة لنفس المفهوم"""
+    results = []
+    
+    for style in variations:
+        prompt = f"{base_prompt}، أسلوب {style}"
+        
+        response = requests.post(url, headers=headers, json={
+            "model": "dall-e-3",
+            "prompt": prompt,
+            "size": "1024x1024"
+        })
+        
+        results.append({
+            'style': style,
+            'url': response.json()['data'][0]['url']
+        })
+    
+    return results
+
+# الاستخدام
+base = "مقهى جزائري تقليدي"
+styles = ["ألوان مائية", "واقعي تصويري", "آرت ديكو", "بسيط"]
+
+variations = generate_variations(base, styles)</code></pre>
+
+            <h3 id="batch-generation">إنشاء دفعة</h3>
+
+            <pre><code class="language-python">import asyncio
+import aiohttp
+
+async def generate_image_async(session, prompt):
+    """إنشاء صورة بشكل غير متزامن"""
+    async with session.post(url, headers=headers, json={
+        "model": "stable-diffusion-xl",
+        "prompt": prompt
+    }) as response:
+        data = await response.json()
+        return data['data'][0]['url']
+
+async def batch_generate(prompts):
+    """إنشاء عدة صور بالتوازي"""
+    async with aiohttp.ClientSession() as session:
+        tasks = [generate_image_async(session, p) for p in prompts]
+        return await asyncio.gather(*tasks)
+
+# الاستخدام
+prompts = [
+    "شعار حديث لشركة ناشئة في مجال التكنولوجيا",
+    "أيقونة بسيطة لتطبيق الهاتف المحمول",
+    "لافتة ويب للتجارة الإلكترونية"
+]
+
+images = asyncio.run(batch_generate(prompts))</code></pre>
+
+            <h2 id="parametres">⚙️ المعاملات المهمة</h2>
+
+            <h3 id="taille">الحجم</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>الحجم</th>
+                        <th>الاستخدام</th>
+                        <th>السعر النسبي</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>256x256</td><td>صور مصغرة، أيقونات</td><td>0.5x</td></tr>
+                    <tr><td>512x512</td><td>وسائل التواصل الاجتماعي، المنشورات</td><td>1x</td></tr>
+                    <tr><td>1024x1024</td><td>قياسي، متعدد الاستخدامات</td><td>1.5x</td></tr>
+                    <tr><td>1024x1792</td><td>صورة شخصية، هاتف محمول</td><td>2x</td></tr>
+                    <tr><td>1792x1024</td><td>منظر طبيعي، سطح المكتب</td><td>2x</td></tr>
+                </tbody>
+            </table>
+
+            <h3 id="qualite">الجودة</h3>
+
+            <ul>
+                <li><strong>standard</strong>: جودة عادية، سريع</li>
+                <li><strong>hd</strong>: دقة عالية، مزيد من التفاصيل (ضعف السعر)</li>
+            </ul>
+
+            <h3 id="style">الأسلوب</h3>
+
+            <ul>
+                <li><strong>vivid</strong>: ألوان زاهية ومشبعة</li>
+                <li><strong>natural</strong>: نغمات طبيعية وواقعية</li>
+            </ul>
+
+            <h2 id="optimisation">💰 تحسين التكلفة</h2>
+
+            <h3 id="conseils-economie">نصائح للتوفير</h3>
+
+            <ol>
+                <li><strong>اختبر بدقة منخفضة</strong>
+                    <pre><code>// اختبر بـ 512x512 ثم أنشئ بـ 1024x1024</code></pre>
+                </li>
+                <li><strong>استخدم النموذج المناسب</strong>
+                    <ul>
+                        <li>Stable Diffusion XL: النماذج الأولية (0.010$/صورة)</li>
+                        <li>DALL-E 3: الإنتاج النهائي (0.040$/صورة)</li>
+                    </ul>
+                </li>
+                <li><strong>خزِّن النتائج مؤقتًا</strong>
+                    <pre><code class="language-python">import hashlib
+
+def get_cached_or_generate(prompt):
+    cache_key = hashlib.md5(prompt.encode()).hexdigest()
+    
+    if cache_key in image_cache:
+        return image_cache[cache_key]
+    
+    image_url = generate_image(prompt)
+    image_cache[cache_key] = image_url
+    return image_url</code></pre>
+                </li>
+            </ol>
+
+            <h2 id="bonnes-pratiques">✨ أفضل الممارسات</h2>
+
+            <h3 id="prompts-negatifs">المطالبات السلبية</h3>
+
+            <p>حدد ما لا تريده في الصورة:</p>
+
+            <pre><code class="language-json">{
+  "prompt": "صورة شخصية احترافية، إضاءة استوديو",
+  "negative_prompt": "ضبابي، تشويه، جودة منخفضة، علامة مائية، نص، أيادي مشوهة"
+}</code></pre>
+
+            <h3 id="iterations">التكرار التدريجي</h3>
+
+            <ol>
+                <li><strong>مطالبة أساسية</strong>: "قطة"</li>
+                <li><strong>إضافة الأسلوب</strong>: "قطة، أسلوب ألوان مائية"</li>
+                <li><strong>إضافة التفاصيل</strong>: "قطة سوداء وبيضاء، أسلوب ألوان مائية، خلفية زهرية"</li>
+                <li><strong>إضافة تقنية</strong>: "قطة سوداء وبيضاء، أسلوب ألوان مائية، خلفية زهرية، إضاءة ناعمة، 4K"</li>
+            </ol>
+
+            <h3 id="references">استخدام المراجع</h3>
+
+            <pre><code class="language-text">أسلوب [فنان مشهور]
+مثل [عمل معروف]
+على طريقة [حركة فنية]
+مستوحى من [فيلم/لعبة]
+
+أمثلة:
+- "أسلوب Studio Ghibli"
+- "مثل Blade Runner 2049"
+- "على طريقة Van Gogh"
+- "مستوحى من Cyberpunk 2077"</code></pre>
+
+            <h2 id="troubleshooting">🔧 استكشاف الأخطاء وإصلاحها</h2>
+
+            <h3 id="image-floue">صورة ضبابية أو منخفضة الجودة</h3>
+
+            <p><strong>الحلول:</strong></p>
+            <ul>
+                <li>أضف "مفصل للغاية، 8K، تركيز حاد"</li>
+                <li>استخدم quality="hd"</li>
+                <li>زد الدقة</li>
+                <li>جرب نموذجًا مختلفًا (Flux Pro)</li>
+            </ul>
+
+            <h3 id="style-incorrect">الأسلوب غير محترم</h3>
+
+            <p><strong>الحلول:</strong></p>
+            <ul>
+                <li>كن أكثر تحديدًا بشأن الأسلوب</li>
+                <li>أضف مراجع فنية</li>
+                <li>استخدم مطالبة سلبية</li>
+                <li>جرب Midjourney للأساليب الفنية</li>
+            </ul>
+
+            <h3 id="texte-illisible">نص غير مقروء في الصورة</h3>
+
+            <p><strong>الحلول:</strong></p>
+            <ul>
+                <li>استخدم DALL-E 3 (أفضل للنص)</li>
+                <li>حدد "نص واضح ومقروء"</li>
+                <li>بسِّط النص المطلوب</li>
+                <li>أنشئ النص بشكل منفصل ثم ركِّب</li>
+            </ul>
+
+            <h2 id="ressources">📚 موارد إضافية</h2>
+
+            <ul>
+                <li>📖 <a href="./writing-prompts.html">دليل كتابة المطالبات</a></li>
+                <li>🎨 <a href="https://lexica.art">Lexica - معرض المطالبات</a></li>
+                <li>💬 <a href="https://discord.gg/iafactory">مجتمع Discord</a></li>
+                <li>🎥 <a href="https://youtube.com/@iafactory">دروس فيديو</a></li>
+            </ul>
+
+            <div class="alert alert-success">
+                <strong>🎨 جاهز للإنشاء؟</strong>
+                <p>ابدأ في إنشاء الصور على <a href="https://app.iafactory-algeria.com">app.iafactory-algeria.com</a></p>
+            </div>
+        </main>
+
+        <aside class="docs-toc">
+            <h3 class="docs-toc-title">في هذه الصفحة</h3>
+            <ul></ul>
+        </aside>
+    </div>
+
+    <script src="../../assets/js/docs-theme.js"></script>
+</body>
+</html>

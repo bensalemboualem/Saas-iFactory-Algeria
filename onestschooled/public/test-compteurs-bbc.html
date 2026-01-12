@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Compteurs BBC School Algeria</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            background: linear-gradient(135deg, #2196F3, #1976D2);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .counters-row {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+        .counter-box {
+            flex: 1;
+            min-width: 250px;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: transform 0.3s;
+        }
+        .counter-box:hover {
+            transform: translateY(-5px);
+        }
+        .counter-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+        }
+        .icon-students { background: #4CAF50; }
+        .icon-parents { background: #FF9800; }
+        .icon-teachers { background: #2196F3; }
+        .icon-sessions { background: #9C27B0; }
+        .counter-content h2 {
+            margin: 0;
+            font-size: 36px;
+            font-weight: bold;
+            color: #333;
+        }
+        .counter-content p {
+            margin: 5px 0 0 0;
+            color: #666;
+            font-size: 14px;
+        }
+        .test-info {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🇩🇿 Test Compteurs BBC School Algeria</h1>
+            <p>Vérification de l'affichage des statistiques OnestSchool</p>
+        </div>
+        
+        <div class="test-info">
+            <h3>📊 Données Expected vs Actual</h3>
+            <ul>
+                <li><strong>Étudiants:</strong> 804 (total dans la base)</li>
+                <li><strong>Parents:</strong> 304</li>
+                <li><strong>Enseignants:</strong> 54</li>
+                <li><strong>Sessions:</strong> 22</li>
+            </ul>
+        </div>
+        
+        <div class="counters-row">
+            <div class="counter-box">
+                <div class="counter-icon icon-students">
+                    🎓
+                </div>
+                <div class="counter-content">
+                    <h2>804</h2>
+                    <p>Active Students</p>
+                </div>
+            </div>
+            
+            <div class="counter-box">
+                <div class="counter-icon icon-parents">
+                    👨‍👩‍👧‍👦
+                </div>
+                <div class="counter-content">
+                    <h2>304</h2>
+                    <p>Parents</p>
+                </div>
+            </div>
+            
+            <div class="counter-box">
+                <div class="counter-icon icon-teachers">
+                    👨‍🏫
+                </div>
+                <div class="counter-content">
+                    <h2>54</h2>
+                    <p>Teachers</p>
+                </div>
+            </div>
+            
+            <div class="counter-box">
+                <div class="counter-icon icon-sessions">
+                    📅
+                </div>
+                <div class="counter-content">
+                    <h2>22</h2>
+                    <p>Sessions</p>
+                </div>
+            </div>
+        </div>
+        
+        <div style="background: #d4edda; color: #155724; padding: 15px; border-radius: 10px; margin-top: 20px;">
+            <h4>✅ Résultat Attendu</h4>
+            <p>C'est exactement comme ça que les compteurs doivent s'afficher sur le dashboard BBC School Algeria !</p>
+        </div>
+    </div>
+</body>
+</html>

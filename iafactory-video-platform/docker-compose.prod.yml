@@ -1,0 +1,356 @@
+# =============================================================================
+# IAFactory Video Platform - Production Docker Compose
+# =============================================================================
+# Usage: docker-compose -f docker-compose.prod.yml up -d
+# =============================================================================
+
+services:
+  # ===========================================================================
+  # DATABASE
+  # ===========================================================================
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: iaf-video-postgres-prod
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:?POSTGRES_USER required}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD required}
+      POSTGRES_DB: ${POSTGRES_DB:-video_platform}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./infrastructure/sql/init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+    ports:
+      - "127.0.0.1:5436:5436"
+    command: >
+      postgres
+      -c shared_buffers=256MB
+      -c effective_cache_size=768MB
+      -c maintenance_work_mem=128MB
+      -c max_connections=200
+      -c log_statement=ddl
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: always
+    networks:
+      - video-prod-network
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '1.5'
+
+  # ===========================================================================
+  # CACHE & QUEUE
+  # ===========================================================================
+
+  redis:
+    image: redis:7-alpine
+    container_name: iaf-video-redis-prod
+    command: >
+      redis-server
+      --appendonly yes
+      --maxmemory 1gb
+      --maxmemory-policy allkeys-lru
+      --requirepass ${REDIS_PASSWORD:?REDIS_PASSWORD required}
+    volumes:
+      - redis-data:/data
+    ports:
+      - "127.0.0.1:6383:6383"
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    restart: always
+    networks:
+      - video-prod-network
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: '0.5'
+
+  # ===========================================================================
+  # OBJECT STORAGE
+  # ===========================================================================
+
+  minio:
+    image: minio/minio:latest
+    container_name: iaf-video-minio-prod
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:?MINIO_ROOT_USER required}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:?MINIO_ROOT_PASSWORD required}
+    volumes:
+      - minio-data:/data
+    ports:
+      - "127.0.0.1:9000:9000"
+      - "127.0.0.1:9001:9001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: always
+    networks:
+      - video-prod-network
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: '0.5'
+
+  # ===========================================================================
+  # BACKEND API
+  # ===========================================================================
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.prod
+    container_name: iaf-video-backend-prod
+    env_file:
+      - ./backend/.env
+    environment:
+      ENVIRONMENT: production
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5436/${POSTGRES_DB:-video_platform}
+      REDIS_URL: redis://:${REDIS_PASSWORD}@redis:6383/0
+      CELERY_BROKER_URL: redis://:${REDIS_PASSWORD}@redis:6383/1
+      CELERY_RESULT_BACKEND: redis://:${REDIS_PASSWORD}@redis:6383/2
+      S3_ENDPOINT: http://minio:9000
+      S3_ACCESS_KEY: ${MINIO_ROOT_USER}
+      S3_SECRET_KEY: ${MINIO_ROOT_PASSWORD}
+      S3_BUCKET: video-assets
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - backend-storage:/app/storage
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8240/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    restart: always
+    networks:
+      - video-prod-network
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+          cpus: '2.0'
+        reservations:
+          memory: 1G
+
+  # ===========================================================================
+  # CELERY WORKERS
+  # ===========================================================================
+
+  celery-worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.prod
+    container_name: iaf-video-celery-worker-prod
+    command: celery -A app.celery_app worker --loglevel=info --concurrency=4 -Q generation,publishing,pipeline
+    env_file:
+      - ./backend/.env
+    environment:
+      ENVIRONMENT: production
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5436/${POSTGRES_DB:-video_platform}
+      REDIS_URL: redis://:${REDIS_PASSWORD}@redis:6383/0
+      CELERY_BROKER_URL: redis://:${REDIS_PASSWORD}@redis:6383/1
+      CELERY_RESULT_BACKEND: redis://:${REDIS_PASSWORD}@redis:6383/2
+      S3_ENDPOINT: http://minio:9000
+      S3_ACCESS_KEY: ${MINIO_ROOT_USER}
+      S3_SECRET_KEY: ${MINIO_ROOT_PASSWORD}
+    depends_on:
+      - backend
+      - redis
+    volumes:
+      - backend-storage:/app/storage
+    restart: always
+    networks:
+      - video-prod-network
+    deploy:
+      resources:
+        limits:
+          memory: 8G
+          cpus: '4.0'
+        reservations:
+          memory: 2G
+
+  celery-beat:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.prod
+    container_name: iaf-video-celery-beat-prod
+    command: celery -A app.celery_app beat --loglevel=info
+    env_file:
+      - ./backend/.env
+    environment:
+      CELERY_BROKER_URL: redis://:${REDIS_PASSWORD}@redis:6383/1
+      CELERY_RESULT_BACKEND: redis://:${REDIS_PASSWORD}@redis:6383/2
+    depends_on:
+      - celery-worker
+    restart: always
+    networks:
+      - video-prod-network
+
+  # ===========================================================================
+  # FRONTEND
+  # ===========================================================================
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: ${API_URL:-https://api.video.iafactory.com}
+    container_name: iaf-video-frontend-prod
+    environment:
+      NODE_ENV: production
+    depends_on:
+      - backend
+    ports:
+      - "127.0.0.1:3000:3000"
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:3120"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: always
+    networks:
+      - video-prod-network
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: '1.0'
+
+  # ===========================================================================
+  # NGINX REVERSE PROXY
+  # ===========================================================================
+
+  nginx:
+    image: nginx:alpine
+    container_name: iaf-video-nginx-prod
+    volumes:
+      - ./infrastructure/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./infrastructure/nginx/ssl:/etc/nginx/ssl:ro
+      - backend-storage:/app/storage:ro
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - frontend
+      - backend
+    healthcheck:
+      test: ["CMD", "nginx", "-t"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: always
+    networks:
+      - video-prod-network
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+          cpus: '0.25'
+
+  # ===========================================================================
+  # MONITORING
+  # ===========================================================================
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: iaf-video-prometheus-prod
+    volumes:
+      - ./infrastructure/monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./infrastructure/monitoring/alerts.yml:/etc/prometheus/alerts.yml:ro
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=30d'
+    ports:
+      - "127.0.0.1:9090:9090"
+    restart: always
+    networks:
+      - video-prod-network
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: iaf-video-grafana-prod
+    depends_on:
+      - prometheus
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:?GRAFANA_PASSWORD required}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_SERVER_ROOT_URL: ${GRAFANA_URL:-http://localhost:3002}
+      GF_ANALYTICS_REPORTING_ENABLED: "false"
+    volumes:
+      - grafana-data:/var/lib/grafana
+    ports:
+      - "127.0.0.1:3002:3000"
+    restart: always
+    networks:
+      - video-prod-network
+
+  # ===========================================================================
+  # FLOWER (Celery monitoring)
+  # ===========================================================================
+
+  flower:
+    image: mher/flower:latest
+    container_name: iaf-video-flower-prod
+    command: celery flower --broker=redis://:${REDIS_PASSWORD}@redis:6383/1
+    environment:
+      FLOWER_BASIC_AUTH: ${FLOWER_USER:-admin}:${FLOWER_PASSWORD:-admin}
+    depends_on:
+      - celery-worker
+    ports:
+      - "127.0.0.1:5555:5555"
+    restart: always
+    networks:
+      - video-prod-network
+
+# =============================================================================
+# VOLUMES
+# =============================================================================
+volumes:
+  postgres-data:
+    name: iaf-video-postgres-prod-data
+  redis-data:
+    name: iaf-video-redis-prod-data
+  minio-data:
+    name: iaf-video-minio-prod-data
+  backend-storage:
+    name: iaf-video-backend-prod-storage
+  prometheus-data:
+    name: iaf-video-prometheus-prod-data
+  grafana-data:
+    name: iaf-video-grafana-prod-data
+
+# =============================================================================
+# NETWORKS
+# =============================================================================
+networks:
+  video-prod-network:
+    name: iafactory-video-production
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.30.0.0/16

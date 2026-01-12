@@ -1,0 +1,674 @@
+﻿import sys
+sys.path.append('../backend')
+from app.gateway_helper import call_llm_sync
+# MIGRATED TO GATEWAY - Use httpx to call http://localhost:3001/api/llm/chat/completions
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+IAFactory-School - Chatbot RAG Professionnel
+Interface Streamlit pour interroger la base de connaissances
+"""
+
+import streamlit as st
+import sys
+import os
+from pathlib import Path
+from datetime import datetime
+from typing import List, Dict, Optional
+
+# Add paths
+sys.path.insert(0, str(Path(__file__).parent))
+sys.path.insert(0, str(Path(__file__).parent.parent / "backend"))
+
+# Load environment variables from .env
+from dotenv import load_dotenv
+env_path = Path(__file__).parent.parent / ".env"
+load_dotenv(env_path)
+
+# Check API keys
+OPENAI_KEY = os.getenv("OPENAI_API_KEY", "")
+ANTHROPIC_KEY = os.getenv("ANTHROPIC_API_KEY", "")
+GROQ_KEY = os.getenv("GROQ_API_KEY", "")
+DEEPSEEK_KEY = os.getenv("DEEPSEEK_API_KEY", "")
+TOGETHER_KEY = os.getenv("TOGETHER_API_KEY", "")
+OPENROUTER_KEY = os.getenv("OPEN_ROUTER_API_KEY", "")
+
+# Try to import RAG service, fallback to simple mode if not available
+try:
+    from app.services.rag.rag_service import RAGService, get_rag_service
+    from app.services.rag.llm_service import LLMProvider, LLMService
+    RAG_AVAILABLE = True
+except ImportError as e:
+    RAG_AVAILABLE = False
+    import_error = str(e)
+
+# Import config for branding
+from config import get_active_config
+
+# Page config
+st.set_page_config(
+    page_title="IAFactory-School - Assistant IA",
+    page_icon="ðŸ¤–",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
+# CSS Premium
+PREMIUM_CSS = """
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+    * {
+        font-family: 'Inter', sans-serif;
+    }
+
+    .stApp {
+        background: linear-gradient(180deg, #fafafa 0%, #f5f5f5 100%);
+    }
+
+    /* Chat messages */
+    .chat-message {
+        padding: 1.5rem;
+        border-radius: 12px;
+        margin-bottom: 1rem;
+        display: flex;
+        gap: 1rem;
+        animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .chat-message.user {
+        background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+        color: white;
+        margin-left: 20%;
+    }
+
+    .chat-message.assistant {
+        background: white;
+        border: 1px solid #e5e7eb;
+        margin-right: 20%;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+
+    .chat-message .avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        flex-shrink: 0;
+    }
+
+    .chat-message.user .avatar {
+        background: rgba(255,255,255,0.2);
+    }
+
+    .chat-message.assistant .avatar {
+        background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+        color: white;
+    }
+
+    .chat-message .content {
+        flex: 1;
+        line-height: 1.6;
+    }
+
+    .chat-message.user .content {
+        color: white;
+    }
+
+    .chat-message.assistant .content {
+        color: #374151;
+    }
+
+    /* Sources */
+    .sources-container {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 1rem;
+        margin-top: 1rem;
+    }
+
+    .source-item {
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 6px;
+        padding: 0.75rem;
+        margin-bottom: 0.5rem;
+        font-size: 0.85rem;
+        color: #6b7280;
+    }
+
+    .source-item:hover {
+        border-color: #3B82F6;
+    }
+
+    /* Input */
+    .stTextInput > div > div > input {
+        border-radius: 12px;
+        border: 2px solid #e5e7eb;
+        padding: 1rem 1.25rem;
+        font-size: 1rem;
+    }
+
+    .stTextInput > div > div > input:focus {
+        border-color: #3B82F6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    /* Sidebar */
+    [data-testid="stSidebar"] {
+        background: white;
+        border-right: 1px solid #e5e7eb;
+    }
+
+    [data-testid="stSidebar"] .stSelectbox label,
+    [data-testid="stSidebar"] .stSlider label {
+        font-weight: 500;
+        color: #374151;
+    }
+
+    /* Header */
+    .main-header {
+        text-align: center;
+        padding: 2rem 0;
+        margin-bottom: 2rem;
+    }
+
+    .main-header h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #111827;
+        margin-bottom: 0.5rem;
+    }
+
+    .main-header p {
+        color: #6b7280;
+        font-size: 1rem;
+    }
+
+    /* Status badges */
+    .status-badge {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 500;
+    }
+
+    .status-online {
+        background: #D1FAE5;
+        color: #065F46;
+    }
+
+    .status-offline {
+        background: #FEE2E2;
+        color: #991B1B;
+    }
+
+    /* Hide Streamlit branding */
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
+</style>
+"""
+
+st.markdown(PREMIUM_CSS, unsafe_allow_html=True)
+
+
+def init_session_state():
+    """Initialize session state variables"""
+    if "messages" not in st.session_state:
+        st.session_state.messages = []
+    if "rag_service" not in st.session_state:
+        st.session_state.rag_service = None
+    if "total_queries" not in st.session_state:
+        st.session_state.total_queries = 0
+
+
+def load_documents_simple() -> List[Dict]:
+    """Load documents from demo/documents folder"""
+    docs_path = Path(__file__).parent / "documents"
+    documents = []
+
+    if docs_path.exists():
+        for md_file in docs_path.glob("*.md"):
+            try:
+                content = md_file.read_text(encoding="utf-8")
+                documents.append({
+                    "name": md_file.stem,
+                    "content": content,
+                    "path": str(md_file)
+                })
+            except Exception as e:
+                st.warning(f"Erreur lecture {md_file.name}: {e}")
+
+    return documents
+
+
+def simple_search(query: str, documents: List[Dict], top_k: int = 3) -> List[Dict]:
+    """Simple keyword-based search (fallback when RAG not available)"""
+    query_lower = query.lower()
+    results = []
+
+    for doc in documents:
+        content_lower = doc["content"].lower()
+        # Count keyword matches
+        score = sum(1 for word in query_lower.split() if word in content_lower)
+        if score > 0:
+            # Extract relevant snippet
+            lines = doc["content"].split("\n")
+            relevant_lines = []
+            for line in lines:
+                if any(word in line.lower() for word in query_lower.split()):
+                    relevant_lines.append(line.strip())
+            snippet = " ".join(relevant_lines[:5])[:500]
+            results.append({
+                "name": doc["name"],
+                "snippet": snippet or doc["content"][:500],
+                "score": score
+            })
+
+    # Sort by score and return top k
+    results.sort(key=lambda x: x["score"], reverse=True)
+    return results[:top_k]
+
+
+def generate_simple_response(query: str, context: str, language: str = "fr") -> str:
+    """Generate a simple response based on context (no LLM)"""
+    if not context.strip():
+        responses = {
+            "fr": "Je n'ai pas trouve d'information pertinente dans ma base de connaissances pour repondre a cette question.",
+            "ar": "Ù„Ù… Ø£Ø¬Ø¯ Ù…Ø¹Ù„ÙˆÙ…Ø§Øª Ø°Ø§Øª ØµÙ„Ø© ÙÙŠ Ù‚Ø§Ø¹Ø¯Ø© Ù…Ø¹Ø±ÙØªÙŠ Ù„Ù„Ø¥Ø¬Ø§Ø¨Ø© Ø¹Ù„Ù‰ Ù‡Ø°Ø§ Ø§Ù„Ø³Ø¤Ø§Ù„.",
+            "en": "I couldn't find relevant information in my knowledge base to answer this question."
+        }
+        return responses.get(language, responses["fr"])
+
+    # Format response with context
+    intros = {
+        "fr": "Voici ce que j'ai trouve dans ma base de connaissances:",
+        "ar": "Ø¥Ù„ÙŠÙƒ Ù…Ø§ ÙˆØ¬Ø¯ØªÙ‡ ÙÙŠ Ù‚Ø§Ø¹Ø¯Ø© Ù…Ø¹Ø±ÙØªÙŠ:",
+        "en": "Here's what I found in my knowledge base:"
+    }
+
+    return f"{intros.get(language, intros['fr'])}\n\n{context}"
+
+
+def generate_llm_response(query: str, context: str, language: str = "fr", provider: str = "openai") -> str:
+    """Generate a response using LLM (OpenAI, Anthropic, or Groq)"""
+
+    system_prompts = {
+        "fr": """Tu es un assistant IA expert pour IAFactory-School, le Programme National IA pour l'Education en Algerie.
+
+Tu reponds aux questions en te basant UNIQUEMENT sur le contexte fourni.
+Si l'information n'est pas dans le contexte, dis-le clairement.
+Sois precis sur les chiffres (prix, ROI, durees).
+Cite tes sources entre crochets [Source X].""",
+
+        "ar": """Ø£Ù†Øª Ù…Ø³Ø§Ø¹Ø¯ Ø°ÙƒØ§Ø¡ Ø§ØµØ·Ù†Ø§Ø¹ÙŠ Ø®Ø¨ÙŠØ± ÙÙŠ IAFactory-SchoolØŒ Ø§Ù„Ø¨Ø±Ù†Ø§Ù…Ø¬ Ø§Ù„ÙˆØ·Ù†ÙŠ Ù„Ù„Ø°ÙƒØ§Ø¡ Ø§Ù„Ø§ØµØ·Ù†Ø§Ø¹ÙŠ Ù„Ù„ØªØ¹Ù„ÙŠÙ… ÙÙŠ Ø§Ù„Ø¬Ø²Ø§Ø¦Ø±.
+
+ØªØ¬ÙŠØ¨ Ø¹Ù„Ù‰ Ø§Ù„Ø£Ø³Ø¦Ù„Ø© Ø¨Ù†Ø§Ø¡Ù‹ Ø¹Ù„Ù‰ Ø§Ù„Ø³ÙŠØ§Ù‚ Ø§Ù„Ù…Ù‚Ø¯Ù… ÙÙ‚Ø·.
+Ø¥Ø°Ø§ Ù„Ù… ØªÙƒÙ† Ø§Ù„Ù…Ø¹Ù„ÙˆÙ…Ø§Øª Ù…ÙˆØ¬ÙˆØ¯Ø© ÙÙŠ Ø§Ù„Ø³ÙŠØ§Ù‚ØŒ Ù‚Ù„ Ø°Ù„Ùƒ Ø¨ÙˆØ¶ÙˆØ­.
+ÙƒÙ† Ø¯Ù‚ÙŠÙ‚Ù‹Ø§ ÙÙŠ Ø§Ù„Ø£Ø±Ù‚Ø§Ù… (Ø§Ù„Ø£Ø³Ø¹Ø§Ø±ØŒ Ø§Ù„Ø¹Ø§Ø¦Ø¯ Ø¹Ù„Ù‰ Ø§Ù„Ø§Ø³ØªØ«Ù…Ø§Ø±ØŒ Ø§Ù„Ù…Ø¯Ø¯).""",
+
+        "en": """You are an expert AI assistant for IAFactory-School, the National AI Program for Education in Algeria.
+
+Answer questions based ONLY on the provided context.
+If information is not in the context, say so clearly.
+Be precise with numbers (prices, ROI, durations).
+Cite your sources in brackets [Source X]."""
+    }
+
+    system_prompt = system_prompts.get(language, system_prompts["fr"])
+
+    user_message = f"""CONTEXTE:
+{context}
+
+QUESTION:
+{query}
+
+Reponds de maniere precise et structuree."""
+
+    # Try OpenAI
+    if OPENAI_KEY and (provider == "openai" or provider == "auto"):
+        try:
+            import httpx
+GATEWAY_URL = "http://localhost:3001/api/llm/chat/completions"
+            # client = OpenAI()  # MIGRATED TO GATEWAY
+            response = call_llm_sync(
+                model="gpt-4o-mini",
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": user_message}
+                ],
+                temperature=0.3,
+                max_tokens=1000
+            )
+            return response.choices[0].message.content
+        except Exception as e:
+            if provider == "openai":
+                return f"Erreur OpenAI: {str(e)}"
+
+    # Try Anthropic
+    if ANTHROPIC_KEY and (provider == "anthropic" or provider == "auto"):
+        try:
+            from anthropic import Anthropic
+            client = Anthropic(api_key=ANTHROPIC_KEY)
+            response = client.messages.create(
+                model="claude-3-5-haiku-20241022",
+                max_tokens=1000,
+                system=system_prompt,
+                messages=[{"role": "user", "content": user_message}]
+            )
+            return response.content[0].text
+        except Exception as e:
+            if provider == "anthropic":
+                return f"Erreur Anthropic: {str(e)}"
+
+    # Try Groq (fastest)
+    if GROQ_KEY and (provider == "groq" or provider == "auto"):
+        try:
+            from groq import Groq
+            client = Groq(api_key=GROQ_KEY)
+            response = call_llm_sync(
+                model="llama-3.1-8b-instant",
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": user_message}
+                ],
+                temperature=0.3,
+                max_tokens=1000
+            )
+            return response.choices[0].message.content
+        except Exception as e:
+            if provider == "groq":
+                return f"Erreur Groq: {str(e)}"
+
+    # Try DeepSeek (cheap & good)
+    if DEEPSEEK_KEY and (provider == "deepseek" or provider == "auto"):
+        try:
+            import httpx
+GATEWAY_URL = "http://localhost:3001/api/llm/chat/completions"
+            # client = OpenAI()  # MIGRATED TO GATEWAY
+            response = call_llm_sync(
+                model="deepseek-chat",
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": user_message}
+                ],
+                temperature=0.3,
+                max_tokens=1000
+            )
+            return response.choices[0].message.content
+        except Exception as e:
+            if provider == "deepseek":
+                return f"Erreur DeepSeek: {str(e)}"
+
+    # Try OpenRouter (access to Qwen, Kimi, etc.)
+    if OPENROUTER_KEY and (provider == "openrouter" or provider == "qwen" or provider == "auto"):
+        try:
+            import httpx
+GATEWAY_URL = "http://localhost:3001/api/llm/chat/completions"
+            # client = OpenAI()  # MIGRATED TO GATEWAY
+            model = "qwen/qwen-2.5-72b-instruct" if provider == "qwen" else "qwen/qwen-2.5-7b-instruct"
+            response = call_llm_sync(
+                model=model,
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": user_message}
+                ],
+                temperature=0.3,
+                max_tokens=1000
+            )
+            return response.choices[0].message.content
+        except Exception as e:
+            if provider in ["openrouter", "qwen"]:
+                return f"Erreur OpenRouter: {str(e)}"
+
+    # Try Together AI (open source models)
+    if TOGETHER_KEY and (provider == "together" or provider == "auto"):
+        try:
+            import httpx
+GATEWAY_URL = "http://localhost:3001/api/llm/chat/completions"
+            # client = OpenAI()  # MIGRATED TO GATEWAY
+            response = call_llm_sync(
+                model="Qwen/Qwen2.5-7B-Instruct-Turbo",
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": user_message}
+                ],
+                temperature=0.3,
+                max_tokens=1000
+            )
+            return response.choices[0].message.content
+        except Exception as e:
+            if provider == "together":
+                return f"Erreur Together: {str(e)}"
+
+    # Try Ollama (local)
+    if provider == "ollama":
+        try:
+            import httpx
+GATEWAY_URL = "http://localhost:3001/api/llm/chat/completions"
+            # client = OpenAI()  # MIGRATED TO GATEWAY
+            response = call_llm_sync(
+                model="qwen2:7b",
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": user_message}
+                ],
+                temperature=0.3,
+                max_tokens=1000
+            )
+            return response.choices[0].message.content
+        except Exception as e:
+            return f"Erreur Ollama: {str(e)} - Verifiez que Ollama est lance."
+
+    # Fallback to simple response
+    return generate_simple_response(query, context, language)
+
+
+def render_chat_message(role: str, content: str, sources: List[Dict] = None):
+    """Render a chat message with proper styling"""
+    avatar = "ðŸ‘¤" if role == "user" else "ðŸ¤–"
+    css_class = role
+
+    st.markdown(f"""
+        <div class="chat-message {css_class}">
+            <div class="avatar">{avatar}</div>
+            <div class="content">{content}</div>
+        </div>
+    """, unsafe_allow_html=True)
+
+    if sources and role == "assistant":
+        with st.expander("ðŸ“š Sources citees", expanded=False):
+            for i, source in enumerate(sources, 1):
+                st.markdown(f"""
+                    <div class="source-item">
+                        <strong>[Source {i}]</strong> {source.get('name', 'Document')}<br>
+                        <small>{source.get('snippet', '')[:200]}...</small>
+                    </div>
+                """, unsafe_allow_html=True)
+
+
+def main():
+    init_session_state()
+    config = get_active_config()
+
+    # Sidebar
+    with st.sidebar:
+        st.markdown(f"### {config['logo_emoji']} {config['display_name']}")
+        st.markdown("---")
+
+        # Language selector
+        language = st.selectbox(
+            "ðŸŒ Langue / Ø§Ù„Ù„ØºØ© / Language",
+            options=["fr", "ar", "en"],
+            format_func=lambda x: {"fr": "Francais", "ar": "Ø§Ù„Ø¹Ø±Ø¨ÙŠØ©", "en": "English"}[x],
+            index=0
+        )
+
+        # Number of sources
+        top_k = st.slider(
+            "ðŸ“š Nombre de sources",
+            min_value=1,
+            max_value=10,
+            value=3
+        )
+
+        st.markdown("---")
+
+        # LLM Provider selector
+        available_providers = []
+        if GROQ_KEY:
+            available_providers.append(("groq", "Groq Llama 3.1 (rapide)"))
+        if DEEPSEEK_KEY:
+            available_providers.append(("deepseek", "DeepSeek Chat (economique)"))
+        if OPENROUTER_KEY:
+            available_providers.append(("qwen", "Qwen 2.5 72B (OpenRouter)"))
+        if TOGETHER_KEY:
+            available_providers.append(("together", "Qwen 2.5 (Together)"))
+        if OPENAI_KEY:
+            available_providers.append(("openai", "OpenAI GPT-4o-mini"))
+        if ANTHROPIC_KEY:
+            available_providers.append(("anthropic", "Anthropic Claude"))
+        # Ollama always available (local)
+        available_providers.append(("ollama", "Ollama Local (qwen2:7b) GRATUIT"))
+
+        if available_providers:
+            provider = st.selectbox(
+                "ðŸ¤– Modele LLM",
+                options=[p[0] for p in available_providers],
+                format_func=lambda x: dict(available_providers).get(x, x),
+                index=0
+            )
+            st.session_state.llm_provider = provider
+        else:
+            st.session_state.llm_provider = None
+
+        st.markdown("---")
+
+        # Status
+        if available_providers:
+            st.markdown('<span class="status-badge status-online">LLM Connecte</span>', unsafe_allow_html=True)
+            st.success(f"Cles API detectees: {len(available_providers)}")
+        else:
+            st.markdown('<span class="status-badge status-offline">Aucun LLM</span>', unsafe_allow_html=True)
+            st.warning("Aucune cle API trouvee dans .env")
+
+        st.markdown("---")
+
+        # Stats
+        st.markdown("### ðŸ“Š Statistiques")
+        st.metric("Questions posees", st.session_state.total_queries)
+
+        # Clear chat
+        if st.button("ðŸ—‘ï¸ Effacer la conversation", use_container_width=True):
+            st.session_state.messages = []
+            st.rerun()
+
+        st.markdown("---")
+        st.markdown(f"""
+            <div style="text-align: center; color: #9ca3af; font-size: 0.8rem;">
+                Powered by IAFactory<br>
+                v1.0.0
+            </div>
+        """, unsafe_allow_html=True)
+
+    # Main content
+    st.markdown(f"""
+        <div class="main-header">
+            <h1>ðŸ¤– Assistant IA - {config['display_name']}</h1>
+            <p>Posez vos questions sur le programme IAFactory-School</p>
+        </div>
+    """, unsafe_allow_html=True)
+
+    # Load documents
+    documents = load_documents_simple()
+    if not documents:
+        st.warning("Aucun document trouve dans demo/documents/. Veuillez executer le setup.")
+
+    # Display chat history
+    for message in st.session_state.messages:
+        render_chat_message(
+            message["role"],
+            message["content"],
+            message.get("sources", [])
+        )
+
+    # Chat input
+    placeholders = {
+        "fr": "Posez votre question sur IAFactory-School...",
+        "ar": "Ø§Ø·Ø±Ø­ Ø³Ø¤Ø§Ù„Ùƒ Ø­ÙˆÙ„ IAFactory-School...",
+        "en": "Ask your question about IAFactory-School..."
+    }
+
+    if prompt := st.chat_input(placeholders.get(language, placeholders["fr"])):
+        # Add user message
+        st.session_state.messages.append({"role": "user", "content": prompt})
+        st.session_state.total_queries += 1
+
+        # Search for relevant context
+        search_results = simple_search(prompt, documents, top_k)
+        context = "\n\n".join([r["snippet"] for r in search_results])
+
+        # Generate response using LLM
+        provider = st.session_state.get("llm_provider", "auto")
+        if provider:
+            with st.spinner("Generation de la reponse..."):
+                answer = generate_llm_response(prompt, context, language, provider)
+            sources = search_results
+        else:
+            answer = generate_simple_response(prompt, context, language)
+            sources = search_results
+
+        # Add assistant message
+        st.session_state.messages.append({
+            "role": "assistant",
+            "content": answer,
+            "sources": sources
+        })
+
+        st.rerun()
+
+    # Example questions
+    if not st.session_state.messages:
+        st.markdown("### ðŸ’¡ Questions suggÃ©rÃ©es")
+
+        examples = {
+            "fr": [
+                "Quel est le prix par Ã©lÃ¨ve pour une Ã©cole de 1600 Ã©lÃ¨ves?",
+                "Quel est l'investissement total IAFactory pour BBC School?",
+                "Quelles technologies sont utilisÃ©es dans la plateforme?",
+                "Quel est le ROI prÃ©vu sur 3 ans?",
+            ],
+            "ar": [
+                "Ù…Ø§ Ù‡Ùˆ Ø³Ø¹Ø± ÙƒÙ„ Ø·Ø§Ù„Ø¨ØŸ",
+                "Ù…Ø§ Ù‡Ùˆ Ø¥Ø¬Ù…Ø§Ù„ÙŠ Ø§Ù„Ø§Ø³ØªØ«Ù…Ø§Ø±ØŸ",
+                "Ù…Ø§ Ù‡ÙŠ Ø§Ù„ØªÙ‚Ù†ÙŠØ§Øª Ø§Ù„Ù…Ø³ØªØ®Ø¯Ù…Ø©ØŸ",
+            ],
+            "en": [
+                "What is the price per student for a school with 1600 students?",
+                "What is the total IAFactory investment for BBC School?",
+                "What technologies are used in the platform?",
+            ]
+        }
+
+        cols = st.columns(2)
+        for i, example in enumerate(examples.get(language, examples["fr"])):
+            with cols[i % 2]:
+                if st.button(f"ðŸ’¬ {example}", key=f"example_{i}", use_container_width=True):
+                    st.session_state.messages.append({"role": "user", "content": example})
+                    st.session_state.total_queries += 1
+                    st.rerun()
+
+
+if __name__ == "__main__":
+    main()

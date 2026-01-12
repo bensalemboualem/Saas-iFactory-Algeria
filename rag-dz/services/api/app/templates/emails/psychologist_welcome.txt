@@ -1,0 +1,72 @@
+===============================================
+🇨🇭 IA Factory - Privacy & Precision
+Privacy & Compliance
+===============================================
+
+Welcome, {{user_name}}!
+
+Your private AI assistant for clinical practice is now ready. Designed specifically for Geneva psychologists, IA Factory helps you save time while maintaining the highest standards of patient confidentiality.
+
+🔒 Swiss nLPD Compliant
+
+-----------------------------------------------
+🎁 FIRST TOKEN GIFT
+-----------------------------------------------
+
+We've credited your account with 100 FREE TOKENS to get started.
+
+Your Redeem Code:
+{{redeem_code}}
+
+Enter this code in your dashboard to activate your tokens.
+
+-----------------------------------------------
+KEY FEATURES FOR CLINICAL PRACTICE
+-----------------------------------------------
+
+1. 🎯 STRESS DETECTION (0-10 Scale)
+   Automatically detects patient stress levels, anxiety indicators, and
+   emotional nuances during sessions. Includes crisis keyword flagging
+   for immediate review.
+
+2. 🔒 SWISS nLPD PRIVACY COMPLIANCE
+   {{privacy_note}}
+   All transcriptions are anonymized, encrypted at rest, and stored
+   exclusively in Switzerland.
+
+3. 📝 CLINICAL NEUTRAL SUMMARIES
+   Professional session summaries with therapeutic themes, progress
+   indicators, and emotional state assessment—ready for your clinical notes.
+
+-----------------------------------------------
+QUICK START GUIDE (3 STEPS)
+-----------------------------------------------
+
+STEP 1: RECORD
+Click the central pulse microphone during your session. The waveform
+shows you're recording.
+
+STEP 2: ANALYZE
+Stop recording to receive instant transcription with stress detection,
+emotion analysis, and therapeutic themes.
+
+STEP 3: EXPORT
+Download your clinical summary (PDF) or copy to your patient management
+system. All identifying data auto-removed.
+
+-----------------------------------------------
+
+→ Access Your Dashboard: {{dashboard_url}}
+
+-----------------------------------------------
+SUPPORT
+-----------------------------------------------
+
+🇨🇭 Geneva Psychologists • Clinical Precision • Full Privacy
+
+Questions? Contact us at {{support_email}}
+
+© {{current_year}} IA Factory Switzerland. All rights reserved.
+Compliant with Swiss nLPD (New Federal Act on Data Protection)
+
+===============================================

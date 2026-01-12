@@ -1,0 +1,274 @@
+{
+  "name": "IAF Media-to-Reels Pipeline v1.0",
+  "nodes": [
+    {
+      "id": "trigger_webhook",
+      "type": "n8n-nodes-base.webhook",
+      "position": [100, 300],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "media-upload",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "notes": "TRIGGER: Recoit upload video OU lien YouTube"
+    },
+    {
+      "id": "detect_input_type",
+      "type": "n8n-nodes-base.if",
+      "position": [300, 300],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$json.youtube_url}}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "notes": "BRANCH: YouTube URL ou fichier direct?"
+    },
+    {
+      "id": "youtube_download",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [500, 200],
+      "parameters": {
+        "url": "https://cockpit.iafactory.ch/api/media/youtube-extract",
+        "method": "POST",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            { "name": "url", "value": "={{$json.youtube_url}}" },
+            { "name": "format", "value": "audio" }
+          ]
+        }
+      },
+      "notes": "YOUTUBE: Extraction audio via yt-dlp proxy"
+    },
+    {
+      "id": "file_to_binary",
+      "type": "n8n-nodes-base.moveBinaryData",
+      "position": [500, 400],
+      "parameters": {
+        "mode": "jsonToBinary",
+        "sourceKey": "file_data"
+      },
+      "notes": "FILE: Convertir upload en binary pour traitement"
+    },
+    {
+      "id": "merge_audio",
+      "type": "n8n-nodes-base.merge",
+      "position": [700, 300],
+      "parameters": {
+        "mode": "multiplex"
+      },
+      "notes": "MERGE: Unifie les 2 branches (YouTube ou Upload)"
+    },
+    {
+      "id": "whisper_transcription",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [900, 300],
+      "parameters": {
+        "url": "https://cockpit.iafactory.ch/api/agent/voice/upload",
+        "method": "POST",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            { "name": "audio", "value": "={{$binary.data}}" },
+            { "name": "tenant", "value": "algeria" },
+            { "name": "language_hint", "value": "auto" },
+            { "name": "return_audio", "value": "false" }
+          ]
+        },
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "notes": "WHISPER: Transcription audio -> texte (2min timeout)"
+    },
+    {
+      "id": "archon_strategic_analysis",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [1100, 300],
+      "parameters": {
+        "url": "https://cockpit.iafactory.ch/api/agent/voice/text",
+        "method": "POST",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "text",
+              "value": "=Analyse strategique de ce contenu pour creer des Reels viraux:\n\n{{$json.input_text}}\n\nIdentifie: 1) Les hooks emotionnels 2) Les moments forts 3) Les citations marquantes"
+            },
+            { "name": "tenant", "value": "algeria" },
+            {
+              "name": "system_prompt",
+              "value": "Tu es un expert en content marketing viral. Analyse le contenu pour identifier les elements a fort potentiel d'engagement sur les reseaux sociaux. Format: JSON avec hooks, moments_forts, citations."
+            }
+          ]
+        }
+      },
+      "notes": "ARCHON/RAG: Analyse strategique du contenu"
+    },
+    {
+      "id": "bmad_context_fetch",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [1100, 450],
+      "parameters": {
+        "url": "https://cockpit.iafactory.ch/api/rag/query",
+        "method": "POST",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            { "name": "query", "value": "={{$json.input_text}}" },
+            { "name": "collection", "value": "bmad_knowledge" },
+            { "name": "top_k", "value": 5 }
+          ]
+        }
+      },
+      "notes": "BMAD: Recupere contexte supplementaire depuis la base de connaissances"
+    },
+    {
+      "id": "merge_analysis",
+      "type": "n8n-nodes-base.merge",
+      "position": [1300, 375],
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition"
+      },
+      "notes": "COMBINE: Fusionne analyse Archon + contexte BMAD"
+    },
+    {
+      "id": "claude_reels_generator",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [1500, 375],
+      "parameters": {
+        "url": "https://api.anthropic.com/v1/messages",
+        "method": "POST",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "anthropicApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "anthropic-version", "value": "2023-06-01" },
+            { "name": "content-type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"claude-sonnet-4-20250514\",\n  \"max_tokens\": 4096,\n  \"system\": \"Tu es un expert en creation de contenu viral pour Instagram Reels et TikTok. Tu generes des scripts precis avec timing, texte a l'ecran, et suggestions visuelles.\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Basé sur cette analyse:\\n\\nTRANSCRIPTION: {{$node.whisper_transcription.json.input_text}}\\n\\nANALYSE STRATEGIQUE: {{$node.archon_strategic_analysis.json.output_text}}\\n\\nCONTEXTE BMAD: {{$node.bmad_context_fetch.json.results}}\\n\\nGenere 3 SCRIPTS DE REELS VIRAUX avec:\\n1. HOOK (3 sec) - phrase d'accroche\\n2. TENSION (10 sec) - probleme ou revelation\\n3. PAYOFF (5 sec) - solution ou twist\\n4. CTA (2 sec) - call to action\\n\\nPour chaque script, inclus:\\n- Texte exact a afficher\\n- Timing precis\\n- Suggestion de B-roll/visuel\\n- Musique recommandee (style)\\n- Hashtags optimises\\n\\nFormat: JSON structure\"\n    }\n  ]\n}"
+      },
+      "notes": "CLAUDE: Generation des 3 scripts Reels + visuels"
+    },
+    {
+      "id": "parse_reels_output",
+      "type": "n8n-nodes-base.code",
+      "position": [1700, 375],
+      "parameters": {
+        "jsCode": "// Parse Claude response et structure le pack\nconst claudeResponse = $input.first().json;\nconst content = claudeResponse.content[0].text;\n\n// Essayer de parser le JSON\nlet reels = [];\ntry {\n  const jsonMatch = content.match(/```json([\\s\\S]*?)```/);\n  if (jsonMatch) {\n    reels = JSON.parse(jsonMatch[1]);\n  } else {\n    reels = JSON.parse(content);\n  }\n} catch (e) {\n  // Fallback: structurer manuellement\n  reels = {\n    scripts: [\n      { id: 1, raw: content.slice(0, 1000) },\n      { id: 2, raw: content.slice(1000, 2000) },\n      { id: 3, raw: content.slice(2000, 3000) }\n    ],\n    parse_error: e.message\n  };\n}\n\nreturn {\n  json: {\n    pack_id: `REELS_${Date.now()}`,\n    created_at: new Date().toISOString(),\n    source_transcription: $node.whisper_transcription.json.input_text?.slice(0, 500),\n    reels_scripts: reels,\n    metadata: {\n      processing_time_ms: Date.now() - $node.trigger_webhook.json.timestamp,\n      model: 'claude-sonnet-4-20250514',\n      version: '1.0'\n    }\n  }\n};"
+      },
+      "notes": "PARSE: Structure le pack final"
+    },
+    {
+      "id": "delivery_router",
+      "type": "n8n-nodes-base.switch",
+      "position": [1900, 375],
+      "parameters": {
+        "dataType": "string",
+        "value1": "={{$node.trigger_webhook.json.delivery_method}}",
+        "rules": {
+          "rules": [
+            { "value2": "email" },
+            { "value2": "slack" },
+            { "value2": "both" }
+          ]
+        }
+      },
+      "notes": "ROUTER: Email ou Slack ou les deux?"
+    },
+    {
+      "id": "send_email",
+      "type": "n8n-nodes-base.emailSend",
+      "position": [2100, 275],
+      "parameters": {
+        "fromEmail": "reels@iafactory.ch",
+        "toEmail": "={{$node.trigger_webhook.json.client_email}}",
+        "subject": "=Vos 3 Scripts Reels - Pack #{{$json.pack_id}}",
+        "emailFormat": "html",
+        "html": "=<h1>Pack Reels Genere</h1>\n<p>Voici vos 3 scripts de Reels a fort potentiel viral.</p>\n<hr>\n<pre>{{JSON.stringify($json.reels_scripts, null, 2)}}</pre>\n<hr>\n<p><small>Genere par IAF Media Intelligence | {{$json.created_at}}</small></p>"
+      },
+      "notes": "EMAIL: Envoi du pack par email"
+    },
+    {
+      "id": "send_slack",
+      "type": "n8n-nodes-base.slack",
+      "position": [2100, 475],
+      "parameters": {
+        "resource": "message",
+        "channel": "={{$node.trigger_webhook.json.slack_channel || '#content-reels'}}",
+        "text": "=:movie_camera: *Nouveau Pack Reels Genere*\n\n*Pack ID:* `{{$json.pack_id}}`\n*Scripts:* 3 Reels prets a produire\n\n```{{JSON.stringify($json.reels_scripts, null, 2).slice(0, 2000)}}```",
+        "otherOptions": {
+          "includeLinkToWorkflow": true
+        }
+      },
+      "notes": "SLACK: Notification + pack sur Slack"
+    },
+    {
+      "id": "response_success",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "position": [2300, 375],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"status\": \"success\",\n  \"pack_id\": \"{{$json.pack_id}}\",\n  \"message\": \"Pack de 3 Reels genere et envoye\",\n  \"delivery\": \"{{$node.trigger_webhook.json.delivery_method}}\"\n}"
+      },
+      "notes": "RESPONSE: Confirme au client"
+    }
+  ],
+  "connections": {
+    "trigger_webhook": { "main": [[{ "node": "detect_input_type", "type": "main", "index": 0 }]] },
+    "detect_input_type": {
+      "main": [
+        [{ "node": "youtube_download", "type": "main", "index": 0 }],
+        [{ "node": "file_to_binary", "type": "main", "index": 0 }]
+      ]
+    },
+    "youtube_download": { "main": [[{ "node": "merge_audio", "type": "main", "index": 0 }]] },
+    "file_to_binary": { "main": [[{ "node": "merge_audio", "type": "main", "index": 1 }]] },
+    "merge_audio": { "main": [[{ "node": "whisper_transcription", "type": "main", "index": 0 }]] },
+    "whisper_transcription": {
+      "main": [[
+        { "node": "archon_strategic_analysis", "type": "main", "index": 0 },
+        { "node": "bmad_context_fetch", "type": "main", "index": 0 }
+      ]]
+    },
+    "archon_strategic_analysis": { "main": [[{ "node": "merge_analysis", "type": "main", "index": 0 }]] },
+    "bmad_context_fetch": { "main": [[{ "node": "merge_analysis", "type": "main", "index": 1 }]] },
+    "merge_analysis": { "main": [[{ "node": "claude_reels_generator", "type": "main", "index": 0 }]] },
+    "claude_reels_generator": { "main": [[{ "node": "parse_reels_output", "type": "main", "index": 0 }]] },
+    "parse_reels_output": { "main": [[{ "node": "delivery_router", "type": "main", "index": 0 }]] },
+    "delivery_router": {
+      "main": [
+        [{ "node": "send_email", "type": "main", "index": 0 }],
+        [{ "node": "send_slack", "type": "main", "index": 0 }],
+        [
+          { "node": "send_email", "type": "main", "index": 0 },
+          { "node": "send_slack", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "send_email": { "main": [[{ "node": "response_success", "type": "main", "index": 0 }]] },
+    "send_slack": { "main": [[{ "node": "response_success", "type": "main", "index": 0 }]] }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataSuccessExecution": "all",
+    "saveDataErrorExecution": "all"
+  },
+  "meta": {
+    "version": "1.0",
+    "author": "IAFactory",
+    "description": "Pipeline Media-to-Reels: Upload/YouTube -> Whisper -> Archon/RAG -> Claude -> 3 Scripts Viraux"
+  }
+}

@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intégration Goose - IAFactory Algeria</title>
+    <link rel="stylesheet" href="../../assets/css/docs-theme.css">
+</head>
+<body>
+    <header class="docs-header">
+        <div class="docs-logo">
+            <img src="../../assets/images/logo.png" alt="IAFactory Algeria">
+            <span>IAFactory Algeria</span>
+        </div>
+        <nav class="main-nav">
+            <a href="../index.html">Documentation</a>
+            <a href="https://app.iafactory-algeria.com">App</a>
+            <a href="../api/index.html">API</a>
+        </nav>
+        <div class="docs-controls">
+            <div class="language-switcher">
+                <button data-lang="fr" class="active">🇫🇷 FR</button>
+                <button data-lang="en">🇬🇧 EN</button>
+                <button data-lang="ar">🇸🇦 AR</button>
+            </div>
+            <div class="theme-toggle">
+                <div class="theme-toggle-slider">☀️</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <!-- Sidebar -->
+        </aside>
+
+        <main class="docs-main">
+            <h1>Intégration Goose</h1>
+            
+            <p class="lead">Utilisez Goose AI avec les modèles d'IAFactory Algeria pour un assistant développement terminal puissant.</p>
+
+            <h2 id="introduction">🦢 Qu'est-ce que Goose ?</h2>
+
+            <p>Goose est un assistant développement en ligne de commande qui peut lire votre codebase, exécuter des commandes et vous assister dans vos tâches de développement. Connectez-le à IAFactory Algeria pour utiliser nos modèles.</p>
+
+            <div class="alert alert-info">
+                <strong>💡 Capacités :</strong>
+                <ul>
+                    <li>Assistant développement conversationnel</li>
+                    <li>Lecture et modification de fichiers</li>
+                    <li>Exécution de commandes shell</li>
+                    <li>Génération et refactoring de code</li>
+                    <li>Debugging assisté</li>
+                    <li>Git automation</li>
+                </ul>
+            </div>
+
+            <h2 id="installation">📦 Installation</h2>
+
+            <h3 id="via-pip">Via pip</h3>
+
+            <pre><code class="language-bash">pip install goose-ai
+
+# Vérifier l'installation
+goose --version</code></pre>
+
+            <h3 id="via-homebrew">Via Homebrew (macOS)</h3>
+
+            <pre><code class="language-bash">brew install goose-ai</code></pre>
+
+            <h2 id="configuration">⚙️ Configuration IAFactory</h2>
+
+            <h3 id="config-file">Fichier de Configuration</h3>
+
+            <p>Créez <code>~/.goose/config.yaml</code> :</p>
+
+            <pre><code class="language-yaml">providers:
+  iafactory:
+    type: openai
+    base_url: https://api.iafactory-algeria.com/v1
+    api_key: ${IAFACTORY_API_KEY}
+    models:
+      - gpt-4.1
+      - gpt-4.1-mini
+      - claude-3.7-sonnet
+
+default_provider: iafactory
+default_model: gpt-4.1
+
+settings:
+  temperature: 0.7
+  max_tokens: 4000
+  stream: true</code></pre>
+
+            <h3 id="environment">Variables d'Environnement</h3>
+
+            <pre><code class="language-bash"># Dans ~/.bashrc ou ~/.zshrc
+export IAFACTORY_API_KEY="votre_cle_api"
+
+# Ou pour une session
+export IAFACTORY_API_KEY="votre_cle_api"
+goose</code></pre>
+
+            <h2 id="utilisation">🚀 Utilisation</h2>
+
+            <h3 id="demarrage">Démarrage</h3>
+
+            <pre><code class="language-bash"># Lancer Goose dans le dossier courant
+goose
+
+# Avec un modèle spécifique
+goose --model gpt-4.1
+
+# Avec un prompt initial
+goose --prompt "Analyse ce projet et suggère des améliorations"</code></pre>
+
+            <h3 id="commandes">Commandes Goose</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Commande</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>/files</code></td><td>Lister les fichiers du projet</td></tr>
+                    <tr><td><code>/read &lt;file&gt;</code></td><td>Lire un fichier</td></tr>
+                    <tr><td><code>/edit &lt;file&gt;</code></td><td>Modifier un fichier</td></tr>
+                    <tr><td><code>/run &lt;cmd&gt;</code></td><td>Exécuter une commande</td></tr>
+                    <tr><td><code>/git</code></td><td>Opérations Git</td></tr>
+                    <tr><td><code>/reset</code></td><td>Reset conversation</td></tr>
+                    <tr><td><code>/exit</code></td><td>Quitter</td></tr>
+                </tbody>
+            </table>
+
+            <h2 id="scenarios">🎯 Scénarios d'Utilisation</h2>
+
+            <h3 id="scenario-1">1. Code Review Automatique</h3>
+
+            <pre><code class="language-bash">$ goose
+
+You: Review tous les fichiers modifiés depuis hier
+
+Goose: Je vais analyser les changements récents...
+
+[Goose lit automatiquement les fichiers]
+[Génère un rapport de code review]
+
+✓ src/api/users.js
+  - Excellente gestion d'erreurs
+  - ⚠️ Manque tests unitaires
+  - Suggestion: Ajouter validation input
+
+✓ src/components/Dashboard.jsx  
+  - ✅ Code propre et lisible
+  - Performance: OK
+  - Suggestion: Mémoïser les calculs lourds
+
+Voulez-vous que je génère les tests manquants ?</code></pre>
+
+            <h3 id="scenario-2">2. Debugging Interactif</h3>
+
+            <pre><code class="language-bash">You: Mon test users.test.js échoue, aide-moi
+
+Goose: Je lis le fichier de test...
+
+[Goose lit users.test.js et users.js]
+
+J'ai trouvé le problème:
+- Ligne 45: expect(user.age).toBe(25) 
+- Mais l'API retourne une string "25" pas un number
+
+Solutions:
+1. Convertir en number dans l'API
+2. Ajuster le test pour string
+
+Quelle approche préférez-vous ?
+
+You: Option 1
+
+Goose: J'ai modifié src/api/users.js:
+- Ajouté parseInt(data.age, 10)
+- Lancé les tests: ✅ PASS
+
+Voulez-vous commit ces changements ?</code></pre>
+
+            <h3 id="scenario-3">3. Feature Complète</h3>
+
+            <pre><code class="language-bash">You: Crée une API REST pour gérer des articles de blog
+
+Goose: Je vais créer:
+1. Modèle Article (Mongoose)
+2. Routes CRUD
+3. Controllers
+4. Validation middleware
+5. Tests
+
+D'accord ?
+
+You: Oui
+
+Goose:
+✓ Créé models/Article.js
+✓ Créé routes/articles.js  
+✓ Créé controllers/articles.js
+✓ Créé middleware/validation.js
+✓ Créé tests/articles.test.js
+✓ Mis à jour app.js
+
+Tests: ✅ 12/12 passent
+
+Fichiers prêts à commit. Voulez-vous que je crée la PR ?</code></pre>
+
+            <h2 id="workflows">🔄 Workflows Avancés</h2>
+
+            <h3 id="auto-pr">Auto Pull Request</h3>
+
+            <pre><code class="language-bash">You: Refactorise le code legacy dans /old-api
+
+Goose: [Analyse et refactoring]
+
+✓ Refactoré 15 fichiers
+✓ Tests: 98% coverage
+✓ Performance: +40%
+
+Créer une PR ?
+
+You: Oui
+
+Goose:
+✓ Branch créée: refactor/old-api-modernization
+✓ Commits: 3 commits avec messages descriptifs
+✓ PR créée: #142
+✓ CI/CD: ✅ All checks passed
+
+PR: https://github.com/yourrepo/pull/142</code></pre>
+
+            <h3 id="migration">Migration Assistée</h3>
+
+            <pre><code class="language-bash">You: Migre ce projet de JavaScript vers TypeScript
+
+Goose: Plan de migration:
+1. Setup TypeScript config
+2. Installer @types
+3. Convertir fichiers un par un
+4. Fixer erreurs de types
+5. Tests
+
+Commencer ?
+
+You: Go
+
+Goose:
+[1/5] ✓ tsconfig.json créé
+[2/5] ✓ @types installés (35 packages)
+[3/5] ⏳ Conversion en cours...
+  ✓ src/index.js → index.ts
+  ✓ src/api/*.js → api/*.ts (12 fichiers)
+  ✓ src/utils/*.js → utils/*.ts (8 fichiers)
+[4/5] ⏳ Résolution erreurs types...
+  ✓ 47 erreurs résolues
+  ⚠️ 3 erreurs manuelles requises
+[5/5] ✓ Tests: 145/145 passent
+
+Migration 94% complète. Voulez-vous que je vous guide pour les 3 erreurs restantes ?</code></pre>
+
+            <h2 id="customization">🎨 Personnalisation</h2>
+
+            <h3 id="goosefile">Goosefile (Project Config)</h3>
+
+            <p>Créez <code>.goosefile.yaml</code> à la racine du projet :</p>
+
+            <pre><code class="language-yaml">name: MonProjet
+description: API REST Node.js
+
+context:
+  - README.md
+  - docs/architecture.md
+  - package.json
+
+rules:
+  - "Toujours écrire des tests"
+  - "Suivre convention ESLint"
+  - "Documenter les fonctions publiques"
+  - "Commits en français"
+
+commands:
+  test: npm test
+  lint: npm run lint
+  build: npm run build
+
+ai_model: gpt-4.1
+temperature: 0.3</code></pre>
+
+            <h3 id="prompts-personnalises">Prompts Personnalisés</h3>
+
+            <p>Créez <code>~/.goose/prompts/</code> :</p>
+
+            <pre><code class="language-yaml"># prompts/code-review.yaml
+name: code-review-expert
+description: Expert code reviewer
+
+system_prompt: |
+  Tu es un senior developer expert en code review.
+  
+  Pour chaque fichier:
+  1. Qualité du code (1-10)
+  2. Points forts (3)
+  3. Points d'amélioration (priorités)
+  4. Suggestions concrètes
+  5. Security issues
+  
+  Format: Markdown avec émojis
+
+temperature: 0.2</code></pre>
+
+            <p>Utilisation :</p>
+
+            <pre><code class="language-bash">goose --prompt code-review-expert</code></pre>
+
+            <h2 id="bonnes-pratiques">✨ Bonnes Pratiques</h2>
+
+            <h3 id="contexte">1. Contexte Projet</h3>
+
+            <ul>
+                <li>Créez un bon <code>.goosefile.yaml</code></li>
+                <li>Maintenez à jour <code>README.md</code> et docs</li>
+                <li>Utilisez <code>.gooseignore</code> pour exclure fichiers</li>
+            </ul>
+
+            <h3 id="collaboration">2. Collaboration</h3>
+
+            <ul>
+                <li>Partagez <code>.goosefile.yaml</code> avec l'équipe</li>
+                <li>Documentez les prompts personnalisés</li>
+                <li>Reviewez toujours le code généré</li>
+            </ul>
+
+            <h3 id="securite">3. Sécurité</h3>
+
+            <ul>
+                <li>Ne commitez jamais <code>config.yaml</code> avec clés API</li>
+                <li>Utilisez variables d'environnement</li>
+                <li>Ajoutez fichiers sensibles à <code>.gooseignore</code></li>
+            </ul>
+
+            <h2 id="ressources">📚 Ressources</h2>
+
+            <ul>
+                <li>📖 <a href="https://goose.ai/docs">Documentation Goose</a></li>
+                <li>🎥 <a href="../api/quick-start.html">API Quick Start IAFactory</a></li>
+                <li>💬 <a href="https://discord.gg/iafactory">Communauté Discord</a></li>
+                <li>🦢 <a href="https://github.com/block/goose">Goose GitHub</a></li>
+            </ul>
+
+            <div class="alert alert-success">
+                <strong>🦢 Prêt à coder avec Goose ?</strong>
+                <p>Récupérez votre clé API : <a href="https://app.iafactory-algeria.com/api-keys">app.iafactory-algeria.com</a></p>
+            </div>
+        </main>
+
+        <aside class="docs-toc">
+            <h3 class="docs-toc-title">Sur cette page</h3>
+            <ul></ul>
+        </aside>
+    </div>
+
+    <script src="../../assets/js/docs-theme.js"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+fastapi==0.111.0
+uvicorn[standard]==0.30.0
+pydantic==2.7.3
+pydantic-settings==2.3.4
+python-multipart==0.0.9
+redis==5.0.7
+rq==1.16.2
+psycopg[binary]==3.2.1
+prometheus_client==0.20.0
+qdrant-client==1.11.1
+meilisearch==0.30.0
+sentence-transformers==2.7.0
+transformers==4.44.2
+torch==2.3.1
+librosa==0.10.1
+soundfile==0.12.1
+python-dateutil==2.9.0
+PyPDF2==3.0.1
+python-docx==1.1.0
+aiofiles==23.2.1
+
+# Cloud LLM providers
+openai==1.35.0
+anthropic==0.28.0
+
+# Twilio SMS & WhatsApp
+twilio==9.0.0
+
+# Nouveaux packages d'Archon
+asyncpg==0.29.0
+aiohttp==3.9.1
+beautifulsoup4==4.12.2
+lxml==5.1.0
+tldextract==5.1.1
+supabase==2.10.0
+
+# Authentication & Security
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-multipart==0.0.9
+
+# Search & Re-ranking
+elasticsearch==8.15.1
+rank-bm25==0.2.2
+
+# Testing
+pytest==8.3.4
+pytest-cov==6.0.0
+pytest-asyncio==0.24.0
+httpx==0.27.2
+
+# Database migrations
+alembic~=1.13.0

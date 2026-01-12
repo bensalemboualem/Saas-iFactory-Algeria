@@ -1,0 +1,1010 @@
+PS D:\iafactory>
+PS D:\iafactory> # Afficher le résultat
+PS D:\iafactory> Get-Content "D:\IAFactory\keys-audit.txt"
+
+iafactory-academy\backend\.env:5:SECRET_KEY=your-super-secret-key-change-in-production-min-32-chars
+iafactory-academy\backend\.env:31:JWT_SECRET_KEY=your-jwt-secret-key-change-in-production-min-32-chars
+iafactory-academy\backend\.env:45:# Stripe Payment
+iafactory-academy\backend\.env:46:STRIPE_SECRET_KEY=sk_test_your_stripe_secret_key
+iafactory-academy\backend\.env:47:STRIPE_PUBLISHABLE_KEY=pk_test_your_stripe_publishable_key
+iafactory-academy\backend\.env:48:STRIPE_WEBHOOK_SECRET=whsec_your_webhook_secret
+iafactory-academy\backend\.env:49:STRIPE_CURRENCY=chf
+iafactory-academy\backend\.env:50:STRIPE_SUCCESS_URL=http://localhost:3000/payment/success
+iafactory-academy\backend\.env:51:STRIPE_CANCEL_URL=http://localhost:3000/payment/cancel
+iafactory-academy\backend\.env:54:SENDGRID_API_KEY=SG.your_sendgrid_api_key
+iafactory-academy\backend\.env:64:AWS_SECRET_ACCESS_KEY=your_aws_secret_key
+iafactory-academy\backend\.env.example:5:SECRET_KEY=your-super-secret-key-change-in-production-min-32-c
+hars
+iafactory-academy\backend\.env.example:31:JWT_SECRET_KEY=your-jwt-secret-key-change-in-production-min-3
+2-chars
+iafactory-academy\backend\.env.example:45:# Stripe Payment
+iafactory-academy\backend\.env.example:46:STRIPE_SECRET_KEY=sk_test_your_stripe_secret_key
+iafactory-academy\backend\.env.example:47:STRIPE_PUBLISHABLE_KEY=pk_test_your_stripe_publishable_key
+iafactory-academy\backend\.env.example:48:STRIPE_WEBHOOK_SECRET=whsec_your_webhook_secret
+iafactory-academy\backend\.env.example:49:STRIPE_CURRENCY=chf
+iafactory-academy\backend\.env.example:50:STRIPE_SUCCESS_URL=http://localhost:3000/payment/success
+iafactory-academy\backend\.env.example:51:STRIPE_CANCEL_URL=http://localhost:3000/payment/cancel
+iafactory-academy\backend\.env.example:54:SENDGRID_API_KEY=SG.your_sendgrid_api_key
+iafactory-academy\backend\.env.example:64:AWS_SECRET_ACCESS_KEY=your_aws_secret_key
+iafactory-academy\demo\anythingllm\.env:4:GROQ_API_KEY=gsk_mw3p2HWSQaJPUh4z25DlWGdyb3FYZhFygkn4uqAV2xl8
+rO8f5dr7
+iafactory-academy\demo\anythingllm\.env:5:OPENAI_API_KEY=sk-proj-ysvcisY37XVws6sIMnjCFnUKh-NcryoH3dh0RP
+4AdqaefEUx3j1TgdlvwalzfqkKugJZz89ouXT3BlbkFJxaNl3lIcKhpRr2H3SrZpfzvefhNSbcqoCTkjIX-GtwHRiRT7fp5TP2yxYWt
+LZgV9l4uRh0Z-YA
+iafactory-academy\demo\anythingllm\.env:6:ANTHROPIC_API_KEY=sk-ant-api03-KXmMM4l1RKlMUxyjAxC44lNLDN7e8m
+Rwr4RYgVhKbHmQmbxhv2OlOjB9glnH7dOdtLEvQ7tIEcHKm4-3hQFAEw-W-p1DgAA
+iafactory-academy\demo\anythingllm\.env:7:TOGETHER_API_KEY=99ac6265846d3cb6a8f83e038605d01a4d1c6b8b80e4
+a64d3486460a89b85df3
+iafactory-academy\demo\anythingllm\.env:8:OPEN_ROUTER_API_KEY=sk-or-v1-b096b9798cd36d238b56f7d5476dbedb
+2dde0e8834f3f040f029c226b64e798b
+iafactory-academy\demo\iafactory-chat\docker-compose\local\grafana\.env.example:7:#
+OPENAI_API_KEY=sk-xxxx
+iafactory-academy\demo\iafactory-chat\docker-compose\local\grafana\.env.example:8:#
+OPENAI_PROXY_URL=https://api.openai.com/v1
+iafactory-academy\demo\iafactory-chat\docker-compose\local\grafana\.env.example:9:#
+OPENAI_MODEL_LIST=...
+iafactory-academy\demo\iafactory-chat\docker-compose\local\grafana\.env.zh-CN.example:7:#
+OPENAI_API_KEY=sk-xxxx
+iafactory-academy\demo\iafactory-chat\docker-compose\local\grafana\.env.zh-CN.example:8:#
+OPENAI_PROXY_URL=https://api.openai.com/v1
+iafactory-academy\demo\iafactory-chat\docker-compose\local\grafana\.env.zh-CN.example:9:#
+OPENAI_MODEL_LIST=...
+iafactory-academy\demo\iafactory-chat\docker-compose\local\logto\.env.example:21:#
+OPENAI_API_KEY=sk-xxxx
+iafactory-academy\demo\iafactory-chat\docker-compose\local\logto\.env.example:22:#
+OPENAI_PROXY_URL=https://api.openai.com/v1
+iafactory-academy\demo\iafactory-chat\docker-compose\local\logto\.env.example:23:#
+OPENAI_MODEL_LIST=...
+iafactory-academy\demo\iafactory-chat\docker-compose\local\logto\.env.zh-CN.example:21:#
+OPENAI_API_KEY=sk-xxxx
+iafactory-academy\demo\iafactory-chat\docker-compose\local\logto\.env.zh-CN.example:22:#
+OPENAI_PROXY_URL=https://api.openai.com/v1
+iafactory-academy\demo\iafactory-chat\docker-compose\local\logto\.env.zh-CN.example:23:#
+OPENAI_MODEL_LIST=...
+iafactory-academy\demo\iafactory-chat\docker-compose\local\zitadel\.env.example:31:#
+OPENAI_API_KEY=sk-xxxx
+iafactory-academy\demo\iafactory-chat\docker-compose\local\zitadel\.env.example:32:#
+OPENAI_PROXY_URL=https://api.openai.com/v1
+iafactory-academy\demo\iafactory-chat\docker-compose\local\zitadel\.env.example:33:#
+OPENAI_MODEL_LIST=...
+iafactory-academy\demo\iafactory-chat\docker-compose\local\zitadel\.env.zh-CN.example:30:#
+OPENAI_API_KEY=sk-xxxx
+iafactory-academy\demo\iafactory-chat\docker-compose\local\zitadel\.env.zh-CN.example:31:#
+OPENAI_PROXY_URL=https://api.openai.com/v1
+iafactory-academy\demo\iafactory-chat\docker-compose\local\zitadel\.env.zh-CN.example:32:#
+OPENAI_MODEL_LIST=...
+iafactory-academy\demo\iafactory-chat\docker-compose\local\.env.example:7:# OPENAI_API_KEY=sk-xxxx
+iafactory-academy\demo\iafactory-chat\docker-compose\local\.env.example:8:#
+OPENAI_PROXY_URL=https://api.openai.com/v1
+iafactory-academy\demo\iafactory-chat\docker-compose\local\.env.example:9:# OPENAI_MODEL_LIST=...
+iafactory-academy\demo\iafactory-chat\docker-compose\local\.env.zh-CN.example:7:#
+OPENAI_API_KEY=sk-xxxx
+iafactory-academy\demo\iafactory-chat\docker-compose\local\.env.zh-CN.example:8:#
+OPENAI_PROXY_URL=https://api.openai.com/v1
+iafactory-academy\demo\iafactory-chat\docker-compose\local\.env.zh-CN.example:9:# OPENAI_MODEL_LIST=...
+iafactory-academy\demo\iafactory-chat\docker-compose\production\grafana\.env.example:7:#
+OPENAI_API_KEY=sk-xxxx
+iafactory-academy\demo\iafactory-chat\docker-compose\production\grafana\.env.example:8:#
+OPENAI_PROXY_URL=https://api.openai.com/v1
+iafactory-academy\demo\iafactory-chat\docker-compose\production\grafana\.env.example:9:#
+OPENAI_MODEL_LIST=...
+iafactory-academy\demo\iafactory-chat\docker-compose\production\grafana\.env.zh-CN.example:7:#
+OPENAI_API_KEY=sk-xxxx
+iafactory-academy\demo\iafactory-chat\docker-compose\production\grafana\.env.zh-CN.example:8:#
+OPENAI_PROXY_URL=https://api.openai.com/v1
+iafactory-academy\demo\iafactory-chat\docker-compose\production\grafana\.env.zh-CN.example:9:#
+OPENAI_MODEL_LIST=...
+iafactory-academy\demo\iafactory-chat\docker-compose\production\logto\.env.example:52:# Note: For
+server versions, the API must support embedding models (OpenAI text-embedding-3-small) for file
+processing
+iafactory-academy\demo\iafactory-chat\docker-compose\production\logto\.env.example:53:# You don't need
+to specify this model in OPENAI_MODEL_LIST
+iafactory-academy\demo\iafactory-chat\docker-compose\production\logto\.env.example:54:#
+OPENAI_API_KEY=sk-xxxx
+iafactory-academy\demo\iafactory-chat\docker-compose\production\logto\.env.example:55:#
+OPENAI_PROXY_URL=https://api.openai.com/v1
+iafactory-academy\demo\iafactory-chat\docker-compose\production\logto\.env.example:56:#
+OPENAI_MODEL_LIST=...
+iafactory-academy\demo\iafactory-chat\docker-compose\production\logto\.env.zh-CN.example:52:#
+请注意，对于服务端版本，其 API 必须支持嵌入（即 OpenAI text-embedding-3-small）模型，否则无法对上传文件 进行处理，但你无需在 OPENAI_MODEL_LIST
+中指定此模型
+iafactory-academy\demo\iafactory-chat\docker-compose\production\logto\.env.zh-CN.example:53:#
+OPENAI_API_KEY=sk-xxxx
+iafactory-academy\demo\iafactory-chat\docker-compose\production\logto\.env.zh-CN.example:54:#
+OPENAI_PROXY_URL=https://api.openai.com/v1
+iafactory-academy\demo\iafactory-chat\docker-compose\production\logto\.env.zh-CN.example:55:#
+OPENAI_MODEL_LIST=...
+iafactory-academy\demo\iafactory-chat\docker-compose\production\zitadel\.env.example:49:# Note: For
+server versions, the API must support embedding models (OpenAI text-embedding-3-small) for file
+processing
+iafactory-academy\demo\iafactory-chat\docker-compose\production\zitadel\.env.example:50:# You don't
+need to specify this model in OPENAI_MODEL_LIST
+iafactory-academy\demo\iafactory-chat\docker-compose\production\zitadel\.env.example:51:#
+OPENAI_API_KEY=sk-xxxx
+iafactory-academy\demo\iafactory-chat\docker-compose\production\zitadel\.env.example:52:#
+OPENAI_PROXY_URL=https://api.openai.com/v1
+iafactory-academy\demo\iafactory-chat\docker-compose\production\zitadel\.env.example:53:#
+OPENAI_MODEL_LIST=...
+iafactory-academy\demo\iafactory-chat\docker-compose\production\zitadel\.env.zh-CN.example:45:#
+请注意，对于服务端版本，其 API 必须支持嵌入（即 OpenAI text-embedding-3-small）模型，否则无法对上传文件 进行处理，但你无需在 OPENAI_MODEL_LIST
+中指定此模型
+iafactory-academy\demo\iafactory-chat\docker-compose\production\zitadel\.env.zh-CN.example:46:#
+OPENAI_API_KEY=sk-xxxx
+iafactory-academy\demo\iafactory-chat\docker-compose\production\zitadel\.env.zh-CN.example:47:#
+OPENAI_PROXY_URL=https://api.openai.com/v1
+iafactory-academy\demo\iafactory-chat\docker-compose\production\zitadel\.env.zh-CN.example:48:#
+OPENAI_MODEL_LIST=...
+iafactory-academy\demo\iafactory-chat\.env:30:# OPENAI
+iafactory-academy\demo\iafactory-chat\.env:32:OPENAI_API_KEY=
+iafactory-academy\demo\iafactory-chat\.env:35:# ANTHROPIC (Claude)
+iafactory-academy\demo\iafactory-chat\.env:37:ANTHROPIC_API_KEY=
+iafactory-academy\demo\iafactory-chat\.env:42:GOOGLE_API_KEY=
+iafactory-academy\demo\iafactory-chat\.env:45:# DEEPSEEK
+iafactory-academy\demo\iafactory-chat\.env:47:DEEPSEEK_API_KEY=
+iafactory-academy\demo\iafactory-chat\.env:52:MISTRAL_API_KEY=
+iafactory-academy\demo\iafactory-chat\.env:55:# GROQ
+iafactory-academy\demo\iafactory-chat\.env:57:GROQ_API_KEY=
+iafactory-academy\demo\iafactory-chat\.env:62:OPENROUTER_API_KEY=
+iafactory-academy\demo\iafactory-chat\.env:67:PERPLEXITY_API_KEY=
+iafactory-academy\demo\iafactory-chat\.env:72:QWEN_API_KEY=
+iafactory-academy\demo\iafactory-chat\.env:75:# AZURE OPENAI
+iafactory-academy\demo\iafactory-chat\.env:77:# AZURE_API_KEY=
+iafactory-academy\demo\iafactory-chat\.env.example:5:# API_KEY_SELECT_MODE=random
+iafactory-academy\demo\iafactory-chat\.env.example:51:# ## OpenAI ###
+iafactory-academy\demo\iafactory-chat\.env.example:53:# you openai api key
+iafactory-academy\demo\iafactory-chat\.env.example:54:OPENAI_API_KEY=sk-xxxxxxxxx
+iafactory-academy\demo\iafactory-chat\.env.example:56:# use a proxy to connect to the OpenAI API
+iafactory-academy\demo\iafactory-chat\.env.example:57:# OPENAI_PROXY_URL=https://api.openai.com/v1
+iafactory-academy\demo\iafactory-chat\.env.example:60:# OPENAI_MODEL_LIST=gpt-3.5-turbo
+iafactory-academy\demo\iafactory-chat\.env.example:63:# ## Azure OpenAI ###
+iafactory-academy\demo\iafactory-chat\.env.example:65:# you can learn azure OpenAI Service on
+https://learn.microsoft.com/en-us/azure/ai-services/openai/overview
+iafactory-academy\demo\iafactory-chat\.env.example:66:# use Azure OpenAI Service by uncomment the
+following line
+iafactory-academy\demo\iafactory-chat\.env.example:68:# The API key you applied for on the Azure
+OpenAI account page, which can be found in the "Keys and Endpoints" section.
+iafactory-academy\demo\iafactory-chat\.env.example:69:# AZURE_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+iafactory-academy\demo\iafactory-chat\.env.example:71:# The endpoint you applied for on the Azure
+OpenAI account page, which can be found in the "Keys and Endpoints" section.
+iafactory-academy\demo\iafactory-chat\.env.example:72:#
+AZURE_ENDPOINT=https://docs-test-001.openai.azure.com
+iafactory-academy\demo\iafactory-chat\.env.example:78:# ## Anthropic Service ####
+iafactory-academy\demo\iafactory-chat\.env.example:80:# ANTHROPIC_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+iafactory-academy\demo\iafactory-chat\.env.example:82:# use a proxy to connect to the Anthropic API
+iafactory-academy\demo\iafactory-chat\.env.example:83:# ANTHROPIC_PROXY_URL=https://api.anthropic.com
+iafactory-academy\demo\iafactory-chat\.env.example:88:# GOOGLE_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+iafactory-academy\demo\iafactory-chat\.env.example:110:#
+OPENROUTER_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+iafactory-academy\demo\iafactory-chat\.env.example:116:# MISTRAL_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+iafactory-academy\demo\iafactory-chat\.env.example:120:#
+PERPLEXITY_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+iafactory-academy\demo\iafactory-chat\.env.example:122:# ## Groq Service ####
+iafactory-academy\demo\iafactory-chat\.env.example:124:# GROQ_API_KEY=gsk_xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+iafactory-academy\demo\iafactory-chat\.env.example:128:#
+ZEROONE_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+iafactory-academy\demo\iafactory-chat\.env.example:132:#
+TOGETHERAI_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+iafactory-academy\demo\iafactory-chat\.env.example:136:#
+ZHIPU_API_KEY=xxxxxxxxxxxxxxxxxxx.xxxxxxxxxxxxx
+iafactory-academy\demo\iafactory-chat\.env.example:140:#
+MOONSHOT_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+iafactory-academy\demo\iafactory-chat\.env.example:144:# MINIMAX_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+iafactory-academy\demo\iafactory-chat\.env.example:146:# ## DeepSeek AI  ####
+iafactory-academy\demo\iafactory-chat\.env.example:148:# DEEPSEEK_PROXY_URL=https://api.deepseek.com/v1
+iafactory-academy\demo\iafactory-chat\.env.example:149:# DEEPSEEK_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+iafactory-academy\demo\iafactory-chat\.env.example:154:# QINIU_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+iafactory-academy\demo\iafactory-chat\.env.example:158:#
+QWEN_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+iafactory-academy\demo\iafactory-chat\.env.example:162:#
+CLOUDFLARE_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+iafactory-academy\demo\iafactory-chat\.env.example:167:#
+SILICONCLOUD_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+iafactory-academy\demo\iafactory-chat\.env.example:172:#
+TENCENT_CLOUD_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+iafactory-academy\demo\iafactory-chat\.env.example:176:#
+PPIO_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+iafactory-academy\demo\iafactory-chat\.env.example:180:#
+INFINIAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+iafactory-academy\demo\iafactory-chat\.env.example:185:#
+AI302_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+iafactory-academy\demo\iafactory-chat\.env.example:189:#
+MODELSCOPE_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+iafactory-academy\demo\iafactory-chat\.env.example:193:#
+AIHUBMIX_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+iafactory-academy\demo\iafactory-chat\.env.example:197:#
+BFL_API_KEY=bfl-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+iafactory-academy\demo\iafactory-chat\.env.example:201:#
+FAL_API_KEY=fal-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+iafactory-academy\demo\iafactory-chat\.env.example:212:#
+NEBIUS_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+iafactory-academy\demo\iafactory-chat\.env.example:216:#
+NEWAPI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+iafactory-academy\demo\iafactory-chat\.env.example:221:#
+VERCELAIGATEWAY_API_KEY=your_vercel_ai_gateway_api_key
+iafactory-academy\demo\iafactory-chat\.env.example:240:#
+PLUGIN_SETTINGS=search-engine:SERPAPI_API_KEY=xxxxx
+iafactory-academy\demo\iafactory-chat\.env.example:285:#
+CLERK_SECRET_KEY=sk_live_xxxxxxxxxxxxxxxxxxxxxx
+iafactory-academy\demo\iafactory-chat\.env.example:398:# DEFAULT_FILES_CONFIG="embedding_model=openai/e
+mbedding-text-3-small,reranker_model=cohere/rerank-english-v3.0,query_mode=full_text"
+iafactory-academy\demo\iafactory-chat\.env.example:415:# KLAVIS_API_KEY=your_klavis_api_key_here
+iafactory-academy\demo\iafactory-chat\.env.example.development:121:#
+OPENAI_API_KEY=sk-NEVER_USE_REAL_API_KEYS_IN_CONFIG_FILES
+iafactory-academy\demo\iafactory-chat\.env.example.development:122:#
+OPENAI_PROXY_URL=https://api.openai.com/v1
+iafactory-academy\demo\iafactory-chat\.env.example.development:123:# OPENAI_MODEL_LIST=...
+iafactory-academy\.env:6:SECRET_KEY=T4WkiqZN-cIVBPkBel-XiceU61BZd0edvD3BynUgDnJjzMQ2KwSF0rr-9zoCXDUzDnK
+HX6uZZCjFfsLapmRbog
+iafactory-academy\.env:8:JWT_SECRET_KEY=T4WkiqZN-cIVBPkBel-XiceU61BZd0edvD3BynUgDnJjzMQ2KwSF0rr-9zoCXDU
+zDnKHX6uZZCjFfsLapmRbog
+iafactory-academy\.env:45:QDRANT_API_KEY=
+iafactory-academy\.env:71:# OpenAI
+iafactory-academy\.env:72:OPENAI_API_KEY=sk-proj-ysvcisY37XVws6sIMnjCFnUKh-NcryoH3dh0RP4AdqaefEUx3j1Tgd
+lvwalzfqkKugJZz89ouXT3BlbkFJxaNl3lIcKhpRr2H3SrZpfzvefhNSbcqoCTkjIX-GtwHRiRT7fp5TP2yxYWtLZgV9l4uRh0Z-YA
+iafactory-academy\.env:74:# Anthropic Claude
+iafactory-academy\.env:75:ANTHROPIC_API_KEY=sk-ant-api03-KXmMM4l1RKlMUxyjAxC44lNLDN7e8mRwr4RYgVhKbHmQmb
+xhv2OlOjB9glnH7dOdtLEvQ7tIEcHKm4-3hQFAEw-W-p1DgAA
+iafactory-academy\.env:77:# Groq
+iafactory-academy\.env:78:GROQ_API_KEY=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
+iafactory-academy\.env:81:GEMINI_API_KEY=AIzaSyB-jLhkFVfPtOs1txBjzu0anKk1BXWDsdg
+iafactory-academy\.env:82:GOOGLE_GENERATIVE_AI_API_KEY=AIzaSyB21Sv2aZEJ33TJ02dfLMx-PklP4ZVcG40
+iafactory-academy\.env:83:GOOGLE_TRANSLATE_API_KEY=AIzaSyBUxZut5cKtGfWuex2RWy9oMf2GrbO3b2M
+iafactory-academy\.env:86:MISTRAL_API_KEY=U4TD40GfA96d4txjFQzQSps2PXaxKYHC
+iafactory-academy\.env:88:# DeepSeek
+iafactory-academy\.env:89:DEEPSEEK_API_KEY=sk-e2d7d214600946479856ffafbe1ce392
+iafactory-academy\.env:92:QWEN_API_KEY_ACCESS=LTAI5t6tn47YkxMxeFGybnc3
+iafactory-academy\.env:93:QWEN_API_KEY_SECRET=Rtwn4nTK8f6LoKXvxJ623OUKH1PD8Q
+iafactory-academy\.env:96:COHERE_API_KEY=bAVVqL7U4wv2gmd4gbGBQwpVXDEGZqFm42czSg3a
+iafactory-academy\.env:99:TOGETHER_API_KEY=99ac6265846d3cb6a8f83e038605d01a4d1c6b8b80e4a64d3486460a89b8
+5df3
+iafactory-academy\.env:102:OPEN_ROUTER_API_KEY=sk-or-v1-b096b9798cd36d238b56f7d5476dbedb2dde0e8834f3f04
+0f029c226b64e798b
+iafactory-academy\.env:106:KLING_SECRET_KEY=etANJRQNhFGQmd3ReyrfdbrPAykAnDGh
+iafactory-academy\.env:115:SUPABASE_SECRET_KEY=sb_secret_-I9c89zJv0WcjIi0eWdQMg_uEfkhQoO
+iafactory-academy\.env:130:# 💳 PAYMENT - STRIPE (Dev Keys)
+iafactory-academy\.env:132:STRIPE_SECRET_KEY=sk_test_YOUR_STRIPE_SECRET_KEY
+iafactory-academy\.env:133:STRIPE_PUBLIC_KEY=pk_test_YOUR_STRIPE_PUBLIC_KEY
+iafactory-academy\.env:134:STRIPE_WEBHOOK_SECRET=whsec_YOUR_WEBHOOK_SECRET
+iafactory-academy\.env:143:SENDGRID_API_KEY=SG.YOUR_SENDGRID_API_KEY
+iafactory-academy\.env:149:SMTP_PASSWORD=${SENDGRID_API_KEY}
+iafactory-academy\.env:155:AWS_SECRET_ACCESS_KEY=YOUR_AWS_SECRET_KEY
+iafactory-academy\.env.production.example:6:SECRET_KEY=YOUR_SECRET_KEY
+iafactory-academy\.env.production.example:27:# Stripe (Payment Processing)
+iafactory-academy\.env.production.example:28:STRIPE_SECRET_KEY=sk_live_YOUR_STRIPE_SECRET_KEY
+iafactory-academy\.env.production.example:29:STRIPE_PUBLIC_KEY=pk_live_YOUR_STRIPE_PUBLIC_KEY
+iafactory-academy\.env.production.example:30:STRIPE_WEBHOOK_SECRET=whsec_YOUR_WEBHOOK_SECRET
+iafactory-academy\.env.production.example:33:SENDGRID_API_KEY=SG.YOUR_SENDGRID_API_KEY
+iafactory-academy\.env.production.example:39:AWS_SECRET_ACCESS_KEY=YOUR_AWS_SECRET_KEY
+iafactory-academy\.env.production.example:54:SMTP_PASSWORD=${SENDGRID_API_KEY}
+iafactory-ai-tools\.env:39:# OpenAI (Text, Image, Audio) - PRINCIPAL
+iafactory-ai-tools\.env:40:OPENAI_API_KEY="sk-proj-ysvcisY37XVws6sIMnjCFnUKh-NcryoH3dh0RP4AdqaefEUx3j1T
+gdlvwalzfqkKugJZz89ouXT3BlbkFJxaNl3lIcKhpRr2H3SrZpfzvefhNSbcqoCTkjIX-GtwHRiRT7fp5TP2yxYWtLZgV9l4uRh0Z-Y
+A"
+iafactory-ai-tools\.env:41:OPENAI_ORG_ID=""
+iafactory-ai-tools\.env:43:# Anthropic Claude (Text Generation - Alternative)
+iafactory-ai-tools\.env:44:ANTHROPIC_API_KEY="sk-ant-api03-KXmMM4l1RKlMUxyjAxC44lNLDN7e8mRwr4RYgVhKbHmQ
+mbxhv2OlOjB9glnH7dOdtLEvQ7tIEcHKm4-3hQFAEw-W-p1DgAA"
+iafactory-ai-tools\.env:47:STABILITY_API_KEY=""
+iafactory-ai-tools\.env:53:DEEPL_API_KEY=""
+iafactory-ai-tools\.env:56:GOOGLE_TRANSLATE_API_KEY="AIzaSyBUxZut5cKtGfWuex2RWy9oMf2GrbO3b2M"
+iafactory-ai-tools\.env:155:JWT_SECRET_KEY="iafactory-jwt-secret-change-in-production-2025"
+iafactory-ai-tools\.env:168:# 1. En production, change tous les secrets (JWT_SECRET_KEY,
+DATABASE_PASSWORD, etc.)
+iafactory-ai-tools\.env.example:26:# OpenAI (Text Generation, Image Generation, Speech-to-Text)
+iafactory-ai-tools\.env.example:27:OPENAI_API_KEY="sk-proj-..."
+iafactory-ai-tools\.env.example:28:OPENAI_ORG_ID=""  # Optional
+iafactory-ai-tools\.env.example:30:# Anthropic Claude (Text Generation)
+iafactory-ai-tools\.env.example:31:ANTHROPIC_API_KEY="sk-ant-..."
+iafactory-ai-tools\.env.example:34:STABILITY_API_KEY="sk-..."
+iafactory-ai-tools\.env.example:40:DEEPL_API_KEY=""  # Optional - fallback to OpenAI
+iafactory-ai-tools\.env.example:90:WHISPER_MODEL="whisper-1"  # whisper-1 (OpenAI) or local
+iafactory-ai-tools\.env.example:142:JWT_SECRET_KEY="your-super-secret-jwt-key-change-me"
+iafactory-gateway\.env:3:# OpenAI-Compatible AI Gateway with Multi-Provider Support
+iafactory-gateway\.env:33:# Groq (Ultra-fast inference)
+iafactory-gateway\.env:34:GROQ_API_KEY=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
+iafactory-gateway\.env:37:OPENROUTER_API_KEY=sk-or-v1-b096b9798cd36d238b56f7d5476dbedb2dde0e8834f3f040f
+029c226b64e798b
+iafactory-gateway\.env:39:# DeepSeek (Cost-effective coding)
+iafactory-gateway\.env:40:DEEPSEEK_API_KEY=sk-e2d7d214600946479856ffafbe1ce392
+iafactory-gateway\.env:42:# OpenAI (Optional fallback)
+iafactory-gateway\.env:43:OPENAI_API_KEY=sk-proj-ysvcisY37XVws6sIMnjCFnUKh-NcryoH3dh0RP4AdqaefEUx3j1Tgd
+lvwalzfqkKugJZz89ouXT3BlbkFJxaNl3lIcKhpRr2H3SrZpfzvefhNSbcqoCTkjIX-GtwHRiRT7fp5TP2yxYWtLZgV9l4uRh0Z-YA
+iafactory-gateway\.env:48:GROQ_BASE_URL=https://api.groq.com/openai/v1
+iafactory-gateway\.env:50:DEEPSEEK_BASE_URL=https://api.deepseek.com/v1
+iafactory-gateway\.env:70:PRICING_GROQ_FAST=0.1
+iafactory-gateway\.env:71:PRICING_DEEPSEEK=0.3
+iafactory-gateway\.env.example:17:GROQ_API_KEY="gsk_..."
+iafactory-gateway\.env.example:18:OPENROUTER_API_KEY="sk-or-v1-..."
+iafactory-gateway\.env.example:19:DEEPSEEK_API_KEY="sk-..."
+iafactory-gateway\.env.example:20:OPENAI_API_KEY="sk-..."
+iafactory-gateway\.env.example:23:GROQ_BASE_URL="https://api.groq.com/openai/v1"
+iafactory-gateway\.env.example:25:DEEPSEEK_BASE_URL="https://api.deepseek.com/v1"
+iafactory-gateway\.env.example:39:PRICING_GROQ_FAST=0.1
+iafactory-gateway\.env.example:40:PRICING_DEEPSEEK=0.3
+iafactory-video-platform\backend\.env:12:SECRET_KEY=change-me-in-production-use-secrets-generate
+iafactory-video-platform\backend\.env:28:# S3_SECRET_KEY=your-secret-key
+iafactory-video-platform\backend\.env:33:# OpenAI
+iafactory-video-platform\backend\.env:34:OPENAI_API_KEY=sk-proj-ysvcisY37XVws6sIMnjCFnUKh-NcryoH3dh0RP4
+AdqaefEUx3j1TgdlvwalzfqkKugJZz89ouXT3BlbkFJxaNl3lIcKhpRr2H3SrZpfzvefhNSbcqoCTkjIX-GtwHRiRT7fp5TP2yxYWtL
+ZgV9l4uRh0Z-YA
+iafactory-video-platform\backend\.env:35:OPENAI_MODEL=gpt-4-turbo-preview
+iafactory-video-platform\backend\.env:37:# Anthropic
+iafactory-video-platform\backend\.env:38:ANTHROPIC_API_KEY=sk-ant-api03-KXmMM4l1RKlMUxyjAxC44lNLDN7e8mR
+wr4RYgVhKbHmQmbxhv2OlOjB9glnH7dOdtLEvQ7tIEcHKm4-3hQFAEw-W-p1DgAA
+iafactory-video-platform\backend\.env:39:ANTHROPIC_MODEL=claude-3-opus-20240229
+iafactory-video-platform\backend\.env:41:# Groq (Free tier available)
+iafactory-video-platform\backend\.env:42:GROQ_API_KEY=gsk_mw3p2HWSQaJPUh4z25DlWGdyb3FYZhFygkn4uqAV2xl8r
+O8f5dr7
+iafactory-video-platform\backend\.env:43:GROQ_MODEL=llama-3.3-70b-versatile
+iafactory-video-platform\backend\.env:45:# DeepSeek
+iafactory-video-platform\backend\.env:46:DEEPSEEK_API_KEY=sk-e2d7d214600946479856ffafbe1ce392
+iafactory-video-platform\backend\.env:47:DEEPSEEK_MODEL=deepseek-chat
+iafactory-video-platform\backend\.env:50:GOOGLE_API_KEY=AIzaSyB-jLhkFVfPtOs1txBjzu0anKk1BXWDsdg
+iafactory-video-platform\backend\.env:54:MISTRAL_API_KEY=U4TD40GfA96d4txjFQzQSps2PXaxKYHC
+iafactory-video-platform\backend\.env:58:DEFAULT_LLM_PROVIDER=groq
+iafactory-video-platform\backend\.env:62:STABILITY_API_KEY=sk-IPRlR6nimTAgBaLHd7KKWkGyIowhqu7wQlNLapFun
+TpwrGoF
+iafactory-video-platform\backend\.env:65:LEONARDO_API_KEY=your-leonardo-key
+iafactory-video-platform\backend\.env:71:IDEOGRAM_API_KEY=your-ideogram-key
+iafactory-video-platform\backend\.env:80:RUNWAY_API_KEY=key_8e9b11a187baeff25e6b40b49bc5430af590b6f767b
+e9da99125977abcf4487019f3596a15347bc375c9515c774fa783aed318154faf8e4c3a0df5f3c26fe2ca
+iafactory-video-platform\backend\.env:83:PIKA_API_KEY=9aca55bd-7c0a-4e61-81b2-4efa77f3a04c:3d3f299c0a6e
+57f58a66682a1342620e
+iafactory-video-platform\backend\.env:86:LUMA_API_KEY=luma-ec9feb49-902e-4bd9-9985-3af2683b204f-4210410
+4-4d46-4b92-83e7-d1e3b9c5f8c9
+iafactory-video-platform\backend\.env:90:KLING_SECRET_KEY=etANJRQNhFGQmd3ReyrfdbrPAykAnDGh
+iafactory-video-platform\backend\.env:93:MINIMAX_API_KEY=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJHcm91c
+E5hbWUiOiJCRU5TQUxFTSBCb3VhbGVtIiwiVXNlck5hbWUiOiJpYWZhY3RvcnkiLCJBY2NvdW50IjoiIiwiU3ViamVjdElEIjoiMTkz
+ODE2NjYyMTUxNjMzNzkzMiIsIlBob25lIjoiIiwiR3JvdXBJRCI6IjE5MzgxNjY2MjE1MTIxNDM2MjgiLCJQYWdlTmFtZSI6IiIsIk1
+haWwiOiJiZW5zYWxlbWJvdWFsZW1AZ21haWwuY29tIiwiQ3JlYXRlVGltZSI6IjIwMjUtMTItMTQgMTk6MDM6MDIiLCJUb2tlblR5cG
+UiOjEsImlzcyI6Im1pbmltYXgifQ.rZfbj53I1po-lahia1DRBO1939dxhJtVax1eXZKjqIJx6SMTmWziCR3G6B-nfBFHJU9pAr_3YV
+hki6grukkdO7TNzqsxUdTxdl8SycaOZWroyg9LhzvYR-4BxPekoB_wraM84w0i7h3PPQtQeHX8GstcoEH8I0DCh1cuTa4KKNi2R05mI
+raQaUUOHpp07BGoMwJ72Ba9JFrT6BOTDJM7mMtgc-qm2Dnuk5pdUmUSbtjSQ6YI_YsMmlDgm9d88vvxj7STQ_ptwvItYZ34iFklZZQO
+dXV6hT9RJtIdcX-uAScDZ_jnQuMq3hofNIA5bP2RFX6F6ju_G5ZCZzsGp8sQtw
+iafactory-video-platform\backend\.env:99:HEYGEN_API_KEY=your-heygen-key
+iafactory-video-platform\backend\.env:102:DID_API_KEY=your-did-key
+iafactory-video-platform\backend\.env:105:SYNTHESIA_API_KEY=your-synthesia-key
+iafactory-video-platform\backend\.env:111:ELEVENLABS_API_KEY=sk_e0d8cb72b0e0d2f4e0b86a9f7d3c1a2e5f4b3c6
+d7e8f9a0b1c2d3e4f5a6b7c8d
+iafactory-video-platform\backend\.env:118:SUNO_API_KEY=your-suno-key
+iafactory-video-platform\backend\.env:121:UDIO_API_KEY=your-udio-key
+iafactory-video-platform\backend\.env:141:TWITTER_API_KEY=your-twitter-key
+iafactory-video-platform\backend\.env.example:12:SECRET_KEY=change-me-in-production-use-secrets-generat
+e
+iafactory-video-platform\backend\.env.example:28:# S3_SECRET_KEY=your-secret-key
+iafactory-video-platform\backend\.env.example:33:# OpenAI
+iafactory-video-platform\backend\.env.example:34:OPENAI_API_KEY=sk-your-openai-key
+iafactory-video-platform\backend\.env.example:35:OPENAI_MODEL=gpt-4-turbo-preview
+iafactory-video-platform\backend\.env.example:37:# Anthropic
+iafactory-video-platform\backend\.env.example:38:ANTHROPIC_API_KEY=sk-ant-your-anthropic-key
+iafactory-video-platform\backend\.env.example:39:ANTHROPIC_MODEL=claude-3-opus-20240229
+iafactory-video-platform\backend\.env.example:41:# Groq (Free tier available)
+iafactory-video-platform\backend\.env.example:42:GROQ_API_KEY=gsk_your-groq-key
+iafactory-video-platform\backend\.env.example:43:GROQ_MODEL=llama-3.3-70b-versatile
+iafactory-video-platform\backend\.env.example:45:# DeepSeek
+iafactory-video-platform\backend\.env.example:46:DEEPSEEK_API_KEY=sk-your-deepseek-key
+iafactory-video-platform\backend\.env.example:47:DEEPSEEK_MODEL=deepseek-chat
+iafactory-video-platform\backend\.env.example:50:GOOGLE_API_KEY=your-google-key
+iafactory-video-platform\backend\.env.example:54:MISTRAL_API_KEY=your-mistral-key
+iafactory-video-platform\backend\.env.example:58:DEFAULT_LLM_PROVIDER=groq
+iafactory-video-platform\backend\.env.example:62:STABILITY_API_KEY=sk-your-stability-key
+iafactory-video-platform\backend\.env.example:65:LEONARDO_API_KEY=your-leonardo-key
+iafactory-video-platform\backend\.env.example:71:IDEOGRAM_API_KEY=your-ideogram-key
+iafactory-video-platform\backend\.env.example:80:RUNWAY_API_KEY=your-runway-key
+iafactory-video-platform\backend\.env.example:83:PIKA_API_KEY=your-pika-key
+iafactory-video-platform\backend\.env.example:86:LUMA_API_KEY=your-luma-key
+iafactory-video-platform\backend\.env.example:89:KLING_API_KEY=your-kling-key
+iafactory-video-platform\backend\.env.example:95:HEYGEN_API_KEY=your-heygen-key
+iafactory-video-platform\backend\.env.example:98:DID_API_KEY=your-did-key
+iafactory-video-platform\backend\.env.example:101:SYNTHESIA_API_KEY=your-synthesia-key
+iafactory-video-platform\backend\.env.example:107:ELEVENLABS_API_KEY=your-elevenlabs-key
+iafactory-video-platform\backend\.env.example:114:SUNO_API_KEY=your-suno-key
+iafactory-video-platform\backend\.env.example:117:UDIO_API_KEY=your-udio-key
+iafactory-video-platform\backend\.env.example:137:TWITTER_API_KEY=your-twitter-key
+iafactory-video-platform\.env.example:27:SECRET_KEY=your-super-secret-key-change-in-production
+iafactory-video-platform\.env.example:31:GROQ_API_KEY=gsk_your-groq-key          # Free tier available
+iafactory-video-platform\.env.example:32:OPENAI_API_KEY=sk-your-openai-key
+iafactory-video-platform\.env.example:33:ANTHROPIC_API_KEY=sk-ant-your-key
+iafactory-video-platform\.env.example:34:DEEPSEEK_API_KEY=sk-your-deepseek-key
+iafactory-video-platform\.env.example:35:MISTRAL_API_KEY=your-mistral-key
+iafactory-video-platform\.env.example:36:GOOGLE_API_KEY=your-google-key
+iafactory-video-platform\.env.example:39:# DALL-E uses OPENAI_API_KEY
+iafactory-video-platform\.env.example:40:STABILITY_API_KEY=sk-your-stability-key
+iafactory-video-platform\.env.example:41:LEONARDO_API_KEY=your-leonardo-key
+iafactory-video-platform\.env.example:43:IDEOGRAM_API_KEY=your-ideogram-key
+iafactory-video-platform\.env.example:47:RUNWAY_API_KEY=your-runway-key
+iafactory-video-platform\.env.example:48:PIKA_API_KEY=your-pika-key
+iafactory-video-platform\.env.example:49:LUMA_API_KEY=your-luma-key
+iafactory-video-platform\.env.example:50:KLING_API_KEY=your-kling-key
+iafactory-video-platform\.env.example:53:HEYGEN_API_KEY=your-heygen-key
+iafactory-video-platform\.env.example:54:DID_API_KEY=your-did-key
+iafactory-video-platform\.env.example:55:SYNTHESIA_API_KEY=your-synthesia-key
+iafactory-video-platform\.env.example:58:ELEVENLABS_API_KEY=your-elevenlabs-key
+iafactory-video-platform\.env.example:59:SUNO_API_KEY=your-suno-key
+iafactory-video-platform\.env.example:60:UDIO_API_KEY=your-udio-key
+iafactory-video-platform\.env.example:75:TWITTER_API_KEY=your-twitter-key
+rag-dz\agents\iafactory-operator\.env:6:ANTHROPIC_API_KEY=
+rag-dz\agents\iafactory-operator\.env:7:ANTHROPIC_MODEL=claude-sonnet-4-20250514
+rag-dz\agents\iafactory-operator\.env:8:OPENAI_API_KEY=
+rag-dz\agents\iafactory-operator\.env:16:S3_SECRET_KEY=
+rag-dz\agents\iafactory-operator\.env.example:22:ANTHROPIC_API_KEY=sk-ant-xxx
+rag-dz\agents\iafactory-operator\.env.example:24:# === OpenAI (Whisper) ===
+rag-dz\agents\iafactory-operator\.env.example:25:OPENAI_API_KEY=sk-xxx
+rag-dz\agents\iafactory-operator\.env.example:31:S3_SECRET_KEY=xxx
+rag-dz\agents\video-operator\.env:1:REPLICATE_API_TOKEN=YOUR_REPLICATE_API_KEY
+rag-dz\apps\api-portal\.env.example:8:API_KEY=your_api_key_here
+rag-dz\apps\api-portal\.env.example:14:OPENAI_API_KEY=sk-your_openai_key
+rag-dz\apps\api-portal\.env.example:15:ANTHROPIC_API_KEY=sk-ant-your_anthropic_key
+rag-dz\apps\api-portal\.env.example:16:GROQ_API_KEY=gsk_your_groq_key
+rag-dz\apps\can2025\.env.example:8:API_KEY=your_api_key_here
+rag-dz\apps\can2025\.env.example:14:OPENAI_API_KEY=sk-your_openai_key
+rag-dz\apps\can2025\.env.example:15:ANTHROPIC_API_KEY=sk-ant-your_anthropic_key
+rag-dz\apps\can2025\.env.example:16:GROQ_API_KEY=gsk_your_groq_key
+rag-dz\apps\crm-ia\.env.example:8:API_KEY=your_api_key_here
+rag-dz\apps\crm-ia\.env.example:14:OPENAI_API_KEY=sk-your_openai_key
+rag-dz\apps\crm-ia\.env.example:15:ANTHROPIC_API_KEY=sk-ant-your_anthropic_key
+rag-dz\apps\crm-ia\.env.example:16:GROQ_API_KEY=gsk_your_groq_key
+rag-dz\apps\dzirvideo\.env:5:ALIBABA_DASHSCOPE_API_KEY=sk-89e2dc59244041168928b78ddd7dbb7a
+rag-dz\apps\dzirvideo\.env:6:ALIBABA_DASHSCOPE_API_KEY_2=sk-45896ade8c7b443888dd2681d5b9cfe0
+rag-dz\apps\dzirvideo\.env:7:ALIBABA_DASHSCOPE_API_KEY_3=sk-eAgQBaaqVwsffb9GXJF9Fvl1XFc1nADA0FF2CD8F211
+F09E863ADA8C5A2CE4
+rag-dz\apps\dzirvideo\.env:14:QWEN_API_KEY=sk-89e2dc59244041168928b78ddd7dbb7a
+rag-dz\apps\dzirvideo\.env.example:5:ALIBABA_DASHSCOPE_API_KEY=sk-your-alibaba-key-here
+rag-dz\apps\dzirvideo\.env.example:16:KLING_AI_API_KEY=your-kling-key  # 66 credits/day
+rag-dz\apps\dzirvideo\.env.example:17:PIKA_LABS_API_KEY=your-pika-key  # 250 free credits
+rag-dz\apps\dzirvideo\.env.example:18:LUMA_AI_API_KEY=your-luma-key  # $9.99/mo unlimited
+rag-dz\apps\dzirvideo\.env.example:22:RUNWAY_API_KEY=your-runway-key  # Gen-4 ($0.05/sec)
+rag-dz\apps\dzirvideo\.env.example:23:OPENAI_API_KEY=sk-your-openai-key  # Sora, DALL-E 3
+rag-dz\apps\dzirvideo\.env.example:24:TOGETHER_API_KEY=your-together-key  # FLUX.1
+rag-dz\apps\dzirvideo\.env.example:25:STABILITY_API_KEY=your-stability-key  # Stable Diffusion 3.5
+rag-dz\apps\dzirvideo\.env.example:28:MIDJOURNEY_API_KEY=your-midjourney-key
+rag-dz\apps\dzirvideo\.env.example:29:IDEOGRAM_API_KEY=your-ideogram-key
+rag-dz\apps\dzirvideo\.env.example:30:LEONARDO_API_KEY=your-leonardo-key
+rag-dz\apps\dzirvideo\.env.example:33:PLAYGROUND_API_KEY=your-playground-key
+rag-dz\apps\dzirvideo\.env.example:34:FREEPIK_API_KEY=your-freepik-key
+rag-dz\apps\dzirvideo\.env.example:37:HEYGEN_API_KEY=your-heygen-key
+rag-dz\apps\dzirvideo\.env.example:38:SYNTHESIA_API_KEY=your-synthesia-key
+rag-dz\apps\dzirvideo\.env.example:39:D_ID_API_KEY=your-d-id-key
+rag-dz\apps\dzirvideo\.env.example:40:TAVUS_API_KEY=your-tavus-key
+rag-dz\apps\dzirvideo\.env.example:41:KREADO_API_KEY=your-kreado-key
+rag-dz\apps\dzirvideo\.env.example:44:CANVA_API_KEY=your-canva-key
+rag-dz\apps\dzirvideo\.env.example:45:VEED_IO_API_KEY=your-veed-key
+rag-dz\apps\dzirvideo\.env.example:46:INVIDEO_API_KEY=your-invideo-key
+rag-dz\apps\dzirvideo\.env.example:47:OPUS_CLIP_API_KEY=your-opus-key
+rag-dz\apps\dzirvideo\.env.example:50:VIDU_AI_API_KEY=your-vidu-key  # Tencent
+rag-dz\apps\dzirvideo\.env.example:51:HAILUO_AI_API_KEY=your-hailuo-key  # MiniMax v2
+rag-dz\apps\dzirvideo\.env.example:52:HAILUO_2_3_API_KEY=your-hailuo-2.3-key  # MiniMax v2.3
+(upgraded, 30/day free)
+rag-dz\apps\dzirvideo\.env.example:53:COGVIDEO_API_KEY=your-cogvideo-key  # Zhipu AI
+rag-dz\apps\dzirvideo\.env.example:54:KREA_API_KEY=your-krea-key
+rag-dz\apps\dzirvideo\.env.example:57:NANO_API_KEY=your-nano-key  # Ultra-fast generation (35s avg,
+50/day free)
+rag-dz\apps\dzirvideo\.env.example:58:BANAN_PRO_API_KEY=your-banan-pro-key  # Professional 4K video
+($0.08/sec)
+rag-dz\apps\ia-agents\.env.example:8:API_KEY=your_api_key_here
+rag-dz\apps\ia-agents\.env.example:14:OPENAI_API_KEY=sk-your_openai_key
+rag-dz\apps\ia-agents\.env.example:15:ANTHROPIC_API_KEY=sk-ant-your_anthropic_key
+rag-dz\apps\ia-agents\.env.example:16:GROQ_API_KEY=gsk_your_groq_key
+rag-dz\apps\ia-agents\.env.local.example:4:# Option 1: Anthropic (Claude) - Recommended
+rag-dz\apps\ia-agents\.env.local.example:5:ANTHROPIC_API_KEY=your_anthropic_api_key_here
+rag-dz\apps\ia-agents\.env.local.example:7:# Option 2: OpenAI (GPT)
+rag-dz\apps\ia-agents\.env.local.example:8:# OPENAI_API_KEY=your_openai_api_key_here
+rag-dz\apps\ia-notebook\.env.example:8:API_KEY=your_api_key_here
+rag-dz\apps\ia-notebook\.env.example:14:OPENAI_API_KEY=sk-your_openai_key
+rag-dz\apps\ia-notebook\.env.example:15:ANTHROPIC_API_KEY=sk-ant-your_anthropic_key
+rag-dz\apps\ia-notebook\.env.example:16:GROQ_API_KEY=gsk_your_groq_key
+rag-dz\apps\interview\.env.example:1:# DeepSeek API Key (avec crédits)
+rag-dz\apps\interview\.env.example:2:DEEPSEEK_API_KEY=your_value_here
+rag-dz\apps\interview\.env.example:4:# Anthropic (backup - sans crédits)
+rag-dz\apps\interview\.env.example:5:ANTHROPIC_API_KEY=your_value_here
+rag-dz\apps\news\.env.example:8:API_KEY=your_api_key_here
+rag-dz\apps\news\.env.example:14:OPENAI_API_KEY=sk-your_openai_key
+rag-dz\apps\news\.env.example:15:ANTHROPIC_API_KEY=sk-ant-your_anthropic_key
+rag-dz\apps\news\.env.example:16:GROQ_API_KEY=gsk_your_groq_key
+rag-dz\apps\prompt-creator\.env.example:8:API_KEY=your_api_key_here
+rag-dz\apps\prompt-creator\.env.example:14:OPENAI_API_KEY=sk-your_openai_key
+rag-dz\apps\prompt-creator\.env.example:15:ANTHROPIC_API_KEY=sk-ant-your_anthropic_key
+rag-dz\apps\prompt-creator\.env.example:16:GROQ_API_KEY=gsk_your_groq_key
+rag-dz\apps\seo-dz-boost\.env.example:8:API_KEY=your_api_key_here
+rag-dz\apps\seo-dz-boost\.env.example:14:OPENAI_API_KEY=sk-your_openai_key
+rag-dz\apps\seo-dz-boost\.env.example:15:ANTHROPIC_API_KEY=sk-ant-your_anthropic_key
+rag-dz\apps\seo-dz-boost\.env.example:16:GROQ_API_KEY=gsk_your_groq_key
+rag-dz\apps\sport\.env.example:8:API_KEY=your_api_key_here
+rag-dz\apps\sport\.env.example:14:OPENAI_API_KEY=sk-your_openai_key
+rag-dz\apps\sport\.env.example:15:ANTHROPIC_API_KEY=sk-ant-your_anthropic_key
+rag-dz\apps\sport\.env.example:16:GROQ_API_KEY=gsk_your_groq_key
+rag-dz\apps\video-studio\frontend\.env.local:6:ANTHROPIC_API_KEY=sk-ant-api03-KXmMM4l1RKlMUxyjAxC44lNLD
+N7e8mRwr4RYgVhKbHmQmbxhv2OlOjB9glnH7dOdtLEvQ7tIEcHKm4-3hQFAEw-W-p1DgAA
+rag-dz\apps\video-studio\frontend\.env.local:7:OPENAI_API_KEY=sk-proj-ysvcisY37XVws6sIMnjCFnUKh-NcryoH3
+dh0RP4AdqaefEUx3j1TgdlvwalzfqkKugJZz89ouXT3BlbkFJxaNl3lIcKhpRr2H3SrZpfzvefhNSbcqoCTkjIX-GtwHRiRT7fp5TP2
+yxYWtLZgV9l4uRh0Z-YA
+rag-dz\apps\video-studio\frontend\.env.local:8:GROQ_API_KEY=gsk_mw3p2HWSQaJPUh4z25DlWGdyb3FYZhFygkn4uqA
+V2xl8rO8f5dr7
+rag-dz\apps\video-studio\frontend\.env.local:9:GEMINI_API_KEY=AIzaSyB-jLhkFVfPtOs1txBjzu0anKk1BXWDsdg
+rag-dz\apps\video-studio\frontend\.env.local:10:GOOGLE_GENERATIVE_AI_API_KEY=AIzaSyB21Sv2aZEJ33TJ02dfLM
+x-PklP4ZVcG40
+rag-dz\apps\video-studio\frontend\.env.local:11:MISTRAL_API_KEY=U4TD40GfA96d4txjFQzQSps2PXaxKYHC
+rag-dz\apps\video-studio\frontend\.env.local:12:DEEPSEEK_API_KEY=sk-e2d7d214600946479856ffafbe1ce392
+rag-dz\apps\video-studio\frontend\.env.local:13:COHERE_API_KEY=bAVVqL7U4wv2gmd4gbGBQwpVXDEGZqFm42czSg3a
+rag-dz\apps\video-studio\frontend\.env.local:14:TOGETHER_API_KEY=99ac6265846d3cb6a8f83e038605d01a4d1c6b
+8b80e4a64d3486460a89b85df3
+rag-dz\apps\video-studio\frontend\.env.local:15:OPEN_ROUTER_API_KEY=sk-or-v1-b096b9798cd36d238b56f7d547
+6dbedb2dde0e8834f3f040f029c226b64e798b
+rag-dz\apps\video-studio\frontend\.env.local:20:KLING_SECRET_KEY=etANJRQNhFGQmd3ReyrfdbrPAykAnDGh
+rag-dz\apps\video-studio\frontend\.env.local:23:LUMA_API_KEY_SUISSE=luma-ea5617eb-1a5d-4c05-af8e-91aafa
+4a000c-df1a8424-3446-41ec-88f1-f85714981375
+rag-dz\apps\video-studio\frontend\.env.local:26:LUMA_API_KEY=luma-ec9feb49-902e-4bd9-9985-3af2683b204f-
+42104104-4d46-4b92-83e7-d1e3b9c5f8c9
+rag-dz\apps\video-studio\frontend\.env.local:29:RUNWAY_API_KEY=key_8e9b11a187baeff25e6b40b49bc5430af590
+b6f767be9da99125977abcf4487019f3596a15347bc375c9515c774fa783aed318154faf8e4c3a0df5f3c26fe2ca
+rag-dz\apps\video-studio\frontend\.env.local:32:MINIMAX_API_KEY=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.ey
+JHcm91cE5hbWUiOiJCRU5TQUxFTSBCb3VhbGVtIiwiVXNlck5hbWUiOiJpYWZhY3RvcnkiLCJBY2NvdW50IjoiIiwiU3ViamVjdElEI
+joiMTkzODE2NjYyMTUxNjMzNzkzMiIsIlBob25lIjoiIiwiR3JvdXBJRCI6IjE5MzgxNjY2MjE1MTIxNDM2MjgiLCJQYWdlTmFtZSI6
+IiIsIk1haWwiOiJiZW5zYWxlbWJvdWFsZW1AZ21haWwuY29tIiwiQ3JlYXRlVGltZSI6IjIwMjUtMTItMTQgMTk6MDM6MDIiLCJUb2t
+lblR5cGUiOjEsImlzcyI6Im1pbmltYXgifQ.rZfbj53I1po-lahia1DRBO1939dxhJtVax1eXZKjqIJx6SMTmWziCR3G6B-nfBFHJU9
+pAr_3YVhki6grukkdO7TNzqsxUdTxdl8SycaOZWroyg9LhzvYR-4BxPekoB_wraM84w0i7h3PPQtQeHX8GstcoEH8I0DCh1cuTa4KKN
+i2R05mIraQaUUOHpp07BGoMwJ72Ba9JFrT6BOTDJM7mMtgc-qm2Dnuk5pdUmUSbtjSQ6YI_YsMmlDgm9d88vvxj7STQ_ptwvItYZ34i
+FklZZQOdXV6hT9RJtIdcX-uAScDZ_jnQuMq3hofNIA5bP2RFX6F6ju_G5ZCZzsGp8sQtw
+rag-dz\apps\video-studio\frontend\.env.local:35:PIKA_API_KEY=9aca55bd-7c0a-4e61-81b2-4efa77f3a04c:3d3f2
+99c0a6e57f58a66682a1342620e
+rag-dz\apps\video-studio\frontend\.env.local:41:STABILITY_API_KEY=sk-IPRlR6nimTAgBaLHd7KKWkGyIowhqu7wQl
+NLapFunTpwrGoF
+rag-dz\apps\video-studio\frontend\.env.local:42:STABILITY_API_KEY_ALT=sk-XTqekFfTaGEt6sfDiBgqNfvnxTorWd
+pk4VNu6WZHMaaQQEME
+rag-dz\apps\video-studio\frontend\.env.local:48:QWEN_API_KEY=sk-eAgQBaaqVwsffb9GXJF9Fvl1XFc1nADA0FF2CD8
+F211F09E863ADA8C5A2CE4
+rag-dz\apps\video-studio\frontend\.env.local:54:GOOGLE_TRANSLATE_API_KEY=AIzaSyB-jLhkFVfPtOs1txBjzu0anK
+k1BXWDsdg
+rag-dz\apps\video-studio\frontend\.env.local:57:# ELEVENLABS_API_KEY=your_elevenlabs_key_here
+rag-dz\apps\video-studio\frontend\.env.local:63:# R2_SECRET_ACCESS_KEY=your_secret_key
+rag-dz\apps\video-studio\frontend\.env.local:68:# Stripe (à configurer)
+rag-dz\apps\video-studio\frontend\.env.local:69:# STRIPE_SECRET_KEY=sk_test_...
+rag-dz\apps\video-studio\frontend\.env.local:70:# STRIPE_WEBHOOK_SECRET=whsec_...
+rag-dz\apps\video-studio\infrastructure\.env.example:9:SECRET_KEY=your-super-secret-key-change-this-in-
+production
+rag-dz\apps\video-studio\infrastructure\.env.example:16:MINIO_SECRET_KEY=your-minio-secret-key
+rag-dz\apps\video-studio\infrastructure\.env.example:20:# Anthropic (Claude) - REQUIS
+rag-dz\apps\video-studio\infrastructure\.env.example:21:ANTHROPIC_API_KEY=sk-ant-api03-xxx
+rag-dz\apps\video-studio\infrastructure\.env.example:24:ELEVENLABS_API_KEY=xxx
+rag-dz\apps\video-studio\infrastructure\.env.example:27:MINIMAX_API_KEY=xxx
+rag-dz\apps\video-studio\infrastructure\.env.example:31:FAL_API_KEY=xxx
+rag-dz\apps\video-studio\infrastructure\.env.example:34:SUNO_API_KEY=xxx
+rag-dz\apps\video-studio\infrastructure\.env.example:37:GROK_API_KEY=xxx
+rag-dz\apps\video-studio\infrastructure\.env.example:42:N8N_API_KEY=xxx
+rag-dz\apps\video-studio\.env.example:4:ELEVENLABS_API_KEY=your_elevenlabs_key
+rag-dz\apps\video-studio\.env.example:19:S3_SECRET_KEY=your_s3_secret_key
+rag-dz\apps\video-studio\.env.example:23:# Stripe Payment
+rag-dz\apps\video-studio\.env.example:24:STRIPE_PUBLISHABLE_KEY=pk_live_xxxxx
+rag-dz\apps\video-studio\.env.example:25:STRIPE_SECRET_KEY=sk_live_xxxxx
+rag-dz\apps\video-studio\.env.example:26:STRIPE_WEBHOOK_SECRET=whsec_xxxxx
+rag-dz\apps\video-studio\.env.production:9:ELEVENLABS_API_KEY=sk_VOTRE_CLE_ICI
+rag-dz\apps\video-studio\.env.production:29:S3_SECRET_KEY=VOTRE_SECRET_KEY_R2
+rag-dz\apps\video-studio\.env.production:33:# === Stripe Payment (OBLIGATOIRE pour les paiements) ===
+rag-dz\apps\video-studio\.env.production:34:STRIPE_PUBLISHABLE_KEY=pk_live_VOTRE_CLE_PUBLIQUE
+rag-dz\apps\video-studio\.env.production:35:STRIPE_SECRET_KEY=sk_live_VOTRE_CLE_SECRETE
+rag-dz\apps\video-studio\.env.production:36:STRIPE_WEBHOOK_SECRET=whsec_VOTRE_WEBHOOK_SECRET
+rag-dz\apps\video-studio\.env.ready:7:ANTHROPIC_API_KEY=sk-ant-api03-KXmMM4l1RKlMUxyjAxC44lNLDN7e8mRwr4
+RYgVhKbHmQmbxhv2OlOjB9glnH7dOdtLEvQ7tIEcHKm4-3hQFAEw-W-p1DgAA
+rag-dz\apps\video-studio\.env.ready:8:OPENAI_API_KEY=sk-proj-ysvcisY37XVws6sIMnjCFnUKh-NcryoH3dh0RP4Adq
+aefEUx3j1TgdlvwalzfqkKugJZz89ouXT3BlbkFJxaNl3lIcKhpRr2H3SrZpfzvefhNSbcqoCTkjIX-GtwHRiRT7fp5TP2yxYWtLZgV
+9l4uRh0Z-YA
+rag-dz\apps\video-studio\.env.ready:9:GROQ_API_KEY=gsk_mw3p2HWSQaJPUh4z25DlWGdyb3FYZhFygkn4uqAV2xl8rO8f
+5dr7
+rag-dz\apps\video-studio\.env.ready:10:GEMINI_API_KEY=AIzaSyB-jLhkFVfPtOs1txBjzu0anKk1BXWDsdg
+rag-dz\apps\video-studio\.env.ready:11:GOOGLE_GENERATIVE_AI_API_KEY=AIzaSyB21Sv2aZEJ33TJ02dfLMx-PklP4ZV
+cG40
+rag-dz\apps\video-studio\.env.ready:12:MISTRAL_API_KEY=U4TD40GfA96d4txjFQzQSps2PXaxKYHC
+rag-dz\apps\video-studio\.env.ready:13:DEEPSEEK_API_KEY=sk-e2d7d214600946479856ffafbe1ce392
+rag-dz\apps\video-studio\.env.ready:14:COHERE_API_KEY=bAVVqL7U4wv2gmd4gbGBQwpVXDEGZqFm42czSg3a
+rag-dz\apps\video-studio\.env.ready:15:TOGETHER_API_KEY=99ac6265846d3cb6a8f83e038605d01a4d1c6b8b80e4a64
+d3486460a89b85df3
+rag-dz\apps\video-studio\.env.ready:16:OPEN_ROUTER_API_KEY=sk-or-v1-b096b9798cd36d238b56f7d5476dbedb2dd
+e0e8834f3f040f029c226b64e798b
+rag-dz\apps\video-studio\.env.ready:21:KLING_SECRET_KEY=etANJRQNhFGQmd3ReyrfdbrPAykAnDGh
+rag-dz\apps\video-studio\.env.ready:24:LUMA_API_KEY_SUISSE=luma-ea5617eb-1a5d-4c05-af8e-91aafa4a000c-df
+1a8424-3446-41ec-88f1-f85714981375
+rag-dz\apps\video-studio\.env.ready:27:LUMA_API_KEY=luma-ec9feb49-902e-4bd9-9985-3af2683b204f-42104104-
+4d46-4b92-83e7-d1e3b9c5f8c9
+rag-dz\apps\video-studio\.env.ready:30:RUNWAY_API_KEY=key_8e9b11a187baeff25e6b40b49bc5430af590b6f767be9
+da99125977abcf4487019f3596a15347bc375c9515c774fa783aed318154faf8e4c3a0df5f3c26fe2ca
+rag-dz\apps\video-studio\.env.ready:33:MINIMAX_API_KEY=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJHcm91cE5
+hbWUiOiJCRU5TQUxFTSBCb3VhbGVtIiwiVXNlck5hbWUiOiJpYWZhY3RvcnkiLCJBY2NvdW50IjoiIiwiU3ViamVjdElEIjoiMTkzOD
+E2NjYyMTUxNjMzNzkzMiIsIlBob25lIjoiIiwiR3JvdXBJRCI6IjE5MzgxNjY2MjE1MTIxNDM2MjgiLCJQYWdlTmFtZSI6IiIsIk1ha
+WwiOiJiZW5zYWxlbWJvdWFsZW1AZ21haWwuY29tIiwiQ3JlYXRlVGltZSI6IjIwMjUtMTItMTQgMTk6MDM6MDIiLCJUb2tlblR5cGUi
+OjEsImlzcyI6Im1pbmltYXgifQ.rZfbj53I1po-lahia1DRBO1939dxhJtVax1eXZKjqIJx6SMTmWziCR3G6B-nfBFHJU9pAr_3YVhk
+i6grukkdO7TNzqsxUdTxdl8SycaOZWroyg9LhzvYR-4BxPekoB_wraM84w0i7h3PPQtQeHX8GstcoEH8I0DCh1cuTa4KKNi2R05mIra
+QaUUOHpp07BGoMwJ72Ba9JFrT6BOTDJM7mMtgc-qm2Dnuk5pdUmUSbtjSQ6YI_YsMmlDgm9d88vvxj7STQ_ptwvItYZ34iFklZZQOdX
+V6hT9RJtIdcX-uAScDZ_jnQuMq3hofNIA5bP2RFX6F6ju_G5ZCZzsGp8sQtw
+rag-dz\apps\video-studio\.env.ready:36:PIKA_API_KEY=9aca55bd-7c0a-4e61-81b2-4efa77f3a04c:3d3f299c0a6e57
+f58a66682a1342620e
+rag-dz\apps\video-studio\.env.ready:42:STABILITY_API_KEY=sk-IPRlR6nimTAgBaLHd7KKWkGyIowhqu7wQlNLapFunTp
+wrGoF
+rag-dz\apps\video-studio\.env.ready:43:STABILITY_API_KEY_ALT=sk-XTqekFfTaGEt6sfDiBgqNfvnxTorWdpk4VNu6WZ
+HMaaQQEME
+rag-dz\apps\video-studio\.env.ready:49:QWEN_API_KEY=sk-eAgQBaaqVwsffb9GXJF9Fvl1XFc1nADA0FF2CD8F211F09E8
+63ADA8C5A2CE4
+rag-dz\apps\video-studio\.env.ready:52:GOOGLE_TRANSLATE_API_KEY=AIzaSyBUxZut5cKtGfWuex2RWy9oMf2GrbO3b2M
+rag-dz\apps\video-studio\.env.ready:56:ELEVENLABS_API_KEY=VOTRE_CLE_ELEVENLABS_ICI
+rag-dz\apps\video-studio\.env.ready:77:S3_SECRET_KEY=VOTRE_SECRET_KEY_R2
+rag-dz\apps\video-studio\.env.ready:81:# === Stripe Payment ===
+rag-dz\apps\video-studio\.env.ready:83:STRIPE_PUBLISHABLE_KEY=pk_live_VOTRE_CLE
+rag-dz\apps\video-studio\.env.ready:84:STRIPE_SECRET_KEY=sk_live_VOTRE_CLE
+rag-dz\apps\video-studio\.env.ready:85:STRIPE_WEBHOOK_SECRET=whsec_VOTRE_SECRET
+rag-dz\apps\video-studio\.env.ready:119:# LLM par défaut: Claude (Anthropic)
+rag-dz\apps\video-studio\.env.ready:120:DEFAULT_LLM_PROVIDER=anthropic
+rag-dz\bolt-diy\.env.example:11:# Anthropic Claude
+rag-dz\bolt-diy\.env.example:12:# Get your API key from: https://console.anthropic.com/
+rag-dz\bolt-diy\.env.example:13:ANTHROPIC_API_KEY=your_anthropic_api_key_here
+rag-dz\bolt-diy\.env.example:15:# OpenAI GPT models
+rag-dz\bolt-diy\.env.example:16:# Get your API key from: https://platform.openai.com/api-keys
+rag-dz\bolt-diy\.env.example:17:OPENAI_API_KEY=your_openai_api_key_here
+rag-dz\bolt-diy\.env.example:19:# GitHub Models (OpenAI models hosted by GitHub)
+rag-dz\bolt-diy\.env.example:24:GITHUB_API_KEY=github_pat_your_personal_access_token_here
+rag-dz\bolt-diy\.env.example:28:PERPLEXITY_API_KEY=your_perplexity_api_key_here
+rag-dz\bolt-diy\.env.example:30:# DeepSeek
+rag-dz\bolt-diy\.env.example:31:# Get your API key from: https://platform.deepseek.com/api_keys
+rag-dz\bolt-diy\.env.example:32:DEEPSEEK_API_KEY=your_deepseek_api_key_here
+rag-dz\bolt-diy\.env.example:36:GOOGLE_GENERATIVE_AI_API_KEY=your_google_gemini_api_key_here
+rag-dz\bolt-diy\.env.example:40:COHERE_API_KEY=your_cohere_api_key_here
+rag-dz\bolt-diy\.env.example:42:# Groq (Fast inference)
+rag-dz\bolt-diy\.env.example:43:# Get your API key from: https://console.groq.com/keys
+rag-dz\bolt-diy\.env.example:44:GROQ_API_KEY=your_groq_api_key_here
+rag-dz\bolt-diy\.env.example:48:MISTRAL_API_KEY=your_mistral_api_key_here
+rag-dz\bolt-diy\.env.example:52:TOGETHER_API_KEY=your_together_api_key_here
+rag-dz\bolt-diy\.env.example:56:XAI_API_KEY=your_xai_api_key_here
+rag-dz\bolt-diy\.env.example:60:MOONSHOT_API_KEY=your_moonshot_api_key_here
+rag-dz\bolt-diy\.env.example:64:HuggingFace_API_KEY=your_huggingface_api_key_here
+rag-dz\bolt-diy\.env.example:68:HYPERBOLIC_API_KEY=your_hyperbolic_api_key_here
+rag-dz\bolt-diy\.env.example:72:OPEN_ROUTER_API_KEY=your_openrouter_api_key_here
+rag-dz\bolt-diy\.env.example:83:# OpenAI-like API (Compatible providers)
+rag-dz\bolt-diy\.env.example:84:OPENAI_LIKE_API_BASE_URL=your_openai_like_base_url_here
+rag-dz\bolt-diy\.env.example:85:OPENAI_LIKE_API_KEY=your_openai_like_api_key_here
+rag-dz\bolt-diy\.env.example:230:# IAFactory Gateway URL (OpenAI-compatible endpoint)
+rag-dz\bolt-diy\.env.example:236:IAFACTORY_GATEWAY_API_KEY=
+rag-dz\bolt-diy\.env.local:11:# Anthropic Claude
+rag-dz\bolt-diy\.env.local:12:# Get your API key from: https://console.anthropic.com/
+rag-dz\bolt-diy\.env.local:13:ANTHROPIC_API_KEY=sk-ant-api03-KXmMM4l1RKlMUxyjAxC44lNLDN7e8mRwr4RYgVhKbH
+mQmbxhv2OlOjB9glnH7dOdtLEvQ7tIEcHKm4-3hQFAEw-W-p1DgAA
+rag-dz\bolt-diy\.env.local:15:# OpenAI GPT models
+rag-dz\bolt-diy\.env.local:16:# Get your API key from: https://platform.openai.com/api-keys
+rag-dz\bolt-diy\.env.local:17:OPENAI_API_KEY=sk-proj-ysvcisY37XVws6sIMnjCFnUKh-NcryoH3dh0RP4AdqaefEUx3j
+1TgdlvwalzfqkKugJZz89ouXT3BlbkFJxaNl3lIcKhpRr2H3SrZpfzvefhNSbcqoCTkjIX-GtwHRiRT7fp5TP2yxYWtLZgV9l4uRh0Z
+-YA
+rag-dz\bolt-diy\.env.local:19:# GitHub Models (OpenAI models hosted by GitHub)
+rag-dz\bolt-diy\.env.local:24:GITHUB_API_KEY=
+rag-dz\bolt-diy\.env.local:28:PERPLEXITY_API_KEY=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
+rag-dz\bolt-diy\.env.local:30:# DeepSeek
+rag-dz\bolt-diy\.env.local:31:# Get your API key from: https://platform.deepseek.com/api_keys
+rag-dz\bolt-diy\.env.local:32:DEEPSEEK_API_KEY=sk-e2d7d214600946479856ffafbe1ce392
+rag-dz\bolt-diy\.env.local:36:GOOGLE_GENERATIVE_AI_API_KEY=AIzaSyB21Sv2aZEJ33TJ02dfLMx-PklP4ZVcG40
+rag-dz\bolt-diy\.env.local:40:COHERE_API_KEY=bAVVqL7U4wv2gmd4gbGBQwpVXDEGZqFm42czSg3a
+rag-dz\bolt-diy\.env.local:42:# Groq (Fast inference)
+rag-dz\bolt-diy\.env.local:43:# Get your API key from: https://console.groq.com/keys
+rag-dz\bolt-diy\.env.local:44:GROQ_API_KEY=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
+rag-dz\bolt-diy\.env.local:48:MISTRAL_API_KEY=U4TD40GfA96d4txjFQzQSps2PXaxKYHC
+rag-dz\bolt-diy\.env.local:52:TOGETHER_API_KEY=99ac6265846d3cb6a8f83e038605d01a4d1c6b8b80e4a64d3486460a
+89b85df3
+rag-dz\bolt-diy\.env.local:56:XAI_API_KEY=
+rag-dz\bolt-diy\.env.local:60:MOONSHOT_API_KEY=
+rag-dz\bolt-diy\.env.local:64:HuggingFace_API_KEY=
+rag-dz\bolt-diy\.env.local:68:HYPERBOLIC_API_KEY=
+rag-dz\bolt-diy\.env.local:72:OPEN_ROUTER_API_KEY=sk-or-v1-b096b9798cd36d238b56f7d5476dbedb2dde0e8834f3
+f040f029c226b64e798b
+rag-dz\bolt-diy\.env.local:83:# OpenAI-like API (Compatible providers)
+rag-dz\bolt-diy\.env.local:85:OPENAI_LIKE_API_BASE_URL=http://localhost:3001/v1
+rag-dz\bolt-diy\.env.local:86:OPENAI_LIKE_API_KEY=iaf-testing-key
+rag-dz\bolt-diy\.env.local:230:# IAFactory Gateway URL (OpenAI-compatible endpoint)
+rag-dz\bolt-diy\.env.local:235:IAFACTORY_GATEWAY_API_KEY=
+rag-dz\bolt-diy\.env.production:3:# Get your GROQ API Key here -
+rag-dz\bolt-diy\.env.production:4:# https://console.groq.com/keys
+rag-dz\bolt-diy\.env.production:5:# You only need this environment variable set if you want to use
+Groq models
+rag-dz\bolt-diy\.env.production:6:GROQ_API_KEY=
+rag-dz\bolt-diy\.env.production:11:HuggingFace_API_KEY=
+rag-dz\bolt-diy\.env.production:14:#
+https://help.openai.com/en/articles/4936850-where-do-i-find-my-openai-api-key
+rag-dz\bolt-diy\.env.production:16:OPENAI_API_KEY=
+rag-dz\bolt-diy\.env.production:18:# Get your Anthropic API Key in your account settings -
+rag-dz\bolt-diy\.env.production:19:# https://console.anthropic.com/settings/keys
+rag-dz\bolt-diy\.env.production:21:ANTHROPIC_API_KEY=
+rag-dz\bolt-diy\.env.production:26:OPEN_ROUTER_API_KEY=
+rag-dz\bolt-diy\.env.production:31:GOOGLE_GENERATIVE_AI_API_KEY=
+rag-dz\bolt-diy\.env.production:38:# You only need this environment variable set if you want to use
+OpenAI Like models
+rag-dz\bolt-diy\.env.production:39:OPENAI_LIKE_API_BASE_URL=
+rag-dz\bolt-diy\.env.production:44:# You only need this environment variable set if you want to use
+DeepSeek models through their API
+rag-dz\bolt-diy\.env.production:45:DEEPSEEK_API_KEY=
+rag-dz\bolt-diy\.env.production:47:# Get your OpenAI Like API Key
+rag-dz\bolt-diy\.env.production:48:OPENAI_LIKE_API_KEY=
+rag-dz\bolt-diy\.env.production:51:TOGETHER_API_KEY=
+rag-dz\bolt-diy\.env.production:54:HYPERBOLIC_API_KEY=
+rag-dz\bolt-diy\.env.production:60:MISTRAL_API_KEY=
+rag-dz\bolt-diy\.env.production:65:COHERE_API_KEY=
+rag-dz\bolt-diy\.env.production:76:XAI_API_KEY=
+rag-dz\bolt-diy\.env.production:81:PERPLEXITY_API_KEY=
+rag-dz\frontend\archon-ui\.env.example:31:# Get your API key from: https://console.anthropic.com/
+rag-dz\frontend\archon-ui\.env.example:33:ANTHROPIC_API_KEY=
+rag-dz\frontend\archon-ui\.env.example:126:# - OPENAI_API_KEY (encrypted)
+rag-dz\frontend\archon-ui\.env.example:127:# - OPENROUTER_API_KEY (encrypted, format: sk-or-v1-...,
+get from https://openrouter.ai/keys)
+rag-dz\frontend\rag-ui\.env.example:3:VITE_API_KEY=
+rag-dz\ia-factory\automation\.env:7:ANTHROPIC_API_KEY=your_anthropic_api_key_here
+rag-dz\ia-factory\automation\.env:8:OPENAI_API_KEY=your_openai_api_key_optional
+rag-dz\ia-factory\automation\.env:51:TWITTER_API_KEY=
+rag-dz\ia-factory\automation\.env:77:ICOSNET_API_KEY=
+rag-dz\ia-factory\automation\.env:82:SECRET_KEY=your_secret_key_here_change_in_production
+rag-dz\ia-factory\automation\.env.example:7:ANTHROPIC_API_KEY=your_anthropic_api_key_here
+rag-dz\ia-factory\automation\.env.example:8:OPENAI_API_KEY=your_openai_api_key_optional
+rag-dz\ia-factory\automation\.env.example:51:TWITTER_API_KEY=
+rag-dz\ia-factory\automation\.env.example:77:ICOSNET_API_KEY=
+rag-dz\ia-factory\automation\.env.example:82:SECRET_KEY=your_secret_key_here_change_in_production
+rag-dz\ia-factory\config-ch\.env.ch.local:11:API_SECRET_KEY=change-me-in-production-ch-secure-key-2024
+rag-dz\ia-factory\config-ch\.env.ch.local:12:JWT_SECRET_KEY=change-me-in-production-ch-jwt-secret-2024
+rag-dz\ia-factory\config-ch\.env.ch.local:24:# LLM Provider (Groq = gratuit et rapide)
+rag-dz\ia-factory\config-ch\.env.ch.local:26:LLM_PROVIDER=groq
+rag-dz\ia-factory\config-ch\.env.ch.local:35:# Groq (Provider principal - gratuit)
+rag-dz\ia-factory\config-ch\.env.ch.local:36:GROQ_API_KEY=
+rag-dz\ia-factory\config-ch\.env.ch.local:38:# OpenAI (Fallback)
+rag-dz\ia-factory\config-ch\.env.ch.local:39:OPENAI_API_KEY=
+rag-dz\ia-factory\config-ch\.env.ch.local:41:# Anthropic
+rag-dz\ia-factory\config-ch\.env.ch.local:42:ANTHROPIC_API_KEY=
+rag-dz\ia-factory\config-ch\.env.ch.local:44:# DeepSeek
+rag-dz\ia-factory\config-ch\.env.ch.local:45:DEEPSEEK_API_KEY=
+rag-dz\ia-factory\config-ch\.env.ch.local:48:GOOGLE_GENERATIVE_AI_API_KEY=
+rag-dz\ia-factory\config-ch\.env.ch.local:62:ENABLE_API_KEY_AUTH=true
+rag-dz\ia-factory\.env.example:26:# Anthropic Claude API (Required for script generation)
+rag-dz\ia-factory\.env.example:27:ANTHROPIC_API_KEY=sk-ant-api03-your-key-here
+rag-dz\ia-factory\.env.example:32:# OpenAI API (Optional - for Whisper transcription)
+rag-dz\ia-factory\.env.example:33:OPENAI_API_KEY=sk-your-key-here
+rag-dz\ia-factory\.env.example:65:SECRET_KEY=your-super-secret-key-change-in-production
+rag-dz\nexus-pro\.env.example:22:# OpenAI - https://platform.openai.com
+rag-dz\nexus-pro\.env.example:23:OPENAI_API_KEY=sk-xxx
+rag-dz\nexus-pro\.env.example:25:# Anthropic - https://console.anthropic.com
+rag-dz\nexus-pro\.env.example:26:ANTHROPIC_API_KEY=sk-ant-xxx
+rag-dz\nexus-pro\.env.example:28:# DeepSeek - https://platform.deepseek.com (économique)
+rag-dz\nexus-pro\.env.example:29:DEEPSEEK_API_KEY=xxx
+rag-dz\nexus-pro\.env.example:31:# Groq - https://console.groq.com (rapide)
+rag-dz\nexus-pro\.env.example:32:GROQ_API_KEY=gsk_xxx
+rag-dz\nexus-pro\.env.example:35:GEMINI_API_KEY=xxx
+rag-dz\nexus-pro\.env.example:38:# Chargily - https://chargily.com
+rag-dz\nexus-pro\.env.example:39:CHARGILY_API_KEY=xxx
+rag-dz\nexus-pro\.env.example:40:CHARGILY_SECRET_KEY=xxx
+rag-dz\nexus-pro\.env.example:56:OPENAI_DAILY_LIMIT=100
+rag-dz\nexus-pro\.env.example:57:ANTHROPIC_DAILY_LIMIT=50
+rag-dz\services\api\.env:14:JWT_SECRET_KEY=T4WkiqZN-cIVBPkBel-XiceU61BZd0edvD3BynUgDnJjzMQ2KwSF0rr-9zoC
+XDUzDnKHX6uZZCjFfsLapmRbog
+rag-dz\services\api\.env:15:API_SECRET_KEY=dev-secret-key-change-in-production
+rag-dz\services\api\.env:21:OPENAI_API_KEY=sk-proj-ysvcisY37XVws6sIMnjCFnUKh-NcryoH3dh0RP4AdqaefEUx3j1T
+gdlvwalzfqkKugJZz89ouXT3BlbkFJxaNl3lIcKhpRr2H3SrZpfzvefhNSbcqoCTkjIX-GtwHRiRT7fp5TP2yxYWtLZgV9l4uRh0Z-Y
+A
+rag-dz\services\api\.env:22:ANTHROPIC_API_KEY=sk-ant-api03-KXmMM4l1RKlMUxyjAxC44lNLDN7e8mRwr4RYgVhKbHmQ
+mbxhv2OlOjB9glnH7dOdtLEvQ7tIEcHKm4-3hQFAEw-W-p1DgAA
+rag-dz\services\api\.env:23:GROQ_API_KEY=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
+rag-dz\services\api\.env:24:GEMINI_API_KEY=AIzaSyB-jLhkFVfPtOs1txBjzu0anKk1BXWDsdg
+rag-dz\services\api\.env:25:GOOGLE_GENERATIVE_AI_API_KEY=AIzaSyB21Sv2aZEJ33TJ02dfLMx-PklP4ZVcG40
+rag-dz\services\api\.env:26:MISTRAL_API_KEY=U4TD40GfA96d4txjFQzQSps2PXaxKYHC
+rag-dz\services\api\.env:27:DEEPSEEK_API_KEY=sk-e2d7d214600946479856ffafbe1ce392
+rag-dz\services\api\.env:28:COHERE_API_KEY=bAVVqL7U4wv2gmd4gbGBQwpVXDEGZqFm42czSg3a
+rag-dz\services\api\.env:29:TOGETHER_API_KEY=99ac6265846d3cb6a8f83e038605d01a4d1c6b8b80e4a64d3486460a89
+b85df3
+rag-dz\services\api\.env:30:OPENROUTER_API_KEY=sk-or-v1-b096b9798cd36d238b56f7d5476dbedb2dde0e8834f3f04
+0f029c226b64e798b
+rag-dz\services\api\.env:31:PERPLEXITY_API_KEY=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
+rag-dz\services\api\.env:35:KLING_SECRET_KEY=etANJRQNhFGQmd3ReyrfdbrPAykAnDGh
+rag-dz\services\api\.env:37:# === CHARGILY PAY (Algérie) ===
+rag-dz\services\api\.env:38:CHARGILY_API_KEY=test_pk_BDD7Pd5w9oQxaSrs71oujJjNS4PduFdHy7CKqW4q
+rag-dz\services\api\.env:39:CHARGILY_SECRET_KEY=test_sk_4kHnTzSCgGKtiEVLFkrX9RiqUlAbfsy6ilLzO8Ld
+rag-dz\services\api\.env:40:CHARGILY_WEBHOOK_SECRET=whsec_to_be_configured
+rag-dz\services\api\.env:41:CHARGILY_MODE=test
+rag-dz\services\api\.env.example:14:QDRANT_API_KEY=
+rag-dz\services\api\.env.example:17:API_SECRET_KEY=CHANGE_ME_GENERATE_WITH_openssl_rand_hex_32
+rag-dz\services\api\.env.example:39:ENABLE_API_KEY_AUTH=true
+rag-dz\services\api\.env.local:1:GROQ_API_KEY=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
+rag-dz\services\api\.env.local:4:JWT_SECRET_KEY=T4WkiqZN-cIVBPkBel-XiceU61BZd0edvD3BynUgDnJjzMQ2KwSF0rr
+-9zoCXDUzDnKHX6uZZCjFfsLapmRbog
+rag-dz\services\backend\key-service\.env.example:5:FIREBASE_API_KEY=your-api-key
+rag-dz\.env:8:API_SECRET_KEY=iafactory_dz_2025_supersecure_key_min32chars
+rag-dz\.env:10:JWT_SECRET_KEY=jwt_iafactory_algeria_2025_secret_key_64chars_minimum_required
+rag-dz\.env:43:QDRANT_API_KEY=
+rag-dz\.env:65:ENABLE_API_KEY_AUTH=false
+rag-dz\.env:72:VITE_API_KEY=
+rag-dz\.env:77:VITE_OPENAI_API_KEY=
+rag-dz\.env:78:VITE_ANTHROPIC_API_KEY=
+rag-dz\.env:79:VITE_GROQ_API_KEY=
+rag-dz\.env:80:VITE_GOOGLE_GENERATIVE_AI_API_KEY=
+rag-dz\.env:81:VITE_MISTRAL_API_KEY=
+rag-dz\.env:82:VITE_DEEPSEEK_API_KEY=
+rag-dz\.env:83:VITE_COHERE_API_KEY=
+rag-dz\.env:84:VITE_TOGETHER_API_KEY=
+rag-dz\.env:85:VITE_OPEN_ROUTER_API_KEY=
+rag-dz\.env:96:# Choose provider: openai, anthropic, deepseek, groq
+rag-dz\.env:97:LLM_PROVIDER=anthropic
+rag-dz\.env:101:# OpenAI
+rag-dz\.env:102:OPENAI_API_KEY=sk-your-openai-key-here
+rag-dz\.env:104:# Anthropic Claude (Recommandé pour BMAD/Archon)
+rag-dz\.env:105:ANTHROPIC_API_KEY=sk-ant-your-anthropic-key-here
+rag-dz\.env:107:# DeepSeek (Économique et performant)
+rag-dz\.env:108:DEEPSEEK_API_KEY=sk-your-deepseek-key-here
+rag-dz\.env:113:GROQ_API_KEY=gsk_your-groq-key-here
+rag-dz\.env:114:GOOGLE_GENERATIVE_AI_API_KEY=AIzaSy-your-google-key-here
+rag-dz\.env:115:MISTRAL_API_KEY=your-mistral-key-here
+rag-dz\.env:116:COHERE_API_KEY=your-cohere-key-here
+rag-dz\.env:117:TOGETHER_API_KEY=your-together-key-here
+rag-dz\.env:118:OPEN_ROUTER_API_KEY=sk-or-v1-your-openrouter-key-here
+rag-dz\.env:143:N8N_API_KEY=
+rag-dz\.env:151:VITE_N8N_API_KEY=
+rag-dz\.env:196:# Note: Les clés ANTHROPIC_API_KEY et GOOGLE_GENERATIVE_AI_API_KEY
+rag-dz\.env:200:PERPLEXITY_API_KEY=pplx-your-key-here
+rag-dz\.env:206:REPLICATE_API_KEY=r8_your-replicate-key
+rag-dz\.env:207:STABILITY_API_KEY=sk-your-stability-key
+rag-dz\.env:209:ELEVENLABS_API_KEY=your-elevenlabs-key
+rag-dz\.env:212:DASHSCOPE_API_KEY=sk-your-dashscope-key
+rag-dz\.env:215:GEMINI_API_KEY=AIza-your-gemini-key
+rag-dz\.env:223:ANTHROPIC_API_KEY=sk-ant-xxx
+rag-dz\.env:224:OPENAI_API_KEY=sk-xxx
+rag-dz\.env:233:INFOMANIAK_API_KEY=xxx
+rag-dz\.env:234:ICOSNET_API_KEY=xxx
+rag-dz\.env:244:TWITTER_API_KEY=xxx
+rag-dz\.env:251:SECRET_KEY=generate-secure-key-here
+rag-dz\.env:252:JWT_SECRET_KEY=dev-secret-key-change-in-production-123456789
+rag-dz\.env:255:OPENAI_API_KEY=sk-proj-ysvcisY37XVws6sIMnjCFnUKh-NcryoH3dh0RP4AdqaefEUx3j1TgdlvwalzfqkK
+ugJZz89ouXT3BlbkFJxaNl3lIcKhpRr2H3SrZpfzvefhNSbcqoCTkjIX-GtwHRiRT7fp5TP2yxYWtLZgV9l4uRh0Z-YA
+rag-dz\.env:256:ANTHROPIC_API_KEY=sk-ant-api03-KXmMM4l1RKlMUxyjAxC44lNLDN7e8mRwr4RYgVhKbHmQmbxhv2OlOjB9
+glnH7dOdtLEvQ7tIEcHKm4-3hQFAEw-W-p1DgAA
+rag-dz\.env:257:GROQ_API_KEY=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
+rag-dz\.env:258:GEMINI_API_KEY=AIzaSyB-jLhkFVfPtOs1txBjzu0anKk1BXWDsdg
+rag-dz\.env:259:GOOGLE_GENERATIVE_AI_API_KEY=AIzaSyB21Sv2aZEJ33TJ02dfLMx-PklP4ZVcG40
+rag-dz\.env:260:MISTRAL_API_KEY=U4TD40GfA96d4txjFQzQSps2PXaxKYHC
+rag-dz\.env:261:COHERE_API_KEY=bAVVqL7U4wv2gmd4gbGBQwpVXDEGZqFm42czSg3a
+rag-dz\.env:262:TOGETHER_API_KEY=99ac6265846d3cb6a8f83e038605d01a4d1c6b8b80e4a64d3486460a89b85df3
+rag-dz\.env:263:OPENROUTER_API_KEY=sk-or-v1-b096b9798cd36d238b56f7d5476dbedb2dde0e8834f3f040f029c226b64
+e798b
+rag-dz\.env:264:PERPLEXITY_API_KEY=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
+rag-dz\.env:266:KLING_SECRET_KEY=etANJRQNhFGQmd3ReyrfdbrPAykAnDGh
+rag-dz\.env.docker.example:13:API_SECRET_KEY=change-me-api-secret-key-min-32-chars
+rag-dz\.env.docker.example:14:JWT_SECRET_KEY=change-me-jwt-secret-key-min-32-chars
+rag-dz\.env.docker.example:38:QDRANT_API_KEY=
+rag-dz\.env.docker.example:44:# Provider par défaut: groq (gratuit), openai, anthropic, deepseek
+rag-dz\.env.docker.example:45:LLM_PROVIDER=groq
+rag-dz\.env.docker.example:49:# Groq (Gratuit - recommandé pour démarrer)
+rag-dz\.env.docker.example:50:# https://console.groq.com/keys
+rag-dz\.env.docker.example:51:GROQ_API_KEY=gsk_your-groq-key-here
+rag-dz\.env.docker.example:53:# OpenAI
+rag-dz\.env.docker.example:54:# https://platform.openai.com/api-keys
+rag-dz\.env.docker.example:55:OPENAI_API_KEY=sk-your-openai-key-here
+rag-dz\.env.docker.example:57:# Anthropic Claude (recommandé pour BMAD)
+rag-dz\.env.docker.example:58:# https://console.anthropic.com/
+rag-dz\.env.docker.example:59:ANTHROPIC_API_KEY=sk-ant-your-anthropic-key-here
+rag-dz\.env.docker.example:61:# DeepSeek (économique)
+rag-dz\.env.docker.example:62:# https://platform.deepseek.com/
+rag-dz\.env.docker.example:63:DEEPSEEK_API_KEY=sk-your-deepseek-key-here
+rag-dz\.env.docker.example:67:GOOGLE_GENERATIVE_AI_API_KEY=AIzaSy-your-google-key-here
+rag-dz\.env.example:8:API_SECRET_KEY=your-secret-key-here-min-32-chars
+rag-dz\.env.example:42:QDRANT_API_KEY=
+rag-dz\.env.example:64:ENABLE_API_KEY_AUTH=false
+rag-dz\.env.example:71:VITE_API_KEY=
+rag-dz\.env.example:84:# Choose provider: openai, anthropic, deepseek, groq
+rag-dz\.env.example:85:LLM_PROVIDER=anthropic
+rag-dz\.env.example:89:# OpenAI
+rag-dz\.env.example:90:OPENAI_API_KEY=sk-your-openai-key-here
+rag-dz\.env.example:92:# Anthropic Claude (Recommandé pour BMAD/Archon)
+rag-dz\.env.example:93:ANTHROPIC_API_KEY=sk-ant-your-anthropic-key-here
+rag-dz\.env.example:95:# DeepSeek (Économique et performant)
+rag-dz\.env.example:96:DEEPSEEK_API_KEY=sk-your-deepseek-key-here
+rag-dz\.env.example:101:GROQ_API_KEY=gsk_your-groq-key-here
+rag-dz\.env.example:102:GOOGLE_GENERATIVE_AI_API_KEY=AIzaSy-your-google-key-here
+rag-dz\.env.example:103:MISTRAL_API_KEY=your-mistral-key-here
+rag-dz\.env.example:104:COHERE_API_KEY=your-cohere-key-here
+rag-dz\.env.example:105:TOGETHER_API_KEY=your-together-key-here
+rag-dz\.env.example:106:OPEN_ROUTER_API_KEY=sk-or-v1-your-openrouter-key-here
+rag-dz\.env.example:131:N8N_API_KEY=
+rag-dz\.env.example:139:VITE_N8N_API_KEY=
+rag-dz\.env.example:184:# Note: Les clés ANTHROPIC_API_KEY et GOOGLE_GENERATIVE_AI_API_KEY
+rag-dz\.env.example:188:PERPLEXITY_API_KEY=pplx-your-key-here
+rag-dz\.env.example:196:ANTHROPIC_API_KEY=sk-ant-xxx
+rag-dz\.env.example:197:OPENAI_API_KEY=sk-xxx
+rag-dz\.env.example:206:INFOMANIAK_API_KEY=xxx
+rag-dz\.env.example:207:ICOSNET_API_KEY=xxx
+rag-dz\.env.example:217:TWITTER_API_KEY=xxx
+rag-dz\.env.example:224:SECRET_KEY=generate-secure-key-here
+rag-dz\.env.local:8:API_SECRET_KEY=temp-secret-key-for-testing-only-change-in-production
+rag-dz\.env.local:9:JWT_SECRET_KEY=jwt-secret-key-for-testing-only-change-in-production
+rag-dz\.env.local:44:QDRANT_API_KEY=
+rag-dz\.env.local:66:ENABLE_API_KEY_AUTH=false
+rag-dz\.env.local:73:VITE_API_KEY=
+rag-dz\.env.local:78:VITE_OPENAI_API_KEY=sk-proj-ysvcisY37XVws6sIMnjCFnUKh-NcryoH3dh0RP4AdqaefEUx3j1Tgd
+lvwalzfqkKugJZz89ouXT3BlbkFJxaNl3lIcKhpRr2H3SrZpfzvefhNSbcqoCTkjIX-GtwHRiRT7fp5TP2yxYWtLZgV9l4uRh0Z-YA
+rag-dz\.env.local:79:VITE_ANTHROPIC_API_KEY=sk-ant-api03-KXmMM4l1RKlMUxyjAxC44lNLDN7e8mRwr4RYgVhKbHmQmb
+xhv2OlOjB9glnH7dOdtLEvQ7tIEcHKm4-3hQFAEw-W-p1DgAA
+rag-dz\.env.local:80:VITE_GROQ_API_KEY=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
+rag-dz\.env.local:81:VITE_GOOGLE_GENERATIVE_AI_API_KEY=AIzaSyB21Sv2aZEJ33TJ02dfLMx-PklP4ZVcG40
+rag-dz\.env.local:82:VITE_MISTRAL_API_KEY=U4TD40GfA96d4txjFQzQSps2PXaxKYHC
+rag-dz\.env.local:83:VITE_DEEPSEEK_API_KEY=sk-e2d7d214600946479856ffafbe1ce392
+rag-dz\.env.local:84:VITE_COHERE_API_KEY=bAVVqL7U4wv2gmd4gbGBQwpVXDEGZqFm42czSg3a
+rag-dz\.env.local:85:VITE_TOGETHER_API_KEY=99ac6265846d3cb6a8f83e038605d01a4d1c6b8b80e4a64d3486460a89b8
+5df3
+rag-dz\.env.local:86:VITE_OPEN_ROUTER_API_KEY=sk-or-v1-b096b9798cd36d238b56f7d5476dbedb2dde0e8834f3f040
+f029c226b64e798b
+rag-dz\.env.local:97:# Choose provider: openai, anthropic, deepseek, groq, google
+rag-dz\.env.local:102:# OpenAI
+rag-dz\.env.local:103:OPENAI_API_KEY=sk-proj-ysvcisY37XVws6sIMnjCFnUKh-NcryoH3dh0RP4AdqaefEUx3j1Tgdlvwa
+lzfqkKugJZz89ouXT3BlbkFJxaNl3lIcKhpRr2H3SrZpfzvefhNSbcqoCTkjIX-GtwHRiRT7fp5TP2yxYWtLZgV9l4uRh0Z-YA
+rag-dz\.env.local:105:# Anthropic Claude (Recommandé pour BMAD/Archon)
+rag-dz\.env.local:106:ANTHROPIC_API_KEY=sk-ant-api03-KXmMM4l1RKlMUxyjAxC44lNLDN7e8mRwr4RYgVhKbHmQmbxhv2
+OlOjB9glnH7dOdtLEvQ7tIEcHKm4-3hQFAEw-W-p1DgAA
+rag-dz\.env.local:108:# DeepSeek (Économique et performant)
+rag-dz\.env.local:109:DEEPSEEK_API_KEY=sk-e2d7d214600946479856ffafbe1ce392
+rag-dz\.env.local:114:GROQ_API_KEY=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
+rag-dz\.env.local:115:GOOGLE_GENERATIVE_AI_API_KEY=AIzaSyB21Sv2aZEJ33TJ02dfLMx-PklP4ZVcG40
+rag-dz\.env.local:116:GEMINI_API_KEY=AIzaSyB21Sv2aZEJ33TJ02dfLMx-PklP4ZVcG40
+rag-dz\.env.local:117:MISTRAL_API_KEY=U4TD40GfA96d4txjFQzQSps2PXaxKYHC
+rag-dz\.env.local:118:COHERE_API_KEY=bAVVqL7U4wv2gmd4gbGBQwpVXDEGZqFm42czSg3a
+rag-dz\.env.local:119:TOGETHER_API_KEY=99ac6265846d3cb6a8f83e038605d01a4d1c6b8b80e4a64d3486460a89b85df3
+rag-dz\.env.local:120:OPEN_ROUTER_API_KEY=sk-or-v1-b096b9798cd36d238b56f7d5476dbedb2dde0e8834f3f040f029
+c226b64e798b
+rag-dz\.env.local:145:N8N_API_KEY=
+rag-dz\.env.local:153:VITE_N8N_API_KEY=
+rag-dz\.env.local:198:# Note: Les clés ANTHROPIC_API_KEY et GOOGLE_GENERATIVE_AI_API_KEY
+rag-dz\.env.local:202:PERPLEXITY_API_KEY=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
+rag-dz\.env.local:214:REPLICATE_API_KEY=YOUR_REPLICATE_API_KEY
+rag-dz\.env.local:219:STABILITY_API_KEY=your-stability-key-here
+rag-dz\.env.local:229:ELEVENLABS_API_KEY=your-elevenlabs-key-here
+rag-dz\.env.new:10:API_SECRET_KEY=__GENERER_NOUVEAU__
+rag-dz\.env.new:12:JWT_SECRET_KEY=__GENERER_NOUVEAU_64_CHARS__
+rag-dz\.env.new:45:QDRANT_API_KEY=
+rag-dz\.env.new:63:ENABLE_API_KEY_AUTH=false
+rag-dz\.env.new:70:VITE_API_KEY=
+rag-dz\.env.new:83:LLM_PROVIDER=anthropic
+rag-dz\.env.new:91:# OpenAI - https://platform.openai.com/api-keys
+rag-dz\.env.new:92:OPENAI_API_KEY=__NOUVELLE_CLE__
+rag-dz\.env.new:94:# Anthropic - https://console.anthropic.com/settings/keys
+rag-dz\.env.new:95:ANTHROPIC_API_KEY=__NOUVELLE_CLE__
+rag-dz\.env.new:97:# DeepSeek - https://platform.deepseek.com/api_keys
+rag-dz\.env.new:98:DEEPSEEK_API_KEY=__NOUVELLE_CLE__
+rag-dz\.env.new:100:# Groq - https://console.groq.com/keys
+rag-dz\.env.new:101:GROQ_API_KEY=__NOUVELLE_CLE__
+rag-dz\.env.new:104:GOOGLE_GENERATIVE_AI_API_KEY=__NOUVELLE_CLE__
+rag-dz\.env.new:107:MISTRAL_API_KEY=__NOUVELLE_CLE__
+rag-dz\.env.new:110:COHERE_API_KEY=__NOUVELLE_CLE__
+rag-dz\.env.new:113:TOGETHER_API_KEY=__NOUVELLE_CLE__
+rag-dz\.env.new:116:OPEN_ROUTER_API_KEY=__NOUVELLE_CLE__
+rag-dz\.env.new:137:N8N_API_KEY=
+rag-dz\.env.new:164:PERPLEXITY_API_KEY=pplx-your-key-here
+rag-dz\.env.new:170:REPLICATE_API_KEY=r8_your-replicate-key
+rag-dz\.env.new:171:STABILITY_API_KEY=sk-your-stability-key
+rag-dz\.env.new:173:ELEVENLABS_API_KEY=your-elevenlabs-key
+rag-dz\.env.new:174:DASHSCOPE_API_KEY=sk-your-dashscope-key
+rag-dz\.env.new:175:GEMINI_API_KEY=AIza-your-gemini-key
+rag-dz\.env.new:181:SECRET_KEY=__GENERER_NOUVEAU__
+rag-dz\.env.nexus.example:22:# OpenAI - https://platform.openai.com
+rag-dz\.env.nexus.example:23:OPENAI_API_KEY=sk-xxx
+rag-dz\.env.nexus.example:25:# Anthropic - https://console.anthropic.com
+rag-dz\.env.nexus.example:26:ANTHROPIC_API_KEY=sk-ant-xxx
+rag-dz\.env.nexus.example:28:# DeepSeek - https://platform.deepseek.com (économique)
+rag-dz\.env.nexus.example:29:DEEPSEEK_API_KEY=xxx
+rag-dz\.env.nexus.example:31:# Groq - https://console.groq.com (rapide)
+rag-dz\.env.nexus.example:32:GROQ_API_KEY=gsk_xxx
+rag-dz\.env.nexus.example:35:GEMINI_API_KEY=xxx
+rag-dz\.env.nexus.example:38:# Chargily - https://chargily.com
+rag-dz\.env.nexus.example:39:CHARGILY_API_KEY=xxx
+rag-dz\.env.nexus.example:40:CHARGILY_SECRET_KEY=xxx
+rag-dz\.env.nexus.example:56:OPENAI_DAILY_LIMIT=100
+rag-dz\.env.nexus.example:57:ANTHROPIC_DAILY_LIMIT=50
+rag-dz\.env.production:14:API_SECRET_KEY=CHANGE_THIS_TO_A_STRONG_SECRET_KEY_AT_LEAST_32_CHARS
+rag-dz\.env.production:31:# Groq (Recommended - Fast & Affordable)
+rag-dz\.env.production:32:GROQ_API_KEY=gsk_your_groq_api_key_here
+rag-dz\.env.production:33:LLM_PROVIDER=groq
+rag-dz\.env.production:36:# OpenAI (Optional)
+rag-dz\.env.production:37:OPENAI_API_KEY=sk-your-openai-api-key-here
+rag-dz\.env.production:39:# Anthropic Claude (Optional)
+rag-dz\.env.production:40:ANTHROPIC_API_KEY=sk-ant-your-anthropic-key-here
+rag-dz\.env.production:42:# DeepSeek (Optional - Cheap)
+rag-dz\.env.production:43:DEEPSEEK_API_KEY=sk-your-deepseek-key-here
+rag-dz\.env.production:46:GOOGLE_API_KEY=your-google-api-key-here
+rag-dz\.env.production:68:ENABLE_API_KEY_AUTH=true
+rag-dz\.env.production:84:FIREBASE_API_KEY=
+
+
+PS D:\iafactory>
+PS D:\iafactory>

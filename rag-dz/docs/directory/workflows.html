@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workflows IA - Directory | IAFactory Algérie</title>
+    <meta name="description" content="Découvrez les meilleurs workflows IA et automatisations no-code. Templates prêts à l'emploi, intégrations et tutoriels pour automatiser votre business.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00c261;
+            --primary-dark: #00a050;
+            --primary-light: #00e070;
+            --bg-dark: #0a0a0a;
+            --bg-card: #111111;
+            --bg-card-hover: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-muted: #666666;
+            --border-color: #222222;
+            --gradient-primary: linear-gradient(135deg, #00c261 0%, #00a050 100%);
+            --gradient-purple: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+            --gradient-blue: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            --gradient-orange: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+            --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.3);
+            --shadow-hover: 0 8px 40px rgba(0, 194, 97, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .logo-text {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .logo-text span {
+            color: var(--primary);
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 0.95rem;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--primary);
+        }
+
+        .nav-cta {
+            background: var(--gradient-primary);
+            color: white !important;
+            padding: 0.6rem 1.25rem;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .nav-cta:hover {
+            opacity: 0.9;
+            color: white !important;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 4rem 2rem;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(139, 92, 246, 0.05) 0%, transparent 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 20%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 80%, rgba(0, 194, 97, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .hero h1 .gradient-text {
+            background: var(--gradient-purple);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            position: relative;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--gradient-purple);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Search Box */
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            position: relative;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 1rem 1.5rem 1rem 3.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #8b5cf6;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1.25rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem 4rem;
+        }
+
+        /* Platform Badges */
+        .platforms-bar {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+
+        .platform-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 0.6rem 1rem;
+            border-radius: 25px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .platform-badge:hover {
+            border-color: var(--primary);
+            color: var(--text-primary);
+        }
+
+        .platform-badge img, .platform-badge i {
+            width: 20px;
+            height: 20px;
+            font-size: 1rem;
+        }
+
+        /* Section Header */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title i {
+            color: #8b5cf6;
+        }
+
+        .section-link {
+            color: #8b5cf6;
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: gap 0.3s;
+        }
+
+        .section-link:hover {
+            gap: 0.75rem;
+        }
+
+        /* Workflow Cards Grid */
+        .workflows-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .workflow-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .workflow-card:hover {
+            border-color: #8b5cf6;
+            box-shadow: 0 8px 40px rgba(139, 92, 246, 0.15);
+            transform: translateY(-4px);
+        }
+
+        .workflow-preview {
+            height: 160px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .workflow-preview::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: 
+                linear-gradient(90deg, transparent 49%, rgba(139, 92, 246, 0.1) 50%, transparent 51%),
+                linear-gradient(0deg, transparent 49%, rgba(139, 92, 246, 0.1) 50%, transparent 51%);
+            background-size: 30px 30px;
+        }
+
+        .workflow-nodes {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .workflow-node {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            position: relative;
+        }
+
+        .workflow-node.trigger {
+            background: var(--gradient-purple);
+        }
+
+        .workflow-node.action {
+            background: var(--gradient-blue);
+        }
+
+        .workflow-node.output {
+            background: var(--gradient-primary);
+        }
+
+        .workflow-connector {
+            width: 30px;
+            height: 2px;
+            background: rgba(139, 92, 246, 0.5);
+            position: relative;
+        }
+
+        .workflow-connector::after {
+            content: '→';
+            position: absolute;
+            right: -5px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(139, 92, 246, 0.7);
+            font-size: 0.8rem;
+        }
+
+        .workflow-content {
+            padding: 1.5rem;
+        }
+
+        .workflow-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+        }
+
+        .workflow-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .workflow-name a {
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .workflow-name a:hover {
+            color: #8b5cf6;
+        }
+
+        .template-badge {
+            background: rgba(139, 92, 246, 0.15);
+            color: #a78bfa;
+            padding: 0.25rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .workflow-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .workflow-meta {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .meta-tag {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .meta-tag i {
+            font-size: 0.85rem;
+        }
+
+        .workflow-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .workflow-stats {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .workflow-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .workflow-stat.downloads {
+            color: #8b5cf6;
+        }
+
+        .use-template-btn {
+            background: var(--gradient-purple);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .use-template-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(139, 92, 246, 0.3);
+        }
+
+        /* Use Cases Section */
+        .use-cases {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .use-case-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .use-case-card:hover {
+            border-color: #8b5cf6;
+            background: var(--bg-card-hover);
+        }
+
+        .use-case-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .use-case-icon.marketing {
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.2) 0%, rgba(249, 115, 22, 0.05) 100%);
+            color: #f97316;
+        }
+
+        .use-case-icon.sales {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(59, 130, 246, 0.05) 100%);
+            color: #3b82f6;
+        }
+
+        .use-case-icon.support {
+            background: linear-gradient(135deg, rgba(0, 194, 97, 0.2) 0%, rgba(0, 194, 97, 0.05) 100%);
+            color: var(--primary);
+        }
+
+        .use-case-icon.data {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(139, 92, 246, 0.05) 100%);
+            color: #8b5cf6;
+        }
+
+        .use-case-icon.hr {
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.2) 0%, rgba(236, 72, 153, 0.05) 100%);
+            color: #ec4899;
+        }
+
+        .use-case-icon.finance {
+            background: linear-gradient(135deg, rgba(234, 179, 8, 0.2) 0%, rgba(234, 179, 8, 0.05) 100%);
+            color: #eab308;
+        }
+
+        .use-case-card h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .use-case-card p {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+
+        .use-case-count {
+            color: #8b5cf6;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        /* Integrations Section */
+        .integrations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .integration-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
+            text-align: center;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .integration-card:hover {
+            border-color: #8b5cf6;
+            transform: translateY(-3px);
+        }
+
+        .integration-icon {
+            width: 45px;
+            height: 45px;
+            margin: 0 auto 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+        }
+
+        .integration-card h4 {
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .integration-card span {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+        }
+
+        /* CTA Section */
+        .create-cta {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(139, 92, 246, 0.02) 100%);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 16px;
+            padding: 3rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .create-cta h2 {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .create-cta p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .cta-btn.primary {
+            background: var(--gradient-purple);
+            color: white;
+        }
+
+        .cta-btn.primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
+        }
+
+        .cta-btn.secondary {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .cta-btn.secondary:hover {
+            border-color: #8b5cf6;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr repeat(3, 1fr);
+            gap: 3rem;
+        }
+
+        .footer-brand p {
+            color: var(--text-secondary);
+            margin: 1rem 0;
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            background: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            transition: all 0.3s;
+        }
+
+        .footer-social a:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .footer-column h4 {
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            color: var(--text-primary);
+        }
+
+        .footer-column a {
+            display: block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.4rem 0;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .footer-column a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 2rem auto 0;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero-stats {
+                gap: 1.5rem;
+            }
+
+            .hero-stat-number {
+                font-size: 1.75rem;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .workflows-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .use-cases {
+                grid-template-columns: 1fr;
+            }
+
+            .integrations-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">IA</div>
+                <div class="logo-text">IAFactory<span>.dz</span></div>
+            </a>
+            <nav>
+                <a href="index.html">Directory</a>
+                <a href="ia-tools.html">Outils IA</a>
+                <a href="agents.html">Agents</a>
+                <a href="workflows.html" class="active">Workflows</a>
+                <a href="daily-news.html">Daily News</a>
+                <a href="#submit" class="nav-cta">Soumettre</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Workflows <span class="gradient-text">IA</span> & Automatisations</h1>
+        <p>Templates d'automatisation prêts à l'emploi. Connectez vos apps, automatisez vos tâches et gagnez du temps avec les meilleurs workflows IA.</p>
+        
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <div class="hero-stat-number">80+</div>
+                <div class="hero-stat-label">Workflows</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-number">200+</div>
+                <div class="hero-stat-label">Intégrations</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-number">15K+</div>
+                <div class="hero-stat-label">Utilisations</div>
+            </div>
+        </div>
+
+        <div class="search-container">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" class="search-box" placeholder="Rechercher un workflow ou une intégration...">
+        </div>
+
+        <!-- Platform Badges -->
+        <div class="platforms-bar">
+            <div class="platform-badge"><i class="fab fa-slack"></i> Slack</div>
+            <div class="platform-badge"><i class="fas fa-envelope"></i> Gmail</div>
+            <div class="platform-badge"><i class="fab fa-google-drive"></i> Google Drive</div>
+            <div class="platform-badge"><i class="fab fa-notion"></i> Notion</div>
+            <div class="platform-badge"><i class="fas fa-database"></i> Airtable</div>
+            <div class="platform-badge"><i class="fab fa-hubspot"></i> HubSpot</div>
+            <div class="platform-badge"><i class="fas fa-shopping-cart"></i> Shopify</div>
+            <div class="platform-badge"><i class="fab fa-whatsapp"></i> WhatsApp</div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Popular Workflows -->
+        <section>
+            <div class="section-header">
+                <h2 class="section-title"><i class="fas fa-fire"></i> Workflows Populaires</h2>
+                <a href="#all" class="section-link">Voir tout <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="workflows-grid">
+                <!-- Workflow 1 -->
+                <div class="workflow-card">
+                    <div class="workflow-preview">
+                        <div class="workflow-nodes">
+                            <div class="workflow-node trigger">📧</div>
+                            <div class="workflow-connector"></div>
+                            <div class="workflow-node action">🤖</div>
+                            <div class="workflow-connector"></div>
+                            <div class="workflow-node output">💬</div>
+                        </div>
+                    </div>
+                    <div class="workflow-content">
+                        <div class="workflow-header">
+                            <div class="workflow-name"><a href="#">Email → IA → Slack</a></div>
+                            <span class="template-badge">Template</span>
+                        </div>
+                        <p class="workflow-description">Résumez automatiquement vos emails importants avec ChatGPT et envoyez les résumés sur Slack.</p>
+                        <div class="workflow-meta">
+                            <span class="meta-tag"><i class="fas fa-plug"></i> Gmail, OpenAI, Slack</span>
+                            <span class="meta-tag"><i class="fas fa-clock"></i> 5 min setup</span>
+                        </div>
+                        <div class="workflow-footer">
+                            <div class="workflow-stats">
+                                <div class="workflow-stat downloads"><i class="fas fa-download"></i> 2.4K</div>
+                                <div class="workflow-stat"><i class="fas fa-star"></i> 4.9</div>
+                            </div>
+                            <a href="#" class="use-template-btn">Utiliser</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Workflow 2 -->
+                <div class="workflow-card">
+                    <div class="workflow-preview">
+                        <div class="workflow-nodes">
+                            <div class="workflow-node trigger">🛒</div>
+                            <div class="workflow-connector"></div>
+                            <div class="workflow-node action">📊</div>
+                            <div class="workflow-connector"></div>
+                            <div class="workflow-node output">📱</div>
+                        </div>
+                    </div>
+                    <div class="workflow-content">
+                        <div class="workflow-header">
+                            <div class="workflow-name"><a href="#">E-commerce → CRM → Notification</a></div>
+                            <span class="template-badge">Template</span>
+                        </div>
+                        <p class="workflow-description">Synchronisez les commandes Shopify avec votre CRM et notifiez l'équipe ventes sur WhatsApp.</p>
+                        <div class="workflow-meta">
+                            <span class="meta-tag"><i class="fas fa-plug"></i> Shopify, HubSpot, WhatsApp</span>
+                            <span class="meta-tag"><i class="fas fa-clock"></i> 10 min setup</span>
+                        </div>
+                        <div class="workflow-footer">
+                            <div class="workflow-stats">
+                                <div class="workflow-stat downloads"><i class="fas fa-download"></i> 1.8K</div>
+                                <div class="workflow-stat"><i class="fas fa-star"></i> 4.8</div>
+                            </div>
+                            <a href="#" class="use-template-btn">Utiliser</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Workflow 3 -->
+                <div class="workflow-card">
+                    <div class="workflow-preview">
+                        <div class="workflow-nodes">
+                            <div class="workflow-node trigger">📝</div>
+                            <div class="workflow-connector"></div>
+                            <div class="workflow-node action">🎨</div>
+                            <div class="workflow-connector"></div>
+                            <div class="workflow-node output">📱</div>
+                        </div>
+                    </div>
+                    <div class="workflow-content">
+                        <div class="workflow-header">
+                            <div class="workflow-name"><a href="#">Content → Image → Social</a></div>
+                            <span class="template-badge">Template</span>
+                        </div>
+                        <p class="workflow-description">Générez automatiquement des images avec DALL-E pour vos articles et publiez sur les réseaux sociaux.</p>
+                        <div class="workflow-meta">
+                            <span class="meta-tag"><i class="fas fa-plug"></i> Notion, DALL-E, Buffer</span>
+                            <span class="meta-tag"><i class="fas fa-clock"></i> 8 min setup</span>
+                        </div>
+                        <div class="workflow-footer">
+                            <div class="workflow-stats">
+                                <div class="workflow-stat downloads"><i class="fas fa-download"></i> 1.5K</div>
+                                <div class="workflow-stat"><i class="fas fa-star"></i> 4.7</div>
+                            </div>
+                            <a href="#" class="use-template-btn">Utiliser</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Workflow 4 -->
+                <div class="workflow-card">
+                    <div class="workflow-preview">
+                        <div class="workflow-nodes">
+                            <div class="workflow-node trigger">📄</div>
+                            <div class="workflow-connector"></div>
+                            <div class="workflow-node action">🤖</div>
+                            <div class="workflow-connector"></div>
+                            <div class="workflow-node output">📊</div>
+                        </div>
+                    </div>
+                    <div class="workflow-content">
+                        <div class="workflow-header">
+                            <div class="workflow-name"><a href="#">PDF → Extraction → Database</a></div>
+                            <span class="template-badge">Template</span>
+                        </div>
+                        <p class="workflow-description">Extrayez automatiquement les données de vos factures PDF et alimentez votre base de données.</p>
+                        <div class="workflow-meta">
+                            <span class="meta-tag"><i class="fas fa-plug"></i> Drive, Claude, Airtable</span>
+                            <span class="meta-tag"><i class="fas fa-clock"></i> 15 min setup</span>
+                        </div>
+                        <div class="workflow-footer">
+                            <div class="workflow-stats">
+                                <div class="workflow-stat downloads"><i class="fas fa-download"></i> 1.2K</div>
+                                <div class="workflow-stat"><i class="fas fa-star"></i> 4.6</div>
+                            </div>
+                            <a href="#" class="use-template-btn">Utiliser</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Use Cases -->
+        <section style="margin-top: 3rem;">
+            <div class="section-header">
+                <h2 class="section-title"><i class="fas fa-lightbulb"></i> Cas d'Usage</h2>
+                <a href="#all" class="section-link">Explorer <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="use-cases">
+                <div class="use-case-card">
+                    <div class="use-case-icon marketing"><i class="fas fa-bullhorn"></i></div>
+                    <h3>Marketing & Contenu</h3>
+                    <p>Automatisez la création de contenu, la gestion des réseaux sociaux et le suivi des campagnes.</p>
+                    <span class="use-case-count">18 workflows disponibles</span>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon sales"><i class="fas fa-chart-line"></i></div>
+                    <h3>Ventes & CRM</h3>
+                    <p>Qualifiez les leads, synchronisez vos contacts et automatisez le suivi commercial.</p>
+                    <span class="use-case-count">15 workflows disponibles</span>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon support"><i class="fas fa-headset"></i></div>
+                    <h3>Support Client</h3>
+                    <p>Routez les tickets, répondez automatiquement aux FAQ et escaladez intelligemment.</p>
+                    <span class="use-case-count">12 workflows disponibles</span>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon data"><i class="fas fa-database"></i></div>
+                    <h3>Data & Analytics</h3>
+                    <p>Collectez, transformez et visualisez vos données automatiquement.</p>
+                    <span class="use-case-count">14 workflows disponibles</span>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon hr"><i class="fas fa-users"></i></div>
+                    <h3>RH & Recrutement</h3>
+                    <p>Automatisez le tri des CV, les notifications et l'onboarding des employés.</p>
+                    <span class="use-case-count">8 workflows disponibles</span>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon finance"><i class="fas fa-coins"></i></div>
+                    <h3>Finance & Facturation</h3>
+                    <p>Automatisez la facturation, les relances et le suivi des paiements.</p>
+                    <span class="use-case-count">13 workflows disponibles</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Integrations -->
+        <section style="margin-top: 3rem;">
+            <div class="section-header">
+                <h2 class="section-title"><i class="fas fa-plug"></i> Intégrations Populaires</h2>
+                <a href="#all" class="section-link">Voir tout <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="integrations-grid">
+                <a href="#" class="integration-card">
+                    <div class="integration-icon">🤖</div>
+                    <h4>ChatGPT</h4>
+                    <span>45 workflows</span>
+                </a>
+                <a href="#" class="integration-card">
+                    <div class="integration-icon">💬</div>
+                    <h4>Slack</h4>
+                    <span>38 workflows</span>
+                </a>
+                <a href="#" class="integration-card">
+                    <div class="integration-icon">📧</div>
+                    <h4>Gmail</h4>
+                    <span>35 workflows</span>
+                </a>
+                <a href="#" class="integration-card">
+                    <div class="integration-icon">📝</div>
+                    <h4>Notion</h4>
+                    <span>32 workflows</span>
+                </a>
+                <a href="#" class="integration-card">
+                    <div class="integration-icon">📊</div>
+                    <h4>Airtable</h4>
+                    <span>28 workflows</span>
+                </a>
+                <a href="#" class="integration-card">
+                    <div class="integration-icon">📱</div>
+                    <h4>WhatsApp</h4>
+                    <span>25 workflows</span>
+                </a>
+                <a href="#" class="integration-card">
+                    <div class="integration-icon">🛒</div>
+                    <h4>Shopify</h4>
+                    <span>22 workflows</span>
+                </a>
+                <a href="#" class="integration-card">
+                    <div class="integration-icon">📈</div>
+                    <h4>HubSpot</h4>
+                    <span>20 workflows</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="create-cta" id="submit">
+            <h2>Créez vos propres Workflows IA</h2>
+            <p>Utilisez nos templates ou créez des automatisations personnalisées sans code pour votre business.</p>
+            <div class="cta-buttons">
+                <a href="#" class="cta-btn primary">
+                    <i class="fas fa-plus"></i> Créer un Workflow
+                </a>
+                <a href="#" class="cta-btn secondary">
+                    <i class="fas fa-book"></i> Documentation
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <a href="../index.html" class="logo">
+                    <div class="logo-icon">IA</div>
+                    <div class="logo-text">IAFactory<span>.dz</span></div>
+                </a>
+                <p>Automatisez votre business avec les meilleurs workflows IA. Templates prêts à l'emploi et intégrations multiples.</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-discord"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4>Directory</h4>
+                <a href="ia-tools.html">Outils IA</a>
+                <a href="agents.html">Agents IA</a>
+                <a href="workflows.html">Workflows</a>
+                <a href="daily-news.html">Daily News</a>
+            </div>
+            <div class="footer-column">
+                <h4>Ressources</h4>
+                <a href="#">Templates</a>
+                <a href="#">Tutoriels</a>
+                <a href="#">API</a>
+                <a href="../blog.html">Blog</a>
+            </div>
+            <div class="footer-column">
+                <h4>Entreprise</h4>
+                <a href="../a-propos.html">À Propos</a>
+                <a href="../contact.html">Contact</a>
+                <a href="../confidentialite.html">Confidentialité</a>
+                <a href="../conditions.html">Conditions</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 - 2025 IAFactory Algérie. Tous droits réservés.</p>
+            <p>Fait avec ❤️ en Algérie</p>
+        </div>
+    </footer>
+</body>
+</html>

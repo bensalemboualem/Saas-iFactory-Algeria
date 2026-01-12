@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <title>💬 Chatbot IA - IAFactory Algeria</title>
+
+    <!-- IAFactory Unified Components -->
+    <link rel="stylesheet" href="../shared/iafactory-unified.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* App-specific styles */
+        body {
+            margin: 0;
+            padding-top: var(--iaf-header-height, 60px);
+            min-height: 100vh;
+            font-family: var(--iaf-font-primary);
+            background: var(--iaf-bg);
+            color: var(--iaf-text);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .app-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 1rem;
+        }
+
+        /* Provider Selector */
+        .provider-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 0.75rem 1rem;
+            background: var(--iaf-bg-card);
+            border: 1px solid var(--iaf-border);
+            border-radius: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .provider-bar h2 {
+            margin: 0;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .provider-select {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid var(--iaf-border);
+            background: var(--iaf-bg);
+            color: var(--iaf-text);
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        /* Chat Container */
+        #chat-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            background: var(--iaf-bg-card);
+            border: 1px solid var(--iaf-border);
+            border-radius: 1rem;
+            margin-bottom: 1rem;
+            min-height: 400px;
+        }
+
+        .chat-message {
+            max-width: 80%;
+            padding: 1rem;
+            border-radius: 1rem;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .user-message {
+            align-self: flex-end;
+            background: var(--iaf-gradient);
+            color: white;
+            border-bottom-right-radius: 0.25rem;
+        }
+
+        .assistant-message {
+            align-self: flex-start;
+            background: var(--iaf-bg);
+            border: 1px solid var(--iaf-border);
+            border-bottom-left-radius: 0.25rem;
+        }
+
+        .system-message {
+            align-self: center;
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #fca5a5;
+            font-size: 0.875rem;
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            opacity: 0.7;
+            margin-bottom: 0.5rem;
+        }
+
+        .message-content {
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
+        .typing {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.3; }
+        }
+
+        /* Input Area */
+        .input-area {
+            display: flex;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: var(--iaf-bg-card);
+            border-radius: 1rem;
+            border: 1px solid var(--iaf-border);
+        }
+
+        #message-input {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            background: var(--iaf-bg);
+            color: var(--iaf-text);
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            resize: none;
+        }
+
+        #message-input:focus {
+            outline: 2px solid var(--iaf-primary);
+        }
+
+        #send-button {
+            padding: 1rem 1.5rem;
+            background: var(--iaf-gradient);
+            color: white;
+            border: none;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        #send-button:hover:not(:disabled) {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 166, 81, 0.3);
+        }
+
+        #send-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Welcome Screen */
+        .welcome {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--iaf-text-secondary);
+        }
+
+        .welcome h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--iaf-text-primary);
+        }
+
+        .welcome p {
+            margin-bottom: 1.5rem;
+        }
+
+        .suggestions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+
+        .suggestion {
+            padding: 0.5rem 1rem;
+            background: var(--iaf-bg);
+            border: 1px solid var(--iaf-border);
+            border-radius: 2rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+        }
+
+        .suggestion:hover {
+            border-color: var(--iaf-primary);
+            color: var(--iaf-primary);
+        }
+
+        /* Languages in suggestions */
+        .suggestion[data-lang="ar"] {
+            direction: rtl;
+        }
+
+        /* Footer spacing */
+        .app-footer-spacer {
+            height: 100px;
+        }
+
+        @media (max-width: 768px) {
+            .provider-bar {
+                flex-direction: column;
+                text-align: center;
+            }
+            .input-area {
+                flex-direction: column;
+            }
+            #send-button {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body data-iaf-auto-init>
+    <!-- Header (auto-injected by iafactory-unified.js) -->
+    <div id="iaf-header" data-iaf-header></div>
+
+    <!-- Main App -->
+    <div class="app-container">
+        <div class="provider-bar">
+            <h2><i class="fas fa-robot"></i> <span data-i18n="chatbot_title">Chat IA</span></h2>
+            <select id="provider-select" class="provider-select">
+                <option value="anthropic">Claude (Anthropic)</option>
+                <option value="openai">GPT-4 (OpenAI)</option>
+                <option value="groq" selected>Llama 3.3 (Groq)</option>
+                <option value="gemini">Gemini (Google)</option>
+            </select>
+        </div>
+
+        <div id="chat-container">
+            <div class="welcome">
+                <h2 data-i18n="chat_welcome_title">Bienvenue sur IAFactory Chat</h2>
+                <p data-i18n="chat_welcome_subtitle">Posez votre question en français, arabe (darija, amazigh) ou anglais</p>
+                <div class="suggestions">
+                    <span class="suggestion" onclick="askSuggestion(this)" data-lang="fr">Explique-moi l'IA générative</span>
+                    <span class="suggestion" onclick="askSuggestion(this)" data-lang="ar">اشرح لي الذكاء الاصطناعي</span>
+                    <span class="suggestion" onclick="askSuggestion(this)" data-lang="dzj">واش راك؟ علابالك كيفاش نستعمل هذا</span>
+                    <span class="suggestion" onclick="askSuggestion(this)" data-lang="ber">ⴰⵣⵓⵍ, ⵎⴰⵜⴰ ⵜⵣⵎⵔⴻⴷ ⴰⴷ ⵜⴻⵄⴰⵡⵏⴻⴷ?</span>
+                    <span class="suggestion" onclick="askSuggestion(this)" data-lang="en">Help me code in Python</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="input-area">
+            <textarea id="message-input" rows="1" data-i18n-placeholder="chat_placeholder" placeholder="Écrivez votre message..."></textarea>
+            <button id="send-button">
+                <i class="fas fa-paper-plane"></i> <span data-i18n="send">Envoyer</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="app-footer-spacer"></div>
+
+    <!-- Footer (auto-injected) -->
+    <div id="iaf-footer" data-iaf-footer></div>
+
+    <!-- Chatbot Help (auto-injected) -->
+    <div id="iaf-chatbot" data-iaf-chatbot></div>
+
+    <!-- IAFactory Unified JS -->
+    <script src="../shared/iafactory-unified.js"></script>
+
+    <!-- Chat Logic -->
+    <script>
+        // API Configuration
+        const API_BASE = 'http://localhost:8000';
+
+        // i18n additions for this app
+        const APP_TRANSLATIONS = {
+            fr: {
+                chatbot_title: "Chat IA",
+                chat_welcome_title: "Bienvenue sur IAFactory Chat",
+                chat_welcome_subtitle: "Posez votre question en français, arabe (darija, amazigh) ou anglais",
+                chat_placeholder: "Écrivez votre message...",
+                send: "Envoyer",
+                thinking: "Réflexion en cours...",
+                error_api: "Erreur de connexion à l'API"
+            },
+            en: {
+                chatbot_title: "AI Chat",
+                chat_welcome_title: "Welcome to IAFactory Chat",
+                chat_welcome_subtitle: "Ask your question in French, Arabic (darija, amazigh) or English",
+                chat_placeholder: "Type your message...",
+                send: "Send",
+                thinking: "Thinking...",
+                error_api: "API connection error"
+            },
+            ar: {
+                chatbot_title: "دردشة ذكية",
+                chat_welcome_title: "مرحبا بك في دردشة IAFactory",
+                chat_welcome_subtitle: "اطرح سؤالك بالفرنسية أو العربية (الدارجة، الأمازيغية) أو الإنجليزية",
+                chat_placeholder: "اكتب رسالتك...",
+                send: "إرسال",
+                thinking: "جاري التفكير...",
+                error_api: "خطأ في الاتصال بالواجهة"
+            }
+        };
+
+        // Chat state
+        let conversationHistory = [];
+        let isLoading = false;
+
+        // DOM Elements
+        const chatContainer = document.getElementById('chat-container');
+        const messageInput = document.getElementById('message-input');
+        const sendButton = document.getElementById('send-button');
+        const providerSelect = document.getElementById('provider-select');
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            // Auto-resize textarea
+            messageInput.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = Math.min(this.scrollHeight, 150) + 'px';
+            });
+
+            // Send on Enter (Shift+Enter for new line)
+            messageInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+
+            // Send button
+            sendButton.addEventListener('click', sendMessage);
+        });
+
+        function askSuggestion(el) {
+            messageInput.value = el.textContent;
+            sendMessage();
+        }
+
+        async function sendMessage() {
+            const message = messageInput.value.trim();
+            if (!message || isLoading) return;
+
+            // Clear welcome screen on first message
+            const welcome = chatContainer.querySelector('.welcome');
+            if (welcome) welcome.remove();
+
+            // Add user message
+            addMessage(message, 'user');
+            messageInput.value = '';
+            messageInput.style.height = 'auto';
+
+            // Add to history
+            conversationHistory.push({ role: 'user', content: message });
+
+            // Show typing indicator
+            isLoading = true;
+            sendButton.disabled = true;
+            const typingId = addMessage('<span class="typing">⏳ ' + getTranslation('thinking') + '</span>', 'assistant', true);
+
+            try {
+                // Use agent-chat API with session management
+                // Create session if not exists
+                if (!window.chatSessionId) {
+                    const sessionRes = await fetch(`${API_BASE}/api/agent-chat/sessions`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ agent_type: 'rag' })
+                    });
+                    const sessionData = await sessionRes.json();
+                    window.chatSessionId = sessionData.session_id;
+                }
+
+                const response = await fetch(`${API_BASE}/api/agent-chat/sessions/${window.chatSessionId}/send`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: message })
+                });
+
+                // Remove typing indicator
+                const typingEl = document.getElementById(typingId);
+                if (typingEl) typingEl.remove();
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+
+                const data = await response.json();
+                const assistantMessage = data.content || data.answer || data.response || data.message || 'OK';
+
+                addMessage(assistantMessage, 'assistant');
+                conversationHistory.push({ role: 'assistant', content: assistantMessage });
+
+            } catch (error) {
+                console.error('Chat error:', error);
+                const typingEl = document.getElementById(typingId);
+                if (typingEl) typingEl.remove();
+
+                addMessage('❌ ' + getTranslation('error_api') + ': ' + error.message, 'system');
+            } finally {
+                isLoading = false;
+                sendButton.disabled = false;
+                messageInput.focus();
+            }
+        }
+
+        function addMessage(content, type, isHtml = false) {
+            const id = 'msg-' + Date.now();
+            const messageDiv = document.createElement('div');
+            messageDiv.id = id;
+            messageDiv.className = `chat-message ${type}-message`;
+
+            const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            const sender = type === 'user' ? '👤 Vous' : type === 'assistant' ? '🤖 IA' : '⚠️ Système';
+
+            messageDiv.innerHTML = `
+                <div class="message-header">
+                    <span>${sender}</span>
+                    <span>${now}</span>
+                </div>
+                <div class="message-content">${isHtml ? content : escapeHtml(content)}</div>
+            `;
+
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+
+            return id;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function getTranslation(key) {
+            const lang = localStorage.getItem('iafactory_lang') || 'fr';
+            return APP_TRANSLATIONS[lang]?.[key] || APP_TRANSLATIONS['fr'][key] || key;
+        }
+
+        // Update translations when language changes
+        window.addEventListener('languageChanged', (e) => {
+            const lang = e.detail.lang;
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (APP_TRANSLATIONS[lang]?.[key]) {
+                    el.textContent = APP_TRANSLATIONS[lang][key];
+                }
+            });
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                if (APP_TRANSLATIONS[lang]?.[key]) {
+                    el.placeholder = APP_TRANSLATIONS[lang][key];
+                }
+            });
+        });
+    </script>
+</body>
+</html>

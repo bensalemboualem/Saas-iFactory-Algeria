@@ -1,0 +1,84 @@
+{
+  "docs": [
+    {
+      "title": "OECD Transfer Pricing Guidelines",
+      "text": "The OECD Transfer Pricing Guidelines provide guidance on the application of the arm's length principle for the valuation of cross-border transactions between associated enterprises.\n\nKey principles:\n- Arm's length principle: transactions should be priced as if between independent parties\n- Comparable uncontrolled price method (CUP)\n- Resale price method\n- Cost plus method\n- Transactional net margin method (TNMM)\n- Profit split method\n\nDocumentation requirements:\n- Master file (group-wide information)\n- Local file (country-specific transactions)\n- Country-by-Country reporting (CbCR) for MNEs with revenue > €750M",
+      "country": "GLOBAL",
+      "language": "en",
+      "theme": "Fiscalité",
+      "source": "OECD",
+      "tags": ["Transfer Pricing", "OECD", "Arm's Length", "BEPS", "CbCR"],
+      "is_official": true
+    },
+    {
+      "title": "EU VAT Directive - One Stop Shop (OSS)",
+      "text": "The EU One Stop Shop (OSS) simplifies VAT obligations for businesses selling goods and services cross-border within the EU.\n\nTypes of OSS:\n- Union OSS: for EU-established businesses selling to consumers in other EU countries\n- Non-Union OSS: for non-EU businesses selling digital services to EU consumers\n- Import OSS (IOSS): for distance sales of imported goods up to €150\n\nThresholds:\n- €10,000 annual threshold for using domestic VAT rates on cross-border B2C sales\n- Above threshold: VAT of destination country applies\n\nRegistration: in one EU Member State, covers all EU sales\nReporting: quarterly VAT returns\nPayment: single payment to registration Member State",
+      "country": "GLOBAL",
+      "language": "en",
+      "theme": "Fiscalité",
+      "source": "EU",
+      "tags": ["VAT", "OSS", "EU", "E-commerce", "Cross-border"],
+      "is_official": true
+    },
+    {
+      "title": "IAS/IFRS - International Accounting Standards",
+      "text": "International Financial Reporting Standards (IFRS) are global accounting standards for preparing financial statements.\n\nKey standards:\n- IFRS 15: Revenue from Contracts with Customers\n- IFRS 16: Leases (right-of-use assets)\n- IFRS 9: Financial Instruments\n- IAS 1: Presentation of Financial Statements\n- IAS 12: Income Taxes\n- IAS 38: Intangible Assets\n\nFinancial statements components:\n1. Statement of financial position (balance sheet)\n2. Statement of comprehensive income\n3. Statement of changes in equity\n4. Statement of cash flows\n5. Notes\n\nAdopted by over 140 countries, including the EU (mandatory for listed companies).",
+      "country": "GLOBAL",
+      "language": "en",
+      "theme": "Fiscalité",
+      "source": "OECD",
+      "tags": ["IFRS", "IAS", "Accounting", "Financial Reporting"],
+      "is_official": true
+    },
+    {
+      "title": "Convention fiscale OCDE - Modèle de convention",
+      "text": "Le Modèle de Convention fiscale de l'OCDE sert de base aux traités bilatéraux pour éviter la double imposition.\n\nPrincipes clés:\n- Résidence fiscale (Art. 4)\n- Établissement stable (Art. 5)\n- Bénéfices des entreprises (Art. 7)\n- Dividendes (Art. 10)\n- Intérêts (Art. 11)\n- Redevances (Art. 12)\n- Gains en capital (Art. 13)\n- Revenus d'emploi (Art. 15)\n\nMéthodes d'élimination de la double imposition:\n- Méthode de l'exemption\n- Méthode du crédit d'impôt\n\nProcédure amiable (Art. 25) pour résoudre les différends.",
+      "country": "GLOBAL",
+      "language": "fr",
+      "theme": "Fiscalité",
+      "source": "OECD",
+      "tags": ["Convention fiscale", "OCDE", "Double imposition", "Traité"],
+      "is_official": true
+    },
+    {
+      "title": "ILO - International Labour Standards",
+      "text": "The International Labour Organization (ILO) sets international labour standards through conventions and recommendations.\n\nFundamental conventions:\n1. Freedom of Association (C87, C98)\n2. Forced Labour (C29, C105)\n3. Child Labour (C138, C182)\n4. Discrimination (C100, C111)\n\nKey standards:\n- Minimum wage\n- Working hours (max 48h/week, 8h/day)\n- Paid annual leave (min 3 weeks)\n- Maternity protection (14 weeks minimum)\n- Occupational safety and health\n\nMember states: 187 countries\nTripartite structure: governments, employers, workers",
+      "country": "GLOBAL",
+      "language": "en",
+      "theme": "Sécurité Sociale",
+      "source": "UN",
+      "tags": ["ILO", "Labour", "Conventions", "Workers Rights"],
+      "is_official": true
+    },
+    {
+      "title": "Incoterms 2020 - International Commercial Terms",
+      "text": "Incoterms are internationally recognized commercial terms defining seller and buyer responsibilities in international trade.\n\nRules for any mode of transport:\n- EXW (Ex Works): seller delivers at their premises\n- FCA (Free Carrier): seller delivers to carrier\n- CPT (Carriage Paid To): seller pays carriage\n- CIP (Carriage and Insurance Paid To): seller pays carriage + insurance\n- DAP (Delivered at Place): seller delivers at destination\n- DPU (Delivered at Place Unloaded): seller delivers and unloads\n- DDP (Delivered Duty Paid): seller bears all costs and risks\n\nSea and inland waterway transport only:\n- FAS, FOB, CFR, CIF\n\nPublished by ICC (International Chamber of Commerce)",
+      "country": "GLOBAL",
+      "language": "en",
+      "theme": "Commerce",
+      "source": "WTO",
+      "tags": ["Incoterms", "Trade", "ICC", "Import", "Export"],
+      "is_official": true
+    },
+    {
+      "title": "BEPS - Base Erosion and Profit Shifting",
+      "text": "The OECD/G20 BEPS Project addresses tax avoidance strategies that exploit gaps in tax rules.\n\nBEPS 2.0 - Pillar One:\n- Reallocation of taxing rights to market jurisdictions\n- Applies to MNEs with global revenue > €20B and profitability > 10%\n- Amount A: 25% of residual profits reallocated\n\nBEPS 2.0 - Pillar Two (GloBE):\n- Global minimum tax rate of 15%\n- Applies to MNEs with revenue > €750M\n- Income Inclusion Rule (IIR)\n- Undertaxed Profits Rule (UTPR)\n- Qualified Domestic Minimum Top-up Tax (QDMTT)\n\nImplementation: 2024-2025 for most jurisdictions",
+      "country": "GLOBAL",
+      "language": "en",
+      "theme": "Fiscalité",
+      "source": "OECD",
+      "tags": ["BEPS", "Pillar Two", "GloBE", "Minimum Tax", "15%"],
+      "is_official": true
+    },
+    {
+      "title": "EU GDPR - Data Protection Regulation",
+      "text": "The General Data Protection Regulation (GDPR) is the EU regulation on data protection and privacy.\n\nKey principles:\n- Lawfulness, fairness, transparency\n- Purpose limitation\n- Data minimization\n- Accuracy\n- Storage limitation\n- Integrity and confidentiality\n- Accountability\n\nData subject rights:\n- Right of access\n- Right to rectification\n- Right to erasure ('right to be forgotten')\n- Right to data portability\n- Right to object\n\nPenalties:\n- Up to €20M or 4% of global annual turnover\n\nData Protection Officer (DPO) required for large-scale processing.",
+      "country": "GLOBAL",
+      "language": "en",
+      "theme": "Procédures administratives",
+      "source": "EU",
+      "tags": ["GDPR", "Data Protection", "Privacy", "EU", "DPO"],
+      "is_official": true
+    }
+  ]
+}

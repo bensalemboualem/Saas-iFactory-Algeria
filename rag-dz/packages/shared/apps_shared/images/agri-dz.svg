@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <defs>
+    <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#38bdf8;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0ea5e9;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="sun" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fef08a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d4af37;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="field" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="earth" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#92400e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#78350f;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Sky background -->
+  <rect width="400" height="200" fill="url(#sky)"/>
+
+  <!-- Sun rising -->
+  <circle cx="320" cy="60" r="35" fill="url(#sun)"/>
+  <circle cx="320" cy="60" r="30" fill="#fef3c7" opacity="0.6"/>
+  <!-- Sun rays -->
+  <g transform="translate(320, 60)">
+    <line x1="0" y1="-45" x2="0" y2="-55" stroke="#fbbf24" stroke-width="3" stroke-linecap="round"/>
+    <line x1="35" y1="-25" x2="42" y2="-32" stroke="#fbbf24" stroke-width="3" stroke-linecap="round"/>
+    <line x1="45" y1="5" x2="55" y2="5" stroke="#fbbf24" stroke-width="3" stroke-linecap="round"/>
+    <line x1="30" y1="30" x2="37" y2="37" stroke="#fbbf24" stroke-width="3" stroke-linecap="round"/>
+  </g>
+
+  <!-- Mountains/Hills -->
+  <path d="M 0,150 Q 100,120 200,150 T 400,150 L 400,200 L 0,200 Z" fill="#006233" opacity="0.3"/>
+
+  <!-- Fields -->
+  <rect x="0" y="200" width="400" height="100" fill="url(#earth)"/>
+  <rect x="0" y="180" width="400" height="40" fill="url(#field)"/>
+
+  <!-- Field rows -->
+  <line x1="0" y1="195" x2="400" y2="195" stroke="#059669" stroke-width="2" opacity="0.5"/>
+  <line x1="0" y1="205" x2="400" y2="205" stroke="#059669" stroke-width="2" opacity="0.5"/>
+
+  <!-- Palm trees (Algerian style) -->
+  <g transform="translate(80, 150)">
+    <!-- Trunk -->
+    <rect x="-8" y="0" width="16" height="60" fill="#92400e"/>
+    <ellipse cx="0" cy="10" rx="9" ry="5" fill="#78350f"/>
+    <ellipse cx="0" cy="25" rx="9" ry="5" fill="#78350f"/>
+    <ellipse cx="0" cy="40" rx="9" ry="5" fill="#78350f"/>
+    <!-- Fronds -->
+    <path d="M 0,-20 Q -30,-40 -45,-35" stroke="#10b981" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M 0,-20 Q -20,-45 -25,-55" stroke="#10b981" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M 0,-20 Q 0,-50 0,-60" stroke="#059669" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M 0,-20 Q 20,-45 25,-55" stroke="#10b981" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M 0,-20 Q 30,-40 45,-35" stroke="#10b981" stroke-width="4" fill="none" stroke-linecap="round"/>
+  </g>
+
+  <!-- Modern tractor -->
+  <g transform="translate(250, 195)">
+    <!-- Body -->
+    <rect x="10" y="-25" width="60" height="30" rx="5" fill="#d21034"/>
+    <rect x="15" y="-20" width="50" height="20" rx="3" fill="#b91c1c"/>
+    <!-- Cabin -->
+    <rect x="45" y="-40" width="25" height="15" rx="2" fill="#1f2937"/>
+    <rect x="47" y="-38" width="21" height="11" fill="#38bdf8" opacity="0.5"/>
+    <!-- Front wheel (small) -->
+    <circle cx="25" cy="5" r="10" fill="#1f2937"/>
+    <circle cx="25" cy="5" r="6" fill="#4b5563"/>
+    <!-- Back wheel (large) -->
+    <circle cx="60" cy="10" r="18" fill="#1f2937"/>
+    <circle cx="60" cy="10" r="12" fill="#4b5563"/>
+    <circle cx="60" cy="10" r="6" fill="#d4af37"/>
+    <!-- Exhaust -->
+    <rect x="15" y="-35" width="5" height="10" fill="#374151"/>
+    <ellipse cx="17.5" cy="-35" rx="3" ry="2" fill="#6b7280"/>
+  </g>
+
+  <!-- Wheat stalks -->
+  <g transform="translate(150, 190)">
+    <line x1="0" y1="30" x2="0" y2="0" stroke="#d4af37" stroke-width="2"/>
+    <ellipse cx="0" cy="-5" rx="3" ry="8" fill="#fbbf24"/>
+    <line x1="15" y1="30" x2="15" y2="5" stroke="#d4af37" stroke-width="2"/>
+    <ellipse cx="15" cy="0" rx="3" ry="8" fill="#fbbf24"/>
+    <line x1="30" y1="30" x2="30" y2="2" stroke="#d4af37" stroke-width="2"/>
+    <ellipse cx="30" cy="-3" rx="3" ry="8" fill="#fbbf24"/>
+  </g>
+
+  <!-- Star of Algeria -->
+  <g transform="translate(350, 150)">
+    <path d="M 0,-12 L 2.8,-3.7 L 11.4,-3.7 L 4.7,1.7 L 7.4,9.7 L 0,4.3 L -7.4,9.7 L -4.7,1.7 L -11.4,-3.7 L -2.8,-3.7 Z"
+          fill="#d4af37" opacity="0.7"/>
+  </g>
+
+  <!-- Water drops (irrigation) -->
+  <g transform="translate(330, 180)">
+    <ellipse cx="0" cy="0" rx="4" ry="6" fill="#38bdf8" opacity="0.8"/>
+    <ellipse cx="12" cy="5" rx="4" ry="6" fill="#38bdf8" opacity="0.6"/>
+    <ellipse cx="24" cy="3" rx="4" ry="6" fill="#38bdf8" opacity="0.7"/>
+  </g>
+</svg>

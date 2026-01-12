@@ -1,0 +1,31 @@
+
+<!-- PATCH ANTI-NOTIFICATION BBC SCHOOL -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Désactiver toutes les notifications automatiques
+    if (typeof toastr !== "undefined") {
+        const originalToastr = toastr.success;
+        toastr.success = function(message, title) {
+            if (message && (message.includes("Bienvenue") || message.includes("bbc") || message.includes("BBC"))) {
+                console.log("Notification toastr bloquée:", message);
+                return;
+            }
+            return originalToastr.apply(this, arguments);
+        };
+    }
+    
+    // Supprimer toutes les notifications existantes après 1 seconde
+    setTimeout(() => {
+        const allNotifications = document.querySelectorAll(
+            ".bbc-notification, .toast, .alert, .notification, " +
+            "[class*=\"notification\"], [class*=\"toast\"], [class*=\"alert\"]"
+        );
+        allNotifications.forEach(el => {
+            if (el.textContent && el.textContent.toLowerCase().includes("bienvenue")) {
+                el.remove();
+            }
+        });
+    }, 1000);
+});
+</script>
+<!-- FIN PATCH ANTI-NOTIFICATION -->

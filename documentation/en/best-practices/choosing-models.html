@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choosing Models - IAFactory Algeria</title>
+    <link rel="stylesheet" href="../../assets/css/docs-theme.css">
+</head>
+<body>
+    <header class="docs-header">
+        <div class="docs-logo">
+            <img src="../../assets/images/logo.png" alt="IAFactory Algeria">
+            <span>IAFactory Algeria</span>
+        </div>
+        <nav class="main-nav">
+            <a href="../index.html">Documentation</a>
+            <a href="https://app.iafactory-algeria.com">App</a>
+            <a href="../api/index.html">API</a>
+        </nav>
+        <div class="docs-controls">
+            <div class="language-switcher">
+                <button data-lang="fr">FR</button>
+                <button data-lang="en" class="active">EN</button>
+                <button data-lang="ar">AR</button>
+            </div>
+            <div class="theme-toggle">
+                <div class="theme-toggle-slider"></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <!-- ...existing sidebar... -->
+        </aside>
+
+        <main class="docs-main">
+            <h1>Choosing Models</h1>
+
+            <p class="lead">Guide to selecting the optimal AI model based on your use case, budget, and performance requirements.</p>
+
+            <h2 id="overview">Model Overview</h2>
+
+            <p>IAFactory Algeria provides access to a wide range of AI models. Each model has its strengths and optimal use cases.</p>
+
+            <h3 id="categories">Model Categories</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Models</th>
+                        <th>Primary Use</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Flagship</strong></td>
+                        <td>GPT-4.1, Claude Sonnet 4, Gemini 2.5 Pro</td>
+                        <td>Complex tasks, advanced reasoning</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fast</strong></td>
+                        <td>GPT-4.1-mini, Claude Haiku, Gemini Flash</td>
+                        <td>Quick responses, reduced cost</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Code</strong></td>
+                        <td>Codestral, DeepSeek Coder, Claude Code</td>
+                        <td>Programming, debugging, refactoring</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Search</strong></td>
+                        <td>Perplexity, Grok</td>
+                        <td>Web search, current events</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Local</strong></td>
+                        <td>Ollama (Llama 3.3, Mistral, Qwen)</td>
+                        <td>Privacy, offline use</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 id="selection-criteria">Selection Criteria</h2>
+
+            <h3 id="performance">1. Performance and Quality</h3>
+
+            <div class="alert alert-info">
+                <strong>General Rule:</strong> Larger models produce better quality responses but are slower and more expensive.
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Model</th>
+                        <th>Quality</th>
+                        <th>Speed</th>
+                        <th>Cost</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>GPT-4.1</td>
+                        <td>Excellent</td>
+                        <td>Medium</td>
+                        <td>$$$</td>
+                    </tr>
+                    <tr>
+                        <td>Claude Sonnet 4</td>
+                        <td>Excellent</td>
+                        <td>Fast</td>
+                        <td>$$$</td>
+                    </tr>
+                    <tr>
+                        <td>GPT-4.1-mini</td>
+                        <td>Very Good</td>
+                        <td>Very Fast</td>
+                        <td>$</td>
+                    </tr>
+                    <tr>
+                        <td>Claude Haiku</td>
+                        <td>Good</td>
+                        <td>Ultra Fast</td>
+                        <td>$</td>
+                    </tr>
+                    <tr>
+                        <td>Llama 3.3 70B</td>
+                        <td>Very Good</td>
+                        <td>Variable</td>
+                        <td>Free (local)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 id="use-case">2. Use Case</h3>
+
+            <h4>Development and Code</h4>
+
+            <pre><code class="language-json">{
+  "task": "code_generation",
+  "recommended": ["codestral-2508", "claude-sonnet-4", "gpt-4.1"],
+  "budget": ["deepseek-coder", "gpt-4.1-mini"]
+}</code></pre>
+
+            <p><strong>Why:</strong></p>
+            <ul>
+                <li><strong>Codestral</strong>: Specifically optimized for code</li>
+                <li><strong>Claude Sonnet 4</strong>: Excellent at understanding project context</li>
+                <li><strong>GPT-4.1</strong>: Versatile with strong coding capabilities</li>
+            </ul>
+
+            <h4>Writing and Content</h4>
+
+            <pre><code class="language-json">{
+  "task": "content_writing",
+  "recommended": ["claude-sonnet-4", "gpt-4.1"],
+  "budget": ["gpt-4.1-mini", "mistral-large"]
+}</code></pre>
+
+            <h4>Data Analysis</h4>
+
+            <pre><code class="language-json">{
+  "task": "data_analysis",
+  "recommended": ["gpt-4.1", "claude-sonnet-4"],
+  "for_code": ["codestral-2508", "deepseek-coder"]
+}</code></pre>
+
+            <h4>Chat and Customer Support</h4>
+
+            <pre><code class="language-json">{
+  "task": "customer_support",
+  "recommended": ["gpt-4.1-mini", "claude-haiku"],
+  "reason": "Fast, economical, sufficient for FAQ"
+}</code></pre>
+
+            <h4>Research and News</h4>
+
+            <pre><code class="language-json">{
+  "task": "web_search",
+  "recommended": ["perplexity-sonar", "grok"],
+  "note": "These models have real-time web access"
+}</code></pre>
+
+            <h3 id="context-window">3. Context Window</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Model</th>
+                        <th>Context Window</th>
+                        <th>Ideal For</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Claude Sonnet 4</td>
+                        <td>200K tokens</td>
+                        <td>Long documents, code bases</td>
+                    </tr>
+                    <tr>
+                        <td>GPT-4.1</td>
+                        <td>128K tokens</td>
+                        <td>Medium documents</td>
+                    </tr>
+                    <tr>
+                        <td>Gemini 2.5 Pro</td>
+                        <td>1M tokens</td>
+                        <td>Very long documents</td>
+                    </tr>
+                    <tr>
+                        <td>GPT-4.1-mini</td>
+                        <td>128K tokens</td>
+                        <td>General use</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 id="cost">4. Cost</h3>
+
+            <div class="alert alert-warning">
+                <strong>Cost Optimization:</strong>
+                <ul>
+                    <li>Use mini/flash models for prototyping</li>
+                    <li>Reserve flagship models for production</li>
+                    <li>Enable caching for repetitive queries</li>
+                </ul>
+            </div>
+
+            <h2 id="recommendations">Recommendations by Scenario</h2>
+
+            <h3 id="startup">Startup / MVP</h3>
+
+            <pre><code class="language-yaml">development:
+  model: gpt-4.1-mini
+  reason: Good quality/price ratio
+
+production:
+  model: gpt-4.1
+  fallback: gpt-4.1-mini
+
+cost_optimization:
+  cache: true
+  batch_requests: true</code></pre>
+
+            <h3 id="enterprise">Enterprise</h3>
+
+            <pre><code class="language-yaml">primary:
+  model: claude-sonnet-4
+  reason: Best quality, security
+
+code_tasks:
+  model: codestral-2508
+
+support_chat:
+  model: gpt-4.1-mini
+
+sensitive_data:
+  model: ollama/llama3.3
+  reason: Data stays local</code></pre>
+
+            <h3 id="research">Research / Education</h3>
+
+            <pre><code class="language-yaml">analysis:
+  model: gpt-4.1
+  reason: Advanced reasoning
+
+literature_review:
+  model: perplexity-sonar
+  reason: Web access, citations
+
+local_experiments:
+  model: ollama/mistral
+  reason: Free, full control</code></pre>
+
+            <h2 id="model-routing">Intelligent Routing</h2>
+
+            <p>IAFactory supports automatic request routing to the optimal model:</p>
+
+            <pre><code class="language-python">from iafactory import IAFactory
+
+client = IAFactory(api_key="your_key")
+
+# Router configuration
+router_config = {
+    "rules": [
+        {
+            "condition": "task == 'code'",
+            "model": "codestral-2508"
+        },
+        {
+            "condition": "tokens > 50000",
+            "model": "claude-sonnet-4"
+        },
+        {
+            "condition": "urgency == 'high'",
+            "model": "gpt-4.1-mini"
+        }
+    ],
+    "default": "gpt-4.1"
+}
+
+response = client.chat.completions.create(
+    model="auto",  # Automatic routing
+    messages=[...],
+    router_config=router_config
+)</code></pre>
+
+            <h2 id="testing">Testing Models</h2>
+
+            <p>Before choosing, test multiple models on your real use cases:</p>
+
+            <pre><code class="language-python">models_to_test = [
+    "gpt-4.1",
+    "claude-sonnet-4",
+    "gpt-4.1-mini",
+    "codestral-2508"
+]
+
+test_prompt = "Your test prompt"
+
+for model in models_to_test:
+    response = client.chat.completions.create(
+        model=model,
+        messages=[{"role": "user", "content": test_prompt}]
+    )
+    print(f"=== {model} ===")
+    print(f"Time: {response.usage.total_time}ms")
+    print(f"Tokens: {response.usage.total_tokens}")
+    print(f"Cost: ${response.usage.cost}")
+    print(response.choices[0].message.content[:500])
+    print()</code></pre>
+
+            <h2 id="best-practices">Best Practices</h2>
+
+            <ul>
+                <li><strong>Start small</strong>: Test with gpt-4.1-mini before moving to more powerful models</li>
+                <li><strong>Measure</strong>: Track metrics (time, cost, quality) for each model</li>
+                <li><strong>Adapt</strong>: Different tasks may require different models</li>
+                <li><strong>Cache</strong>: Enable caching for repetitive queries</li>
+                <li><strong>Failover</strong>: Configure backup models for availability</li>
+            </ul>
+
+            <div class="alert alert-success">
+                <strong>Next Step:</strong>
+                <p>Check our guide on <a href="./writing-prompts.html">Writing Effective Prompts</a> to maximize your model results.</p>
+            </div>
+        </main>
+
+        <aside class="docs-toc">
+            <h3 class="docs-toc-title">On this page</h3>
+            <ul></ul>
+        </aside>
+    </div>
+
+    <script src="../../assets/js/docs-theme.js"></script>
+</body>
+</html>

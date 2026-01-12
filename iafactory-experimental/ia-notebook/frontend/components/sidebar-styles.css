@@ -1,0 +1,514 @@
+/*
+====================================================================
+  IAFACTORY ALGERIA - SIDEBAR STYLES
+  Version: 2.0 - Décembre 2025
+  Design: Auto-expand on hover (NO manual toggle)
+====================================================================
+*/
+
+/* ==================== VARIABLES ==================== */
+:root {
+    /* Sidebar Dimensions */
+    --iaf-sidebar-width-expanded: 260px;
+    --iaf-sidebar-width-collapsed: 60px;
+    --iaf-sidebar-transition: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Z-Index */
+    --iaf-z-sidebar: 900;
+}
+
+/* ==================== SIDEBAR CONTAINER ==================== */
+.iaf-sidebar {
+    position: fixed;
+    top: var(--iaf-header-height, 60px);
+    left: 0;
+    bottom: 0;
+    width: var(--iaf-sidebar-width-collapsed); /* Start collapsed */
+    background: var(--bg, #020617);
+    backdrop-filter: blur(24px);
+    border-right: 1px solid var(--border, rgba(255, 255, 255, 0.12));
+    z-index: var(--iaf-z-sidebar);
+    transition: width var(--iaf-sidebar-transition);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Expanded State (on hover) */
+.iaf-sidebar.expanded {
+    width: var(--iaf-sidebar-width-expanded);
+}
+
+/* Light Mode */
+[data-theme="light"] .iaf-sidebar {
+    background: var(--bg, #f7f5f0);
+    border-right-color: var(--border, rgba(0, 0, 0, 0.08));
+}
+
+/* ==================== SIDEBAR CONTENT ==================== */
+.iaf-sidebar-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 16px 8px; /* Plus d'espace en haut/bas, moins sur les côtés */
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* Center all items when sidebar is collapsed */
+.iaf-sidebar:not(.expanded) .iaf-sidebar-content {
+    align-items: center;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+/* Make all items auto-width when collapsed so they center properly */
+.iaf-sidebar:not(.expanded) .iaf-sidebar-logo,
+.iaf-sidebar:not(.expanded) .iaf-sidebar-item,
+.iaf-sidebar:not(.expanded) .iaf-sidebar-btn,
+.iaf-sidebar:not(.expanded) .iaf-sidebar-user {
+    width: auto !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+/* ==================== SIDEBAR LOGO (TOP) ==================== */
+.iaf-sidebar-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    margin-bottom: 16px;
+    text-decoration: none;
+    color: var(--iaf-text-primary, #ffffff);
+    border-radius: 10px;
+    transition: all var(--iaf-transition-fast, 150ms);
+}
+
+.iaf-sidebar-logo:hover {
+    background: rgba(0, 166, 81, 0.1);
+}
+
+/* When collapsed, center logo flag only */
+.iaf-sidebar:not(.expanded) .iaf-sidebar-logo {
+    justify-content: center;
+    padding: 12px 8px;
+}
+
+/* RTL (AR): Logo to the right */
+[dir="rtl"] .iaf-sidebar:not(.expanded) .iaf-sidebar-logo {
+    transform: translateX(5px) !important; /* AR: to the right */
+}
+
+.sidebar-logo-flag {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.sidebar-logo-text {
+    font-size: 15px;
+    font-weight: 700;
+    white-space: nowrap;
+    opacity: 1;
+    transition: opacity var(--iaf-sidebar-transition);
+    display: inline-flex;
+    align-items: center;
+}
+
+/* Logo letter animations - SPÉCIFIQUE à la sidebar */
+.iaf-sidebar .sidebar-logo-text .letter {
+    display: inline-block;
+    font-weight: 700;
+    animation: sidebarLetterFadeIn 0.6s ease-out backwards;
+}
+
+@keyframes sidebarLetterFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.iaf-sidebar .sidebar-logo-text .i-drop {
+    position: relative;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 1px;
+}
+
+.iaf-sidebar .sidebar-logo-text .i-stem {
+    font-size: 15px;
+    line-height: 0.8;
+}
+
+.iaf-sidebar .sidebar-logo-text .i-dot {
+    font-size: 8px;
+    margin-top: -2px;
+}
+
+/* Hide logo text when collapsed */
+.iaf-sidebar:not(.expanded) .sidebar-logo-text {
+    opacity: 0;
+    width: 0;
+}
+
+/* Custom Scrollbar */
+.iaf-sidebar-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.iaf-sidebar-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.iaf-sidebar-content::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+.iaf-sidebar-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* ==================== MAIN NAVIGATION ==================== */
+.iaf-sidebar-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* ==================== BOTTOM SECTION ==================== */
+.iaf-sidebar-bottom {
+    margin-top: auto;
+    padding-top: 12px;
+    border-top: 1px solid var(--iaf-border, rgba(255, 255, 255, 0.1));
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+[data-theme="light"] .iaf-sidebar-bottom {
+    border-top-color: rgba(0, 0, 0, 0.1);
+}
+
+/* ==================== SIDEBAR ITEMS ==================== */
+.iaf-sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px; /* Plus de padding pour éloigner du bord */
+    background: transparent;
+    border: none;
+    border-radius: 10px;
+    color: var(--iaf-text-secondary, rgba(255, 255, 255, 0.7));
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all var(--iaf-transition-fast, 150ms);
+    white-space: nowrap;
+    position: relative;
+    justify-content: flex-start;
+}
+
+/* When collapsed, center icons */
+.iaf-sidebar:not(.expanded) .iaf-sidebar-item {
+    justify-content: center;
+    padding: 12px 8px; /* Padding centré quand collapsed */
+}
+
+.iaf-sidebar-item:hover {
+    background: rgba(0, 166, 81, 0.15);
+    color: var(--iaf-primary, #00a651);
+}
+
+.iaf-sidebar-item:active {
+    transform: scale(0.97);
+}
+
+/* Light Mode */
+[data-theme="light"] .iaf-sidebar-item {
+    color: rgba(0, 0, 0, 0.7);
+}
+
+[data-theme="light"] .iaf-sidebar-item:hover {
+    background: rgba(0, 166, 81, 0.1);
+}
+
+/* ==================== SIDEBAR ICONS ==================== */
+.iaf-sidebar-icon {
+    font-size: 18px;
+    min-width: 18px;
+    opacity: 0.9;
+    transition: all var(--iaf-transition-fast, 150ms);
+}
+
+.iaf-sidebar-item:hover .iaf-sidebar-icon {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* ==================== SIDEBAR LABELS ==================== */
+.iaf-sidebar-label {
+    opacity: 1;
+    transition: opacity var(--iaf-sidebar-transition);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Hide labels when collapsed */
+.iaf-sidebar:not(.expanded) .iaf-sidebar-label {
+    opacity: 0;
+    width: 0;
+}
+
+/* ==================== TOOLTIPS (for collapsed state) ==================== */
+.iaf-sidebar:not(.expanded) .iaf-sidebar-item::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: calc(100% + 12px);
+    padding: 6px 12px;
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    font-size: 13px;
+    border-radius: 6px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--iaf-transition-fast, 150ms);
+    z-index: 1000;
+}
+
+.iaf-sidebar:not(.expanded) .iaf-sidebar-item:hover::after {
+    opacity: 1;
+}
+
+/* ==================== SETTINGS + THEME ACTIONS (HORIZONTAL) ==================== */
+.iaf-sidebar-actions {
+    display: flex;
+    gap: 6px;
+    justify-content: space-between;
+}
+
+/* When collapsed: center buttons */
+.iaf-sidebar:not(.expanded) .iaf-sidebar-actions {
+    flex-direction: column;
+    align-items: center;
+}
+
+.iaf-sidebar-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px; /* Plus de padding */
+    background: transparent;
+    border: none; /* Pas de bordure */
+    border-radius: 8px;
+    color: var(--iaf-text-secondary, rgba(255, 255, 255, 0.7));
+    font-size: 16px;
+    cursor: pointer;
+    transition: all var(--iaf-transition-fast, 150ms);
+    position: relative;
+}
+
+.iaf-sidebar-btn:hover {
+    background: rgba(0, 166, 81, 0.15);
+    color: var(--iaf-primary, #00a651);
+}
+
+/* When collapsed: show tooltips */
+.iaf-sidebar:not(.expanded) .iaf-sidebar-btn::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: calc(100% + 12px);
+    padding: 6px 12px;
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    font-size: 13px;
+    border-radius: 6px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--iaf-transition-fast, 150ms);
+    z-index: 1000;
+}
+
+.iaf-sidebar:not(.expanded) .iaf-sidebar-btn:hover::after {
+    opacity: 1;
+}
+
+/* ==================== USER BUTTON (BOTTOM) ==================== */
+.iaf-sidebar-user {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centrer le contenu */
+    gap: 10px;
+    padding: 12px; /* Plus de padding */
+    background: var(--bg, #020617); /* Couleur de la page (dark/light) */
+    border: none; /* Pas de bordure */
+    border-radius: 10px;
+    color: var(--iaf-text-primary, #ffffff);
+    cursor: pointer;
+    transition: all var(--iaf-transition-fast, 150ms);
+    width: 100%;
+    overflow: hidden;
+}
+
+.iaf-sidebar-user:hover {
+    background: rgba(0, 166, 81, 0.15); /* Léger fond au hover */
+}
+
+/* When collapsed: center avatar only */
+.iaf-sidebar:not(.expanded) .iaf-sidebar-user {
+    justify-content: center;
+    padding: 12px 8px; /* Match other items' padding */
+    transform: translateX(3px); /* FR/EN: slightly right */
+}
+
+/* RTL (AR): User button to the left */
+[dir="rtl"] .iaf-sidebar:not(.expanded) .iaf-sidebar-user {
+    transform: translateX(-10px) !important; /* AR: more to the left */
+}
+
+/* ==================== USER AVATAR ==================== */
+.iaf-user-avatar {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    background: linear-gradient(135deg, var(--iaf-green, #00a651) 0%, #00c761 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    color: white;
+    text-transform: uppercase;
+}
+
+/* ==================== USER INFO ==================== */
+.iaf-user-info {
+    /* flex: 1; REMOVED - pour mieux centrer le bouton */
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+    opacity: 1;
+    transition: opacity var(--iaf-sidebar-transition);
+}
+
+/* Hide user info when collapsed */
+.iaf-sidebar:not(.expanded) .iaf-user-info {
+    opacity: 0;
+    width: 0;
+}
+
+.iaf-user-name {
+    font-size: 13px; /* Réduit de 14px pour mieux rentrer */
+    font-weight: 600;
+    color: var(--iaf-text-primary, #ffffff);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.iaf-user-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px; /* Réduit de 12px pour mieux rentrer */
+    color: var(--iaf-text-muted, rgba(255, 255, 255, 0.5));
+}
+
+.iaf-user-profile {
+    white-space: nowrap;
+}
+
+.iaf-user-separator {
+    opacity: 0.5;
+}
+
+.iaf-user-tokens {
+    white-space: nowrap;
+}
+
+/* ==================== USER MENU ICON ==================== */
+.iaf-user-menu-icon {
+    display: none; /* Caché pour mieux centrer le bouton user */
+    font-size: 16px;
+    color: var(--iaf-text-muted, rgba(255, 255, 255, 0.5));
+    opacity: 1;
+    transition: opacity var(--iaf-sidebar-transition);
+}
+
+/* Hide menu icon when collapsed */
+.iaf-sidebar:not(.expanded) .iaf-user-menu-icon {
+    opacity: 0;
+    width: 0;
+}
+
+/* ==================== RESPONSIVE (Mobile) ==================== */
+@media (max-width: 768px) {
+    .iaf-sidebar {
+        transform: translateX(-100%);
+    }
+
+    .iaf-sidebar.expanded {
+        transform: translateX(0);
+        width: var(--iaf-sidebar-width-expanded);
+    }
+}
+
+/* ==================== ANIMATIONS ==================== */
+@keyframes slideIn {
+    from {
+        transform: translateX(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.iaf-sidebar-item {
+    animation: slideIn 0.3s ease-out;
+}
+
+/* Stagger animation for items */
+.iaf-sidebar-main .iaf-sidebar-item:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.iaf-sidebar-main .iaf-sidebar-item:nth-child(2) {
+    animation-delay: 0.05s;
+}
+
+.iaf-sidebar-main .iaf-sidebar-item:nth-child(3) {
+    animation-delay: 0.1s;
+}
+
+/* ==================== ACCESSIBILITY ==================== */
+.iaf-sidebar-item:focus,
+.iaf-sidebar-btn:focus,
+.iaf-sidebar-user:focus {
+    outline: 2px solid var(--iaf-primary, #00a651);
+    outline-offset: 2px;
+}
+
+/* ==================== PRINT ==================== */
+@media print {
+    .iaf-sidebar {
+        display: none;
+    }
+}

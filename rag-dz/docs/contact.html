@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - IAFactory Algeria</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00c261;
+            --primary-dark: #00a050;
+            --bg: #0a0a0a;
+            --surface: #111;
+            --surface-light: #1a1a1a;
+            --text: #fff;
+            --text-muted: #888;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+        
+        .header { background: rgba(10,10,10,0.95); padding: 1rem 2rem; position: fixed; top: 0; left: 0; right: 0; z-index: 100; border-bottom: 1px solid #222; }
+        .header-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--primary); text-decoration: none; }
+        .back-btn { background: var(--primary); color: #000; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; }
+
+        .main { max-width: 1200px; margin: 0 auto; padding: 120px 2rem 4rem; }
+        .page-header { text-align: center; margin-bottom: 4rem; }
+        .page-header h1 { font-size: 3rem; margin-bottom: 1rem; background: linear-gradient(135deg, var(--primary), #00ff88); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .page-header p { font-size: 1.2rem; color: var(--text-muted); }
+
+        /* Contact Grid */
+        .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; margin-bottom: 4rem; }
+
+        /* Contact Info */
+        .contact-info h2 { font-size: 2rem; margin-bottom: 2rem; }
+        .info-card { background: var(--surface); border: 1px solid #222; border-radius: 16px; padding: 1.5rem; margin-bottom: 1.5rem; display: flex; gap: 1.5rem; transition: all 0.3s; }
+        .info-card:hover { border-color: var(--primary); }
+        .info-icon { width: 50px; height: 50px; background: linear-gradient(135deg, var(--primary), #00ff88); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
+        .info-content h4 { margin-bottom: 0.5rem; }
+        .info-content p { color: var(--text-muted); font-size: 0.95rem; }
+        .info-content a { color: var(--primary); text-decoration: none; }
+        .info-content a:hover { text-decoration: underline; }
+
+        /* Social */
+        .social-section { margin-top: 2rem; }
+        .social-section h3 { margin-bottom: 1rem; }
+        .social-links { display: flex; gap: 1rem; }
+        .social-link { width: 45px; height: 45px; background: var(--surface); border: 1px solid #333; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 1.2rem; transition: all 0.3s; text-decoration: none; }
+        .social-link:hover { background: var(--primary); color: #000; border-color: var(--primary); }
+
+        /* Contact Form */
+        .contact-form { background: var(--surface); border: 1px solid #222; border-radius: 20px; padding: 2.5rem; }
+        .contact-form h2 { font-size: 1.8rem; margin-bottom: 2rem; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; background: var(--bg); border: 1px solid #333; border-radius: 10px; padding: 1rem; color: var(--text); font-size: 1rem; transition: border-color 0.3s; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--primary); }
+        .form-group textarea { min-height: 150px; resize: vertical; }
+        .form-group select { cursor: pointer; }
+        .submit-btn { width: 100%; background: var(--primary); color: #000; border: none; padding: 1rem 2rem; border-radius: 12px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s; }
+        .submit-btn:hover { background: var(--primary-dark); transform: translateY(-2px); }
+
+        /* Map */
+        .map-section { margin-bottom: 4rem; }
+        .map-section h2 { text-align: center; margin-bottom: 2rem; font-size: 2rem; }
+        .map-container { background: var(--surface); border: 1px solid #222; border-radius: 20px; overflow: hidden; height: 400px; display: flex; align-items: center; justify-content: center; }
+        .map-placeholder { text-align: center; color: var(--text-muted); }
+        .map-placeholder i { font-size: 4rem; margin-bottom: 1rem; color: var(--primary); }
+
+        /* FAQ */
+        .faq { margin-bottom: 4rem; }
+        .faq h2 { text-align: center; margin-bottom: 2rem; font-size: 2rem; }
+        .faq-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 1.5rem; }
+        .faq-item { background: var(--surface); border: 1px solid #222; border-radius: 12px; padding: 1.5rem; }
+        .faq-item h4 { color: var(--primary); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
+        .faq-item p { color: var(--text-muted); font-size: 0.95rem; }
+
+        footer { background: var(--surface); border-top: 1px solid #222; padding: 2rem; text-align: center; color: var(--text-muted); margin-top: 4rem; }
+
+        @media (max-width: 768px) {
+            .page-header h1 { font-size: 2rem; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .form-row { grid-template-columns: 1fr; }
+            .faq-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+<link rel="stylesheet" href="/apps/shared/iafactory-unified.css">
+</head>
+<body>
+<!-- IAFactory Trilingue Controls -->
+<div class="iaf-controls-floating" style="position:fixed;top:20px;right:20px;z-index:9998;display:flex;gap:10px;align-items:center;">
+    <div class="iaf-lang-dropdown" style="position:relative;">
+        <button class="iaf-lang-btn" onclick="IAFUnified.toggleLangMenu()" 
+            style="background:#667eea;color:white;border:none;padding:8px 15px;border-radius:8px;cursor:pointer;font-size:14px;display:flex;align-items:center;gap:5px;">
+            🌐 <span id="current-lang-label">FR</span> ▼
+        </button>
+        <div class="iaf-lang-menu" id="lang-menu" 
+            style="display:none;position:absolute;top:100%;right:0;background:white;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,0.15);min-width:150px;margin-top:5px;overflow:hidden;">
+            <button onclick="IAFUnified.changeLang('fr')" style="width:100%;padding:10px 15px;border:none;background:none;text-align:left;cursor:pointer;">🇫🇷 Français</button>
+            <button onclick="IAFUnified.changeLang('ar')" style="width:100%;padding:10px 15px;border:none;background:none;text-align:left;cursor:pointer;">🇩🇿 العربية</button>
+            <button onclick="IAFUnified.changeLang('en')" style="width:100%;padding:10px 15px;border:none;background:none;text-align:left;cursor:pointer;">🇬🇧 English</button>
+        </div>
+    </div>
+    <button class="iaf-theme-toggle" onclick="IAFUnified.toggleTheme()" 
+        style="background:#667eea;color:white;border:none;padding:8px 12px;border-radius:8px;cursor:pointer;font-size:16px;" 
+        title="Toggle theme">🌓</button>
+</div>
+
+    <header class="header">
+        <div class="header-content">
+            <a href="../landing-complete-responsive.html" class="logo">🇩🇿 IAFactory</a>
+            <a href="../landing-complete-responsive.html" class="back-btn"><i class="fas fa-arrow-left"></i> Retour</a>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="page-header">
+            <h1>📞 Contactez-nous</h1>
+            <p>Notre équipe est à votre disposition pour répondre à toutes vos questions</p>
+        </div>
+
+        <div class="contact-grid">
+            <div class="contact-info">
+                <h2>Nos Coordonnées</h2>
+                
+                <div class="info-card">
+                    <div class="info-icon">📍</div>
+                    <div class="info-content">
+                        <h4>Adresse</h4>
+                        <p>Centre d'Affaires, Boulevard Mohamed V<br>Alger, Algérie 16000</p>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon">📧</div>
+                    <div class="info-content">
+                        <h4>Email</h4>
+                        <p><a href="mailto:contact@iafactory.dz">contact@iafactory.dz</a></p>
+                        <p><a href="mailto:support@iafactory.dz">support@iafactory.dz</a></p>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon">📱</div>
+                    <div class="info-content">
+                        <h4>Téléphone</h4>
+                        <p>+213 (0) 21 XX XX XX</p>
+                        <p>+213 (0) 5XX XX XX XX (Mobile)</p>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon">🕐</div>
+                    <div class="info-content">
+                        <h4>Horaires</h4>
+                        <p>Dimanche - Jeudi : 9h00 - 17h00</p>
+                        <p>Support technique : 24/7</p>
+                    </div>
+                </div>
+
+                <div class="social-section">
+                    <h3>Suivez-nous</h3>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-form">
+                <h2>Envoyez-nous un message</h2>
+                <form>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nom">Nom complet *</label>
+                            <input type="text" id="nom" required placeholder="Votre nom">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" required placeholder="votre@email.com">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="telephone">Téléphone</label>
+                            <input type="tel" id="telephone" placeholder="+213 XXX XXX XXX">
+                        </div>
+                        <div class="form-group">
+                            <label for="entreprise">Entreprise</label>
+                            <input type="text" id="entreprise" placeholder="Nom de votre entreprise">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sujet">Sujet *</label>
+                        <select id="sujet" required>
+                            <option value="">Sélectionnez un sujet</option>
+                            <option value="demo">Demande de démonstration</option>
+                            <option value="devis">Demande de devis</option>
+                            <option value="support">Support technique</option>
+                            <option value="partenariat">Partenariat</option>
+                            <option value="emploi">Opportunité d'emploi</option>
+                            <option value="autre">Autre</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Message *</label>
+                        <textarea id="message" required placeholder="Décrivez votre besoin ou votre question..."></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-paper-plane"></i> Envoyer le message
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="map-section">
+            <h2>📍 Nous Trouver</h2>
+            <div class="map-container">
+                <div class="map-placeholder">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <p>Centre d'Affaires, Boulevard Mohamed V, Alger</p>
+                    <p style="font-size: 0.85rem; margin-top: 0.5rem;">Carte Google Maps</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq">
+            <h2>❓ Questions Fréquentes</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h4><i class="fas fa-clock"></i> Quel est le délai de réponse ?</h4>
+                    <p>Nous répondons généralement dans les 24 heures ouvrables. Pour les urgences, contactez notre support technique.</p>
+                </div>
+                <div class="faq-item">
+                    <h4><i class="fas fa-calendar"></i> Comment obtenir une démo ?</h4>
+                    <p>Remplissez le formulaire avec "Demande de démonstration" et nous vous contacterons pour planifier un rendez-vous.</p>
+                </div>
+                <div class="faq-item">
+                    <h4><i class="fas fa-headset"></i> Support technique disponible ?</h4>
+                    <p>Notre support technique est disponible 24/7 pour les clients Enterprise. Standard : Dimanche-Jeudi 9h-17h.</p>
+                </div>
+                <div class="faq-item">
+                    <h4><i class="fas fa-handshake"></i> Partenariat possible ?</h4>
+                    <p>Nous sommes ouverts aux partenariats. Sélectionnez "Partenariat" dans le formulaire pour nous faire part de votre proposition.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2025 IAFactory Algeria. Tous droits réservés.</p>
+    </footer>
+<script src="/apps/shared/iafactory-unified.js"></script>
+<!-- IAFactory Chatbot -->
+<button class="iaf-chatbot-btn" onclick="IAFUnified.toggleChatbot()" title="Aide" aria-label="Aide">💬</button>
+<div data-iaf-footer></div>
+</body>
+</html>

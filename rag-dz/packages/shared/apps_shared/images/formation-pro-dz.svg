@@ -1,0 +1,220 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <defs>
+    <linearGradient id="bgFormation" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fff7ed;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ffedd5;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="tools" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#9ca3af;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6b7280;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="badge" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f97316;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="growth" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" style="stop-color:#059669;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#10b981;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="300" fill="url(#bgFormation)"/>
+
+  <!-- Decorative circles -->
+  <circle cx="350" cy="50" r="35" fill="#f97316" opacity="0.15"/>
+  <circle cx="50" cy="250" r="40" fill="#006233" opacity="0.15"/>
+
+  <!-- Tool box/Professional tools -->
+  <g transform="translate(80, 140)">
+    <!-- Toolbox body -->
+    <rect x="0" y="20" width="100" height="60" rx="4" fill="#dc2626"/>
+    <rect x="2" y="22" width="96" height="56" rx="3" fill="#ef4444"/>
+
+    <!-- Toolbox top compartment -->
+    <rect x="10" y="10" width="80" height="15" fill="#b91c1c"/>
+    <rect x="12" y="12" width="76" height="11" fill="#dc2626"/>
+
+    <!-- Handle -->
+    <path d="M 30,10 Q 30,0 50,0 Q 70,0 70,10" stroke="#6b7280" stroke-width="5" fill="none" stroke-linecap="round"/>
+
+    <!-- Lock -->
+    <rect x="47" y="45" width="6" height="10" rx="1" fill="#fbbf24"/>
+    <circle cx="50" cy="50" r="2" fill="#92400e"/>
+
+    <!-- Toolbox lines -->
+    <line x1="5" y1="35" x2="95" y2="35" stroke="#b91c1c" stroke-width="1"/>
+    <line x1="5" y1="50" x2="95" y2="50" stroke="#b91c1c" stroke-width="1"/>
+  </g>
+
+  <!-- Wrench -->
+  <g transform="translate(200, 180)">
+    <rect x="0" y="0" width="8" height="50" rx="2" fill="url(#tools)" transform="rotate(30)"/>
+    <circle cx="4" cy="0" r="10" fill="url(#tools)" transform="rotate(30)"/>
+    <circle cx="4" cy="0" r="6" fill="#4b5563" transform="rotate(30)"/>
+    <rect x="8" y="-2" width="6" height="4" fill="url(#tools)" transform="rotate(30)"/>
+  </g>
+
+  <!-- Hammer -->
+  <g transform="translate(220, 160)">
+    <rect x="0" y="15" width="6" height="45" rx="1" fill="#92400e" transform="rotate(20)"/>
+    <rect x="-10" y="10" width="30" height="12" rx="2" fill="url(#tools)" transform="rotate(20)"/>
+    <rect x="-8" y="12" width="26" height="8" fill="#6b7280" transform="rotate(20)"/>
+  </g>
+
+  <!-- Screwdriver -->
+  <g transform="translate(240, 200)">
+    <rect x="0" y="0" width="5" height="35" fill="#fbbf24" transform="rotate(-15)"/>
+    <polygon points="0,35 2.5,45 5,35" fill="#9ca3af" transform="rotate(-15)"/>
+    <circle cx="2.5" cy="-2" r="4" fill="#dc2626" transform="rotate(-15)"/>
+  </g>
+
+  <!-- Certificate/Badge -->
+  <g transform="translate(280, 100)">
+    <!-- Badge star shape background -->
+    <circle cx="0" cy="0" r="45" fill="url(#badge)"/>
+    <circle cx="0" cy="0" r="42" fill="#fb923c"/>
+
+    <!-- Star points -->
+    <g>
+      <polygon points="0,-40 8,-15 35,-15 14,0 22,28 0,12 -22,28 -14,0 -35,-15 -8,-15" fill="url(#badge)"/>
+      <polygon points="0,-35 7,-13 30,-13 12,0 19,24 0,10 -19,24 -12,0 -30,-13 -7,-13" fill="#fbbf24"/>
+    </g>
+
+    <!-- Center circle -->
+    <circle cx="0" cy="0" r="20" fill="#ffffff"/>
+    <circle cx="0" cy="0" r="18" fill="#fffbeb"/>
+
+    <!-- Checkmark/Success -->
+    <path d="M -8,0 L -3,8 L 10,-8" stroke="#10b981" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Ribbon -->
+    <path d="M -15,35 L -10,60 L -5,50" fill="#dc2626"/>
+    <path d="M 15,35 L 10,60 L 5,50" fill="#dc2626"/>
+  </g>
+
+  <!-- Skills progress bars -->
+  <g transform="translate(50, 60)">
+    <rect x="0" y="0" width="120" height="60" rx="6" fill="#ffffff" opacity="0.95"/>
+
+    <!-- Title -->
+    <text x="10" y="15" font-family="Arial" font-size="10" fill="#1e40af" font-weight="bold">Compétences</text>
+
+    <!-- Skill 1 -->
+    <rect x="10" y="22" width="100" height="6" rx="3" fill="#e5e7eb"/>
+    <rect x="10" y="22" width="85" height="6" rx="3" fill="#10b981"/>
+    <text x="92" y="27" font-family="Arial" font-size="7" fill="#059669" font-weight="bold">85%</text>
+
+    <!-- Skill 2 -->
+    <rect x="10" y="33" width="100" height="6" rx="3" fill="#e5e7eb"/>
+    <rect x="10" y="33" width="70" height="6" rx="3" fill="#3b82f6"/>
+    <text x="77" y="38" font-family="Arial" font-size="7" fill="#1e40af" font-weight="bold">70%</text>
+
+    <!-- Skill 3 -->
+    <rect x="10" y="44" width="100" height="6" rx="3" fill="#e5e7eb"/>
+    <rect x="10" y="44" width="92" height="6" rx="3" fill="#f59e0b"/>
+    <text x="99" y="49" font-family="Arial" font-size="7" fill="#d97706" font-weight="bold">92%</text>
+  </g>
+
+  <!-- Growth chart -->
+  <g transform="translate(300, 220)">
+    <rect x="0" y="0" width="80" height="60" rx="4" fill="#ffffff" opacity="0.95"/>
+
+    <!-- Chart bars -->
+    <rect x="10" y="40" width="10" height="10" fill="#10b981"/>
+    <rect x="25" y="30" width="10" height="20" fill="#10b981"/>
+    <rect x="40" y="20" width="10" height="30" fill="#34d399"/>
+    <rect x="55" y="10" width="10" height="40" fill="url(#growth)"/>
+
+    <!-- Arrow up -->
+    <path d="M 70,8 L 75,3 L 75,13 Z" fill="#10b981"/>
+  </g>
+
+  <!-- Hard hat (safety/construction training) -->
+  <g transform="translate(340, 180)">
+    <ellipse cx="0" cy="12" rx="30" ry="8" fill="#374151" opacity="0.3"/>
+    <path d="M -27,12 L -22,-5 Q 0,-15 22,-5 L 27,12 Z" fill="#f97316"/>
+    <path d="M -22,-5 Q 0,-12 22,-5" fill="#fb923c"/>
+    <ellipse cx="0" cy="-8" rx="14" ry="5" fill="#fbbf24"/>
+
+    <!-- Algerian flag sticker -->
+    <rect x="-10" y="0" width="10" height="7" fill="#006233"/>
+    <rect x="0" y="0" width="10" height="7" fill="#ffffff"/>
+    <circle cx="5" cy="3.5" r="2" fill="#d21034"/>
+  </g>
+
+  <!-- Training manual/book -->
+  <g transform="translate(120, 230)">
+    <rect x="5" y="5" width="60" height="45" rx="3" fill="#94a3b8"/>
+    <rect x="0" y="0" width="60" height="45" rx="3" fill="#3b82f6"/>
+    <rect x="2" y="2" width="56" height="41" rx="2" fill="#60a5fa"/>
+
+    <!-- Book spine -->
+    <rect x="0" y="0" width="8" height="45" rx="3" fill="#1e40af"/>
+
+    <!-- Text lines -->
+    <line x1="15" y1="12" x2="50" y2="12" stroke="#ffffff" stroke-width="2"/>
+    <line x1="15" y1="20" x2="48" y2="20" stroke="#dbeafe" stroke-width="1.5"/>
+    <line x1="15" y1="26" x2="45" y2="26" stroke="#dbeafe" stroke-width="1.5"/>
+    <line x1="15" y1="32" x2="50" y2="32" stroke="#dbeafe" stroke-width="1.5"/>
+  </g>
+
+  <!-- Gears (mechanism/process) -->
+  <g transform="translate(200, 80)">
+    <!-- Large gear -->
+    <circle cx="0" cy="0" r="25" fill="#f97316"/>
+    <circle cx="0" cy="0" r="20" fill="#fb923c"/>
+    <circle cx="0" cy="0" r="10" fill="#ffffff"/>
+
+    <!-- Gear teeth -->
+    <rect x="-4" y="-28" width="8" height="8" fill="#f97316"/>
+    <rect x="-4" y="20" width="8" height="8" fill="#f97316"/>
+    <rect x="-28" y="-4" width="8" height="8" fill="#f97316"/>
+    <rect x="20" y="-4" width="8" height="8" fill="#f97316"/>
+
+    <!-- Small gear -->
+    <circle cx="35" cy="-20" r="18" fill="#6b7280"/>
+    <circle cx="35" cy="-20" r="14" fill="#9ca3af"/>
+    <circle cx="35" cy="-20" r="7" fill="#ffffff"/>
+
+    <!-- Small gear teeth -->
+    <rect x="32" y="-22" width="6" height="6" fill="#6b7280" transform="translate(35, -20) rotate(0) translate(-35, 20)"/>
+    <rect x="32" y="-22" width="6" height="6" fill="#6b7280" transform="translate(35, -20) rotate(90) translate(-35, 20)"/>
+  </g>
+
+  <!-- Clipboard with checklist -->
+  <g transform="translate(50, 180)">
+    <rect x="0" y="0" width="50" height="70" rx="3" fill="#6b7280"/>
+    <rect x="2" y="2" width="46" height="66" fill="#ffffff"/>
+
+    <!-- Clip -->
+    <rect x="18" y="-3" width="14" height="6" rx="2" fill="#9ca3af"/>
+
+    <!-- Checklist items -->
+    <rect x="8" y="12" width="6" height="6" fill="none" stroke="#10b981" stroke-width="2"/>
+    <path d="M 9,15 L 11,17 L 13,13" stroke="#10b981" stroke-width="1.5" fill="none"/>
+    <line x1="18" y1="15" x2="42" y2="15" stroke="#94a3b8" stroke-width="1.5"/>
+
+    <rect x="8" y="24" width="6" height="6" fill="none" stroke="#10b981" stroke-width="2"/>
+    <path d="M 9,27 L 11,29 L 13,25" stroke="#10b981" stroke-width="1.5" fill="none"/>
+    <line x1="18" y1="27" x2="42" y2="27" stroke="#94a3b8" stroke-width="1.5"/>
+
+    <rect x="8" y="36" width="6" height="6" fill="none" stroke="#3b82f6" stroke-width="2"/>
+    <line x1="18" y1="39" x2="42" y2="39" stroke="#94a3b8" stroke-width="1.5"/>
+
+    <rect x="8" y="48" width="6" height="6" fill="none" stroke="#cbd5e1" stroke-width="2"/>
+    <line x1="18" y1="51" x2="42" y2="51" stroke="#cbd5e1" stroke-width="1.5"/>
+  </g>
+
+  <!-- Algerian crescent and star -->
+  <g transform="translate(30, 40)">
+    <path d="M 0,-12 A 10,10 0 1,1 0,8 A 8,8 0 1,0 0,-12" fill="#006233"/>
+    <path d="M 10,-2 L 11.5,2 L 15.5,2 L 12.5,4.5 L 14,8.5 L 10,6 L 6,8.5 L 7.5,4.5 L 4.5,2 L 8.5,2 Z" fill="#d4af37"/>
+  </g>
+
+  <!-- Star of Algeria -->
+  <g transform="translate(370, 20)">
+    <path d="M 0,-12 L 2.8,-3.7 L 11.4,-3.7 L 4.7,1.7 L 7.4,9.7 L 0,4.3 L -7.4,9.7 L -4.7,1.7 L -11.4,-3.7 L -2.8,-3.7 Z"
+          fill="#006233"/>
+  </g>
+</svg>

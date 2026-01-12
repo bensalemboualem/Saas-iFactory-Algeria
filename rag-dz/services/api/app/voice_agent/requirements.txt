@@ -1,0 +1,27 @@
+# Faster-Whisper Voice Agent Requirements
+# Reconnaissance vocale souveraine multi-langues
+
+# Core Faster-Whisper
+ctranslate2>=4.0,<5
+faster-whisper>=1.1.0
+
+# Hugging Face (téléchargement modèles)
+huggingface_hub>=0.23
+tokenizers>=0.13,<1
+
+# Audio processing
+av>=11
+soundfile>=0.12
+librosa>=0.10
+
+# Machine Learning
+onnxruntime>=1.14,<2
+torch>=2.0  # Optionnel (pour GPU CUDA)
+
+# Utils
+tqdm
+requests
+
+# FastAPI (déjà installé dans backend principal)
+# fastapi>=0.104
+# uvicorn[standard]>=0.24

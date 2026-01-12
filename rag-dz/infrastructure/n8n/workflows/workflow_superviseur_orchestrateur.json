@@ -1,0 +1,278 @@
+{
+  "name": "Superviseur Orchestrateur BMAD",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 5
+            }
+          ]
+        }
+      },
+      "id": "schedule-supervisor",
+      "name": "Planification 5 min",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $env.BACKEND_URL || 'http://backend:8180' }}/api/orchestrator/pending-workflows?limit=25",
+        "options": {
+          "timeout": 15000
+        },
+        "headerParametersUi": {
+          "parameter": [
+            {
+              "name": "X-API-Key",
+              "value": "={{ $env.API_KEY || 'change-me-in-production' }}"
+            }
+          ]
+        }
+      },
+      "id": "fetch-pending",
+      "name": "Récupérer backlog",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        460,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "functionCode": "const pending = $json.pending || [];\nif (!Array.isArray(pending) || pending.length === 0) {\n  return [];\n}\nreturn pending.map(item => ({ json: item }));"
+      },
+      "id": "expand-pending",
+      "name": "Déplier orchestrations",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        700,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "functionCode": "const ageMinutes = $json.age_minutes ?? 0;\nconst needsRecovery = ($json.status === 'failed') || ageMinutes > 15;\nconst needsHuman = (!$json.project_ready && ($json.missing_signals || []).length > 0);\nreturn [\n  {\n    json: {\n      ...$json,\n      needs_recovery: needsRecovery,\n      needs_human: needsHuman,\n      age_minutes: ageMinutes\n    }\n  }\n];"
+      },
+      "id": "tag-decisions",
+      "name": "Annoter décisions",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        920,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "leftValue": "={{ $json.needs_recovery }}",
+              "rightValue": true
+            }
+          ]
+        }
+      },
+      "id": "if-recovery",
+      "name": "Reprise automatique?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1160,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $env.BACKEND_URL || 'http://backend:8180' }}/api/orchestrator/pending-workflows/{{$json.id}}/recover",
+        "method": "POST",
+        "headerParametersUi": {
+          "parameter": [
+            {
+              "name": "X-API-Key",
+              "value": "={{ $env.API_KEY || 'change-me-in-production' }}"
+            }
+          ]
+        }
+      },
+      "id": "http-recover",
+      "name": "Relancer orchestration",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1380,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "channel": "={{ $env.SLACK_CHANNEL || '#ops-ragdz' }}",
+        "text": "🔁 *Relance auto orchestrateur*\\n• Projet: {{$json.project_id}}\\n• State: {{$json.id}}\\n• Status précédent: {{$json.status}}\\n• Âge: {{$json.age_minutes}} min\\n• Manques: {{ ($json.missing_signals || []).join(', ') || 'aucun' }}",
+        "otherOptions": {}
+      },
+      "id": "slack-recovery",
+      "name": "Notifier relance",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        1600,
+        120
+      ],
+      "credentials": {
+        "slackApi": {
+          "id": "slack-credentials",
+          "name": "Slack"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "leftValue": "={{ $json.needs_human }}",
+              "rightValue": true
+            }
+          ]
+        }
+      },
+      "id": "if-human",
+      "name": "Escalade humaine?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1160,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "channel": "={{ $env.SLACK_CHANNEL || '#ops-ragdz' }}",
+        "text": "⚠️ *Intervention requise*\\n• Projet: {{$json.project_id}}\\n• State: {{$json.id}}\\n• Statut: {{$json.status}}\\n• Signaux manquants: {{ ($json.missing_signals || []).join(', ') }}\\n• Agents consultés: {{ ($json.agents_consulted || []).join(', ') }}\\n• Messages: {{$json.messages_count}}",
+        "otherOptions": {}
+      },
+      "id": "slack-human",
+      "name": "Alerter équipe",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [
+        1380,
+        420
+      ],
+      "credentials": {
+        "slackApi": {
+          "id": "slack-credentials",
+          "name": "Slack"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Planification 5 min": {
+      "main": [
+        [
+          {
+            "node": "Récupérer backlog",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Récupérer backlog": {
+      "main": [
+        [
+          {
+            "node": "Déplier orchestrations",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Déplier orchestrations": {
+      "main": [
+        [
+          {
+            "node": "Annoter décisions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Annoter décisions": {
+      "main": [
+        [
+          {
+            "node": "Reprise automatique?",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Escalade humaine?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reprise automatique?": {
+      "main": [
+        [
+          {
+            "node": "Relancer orchestration",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Relancer orchestration": {
+      "main": [
+        [
+          {
+            "node": "Notifier relance",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Escalade humaine?": {
+      "main": [
+        [
+          {
+            "node": "Alerter équipe",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "Supervisor"
+    },
+    {
+      "name": "BMAD"
+    }
+  ],
+  "triggerCount": 0,
+  "versionId": "1"
+}
+

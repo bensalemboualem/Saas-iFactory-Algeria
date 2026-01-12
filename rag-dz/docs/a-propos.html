@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>À Propos - IAFactory Algeria</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00c261;
+            --primary-dark: #00a050;
+            --bg: #0a0a0a;
+            --surface: #111;
+            --surface-light: #1a1a1a;
+            --text: #fff;
+            --text-muted: #888;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+        
+        .header { background: rgba(10,10,10,0.95); padding: 1rem 2rem; position: fixed; top: 0; left: 0; right: 0; z-index: 100; border-bottom: 1px solid #222; }
+        .header-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--primary); text-decoration: none; }
+        .back-btn { background: var(--primary); color: #000; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; }
+
+        .main { max-width: 1200px; margin: 0 auto; padding: 120px 2rem 4rem; }
+        
+        /* Hero Section */
+        .hero { text-align: center; margin-bottom: 5rem; }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 1.5rem; background: linear-gradient(135deg, var(--primary), #00ff88); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .hero p { font-size: 1.3rem; color: var(--text-muted); max-width: 800px; margin: 0 auto; }
+
+        /* Mission */
+        .mission { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-bottom: 5rem; }
+        .mission-content h2 { font-size: 2.5rem; margin-bottom: 1.5rem; }
+        .mission-content p { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 1rem; }
+        .mission-visual { background: linear-gradient(135deg, rgba(0,194,97,0.1), rgba(0,255,136,0.05)); border: 1px solid rgba(0,194,97,0.3); border-radius: 24px; padding: 3rem; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 400px; }
+        .mission-visual .flag { font-size: 8rem; margin-bottom: 1rem; }
+        .mission-visual h3 { font-size: 1.5rem; color: var(--primary); }
+
+        /* Values */
+        .values { margin-bottom: 5rem; }
+        .values h2 { text-align: center; font-size: 2.5rem; margin-bottom: 3rem; }
+        .values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+        .value-card { background: var(--surface); border: 1px solid #222; border-radius: 16px; padding: 2rem; text-align: center; transition: all 0.3s; }
+        .value-card:hover { border-color: var(--primary); transform: translateY(-5px); }
+        .value-icon { width: 80px; height: 80px; background: linear-gradient(135deg, var(--primary), #00ff88); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 1.5rem; }
+        .value-card h3 { font-size: 1.3rem; margin-bottom: 1rem; }
+        .value-card p { color: var(--text-muted); }
+
+        /* Timeline */
+        .timeline { margin-bottom: 5rem; }
+        .timeline h2 { text-align: center; font-size: 2.5rem; margin-bottom: 3rem; }
+        .timeline-items { position: relative; max-width: 800px; margin: 0 auto; }
+        .timeline-items::before { content: ''; position: absolute; left: 50%; width: 2px; height: 100%; background: var(--primary); transform: translateX(-50%); }
+        .timeline-item { display: flex; margin-bottom: 3rem; }
+        .timeline-item:nth-child(odd) { flex-direction: row-reverse; }
+        .timeline-content { width: 45%; background: var(--surface); border: 1px solid #222; border-radius: 12px; padding: 1.5rem; position: relative; }
+        .timeline-item:nth-child(odd) .timeline-content { margin-left: auto; }
+        .timeline-item:nth-child(even) .timeline-content { margin-right: auto; }
+        .timeline-date { background: var(--primary); color: #000; padding: 0.25rem 0.75rem; border-radius: 20px; font-weight: 600; font-size: 0.85rem; display: inline-block; margin-bottom: 0.5rem; }
+        .timeline-content h4 { margin-bottom: 0.5rem; }
+        .timeline-content p { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Team */
+        .team { margin-bottom: 5rem; }
+        .team h2 { text-align: center; font-size: 2.5rem; margin-bottom: 3rem; }
+        .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
+        .team-member { background: var(--surface); border: 1px solid #222; border-radius: 16px; padding: 2rem; text-align: center; transition: all 0.3s; }
+        .team-member:hover { border-color: var(--primary); }
+        .member-avatar { width: 100px; height: 100px; background: linear-gradient(135deg, var(--primary), #00ff88); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; margin: 0 auto 1.5rem; }
+        .team-member h4 { font-size: 1.2rem; margin-bottom: 0.25rem; }
+        .team-member .role { color: var(--primary); font-size: 0.9rem; margin-bottom: 1rem; }
+        .team-member p { color: var(--text-muted); font-size: 0.9rem; }
+
+        /* Stats */
+        .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; margin-bottom: 5rem; }
+        .stat { background: var(--surface); border: 1px solid #222; border-radius: 16px; padding: 2rem; text-align: center; }
+        .stat-number { font-size: 3rem; font-weight: 700; color: var(--primary); }
+        .stat-label { color: var(--text-muted); margin-top: 0.5rem; }
+
+        /* CTA */
+        .cta-section { text-align: center; background: linear-gradient(135deg, rgba(0,194,97,0.1), rgba(0,255,136,0.05)); border: 1px solid rgba(0,194,97,0.3); border-radius: 20px; padding: 3rem; }
+        .cta-section h2 { font-size: 2rem; margin-bottom: 1rem; }
+        .cta-section p { color: var(--text-muted); margin-bottom: 2rem; }
+        .cta-btn { display: inline-block; background: var(--primary); color: #000; padding: 1rem 2.5rem; border-radius: 12px; text-decoration: none; font-weight: 700; transition: all 0.3s; }
+        .cta-btn:hover { transform: translateY(-3px); }
+
+        footer { background: var(--surface); border-top: 1px solid #222; padding: 2rem; text-align: center; color: var(--text-muted); margin-top: 4rem; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .mission { grid-template-columns: 1fr; }
+            .stats { grid-template-columns: repeat(2, 1fr); }
+            .timeline-items::before { left: 20px; }
+            .timeline-content { width: calc(100% - 50px) !important; margin-left: 50px !important; }
+        }
+    </style>
+<link rel="stylesheet" href="/apps/shared/iafactory-unified.css">
+</head>
+<body>
+<!-- IAFactory Trilingue Controls -->
+<div class="iaf-controls-floating" style="position:fixed;top:20px;right:20px;z-index:9998;display:flex;gap:10px;align-items:center;">
+    <div class="iaf-lang-dropdown" style="position:relative;">
+        <button class="iaf-lang-btn" onclick="IAFUnified.toggleLangMenu()" 
+            style="background:#667eea;color:white;border:none;padding:8px 15px;border-radius:8px;cursor:pointer;font-size:14px;display:flex;align-items:center;gap:5px;">
+            🌐 <span id="current-lang-label">FR</span> ▼
+        </button>
+        <div class="iaf-lang-menu" id="lang-menu" 
+            style="display:none;position:absolute;top:100%;right:0;background:white;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,0.15);min-width:150px;margin-top:5px;overflow:hidden;">
+            <button onclick="IAFUnified.changeLang('fr')" style="width:100%;padding:10px 15px;border:none;background:none;text-align:left;cursor:pointer;">🇫🇷 Français</button>
+            <button onclick="IAFUnified.changeLang('ar')" style="width:100%;padding:10px 15px;border:none;background:none;text-align:left;cursor:pointer;">🇩🇿 العربية</button>
+            <button onclick="IAFUnified.changeLang('en')" style="width:100%;padding:10px 15px;border:none;background:none;text-align:left;cursor:pointer;">🇬🇧 English</button>
+        </div>
+    </div>
+    <button class="iaf-theme-toggle" onclick="IAFUnified.toggleTheme()" 
+        style="background:#667eea;color:white;border:none;padding:8px 12px;border-radius:8px;cursor:pointer;font-size:16px;" 
+        title="Toggle theme">🌓</button>
+</div>
+
+    <header class="header">
+        <div class="header-content">
+            <a href="../landing-complete-responsive.html" class="logo">🇩🇿 IAFactory</a>
+            <a href="../landing-complete-responsive.html" class="back-btn"><i class="fas fa-arrow-left"></i> Retour</a>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="hero">
+            <h1>À Propos d'IAFactory Algeria</h1>
+            <p>Nous construisons la première plateforme IA souveraine en Algérie, conçue pour les institutions publiques et privées qui veulent exploiter l'intelligence artificielle tout en gardant le contrôle de leurs données.</p>
+        </div>
+
+        <div class="mission">
+            <div class="mission-content">
+                <h2>Notre Mission</h2>
+                <p>IAFactory Algeria a pour mission de démocratiser l'accès à l'intelligence artificielle pour les entreprises et institutions algériennes.</p>
+                <p>Nous croyons que chaque organisation, quelle que soit sa taille, devrait pouvoir bénéficier des avancées de l'IA sans compromettre la confidentialité de ses données.</p>
+                <p>Notre plateforme RAG (Retrieval Augmented Generation) permet de créer des assistants IA intelligents qui comprennent vos documents et répondent avec précision, le tout hébergé localement en Algérie.</p>
+            </div>
+            <div class="mission-visual">
+                <div class="flag">🇩🇿</div>
+                <h3>Souveraineté Numérique</h3>
+            </div>
+        </div>
+
+        <div class="values">
+            <h2>Nos Valeurs</h2>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">🔒</div>
+                    <h3>Souveraineté</h3>
+                    <p>Vos données restent en Algérie, sous votre contrôle total. Aucune dépendance aux clouds étrangers.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">⚡</div>
+                    <h3>Innovation</h3>
+                    <p>Nous intégrons les dernières avancées en IA pour vous offrir les meilleures performances.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🤝</div>
+                    <h3>Proximité</h3>
+                    <p>Support local en français et arabe, équipe basée à Alger pour un accompagnement de proximité.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🎯</div>
+                    <h3>Excellence</h3>
+                    <p>Nous visons l'excellence dans chaque aspect de notre plateforme et de notre service.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-number">51+</div>
+                <div class="stat-label">Applications IA</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">22</div>
+                <div class="stat-label">Providers LLM</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">500+</div>
+                <div class="stat-label">Modèles IA</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Local</div>
+            </div>
+        </div>
+
+        <div class="timeline">
+            <h2>Notre Histoire</h2>
+            <div class="timeline-items">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-date">2024 Q1</span>
+                        <h4>Fondation</h4>
+                        <p>Création d'IAFactory avec la vision d'une IA souveraine pour l'Algérie.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-date">2024 Q2</span>
+                        <h4>Plateforme RAG</h4>
+                        <p>Lancement de notre technologie RAG pour assistants intelligents.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-date">2024 Q4</span>
+                        <h4>51+ Applications</h4>
+                        <p>Catalogue étendu à 56 applications IA pour tous les secteurs.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-date">2025</span>
+                        <h4>Expansion</h4>
+                        <p>Déploiement national et partenariats avec institutions publiques.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="team">
+            <h2>Notre Équipe</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-avatar">👨‍💼</div>
+                    <h4>Ahmed B.</h4>
+                    <div class="role">CEO & Fondateur</div>
+                    <p>15 ans d'expérience en tech et IA, ancien Google et Microsoft.</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-avatar">👩‍💻</div>
+                    <h4>Fatima Z.</h4>
+                    <div class="role">CTO</div>
+                    <p>Experte en Machine Learning et systèmes distribués.</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-avatar">👨‍🔬</div>
+                    <h4>Karim M.</h4>
+                    <div class="role">Head of AI Research</div>
+                    <p>PhD en NLP, spécialiste RAG et LLMs.</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-avatar">👩‍💼</div>
+                    <h4>Amina D.</h4>
+                    <div class="role">Head of Operations</div>
+                    <p>Gestion de projets enterprise et déploiements à grande échelle.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <h2>Rejoignez l'aventure IA en Algérie</h2>
+            <p>Vous souhaitez collaborer avec nous ou rejoindre notre équipe ?</p>
+            <a href="contact.html" class="cta-btn">Contactez-nous</a>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2025 IAFactory Algeria. Tous droits réservés.</p>
+    </footer>
+<script src="/apps/shared/iafactory-unified.js"></script>
+<!-- IAFactory Chatbot -->
+<button class="iaf-chatbot-btn" onclick="IAFUnified.toggleChatbot()" title="Aide" aria-label="Aide">💬</button>
+<div data-iaf-footer></div>
+</body>
+</html>

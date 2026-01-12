@@ -1,0 +1,291 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+  :root {
+    /* ===== IAFactory Design System - Light Mode (Landing Page Source) ===== */
+    --background: 38 33% 96%;           /* #f7f5f0 - Warm cream from landing */
+    --foreground: 222 47% 11%;          /* #0f172a - Dark navy */
+    --muted: 220 13% 91%;
+    --muted-foreground: 215 16% 47%;
+    --popover: 0 0% 100%;               /* White popover */
+    --popover-foreground: 222 47% 11%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --card: 0 0% 100%;                  /* White cards */
+    --card-foreground: 222 47% 11%;
+    --primary: 153 100% 32%;            /* #00a651 - IAFactory Green */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 222 47% 11%;
+    --accent: 153 100% 32%;             /* Same green for accent */
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;           /* #ef4444 - IAFactory Red */
+    --destructive-foreground: 0 0% 100%;
+    --ring: 153 100% 32%;
+    --radius: 0.5rem;
+    /* IAFactory brand accents */
+    --iaf-green: 153 100% 32%;
+    --iaf-green-light: 153 100% 39%;
+    --iaf-red: 0 84% 60%;
+    --green-accent: 153 100% 32%;
+    --blue-accent: 217 91% 60%;
+  }
+  .dark {
+    /* ===== IAFactory Design System - Dark Mode (Landing Page Source) ===== */
+    --background: 222 84% 2%;           /* #020617 - Very dark navy from landing */
+    --foreground: 210 40% 98%;          /* #f8fafc - Off-white */
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
+    --popover: 222 84% 2%;
+    --popover-foreground: 210 40% 98%;
+    --border: 217 33% 17%;
+    --input: 217 33% 17%;
+    --card: 222 84% 2%;                 /* Same as background for cards */
+    --card-foreground: 210 40% 98%;
+    --primary: 153 100% 32%;            /* #00a651 - IAFactory Green (same) */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 217 33% 17%;
+    --secondary-foreground: 210 40% 98%;
+    --accent: 153 100% 32%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;           /* #ef4444 - IAFactory Red */
+    --destructive-foreground: 0 0% 100%;
+    --ring: 153 100% 32%;
+    --radius: 0.5rem;
+    /* IAFactory brand accents */
+    --iaf-green: 153 100% 32%;
+    --iaf-green-light: 153 100% 39%;
+    --iaf-red: 0 84% 60%;
+    --green-accent: 153 100% 32%;
+    --blue-accent: 217 91% 60%;
+  }
+}
+@layer base {
+  [data-theme="dark"],
+  body[data-theme="dark"] {
+    /* ===== IAFactory Design System - Dark Mode ===== */
+    --background: 222 84% 2%;           /* #020617 - Very dark navy from landing */
+    --foreground: 210 40% 98%;          /* #f8fafc - Off-white */
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
+    --popover: 222 84% 2%;
+    --popover-foreground: 210 40% 98%;
+    --border: 217 33% 17%;
+    --input: 217 33% 17%;
+    --card: 222 84% 2%;
+    --card-foreground: 210 40% 98%;
+    --primary: 153 100% 32%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 217 33% 17%;
+    --secondary-foreground: 210 40% 98%;
+    --accent: 153 100% 32%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --ring: 153 100% 32%;
+  }
+
+  [data-theme="light"],
+  body[data-theme="light"] {
+    /* ===== IAFactory Design System - Light Mode ===== */
+    --background: 38 33% 96%;           /* #f7f5f0 - Warm cream from landing */
+    --foreground: 222 47% 11%;          /* #0f172a - Dark navy */
+    --card: 0 0% 100%;                  /* White cards */
+    --card-foreground: 222 47% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+    --primary: 153 100% 32%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 222 47% 11%;
+    --muted: 220 13% 91%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 153 100% 32%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 153 100% 32%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Force light mode background */
+  body[data-theme="light"],
+  html[data-theme="light"] body {
+    background-color: #f7f5f0 !important;
+    color: #0f172a !important;
+  }
+
+  body[data-theme="light"] main,
+  body[data-theme="light"] .app {
+    background-color: #f7f5f0 !important;
+  }
+
+  /* Force dark mode background */
+  body[data-theme="dark"],
+  html[data-theme="dark"] body {
+    background-color: #020617 !important;
+    color: #f8fafc !important;
+  }
+
+  body[data-theme="dark"] main,
+  body[data-theme="dark"] .app {
+    background-color: #020617 !important;
+  }
+}
+@layer components {
+  /* Grid pattern for background (actually used in MainLayout) */
+  .neon-grid {
+    background-image:
+      linear-gradient(to right, #00a65120 1px, transparent 1px),
+      linear-gradient(to bottom, #00a65120 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  
+  .dark .neon-grid {
+    background-image:
+      linear-gradient(to right, #00a65130 1px, transparent 1px),
+      linear-gradient(to bottom, #00a65130 1px, transparent 1px);
+  }
+}
+
+/* Animation delays (checked for usage) */
+.animation-delay-150 {
+  animation-delay: 150ms;
+}
+.animation-delay-300 {
+  animation-delay: 300ms;
+}
+
+/* Pulse glow animation (used in GlassCrawlDepthSelector) */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow:
+      0 0 20px 10px hsl(var(--blue-accent) / 0.50),
+      0 0 40px 20px hsl(var(--blue-accent) / 0.30);
+  }
+  50% {
+    box-shadow:
+      0 0 30px 15px hsl(var(--blue-accent) / 0.70),
+      0 0 60px 30px hsl(var(--blue-accent) / 0.40);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-pulse-glow {
+    animation: none !important;
+  }
+}
+
+/* Custom scrollbar styles (used in multiple components) */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--blue-accent) / 0.30) transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--blue-accent) / 0.30);
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: hsl(var(--blue-accent) / 0.50);
+}
+
+.dark .custom-scrollbar {
+  scrollbar-color: hsl(var(--blue-accent) / 0.45) transparent;
+}
+
+.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--blue-accent) / 0.40);
+}
+
+.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: hsl(var(--blue-accent) / 0.60);
+}
+
+/* Thin scrollbar styles (used in KanbanColumn and other components) - Tron-themed */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--blue-accent) / 0.40) transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    to bottom,
+    hsl(var(--blue-accent) / 0.60),
+    hsl(var(--blue-accent) / 0.30)
+  );
+  border-radius: 3px;
+  box-shadow: 0 0 3px hsl(var(--blue-accent) / 0.40);
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    to bottom,
+    hsl(var(--blue-accent) / 0.80),
+    hsl(var(--blue-accent) / 0.50)
+  );
+  box-shadow:
+    0 0 6px hsl(var(--blue-accent) / 0.60),
+    inset 0 0 3px hsl(var(--blue-accent) / 0.30);
+}
+
+.dark .scrollbar-thin {
+  scrollbar-color: hsl(var(--blue-accent) / 0.50) transparent;
+}
+
+.dark .scrollbar-thin::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    to bottom,
+    hsl(var(--blue-accent) / 0.50),
+    hsl(var(--blue-accent) / 0.20)
+  );
+  box-shadow: 0 0 4px hsl(var(--blue-accent) / 0.50);
+}
+
+.dark .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    to bottom,
+    hsl(var(--blue-accent) / 0.70),
+    hsl(var(--blue-accent) / 0.40)
+  );
+  box-shadow:
+    0 0 8px hsl(var(--blue-accent) / 0.70),
+    inset 0 0 3px hsl(var(--blue-accent) / 0.40);
+}
+

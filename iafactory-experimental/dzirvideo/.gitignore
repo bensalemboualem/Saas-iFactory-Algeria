@@ -1,0 +1,53 @@
+# DzirVideo - Files to ignore
+
+# Environment
+.env
+.env.local
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+ENV/
+
+# Output directories
+output/videos/*.mp4
+output/audio/*.mp3
+output/subtitles/*.srt
+output/**/*.mp4
+output/**/*.mp3
+output/**/*.srt
+
+# Models (downloaded automatically)
+models/*.pt
+models/*.pth
+
+# Google OAuth
+client_secret.json
+credentials.json
+token.json
+
+# Temp files
+*.tmp
+*.temp
+bg_temp.*
+
+# Logs
+*.log
+logs/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Docker
+.dockerignore
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,31 @@
+Invitation au groupe "{{room_name}}" - IA Factory
+================================================
+
+Bonjour,
+
+{{inviter_name}} vous invite a rejoindre le groupe de discussion "{{room_name}}" sur IA Factory.
+
+Informations sur le groupe:
+- Nom: {{room_name}}
+- Type: {{room_type_label}}
+- Membres: {{member_count}}
+
+{{#if message}}
+Message de {{inviter_name}}:
+"{{message}}"
+{{/if}}
+
+Pour rejoindre le groupe, cliquez sur le lien ci-dessous:
+{{invite_url}}
+
+Note: Cette invitation expire le {{expires_at_formatted}}.
+
+---
+
+A bientot sur IA Factory!
+L'equipe IA Factory
+
+---
+
+2025 IA Factory. Tous droits reserves.
+Si vous n'avez pas demande cette invitation, vous pouvez ignorer cet email.

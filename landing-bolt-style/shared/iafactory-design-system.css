@@ -1,0 +1,1136 @@
+/**
+ * ========================================
+ * IAFACTORY ALGERIA - DESIGN SYSTEM v2.0
+ * ========================================
+ * Système de design unifié pour TOUTES les applications
+ * Couleurs Algérie, typographie, composants, responsive
+ * 
+ * 🇩🇿 Couleurs officielles Algérie
+ * 🎨 Design moderne et professionnel
+ * 📱 100% Responsive
+ * 🌍 Support RTL (Arabe)
+ * 
+ * Date: 2 Janvier 2026
+ */
+
+/* ==================== VARIABLES GLOBALES ==================== */
+/* 🎨 RÉFÉRENCE COULEURS - IA FACTORY ALGERIA */
+:root {
+    /* ===== MODE LIGHT (par défaut pour :root) ===== */
+    --bg-page: #F4F3EE;
+    --bg-section: #F4F3EE;
+    --bg-card: #FDFDFB;
+    --bg-secondary: #ECEAE3;
+    --bg-input: #FFFFFF;
+
+    --text-primary: #1a1a1a;
+    --text-secondary: #666666;
+    --text-muted: #999999;
+
+    --border-color: #e5e5e5;
+    --border-hover: #006233;
+
+    /* 🇩🇿 Couleurs Algérie */
+    --green-primary: #006233;
+    --green-hover: #00873E;
+    --green-light: #4CB963;
+    --green-bg: #0d1f12;
+    --green-accent: #008000;
+    --red-algeria: #D52B1E;
+
+    /* Autres */
+    --linkedin: #0077b5;
+    --shadow: rgba(0, 0, 0, 0.1);
+    --shadow-green: rgba(0, 98, 51, 0.15);
+
+    /* 🇩🇿 Couleurs Algérie (aliases pour compatibilité) */
+    --iaf-green: #006233;
+    --iaf-green-light: #00873E;
+    --iaf-green-dark: #004d28;
+    --iaf-red: #D52B1E;
+    --iaf-white: #ffffff;
+
+    /* Couleurs primaires */
+    --iaf-primary: var(--green-primary);
+    --iaf-primary-hover: var(--green-hover);
+    --iaf-primary-active: var(--iaf-green-dark);
+    --iaf-primary-dim: rgba(0, 98, 51, 0.1);
+    --iaf-primary-glow: rgba(0, 98, 51, 0.3);
+
+    /* Couleurs secondaires */
+    --iaf-secondary: var(--red-algeria);
+    --iaf-secondary-dim: rgba(213, 43, 30, 0.1);
+
+    /* Gradients Algérie */
+    --iaf-gradient: linear-gradient(135deg, #006233 0%, #00873E 100%);
+    --iaf-gradient-reverse: linear-gradient(135deg, #00873E 0%, #006233 100%);
+    --iaf-gradient-algeria: linear-gradient(90deg, #006233 33%, #ffffff 33%, #ffffff 66%, #D52B1E 66%);
+
+    /* Mode LIGHT - Fonds */
+    --iaf-bg: var(--bg-page);
+    --iaf-bg-secondary: var(--bg-secondary);
+    --iaf-bg-card: var(--bg-card);
+    --iaf-bg-card-hover: #f1f3f5;
+    --iaf-bg-glass: rgba(255, 255, 255, 0.8);
+    --iaf-bg-header: transparent;
+
+    /* Mode LIGHT - Textes */
+    --iaf-text: var(--text-primary);
+    --iaf-text-primary: var(--text-primary);
+    --iaf-text-secondary: var(--text-secondary);
+    --iaf-text-tertiary: var(--text-muted);
+    --iaf-text-muted: rgba(26, 26, 26, 0.5);
+
+    /* Mode LIGHT - Bordures */
+    --iaf-border: var(--border-color);
+    --iaf-border-bright: rgba(0, 0, 0, 0.15);
+
+    /* Ombres LIGHT */
+    --iaf-shadow-sm: 0 2px 8px var(--shadow);
+    --iaf-shadow-md: 0 8px 24px var(--shadow);
+    --iaf-shadow-lg: 0 16px 48px var(--shadow);
+    --iaf-shadow-xl: 0 24px 64px var(--shadow);
+    --iaf-shadow-glow: 0 0 40px var(--shadow-green);
+    
+    /* Espacements */
+    --iaf-spacing-xs: 4px;
+    --iaf-spacing-sm: 8px;
+    --iaf-spacing-md: 12px;
+    --iaf-spacing-lg: 16px;
+    --iaf-spacing-xl: 24px;
+    --iaf-spacing-2xl: 32px;
+    --iaf-spacing-3xl: 48px;
+    
+    /* Typographie */
+    --iaf-font-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Helvetica Neue', Arial, sans-serif;
+    --iaf-font-arabic: 'Noto Sans Arabic', var(--iaf-font-primary);
+    --iaf-font-mono: 'Fira Code', 'Monaco', 'Courier New', monospace;
+    
+    --iaf-font-size-xs: 12px;
+    --iaf-font-size-sm: 14px;
+    --iaf-font-size-md: 16px;
+    --iaf-font-size-lg: 18px;
+    --iaf-font-size-xl: 24px;
+    --iaf-font-size-2xl: 32px;
+    --iaf-font-size-3xl: 48px;
+    
+    /* Layout */
+    --iaf-header-height: 50px;
+    --iaf-footer-height: auto;
+    --iaf-sidebar-width: 280px;
+    --iaf-max-width: 1400px;
+    
+    /* Transitions */
+    --iaf-transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    --iaf-transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    --iaf-transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Border radius */
+    --iaf-radius-sm: 6px;
+    --iaf-radius-md: 12px;
+    --iaf-radius-lg: 16px;
+    --iaf-radius-xl: 20px;
+    --iaf-radius-2xl: 24px;
+    --iaf-radius-full: 9999px;
+    
+    /* Z-index */
+    --iaf-z-dropdown: 1000;
+    --iaf-z-sticky: 1020;
+    --iaf-z-fixed: 1030;
+    --iaf-z-modal-backdrop: 1040;
+    --iaf-z-modal: 1050;
+    --iaf-z-popover: 1060;
+    --iaf-z-tooltip: 1070;
+}
+
+/* ==================== MODE DARK ==================== */
+[data-theme="dark"] {
+    /* ===== MODE DARK ===== */
+    --bg-page: #0a0a0f;
+    --bg-section: #0a0a0f;
+    --bg-card: #1a1a24;
+    --bg-secondary: #12121a;
+    --bg-input: #0a0a0f;
+
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0a0;
+    --text-muted: #666666;
+
+    --border-color: #2a2a3a;
+    --border-hover: #00873E;
+
+    /* Couleurs Algérie (ajustées pour dark) */
+    --green-primary: #00873E;
+    --green-hover: #4CB963;
+    --green-light: #4CB963;
+
+    --shadow: rgba(0, 0, 0, 0.3);
+    --shadow-green: rgba(0, 135, 62, 0.3);
+
+    /* Aliases pour compatibilité */
+    --iaf-green: #00873E;
+    --iaf-green-light: #4CB963;
+
+    /* Fonds DARK */
+    --iaf-bg: var(--bg-page);
+    --iaf-bg-secondary: var(--bg-secondary);
+    --iaf-bg-card: var(--bg-card);
+    --iaf-bg-card-hover: #21212e;
+    --iaf-bg-glass: rgba(26, 26, 36, 0.8);
+    --iaf-bg-header: transparent;
+
+    /* Textes DARK */
+    --iaf-text: var(--text-primary);
+    --iaf-text-primary: var(--text-primary);
+    --iaf-text-secondary: var(--text-secondary);
+    --iaf-text-tertiary: var(--text-muted);
+    --iaf-text-muted: rgba(255, 255, 255, 0.5);
+
+    /* Bordures DARK */
+    --iaf-border: var(--border-color);
+    --iaf-border-bright: rgba(255, 255, 255, 0.15);
+
+    /* Primaires DARK */
+    --iaf-primary: var(--green-primary);
+    --iaf-primary-hover: var(--green-hover);
+    --iaf-primary-dim: rgba(0, 135, 62, 0.1);
+    --iaf-primary-glow: rgba(0, 135, 62, 0.3);
+
+    /* Gradients DARK */
+    --iaf-gradient: linear-gradient(135deg, #00873E 0%, #4CB963 100%);
+    --iaf-gradient-reverse: linear-gradient(135deg, #4CB963 0%, #00873E 100%);
+
+    /* Ombres DARK */
+    --iaf-shadow-sm: 0 2px 8px var(--shadow);
+    --iaf-shadow-md: 0 8px 24px var(--shadow);
+    --iaf-shadow-lg: 0 16px 48px var(--shadow);
+    --iaf-shadow-xl: 0 24px 64px var(--shadow);
+    --iaf-shadow-glow: 0 0 40px var(--shadow-green);
+}
+
+/* ==================== RESET & BASE ==================== */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: var(--iaf-font-primary);
+    background: var(--iaf-bg);
+    color: var(--iaf-text);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Support RTL pour l'arabe */
+[dir="rtl"] {
+    font-family: var(--iaf-font-arabic);
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+    transition: color var(--iaf-transition-fast);
+}
+
+a:hover {
+    color: var(--iaf-primary);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* ==================== BOUTONS ==================== */
+.iaf-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--iaf-spacing-sm);
+    padding: 12px 24px;
+    border: none;
+    border-radius: var(--iaf-radius-md);
+    font-family: var(--iaf-font-primary);
+    font-size: var(--iaf-font-size-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--iaf-transition-base);
+    white-space: nowrap;
+    user-select: none;
+}
+
+.iaf-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Bouton primaire (vert Algérie) */
+.iaf-btn-primary {
+    background: var(--iaf-gradient);
+    color: #ffffff;
+    box-shadow: var(--iaf-shadow-md), var(--iaf-shadow-glow);
+}
+
+.iaf-btn-primary:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: var(--iaf-shadow-lg), 0 0 60px var(--iaf-primary-glow);
+}
+
+.iaf-btn-primary:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+/* Bouton secondaire */
+.iaf-btn-secondary {
+    background: transparent;
+    border: 2px solid var(--iaf-border);
+    color: var(--iaf-text);
+}
+
+.iaf-btn-secondary:hover:not(:disabled) {
+    border-color: var(--iaf-primary);
+    color: var(--iaf-primary);
+    background: var(--iaf-primary-dim);
+}
+
+/* Bouton outline */
+.iaf-btn-outline {
+    background: transparent;
+    border: 2px solid var(--iaf-primary);
+    color: var(--iaf-primary);
+}
+
+.iaf-btn-outline:hover:not(:disabled) {
+    background: var(--iaf-primary);
+    color: #ffffff;
+}
+
+/* Bouton ghost */
+.iaf-btn-ghost {
+    background: transparent;
+    color: var(--iaf-text-secondary);
+}
+
+.iaf-btn-ghost:hover:not(:disabled) {
+    background: var(--iaf-primary-dim);
+    color: var(--iaf-primary);
+}
+
+/* Tailles de boutons */
+.iaf-btn-sm {
+    padding: 8px 16px;
+    font-size: var(--iaf-font-size-sm);
+}
+
+.iaf-btn-lg {
+    padding: 16px 32px;
+    font-size: var(--iaf-font-size-lg);
+}
+
+.iaf-btn-xl {
+    padding: 20px 40px;
+    font-size: var(--iaf-font-size-xl);
+}
+
+/* Bouton rond (pill) */
+.iaf-btn-pill {
+    border-radius: var(--iaf-radius-full);
+}
+
+/* Bouton icône seul */
+.iaf-btn-icon {
+    padding: 12px;
+    width: 44px;
+    height: 44px;
+}
+
+/* ==================== CARTES ==================== */
+.iaf-card {
+    background: var(--iaf-bg-card);
+    border: 1px solid var(--iaf-border);
+    border-radius: var(--iaf-radius-xl);
+    padding: var(--iaf-spacing-2xl);
+    position: relative;
+    overflow: hidden;
+    transition: all var(--iaf-transition-base);
+    cursor: pointer;
+}
+
+.iaf-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--iaf-gradient);
+    opacity: 0;
+    transition: opacity var(--iaf-transition-fast);
+}
+
+.iaf-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--iaf-primary);
+    box-shadow: var(--iaf-shadow-xl), var(--iaf-shadow-glow);
+    background: var(--iaf-bg-card-hover);
+}
+
+.iaf-card:hover::before {
+    opacity: 1;
+}
+
+/* Header de carte */
+.iaf-card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--iaf-spacing-lg);
+    margin-bottom: var(--iaf-spacing-lg);
+}
+
+/* Icône de carte */
+.iaf-card-icon {
+    width: 72px;
+    height: 72px;
+    border-radius: var(--iaf-radius-lg);
+    background: var(--iaf-gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    flex-shrink: 0;
+    box-shadow: var(--iaf-shadow-md);
+    position: relative;
+}
+
+.iaf-card-icon::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: calc(var(--iaf-radius-lg) + 2px);
+    background: var(--iaf-gradient);
+    opacity: 0;
+    filter: blur(10px);
+    transition: opacity var(--iaf-transition-base);
+    z-index: -1;
+}
+
+.iaf-card:hover .iaf-card-icon::after {
+    opacity: 0.5;
+}
+
+/* Corps de carte */
+.iaf-card-body {
+    flex: 1;
+}
+
+.iaf-card-title {
+    font-size: var(--iaf-font-size-xl);
+    font-weight: 800;
+    margin-bottom: var(--iaf-spacing-sm);
+    color: var(--iaf-text-primary);
+}
+
+.iaf-card-subtitle {
+    font-size: var(--iaf-font-size-sm);
+    color: var(--iaf-text-secondary);
+    margin-bottom: var(--iaf-spacing-md);
+}
+
+.iaf-card-description {
+    color: var(--iaf-text-secondary);
+    margin-bottom: var(--iaf-spacing-lg);
+    line-height: 1.7;
+}
+
+/* Footer de carte */
+.iaf-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: var(--iaf-spacing-lg);
+    border-top: 1px solid var(--iaf-border);
+    margin-top: var(--iaf-spacing-lg);
+}
+
+/* ==================== BADGES ==================== */
+.iaf-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--iaf-spacing-xs);
+    padding: 6px 12px;
+    border-radius: var(--iaf-radius-full);
+    font-size: var(--iaf-font-size-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.iaf-badge-primary {
+    background: var(--iaf-primary-dim);
+    border: 1px solid var(--iaf-primary);
+    color: var(--iaf-primary);
+}
+
+.iaf-badge-hot {
+    background: rgba(239, 68, 68, 0.2);
+    border: 1px solid var(--iaf-red);
+    color: var(--iaf-red);
+    animation: pulse 2s infinite;
+}
+
+.iaf-badge-new {
+    background: rgba(59, 130, 246, 0.2);
+    border: 1px solid #3b82f6;
+    color: #3b82f6;
+}
+
+.iaf-badge-featured {
+    background: var(--iaf-primary-dim);
+    border: 1px solid var(--iaf-primary);
+    color: var(--iaf-primary);
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.9;
+        transform: scale(1.05);
+    }
+}
+
+/* ==================== INPUTS ==================== */
+.iaf-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid var(--iaf-border);
+    border-radius: var(--iaf-radius-md);
+    background: var(--iaf-bg-card);
+    color: var(--iaf-text);
+    font-family: var(--iaf-font-primary);
+    font-size: var(--iaf-font-size-md);
+    transition: all var(--iaf-transition-fast);
+}
+
+.iaf-input:focus {
+    outline: none;
+    border-color: var(--iaf-primary);
+    box-shadow: 0 0 0 4px var(--iaf-primary-dim);
+}
+
+.iaf-input::placeholder {
+    color: var(--iaf-text-tertiary);
+}
+
+/* ==================== GRILLES ==================== */
+.iaf-grid {
+    display: grid;
+    gap: var(--iaf-spacing-xl);
+}
+
+.iaf-grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.iaf-grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.iaf-grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .iaf-grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .iaf-grid-3 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .iaf-grid-4,
+    .iaf-grid-3,
+    .iaf-grid-2 {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ==================== UTILITAIRES ==================== */
+.iaf-container {
+    max-width: var(--iaf-max-width);
+    margin: 0 auto;
+    padding: 0 var(--iaf-spacing-xl);
+}
+
+.iaf-section {
+    padding: var(--iaf-spacing-3xl) 0;
+}
+
+.iaf-text-center {
+    text-align: center;
+}
+
+.iaf-text-primary {
+    color: var(--iaf-primary);
+}
+
+.iaf-text-secondary {
+    color: var(--iaf-text-secondary);
+}
+
+.iaf-text-muted {
+    color: var(--iaf-text-muted);
+}
+
+/* ==================== ANIMATIONS ==================== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.iaf-fade-in {
+    animation: fadeIn 0.6s ease-out;
+}
+
+.iaf-slide-in-left {
+    animation: slideInLeft 0.6s ease-out;
+}
+
+.iaf-slide-in-right {
+    animation: slideInRight 0.6s ease-out;
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 768px) {
+    :root {
+        --iaf-header-height: 50px;
+        --iaf-spacing-3xl: 32px;
+    }
+
+    .iaf-btn {
+        padding: 10px 20px;
+        font-size: var(--iaf-font-size-sm);
+    }
+
+    .iaf-card {
+        padding: var(--iaf-spacing-lg);
+    }
+
+    .iaf-card-icon {
+        width: 56px;
+        height: 56px;
+        font-size: 28px;
+    }
+}
+
+/* ==================== GLOBAL COLOR ENFORCEMENT ==================== */
+/*
+ * RÉFÉRENCE COULEURS IA FACTORY ALGERIA
+ * LIGHT: Page = #ffffff | Cartes = #f8f9fa
+ * DARK:  Page = #0a0a0f | Cartes = #1a1a24
+ */
+
+/* ===== LIGHT MODE - Pages & Sections ===== */
+main, section,
+.hero-section, .features-section, .privacy-section,
+.testimonials-section, .faq-section, .cta-section,
+.contact-section, .models-section, .pricing-section,
+.agents-section, .apps-section, .workflows-section,
+.agents-hero, .apps-container, .iaf-section {
+    background: #F4F3EE !important;
+}
+
+/* ===== DARK MODE - Pages & Sections ===== */
+[data-theme="dark"] html,
+[data-theme="dark"] body,
+[data-theme="dark"] main,
+[data-theme="dark"] section,
+[data-theme="dark"] .hero-section,
+[data-theme="dark"] .features-section,
+[data-theme="dark"] .privacy-section,
+[data-theme="dark"] .testimonials-section,
+[data-theme="dark"] .faq-section,
+[data-theme="dark"] .cta-section,
+[data-theme="dark"] .contact-section,
+[data-theme="dark"] .models-section,
+[data-theme="dark"] .pricing-section,
+[data-theme="dark"] .agents-section,
+[data-theme="dark"] .apps-section,
+[data-theme="dark"] .workflows-section,
+[data-theme="dark"] .agents-hero,
+[data-theme="dark"] .apps-container,
+[data-theme="dark"] .iaf-section {
+    background: #0a0a0f !important;
+}
+
+/* ==================== CARTES - EFFET 3D + BORDURE VERTE ==================== */
+
+/* ===== Base - Light Mode ===== */
+.card, .feature-card, .privacy-card, .testimonial-card,
+.pricing-card, .model-card, .agent-card, .app-card,
+.workflow-card, .faq-item, .category-card, .glass-card,
+.iaf-card, .filters-section, .skeleton-card,
+[class*="-card"] {
+    position: relative;
+    background: #f8f9fa !important;
+    border: 1px solid #e5e5e5;
+    border-radius: 16px;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+/* Barre verte en haut (invisible par défaut) */
+.card::before, .feature-card::before, .privacy-card::before,
+.testimonial-card::before, .pricing-card::before, .model-card::before,
+.agent-card::before, .app-card::before, .workflow-card::before,
+.glass-card::before, .iaf-card::before,
+[class*="-card"]::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #006233, #00873E, #4CB963);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+}
+
+/* HOVER - Light Mode */
+.card:hover, .feature-card:hover, .privacy-card:hover,
+.testimonial-card:hover, .pricing-card:hover, .model-card:hover,
+.agent-card:hover, .app-card:hover, .workflow-card:hover,
+.glass-card:hover, .iaf-card:hover,
+[class*="-card"]:hover {
+    border-color: #006233 !important;
+    transform: translateY(-6px);
+    box-shadow: 0 10px 30px rgba(0, 98, 51, 0.15);
+}
+
+/* Barre verte visible au hover */
+.card:hover::before, .feature-card:hover::before, .privacy-card:hover::before,
+.testimonial-card:hover::before, .pricing-card:hover::before, .model-card:hover::before,
+.agent-card:hover::before, .app-card:hover::before, .workflow-card:hover::before,
+.glass-card:hover::before, .iaf-card:hover::before,
+[class*="-card"]:hover::before {
+    opacity: 1;
+}
+
+/* ===== DARK MODE - Cartes ===== */
+[data-theme="dark"] .card,
+[data-theme="dark"] .feature-card,
+[data-theme="dark"] .privacy-card,
+[data-theme="dark"] .testimonial-card,
+[data-theme="dark"] .pricing-card,
+[data-theme="dark"] .model-card,
+[data-theme="dark"] .agent-card,
+[data-theme="dark"] .app-card,
+[data-theme="dark"] .workflow-card,
+[data-theme="dark"] .faq-item,
+[data-theme="dark"] .category-card,
+[data-theme="dark"] .glass-card,
+[data-theme="dark"] .iaf-card,
+[data-theme="dark"] .filters-section,
+[data-theme="dark"] .skeleton-card,
+[data-theme="dark"] [class*="-card"] {
+    background: #1a1a24 !important;
+    border-color: #2a2a3a;
+}
+
+/* HOVER - Dark Mode (glow vert) */
+[data-theme="dark"] .card:hover,
+[data-theme="dark"] .feature-card:hover,
+[data-theme="dark"] .privacy-card:hover,
+[data-theme="dark"] .testimonial-card:hover,
+[data-theme="dark"] .pricing-card:hover,
+[data-theme="dark"] .model-card:hover,
+[data-theme="dark"] .agent-card:hover,
+[data-theme="dark"] .app-card:hover,
+[data-theme="dark"] .workflow-card:hover,
+[data-theme="dark"] .glass-card:hover,
+[data-theme="dark"] .iaf-card:hover,
+[data-theme="dark"] [class*="-card"]:hover {
+    border-color: #00873E !important;
+    transform: translateY(-6px);
+    box-shadow:
+        0 10px 30px rgba(0, 135, 62, 0.2),
+        0 0 20px rgba(76, 185, 99, 0.15);
+}
+
+/* ==================== BOUTONS FILTRES - VISIBILITÉ ==================== */
+/*
+ * CORRECTION: Texte boutons visibles en Light ET Dark mode
+ */
+
+/* Boutons filtres - État normal - LIGHT MODE */
+.filter-btn,
+.tab-btn,
+.category-btn,
+button[data-cat],
+button[data-category] {
+    background: transparent;
+    color: #1a1a1a !important;
+    border: 1px solid #e5e5e5;
+    padding: 10px 20px;
+    border-radius: 9999px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* Boutons filtres - Hover - LIGHT MODE */
+.filter-btn:hover,
+.tab-btn:hover,
+.category-btn:hover,
+button[data-cat]:hover,
+button[data-category]:hover {
+    background: rgba(0, 98, 51, 0.1);
+    border-color: #006233;
+    color: #006233 !important;
+}
+
+/* Boutons filtres - État actif - LIGHT MODE */
+.filter-btn.active,
+.tab-btn.active,
+.category-btn.active,
+button[data-cat].active,
+button[data-category].active {
+    background: #006233 !important;
+    color: #ffffff !important;
+    border-color: #006233 !important;
+}
+
+/* Boutons filtres - État normal - DARK MODE */
+[data-theme="dark"] .filter-btn,
+[data-theme="dark"] .tab-btn,
+[data-theme="dark"] .category-btn,
+[data-theme="dark"] button[data-cat],
+[data-theme="dark"] button[data-category] {
+    background: transparent;
+    color: #ffffff !important;
+    border-color: #2a2a3a;
+}
+
+/* Boutons filtres - Hover - DARK MODE */
+[data-theme="dark"] .filter-btn:hover,
+[data-theme="dark"] .tab-btn:hover,
+[data-theme="dark"] .category-btn:hover,
+[data-theme="dark"] button[data-cat]:hover,
+[data-theme="dark"] button[data-category]:hover {
+    background: rgba(0, 135, 62, 0.2);
+    border-color: #00873E;
+    color: #4CB963 !important;
+}
+
+/* Boutons filtres - État actif - DARK MODE */
+[data-theme="dark"] .filter-btn.active,
+[data-theme="dark"] .tab-btn.active,
+[data-theme="dark"] .category-btn.active,
+[data-theme="dark"] button[data-cat].active,
+[data-theme="dark"] button[data-category].active {
+    background: #00873E !important;
+    color: #ffffff !important;
+    border-color: #00873E !important;
+}
+
+/* ==================== TITRES - VERT ALGÉRIEN ==================== */
+/*
+ * TOUS les titres h1/h2 = Vert Algérien
+ * h3, h4, h5, h6 = Couleur texte normale
+ */
+
+/* Titres principaux - LIGHT MODE */
+h1, h2,
+.section-title,
+.page-title,
+.hero-title,
+.marketplace-title,
+.workflows-title {
+    color: #006233 !important;
+}
+
+/* Sous-titres - LIGHT MODE */
+h3, h4, h5, h6,
+.card-title,
+.agent-name,
+.app-name {
+    color: #1a1a1a;
+}
+
+/* Titres principaux - DARK MODE */
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] .section-title,
+[data-theme="dark"] .page-title,
+[data-theme="dark"] .hero-title,
+[data-theme="dark"] .marketplace-title,
+[data-theme="dark"] .workflows-title {
+    color: #00873E !important;
+}
+
+/* Sous-titres - DARK MODE */
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] h5,
+[data-theme="dark"] h6,
+[data-theme="dark"] .card-title,
+[data-theme="dark"] .agent-name,
+[data-theme="dark"] .app-name {
+    color: #ffffff;
+}
+
+/* ==================== TITRES - TOUJOURS VISIBLES ==================== */
+.section-title,
+.page-title,
+h1.title,
+.workflows-title,
+.marketplace-title {
+    position: relative !important;
+    z-index: 10;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* ==================== RTL SUPPORT (ARABE) ==================== */
+[dir="rtl"] {
+    text-align: right;
+}
+
+[dir="rtl"] body {
+    font-family: 'Noto Sans Arabic', 'Inter', -apple-system, sans-serif;
+}
+
+[dir="rtl"] .header-nav,
+[dir="rtl"] .iaf-nav,
+[dir="rtl"] .nav-links {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .card,
+[dir="rtl"] .agent-card,
+[dir="rtl"] .app-card,
+[dir="rtl"] .workflow-card {
+    text-align: right;
+}
+
+[dir="rtl"] .agent-header,
+[dir="rtl"] .app-header,
+[dir="rtl"] .card-header {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .agent-footer,
+[dir="rtl"] .card-footer {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .agent-meta,
+[dir="rtl"] .card-meta {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .capability-tag,
+[dir="rtl"] .tag,
+[dir="rtl"] .badge {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .btn-icon-right i,
+[dir="rtl"] .agent-action i {
+    margin-left: 0;
+    margin-right: 8px;
+}
+
+[dir="rtl"] .agent-action:hover,
+[dir="rtl"] .btn:hover {
+    transform: translateX(-4px);
+}
+
+[dir="rtl"] .logo {
+    margin-left: auto;
+    margin-right: 0;
+}
+
+[dir="rtl"] .filters-section,
+[dir="rtl"] .agents-filters {
+    flex-direction: row-reverse;
+}
+
+/* ==================== TEXTES - COULEURS CORRECTES ==================== */
+/* Light mode */
+p, span, li, label, .description, .text-secondary {
+    color: #666666;
+}
+
+/* Dark mode */
+[data-theme="dark"] p,
+[data-theme="dark"] span,
+[data-theme="dark"] li,
+[data-theme="dark"] label,
+[data-theme="dark"] .description,
+[data-theme="dark"] .text-secondary {
+    color: #a0a0a0;
+}
+
+/* ==================== LOGOS - SWITCH DARK/LIGHT ==================== */
+/*
+ * Logos avec classes .logo-light et .logo-dark
+ * Light mode: affiche logo-light (texte noir sur fond clair)
+ * Dark mode: affiche logo-dark (texte blanc sur fond sombre)
+ */
+
+/* Par défaut en light mode - afficher logo light */
+.logo-light {
+    display: block !important;
+}
+
+.logo-dark {
+    display: none !important;
+}
+
+/* En dark mode - afficher logo dark */
+[data-theme="dark"] .logo-light {
+    display: none !important;
+}
+
+[data-theme="dark"] .logo-dark {
+    display: block !important;
+}
+
+/* Logos CTA section */
+.cta-logo-img,
+.mockup-logo-img {
+    object-fit: contain;
+}
+
+/* Logo dans les cartes feature */
+.feature-logo {
+    width: 120px !important;
+    height: 120px !important;
+    object-fit: contain !important;
+}
+
+/* Logo dans les cartes projet */
+.project-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 120px;
+}
+
+.project-logo-img {
+    width: 100px !important;
+    height: 100px !important;
+    object-fit: contain !important;
+}
+
+/* Mix blend mode pour meilleure intégration - DÉSACTIVÉ pour footer */
+.logo-light:not(.footer-logo) {
+    mix-blend-mode: multiply;
+}
+
+.logo-dark:not(.footer-logo) {
+    mix-blend-mode: lighten;
+}
+
+/* Footer logo - pas de blend mode */
+.footer-logo.logo-light,
+.footer-logo.logo-dark {
+    mix-blend-mode: normal !important;
+}
+
+/* ==================== NAVIGATION - CACHER LIEN PAGE ACTUELLE ==================== */
+/*
+ * Règle : Sur chaque page, le lien vers la page actuelle est CACHÉ
+ * Compatible avec: .nav-link, .iaf-nav-link, nav-links li
+ */
+
+/* Page index.html (Accueil) - cacher lien Accueil */
+body.page-home .nav-links li:has(a[data-page="home"]),
+body.page-home .nav-link[data-page="home"],
+body.page-home .iaf-nav-link[data-page="home"],
+body.page-home .iaf-nav-link[href*="index.html"],
+body.page-home .iaf-nav a[href*="index.html"] {
+    display: none !important;
+}
+
+/* Page apps.html (Applications) - cacher lien Applications */
+body.page-apps .nav-links li:has(a[href*="apps.html"]),
+body.page-apps .nav-link[href*="apps.html"],
+body.page-apps .iaf-nav-link[data-page="apps"],
+body.page-apps .iaf-nav-link[href*="apps.html"],
+body.page-apps .iaf-nav a[href*="apps.html"] {
+    display: none !important;
+}
+
+/* Page agents.html (Agents IA) - cacher lien Agents */
+body.page-agents .nav-links li:has(a[href*="agents.html"]),
+body.page-agents .nav-link[href*="agents.html"],
+body.page-agents .iaf-nav-link[data-page="agents"],
+body.page-agents .iaf-nav-link[href*="agents.html"],
+body.page-agents .iaf-nav a[href*="agents.html"] {
+    display: none !important;
+}
+
+/* Page workflows.html (Workflows) - cacher lien Workflows */
+body.page-workflows .nav-links li:has(a[href*="workflows.html"]),
+body.page-workflows .nav-link[href*="workflows.html"],
+body.page-workflows .iaf-nav-link[data-page="workflows"],
+body.page-workflows .iaf-nav-link[href*="workflows.html"],
+body.page-workflows .iaf-nav a[href*="workflows.html"] {
+    display: none !important;
+}
+
+/* Page pricing.html (Tarifs) - cacher lien Tarifs */
+body.page-pricing .nav-links li:has(a[data-page="pricing"]),
+body.page-pricing .nav-link[data-page="pricing"],
+body.page-pricing .iaf-nav-link[data-page="pricing"],
+body.page-pricing .iaf-nav-link[href*="pricing"],
+body.page-pricing .iaf-nav a[href*="pricing"] {
+    display: none !important;
+}

@@ -1,0 +1,140 @@
+{
+  "agent_id": "ia-discovery-dz",
+  "name": "IA Discovery DZ",
+  "name_ar": "ذكاء اكتشاف السوق",
+  "version": "1.0.0",
+  "description": "Agent de customer discovery et validation marché pour startups algériennes",
+  "category": "b2b",
+  "icon": "🎯",
+  "color": "#10B981",
+  
+  "model": {
+    "provider": "anthropic",
+    "model_id": "claude-sonnet-4-20250514",
+    "temperature": 0.6,
+    "max_tokens": 1024
+  },
+  
+  "interview": {
+    "type": "customer_discovery",
+    "methodology": "mom_test",
+    "phases": [
+      {
+        "id": "qualification",
+        "name": "Contexte & Qualification",
+        "min_exchanges": 2,
+        "max_exchanges": 3,
+        "objectives": ["role_understanding", "profile_qualification", "initial_challenges"]
+      },
+      {
+        "id": "problem_exploration",
+        "name": "Exploration du Problème",
+        "min_exchanges": 4,
+        "max_exchanges": 6,
+        "objectives": ["problem_validation", "frequency", "impact", "cost"]
+      },
+      {
+        "id": "current_solutions",
+        "name": "Solutions Actuelles",
+        "min_exchanges": 3,
+        "max_exchanges": 4,
+        "objectives": ["alternatives", "satisfaction", "current_spend"]
+      },
+      {
+        "id": "value_validation",
+        "name": "Validation Valeur",
+        "min_exchanges": 2,
+        "max_exchanges": 3,
+        "objectives": ["willingness_to_pay", "decision_criteria", "stakeholders"]
+      },
+      {
+        "id": "closing",
+        "name": "Clôture & Engagement",
+        "min_exchanges": 1,
+        "max_exchanges": 2,
+        "objectives": ["referrals", "next_steps", "beta_interest"]
+      }
+    ],
+    "estimated_duration_minutes": 15,
+    "languages": ["fr", "ar", "fr-dz", "darija"]
+  },
+  
+  "discovery_framework": {
+    "signal_tracking": true,
+    "signal_types": {
+      "strong": {
+        "indicators": [
+          "spontaneous_mention",
+          "elaborate_workarounds",
+          "budget_allocated",
+          "emotional_response",
+          "proactive_followup"
+        ],
+        "weight": 3
+      },
+      "medium": {
+        "indicators": [
+          "acknowledged_not_priority",
+          "polite_interest",
+          "nice_to_have"
+        ],
+        "weight": 2
+      },
+      "weak": {
+        "indicators": [
+          "no_problem",
+          "disengaged",
+          "no_current_solution"
+        ],
+        "weight": 1
+      }
+    },
+    "verbatim_capture": true,
+    "quantification_required": true
+  },
+  
+  "output": {
+    "generate_report": true,
+    "report_format": "markdown",
+    "validation_score": true,
+    "signal_summary": true,
+    "verbatims_extraction": true,
+    "next_steps": true,
+    "icp_insights": true
+  },
+  
+  "sectors_algeria": [
+    "EdTech",
+    "FinTech",
+    "AgriTech",
+    "E-commerce",
+    "Services B2B",
+    "Santé",
+    "Immobilier",
+    "Transport & Logistique",
+    "Industrie",
+    "Tourisme"
+  ],
+  
+  "ui": {
+    "welcome_message": "Bienvenue - Validation de votre idée business",
+    "completion_message": "Interview terminée - Rapport généré !",
+    "show_progress": true,
+    "show_signals": true,
+    "show_validation_meter": true
+  },
+  
+  "integrations": {
+    "export_notion": true,
+    "export_airtable": true,
+    "export_sheets": true,
+    "webhook_on_complete": true
+  },
+  
+  "analytics": {
+    "track_problem_patterns": true,
+    "track_sector_insights": true,
+    "aggregate_market_signals": true,
+    "trend_analysis": true
+  }
+}

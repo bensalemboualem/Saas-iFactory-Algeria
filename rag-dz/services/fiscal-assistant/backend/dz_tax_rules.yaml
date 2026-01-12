@@ -1,0 +1,250 @@
+# Règles Fiscales Algérie - DZ-FiscalAssistant
+# Version: 2024-2025
+# AVERTISSEMENT: Ces règles sont indicatives. Consultez la DGI pour les taux officiels.
+
+version: "2024-2025"
+last_updated: "2024-01-01"
+currency: "DZD"
+
+# =============================================================================
+# IRG - Impôt sur le Revenu Global (Personnes physiques)
+# =============================================================================
+irg:
+  enabled: true
+  name: "Impôt sur le Revenu Global"
+  description: "Impôt progressif sur les revenus des personnes physiques"
+  
+  # Barème progressif annuel
+  tranches:
+    - min: 0
+      max: 240000
+      rate: 0
+      description: "Exonéré"
+    - min: 240001
+      max: 480000
+      rate: 0.23
+      description: "23%"
+    - min: 480001
+      max: 960000
+      rate: 0.27
+      description: "27%"
+    - min: 960001
+      max: 1920000
+      rate: 0.30
+      description: "30%"
+    - min: 1920001
+      max: 3840000
+      rate: 0.33
+      description: "33%"
+    - min: 3840001
+      max: 999999999999
+      rate: 0.35
+      description: "35%"
+  
+  # Abattements
+  abattement_salarie: 0.10  # 10% pour les salariés
+  abattement_handicape: 0.20  # 20% pour personnes handicapées
+  
+  applies_to:
+    - "salarié"
+    - "freelance"
+    - "autre"
+
+# =============================================================================
+# IFU - Impôt Forfaitaire Unique
+# =============================================================================
+ifu:
+  enabled: true
+  name: "Impôt Forfaitaire Unique"
+  description: "Régime simplifié pour les petits contribuables"
+  
+  # Seuil maximum de CA pour bénéficier de l'IFU
+  seuil_ca_max: 30000000  # 30 millions DZD
+  
+  # Tranches IFU
+  tranches:
+    - min: 0
+      max: 10000000
+      rate: 0.05
+      description: "5% jusqu'à 10M DZD"
+    - min: 10000001
+      max: 30000000
+      rate: 0.12
+      description: "12% de 10M à 30M DZD"
+  
+  # L'IFU inclut
+  includes_tva: true
+  includes_tap: true
+  includes_irg: true
+  
+  applies_to:
+    - "freelance"
+    - "commerçant"
+    - "autre"
+
+# =============================================================================
+# TAP - Taxe sur l'Activité Professionnelle
+# =============================================================================
+tap:
+  enabled: true
+  name: "Taxe sur l'Activité Professionnelle"
+  description: "Taxe locale sur le chiffre d'affaires"
+  
+  # Taux selon activité
+  rate_general: 0.02      # 2% - Taux général
+  rate_production: 0.01   # 1% - Production de biens
+  rate_batiment: 0.02     # 2% - BTP
+  rate_commerce: 0.02     # 2% - Commerce
+  
+  # Exonérations
+  exonerations:
+    - "Export"
+    - "Zones franches"
+  
+  applies_to:
+    - "entreprise"
+    - "freelance"
+    - "commerçant"
+
+# =============================================================================
+# TVA - Taxe sur la Valeur Ajoutée
+# =============================================================================
+tva:
+  enabled: true
+  name: "Taxe sur la Valeur Ajoutée"
+  description: "Impôt indirect sur la consommation"
+  
+  # Taux
+  rate_normal: 0.19       # 19% - Taux normal
+  rate_reduit: 0.09       # 9% - Taux réduit (produits de base)
+  
+  # Seuil d'assujettissement
+  seuil_assujettissement: 30000000  # 30 millions DZD
+  
+  # Exonérations courantes
+  exonerations:
+    - "Exportations"
+    - "Médicaments"
+    - "Produits alimentaires de base"
+  
+  applies_to:
+    - "entreprise"
+
+# =============================================================================
+# IBS - Impôt sur les Bénéfices des Sociétés
+# =============================================================================
+ibs:
+  enabled: true
+  name: "Impôt sur les Bénéfices des Sociétés"
+  description: "Impôt sur les bénéfices des personnes morales"
+  
+  # Taux selon activité
+  rate_general: 0.26       # 26% - Taux général
+  rate_production: 0.19    # 19% - Production de biens
+  rate_tourisme: 0.19      # 19% - Tourisme et artisanat
+  rate_batiment: 0.23      # 23% - BTP
+  rate_export: 0.19        # 19% - Exportation
+  
+  # Acomptes
+  acomptes:
+    - trimestre: 1
+      date_limite: "20 mars"
+      taux: 0.30
+    - trimestre: 2
+      date_limite: "20 juin"
+      taux: 0.30
+    - trimestre: 3
+      date_limite: "20 novembre"
+      taux: 0.40
+  
+  applies_to:
+    - "entreprise"
+
+# =============================================================================
+# CNAS - Cotisations Sociales Salariés
+# =============================================================================
+cnas:
+  enabled: true
+  name: "CNAS - Caisse Nationale des Assurances Sociales"
+  description: "Cotisations sociales pour salariés"
+  
+  # Taux de cotisation
+  taux_employeur: 0.26    # 26% part employeur
+  taux_salarie: 0.09      # 9% part salarié
+  taux_total: 0.35        # 35% total
+  
+  # Plafond mensuel de cotisation
+  plafond_mensuel: 180000  # DZD
+  
+  # Répartition détaillée employeur
+  repartition_employeur:
+    assurance_maladie: 0.125
+    accidents_travail: 0.0125
+    retraite: 0.10
+    assurance_chomage: 0.0125
+  
+  applies_to:
+    - "salarié"
+    - "entreprise"
+
+# =============================================================================
+# CASNOS - Cotisations Non-Salariés
+# =============================================================================
+casnos:
+  enabled: true
+  name: "CASNOS - Caisse Nationale de Sécurité Sociale des Non-Salariés"
+  description: "Cotisations sociales pour travailleurs indépendants"
+  
+  # Taux de cotisation
+  taux: 0.15  # 15%
+  
+  # Assiette de cotisation
+  assiette_min: 216000     # 18 000 x 12 = minimum annuel
+  assiette_max: 6000000    # Plafond annuel
+  
+  # Option de majoration pour prestations améliorées
+  option_majoration: 0.05  # +5% optionnel
+  
+  applies_to:
+    - "freelance"
+    - "commerçant"
+    - "autre"
+
+# =============================================================================
+# Droits de timbre et autres taxes
+# =============================================================================
+autres_taxes:
+  enabled: true
+  
+  droit_timbre:
+    factures: 20  # DZD par facture
+    cheques: 5    # DZD par chèque
+    actes: 500    # DZD minimum
+  
+  taxe_formation_professionnelle:
+    taux: 0.01    # 1% de la masse salariale
+    seuil: 20     # Plus de 20 salariés
+
+# =============================================================================
+# Calendrier fiscal
+# =============================================================================
+calendrier:
+  g50:
+    description: "Déclaration mensuelle (IRG, TVA, TAP)"
+    date_limite: "20 du mois suivant"
+  
+  g50A:
+    description: "Déclaration annuelle récapitulative"
+    date_limite: "20 janvier"
+  
+  declaration_annuelle_ibs:
+    description: "Liasse fiscale IBS"
+    date_limite: "30 avril"
+  
+  declaration_annuelle_irg:
+    description: "Déclaration annuelle IRG"
+    date_limite: "30 avril"
+  
+  ifu_annuel:
+    description: "Déclaration annuelle IFU"
+    date_limite: "30 janvier"

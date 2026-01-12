@@ -1,0 +1,232 @@
+"""
+Payment Service - Intégration Chargily pour l'Algérie
+
+Chargily Pay est la passerelle de paiement pour l'Algérie (CIB, EDAHABIA).
+"""
+
+import os
+import hmac
+import hashlib
+import logging
+from typing import Optional, Dict, Any
+from datetime import datetime
+
+logger = logging.getLogger(__name__)
+
+
+class PaymentService:
+    """Service de paiement via Chargily Pay"""
+
+    def __init__(self):
+        self.api_key = os.getenv('CHARGILY_API_KEY')
+        self.api_secret = os.getenv('CHARGILY_SECRET_KEY')
+        self.webhook_secret = os.getenv('CHARGILY_WEBHOOK_SECRET')
+        self.mode = os.getenv('CHARGILY_MODE', 'test')  # 'test' ou 'live'
+
+        # URL API Chargily
+        self.api_url = (
+            "https://pay.chargily.net/test/api/v2" if self.mode == 'test'
+            else "https://pay.chargily.net/api/v2"
+        )
+
+        self._client = None
+
+        if not self.api_key:
+            logger.warning("Chargily API key not configured - payments disabled")
+
+    @property
+    def client(self):
+        """Lazy load du client Chargily"""
+        if self._client is None and self.api_key:
+            try:
+                from chargily_pay import ChargilyClient
+                self._client = ChargilyClient(
+                    key=self.api_key,
+                    secret=self.api_secret,
+                    url=self.api_url
+                )
+            except ImportError:
+                logger.warning("chargily-pay package not installed")
+            except Exception as e:
+                logger.error(f"Error initializing Chargily client: {e}")
+        return self._client
+
+    # Plans avec prix en DZD
+    PLANS = {
+        'starter': {
+            'name': 'Starter',
+            'credits': 10000,
+            'price_dzd': 1500,
+            'price_chf': 15,
+            'description': '10,000 crédits/mois - Images incluses'
+        },
+        'pro': {
+            'name': 'Pro',
+            'credits': 30000,
+            'price_dzd': 4000,
+            'price_chf': 40,
+            'description': '30,000 crédits/mois - Images + Vidéos'
+        },
+        'enterprise': {
+            'name': 'Enterprise',
+            'credits': 100000,
+            'price_dzd': 15000,
+            'price_chf': 150,
+            'description': '100,000 crédits/mois - Tout illimité + Support'
+        }
+    }
+
+    async def create_checkout(
+        self,
+        tenant_id: str,
+        plan_name: str,
+        customer_email: str,
+        customer_name: Optional[str] = None,
+        success_url: Optional[str] = None,
+        failure_url: Optional[str] = None
+    ) -> Dict[str, Any]:
+        """Crée une session de paiement Chargily"""
+
+        if not self.client:
+            raise Exception("Chargily not configured - please set CHARGILY_API_KEY")
+
+        plan = self.PLANS.get(plan_name)
+        if not plan:
+            raise ValueError(f"Plan inconnu: {plan_name}. Plans valides: {list(self.PLANS.keys())}")
+
+        base_url = os.getenv('FRONTEND_URL', 'http://localhost:3000')
+        api_url = os.getenv('API_URL', 'http://localhost:8000')
+
+        try:
+            from chargily_pay.entity import Checkout
+
+            checkout = self.client.create_checkout(
+                Checkout(
+                    amount=plan['price_dzd'],
+                    currency="dzd",
+                    success_url=success_url or f"{base_url}/payment/success?plan={plan_name}",
+                    failure_url=failure_url or f"{base_url}/payment/failed?plan={plan_name}",
+                    webhook_endpoint=f"{api_url}/api/payments/webhook",
+                    description=f"IA Factory Algeria - Plan {plan['name']}",
+                    locale="fr",
+                    metadata={
+                        "tenant_id": tenant_id,
+                        "plan": plan_name,
+                        "credits": plan['credits'],
+                        "customer_email": customer_email,
+                        "customer_name": customer_name or ""
+                    }
+                )
+            )
+
+            logger.info(f"Checkout créé: {checkout.id} pour tenant {tenant_id}, plan {plan_name}")
+
+            return {
+                "checkout_id": checkout.id,
+                "checkout_url": checkout.checkout_url,
+                "amount": plan['price_dzd'],
+                "plan": plan_name,
+                "credits": plan['credits'],
+                "expires_at": getattr(checkout, 'expires_at', None)
+            }
+
+        except ImportError:
+            # Fallback si le package n'est pas installé
+            logger.error("chargily-pay package not installed")
+            raise Exception("Payment system not available")
+        except Exception as e:
+            logger.error(f"Erreur création checkout: {e}")
+            raise
+
+    async def verify_webhook(self, payload: bytes, signature: str) -> bool:
+        """Vérifie la signature du webhook Chargily (HMAC SHA256)"""
+        if not self.webhook_secret:
+            logger.warning("Webhook secret not configured - skipping verification")
+            return True  # En mode dev, on accepte tout
+
+        try:
+            expected = hmac.new(
+                self.webhook_secret.encode(),
+                payload,
+                hashlib.sha256
+            ).hexdigest()
+
+            return hmac.compare_digest(expected, signature)
+        except Exception as e:
+            logger.error(f"Error verifying webhook signature: {e}")
+            return False
+
+    async def handle_webhook(self, event_type: str, data: Dict) -> Dict[str, Any]:
+        """Traite les événements webhook de Chargily"""
+
+        logger.info(f"Webhook reçu: {event_type}")
+
+        if event_type == "checkout.paid":
+            # Paiement réussi !
+            metadata = data.get("metadata", {})
+            tenant_id = metadata.get("tenant_id")
+            plan = metadata.get("plan")
+            credits = metadata.get("credits", 0)
+
+            logger.info(f"Paiement réussi! Tenant: {tenant_id}, Plan: {plan}, Crédits: {credits}")
+
+            return {
+                "action": "upgrade_plan",
+                "tenant_id": tenant_id,
+                "plan": plan,
+                "credits": int(credits) if credits else 0,
+                "payment_id": data.get("id"),
+                "amount": data.get("amount"),
+                "customer_email": metadata.get("customer_email")
+            }
+
+        elif event_type == "checkout.failed":
+            logger.warning(f"Paiement échoué: {data.get('id')}")
+            return {
+                "action": "payment_failed",
+                "payment_id": data.get("id"),
+                "data": data
+            }
+
+        elif event_type == "checkout.expired":
+            logger.info(f"Checkout expiré: {data.get('id')}")
+            return {
+                "action": "checkout_expired",
+                "checkout_id": data.get("id"),
+                "data": data
+            }
+
+        elif event_type == "checkout.canceled":
+            logger.info(f"Checkout annulé: {data.get('id')}")
+            return {
+                "action": "checkout_canceled",
+                "checkout_id": data.get("id"),
+                "data": data
+            }
+
+        return {"action": "unknown", "event": event_type, "data": data}
+
+    def get_plans(self) -> Dict[str, Any]:
+        """Retourne les plans disponibles"""
+        return {
+            "plans": self.PLANS,
+            "currency": "DZD",
+            "payment_methods": ["CIB", "EDAHABIA"],
+            "mode": self.mode
+        }
+
+    def is_configured(self) -> bool:
+        """Vérifie si Chargily est configuré"""
+        return bool(self.api_key)
+
+
+# Singleton instance
+_payment_service: Optional[PaymentService] = None
+
+
+def get_payment_service() -> PaymentService:
+    """Retourne l'instance singleton du PaymentService"""
+    global _payment_service
+    if _payment_service is None:
+        _payment_service = PaymentService()
+    return _payment_service

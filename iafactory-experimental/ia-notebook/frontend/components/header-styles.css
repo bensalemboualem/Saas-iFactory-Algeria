@@ -1,0 +1,897 @@
+/*
+====================================================================
+  IAFACTORY ALGERIA - HEADER STYLES (Réutilisable)
+  Version: 2.0 - Décembre 2025
+  Design System: Modern Professional SaaS
+====================================================================
+*/
+
+/* ==================== DESIGN SYSTEM VARIABLES ==================== */
+:root {
+    /* Colors - IAFactory Algeria Brand */
+    --iaf-green: #00a651;           /* Vert drapeau algérien */
+    --iaf-red: #ef4444;             /* Rouge drapeau algérien */
+    --iaf-primary: var(--iaf-green);
+    --iaf-primary-hover: #00c761;
+    --iaf-primary-active: #008f45;
+
+    /* Neutral Colors (Auto Dark/Light) */
+    --iaf-bg-header: #020617;
+    --iaf-bg-glass: rgba(255, 255, 255, 0.08);
+    --iaf-border: rgba(255, 255, 255, 0.12);
+    --iaf-text-primary: #ffffff;
+    --iaf-text-secondary: rgba(255, 255, 255, 0.7);
+    --iaf-text-muted: rgba(255, 255, 255, 0.5);
+    --text: #f8fafc; /* For logo letters (dark mode) */
+
+    /* Shadows & Effects */
+    --iaf-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --iaf-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.15);
+    --iaf-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.2);
+    --iaf-glow-primary: 0 0 20px rgba(0, 166, 81, 0.3);
+
+    /* Spacing */
+    --iaf-spacing-xs: 4px;
+    --iaf-spacing-sm: 8px;
+    --iaf-spacing-md: 12px;
+    --iaf-spacing-lg: 16px;
+    --iaf-spacing-xl: 24px;
+
+    /* Typography */
+    --iaf-font-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+    --iaf-font-size-xs: 13px;
+    --iaf-font-size-sm: 14px;
+    --iaf-font-size-md: 15px;
+    --iaf-font-size-lg: 16px;
+
+    /* Transitions */
+    --iaf-transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    --iaf-transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    --iaf-transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Layout */
+    --iaf-header-height: 60px;
+    --iaf-container-max: 1400px;
+    --iaf-z-header: 1000;
+    --iaf-z-mobile-menu: 1100;
+}
+
+/* Light Mode Overrides */
+[data-theme="light"] {
+    --iaf-bg-header: #f7f5f0;
+    --iaf-bg-glass: rgba(0, 0, 0, 0.04);
+    --iaf-border: rgba(0, 0, 0, 0.08);
+    --iaf-text-primary: #1a1a1a;
+    --iaf-text-secondary: rgba(0, 0, 0, 0.7);
+    --iaf-text-muted: rgba(0, 0, 0, 0.5);
+    --text: #0f172a; /* For logo letters (light mode) */
+    --iaf-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+    --iaf-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
+    --iaf-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+/* ==================== HEADER MAIN ==================== */
+.iaf-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--iaf-header-height);
+    background: var(--iaf-bg-header);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border-bottom: 1px solid var(--iaf-border);
+    z-index: var(--iaf-z-header);
+    transition: all var(--iaf-transition-base);
+}
+
+/* Scroll State */
+.iaf-header.scrolled {
+    box-shadow: var(--iaf-shadow-md);
+}
+
+/* ==================== HEADER CONTAINER ==================== */
+.iaf-header-container {
+    max-width: var(--iaf-container-max);
+    margin: 0 auto;
+    height: 100%;
+    padding: 0 var(--iaf-spacing-xl);
+    display: flex;
+    align-items: center;
+    gap: var(--iaf-spacing-xl);
+    position: relative;
+    z-index: 1;
+}
+
+/* ==================== LOGO (EXACT COPY from index.html) ==================== */
+.header-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+/* Logo Text Container */
+.logo-text {
+    font-size: 18px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+}
+
+/* Logo Flag (EXACT COPY from index.html) */
+.logo-flag {
+    width: 32px;
+    animation: flagWavePro 3s ease-in-out infinite;
+    transform-origin: left center;
+    transform-style: preserve-3d;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+    transition: transform 0.3s ease;
+}
+
+/* Animation pour toutes les lettres */
+.logo-text .letter {
+    display: inline-block;
+    animation: letterWave 3s ease-in-out infinite;
+    transform-style: preserve-3d;
+}
+
+/* Animation spéciale pour les "i" */
+.logo-text .i-bounce {
+    display: inline-block;
+    animation: iPro3D 2.5s ease-in-out infinite;
+    transform-style: preserve-3d;
+}
+
+/* Neon glow for green letters - DISABLED (transparent) */
+.logo-text span[style*="#00a651"] {
+    /* animation: neonPulse 3s ease-in-out infinite; */
+}
+
+/* Mode clair: Supprimer tout glow vert autour des lettres */
+[data-theme="light"] .logo-text .i-bounce,
+[data-theme="light"] .logo-text span[style*="#00a651"],
+[data-theme="light"] .logo-text .letter {
+    text-shadow: none !important;
+}
+
+/* Hover effects */
+.logo-text:hover .letter {
+    animation-play-state: paused;
+    transform: translateY(-4px) scale(1.1);
+}
+
+.logo-text:hover .i-bounce {
+    animation-play-state: paused;
+    transform: translateY(-6px) rotateX(-10deg) scale(1.15);
+}
+
+/* Structure pour le point du "i" qui tombe */
+.i-drop {
+    position: relative;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 1px;
+}
+
+.i-stem {
+    display: inline-block;
+    font-size: 18px;
+    line-height: 0.8;
+}
+
+.i-dot {
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: dotDrop 3s ease-in-out infinite;
+    font-size: 10px;
+}
+
+/* ==================== NAVIGATION ==================== */
+.iaf-nav {
+    display: flex;
+    align-items: center;
+    gap: var(--iaf-spacing-xs);
+    margin-left: auto;
+}
+
+.iaf-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--iaf-text-secondary);
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all var(--iaf-transition-fast);
+    position: relative;
+}
+
+.iaf-nav-link:hover {
+    color: var(--iaf-primary);
+}
+
+.iaf-nav-link:active {
+    transform: scale(0.97);
+}
+
+.iaf-nav-icon {
+    font-size: 14px;
+    opacity: 0.9;
+    transition: all var(--iaf-transition-fast);
+}
+
+.iaf-nav-link:hover .iaf-nav-icon {
+    color: var(--iaf-primary);
+    transform: scale(1.1);
+}
+
+/* ==================== HEADER ACTIONS ==================== */
+.iaf-header-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--iaf-spacing-md);
+}
+
+/* ==================== PROFILE TOGGLE ==================== */
+.iaf-profile-toggle {
+    display: flex;
+    background: transparent;
+    border: none;
+    border-radius: 10px;
+    padding: 0;
+    gap: 6px;
+}
+
+.iaf-profile-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 12px;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--iaf-text-muted);
+    cursor: pointer;
+    transition: all var(--iaf-transition-fast);
+    white-space: nowrap;
+}
+
+.iaf-profile-btn:hover {
+    color: var(--iaf-text-secondary);
+}
+
+.iaf-profile-btn.active {
+    color: #ffffff;
+    background: var(--iaf-primary);
+    box-shadow: 0 2px 8px rgba(0, 166, 81, 0.3);
+}
+
+.iaf-profile-icon {
+    font-size: 13px;
+}
+
+/* ==================== LANGUAGE SELECTOR ==================== */
+.iaf-language-selector {
+    position: relative;
+}
+
+.iaf-lang-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--iaf-text-secondary);
+    cursor: pointer;
+    transition: all var(--iaf-transition-fast);
+}
+
+.iaf-lang-btn:hover {
+    color: var(--iaf-primary);
+}
+
+.iaf-lang-icon {
+    font-size: 14px;
+}
+
+.iaf-lang-label {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.iaf-lang-chevron {
+    font-size: 10px;
+    opacity: 0.7;
+    transition: transform var(--iaf-transition-fast);
+}
+
+.iaf-lang-btn[aria-expanded="true"] .iaf-lang-chevron {
+    transform: rotate(180deg);
+}
+
+/* Language Menu Dropdown */
+.iaf-lang-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 180px;
+    background: var(--iaf-bg-header);
+    backdrop-filter: blur(24px);
+    border: 1px solid var(--iaf-border);
+    border-radius: 12px;
+    padding: 6px;
+    box-shadow: var(--iaf-shadow-lg);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all var(--iaf-transition-base);
+}
+
+.iaf-lang-menu.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.iaf-lang-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 10px 12px;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    font-size: var(--iaf-font-size-sm);
+    color: var(--iaf-text-secondary);
+    cursor: pointer;
+    transition: all var(--iaf-transition-fast);
+    text-align: left;
+}
+
+.iaf-lang-option:hover {
+    background: var(--iaf-bg-glass);
+    color: var(--iaf-text-primary);
+}
+
+.iaf-lang-option.active {
+    background: rgba(0, 166, 81, 0.15);
+    color: var(--iaf-primary);
+}
+
+.iaf-lang-flag {
+    font-size: 18px;
+}
+
+.iaf-lang-check {
+    margin-left: auto;
+    opacity: 0;
+    color: var(--iaf-primary);
+}
+
+.iaf-lang-option.active .iaf-lang-check {
+    opacity: 1;
+}
+
+/* ==================== SOCIAL LINKS ==================== */
+.iaf-social-links {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.iaf-social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: transparent;
+    border: 1px solid var(--iaf-border);
+    border-radius: 8px;
+    color: var(--iaf-text-secondary);
+    text-decoration: none;
+    transition: all var(--iaf-transition-fast);
+    position: relative;
+}
+
+.iaf-social-link:hover {
+    background: var(--iaf-bg-glass);
+    color: var(--iaf-text-primary);
+    border-color: var(--iaf-primary);
+    transform: translateY(-2px);
+}
+
+.iaf-social-link:active {
+    transform: translateY(0) scale(0.95);
+}
+
+.iaf-social-link i {
+    font-size: 18px;
+}
+
+.iaf-social-link .hf-icon {
+    font-size: 20px;
+    transition: all var(--iaf-transition-fast);
+}
+
+/* Mode clair: Couleurs naturelles des icônes + bordures transparentes */
+[data-theme="light"] .iaf-social-link {
+    /* Bordure transparente en mode clair */
+    border: none;
+    background: transparent;
+}
+
+[data-theme="light"] .iaf-social-link:nth-child(1) {
+    /* GitHub - noir */
+    color: #24292f;
+}
+
+[data-theme="light"] .iaf-social-link:nth-child(2) .hf-icon {
+    /* Hugging Face - jaune naturel (emoji déjà en couleur) */
+    filter: grayscale(0%);
+    opacity: 1;
+}
+
+[data-theme="light"] .iaf-social-link:hover {
+    /* Hover en mode clair - pas de bordure */
+    border: none;
+}
+
+/* Mode sombre: Icônes gris + bordures transparentes */
+[data-theme="dark"] .iaf-social-link {
+    border: none;
+    background: transparent;
+}
+
+[data-theme="dark"] .iaf-social-link .hf-icon {
+    filter: grayscale(100%);
+    opacity: 0.7;
+}
+
+[data-theme="dark"] .iaf-social-link:hover {
+    border: none;
+}
+
+[data-theme="dark"] .iaf-social-link:hover .hf-icon {
+    filter: grayscale(0%);
+    opacity: 1;
+}
+
+/* Special hover effects */
+.iaf-social-link:nth-child(1):hover {
+    /* GitHub */
+    background: rgba(36, 41, 47, 0.1);
+    border-color: #24292f;
+}
+
+[data-theme="dark"] .iaf-social-link:nth-child(1):hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #ffffff;
+}
+
+.iaf-social-link:nth-child(2):hover {
+    /* Hugging Face */
+    background: rgba(255, 212, 59, 0.1);
+    border-color: #FFD43B;
+}
+
+/* ==================== AUTH BUTTONS ==================== */
+.iaf-auth-buttons {
+    display: flex;
+    gap: var(--iaf-spacing-sm);
+}
+
+/* Button Base Styles */
+.iaf-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 7px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all var(--iaf-transition-fast);
+    white-space: nowrap;
+    position: relative;
+}
+
+.iaf-btn:active {
+    transform: scale(0.97);
+}
+
+.iaf-btn-icon {
+    font-size: 13px;
+}
+
+/* Secondary Button (Log in) */
+.iaf-btn-secondary {
+    background: transparent;
+    color: var(--iaf-text-secondary);
+}
+
+.iaf-btn-secondary:hover {
+    color: var(--iaf-primary);
+}
+
+/* Primary Button (Get Started) */
+.iaf-btn-primary {
+    background: linear-gradient(135deg, var(--iaf-green) 0%, #00c761 100%);
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 166, 81, 0.25);
+}
+
+.iaf-btn-primary:hover {
+    box-shadow: 0 4px 14px rgba(0, 166, 81, 0.35);
+    transform: translateY(-1px);
+}
+
+.iaf-btn-primary:active {
+    transform: translateY(0) scale(0.97);
+}
+
+/* ==================== MOBILE MENU BUTTON ==================== */
+.iaf-mobile-menu-btn {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    padding: 8px;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all var(--iaf-transition-fast);
+}
+
+.iaf-burger-line {
+    width: 22px;
+    height: 2px;
+    background: var(--iaf-text-primary);
+    border-radius: 2px;
+    transition: all var(--iaf-transition-base);
+}
+
+.iaf-mobile-menu-btn.active .iaf-burger-line:nth-child(1) {
+    transform: rotate(45deg) translate(7px, 7px);
+}
+
+.iaf-mobile-menu-btn.active .iaf-burger-line:nth-child(2) {
+    opacity: 0;
+}
+
+.iaf-mobile-menu-btn.active .iaf-burger-line:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
+}
+
+/* ==================== MOBILE MENU ==================== */
+.iaf-mobile-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    max-width: 380px;
+    height: 100vh;
+    background: var(--iaf-bg-header);
+    backdrop-filter: blur(24px);
+    border-left: 1px solid var(--iaf-border);
+    box-shadow: var(--iaf-shadow-lg);
+    z-index: var(--iaf-z-mobile-menu);
+    transform: translateX(100%);
+    transition: transform var(--iaf-transition-slow);
+    overflow-y: auto;
+}
+
+.iaf-mobile-menu.open {
+    transform: translateX(0);
+}
+
+.iaf-mobile-menu-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--iaf-spacing-xl);
+    border-bottom: 1px solid var(--iaf-border);
+}
+
+.iaf-mobile-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--iaf-text-primary);
+}
+
+.iaf-mobile-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: var(--iaf-bg-glass);
+    border: 1px solid var(--iaf-border);
+    border-radius: 8px;
+    font-size: 20px;
+    color: var(--iaf-text-secondary);
+    cursor: pointer;
+    transition: all var(--iaf-transition-fast);
+}
+
+.iaf-mobile-close:hover {
+    background: rgba(239, 68, 68, 0.2);
+    color: var(--iaf-red);
+}
+
+.iaf-mobile-nav {
+    padding: var(--iaf-spacing-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--iaf-spacing-sm);
+}
+
+.iaf-mobile-link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    background: var(--iaf-bg-glass);
+    border: 1px solid var(--iaf-border);
+    border-radius: 12px;
+    font-size: var(--iaf-font-size-md);
+    font-weight: 500;
+    color: var(--iaf-text-secondary);
+    text-decoration: none;
+    transition: all var(--iaf-transition-fast);
+}
+
+.iaf-mobile-link:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--iaf-text-primary);
+    border-color: var(--iaf-primary);
+}
+
+.iaf-mobile-link:active {
+    transform: scale(0.98);
+}
+
+.iaf-mobile-icon {
+    font-size: 20px;
+}
+
+.iaf-mobile-divider {
+    height: 1px;
+    background: var(--iaf-border);
+    margin: var(--iaf-spacing-lg) 0;
+}
+
+.iaf-mobile-link-auth {
+    background: rgba(0, 166, 81, 0.1);
+    border-color: rgba(0, 166, 81, 0.3);
+}
+
+.iaf-mobile-link-primary {
+    background: linear-gradient(135deg, var(--iaf-green) 0%, #00c761 100%);
+    color: #ffffff;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(0, 166, 81, 0.3);
+}
+
+.iaf-mobile-link-primary:hover {
+    color: #ffffff;
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 1024px) {
+    .iaf-nav {
+        display: none;
+    }
+
+    .iaf-profile-toggle {
+        display: none;
+    }
+
+    .iaf-social-links {
+        display: none;
+    }
+
+    .iaf-auth-buttons {
+        display: none;
+    }
+
+    .iaf-mobile-menu-btn {
+        display: flex;
+    }
+}
+
+@media (max-width: 768px) {
+    .iaf-header-container {
+        padding: 0 var(--iaf-spacing-lg);
+    }
+
+    .iaf-logo-text {
+        display: none;
+    }
+
+    .iaf-mobile-menu {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    :root {
+        --iaf-header-height: 60px;
+    }
+
+    .iaf-header-container {
+        padding: 0 var(--iaf-spacing-md);
+    }
+
+    .iaf-language-selector {
+        display: none;
+    }
+}
+
+/* ==================== ACCESSIBILITY ==================== */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Focus States (Keyboard Navigation) */
+.iaf-nav-link:focus-visible,
+.iaf-btn:focus-visible,
+.iaf-lang-btn:focus-visible,
+.iaf-profile-btn:focus-visible,
+.iaf-mobile-menu-btn:focus-visible {
+    outline: 2px solid var(--iaf-primary);
+    outline-offset: 2px;
+}
+
+/* RTL Support (Arabic) */
+[dir="rtl"] .iaf-header-container {
+    direction: rtl;
+}
+
+[dir="rtl"] .iaf-lang-menu {
+    right: auto;
+    left: 0;
+}
+
+/* ==================== ANIMATIONS ==================== */
+@keyframes slideInDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.iaf-header {
+    animation: slideInDown 0.5s ease-out;
+}
+
+/* Hover Glow Effect on Logo */
+.iaf-logo:hover .iaf-logo-flag {
+    box-shadow: 0 0 20px rgba(0, 166, 81, 0.5);
+}
+
+/* ==================== LOGO ANIMATIONS ==================== */
+
+/* Animation vague pour toutes les lettres */
+@keyframes letterWave {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+    }
+    25% {
+        transform: translateY(-6px) scale(1.05);
+    }
+    50% {
+        transform: translateY(0) scale(1);
+    }
+    75% {
+        transform: translateY(-3px) scale(1.02);
+    }
+}
+
+/* Animation 3D pour les "i" */
+@keyframes iPro3D {
+    0%, 100% {
+        transform: translateY(0) rotateX(0deg);
+    }
+    15% {
+        transform: translateY(-12px) rotateX(-15deg);
+    }
+    30% {
+        transform: translateY(0) rotateX(0deg);
+    }
+    45% {
+        transform: translateY(-6px) rotateX(-8deg);
+    }
+    60% {
+        transform: translateY(0) rotateX(0deg);
+    }
+}
+
+/* Animation neon pulse pour lettres vertes */
+@keyframes neonPulse {
+    0%, 100% {
+        text-shadow: 0 0 4px rgba(0, 166, 81, 0.5),
+                     0 0 8px rgba(0, 166, 81, 0.3),
+                     0 0 12px rgba(0, 166, 81, 0.2);
+    }
+    50% {
+        text-shadow: 0 0 8px rgba(0, 166, 81, 0.8),
+                     0 0 16px rgba(0, 166, 81, 0.6),
+                     0 0 24px rgba(0, 166, 81, 0.4);
+    }
+}
+
+/* Animation pour le point du "i" qui tombe et rebondit */
+@keyframes dotDrop {
+    0%, 100% {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+    }
+    15% {
+        transform: translateX(-50%) translateY(20px);
+        opacity: 1;
+    }
+    18% {
+        transform: translateX(-50%) translateY(16px);
+        opacity: 1;
+    }
+    21% {
+        transform: translateX(-50%) translateY(20px);
+        opacity: 1;
+    }
+    24% {
+        transform: translateX(-50%) translateY(18px);
+        opacity: 1;
+    }
+    30% {
+        transform: translateX(-50%) translateY(20px);
+        opacity: 1;
+    }
+}
+
+/* Animation 3D pour le drapeau */
+@keyframes flagWavePro {
+    0%, 100% {
+        transform: perspective(400px) rotateY(0deg) scale(1);
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+    }
+    25% {
+        transform: perspective(400px) rotateY(8deg) scale(1.05);
+        filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.15));
+    }
+    50% {
+        transform: perspective(400px) rotateY(0deg) scale(1);
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+    }
+    75% {
+        transform: perspective(400px) rotateY(-8deg) scale(1.05);
+        filter: drop-shadow(-2px 4px 6px rgba(0, 0, 0, 0.15));
+    }
+}

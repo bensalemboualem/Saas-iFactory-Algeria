@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarifs - IAFactory RAG Algérie</title>
+    <meta name="description" content="Plans et tarifs IAFactory RAG : gratuit, pro et entreprise. Solutions adaptées au marché algérien.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --bg-secondary: #111111;
+            --card: #1a1a1a;
+            --border: #2a2a2a;
+            --text: #ffffff;
+            --text-secondary: #a0a0a0;
+            --primary: #00c261;
+            --primary-hover: #00a351;
+            --accent: #3b82f6;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 24px;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 18px;
+        }
+
+        .logo-text { font-weight: 700; font-size: 20px; }
+        .logo-text span { color: var(--primary); }
+
+        nav { display: flex; gap: 32px; align-items: center; }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover, .nav-link.active { color: var(--primary); }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+
+        /* Hero */
+        .hero {
+            padding: 140px 24px 60px;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(0, 194, 97, 0.05) 0%, transparent 50%);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--text), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Currency Toggle */
+        .currency-toggle {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin: 40px auto;
+            background: var(--card);
+            padding: 6px;
+            border-radius: 30px;
+            width: fit-content;
+        }
+
+        .currency-btn {
+            background: transparent;
+            color: var(--text-secondary);
+            border: none;
+            padding: 10px 24px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .currency-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Pricing Grid */
+        .pricing-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px 80px;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 24px;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .pricing-card.popular {
+            border-color: var(--primary);
+            background: linear-gradient(180deg, rgba(0, 194, 97, 0.1) 0%, var(--card) 30%);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary);
+            color: white;
+            padding: 6px 20px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .plan-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .plan-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .plan-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 24px;
+        }
+
+        .plan-price {
+            margin-bottom: 24px;
+        }
+
+        .price-amount {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .price-currency {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+        }
+
+        .price-period {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 32px;
+        }
+
+        .plan-features li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 14px;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .plan-features li .check {
+            color: var(--primary);
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .plan-features li .cross {
+            color: #666;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .plan-cta {
+            width: 100%;
+            padding: 14px 24px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+        }
+
+        .plan-cta.primary {
+            background: var(--primary);
+            color: white;
+            border: none;
+        }
+
+        .plan-cta.primary:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        .plan-cta.secondary {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .plan-cta.secondary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            max-width: 800px;
+            margin: 80px auto;
+            padding: 0 24px;
+        }
+
+        .faq-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 40px;
+        }
+
+        .faq-item {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 20px 24px;
+            background: transparent;
+            border: none;
+            color: var(--text);
+            font-size: 1rem;
+            font-weight: 600;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-question:hover {
+            background: var(--bg-secondary);
+        }
+
+        .faq-icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s;
+        }
+
+        .faq-item.open .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            padding: 0 24px 20px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            display: none;
+        }
+
+        .faq-item.open .faq-answer {
+            display: block;
+        }
+
+        /* Enterprise Section */
+        .enterprise-section {
+            max-width: 1000px;
+            margin: 0 auto 80px;
+            padding: 0 24px;
+        }
+
+        .enterprise-card {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(0, 194, 97, 0.1));
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 48px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
+        }
+
+        .enterprise-content h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .enterprise-content p {
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            line-height: 1.7;
+        }
+
+        .enterprise-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .enterprise-feature {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .enterprise-feature .check {
+            color: var(--primary);
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 40px 24px;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .pricing-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            nav { display: none; }
+            .hero h1 { font-size: 2rem; }
+            .pricing-grid { grid-template-columns: 1fr; }
+            .enterprise-card {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .enterprise-features {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+<link rel="stylesheet" href="/apps/shared/iafactory-unified.css">
+</head>
+<body>
+<!-- IAFactory Trilingue Controls -->
+<div class="iaf-controls-floating" style="position:fixed;top:20px;right:20px;z-index:9998;display:flex;gap:10px;align-items:center;">
+    <div class="iaf-lang-dropdown" style="position:relative;">
+        <button class="iaf-lang-btn" onclick="IAFUnified.toggleLangMenu()" 
+            style="background:#667eea;color:white;border:none;padding:8px 15px;border-radius:8px;cursor:pointer;font-size:14px;display:flex;align-items:center;gap:5px;">
+            🌐 <span id="current-lang-label">FR</span> ▼
+        </button>
+        <div class="iaf-lang-menu" id="lang-menu" 
+            style="display:none;position:absolute;top:100%;right:0;background:white;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,0.15);min-width:150px;margin-top:5px;overflow:hidden;">
+            <button onclick="IAFUnified.changeLang('fr')" style="width:100%;padding:10px 15px;border:none;background:none;text-align:left;cursor:pointer;">🇫🇷 Français</button>
+            <button onclick="IAFUnified.changeLang('ar')" style="width:100%;padding:10px 15px;border:none;background:none;text-align:left;cursor:pointer;">🇩🇿 العربية</button>
+            <button onclick="IAFUnified.changeLang('en')" style="width:100%;padding:10px 15px;border:none;background:none;text-align:left;cursor:pointer;">🇬🇧 English</button>
+        </div>
+    </div>
+    <button class="iaf-theme-toggle" onclick="IAFUnified.toggleTheme()" 
+        style="background:#667eea;color:white;border:none;padding:8px 12px;border-radius:8px;cursor:pointer;font-size:16px;" 
+        title="Toggle theme">🌓</button>
+</div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="../landing-complete-responsive.html" class="logo">
+                <div class="logo-icon">IA</div>
+                <div class="logo-text">IA<span>Factory</span></div>
+            </a>
+            <nav>
+                <a class="nav-link" href="../landing-complete-responsive.html">Accueil</a>
+                <a class="nav-link" href="fonctionnalites.html">Fonctionnalités</a>
+                <a class="nav-link" href="applications.html">Applications</a>
+                <a class="nav-link active" href="tarifs.html">Tarifs</a>
+                <a class="nav-link" href="documentation.html">Documentation</a>
+            </nav>
+            <a href="../landing-complete-responsive.html" class="btn-primary">Essayer Gratuitement</a>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <h1>💰 Tarifs Simples & Transparents</h1>
+        <p>Des plans adaptés à tous les besoins, du freelance à l'entreprise. Paiement en DZD ou EUR.</p>
+
+        <!-- Currency Toggle -->
+        <div class="currency-toggle">
+            <button class="currency-btn active" data-currency="dzd">🇩🇿 DZD</button>
+            <button class="currency-btn" data-currency="eur">🇪🇺 EUR</button>
+            <button class="currency-btn" data-currency="usd">🇺🇸 USD</button>
+        </div>
+    </section>
+
+    <!-- Pricing Cards -->
+    <section class="pricing-section">
+        <div class="pricing-grid">
+            
+            <!-- Free Plan -->
+            <div class="pricing-card">
+                <div class="plan-icon">🆓</div>
+                <h3 class="plan-name">Gratuit</h3>
+                <p class="plan-description">Parfait pour découvrir la plateforme et tester les fonctionnalités.</p>
+                
+                <div class="plan-price">
+                    <span class="price-amount">0</span>
+                    <span class="price-currency dzd"> DZD</span>
+                    <span class="price-currency eur" style="display:none"> €</span>
+                    <span class="price-currency usd" style="display:none"> $</span>
+                    <div class="price-period">Pour toujours</div>
+                </div>
+
+                <ul class="plan-features">
+                    <li><span class="check">✓</span> Chat multi-LLM (GPT-4o, Claude, Gemini)</li>
+                    <li><span class="check">✓</span> 100 messages / jour</li>
+                    <li><span class="check">✓</span> 5 applications métier</li>
+                    <li><span class="check">✓</span> RAG - 10 documents max</li>
+                    <li><span class="check">✓</span> Support communauté</li>
+                    <li><span class="cross">✗</span> LLMs locaux (Ollama)</li>
+                    <li><span class="cross">✗</span> Agents autonomes</li>
+                    <li><span class="cross">✗</span> API access</li>
+                </ul>
+
+                <a href="../landing-complete-responsive.html" class="plan-cta secondary">Commencer Gratuitement</a>
+            </div>
+
+            <!-- Basic Plan -->
+            <div class="pricing-card">
+                <div class="plan-icon">🚀</div>
+                <h3 class="plan-name">Basic</h3>
+                <p class="plan-description">Pour démarrer sérieusement avec l'IA à petit prix.</p>
+                
+                <div class="plan-price">
+                    <span class="price-amount dzd-price">900</span>
+                    <span class="price-amount eur-price" style="display:none">5</span>
+                    <span class="price-amount usd-price" style="display:none">6</span>
+                    <span class="price-currency dzd"> DZD</span>
+                    <span class="price-currency eur" style="display:none"> €</span>
+                    <span class="price-currency usd" style="display:none"> $</span>
+                    <div class="price-period">par mois</div>
+                </div>
+
+                <ul class="plan-features">
+                    <li><span class="check">✓</span> Chat multi-LLM (tous les modèles gratuits)</li>
+                    <li><span class="check">✓</span> 500 messages / jour</li>
+                    <li><span class="check">✓</span> 15 applications métier</li>
+                    <li><span class="check">✓</span> RAG - 50 documents</li>
+                    <li><span class="check">✓</span> Support email</li>
+                    <li><span class="check">✓</span> LLMs locaux (Ollama)</li>
+                    <li><span class="cross">✗</span> Agents autonomes</li>
+                    <li><span class="cross">✗</span> API access</li>
+                </ul>
+
+                <a href="../landing-complete-responsive.html" class="plan-cta secondary">Choisir Basic</a>
+            </div>
+
+            <!-- Pro Plan -->
+            <div class="pricing-card popular">
+                <span class="popular-badge">🔥 Plus Populaire</span>
+                <div class="plan-icon">⚡</div>
+                <h3 class="plan-name">Pro</h3>
+                <p class="plan-description">Pour les professionnels et PME qui veulent exploiter tout le potentiel de l'IA.</p>
+                
+                <div class="plan-price">
+                    <span class="price-amount dzd-price">1,900</span>
+                    <span class="price-amount eur-price" style="display:none">12</span>
+                    <span class="price-amount usd-price" style="display:none">14</span>
+                    <span class="price-currency dzd"> DZD</span>
+                    <span class="price-currency eur" style="display:none"> €</span>
+                    <span class="price-currency usd" style="display:none"> $</span>
+                    <div class="price-period">par mois</div>
+                </div>
+
+                <ul class="plan-features">
+                    <li><span class="check">✓</span> <strong>Tous les LLMs</strong> (22 providers, 500+ modèles)</li>
+                    <li><span class="check">✓</span> <strong>Messages illimités</strong></li>
+                    <li><span class="check">✓</span> <strong>94+ applications métier</strong></li>
+                    <li><span class="check">✓</span> RAG - 1000 documents</li>
+                    <li><span class="check">✓</span> LLMs locaux (Ollama, LM Studio...)</li>
+                    <li><span class="check">✓</span> Agents web & code</li>
+                    <li><span class="check">✓</span> API access (10K req/mois)</li>
+                    <li><span class="check">✓</span> Support prioritaire</li>
+                </ul>
+
+                <a href="../landing-complete-responsive.html" class="plan-cta primary">Démarrer l'Essai Gratuit →</a>
+            </div>
+
+            <!-- Business Plan -->
+            <div class="pricing-card">
+                <div class="plan-icon">🏢</div>
+                <h3 class="plan-name">Business</h3>
+                <p class="plan-description">Pour les équipes et entreprises avec besoins avancés.</p>
+                
+                <div class="plan-price">
+                    <span class="price-amount dzd-price">4,900</span>
+                    <span class="price-amount eur-price" style="display:none">29</span>
+                    <span class="price-amount usd-price" style="display:none">32</span>
+                    <span class="price-currency dzd"> DZD</span>
+                    <span class="price-currency eur" style="display:none"> €</span>
+                    <span class="price-currency usd" style="display:none"> $</span>
+                    <div class="price-period">par mois / 5 utilisateurs</div>
+                </div>
+
+                <ul class="plan-features">
+                    <li><span class="check">✓</span> <strong>Tout le plan Pro</strong></li>
+                    <li><span class="check">✓</span> <strong>5 utilisateurs inclus</strong></li>
+                    <li><span class="check">✓</span> RAG - Documents illimités</li>
+                    <li><span class="check">✓</span> Workspace partagé</li>
+                    <li><span class="check">✓</span> SSO / LDAP</li>
+                    <li><span class="check">✓</span> API illimitée</li>
+                    <li><span class="check">✓</span> Analytics avancés</li>
+                    <li><span class="check">✓</span> Support dédié</li>
+                </ul>
+
+                <a href="#contact" class="plan-cta secondary">Contacter les Ventes</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enterprise Section -->
+    <section class="enterprise-section">
+        <div class="enterprise-card">
+            <div class="enterprise-content">
+                <h2>🏛️ Enterprise & On-Premise</h2>
+                <p>Pour les grandes entreprises, administrations et organisations avec des exigences de sécurité et de conformité strictes. Déploiement sur vos propres serveurs.</p>
+                
+                <div class="enterprise-features">
+                    <div class="enterprise-feature"><span class="check">✓</span> Installation On-Premise</div>
+                    <div class="enterprise-feature"><span class="check">✓</span> Utilisateurs illimités</div>
+                    <div class="enterprise-feature"><span class="check">✓</span> 100% données locales</div>
+                    <div class="enterprise-feature"><span class="check">✓</span> Conformité loi 18-07</div>
+                    <div class="enterprise-feature"><span class="check">✓</span> SLA personnalisé</div>
+                    <div class="enterprise-feature"><span class="check">✓</span> Formation équipes</div>
+                    <div class="enterprise-feature"><span class="check">✓</span> Support 24/7</div>
+                    <div class="enterprise-feature"><span class="check">✓</span> Customisation complète</div>
+                </div>
+            </div>
+            <div class="enterprise-cta" style="text-align: center;">
+                <div style="font-size: 3rem; margin-bottom: 16px;">🤝</div>
+                <div style="font-size: 1.5rem; font-weight: 700; margin-bottom: 8px;">Sur Devis</div>
+                <p style="color: var(--text-secondary); margin-bottom: 24px;">Contactez-nous pour une offre personnalisée adaptée à vos besoins.</p>
+                <a href="mailto:contact@iafactory.dz" class="btn-primary" style="display: inline-block;">Demander un Devis →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <h2 class="faq-title">❓ Questions Fréquentes</h2>
+
+        <div class="faq-item open">
+            <button class="faq-question">
+                Puis-je payer en Dinars algériens ?
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+                Oui ! Nous acceptons les paiements en DZD via CIB/EDAHABIA, virement bancaire, et Baridimob. Pour les paiements internationaux, nous acceptons Visa, Mastercard et PayPal en EUR/USD.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                Dois-je fournir mes propres clés API ?
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+                Non, pas obligatoirement. Le plan Pro et Business inclut l'accès aux LLMs sans configuration. Cependant, vous pouvez utiliser vos propres clés API si vous le souhaitez pour un meilleur contrôle des coûts ou pour utiliser des modèles spécifiques.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                Qu'est-ce que le RAG et combien de documents puis-je importer ?
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+                Le RAG (Retrieval-Augmented Generation) permet à l'IA de répondre en se basant sur vos propres documents. Le plan Gratuit permet 10 documents, Pro permet 1000 documents, et Business permet un nombre illimité. Les formats supportés incluent PDF, Word, Excel, TXT et pages web.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                Puis-je utiliser des LLMs locaux (Ollama) ?
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+                Oui, les plans Pro et supérieurs permettent de connecter vos LLMs locaux via Ollama, LM Studio, LocalAI, etc. Cela vous permet d'exécuter des modèles sur votre propre matériel pour une confidentialité totale et aucun coût d'API.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                Y a-t-il un engagement de durée ?
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+                Non, tous nos plans sont sans engagement. Vous pouvez annuler à tout moment. Pour les paiements annuels, nous offrons 2 mois gratuits (10 mois payés = 12 mois d'accès).
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                Mes données sont-elles sécurisées ?
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+                Absolument. Toutes les données sont chiffrées au repos (AES-256) et en transit (TLS 1.3). Pour les entreprises avec des exigences strictes, nous proposons des déploiements on-premise où 100% des données restent sur vos serveurs.
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2024 IAFactory Algeria - Plateforme RAG pour l'Algérie et le Maghreb</p>
+        <p style="margin-top: 8px;">
+            <a href="fonctionnalites.html">Fonctionnalités</a> · 
+            <a href="applications.html">Applications</a> · 
+            <a href="tarifs.html">Tarifs</a> · 
+            <a href="documentation.html">Documentation</a>
+        </p>
+    </footer>
+
+    <script>
+        // Currency Toggle
+        document.querySelectorAll('.currency-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelector('.currency-btn.active').classList.remove('active');
+                btn.classList.add('active');
+                
+                const currency = btn.dataset.currency;
+                
+                // Hide all prices
+                document.querySelectorAll('.price-currency, .dzd-price, .eur-price, .usd-price').forEach(el => {
+                    el.style.display = 'none';
+                });
+                
+                // Show selected currency
+                document.querySelectorAll(`.${currency}, .${currency}-price`).forEach(el => {
+                    el.style.display = 'inline';
+                });
+            });
+        });
+
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                const isOpen = item.classList.contains('open');
+                
+                // Close all items
+                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+                
+                // Open clicked item if it was closed
+                if (!isOpen) {
+                    item.classList.add('open');
+                }
+            });
+        });
+    </script>
+<script src="/apps/shared/iafactory-unified.js"></script>
+<!-- IAFactory Chatbot -->
+<button class="iaf-chatbot-btn" onclick="IAFUnified.toggleChatbot()" title="Aide" aria-label="Aide">💬</button>
+<div data-iaf-footer></div>
+</body>
+</html>

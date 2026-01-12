@@ -1,0 +1,104 @@
+{
+  "docs": [
+    {
+      "title": "TVA en Algérie - Guide complet 2024",
+      "text": "La taxe sur la valeur ajoutée (TVA) en Algérie est un impôt indirect prélevé sur la consommation. Elle est appliquée aux taux suivants:\n\n- Taux normal: 19% - Applicable à la plupart des biens et services\n- Taux réduit: 9% - Applicable aux produits de première nécessité, médicaments, équipements agricoles\n\nLes entreprises dont le chiffre d'affaires annuel dépasse 30 millions DA sont assujetties à la TVA. La déclaration se fait mensuellement via le formulaire G50 pour le régime réel, ou trimestriellement pour le régime simplifié.\n\nOpérations exonérées: exportations, opérations bancaires, assurances, certains produits alimentaires de base.",
+      "country": "DZ",
+      "language": "fr",
+      "theme": "Fiscalité",
+      "source": "DGI",
+      "tags": ["TVA", "DGI", "Fiscalité", "19%", "G50"],
+      "is_official": true
+    },
+    {
+      "title": "CNAS - Cotisations sociales des travailleurs salariés",
+      "text": "La Caisse Nationale des Assurances Sociales (CNAS) gère le régime de sécurité sociale des travailleurs salariés en Algérie.\n\nTaux de cotisation:\n- Part employeur: 25% (répartis entre assurance maladie, retraite, accidents du travail)\n- Part salarié: 9%\n- Total: 34% du salaire brut\n\nLes cotisations sont calculées sur le salaire brut plafonné à 8 fois le SNMG. La déclaration et le paiement se font mensuellement via le système DAS (Déclaration d'Assujetti).\n\nPrestations couvertes: maladie, maternité, invalidité, décès, accidents du travail, retraite.",
+      "country": "DZ",
+      "language": "fr",
+      "theme": "Sécurité Sociale",
+      "source": "CNAS",
+      "tags": ["CNAS", "Cotisations", "Sécurité sociale", "34%", "DAS"],
+      "is_official": true
+    },
+    {
+      "title": "CASNOS - Régime des non-salariés",
+      "text": "La Caisse Nationale de Sécurité Sociale des Non-Salariés (CASNOS) couvre les travailleurs indépendants, commerçants, artisans et professions libérales.\n\nTaux de cotisation:\n- Cotisation de base: 15% du revenu déclaré\n- Minimum: basé sur le SNMG\n- Maximum: plafonné\n\nPrestations: assurance maladie, maternité, retraite, allocations familiales.\n\nAffiliation obligatoire dès le début de l'activité. Déclaration annuelle du revenu.",
+      "country": "DZ",
+      "language": "fr",
+      "theme": "Sécurité Sociale",
+      "source": "CASNOS",
+      "tags": ["CASNOS", "Non-salariés", "Indépendants", "15%"],
+      "is_official": true
+    },
+    {
+      "title": "Création d'entreprise - SARL en Algérie",
+      "text": "La SARL (Société à Responsabilité Limitée) est la forme juridique la plus courante pour les PME en Algérie.\n\nCaractéristiques:\n- Capital minimum: 100.000 DA (libéré intégralement)\n- Minimum 2 associés, maximum 50\n- Responsabilité limitée aux apports\n\nÉtapes de création:\n1. Réservation du nom commercial au CNRC\n2. Établissement des statuts (acte notarié)\n3. Dépôt du capital social à la banque\n4. Inscription au registre de commerce\n5. Obtention du NIF (Numéro d'Identification Fiscale)\n6. Affiliation à la CNAS/CASNOS\n7. Obtention de la carte d'employeur\n\nDélai moyen: 7-15 jours ouvrables.\nCoût approximatif: 50.000 - 100.000 DA (hors capital).",
+      "country": "DZ",
+      "language": "fr",
+      "theme": "Création d'entreprise",
+      "source": "CNRC",
+      "tags": ["SARL", "Création entreprise", "CNRC", "NIF", "Capital"],
+      "is_official": true
+    },
+    {
+      "title": "IBS - Impôt sur les Bénéfices des Sociétés",
+      "text": "L'Impôt sur les Bénéfices des Sociétés (IBS) est un impôt direct sur les bénéfices des personnes morales.\n\nTaux:\n- Taux normal: 26%\n- Taux réduit: 19% (activités de production de biens)\n- Taux majoré: 26% + contribution exceptionnelle pour certains secteurs\n\nBase imposable: bénéfice net comptable après retraitements fiscaux.\n\nDéclaration:\n- Acomptes trimestriels (20 mars, 20 juin, 20 septembre, 20 décembre)\n- Déclaration annuelle avant le 30 avril\n\nExonérations possibles pour les nouvelles entreprises en zones défavorisées.",
+      "country": "DZ",
+      "language": "fr",
+      "theme": "Fiscalité",
+      "source": "DGI",
+      "tags": ["IBS", "Impôt", "Sociétés", "26%", "19%"],
+      "is_official": true
+    },
+    {
+      "title": "ضريبة القيمة المضافة في الجزائر",
+      "text": "ضريبة القيمة المضافة هي ضريبة غير مباشرة تفرض على الاستهلاك في الجزائر.\n\nمعدلات الضريبة:\n- المعدل العادي: 19%\n- المعدل المخفض: 9% (للسلع الأساسية)\n\nالشركات التي يتجاوز رقم أعمالها السنوي 30 مليون دج تخضع لضريبة القيمة المضافة.\n\nيتم التصريح شهريا عبر النموذج G50 للنظام الحقيقي، أو كل ثلاثة أشهر للنظام المبسط.\n\nالعمليات المعفاة: التصدير، العمليات المصرفية، التأمين.",
+      "country": "DZ",
+      "language": "ar",
+      "theme": "Fiscalité",
+      "source": "DGI",
+      "tags": ["TVA", "DGI", "ضرائب", "الجزائر", "19%"],
+      "is_official": true
+    },
+    {
+      "title": "الضمان الاجتماعي للعمال الأجراء - CNAS",
+      "text": "يدير الصندوق الوطني للتأمينات الاجتماعية (CNAS) نظام الضمان الاجتماعي للعمال الأجراء في الجزائر.\n\nنسب الاشتراكات:\n- حصة رب العمل: 25%\n- حصة العامل: 9%\n- المجموع: 34% من الأجر الإجمالي\n\nالمزايا المغطاة:\n- التأمين على المرض\n- تعويضات الأمومة\n- معاش التقاعد\n- حوادث العمل\n\nيتم التصريح والدفع شهريا عبر نظام DAS.",
+      "country": "DZ",
+      "language": "ar",
+      "theme": "Sécurité Sociale",
+      "source": "CNAS",
+      "tags": ["CNAS", "الضمان الاجتماعي", "الاشتراكات", "34%"],
+      "is_official": true
+    },
+    {
+      "title": "Registre de commerce - Procédures CNRC",
+      "text": "Le Centre National du Registre de Commerce (CNRC) gère l'immatriculation des entreprises en Algérie.\n\nDocuments requis pour l'inscription:\n1. Formulaire de demande d'inscription\n2. Statuts de la société (originaux notariés)\n3. Attestation de domiciliation\n4. Copie de la pièce d'identité des associés/gérants\n5. Extrait de naissance des gérants\n6. Casier judiciaire (bulletin n°3)\n7. Attestation de dépôt de capital\n\nDélai: 5-7 jours ouvrables\nValidité: Indéfinie (renouvellement annuel)\n\nServices en ligne: www.cnrc.dz",
+      "country": "DZ",
+      "language": "fr",
+      "theme": "Création d'entreprise",
+      "source": "CNRC",
+      "tags": ["CNRC", "Registre commerce", "Immatriculation", "Documents"],
+      "is_official": true
+    },
+    {
+      "title": "IRG - Impôt sur le Revenu Global des salariés",
+      "text": "L'IRG (Impôt sur le Revenu Global) est prélevé à la source sur les salaires.\n\nBarème progressif (revenus mensuels):\n- 0 à 30.000 DA: 0%\n- 30.001 à 120.000 DA: 20%\n- 120.001 à 240.000 DA: 30%\n- Plus de 240.000 DA: 35%\n\nAbattements:\n- 40% pour les revenus jusqu'à 30.000 DA\n- Réductions progressives au-delà\n\nL'employeur est responsable de la retenue et du versement mensuel à l'administration fiscale.",
+      "country": "DZ",
+      "language": "fr",
+      "theme": "Fiscalité",
+      "source": "DGI",
+      "tags": ["IRG", "Salaires", "Impôt", "Barème", "Retenue source"],
+      "is_official": true
+    },
+    {
+      "title": "ANSEJ - Aide à la création d'entreprise pour les jeunes",
+      "text": "L'Agence Nationale de Soutien à l'Emploi des Jeunes (ANSEJ) offre des dispositifs d'aide à la création de micro-entreprises.\n\nConditions d'éligibilité:\n- Âge: 19-40 ans\n- Sans emploi\n- Qualification professionnelle dans le domaine du projet\n- Apport personnel minimum\n\nAvantages:\n- Prêt sans intérêt (PNR)\n- Crédit bancaire bonifié\n- Exonérations fiscales (IBS, TVA, TAP) pendant 3 ans\n- Réduction des charges sociales\n\nMontant maximum du projet: 10 millions DA\nApport personnel: 1% à 2% selon le niveau du projet.",
+      "country": "DZ",
+      "language": "fr",
+      "theme": "Création d'entreprise",
+      "source": "ANSEJ",
+      "tags": ["ANSEJ", "Jeunes", "Création entreprise", "Aide", "Financement"],
+      "is_official": true
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+    "designation": "Désignation",
+    "staff_id": "ID personnel",
+    "departments": "Départements",
+    "department": "Département",
+    "Staff": "Personnel",
+    "staff": "Personnel",
+    "Staff Management": "Gestion du personnel",
+    "Staff List": "Liste du personnel",
+    "staff_list": "Liste du personnel",
+    "Staff Details": "Détails du personnel",
+    "staff_details": "Détails du personnel",
+    "Add Staff": "Ajouter personnel",
+    "add_staff": "Ajouter personnel",
+    "Edit Staff": "Modifier personnel",
+    "edit_staff": "Modifier personnel",
+    "Update Staff": "Mettre à jour personnel",
+    "update_staff": "Mettre à jour personnel"
+}

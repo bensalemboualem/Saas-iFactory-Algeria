@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تكامل Make.com - IAFactory الجزائر</title>
+    <link rel="stylesheet" href="../../assets/css/docs-theme.css">
+</head>
+<body>
+    <header class="docs-header">
+        <div class="docs-logo">
+            <img src="../../assets/images/logo.png" alt="IAFactory الجزائر">
+            <span>IAFactory الجزائر</span>
+        </div>
+        <nav class="main-nav">
+            <a href="../index.html">التوثيق</a>
+            <a href="https://app.iafactory-algeria.com">التطبيق</a>
+            <a href="../api/index.html">API</a>
+        </nav>
+        <div class="docs-controls">
+            <div class="language-switcher">
+                <button data-lang="fr">🇫🇷 FR</button>
+                <button data-lang="en">🇬🇧 EN</button>
+                <button data-lang="ar" class="active">🇸🇦 AR</button>
+            </div>
+            <div class="theme-toggle">
+                <div class="theme-toggle-slider">☀️</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <!-- Sidebar -->
+        </aside>
+
+        <main class="docs-main">
+            <h1>تكامل Make.com</h1>
+            
+            <p class="lead">قم بدمج الذكاء الاصطناعي من IAFactory الجزائر في سيناريوهات Make.com الخاصة بك لأتمتة سير العمل الذكي.</p>
+
+            <h2 id="introduction">🔄 مقدمة</h2>
+
+            <p>Make.com (المعروف سابقاً باسم Integromat) هو منصة أتمتة مرئية قوية. قم بربطها مع IAFactory الجزائر لإضافة قدرات الذكاء الاصطناعي إلى سير عملك: معالجة النصوص، إنشاء الصور، اتخاذ القرارات الذكية، والمزيد.</p>
+
+            <div class="alert alert-info">
+                <strong>💡 حالات الاستخدام:</strong>
+                <ul>
+                    <li>معالجة رسائل البريد الإلكتروني بالذكاء الاصطناعي والرد التلقائي</li>
+                    <li>إنشاء محتوى من البيانات المنظمة</li>
+                    <li>التصنيف والتوجيه الذكي</li>
+                    <li>الترجمة الآلية</li>
+                    <li>استخراج البيانات بالذكاء الاصطناعي</li>
+                    <li>سير عمل روبوت الدردشة</li>
+                </ul>
+            </div>
+
+            <h2 id="setup">📦 الإعداد</h2>
+
+            <h3 id="create-account">1. إنشاء حساب Make</h3>
+
+            <ol>
+                <li>انتقل إلى <a href="https://www.make.com">make.com</a></li>
+                <li>سجل للحصول على حساب مجاني</li>
+                <li>تحقق من بريدك الإلكتروني</li>
+            </ol>
+
+            <h3 id="get-api-key">2. الحصول على مفتاح API من IAFactory</h3>
+
+            <ol>
+                <li>سجل الدخول إلى <a href="https://app.iafactory-algeria.com">app.iafactory-algeria.com</a></li>
+                <li>انتقل إلى <strong>الإعدادات ← مفاتيح API</strong></li>
+                <li>انقر على <strong>إنشاء مفتاح جديد</strong></li>
+                <li>انسخ مفتاحك (احتفظ به آمناً!)</li>
+            </ol>
+
+            <h2 id="http-module">⚙️ تكوين وحدة HTTP</h2>
+
+            <h3 id="basic-setup">الإعداد الأساسي</h3>
+
+            <p>استخدم وحدة <strong>HTTP ← إجراء طلب</strong>:</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>الحقل</th>
+                        <th>القيمة</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>URL</strong></td><td><code>https://api.iafactory-algeria.com/v1/chat/completions</code></td></tr>
+                    <tr><td><strong>الطريقة</strong></td><td>POST</td></tr>
+                    <tr><td><strong>الرؤوس</strong></td><td>انظر أدناه</td></tr>
+                    <tr><td><strong>نوع الجسم</strong></td><td>Raw (JSON)</td></tr>
+                </tbody>
+            </table>
+
+            <h3 id="headers">الرؤوس</h3>
+
+            <pre><code class="language-json">{
+  "Authorization": "Bearer YOUR_API_KEY",
+  "Content-Type": "application/json"
+}</code></pre>
+
+            <h3 id="request-body">جسم الطلب</h3>
+
+            <pre><code class="language-json">{
+  "model": "gpt-4.1",
+  "messages": [
+    {
+      "role": "system",
+      "content": "أنت مساعد مفيد."
+    },
+    {
+      "role": "user",
+      "content": "{{1.prompt}}"
+    }
+  ],
+  "temperature": 0.7,
+  "max_tokens": 1000
+}</code></pre>
+
+            <h2 id="scenarios">🎯 أمثلة السيناريوهات</h2>
+
+            <h3 id="scenario-1">1. معالجة البريد الإلكتروني الذكية</h3>
+
+            <p><strong>سير العمل:</strong></p>
+
+            <ol>
+                <li><strong>Gmail ← مراقبة رسائل البريد الإلكتروني</strong> (محفز)</li>
+                <li><strong>HTTP ← IAFactory API</strong> (تحليل البريد الإلكتروني)</li>
+                <li><strong>موجه</strong> (توجيه بناءً على تصنيف الذكاء الاصطناعي)</li>
+                <li><strong>Gmail ← إرسال بريد إلكتروني</strong> (رد تلقائي)</li>
+            </ol>
+
+            <p><strong>مطالبة الذكاء الاصطناعي:</strong></p>
+
+            <pre><code class="language-json">{
+  "model": "gpt-4.1-mini",
+  "messages": [{
+    "role": "system",
+    "content": "صنف هذا البريد الإلكتروني إلى: عاجل، مهم، عادي، بريد مزعج. أرجع الفئة فقط."
+  }, {
+    "role": "user",
+    "content": "الموضوع: {{1.subject}}\n\nالمحتوى: {{1.textPlain}}"
+  }],
+  "temperature": 0.1
+}</code></pre>
+
+            <h3 id="scenario-2">2. إنشاء المحتوى من قاعدة البيانات</h3>
+
+            <p><strong>سير العمل:</strong></p>
+
+            <ol>
+                <li><strong>Airtable ← مراقبة السجلات</strong></li>
+                <li><strong>HTTP ← IAFactory API</strong> (إنشاء المحتوى)</li>
+                <li><strong>Airtable ← تحديث السجل</strong></li>
+                <li><strong>WordPress ← إنشاء منشور</strong></li>
+            </ol>
+
+            <p><strong>تكوين الذكاء الاصطناعي:</strong></p>
+
+            <pre><code class="language-json">{
+  "model": "gpt-4.1",
+  "messages": [{
+    "role": "system",
+    "content": "أنشئ مقالة مدونة من 500 كلمة بتنسيق HTML مع تحسين SEO."
+  }, {
+    "role": "user",
+    "content": "العنوان: {{1.title}}\nالكلمات المفتاحية: {{1.keywords}}\nالمخطط: {{1.outline}}"
+  }],
+  "temperature": 0.8,
+  "max_tokens": 2000
+}</code></pre>
+
+            <h3 id="scenario-3">3. الترجمة الآلية</h3>
+
+            <p><strong>سير العمل:</strong></p>
+
+            <ol>
+                <li><strong>Webhook</strong> (تلقي النص)</li>
+                <li><strong>HTTP ← IAFactory</strong> (ترجمة)</li>
+                <li><strong>Slack ← إرسال رسالة</strong> (إخطار)</li>
+            </ol>
+
+            <p><strong>مطالبة الترجمة:</strong></p>
+
+            <pre><code class="language-json">{
+  "model": "gpt-4.1-mini",
+  "messages": [{
+    "role": "system",
+    "content": "ترجم إلى {{2.targetLanguage}}. أرجع الترجمة فقط، بدون شروحات."
+  }, {
+    "role": "user",
+    "content": "{{1.text}}"
+  }],
+  "temperature": 0.2
+}</code></pre>
+
+            <h2 id="advanced">🚀 الميزات المتقدمة</h2>
+
+            <h3 id="iterators">استخدام المكررات</h3>
+
+            <p>معالجة عناصر متعددة بالذكاء الاصطناعي:</p>
+
+            <ol>
+                <li><strong>مُجمع المصفوفة</strong> ← جمع العناصر</li>
+                <li><strong>مكرر</strong> ← حلقة عبر العناصر</li>
+                <li><strong>HTTP ← IAFactory</strong> ← معالجة كل عنصر</li>
+                <li><strong>مُجمع المصفوفة</strong> ← جمع النتائج</li>
+            </ol>
+
+            <h3 id="error-handling">معالجة الأخطاء</h3>
+
+            <pre><code class="language-json">{
+  "error": {
+    "handler": [
+      {
+        "module": "Slack",
+        "action": "sendMessage",
+        "parameters": {
+          "channel": "#alerts",
+          "text": "خطأ في API الذكاء الاصطناعي: {{error.message}}"
+        }
+      },
+      {
+        "module": "DataStore",
+        "action": "add",
+        "parameters": {
+          "key": "failed_requests",
+          "data": "{{bundle}}"
+        }
+      }
+    ],
+    "directive": "resume"
+  }
+}</code></pre>
+
+            <h3 id="rate-limiting">تحديد المعدل وإعادة المحاولة</h3>
+
+            <ul>
+                <li>وحدة <strong>النوم</strong>: إضافة تأخيرات بين الطلبات</li>
+                <li><strong>المكرر</strong>: إعادة محاولة الطلبات الفاشلة</li>
+                <li><strong>معالج الأخطاء</strong>: التراجع الأسي</li>
+            </ul>
+
+            <h2 id="best-practices">✨ أفضل الممارسات</h2>
+
+            <h3 id="optimization">1. التحسين</h3>
+
+            <ul>
+                <li>استخدم <code>gpt-4.1-mini</code> للمهام البسيطة (أسرع وأرخص)</li>
+                <li>استخدم <code>gpt-4.1</code> للاستدلال المعقد</li>
+                <li>اضبط <code>max_tokens</code> المناسب لتجنب الهدر</li>
+                <li>خزن الاستجابات عندما يكون ذلك ممكناً</li>
+            </ul>
+
+            <h3 id="security">2. الأمان</h3>
+
+            <ul>
+                <li>احفظ مفتاح API في <strong>الاتصال</strong> الخاص بـ Make (وليس في السيناريو)</li>
+                <li>استخدم <strong>مخزن البيانات</strong> لتشفير البيانات الحساسة</li>
+                <li>تحقق من توقيعات webhook</li>
+                <li>لا تسجل مفاتيح API في سجل السيناريو أبداً</li>
+            </ul>
+
+            <h3 id="monitoring">3. المراقبة</h3>
+
+            <ul>
+                <li>قم بإعداد <strong>إشعارات الأخطاء</strong> (Slack/Email)</li>
+                <li>استخدم <strong>مخزن البيانات</strong> لتتبع الاستخدام</li>
+                <li>راقب وقت التنفيذ وقم بالتحسين</li>
+                <li>اختبار السيناريو بانتظام</li>
+            </ul>
+
+            <h2 id="troubleshooting">🔧 استكشاف الأخطاء وإصلاحها</h2>
+
+            <h3 id="error-401">خطأ 401: غير مصرح</h3>
+
+            <ul>
+                <li>تحقق من صحة مفتاح API</li>
+                <li>تحقق من تنسيق رأس التفويض: <code>Bearer YOUR_KEY</code></li>
+                <li>تأكد من أن المفتاح لم تنته صلاحيته</li>
+            </ul>
+
+            <h3 id="error-429">خطأ 429: حد المعدل</h3>
+
+            <ul>
+                <li>أضف وحدات <strong>النوم</strong> بين الطلبات</li>
+                <li>نفذ التراجع الأسي</li>
+                <li>قم بترقية خطة IAFactory الخاصة بك</li>
+            </ul>
+
+            <h3 id="timeout">أخطاء المهلة</h3>
+
+            <ul>
+                <li>قلل <code>max_tokens</code></li>
+                <li>قسم الطلبات الكبيرة إلى أجزاء أصغر</li>
+                <li>زد المهلة في إعدادات وحدة HTTP</li>
+            </ul>
+
+            <h2 id="resources">📚 الموارد</h2>
+
+            <ul>
+                <li>📖 <a href="https://www.make.com/en/help">توثيق Make.com</a></li>
+                <li>🎥 <a href="../api/quick-start.html">البداية السريعة لـ API IAFactory</a></li>
+                <li>💬 <a href="https://discord.gg/iafactory">مجتمع Discord</a></li>
+                <li>🔄 <a href="https://www.make.com/en/integrations">تكاملات Make</a></li>
+            </ul>
+
+            <div class="alert alert-success">
+                <strong>🔄 هل أنت مستعد للأتمتة بالذكاء الاصطناعي؟</strong>
+                <p>احصل على مفتاح API الخاص بك: <a href="https://app.iafactory-algeria.com/api-keys">app.iafactory-algeria.com</a></p>
+            </div>
+        </main>
+
+        <aside class="docs-toc">
+            <h3 class="docs-toc-title">في هذه الصفحة</h3>
+            <ul></ul>
+        </aside>
+    </div>
+
+    <script src="../../assets/js/docs-theme.js"></script>
+</body>
+</html>

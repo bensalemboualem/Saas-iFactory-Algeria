@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Started - IAFactory Algeria</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #00A651;
+            --bg: #020617;
+            --card: #0f172a;
+            --border: #1e293b;
+            --text: #f1f5f9;
+            --muted: #64748b;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .signup-container {
+            width: 100%;
+            max-width: 480px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px;
+        }
+        
+        .signup-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        
+        .signup-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        
+        .signup-logo img {
+            width: 48px;
+            height: 32px;
+            border-radius: 4px;
+        }
+        
+        .signup-logo span {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .signup-logo .highlight {
+            color: var(--primary);
+        }
+        
+        .signup-header h1 {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+        
+        .signup-header p {
+            color: var(--muted);
+        }
+        
+        .plans {
+            display: grid;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .plan {
+            padding: 20px;
+            background: var(--bg);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .plan:hover,
+        .plan.selected {
+            border-color: var(--primary);
+        }
+        
+        .plan.selected {
+            background: rgba(0, 166, 81, 0.1);
+        }
+        
+        .plan-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .plan-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .plan-price {
+            color: var(--primary);
+            font-weight: 700;
+        }
+        
+        .plan-desc {
+            color: var(--muted);
+            font-size: 14px;
+        }
+        
+        .plan-features {
+            margin-top: 12px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .plan-feature {
+            background: var(--card);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            color: var(--muted);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: var(--text);
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text);
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        
+        .form-group input:focus {
+            border-color: var(--primary);
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        
+        @media (max-width: 480px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .btn-signup {
+            width: 100%;
+            padding: 16px;
+            background: var(--primary);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 8px;
+        }
+        
+        .btn-signup:hover {
+            background: #008c44;
+            transform: translateY(-2px);
+        }
+        
+        .signup-footer {
+            text-align: center;
+            margin-top: 24px;
+            color: var(--muted);
+            font-size: 14px;
+        }
+        
+        .signup-footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .signup-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: var(--muted);
+            text-decoration: none;
+        }
+        
+        .back-link:hover {
+            color: var(--primary);
+        }
+        
+        .check-icon {
+            display: none;
+            color: var(--primary);
+        }
+        
+        .plan.selected .check-icon {
+            display: block;
+        }
+    </style>
+<link rel="stylesheet" href="/apps/shared/iafactory-unified.css">
+</head>
+<body>
+<!-- IAFactory Trilingue Controls -->
+<div class="iaf-controls-floating" style="position:fixed;top:20px;right:20px;z-index:9998;display:flex;gap:10px;align-items:center;">
+    <div class="iaf-lang-dropdown" style="position:relative;">
+        <button class="iaf-lang-btn" onclick="IAFUnified.toggleLangMenu()" 
+            style="background:#667eea;color:white;border:none;padding:8px 15px;border-radius:8px;cursor:pointer;font-size:14px;display:flex;align-items:center;gap:5px;">
+            🌐 <span id="current-lang-label">FR</span> ▼
+        </button>
+        <div class="iaf-lang-menu" id="lang-menu" 
+            style="display:none;position:absolute;top:100%;right:0;background:white;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,0.15);min-width:150px;margin-top:5px;overflow:hidden;">
+            <button onclick="IAFUnified.changeLang('fr')" style="width:100%;padding:10px 15px;border:none;background:none;text-align:left;cursor:pointer;">🇫🇷 Français</button>
+            <button onclick="IAFUnified.changeLang('ar')" style="width:100%;padding:10px 15px;border:none;background:none;text-align:left;cursor:pointer;">🇩🇿 العربية</button>
+            <button onclick="IAFUnified.changeLang('en')" style="width:100%;padding:10px 15px;border:none;background:none;text-align:left;cursor:pointer;">🇬🇧 English</button>
+        </div>
+    </div>
+    <button class="iaf-theme-toggle" onclick="IAFUnified.toggleTheme()" 
+        style="background:#667eea;color:white;border:none;padding:8px 12px;border-radius:8px;cursor:pointer;font-size:16px;" 
+        title="Toggle theme">🌓</button>
+</div>
+
+    <div class="signup-container">
+        <div class="signup-header">
+            <div class="signup-logo">
+                <img src="https://flagcdn.com/w40/dz.png" alt="DZ">
+                <span>IAFactory <span class="highlight">Algeria</span></span>
+            </div>
+            <h1>🚀 Commencez maintenant</h1>
+            <p>Créez votre compte et accédez à 51+ apps IA</p>
+        </div>
+        
+        <div class="plans">
+            <div class="plan selected" onclick="selectPlan(this, 'free')">
+                <div class="plan-header">
+                    <span class="plan-name">🆓 Gratuit</span>
+                    <span class="plan-price">0 DZD/mois</span>
+                    <i class="fas fa-check-circle check-icon"></i>
+                </div>
+                <p class="plan-desc">Parfait pour découvrir la plateforme</p>
+                <div class="plan-features">
+                    <span class="plan-feature">5 apps</span>
+                    <span class="plan-feature">100 requêtes/jour</span>
+                    <span class="plan-feature">Support communauté</span>
+                </div>
+            </div>
+            
+            <div class="plan" onclick="selectPlan(this, 'pro')">
+                <div class="plan-header">
+                    <span class="plan-name">⭐ Pro</span>
+                    <span class="plan-price">4,900 DZD/mois</span>
+                    <i class="fas fa-check-circle check-icon"></i>
+                </div>
+                <p class="plan-desc">Pour les professionnels et PME</p>
+                <div class="plan-features">
+                    <span class="plan-feature">Toutes les apps</span>
+                    <span class="plan-feature">Illimité</span>
+                    <span class="plan-feature">Support prioritaire</span>
+                    <span class="plan-feature">API Access</span>
+                </div>
+            </div>
+            
+            <div class="plan" onclick="selectPlan(this, 'enterprise')">
+                <div class="plan-header">
+                    <span class="plan-name">🏢 Entreprise</span>
+                    <span class="plan-price">Sur devis</span>
+                    <i class="fas fa-check-circle check-icon"></i>
+                </div>
+                <p class="plan-desc">Solutions sur mesure pour grandes organisations</p>
+                <div class="plan-features">
+                    <span class="plan-feature">Déploiement privé</span>
+                    <span class="plan-feature">SLA garanti</span>
+                    <span class="plan-feature">Formation</span>
+                    <span class="plan-feature">Support 24/7</span>
+                </div>
+            </div>
+        </div>
+        
+        <form onsubmit="handleSignup(event)">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="firstname">Prénom</label>
+                    <input type="text" id="firstname" placeholder="Ahmed" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastname">Nom</label>
+                    <input type="text" id="lastname" placeholder="Benali" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email professionnel</label>
+                <input type="email" id="email" placeholder="ahmed@entreprise.dz" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" id="password" placeholder="Minimum 8 caractères" required minlength="8">
+            </div>
+            
+            <button type="submit" class="btn-signup">
+                <i class="fas fa-rocket"></i> Créer mon compte
+            </button>
+        </form>
+        
+        <div class="signup-footer">
+            <p>Déjà un compte ? <a href="login.html">Se connecter</a></p>
+            <p style="margin-top: 12px; font-size: 12px;">
+                En créant un compte, vous acceptez nos <a href="#">CGU</a> et <a href="#">Politique de confidentialité</a>
+            </p>
+        </div>
+        
+        <a href="../index.html" class="back-link">← Retour à l'accueil</a>
+    </div>
+    
+    <script>
+        let selectedPlan = 'free';
+        
+        function selectPlan(el, plan) {
+            document.querySelectorAll('.plan').forEach(p => p.classList.remove('selected'));
+            el.classList.add('selected');
+            selectedPlan = plan;
+        }
+        
+        function handleSignup(e) {
+            e.preventDefault();
+            const firstname = document.getElementById('firstname').value;
+            const lastname = document.getElementById('lastname').value;
+            const email = document.getElementById('email').value;
+            
+            alert('🎉 Bienvenue ' + firstname + ' !\n\n' +
+                  'Plan sélectionné: ' + selectedPlan.toUpperCase() + '\n' +
+                  'Email: ' + email + '\n\n' +
+                  '(Système d\'inscription en développement)\n\n' +
+                  'En attendant, vous pouvez utiliser la plateforme gratuitement !');
+            
+            window.location.href = '../index.html';
+        }
+    </script>
+<script src="/apps/shared/iafactory-unified.js"></script>
+<!-- IAFactory Chatbot -->
+<button class="iaf-chatbot-btn" onclick="IAFUnified.toggleChatbot()" title="Aide" aria-label="Aide">💬</button>
+<div data-iaf-footer></div>
+</body>
+</html>

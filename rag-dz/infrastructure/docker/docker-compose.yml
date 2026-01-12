@@ -1,0 +1,479 @@
+# ==============================================
+# IA FACTORY ALGÉRIE (RAG-DZ) - Docker Compose
+# ==============================================
+# Instance Souveraine - Région: DZ (Algérie)
+# Ports: 8180-8191 (plage réservée IAF-DZ)
+# ==============================================
+
+services:
+  # ==============================================
+  # DATABASES & CACHE
+  # ==============================================
+
+  # PostgreSQL avec PGVector (Recherche Vectorielle)
+  iafactory-postgres:
+    image: pgvector/pgvector:pg16
+    container_name: iaf-dz-postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:?POSTGRES_USER requis dans .env}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD requis dans .env}
+      POSTGRES_DB: ${POSTGRES_DB:-archon}
+      TZ: Africa/Algiers
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./infrastructure/sql/init.sql:/docker-entrypoint-initdb.d/01-init.sql
+      - ./infrastructure/sql/pgvector_migration.sql:/docker-entrypoint-initdb.d/02-pgvector.sql
+    ports:
+      - "127.0.0.1:6330:5433"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - iafactory-net
+    command: postgres -c shared_preload_libraries=vector
+    restart: unless-stopped
+
+  # Redis Cache
+  iafactory-redis:
+    image: redis:7-alpine
+    container_name: iaf-dz-redis
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6331:6380"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    networks:
+      - iafactory-net
+    restart: unless-stopped
+
+  # Qdrant Vector Database
+  iafactory-qdrant:
+    image: qdrant/qdrant:latest
+    container_name: iaf-dz-qdrant
+    volumes:
+      - qdrant_data:/qdrant/storage
+    ports:
+      - "6332:6334"
+    environment:
+      QDRANT_LOG_LEVEL: ${LOG_LEVEL:-INFO}
+    networks:
+      - iafactory-net
+    restart: unless-stopped
+
+  # ==============================================
+  # BACKEND API (RAG Souverain)
+  # ==============================================
+
+  iafactory-backend:
+    build:
+      context: ./backend/rag-compat
+      dockerfile: Dockerfile
+    container_name: iaf-dz-backend
+    env_file:
+      - .env.local
+    depends_on:
+      iafactory-postgres:
+        condition: service_healthy
+      iafactory-redis:
+        condition: service_healthy
+      iafactory-qdrant:
+        condition: service_started
+    environment:
+      # Région Souveraine
+      SOVEREIGNTY_REGION: DZ
+      SOVEREIGNTY_LABEL: "Algérie"
+      TZ: Africa/Algiers
+
+      # Database - uses env vars for password
+      POSTGRES_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD}@iafactory-postgres:5433/${POSTGRES_DB:-archon}
+      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD}@iafactory-postgres:5433/${POSTGRES_DB:-archon}
+
+      # Redis
+      REDIS_URL: redis://iafactory-redis:6380/0
+      REDIS_PASSWORD: ${REDIS_PASSWORD:-}
+
+      # Qdrant
+      QDRANT_HOST: iafactory-qdrant
+      QDRANT_PORT: 6333
+
+      # LLM Provider (Groq = gratuit et rapide)
+      ENABLE_LLM: "true"
+      LLM_PROVIDER: ${LLM_PROVIDER:-groq}
+      LLM_MODEL: ${LLM_MODEL:-llama-3.3-70b-versatile}
+      GROQ_API_KEY: ${GROQ_API_KEY:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY:-}
+      GOOGLE_GENERATIVE_AI_API_KEY: ${GOOGLE_GENERATIVE_AI_API_KEY:-}
+
+      # TTS Voice (ElevenLabs pour arabe haute qualité)
+      ELEVENLABS_API_KEY: ${ELEVENLABS_API_KEY:-}
+
+      # Security - REQUIRED: set in .env file
+      API_SECRET_KEY: ${API_SECRET_KEY:?API_SECRET_KEY requis dans .env}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY:?JWT_SECRET_KEY requis dans .env}
+      ALLOWED_ORIGINS: http://localhost:8180,http://localhost:8181,http://localhost:8182,http://localhost:8183,http://localhost:8184,http://localhost:8185
+
+      # Rate Limiting
+      RATE_LIMIT_PER_MINUTE: ${RATE_LIMIT_PER_MINUTE:-60}
+      RATE_LIMIT_PER_HOUR: ${RATE_LIMIT_PER_HOUR:-1000}
+      ENABLE_RATE_LIMITING: ${ENABLE_RATE_LIMITING:-true}
+
+      # Embeddings (Multilingue FR/AR/EN)
+      EMBEDDING_MODEL: ${EMBEDDING_MODEL:-sentence-transformers/paraphrase-multilingual-mpnet-base-v2}
+      EMBEDDING_DEVICE: ${EMBEDDING_DEVICE:-cpu}
+      EMBEDDING_BATCH_SIZE: ${EMBEDDING_BATCH_SIZE:-32}
+
+      # Reranking
+      USE_RERANKING: ${USE_RERANKING:-true}
+      RERANKING_MODEL: ${RERANKING_MODEL:-cross-encoder/ms-marco-MiniLM-L-6-v2}
+      RERANKING_TOP_K: ${RERANKING_TOP_K:-10}
+
+      # PGVector
+      USE_PGVECTOR: ${USE_PGVECTOR:-true}
+
+      # Service Info
+      SERVICE_NAME: iafactory-dz-api
+      SERVICE_VERSION: 1.0.0
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      ENVIRONMENT: ${ENVIRONMENT:-development}
+
+      # Features
+      ENABLE_CORS: ${ENABLE_CORS:-true}
+      ENABLE_METRICS: ${ENABLE_METRICS:-true}
+      ENABLE_API_KEY_AUTH: ${ENABLE_API_KEY_AUTH:-false}
+
+      # BMAD Configuration
+      BMAD_DEFAULT_PROVIDER: ${BMAD_DEFAULT_PROVIDER:-groq}
+
+      # Twilio SMS & WhatsApp (DZ)
+      TWILIO_ACCOUNT_SID: ${TWILIO_ACCOUNT_SID:-}
+      TWILIO_AUTH_TOKEN: ${TWILIO_AUTH_TOKEN:-}
+      TWILIO_PHONE_NUMBER: ${TWILIO_PHONE_NUMBER:-}
+      TWILIO_WHATSAPP_NUMBER: ${TWILIO_WHATSAPP_NUMBER:-}
+
+    ports:
+      - "8180:8180"
+    volumes:
+      - ./backend/rag-compat:/app
+      - ./bmad:/bmad:ro
+      - backend_cache:/root/.cache
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8180/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - iafactory-net
+    restart: unless-stopped
+
+  # ==============================================
+  # FRONTEND APPLICATIONS
+  # ==============================================
+
+  # IAFactory Hub (Dashboard Principal)
+  iafactory-hub:
+    build:
+      context: ./frontend/archon-ui
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: ${VITE_API_URL:-http://localhost:8180}
+        VITE_API_SECRET_KEY: ${API_SECRET_KEY}
+    container_name: iaf-dz-hub
+    depends_on:
+      - iafactory-backend
+    environment:
+      VITE_API_URL: ${VITE_API_URL:-http://localhost:8180}
+      VITE_WS_URL: ${VITE_WS_URL:-ws://localhost:8180/ws}
+      VITE_SHOW_DEVTOOLS: ${VITE_SHOW_DEVTOOLS:-true}
+      VITE_API_SECRET_KEY: ${API_SECRET_KEY}
+      VITE_API_KEY: ${API_SECRET_KEY}
+      VITE_SOVEREIGNTY_REGION: DZ
+    ports:
+      - "8182:3737"
+    volumes:
+      - ./frontend/archon-ui/src:/app/src
+      - ./frontend/archon-ui/public:/app/public
+    networks:
+      - iafactory-net
+    restart: unless-stopped
+
+  # IAFactory Docs (Gestion Documentaire)
+  iafactory-docs:
+    build:
+      context: ./frontend/rag-ui
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: ${VITE_API_URL:-http://localhost:8180}
+    container_name: iaf-dz-docs
+    depends_on:
+      - iafactory-backend
+    environment:
+      REACT_APP_API_URL: ${VITE_API_URL:-http://localhost:8180}
+      VITE_SOVEREIGNTY_REGION: DZ
+    ports:
+      - "8183:5173"
+    volumes:
+      - ./frontend/rag-ui/src:/app/src
+      - ./frontend/rag-ui/public:/app/public
+    networks:
+      - iafactory-net
+    restart: unless-stopped
+
+  # IAFactory Studio (Bolt.DIY - AI Code Editor)
+  iafactory-studio:
+    build:
+      context: ./bolt-diy
+      dockerfile: Dockerfile
+    container_name: iaf-dz-studio
+    depends_on:
+      - iafactory-backend
+    environment:
+      VITE_API_URL: ${VITE_API_URL:-http://localhost:8180}
+      VITE_ARCHON_API_URL: http://localhost:8180
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      GROQ_API_KEY: ${GROQ_API_KEY:-}
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY:-}
+      GOOGLE_GENERATIVE_AI_API_KEY: ${GOOGLE_GENERATIVE_AI_API_KEY:-}
+      OLLAMA_API_BASE_URL: http://iafactory-ollama:11435
+      VITE_SOVEREIGNTY_REGION: DZ
+    volumes:
+      - ./bolt-diy/app:/app/app:ro
+      - ./bolt-diy/public:/app/public
+    ports:
+      - "8184:5173"
+    networks:
+      - iafactory-net
+    restart: unless-stopped
+    profiles:
+      - studio
+
+  # ==============================================
+  # SEO & LANDING PAGES
+  # ==============================================
+
+  # SEO-DZ-Boost - Landing Pages SEO pour Google Algérie
+  iafactory-seo-dz:
+    build:
+      context: ./apps/seo-dz-boost
+      dockerfile: Dockerfile
+    container_name: iaf-dz-seo
+    environment:
+      ANALYTICS_PROVIDER: ${ANALYTICS_PROVIDER:-plausible}
+      ANALYTICS_ID: ${ANALYTICS_ID:-}
+      GA4_MEASUREMENT_ID: ${GA4_MEASUREMENT_ID:-}
+      PLAUSIBLE_DOMAIN: ${PLAUSIBLE_DOMAIN:-www.iafactoryalgeria.com}
+      MATOMO_URL: ${MATOMO_URL:-}
+      MATOMO_SITE_ID: ${MATOMO_SITE_ID:-}
+    ports:
+      - "8218:80"
+    networks:
+      - iafactory-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.seo-dz.rule=Host(`www.iafactoryalgeria.com`)"
+      - "traefik.http.services.seo-dz.loadbalancer.server.port=80"
+
+  # ==============================================
+  # DEVELOPER PORTAL (Module 16)
+  # ==============================================
+
+  # API Portal - Dashboard développeur façon OpenAI/Stripe
+  iafactory-api-portal:
+    build:
+      context: ./apps/api-portal/frontend
+      dockerfile: Dockerfile
+    container_name: iaf-dz-api-portal
+    depends_on:
+      - iafactory-backend
+    environment:
+      VITE_API_URL: ${VITE_API_URL:-http://localhost:8180}
+      VITE_SOVEREIGNTY_REGION: DZ
+    ports:
+      - "8219:3000"
+    networks:
+      - iafactory-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.api-portal.rule=Host(`dev.iafactoryalgeria.com`)"
+      - "traefik.http.services.api-portal.loadbalancer.server.port=3000"
+
+  # ==============================================
+  # WORKFLOW & AUTOMATION
+  # ==============================================
+
+  # n8n Workflow Automation
+  iafactory-n8n:
+    image: docker.n8n.io/n8nio/n8n:latest
+    container_name: iaf-dz-n8n
+    depends_on:
+      iafactory-postgres:
+        condition: service_healthy
+    environment:
+      # Database
+      DB_TYPE: postgresdb
+      DB_POSTGRESDB_HOST: iafactory-postgres
+      DB_POSTGRESDB_PORT: 5432
+      DB_POSTGRESDB_DATABASE: ${POSTGRES_DB:-archon}
+      DB_POSTGRESDB_USER: ${POSTGRES_USER:-postgres}
+      DB_POSTGRESDB_PASSWORD: ${POSTGRES_PASSWORD}
+      DB_POSTGRESDB_SCHEMA: n8n
+
+      # Auth
+      N8N_BASIC_AUTH_ACTIVE: ${N8N_BASIC_AUTH_ACTIVE:-true}
+      N8N_BASIC_AUTH_USER: ${N8N_BASIC_AUTH_USER:-admin}
+      N8N_BASIC_AUTH_PASSWORD: ${N8N_BASIC_AUTH_PASSWORD:-admin}
+
+      # Webhook
+      WEBHOOK_URL: ${N8N_WEBHOOK_URL:-http://localhost:8185}
+      N8N_HOST: ${N8N_HOST:-localhost}
+      N8N_PORT: 5678
+      N8N_PROTOCOL: http
+
+      # Timezone Algérie
+      GENERIC_TIMEZONE: Africa/Algiers
+      TZ: Africa/Algiers
+
+      # Execution
+      EXECUTIONS_DATA_PRUNE: "true"
+      EXECUTIONS_DATA_MAX_AGE: 168
+
+      # API
+      N8N_API_ENABLED: "true"
+      N8N_DIAGNOSTICS_ENABLED: "false"
+      N8N_PERSONALIZATION_ENABLED: "false"
+    volumes:
+      - n8n_data:/home/node/.n8n
+      - ./infrastructure/n8n/workflows:/home/node/workflows:ro
+    ports:
+      - "8185:5678"
+    networks:
+      - iafactory-net
+    restart: unless-stopped
+
+  # ==============================================
+  # AI MODELS (Optionnel)
+  # ==============================================
+
+  # Ollama - Modèles IA Locaux (pour LLM Council)
+  iafactory-ollama:
+    image: ollama/ollama:latest
+    container_name: iaf-dz-ollama
+    volumes:
+      - ollama_data:/root/.ollama
+    ports:
+      - "127.0.0.1:11435:11435"
+    networks:
+      - iafactory-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11435/api/tags"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    # Pour GPU support (optionnel):
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]
+
+  # ==============================================
+  # MONITORING (Optionnel)
+  # ==============================================
+
+  # Prometheus
+  iafactory-prometheus:
+    image: prom/prometheus:latest
+    container_name: iaf-dz-prometheus
+    volumes:
+      - ./infrastructure/monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./infrastructure/monitoring/alerts.yml:/etc/prometheus/alerts.yml
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=30d'
+    ports:
+      - "8187:9090"
+    networks:
+      - iafactory-net
+    restart: unless-stopped
+    profiles:
+      - monitoring
+
+  # Grafana
+  iafactory-grafana:
+    image: grafana/grafana:latest
+    container_name: iaf-dz-grafana
+    depends_on:
+      - iafactory-prometheus
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:-admin}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_SERVER_ROOT_URL: http://localhost:8188
+      GF_INSTALL_PLUGINS: redis-datasource
+    volumes:
+      - ./infrastructure/monitoring/grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ./infrastructure/monitoring/grafana/datasources:/etc/grafana/provisioning/datasources
+      - grafana_data:/var/lib/grafana
+    ports:
+      - "8188:3000"
+    networks:
+      - iafactory-net
+    restart: unless-stopped
+    profiles:
+      - monitoring
+
+# ==============================================
+# NETWORKS
+# ==============================================
+networks:
+  iafactory-net:
+    driver: bridge
+    name: iafactory-net
+
+# ==============================================
+# VOLUMES
+# ==============================================
+volumes:
+  postgres_data:
+    name: iaf-dz-postgres-data
+  redis_data:
+    name: iaf-dz-redis-data
+  qdrant_data:
+    name: iaf-dz-qdrant-data
+  ollama_data:
+    name: iaf-dz-ollama-data
+  backend_cache:
+    name: iaf-dz-backend-cache
+  prometheus_data:
+    name: iaf-dz-prometheus-data
+  grafana_data:
+    name: iaf-dz-grafana-data
+  n8n_data:
+    name: iaf-dz-n8n-data

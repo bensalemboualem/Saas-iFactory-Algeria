@@ -1,0 +1,397 @@
+/**
+ * ===================================================================
+ * IAFACTORY ALGERIA - THÈME UNIFIÉ
+ * Palette harmonisée Dark/Light Mode
+ * Compatible avec TOUTES les applications de la plateforme
+ * ===================================================================
+ */
+
+/* ========== VARIABLES CSS - MODE SOMBRE (défaut) ========== */
+:root {
+    /* Couleurs principales */
+    --iaf-primary: #00a651;              /* Vert algérien */
+    --iaf-primary-dark: #008c45;         /* Vert foncé */
+    --iaf-primary-light: #00c767;        /* Vert clair */
+    --iaf-primary-rgb: 0, 166, 81;       /* RGB pour alpha */
+
+    /* Backgrounds */
+    --iaf-bg: #020617;                   /* Noir profond */
+    --iaf-bg-alt: #0a0e1f;               /* Noir alt */
+    --iaf-card: #020617;                 /* Cartes */
+    --iaf-card-hover: #0f172a;           /* Carte survol */
+
+    /* Texte */
+    --iaf-text: #f8fafc;                 /* Texte principal */
+    --iaf-text-muted: rgba(248, 250, 252, 0.75);  /* Texte atténué */
+    --iaf-text-dim: rgba(248, 250, 252, 0.5);     /* Texte dim */
+
+    /* Bordures */
+    --iaf-border: rgba(255, 255, 255, 0.12);      /* Bordure */
+    --iaf-border-light: rgba(255, 255, 255, 0.08); /* Bordure légère */
+
+    /* Ombres */
+    --iaf-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+    --iaf-shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.3);
+    --iaf-shadow-lg: 0 30px 80px rgba(0, 0, 0, 0.7);
+
+    /* Effets */
+    --iaf-glow: 0 0 20px rgba(0, 166, 81, 0.4);
+    --iaf-glow-strong: 0 0 30px rgba(0, 166, 81, 0.6);
+
+    /* États */
+    --iaf-success: #10b981;
+    --iaf-error: #ef4444;
+    --iaf-warning: #f59e0b;
+    --iaf-info: #3b82f6;
+
+    /* Glassmorphism */
+    --iaf-glass-bg: rgba(15, 23, 42, 0.7);
+    --iaf-glass-border: rgba(255, 255, 255, 0.15);
+
+    /* Transitions */
+    --iaf-transition-fast: 150ms ease;
+    --iaf-transition: 250ms ease;
+    --iaf-transition-slow: 400ms ease;
+
+    /* Spacing */
+    --iaf-spacing-xs: 4px;
+    --iaf-spacing-sm: 8px;
+    --iaf-spacing-md: 16px;
+    --iaf-spacing-lg: 24px;
+    --iaf-spacing-xl: 32px;
+    --iaf-spacing-2xl: 48px;
+
+    /* Border Radius */
+    --iaf-radius-sm: 6px;
+    --iaf-radius: 10px;
+    --iaf-radius-lg: 16px;
+    --iaf-radius-xl: 24px;
+}
+
+/* ========== MODE CLAIR ========== */
+[data-theme="light"] {
+    --iaf-bg: #f7f5f0;
+    --iaf-bg-alt: #ffffff;
+    --iaf-card: #ffffff;
+    --iaf-card-hover: #f1f5f9;
+
+    --iaf-text: #0f172a;
+    --iaf-text-muted: rgba(15, 23, 42, 0.7);
+    --iaf-text-dim: rgba(15, 23, 42, 0.5);
+
+    --iaf-border: rgba(0, 0, 0, 0.08);
+    --iaf-border-light: rgba(0, 0, 0, 0.05);
+
+    --iaf-shadow: 0 20px 60px rgba(15, 23, 42, 0.25);
+    --iaf-shadow-sm: 0 4px 12px rgba(15, 23, 42, 0.1);
+    --iaf-shadow-lg: 0 30px 80px rgba(15, 23, 42, 0.35);
+
+    --iaf-glass-bg: rgba(255, 255, 255, 0.7);
+    --iaf-glass-border: rgba(0, 0, 0, 0.1);
+}
+
+/* ========== SUPPORT RTL POUR L'ARABE ========== */
+[dir="rtl"] {
+    direction: rtl;
+}
+
+[dir="rtl"] * {
+    text-align: right;
+}
+
+[dir="rtl"] .text-left {
+    text-align: right !important;
+}
+
+[dir="rtl"] .text-right {
+    text-align: left !important;
+}
+
+/* ========== RESET & BASE ========== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', 'Segoe UI', 'Helvetica Neue', system-ui, -apple-system, sans-serif;
+    background: var(--iaf-bg);
+    color: var(--iaf-text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Police arabe */
+[lang="ar"],
+[lang="ar"] * {
+    font-family: 'Noto Sans Arabic', 'Cairo', 'Amiri', Arial, sans-serif;
+}
+
+/* ========== TYPOGRAPHIE ========== */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--iaf-text);
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.75rem; }
+h4 { font-size: 1.5rem; }
+h5 { font-size: 1.25rem; }
+h6 { font-size: 1rem; }
+
+p {
+    color: var(--iaf-text-muted);
+    margin-bottom: 1rem;
+}
+
+a {
+    color: var(--iaf-primary);
+    text-decoration: none;
+    transition: all var(--iaf-transition-fast);
+}
+
+a:hover {
+    color: var(--iaf-primary-light);
+    text-decoration: underline;
+}
+
+/* ========== BUTTONS ========== */
+.iaf-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: var(--iaf-radius);
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all var(--iaf-transition);
+    outline: none;
+}
+
+.iaf-btn-primary {
+    background: var(--iaf-primary);
+    color: white;
+    box-shadow: 0 4px 12px rgba(var(--iaf-primary-rgb), 0.3);
+}
+
+.iaf-btn-primary:hover {
+    background: var(--iaf-primary-light);
+    box-shadow: var(--iaf-glow-strong);
+    transform: translateY(-2px);
+}
+
+.iaf-btn-secondary {
+    background: var(--iaf-card);
+    color: var(--iaf-text);
+    border: 1px solid var(--iaf-border);
+}
+
+.iaf-btn-secondary:hover {
+    background: var(--iaf-card-hover);
+    border-color: var(--iaf-primary);
+}
+
+.iaf-btn-outline {
+    background: transparent;
+    color: var(--iaf-primary);
+    border: 2px solid var(--iaf-primary);
+}
+
+.iaf-btn-outline:hover {
+    background: var(--iaf-primary);
+    color: white;
+}
+
+.iaf-btn-ghost {
+    background: transparent;
+    color: var(--iaf-text-muted);
+}
+
+.iaf-btn-ghost:hover {
+    background: var(--iaf-card-hover);
+    color: var(--iaf-text);
+}
+
+/* ========== CARDS ========== */
+.iaf-card {
+    background: var(--iaf-card);
+    border: 1px solid var(--iaf-border);
+    border-radius: var(--iaf-radius-lg);
+    padding: var(--iaf-spacing-lg);
+    box-shadow: var(--iaf-shadow-sm);
+    transition: all var(--iaf-transition);
+}
+
+.iaf-card:hover {
+    border-color: var(--iaf-primary);
+    box-shadow: var(--iaf-shadow);
+    transform: translateY(-4px);
+}
+
+.iaf-card-glass {
+    background: var(--iaf-glass-bg);
+    backdrop-filter: blur(14px);
+    border: 1px solid var(--iaf-glass-border);
+}
+
+/* ========== INPUTS ========== */
+.iaf-input {
+    width: 100%;
+    padding: 12px 16px;
+    background: var(--iaf-card);
+    border: 1px solid var(--iaf-border);
+    border-radius: var(--iaf-radius);
+    color: var(--iaf-text);
+    font-size: 15px;
+    transition: all var(--iaf-transition-fast);
+}
+
+.iaf-input:focus {
+    outline: none;
+    border-color: var(--iaf-primary);
+    box-shadow: 0 0 0 3px rgba(var(--iaf-primary-rgb), 0.1);
+}
+
+.iaf-input::placeholder {
+    color: var(--iaf-text-dim);
+}
+
+/* ========== HEADER/NAVBAR ========== */
+.iaf-header {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--iaf-border);
+    background: rgba(2, 6, 23, 0.85);
+}
+
+[data-theme="light"] .iaf-header {
+    background: rgba(247, 245, 240, 0.95);
+}
+
+.iaf-header-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    height: 70px;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* ========== FOOTER ========== */
+.iaf-footer {
+    background: var(--iaf-bg-alt);
+    border-top: 1px solid var(--iaf-border);
+    padding: var(--iaf-spacing-2xl) var(--iaf-spacing-lg);
+    margin-top: var(--iaf-spacing-2xl);
+}
+
+/* ========== UTILITIES ========== */
+.iaf-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--iaf-spacing-lg);
+}
+
+.iaf-flex {
+    display: flex;
+}
+
+.iaf-flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.iaf-grid {
+    display: grid;
+    gap: var(--iaf-spacing-lg);
+}
+
+.iaf-text-center {
+    text-align: center;
+}
+
+.iaf-mb-lg {
+    margin-bottom: var(--iaf-spacing-lg);
+}
+
+.iaf-mt-lg {
+    margin-top: var(--iaf-spacing-lg);
+}
+
+/* ========== ANIMATIONS ========== */
+@keyframes iaf-fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.iaf-animate-in {
+    animation: iaf-fade-in 0.6s ease forwards;
+}
+
+@keyframes iaf-pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+.iaf-pulse {
+    animation: iaf-pulse 2s ease-in-out infinite;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+    :root {
+        font-size: 14px;
+    }
+
+    .iaf-header-container {
+        padding: 0 16px;
+        height: 60px;
+    }
+
+    .iaf-card {
+        padding: var(--iaf-spacing-md);
+    }
+
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.75rem; }
+    h3 { font-size: 1.5rem; }
+}
+
+@media (max-width: 480px) {
+    :root {
+        font-size: 13px;
+    }
+
+    .iaf-btn {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+}

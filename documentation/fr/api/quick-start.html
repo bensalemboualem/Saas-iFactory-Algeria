@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Démarrage Rapide API - IAFactory Algeria</title>
+    <link rel="stylesheet" href="../../assets/css/docs-theme.css">
+    <link rel="icon" href="../../assets/images/favicon.ico">
+</head>
+<body>
+    <!-- Header -->
+    <header class="docs-header">
+        <div class="docs-logo">
+            <img src="../../assets/images/logo.png" alt="IAFactory Algeria">
+            <span>IAFactory Algeria</span>
+        </div>
+        
+        <nav class="main-nav">
+            <a href="../index.html">Documentation</a>
+            <a href="https://app.iafactory-algeria.com">App</a>
+            <a href="./index.html" class="active">API</a>
+            <a href="https://jobs.iafactory-algeria.com">Jobs</a>
+        </nav>
+        
+        <div class="docs-controls">
+            <div class="language-switcher">
+                <button data-lang="fr" class="active">🇫🇷 FR</button>
+                <button data-lang="en">🇬🇧 EN</button>
+                <button data-lang="ar">🇸🇦 AR</button>
+            </div>
+            
+            <div class="theme-toggle">
+                <div class="theme-toggle-slider">☀️</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="docs-container">
+        <!-- Sidebar -->
+        <aside class="docs-sidebar">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" placeholder="Rechercher...">
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-section-title">🔌 API</h3>
+                <ul class="sidebar-menu">
+                    <li><a href="./quick-start.html" class="active">Démarrage rapide</a></li>
+                    <li><a href="./response-format.html">Format de réponse</a></li>
+                    <li><a href="./models-pricing.html">Modèles et tarifs</a></li>
+                    <li><a href="./error-codes.html">Codes d'erreur</a></li>
+                    <li><a href="./parameters.html">Paramètres</a></li>
+                    <li><a href="./optimization.html">Conseils d'optimisation</a></li>
+                    <li><a href="./migration-openai.html">Migration depuis OpenAI</a></li>
+                    <li><a href="./webhooks.html">Webhooks</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-section-title">🛠️ Intégrations</h3>
+                <ul class="sidebar-menu">
+                    <li><a href="../integrations/n8n.html">n8n</a></li>
+                    <li><a href="../integrations/vscode-cline.html">VS Code / Cline</a></li>
+                    <li><a href="../integrations/make.html">Make</a></li>
+                    <li><a href="../integrations/xcode.html">XCode</a></li>
+                    <li><a href="../integrations/cli.html">CLI</a></li>
+                    <li><a href="../integrations/opencode.html">Opencode</a></li>
+                    <li><a href="../integrations/goose.html">Goose</a></li>
+                    <li><a href="../integrations/gitkraken.html">GitKraken</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="docs-main">
+            <h1>🚀 Démarrage Rapide API</h1>
+            
+            <p class="lead">Commencez à utiliser l'API IAFactory Algeria en quelques minutes.</p>
+            
+            <div class="alert alert-info">
+                <strong>➡️</strong> <a href="https://dashboard.iafactory-algeria.com/api">Obtenez votre clé API gratuite</a>
+            </div>
+
+            <h2 id="etape-1">Étape 1 : Obtenir votre clé API</h2>
+            
+            <p>Tous les abonnés IAFactory Algeria reçoivent des crédits API gratuits :</p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Formule</th>
+                        <th>Starter</th>
+                        <th>Standard</th>
+                        <th>Expert</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Crédits mensuels</strong></td>
+                        <td>2 $</td>
+                        <td>4 $</td>
+                        <td>10 $</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <ol>
+                <li>Connectez-vous à <a href="https://dashboard.iafactory-algeria.com">votre compte IAFactory</a></li>
+                <li>Accédez à la section <strong>API</strong></li>
+                <li>Générez une nouvelle clé API</li>
+                <li>Copiez et stockez votre clé en sécurité</li>
+            </ol>
+
+            <div class="alert alert-warning">
+                <strong>⚠️ Important :</strong> Ne partagez jamais votre clé API publiquement. Traitez-la comme un mot de passe.
+            </div>
+
+            <h2 id="etape-2">Étape 2 : Faire votre première requête</h2>
+
+            <h3 id="python">Python</h3>
+            
+            <p>Installation de la bibliothèque OpenAI (compatible avec IAFactory) :</p>
+            
+            <pre><code class="language-bash">pip install openai</code></pre>
+
+            <p>Code d'exemple :</p>
+
+            <pre><code class="language-python">import openai
+
+# Configuration
+openai.api_base = "https://api.iafactory-algeria.com/v1"
+openai.api_key = "VOTRE_CLE_API"
+
+# Requête simple
+response = openai.ChatCompletion.create(
+    model="gpt-4.1",
+    messages=[
+        {
+            "role": "system",
+            "content": "Tu es un assistant utile qui répond en français."
+        },
+        {
+            "role": "user",
+            "content": "Explique-moi l'intelligence artificielle en 3 phrases."
+        }
+    ],
+    temperature=0.7,
+    max_tokens=150
+)
+
+print(response.choices[0].message.content)</code></pre>
+
+            <h3 id="javascript">JavaScript / Node.js</h3>
+            
+            <p>Installation :</p>
+            
+            <pre><code class="language-bash">npm install openai</code></pre>
+
+            <p>Code d'exemple :</p>
+
+            <pre><code class="language-javascript">const { Configuration, OpenAIApi } = require('openai');
+
+const configuration = new Configuration({
+    apiKey: 'VOTRE_CLE_API',
+    basePath: 'https://api.iafactory-algeria.com/v1'
+});
+
+const openai = new OpenAIApi(configuration);
+
+async function main() {
+    const response = await openai.createChatCompletion({
+        model: 'gpt-4.1',
+        messages: [
+            {
+                role: 'system',
+                content: 'Tu es un assistant utile qui répond en français.'
+            },
+            {
+                role: 'user',
+                content: 'Explique-moi l\'intelligence artificielle en 3 phrases.'
+            }
+        ],
+        temperature: 0.7,
+        max_tokens: 150
+    });
+    
+    console.log(response.data.choices[0].message.content);
+}
+
+main();</code></pre>
+
+            <h3 id="curl">cURL</h3>
+            
+            <p>Requête directe avec cURL :</p>
+
+            <pre><code class="language-bash">curl https://api.iafactory-algeria.com/v1/chat/completions \
+  -H "Authorization: Bearer VOTRE_CLE_API" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "gpt-4.1",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Tu es un assistant utile qui répond en français."
+      },
+      {
+        "role": "user",
+        "content": "Explique-moi l'\''intelligence artificielle en 3 phrases."
+      }
+    ],
+    "temperature": 0.7,
+    "max_tokens": 150
+  }'</code></pre>
+
+            <h3 id="php">PHP</h3>
+            
+            <pre><code class="language-php">&lt;?php
+
+$api_key = 'VOTRE_CLE_API';
+$url = 'https://api.iafactory-algeria.com/v1/chat/completions';
+
+$data = [
+    'model' => 'gpt-4.1',
+    'messages' => [
+        [
+            'role' => 'system',
+            'content' => 'Tu es un assistant utile qui répond en français.'
+        ],
+        [
+            'role' => 'user',
+            'content' => 'Explique-moi l\'intelligence artificielle en 3 phrases.'
+        ]
+    ],
+    'temperature' => 0.7,
+    'max_tokens' => 150
+];
+
+$ch = curl_init($url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+curl_setopt($ch, CURLOPT_HTTPHEADER, [
+    'Authorization: Bearer ' . $api_key,
+    'Content-Type: application/json'
+]);
+
+$response = curl_exec($ch);
+curl_close($ch);
+
+$result = json_decode($response, true);
+echo $result['choices'][0]['message']['content'];
+
+?&gt;</code></pre>
+
+            <h2 id="etape-3">Étape 3 : Comprendre la réponse</h2>
+            
+            <p>L'API retourne une réponse JSON structurée :</p>
+
+            <pre><code class="language-json">{
+  "id": "chatcmpl-abc123",
+  "object": "chat.completion",
+  "created": 1704283200,
+  "model": "gpt-4.1",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "L'intelligence artificielle est la capacité des machines..."
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 25,
+    "completion_tokens": 50,
+    "total_tokens": 75
+  }
+}</code></pre>
+
+            <p>Les champs principaux :</p>
+            <ul>
+                <li><code>id</code> : Identifiant unique de la requête</li>
+                <li><code>choices[0].message.content</code> : La réponse générée</li>
+                <li><code>usage</code> : Compteur de tokens utilisés (pour facturation)</li>
+                <li><code>finish_reason</code> : Raison de l'arrêt (stop, length, content_filter)</li>
+            </ul>
+
+            <h2 id="streaming">Mode Streaming (Réponses en temps réel)</h2>
+            
+            <p>Pour recevoir la réponse mot par mot, activez le streaming :</p>
+
+            <pre><code class="language-python">import openai
+
+openai.api_base = "https://api.iafactory-algeria.com/v1"
+openai.api_key = "VOTRE_CLE_API"
+
+response = openai.ChatCompletion.create(
+    model="gpt-4.1",
+    messages=[{"role": "user", "content": "Écris une courte histoire"}],
+    stream=True  # Active le streaming
+)
+
+for chunk in response:
+    if chunk.choices[0].delta.get("content"):
+        print(chunk.choices[0].delta.content, end="")</code></pre>
+
+            <h2 id="prochaines-etapes">Prochaines étapes</h2>
+            
+            <div class="alert alert-success">
+                <strong>✅ Félicitations !</strong> Vous avez fait votre première requête API.
+            </div>
+
+            <p>Pour aller plus loin :</p>
+            <ul>
+                <li><a href="./parameters.html">Découvrez tous les paramètres disponibles</a></li>
+                <li><a href="./models-pricing.html">Explorez les différents modèles et tarifs</a></li>
+                <li><a href="./optimization.html">Optimisez vos requêtes pour réduire les coûts</a></li>
+                <li><a href="../integrations/n8n.html">Intégrez avec n8n pour automatiser</a></li>
+            </ul>
+
+            <h2 id="aide">Besoin d'aide ?</h2>
+            
+            <ul>
+                <li>📖 <a href="./error-codes.html">Guide des codes d'erreur</a></li>
+                <li>💬 <a href="https://discord.gg/iafactory">Rejoignez notre Discord</a></li>
+                <li>📧 <a href="mailto:support@iafactory-algeria.com">Contactez le support</a></li>
+            </ul>
+
+        </main>
+
+        <!-- Table of Contents -->
+        <aside class="docs-toc">
+            <h3 class="docs-toc-title">Sur cette page</h3>
+            <ul>
+                <!-- Generated dynamically by JS -->
+            </ul>
+        </aside>
+    </div>
+
+    <script src="../../assets/js/docs-theme.js"></script>
+</body>
+</html>

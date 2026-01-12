@@ -1,0 +1,106 @@
+# ============================================
+# BOLT.DIY + RAG-DZ INTEGRATION OVERRIDE
+# ============================================
+# Usage: docker-compose -f docker-compose.yml -f docker-compose.bolt.yml up -d
+# ============================================
+
+services:
+  # ==============================================
+  # BOLT.DIY STUDIO (IAFactory Code Generation)
+  # ==============================================
+  iafactory-bolt-studio:
+    build:
+      context: ../../bolt-diy
+      dockerfile: Dockerfile
+      target: bolt-ai-production
+      args:
+        VITE_PUBLIC_APP_URL: ${BOLT_PUBLIC_URL:-http://localhost:8185}
+        VITE_LOG_LEVEL: ${VITE_LOG_LEVEL:-debug}
+    container_name: ${BOLT_CONTAINER_NAME:-iaf-dz-bolt-studio}
+    depends_on:
+      iafactory-backend:
+        condition: service_healthy
+    environment:
+      # Application
+      NODE_ENV: production
+      PORT: 5173
+      HOST: 0.0.0.0
+      RUNNING_IN_DOCKER: "true"
+
+      # BMAD Integration
+      BMAD_API_URL: http://iafactory-backend:8180
+      RAGDZ_API_KEY: ${API_SECRET_KEY}
+      ENABLE_BMAD_PROVIDER: "true"
+      BMAD_REGION: DZ
+
+      # RAG Context
+      ENABLE_RAG_CONTEXT: "true"
+      RAG_MAX_TOKENS: ${RAG_MAX_TOKENS:-4000}
+      RAG_COLLECTION: ${RAG_COLLECTION:-iafactory}
+
+      # Credits
+      ENABLE_CREDITS: "true"
+      DEFAULT_CREDITS: ${DEFAULT_CREDITS:-100}
+
+      # LLM API Keys (from host env)
+      GROQ_API_KEY: ${GROQ_API_KEY:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY:-}
+      GOOGLE_GENERATIVE_AI_API_KEY: ${GOOGLE_GENERATIVE_AI_API_KEY:-}
+
+      # Logging
+      VITE_LOG_LEVEL: ${VITE_LOG_LEVEL:-debug}
+
+    ports:
+      - "${BOLT_PORT_EXTERNAL:-8185}:5173"
+    volumes:
+      # Persist user projects
+      - bolt_projects:/app/projects
+      # Share BMAD agent definitions (read-only)
+      - ../../bmad:/app/bmad:ro
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:5173/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    networks:
+      - iafactory-net
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.bolt-studio.rule=Host(`studio.iafactory.dz`)"
+      - "traefik.http.routers.bolt-studio.entrypoints=websecure"
+      - "traefik.http.services.bolt-studio.loadbalancer.server.port=5173"
+
+  # ==============================================
+  # BACKEND EXTENSION - Add Bolt auth origins
+  # ==============================================
+  iafactory-backend:
+    environment:
+      # Add Bolt.diy to allowed CORS origins
+      ALLOWED_ORIGINS: >-
+        http://localhost:8180,
+        http://localhost:8181,
+        http://localhost:8182,
+        http://localhost:8183,
+        http://localhost:8184,
+        http://localhost:8185,
+        http://localhost:5173,
+        http://iafactory-bolt-studio:5173
+
+# ==============================================
+# VOLUMES
+# ==============================================
+volumes:
+  bolt_projects:
+    driver: local
+
+# ==============================================
+# NETWORKS (inherits from main compose)
+# ==============================================
+networks:
+  iafactory-net:
+    external: true
+    name: ${DOCKER_NETWORK:-iafactory-net}

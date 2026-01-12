@@ -1,0 +1,116 @@
+# IA Factory Automation - Docker Compose
+# Multi-container setup for all automation modules
+
+version: '3.8'
+
+services:
+  # Main API
+  automation-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ia-factory-automation
+    ports:
+      - "8001:8001"
+    environment:
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - ENVIRONMENT=production
+      - LOG_LEVEL=info
+    volumes:
+      - ./outputs:/app/outputs
+      - ./data:/app/data
+    networks:
+      - ia-factory-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Redis for caching and task queue
+  redis:
+    image: redis:7-alpine
+    container_name: ia-factory-redis
+    ports:
+      - "6379:6380"
+    volumes:
+      - redis-data:/data
+    networks:
+      - ia-factory-net
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+
+  # Qdrant for vector storage (RAG)
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: ia-factory-qdrant
+    ports:
+      - "6333:6334"
+      - "6334:6334"
+    volumes:
+      - qdrant-data:/qdrant/storage
+    networks:
+      - ia-factory-net
+    restart: unless-stopped
+    environment:
+      - QDRANT__SERVICE__GRPC_PORT=6334
+
+  # PostgreSQL for structured data
+  postgres:
+    image: postgres:15-alpine
+    container_name: ia-factory-postgres
+    ports:
+      - "5432:5433"
+    environment:
+      - POSTGRES_USER=iafactory
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-iafactory2024}
+      - POSTGRES_DB=automation
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - ia-factory-net
+    restart: unless-stopped
+
+  # Celery worker for background tasks
+  celery-worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ia-factory-celery
+    command: celery -A celery_app worker --loglevel=info
+    environment:
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - CELERY_BROKER_URL=redis://redis:6380/0
+      - CELERY_RESULT_BACKEND=redis://redis:6380/0
+    volumes:
+      - ./outputs:/app/outputs
+    networks:
+      - ia-factory-net
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+  # Celery beat for scheduled tasks
+  celery-beat:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ia-factory-beat
+    command: celery -A celery_app beat --loglevel=info
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6380/0
+    networks:
+      - ia-factory-net
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+networks:
+  ia-factory-net:
+    driver: bridge
+
+volumes:
+  redis-data:
+  qdrant-data:
+  postgres-data:

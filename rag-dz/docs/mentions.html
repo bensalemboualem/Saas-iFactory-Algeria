@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentions Légales - IAFactory Algeria</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00c261;
+            --bg: #0a0a0a;
+            --surface: #111;
+            --text: #fff;
+            --text-muted: #888;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; }
+        
+        .header { background: rgba(10,10,10,0.95); padding: 1rem 2rem; position: fixed; top: 0; left: 0; right: 0; z-index: 100; border-bottom: 1px solid #222; }
+        .header-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--primary); text-decoration: none; }
+        .back-btn { background: var(--primary); color: #000; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 600; }
+
+        .main { max-width: 900px; margin: 0 auto; padding: 120px 2rem 4rem; }
+        .page-header { text-align: center; margin-bottom: 3rem; }
+        .page-header h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+
+        .content { background: var(--surface); border: 1px solid #222; border-radius: 16px; padding: 3rem; }
+        .content h2 { color: var(--primary); margin: 2rem 0 1rem; font-size: 1.5rem; }
+        .content h2:first-child { margin-top: 0; }
+        .content p { color: var(--text-muted); margin-bottom: 1rem; }
+        .content ul { margin: 1rem 0 1rem 2rem; color: var(--text-muted); }
+        .content li { margin-bottom: 0.5rem; }
+        .content strong { color: var(--text); }
+
+        .info-table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+        .info-table tr { border-bottom: 1px solid #333; }
+        .info-table td { padding: 1rem; }
+        .info-table td:first-child { color: var(--text); font-weight: 500; width: 200px; }
+        .info-table td:last-child { color: var(--text-muted); }
+
+        footer { background: var(--surface); border-top: 1px solid #222; padding: 2rem; text-align: center; color: var(--text-muted); margin-top: 4rem; }
+
+        @media (max-width: 768px) {
+            .page-header h1 { font-size: 2rem; }
+            .content { padding: 1.5rem; }
+            .info-table td { display: block; padding: 0.5rem; }
+            .info-table td:first-child { width: 100%; border-bottom: none; }
+        }
+    </style>
+<link rel="stylesheet" href="/apps/shared/iafactory-unified.css">
+</head>
+<body>
+<!-- IAFactory Trilingue Controls -->
+<div class="iaf-controls-floating" style="position:fixed;top:20px;right:20px;z-index:9998;display:flex;gap:10px;align-items:center;">
+    <div class="iaf-lang-dropdown" style="position:relative;">
+        <button class="iaf-lang-btn" onclick="IAFUnified.toggleLangMenu()" 
+            style="background:#667eea;color:white;border:none;padding:8px 15px;border-radius:8px;cursor:pointer;font-size:14px;display:flex;align-items:center;gap:5px;">
+            🌐 <span id="current-lang-label">FR</span> ▼
+        </button>
+        <div class="iaf-lang-menu" id="lang-menu" 
+            style="display:none;position:absolute;top:100%;right:0;background:white;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,0.15);min-width:150px;margin-top:5px;overflow:hidden;">
+            <button onclick="IAFUnified.changeLang('fr')" style="width:100%;padding:10px 15px;border:none;background:none;text-align:left;cursor:pointer;">🇫🇷 Français</button>
+            <button onclick="IAFUnified.changeLang('ar')" style="width:100%;padding:10px 15px;border:none;background:none;text-align:left;cursor:pointer;">🇩🇿 العربية</button>
+            <button onclick="IAFUnified.changeLang('en')" style="width:100%;padding:10px 15px;border:none;background:none;text-align:left;cursor:pointer;">🇬🇧 English</button>
+        </div>
+    </div>
+    <button class="iaf-theme-toggle" onclick="IAFUnified.toggleTheme()" 
+        style="background:#667eea;color:white;border:none;padding:8px 12px;border-radius:8px;cursor:pointer;font-size:16px;" 
+        title="Toggle theme">🌓</button>
+</div>
+
+    <header class="header">
+        <div class="header-content">
+            <a href="../landing-complete-responsive.html" class="logo">🇩🇿 IAFactory</a>
+            <a href="../landing-complete-responsive.html" class="back-btn"><i class="fas fa-arrow-left"></i> Retour</a>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="page-header">
+            <h1>⚖️ Mentions Légales</h1>
+        </div>
+
+        <div class="content">
+            <h2>1. Identification de l'Éditeur</h2>
+            <table class="info-table">
+                <tr>
+                    <td>Raison sociale</td>
+                    <td>IAFactory Algeria SARL</td>
+                </tr>
+                <tr>
+                    <td>Forme juridique</td>
+                    <td>Société à Responsabilité Limitée (SARL)</td>
+                </tr>
+                <tr>
+                    <td>Capital social</td>
+                    <td>1 000 000 DZD</td>
+                </tr>
+                <tr>
+                    <td>Siège social</td>
+                    <td>Centre d'Affaires, Boulevard Mohamed V, Alger 16000, Algérie</td>
+                </tr>
+                <tr>
+                    <td>Registre du commerce</td>
+                    <td>RC N° XXXX/XXXX (Alger)</td>
+                </tr>
+                <tr>
+                    <td>NIF</td>
+                    <td>XXXXXXXXXXXXXXXXXXXX</td>
+                </tr>
+                <tr>
+                    <td>NIS</td>
+                    <td>XXXXXXXXXXXXXXXXXXXX</td>
+                </tr>
+            </table>
+
+            <h2>2. Direction de la Publication</h2>
+            <table class="info-table">
+                <tr>
+                    <td>Directeur de publication</td>
+                    <td>M. Ahmed BENALI, Gérant</td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td>direction@iafactory.dz</td>
+                </tr>
+            </table>
+
+            <h2>3. Hébergement</h2>
+            <table class="info-table">
+                <tr>
+                    <td>Hébergeur</td>
+                    <td>CERIST - Centre de Recherche sur l'Information Scientifique et Technique</td>
+                </tr>
+                <tr>
+                    <td>Adresse</td>
+                    <td>03, Rue des Frères Aïssou, Ben Aknoun, Alger, Algérie</td>
+                </tr>
+                <tr>
+                    <td>Téléphone</td>
+                    <td>+213 (0) 23 XX XX XX</td>
+                </tr>
+            </table>
+
+            <h2>4. Contact</h2>
+            <table class="info-table">
+                <tr>
+                    <td>Email général</td>
+                    <td>contact@iafactory.dz</td>
+                </tr>
+                <tr>
+                    <td>Support technique</td>
+                    <td>support@iafactory.dz</td>
+                </tr>
+                <tr>
+                    <td>Questions légales</td>
+                    <td>legal@iafactory.dz</td>
+                </tr>
+                <tr>
+                    <td>Téléphone</td>
+                    <td>+213 (0) 21 XX XX XX</td>
+                </tr>
+            </table>
+
+            <h2>5. Propriété Intellectuelle</h2>
+            <p>L'ensemble du contenu du site iafactory.dz (textes, images, logos, graphismes, icônes, code source) est la propriété exclusive d'IAFactory Algeria ou de ses partenaires, et est protégé par les lois algériennes et internationales relatives à la propriété intellectuelle.</p>
+            <p>Toute reproduction, représentation, modification, publication ou adaptation de tout ou partie des éléments du site est strictement interdite sans autorisation écrite préalable d'IAFactory Algeria.</p>
+
+            <h2>6. Marques</h2>
+            <p>Les marques et logos figurant sur le site sont des marques déposées. Toute utilisation non autorisée de ces marques est strictement interdite.</p>
+            <ul>
+                <li><strong>IAFactory®</strong> - Marque déposée</li>
+                <li><strong>Dzir IA™</strong> - Marque en cours d'enregistrement</li>
+            </ul>
+
+            <h2>7. Limitation de Responsabilité</h2>
+            <p>IAFactory Algeria s'efforce de fournir des informations exactes et à jour sur son site. Toutefois, nous ne pouvons garantir l'exactitude, la précision ou l'exhaustivité des informations mises à disposition.</p>
+            <p>IAFactory Algeria ne pourra être tenue responsable des dommages directs ou indirects résultant de l'accès au site ou de l'utilisation des services.</p>
+
+            <h2>8. Liens Hypertextes</h2>
+            <p>Le site peut contenir des liens vers des sites tiers. IAFactory Algeria n'exerce aucun contrôle sur ces sites et décline toute responsabilité quant à leur contenu.</p>
+
+            <h2>9. Données Personnelles</h2>
+            <p>Le traitement des données personnelles est détaillé dans notre <a href="confidentialite.html" style="color: var(--primary);">Politique de Confidentialité</a>.</p>
+            <p>Conformément à la réglementation en vigueur, vous disposez de droits sur vos données personnelles que vous pouvez exercer en nous contactant.</p>
+
+            <h2>10. Cookies</h2>
+            <p>Ce site utilise des cookies pour améliorer l'expérience utilisateur. Pour en savoir plus, consultez notre <a href="confidentialite.html" style="color: var(--primary);">Politique de Confidentialité</a>.</p>
+
+            <h2>11. Droit Applicable et Juridiction</h2>
+            <p>Les présentes mentions légales sont soumises au droit algérien. En cas de litige, et après échec de toute tentative de règlement amiable, les tribunaux d'Alger seront seuls compétents.</p>
+
+            <h2>12. Crédits</h2>
+            <p>Design et développement : Équipe IAFactory Algeria</p>
+            <p>Icônes : Font Awesome, Emojis Unicode</p>
+            <p>Polices : Inter (Google Fonts)</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2025 IAFactory Algeria. Tous droits réservés.</p>
+    </footer>
+<script src="/apps/shared/iafactory-unified.js"></script>
+<!-- IAFactory Chatbot -->
+<button class="iaf-chatbot-btn" onclick="IAFUnified.toggleChatbot()" title="Aide" aria-label="Aide">💬</button>
+<div data-iaf-footer></div>
+</body>
+</html>

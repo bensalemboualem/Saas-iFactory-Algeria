@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitation au Chat - IA Factory</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);">
+
+    <!-- Container -->
+    <table width="100%" cellpadding="0" cellspacing="0" style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); padding: 40px 20px;">
+        <tr>
+            <td align="center">
+
+                <!-- Main Card -->
+                <table width="600" cellpadding="0" cellspacing="0" style="background: rgba(30, 41, 59, 0.8); border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 16px; overflow: hidden;">
+
+                    <!-- Header -->
+                    <tr>
+                        <td style="background: linear-gradient(135deg, {{room_color}} 0%, {{room_color_dark}} 100%); padding: 40px 30px; text-align: center;">
+                            <div style="font-size: 48px; margin-bottom: 16px;">{{room_icon}}</div>
+                            <h1 style="color: white; font-size: 24px; margin: 0 0 8px 0; font-weight: 700;">
+                                Invitation au groupe "{{room_name}}"
+                            </h1>
+                            <p style="color: rgba(255, 255, 255, 0.9); font-size: 16px; margin: 0;">
+                                {{inviter_name}} vous invite a rejoindre la conversation
+                            </p>
+                        </td>
+                    </tr>
+
+                    <!-- Body -->
+                    <tr>
+                        <td style="padding: 40px 30px; color: rgba(226, 232, 240, 0.9);">
+
+                            <p style="font-size: 16px; line-height: 1.6; margin-top: 0;">
+                                Bonjour,
+                            </p>
+
+                            <p style="font-size: 16px; line-height: 1.6;">
+                                <strong style="color: white;">{{inviter_name}}</strong> vous invite a rejoindre
+                                le groupe de discussion <strong style="color: {{room_color}};">"{{room_name}}"</strong>
+                                sur IA Factory.
+                            </p>
+
+                            <!-- Room Info Card -->
+                            <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 12px; padding: 20px; margin: 24px 0;">
+                                <table width="100%" cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <td width="60" style="vertical-align: top;">
+                                            <div style="width: 50px; height: 50px; background: {{room_color}}20; border-radius: 12px; text-align: center; line-height: 50px; font-size: 24px;">
+                                                {{room_icon}}
+                                            </div>
+                                        </td>
+                                        <td style="padding-left: 16px; vertical-align: top;">
+                                            <h3 style="color: white; font-size: 18px; margin: 0 0 4px 0;">{{room_name}}</h3>
+                                            <p style="color: rgba(148, 163, 184, 0.8); font-size: 14px; margin: 0 0 8px 0;">
+                                                {{room_type_label}} - {{member_count}} membre(s)
+                                            </p>
+                                            {{#if message}}
+                                            <p style="color: rgba(226, 232, 240, 0.7); font-size: 14px; margin: 0; font-style: italic;">
+                                                "{{message}}"
+                                            </p>
+                                            {{/if}}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <!-- Join Button -->
+                            <table width="100%" cellpadding="0" cellspacing="0" style="margin: 32px 0;">
+                                <tr>
+                                    <td align="center">
+                                        <a href="{{invite_url}}" style="display: inline-block; background: {{room_color}}; color: white; text-decoration: none; padding: 16px 48px; border-radius: 8px; font-weight: 600; font-size: 16px; box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);">
+                                            Rejoindre le groupe
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Alternative Link -->
+                            <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 8px; padding: 16px; margin: 24px 0;">
+                                <p style="font-size: 14px; color: rgba(226, 232, 240, 0.7); margin: 0 0 8px 0;">
+                                    Si le bouton ne fonctionne pas, copiez-collez ce lien dans votre navigateur:
+                                </p>
+                                <p style="font-size: 13px; color: {{room_color}}; word-break: break-all; margin: 0;">
+                                    {{invite_url}}
+                                </p>
+                            </div>
+
+                            <!-- Expiry Notice -->
+                            <div style="background: rgba(234, 179, 8, 0.1); border: 1px solid rgba(234, 179, 8, 0.3); border-radius: 8px; padding: 16px; margin: 24px 0;">
+                                <p style="font-size: 14px; color: rgba(250, 204, 21, 0.9); margin: 0;">
+                                    <strong>Note:</strong> Cette invitation expire le {{expires_at_formatted}}.
+                                </p>
+                            </div>
+
+                            <p style="font-size: 16px; line-height: 1.6; margin-bottom: 0;">
+                                A bientot sur IA Factory!<br>
+                                <strong style="color: white;">L'equipe IA Factory</strong>
+                            </p>
+
+                        </td>
+                    </tr>
+
+                    <!-- Footer -->
+                    <tr>
+                        <td style="background: rgba(15, 23, 42, 0.8); padding: 24px 30px; text-align: center; border-top: 1px solid rgba(148, 163, 184, 0.2);">
+                            <p style="color: rgba(148, 163, 184, 0.7); font-size: 13px; margin: 0 0 8px 0;">
+                                2025 IA Factory. Tous droits reserves.
+                            </p>
+                            <p style="color: rgba(148, 163, 184, 0.6); font-size: 12px; margin: 0;">
+                                Si vous n'avez pas demande cette invitation, vous pouvez ignorer cet email.
+                            </p>
+                        </td>
+                    </tr>
+
+                </table>
+
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>

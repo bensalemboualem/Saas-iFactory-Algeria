@@ -1,0 +1,221 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <defs>
+    <linearGradient id="bgComptable" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fffbeb;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#fef3c7;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="calculator" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e3a8a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e40af;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fef3c7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d4af37;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="graph" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" style="stop-color:#059669;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#10b981;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="300" fill="url(#bgComptable)"/>
+
+  <!-- Decorative circles -->
+  <circle cx="350" cy="50" r="35" fill="#d4af37" opacity="0.15"/>
+  <circle cx="50" cy="250" r="40" fill="#059669" opacity="0.15"/>
+
+  <!-- Modern calculator -->
+  <g transform="translate(80, 100)">
+    <!-- Calculator body -->
+    <rect x="0" y="0" width="90" height="130" rx="8" fill="url(#calculator)"/>
+    <rect x="4" y="4" width="82" height="122" rx="6" fill="#1e40af"/>
+
+    <!-- Screen -->
+    <rect x="10" y="12" width="70" height="25" rx="3" fill="#0f172a"/>
+    <rect x="12" y="14" width="66" height="21" fill="#1f2937"/>
+
+    <!-- Display number -->
+    <text x="73" y="30" font-family="monospace" font-size="14" fill="#10b981" text-anchor="end" font-weight="bold">542,850</text>
+
+    <!-- Buttons -->
+    <g transform="translate(12, 45)">
+      <!-- Row 1 -->
+      <rect x="0" y="0" width="14" height="12" rx="2" fill="#374151"/>
+      <rect x="18" y="0" width="14" height="12" rx="2" fill="#374151"/>
+      <rect x="36" y="0" width="14" height="12" rx="2" fill="#374151"/>
+      <rect x="54" y="0" width="14" height="12" rx="2" fill="#dc2626"/>
+
+      <!-- Row 2 -->
+      <rect x="0" y="16" width="14" height="12" rx="2" fill="#4b5563"/>
+      <rect x="18" y="16" width="14" height="12" rx="2" fill="#4b5563"/>
+      <rect x="36" y="16" width="14" height="12" rx="2" fill="#4b5563"/>
+      <rect x="54" y="16" width="14" height="12" rx="2" fill="#059669"/>
+
+      <!-- Row 3 -->
+      <rect x="0" y="32" width="14" height="12" rx="2" fill="#4b5563"/>
+      <rect x="18" y="32" width="14" height="12" rx="2" fill="#4b5563"/>
+      <rect x="36" y="32" width="14" height="12" rx="2" fill="#4b5563"/>
+      <rect x="54" y="32" width="14" height="12" rx="2" fill="#059669"/>
+
+      <!-- Row 4 -->
+      <rect x="0" y="48" width="14" height="12" rx="2" fill="#4b5563"/>
+      <rect x="18" y="48" width="14" height="12" rx="2" fill="#4b5563"/>
+      <rect x="36" y="48" width="14" height="12" rx="2" fill="#4b5563"/>
+      <rect x="54" y="48" width="14" height="12" rx="2" fill="#059669"/>
+
+      <!-- Row 5 -->
+      <rect x="0" y="64" width="32" height="12" rx="2" fill="#4b5563"/>
+      <rect x="36" y="64" width="14" height="12" rx="2" fill="#4b5563"/>
+      <rect x="54" y="64" width="14" height="12" rx="2" fill="#fbbf24"/>
+    </g>
+  </g>
+
+  <!-- Financial chart -->
+  <g transform="translate(200, 100)">
+    <rect x="0" y="0" width="120" height="100" rx="6" fill="#ffffff"/>
+    <rect x="3" y="3" width="114" height="94" rx="4" fill="#f8fafc"/>
+
+    <!-- Chart title -->
+    <text x="10" y="18" font-family="Arial" font-size="11" fill="#1e40af" font-weight="bold">Revenus</text>
+
+    <!-- Grid lines -->
+    <line x1="15" y1="85" x2="110" y2="85" stroke="#e2e8f0" stroke-width="1"/>
+    <line x1="15" y1="70" x2="110" y2="70" stroke="#e2e8f0" stroke-width="1"/>
+    <line x1="15" y1="55" x2="110" y2="55" stroke="#e2e8f0" stroke-width="1"/>
+    <line x1="15" y1="40" x2="110" y2="40" stroke="#e2e8f0" stroke-width="1"/>
+
+    <!-- Bar chart -->
+    <rect x="20" y="65" width="12" height="20" fill="#10b981"/>
+    <rect x="38" y="55" width="12" height="30" fill="#10b981"/>
+    <rect x="56" y="48" width="12" height="37" fill="#34d399"/>
+    <rect x="74" y="38" width="12" height="47" fill="url(#graph)"/>
+    <rect x="92" y="30" width="12" height="55" fill="url(#graph)"/>
+
+    <!-- Trend line -->
+    <path d="M 26,72 L 44,62 L 62,56 L 80,46 L 98,38" stroke="#3b82f6" stroke-width="2" fill="none"/>
+
+    <!-- Arrow up -->
+    <path d="M 105,33 L 110,28 L 110,38 Z" fill="#10b981"/>
+  </g>
+
+  <!-- Dinar coins -->
+  <g transform="translate(330, 130)">
+    <!-- Back coins -->
+    <ellipse cx="-10" cy="15" rx="20" ry="20" fill="url(#gold)"/>
+    <ellipse cx="-10" cy="15" rx="16" ry="16" fill="#fef3c7"/>
+
+    <!-- Middle coin -->
+    <ellipse cx="5" cy="8" rx="20" ry="20" fill="url(#gold)"/>
+    <ellipse cx="5" cy="8" rx="16" ry="16" fill="#fef3c7"/>
+    <text x="-2" y="13" font-family="Arial" font-size="11" fill="#92400e" font-weight="bold">DA</text>
+
+    <!-- Front coin -->
+    <ellipse cx="0" cy="0" rx="20" ry="20" fill="url(#gold)"/>
+    <ellipse cx="0" cy="0" rx="16" ry="16" fill="#fef3c7"/>
+    <circle cx="0" cy="0" r="12" fill="none" stroke="#d4af37" stroke-width="1.5"/>
+    <path d="M 0,-6 L 1.4,-1.9 L 5.7,-1.9 L 2.3,0.9 L 3.7,4.9 L 0,2.1 L -3.7,4.9 L -2.3,0.9 L -5.7,-1.9 L -1.4,-1.9 Z" fill="#d4af37"/>
+  </g>
+
+  <!-- Fiscal documents -->
+  <g transform="translate(50, 200)">
+    <rect x="5" y="5" width="60" height="80" rx="3" fill="#cbd5e1"/>
+    <rect x="0" y="0" width="60" height="80" rx="3" fill="#ffffff"/>
+    <rect x="2" y="2" width="56" height="76" fill="#f8fafc"/>
+
+    <!-- Document header -->
+    <rect x="8" y="8" width="44" height="12" fill="#1e40af"/>
+    <text x="30" y="16" font-family="Arial" font-size="7" fill="#ffffff" text-anchor="middle" font-weight="bold">FISCAL</text>
+
+    <!-- Document lines -->
+    <line x1="8" y1="28" x2="52" y2="28" stroke="#cbd5e1" stroke-width="2"/>
+    <line x1="8" y1="36" x2="45" y2="36" stroke="#cbd5e1" stroke-width="1.5"/>
+    <line x1="8" y1="43" x2="48" y2="43" stroke="#cbd5e1" stroke-width="1.5"/>
+    <line x1="8" y1="50" x2="42" y2="50" stroke="#cbd5e1" stroke-width="1.5"/>
+    <line x1="8" y1="57" x2="50" y2="57" stroke="#cbd5e1" stroke-width="1.5"/>
+    <line x1="8" y1="64" x2="38" y2="64" stroke="#cbd5e1" stroke-width="1.5"/>
+
+    <!-- Stamp -->
+    <circle cx="45" cy="70" r="8" fill="none" stroke="#059669" stroke-width="2"/>
+    <text x="45" y="73" font-family="Arial" font-size="6" fill="#059669" text-anchor="middle" font-weight="bold">OK</text>
+  </g>
+
+  <!-- Balance scale (justice/accuracy) -->
+  <g transform="translate(250, 230)">
+    <!-- Base -->
+    <rect x="-15" y="25" width="30" height="4" rx="2" fill="#78350f"/>
+
+    <!-- Stand -->
+    <rect x="-2" y="0" width="4" height="25" fill="#92400e"/>
+
+    <!-- Beam -->
+    <rect x="-35" y="-3" width="70" height="3" fill="#d4af37"/>
+
+    <!-- Left chain -->
+    <line x1="-25" y1="0" x2="-25" y2="12" stroke="#9ca3af" stroke-width="1"/>
+    <line x1="-30" y1="0" x2="-30" y2="12" stroke="#9ca3af" stroke-width="1"/>
+    <line x1="-20" y1="0" x2="-20" y2="12" stroke="#9ca3af" stroke-width="1"/>
+
+    <!-- Right chain -->
+    <line x1="25" y1="0" x2="25" y2="12" stroke="#9ca3af" stroke-width="1"/>
+    <line x1="30" y1="0" x2="30" y2="12" stroke="#9ca3af" stroke-width="1"/>
+    <line x1="20" y1="0" x2="20" y2="12" stroke="#9ca3af" stroke-width="1"/>
+
+    <!-- Left pan -->
+    <ellipse cx="-25" cy="12" rx="15" ry="3" fill="#fbbf24"/>
+    <path d="M -40,12 L -25,18 L -10,12" fill="#f59e0b"/>
+
+    <!-- Right pan -->
+    <ellipse cx="25" cy="12" rx="15" ry="3" fill="#fbbf24"/>
+    <path d="M 10,12 L 25,18 L 40,12" fill="#f59e0b"/>
+  </g>
+
+  <!-- Pie chart -->
+  <g transform="translate(200, 250)">
+    <circle cx="0" cy="0" r="30" fill="#e0f2fe"/>
+    <!-- Slices -->
+    <path d="M 0,0 L 0,-30 A 30,30 0 0,1 26,-15 Z" fill="#3b82f6"/>
+    <path d="M 0,0 L 26,-15 A 30,30 0 0,1 26,15 Z" fill="#10b981"/>
+    <path d="M 0,0 L 26,15 A 30,30 0 0,1 0,30 Z" fill="#fbbf24"/>
+    <path d="M 0,0 L 0,30 A 30,30 0 0,1 -26,15 Z" fill="#a78bfa"/>
+    <path d="M 0,0 L -26,15 A 30,30 0 0,1 0,-30 Z" fill="#f97316"/>
+
+    <!-- Center hole (donut) -->
+    <circle cx="0" cy="0" r="12" fill="#ffffff"/>
+  </g>
+
+  <!-- Briefcase -->
+  <g transform="translate(140, 50)">
+    <rect x="0" y="12" width="60" height="40" rx="4" fill="#1e40af"/>
+    <rect x="2" y="14" width="56" height="36" rx="3" fill="#2563eb"/>
+
+    <!-- Handle -->
+    <path d="M 20,12 Q 20,2 30,2 Q 40,2 40,12" stroke="#1e3a8a" stroke-width="4" fill="none"/>
+
+    <!-- Lock -->
+    <rect x="27" y="30" width="6" height="8" rx="1" fill="#d4af37"/>
+    <circle cx="30" cy="33" r="2" fill="#1e40af"/>
+
+    <!-- Top flap -->
+    <rect x="5" y="12" width="50" height="4" fill="#1e3a8a"/>
+  </g>
+
+  <!-- Percentage symbol -->
+  <g transform="translate(340, 240)">
+    <circle cx="0" cy="-12" r="6" fill="none" stroke="#059669" stroke-width="2"/>
+    <circle cx="0" cy="12" r="6" fill="none" stroke="#059669" stroke-width="2"/>
+    <line x1="-8" y1="18" x2="8" y2="-18" stroke="#059669" stroke-width="3"/>
+  </g>
+
+  <!-- Algerian crescent and star -->
+  <g transform="translate(30, 40)">
+    <path d="M 0,-15 A 12,12 0 1,1 0,9 A 10,10 0 1,0 0,-15" fill="#006233"/>
+    <path d="M 12,-3 L 13.5,1 L 17.5,1 L 14.5,3.5 L 16,7.5 L 12,5 L 8,7.5 L 9.5,3.5 L 6.5,1 L 10.5,1 Z" fill="#d4af37"/>
+  </g>
+
+  <!-- Star of Algeria -->
+  <g transform="translate(370, 270)">
+    <path d="M 0,-12 L 2.8,-3.7 L 11.4,-3.7 L 4.7,1.7 L 7.4,9.7 L 0,4.3 L -7.4,9.7 L -4.7,1.7 L -11.4,-3.7 L -2.8,-3.7 Z"
+          fill="#006233"/>
+  </g>
+</svg>

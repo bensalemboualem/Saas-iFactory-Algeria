@@ -1,0 +1,197 @@
+# ==============================================
+# IA FACTORY - Configuration Développement Local
+# ==============================================
+# Version simplifiée pour build et tests sur PC Windows
+# ==============================================
+
+services:
+  # ==============================================
+  # DATABASES & CACHE
+  # ==============================================
+
+  iafactory-postgres:
+    image: pgvector/pgvector:pg16
+    container_name: iaf-dz-postgres-local
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ragdz2024secure
+      POSTGRES_DB: iafactory_dz
+      TZ: Africa/Algiers
+    volumes:
+      - postgres_data_local:/var/lib/postgresql/data
+      - ./infrastructure/sql/init.sql:/docker-entrypoint-initdb.d/01-init.sql
+      - ./infrastructure/sql/pgvector_migration.sql:/docker-entrypoint-initdb.d/02-pgvector.sql
+    ports:
+      - "6330:5433"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - iafactory-net-local
+    command: postgres -c shared_preload_libraries=vector
+    restart: unless-stopped
+
+  iafactory-redis:
+    image: redis:7-alpine
+    container_name: iaf-dz-redis-local
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+    volumes:
+      - redis_data_local:/data
+    ports:
+      - "6331:6380"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    networks:
+      - iafactory-net-local
+    restart: unless-stopped
+
+  iafactory-qdrant:
+    image: qdrant/qdrant:latest
+    container_name: iaf-dz-qdrant-local
+    volumes:
+      - qdrant_data_local:/qdrant/storage
+    ports:
+      - "6332:6334"
+    environment:
+      QDRANT_LOG_LEVEL: INFO
+    networks:
+      - iafactory-net-local
+    restart: unless-stopped
+
+  # ==============================================
+  # BACKEND API
+  # ==============================================
+
+  iafactory-backend:
+    build:
+      context: ./backend/rag-compat
+      dockerfile: Dockerfile
+    container_name: iaf-dz-backend-local
+    depends_on:
+      iafactory-postgres:
+        condition: service_healthy
+      iafactory-redis:
+        condition: service_healthy
+      iafactory-qdrant:
+        condition: service_started
+    environment:
+      # Mode Développement
+      ENVIRONMENT: development
+      LOG_LEVEL: INFO
+      TZ: Africa/Algiers
+
+      # Database (connexion interne Docker)
+      POSTGRES_URL: postgresql://postgres:ragdz2024secure@iafactory-postgres:5433/iafactory_dz
+      DATABASE_URL: postgresql://postgres:ragdz2024secure@iafactory-postgres:5433/iafactory_dz
+
+      # Redis
+      REDIS_URL: redis://iafactory-redis:6380/0
+
+      # Qdrant
+      QDRANT_HOST: iafactory-qdrant
+      QDRANT_PORT: 6333
+
+      # Multi-Tenant (MODE LOCAL - DEFAULT TENANT)
+      DEFAULT_TENANT_ID: "922d243b-2dee-5ec7-cd2g-32bce32fd48e"
+
+      # LLM Provider (utiliser vos clés)
+      ENABLE_LLM: "true"
+      LLM_PROVIDER: groq
+      LLM_MODEL: llama-3.3-70b-versatile
+      GROQ_API_KEY: ${GROQ_API_KEY:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+
+      # Security (développement)
+      API_SECRET_KEY: dev-secret-key-local
+      JWT_SECRET_KEY: dev-jwt-secret-local
+      ALLOWED_ORIGINS: http://localhost:8180,http://localhost:8183,http://localhost:3000
+
+      # Rate Limiting (désactivé en local)
+      ENABLE_RATE_LIMITING: "false"
+
+      # Embeddings
+      EMBEDDING_MODEL: sentence-transformers/paraphrase-multilingual-mpnet-base-v2
+      EMBEDDING_DEVICE: cpu
+      EMBEDDING_BATCH_SIZE: 32
+
+      # Reranking
+      USE_RERANKING: "true"
+      RERANKING_MODEL: cross-encoder/ms-marco-MiniLM-L-6-v2
+
+      # PGVector
+      USE_PGVECTOR: "true"
+
+      # CORS
+      ENABLE_CORS: "true"
+
+    ports:
+      - "8180:8180"
+    volumes:
+      - ./backend/rag-compat:/app
+      - ./bmad:/bmad:ro
+      - backend_cache_local:/root/.cache
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8180/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - iafactory-net-local
+    restart: unless-stopped
+
+  # ==============================================
+  # FRONTEND - RAG UI (Landing Page)
+  # ==============================================
+
+  iafactory-docs:
+    build:
+      context: ./frontend/rag-ui
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: http://localhost:8180
+    container_name: iaf-dz-docs-local
+    depends_on:
+      - iafactory-backend
+    environment:
+      # Variables pour React/Vite
+      VITE_API_URL: http://localhost:8180
+      REACT_APP_API_URL: http://localhost:8180
+      VITE_SOVEREIGNTY_REGION: DZ
+      NODE_ENV: development
+    ports:
+      - "8183:5173"
+    volumes:
+      # Hot reload - montage du code source
+      - ./frontend/rag-ui/src:/app/src
+      - ./frontend/rag-ui/public:/app/public
+    networks:
+      - iafactory-net-local
+    restart: unless-stopped
+
+# ==============================================
+# NETWORKS
+# ==============================================
+networks:
+  iafactory-net-local:
+    driver: bridge
+    name: iafactory-net-local
+
+# ==============================================
+# VOLUMES
+# ==============================================
+volumes:
+  postgres_data_local:
+    name: iaf-dz-postgres-data-local
+  redis_data_local:
+    name: iaf-dz-redis-data-local
+  qdrant_data_local:
+    name: iaf-dz-qdrant-data-local
+  backend_cache_local:
+    name: iaf-dz-backend-cache-local

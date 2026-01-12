@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نصائح وحيل - IAFactory Algeria</title>
+    <link rel="stylesheet" href="../assets/css/docs-theme.css">
+</head>
+<body>
+    <header class="docs-header">
+        <div class="docs-logo">
+            <img src="../assets/images/logo.png" alt="IAFactory Algeria">
+            <span>IAFactory Algeria</span>
+        </div>
+        <nav class="main-nav">
+            <a href="./index.html">التوثيق</a>
+            <a href="https://app.iafactory-algeria.com">التطبيق</a>
+            <a href="./api/index.html">واجهة برمجية</a>
+        </nav>
+        <div class="docs-controls">
+            <div class="language-switcher">
+                <button data-lang="fr">FR</button>
+                <button data-lang="en">EN</button>
+                <button data-lang="ar" class="active">AR</button>
+            </div>
+            <div class="theme-toggle">
+                <div class="theme-toggle-slider"></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <!-- ...existing sidebar... -->
+        </aside>
+
+        <main class="docs-main">
+            <h1>نصائح وحيل</h1>
+
+            <p class="lead">احصل على أقصى استفادة من IAFactory Algeria مع هذه النصائح المتقدمة.</p>
+
+            <h2 id="keyboard-shortcuts">اختصارات لوحة المفاتيح</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>الاختصار</th>
+                        <th>الإجراء</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>Ctrl+Enter</code></td><td>إرسال الرسالة</td></tr>
+                    <tr><td><code>Ctrl+Shift+N</code></td><td>محادثة جديدة</td></tr>
+                    <tr><td><code>Ctrl+K</code></td><td>لوحة الأوامر</td></tr>
+                    <tr><td><code>Ctrl+/</code></td><td>تبديل الشريط الجانبي</td></tr>
+                    <tr><td><code>Ctrl+L</code></td><td>مسح المحادثة</td></tr>
+                    <tr><td><code>Ctrl+S</code></td><td>حفظ المحادثة</td></tr>
+                    <tr><td><code>Ctrl+D</code></td><td>تبديل الوضع الداكن/الفاتح</td></tr>
+                    <tr><td><code>Escape</code></td><td>إيقاف التوليد</td></tr>
+                </tbody>
+            </table>
+
+            <h2 id="model-selection">اختيار النموذج المناسب</h2>
+
+            <div class="alert alert-info">
+                <strong>دليل سريع:</strong>
+                <ul>
+                    <li><strong>GPT-4.1</strong> - أفضل جودة شاملة</li>
+                    <li><strong>GPT-4.1-mini</strong> - سريع واقتصادي</li>
+                    <li><strong>Claude Sonnet 4</strong> - المستندات الطويلة، البرمجة</li>
+                    <li><strong>Codestral</strong> - مهام خاصة بالكود</li>
+                    <li><strong>Perplexity</strong> - البحث على الويب، الأحداث الجارية</li>
+                </ul>
+            </div>
+
+            <h2 id="prompt-techniques">تقنيات الأوامر</h2>
+
+            <h3 id="be-specific">1. كن محددًا</h3>
+
+            <div class="alert alert-danger">
+                <strong>سيء:</strong>
+                <pre><code>اكتب شيئًا عن Python</code></pre>
+            </div>
+
+            <div class="alert alert-success">
+                <strong>جيد:</strong>
+                <pre><code>اكتب دالة Python تقوم بـ:
+- أخذ قائمة من الأعداد الصحيحة
+- إرجاع ثاني أكبر رقم
+- التعامل مع الحالات الحدية (قائمة فارغة، تكرارات)
+- تضمين docstring وتلميحات الأنواع</code></pre>
+            </div>
+
+            <h3 id="provide-context">2. قدم السياق</h3>
+
+            <pre><code class="language-text">أنا أبني تطبيق تجارة إلكترونية React مع TypeScript.
+أستخدم Zustand لإدارة الحالة.
+أحتاج مكون عربة تسوق يقوم بـ:
+- عرض العناصر مع أدوات التحكم في الكمية
+- حساب المجموع مع الضريبة (10%)
+- الحفظ في localStorage</code></pre>
+
+            <h3 id="use-examples">3. استخدم الأمثلة (Few-Shot)</h3>
+
+            <pre><code class="language-text">حوّل هذه النصوص إلى JSON:
+
+مثال 1:
+المدخل: "أحمد علي، 25 سنة، يسكن في الجزائر"
+المخرج: {"name": "أحمد علي", "age": 25, "city": "الجزائر"}
+
+مثال 2:
+المدخل: "فاطمة من وهران، عمرها 30"
+المخرج: {"name": "فاطمة", "age": 30, "city": "وهران"}
+
+الآن حوّل:
+المدخل: "كريم، 28، من قسنطينة"</code></pre>
+
+            <h3 id="chain-of-thought">4. سلسلة التفكير</h3>
+
+            <pre><code class="language-text">حل هذه المشكلة خطوة بخطوة:
+
+المشكلة: احسب التكلفة الشهرية لفريق من 5 مطورين
+- السعر الأساسي: 500$/مطور
+- خصم 20% للفرق أكثر من 3
+- 100$ إضافية للدعم المميز
+- ضريبة 10%
+
+فكر في كل خطوة قبل إعطاء الإجابة النهائية.</code></pre>
+
+            <h3 id="role-assignment">5. تعيين الدور</h3>
+
+            <pre><code class="language-text">أنت مدقق أمني متمرس لديك 15 سنة من الخبرة.
+راجع هذا الكود بحثًا عن الثغرات الأمنية:
+
+[الصق الكود]
+
+ركز على:
+- حقن SQL
+- ثغرات XSS
+- عيوب المصادقة
+- مشاكل تحديد المعدل</code></pre>
+
+            <h2 id="api-optimization">تحسين API</h2>
+
+            <h3 id="reduce-costs">تقليل التكاليف</h3>
+
+            <pre><code class="language-python"># استخدم نماذج mini للمهام البسيطة
+response = client.chat.completions.create(
+    model="gpt-4.1-mini",  # أرخص، لا يزال جيدًا
+    messages=[...],
+    max_tokens=500  # تحديد المخرجات
+)
+
+# تفعيل التخزين المؤقت للاستعلامات المتكررة
+response = client.chat.completions.create(
+    model="gpt-4.1",
+    messages=[...],
+    cache=True  # إعادة استخدام الردود المخزنة
+)</code></pre>
+
+            <h3 id="improve-speed">تحسين السرعة</h3>
+
+            <pre><code class="language-python"># استخدم البث للاستجابة الأسرع
+for chunk in client.chat.completions.create(
+    model="gpt-4.1-mini",
+    messages=[...],
+    stream=True
+):
+    print(chunk.choices[0].delta.content, end="")
+
+# تجميع الطلبات عند الإمكان
+responses = client.batch.create(
+    requests=[
+        {"model": "gpt-4.1-mini", "messages": [...]},
+        {"model": "gpt-4.1-mini", "messages": [...]},
+    ]
+)</code></pre>
+
+            <h3 id="temperature-settings">إعدادات درجة الحرارة</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>المهمة</th>
+                        <th>درجة الحرارة</th>
+                        <th>السبب</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>توليد الكود</td>
+                        <td>0.0 - 0.2</td>
+                        <td>دقيق، حتمي</td>
+                    </tr>
+                    <tr>
+                        <td>استخراج البيانات</td>
+                        <td>0.0</td>
+                        <td>مخرجات متسقة</td>
+                    </tr>
+                    <tr>
+                        <td>أسئلة وأجوبة عامة</td>
+                        <td>0.5 - 0.7</td>
+                        <td>متوازن</td>
+                    </tr>
+                    <tr>
+                        <td>الكتابة الإبداعية</td>
+                        <td>0.8 - 1.2</td>
+                        <td>أكثر تنوعًا وإبداعًا</td>
+                    </tr>
+                    <tr>
+                        <td>العصف الذهني</td>
+                        <td>1.0 - 1.5</td>
+                        <td>أقصى إبداع</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 id="common-mistakes">أخطاء شائعة يجب تجنبها</h2>
+
+            <h3 id="vague-prompts">1. الأوامر الغامضة</h3>
+            <pre><code>سيء: "ساعدني في الكود"
+سيء: "لا يعمل"
+سيء: "اجعله أفضل"
+
+جيد: "أصلح خطأ TypeError في السطر 15 من دالة Python هذه: [الكود]"</code></pre>
+
+            <h3 id="overloading">2. تحميل الطلبات الفردية بشكل زائد</h3>
+            <pre><code>سيء: "ابنِ لي موقع تجارة إلكترونية كامل مع React، Node، MongoDB،
+      المصادقة، معالجة الدفع، لوحة الإدارة، وانشره"
+
+جيد: قسّم إلى خطوات:
+1. "صمم مخطط قاعدة البيانات لموقع تجارة إلكترونية"
+2. "أنشئ مسارات Express API للمنتجات"
+3. "ابنِ مكون قائمة المنتجات في React"
+...</code></pre>
+
+            <h3 id="ignoring-context">3. تجاهل حدود السياق</h3>
+            <pre><code class="language-python"># سيء: إرسال كل قاعدة الكود
+messages = [{"role": "user", "content": entire_project_code}]
+
+# جيد: أرسل الملفات ذات الصلة فقط
+messages = [
+    {"role": "user", "content": f"""
+    لدي خطأ في دالة checkout.
+
+    الملف المعني (checkout.py):
+    {checkout_code}
+
+    الخطأ: {error_message}
+    """}
+]</code></pre>
+
+            <h2 id="productivity-tips">نصائح الإنتاجية</h2>
+
+            <h3 id="templates">أنشئ قوالب</h3>
+
+            <p>احفظ الأوامر الشائعة كقوالب:</p>
+
+            <pre><code class="language-text"># قالب مراجعة الكود
+راجع كود [اللغة] هذا من حيث:
+- الثغرات الأمنية
+- مشاكل الأداء
+- انتهاكات أسلوب الكود
+- الأخطاء المحتملة
+
+الكود:
+[الصق الكود هنا]
+
+# قالب إصلاح الخطأ
+اللغة: [اللغة]
+الإطار: [الإطار]
+الخطأ: [رسالة الخطأ]
+المتوقع: [السلوك المتوقع]
+الفعلي: [السلوك الفعلي]
+الكود: [الكود ذو الصلة]</code></pre>
+
+            <h3 id="iterative-refinement">التحسين التكراري</h3>
+
+            <pre><code class="language-text">الخطوة 1: "اكتب نظام مصادقة مستخدم أساسي"
+الخطوة 2: "أضف تجزئة كلمة المرور مع bcrypt"
+الخطوة 3: "أضف توليد رمز JWT"
+الخطوة 4: "أضف وظيفة تحديث الرمز"
+الخطوة 5: "أضف تحديد معدل محاولات تسجيل الدخول"</code></pre>
+
+            <h2 id="security-tips">أفضل ممارسات الأمان</h2>
+
+            <h3 id="api-key-safety">سلامة مفتاح API</h3>
+
+            <ul>
+                <li>لا تقم أبدًا بحفظ مفاتيح API في التحكم بالإصدار</li>
+                <li>استخدم متغيرات البيئة</li>
+                <li>قم بتدوير المفاتيح بانتظام</li>
+                <li>استخدم مفاتيح مختلفة للتطوير/الإنتاج</li>
+            </ul>
+
+            <pre><code class="language-bash"># ملف .env (أضفه إلى .gitignore!)
+IAFACTORY_API_KEY=sk_live_your_key_here
+
+# في الكود
+import os
+api_key = os.environ.get("IAFACTORY_API_KEY")</code></pre>
+
+            <h3 id="data-privacy">خصوصية البيانات</h3>
+
+            <ul>
+                <li>لا ترسل بيانات شخصية حساسة</li>
+                <li>أخفِ هوية البيانات قبل الإرسال</li>
+                <li>استخدم النماذج المحلية (Ollama) للبيانات السرية</li>
+                <li>راجع سياسات الاحتفاظ بالبيانات في IAFactory</li>
+            </ul>
+
+            <h2 id="resources">موارد إضافية</h2>
+
+            <ul>
+                <li><a href="./api/quick-start.html">بداية سريعة مع API</a></li>
+                <li><a href="./best-practices/writing-prompts.html">دليل هندسة الأوامر</a></li>
+                <li><a href="./best-practices/choosing-models.html">دليل اختيار النموذج</a></li>
+                <li><a href="https://discord.gg/iafactory">Discord المجتمع</a></li>
+                <li><a href="https://youtube.com/@iafactory">دروس فيديو</a></li>
+            </ul>
+
+            <div class="alert alert-success">
+                <strong>نصيحة احترافية:</strong>
+                <p>انضم إلى <a href="https://discord.gg/iafactory">مجتمع Discord</a> لمشاركة النصائح والحصول على مساعدة من مستخدمين آخرين!</p>
+            </div>
+        </main>
+
+        <aside class="docs-toc">
+            <h3 class="docs-toc-title">في هذه الصفحة</h3>
+            <ul></ul>
+        </aside>
+    </div>
+
+    <script src="../assets/js/docs-theme.js"></script>
+</body>
+</html>

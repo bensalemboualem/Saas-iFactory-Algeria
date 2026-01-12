@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تكامل n8n - IAFactory الجزائر</title>
+    <link rel="stylesheet" href="../../assets/css/docs-theme.css">
+</head>
+<body>
+    <header class="docs-header">
+        <div class="docs-logo">
+            <img src="../../assets/images/logo.png" alt="IAFactory الجزائر">
+            <span>IAFactory الجزائر</span>
+        </div>
+        <nav class="main-nav">
+            <a href="../index.html">التوثيق</a>
+            <a href="https://app.iafactory-algeria.com">التطبيق</a>
+            <a href="../api/index.html">واجهة برمجة التطبيقات</a>
+        </nav>
+        <div class="docs-controls">
+            <div class="language-switcher">
+                <button data-lang="fr">🇫🇷 FR</button>
+                <button data-lang="en">🇬🇧 EN</button>
+                <button data-lang="ar" class="active">🇸🇦 AR</button>
+            </div>
+            <div class="theme-toggle">
+                <div class="theme-toggle-slider">☀️</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <!-- الشريط الجانبي -->
+        </aside>
+
+        <main class="docs-main">
+            <h1>تكامل n8n</h1>
+            
+            <p class="lead">قم بأتمتة سير عملك باستخدام n8n وواجهة برمجة تطبيقات IAFactory الجزائر لإنشاء سيناريوهات أتمتة قوية.</p>
+
+            <h2 id="introduction">🔄 ما هو n8n؟</h2>
+
+            <p>n8n هي منصة أتمتة مفتوحة المصدر تتيح لك ربط خدمات مختلفة وأتمتة مهامك. مع IAFactory الجزائر، يمكنك دمج نماذج الذكاء الاصطناعي مباشرة في سير عملك.</p>
+
+            <div class="alert alert-info">
+                <strong>💡 حالات الاستخدام:</strong>
+                <ul>
+                    <li>إنشاء محتوى تلقائي من النماذج</li>
+                    <li>تحليل البيانات الواردة بالذكاء الاصطناعي</li>
+                    <li>الترجمة التلقائية للمستندات</li>
+                    <li>إنشاء الصور للحملات التسويقية</li>
+                    <li>الملخص التلقائي للبريد الإلكتروني أو المستندات</li>
+                </ul>
+            </div>
+
+            <h2 id="installation">📦 التثبيت</h2>
+
+            <h3 id="self-hosted">النسخة الذاتية</h3>
+
+            <pre><code class="language-bash"># عبر Docker
+docker run -it --rm \
+  --name n8n \
+  -p 5678:5678 \
+  -v ~/.n8n:/home/node/.n8n \
+  n8nio/n8n
+
+# عبر npm
+npm install -g n8n
+n8n start</code></pre>
+
+            <h3 id="cloud">النسخة السحابية</h3>
+
+            <ol>
+                <li>سجل على <a href="https://n8n.io">n8n.io</a></li>
+                <li>أنشئ أول سير عمل لك</li>
+                <li>أضف بيانات اعتماد IAFactory الجزائر</li>
+            </ol>
+
+            <h2 id="configuration">⚙️ التكوين</h2>
+
+            <h3 id="ajouter-credentials">إضافة بيانات اعتماد IAFactory</h3>
+
+            <ol>
+                <li>في n8n، انتقل إلى <strong>الإعدادات ← بيانات الاعتماد</strong></li>
+                <li>انقر فوق <strong>إضافة بيانات اعتماد</strong></li>
+                <li>اختر <strong>طلب HTTP</strong></li>
+                <li>قم بالتكوين:
+                    <ul>
+                        <li><strong>الاسم</strong>: IAFactory Algeria API</li>
+                        <li><strong>المصادقة</strong>: Header Auth</li>
+                        <li><strong>الاسم</strong>: Authorization</li>
+                        <li><strong>القيمة</strong>: Bearer مفتاح_API_الخاص_بك</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h2 id="premiers-workflows">🚀 سير العمل الأول</h2>
+
+            <h3 id="workflow-1">سير العمل 1: إنشاء محتوى من النموذج</h3>
+
+            <p><strong>الهدف:</strong> تلقي نموذج ويب وإنشاء محتوى تسويقي تلقائيًا بالذكاء الاصطناعي.</p>
+
+            <h4>إعداد سير العمل:</h4>
+
+            <ol>
+                <li><strong>مشغل Webhook</strong>: تلقي بيانات النموذج</li>
+                <li><strong>طلب HTTP</strong>: استدعاء واجهة برمجة تطبيقات IAFactory
+                    <pre><code class="language-json">{
+  "method": "POST",
+  "url": "https://api.iafactory-algeria.com/v1/chat/completions",
+  "authentication": "IAFactory Algeria API",
+  "body": {
+    "model": "gpt-4.1",
+    "messages": [
+      {
+        "role": "system",
+        "content": "أنت خبير في كتابة الإعلانات. أنشئ نصًا تسويقيًا مقنعًا."
+      },
+      {
+        "role": "user",
+        "content": "المنتج: {{$json.product_name}}\nالوصف: {{$json.description}}"
+      }
+    ],
+    "temperature": 0.7,
+    "max_tokens": 500
+  }
+}</code></pre>
+                </li>
+                <li><strong>عقدة التعيين</strong>: استخراج المحتوى المُنشأ</li>
+                <li><strong>البريد الإلكتروني / Slack / قاعدة البيانات</strong>: إرسال النتيجة</li>
+            </ol>
+
+            <h2 id="bonnes-pratiques">✨ أفضل الممارسات</h2>
+
+            <h3 id="gestion-erreurs">1. معالجة الأخطاء</h3>
+
+            <ul>
+                <li>أضف دائمًا عقدة <strong>مشغل الخطأ</strong></li>
+                <li>استخدم <strong>إعادة المحاولة عند الفشل</strong> لاستدعاءات API</li>
+                <li>سجل الأخطاء في قاعدة بيانات</li>
+                <li>قم بتكوين تنبيهات Slack/البريد الإلكتروني</li>
+            </ul>
+
+            <h3 id="optimisation">2. تحسين التكلفة</h3>
+
+            <ul>
+                <li>استخدم <strong>gpt-4.1-mini</strong> للمهام البسيطة</li>
+                <li>خزِّن الردود المتكررة مؤقتًا</li>
+                <li>حدد max_tokens حسب الحاجة</li>
+                <li>استخدم الشروط لتجنب المكالمات غير الضرورية</li>
+            </ul>
+
+            <h2 id="ressources">📚 الموارد</h2>
+
+            <ul>
+                <li>📖 <a href="https://docs.n8n.io">توثيق n8n</a></li>
+                <li>🎥 <a href="../api/quick-start.html">بداية سريعة لواجهة برمجة التطبيقات IAFactory</a></li>
+                <li>💬 <a href="https://discord.gg/iafactory">مجتمع Discord</a></li>
+            </ul>
+
+            <div class="alert alert-success">
+                <strong>🚀 جاهز للأتمتة؟</strong>
+                <p>احصل على مفتاح API الخاص بك في <a href="https://app.iafactory-algeria.com/api-keys">app.iafactory-algeria.com</a></p>
+            </div>
+        </main>
+
+        <aside class="docs-toc">
+            <h3 class="docs-toc-title">في هذه الصفحة</h3>
+            <ul></ul>
+        </aside>
+    </div>
+
+    <script src="../../assets/js/docs-theme.js"></script>
+</body>
+</html>

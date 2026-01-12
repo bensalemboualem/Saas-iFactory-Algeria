@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <defs>
+    <linearGradient id="skyIndustry" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e3a8a;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="factory" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#374151;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4b5563;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="gear" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d4af37;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="chart" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#34d399;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="300" fill="url(#skyIndustry)"/>
+
+  <!-- Ground -->
+  <rect x="0" y="220" width="400" height="80" fill="#1f2937"/>
+  <rect x="0" y="220" width="400" height="10" fill="#374151"/>
+
+  <!-- Factory building main -->
+  <rect x="80" y="120" width="140" height="100" fill="url(#factory)"/>
+  <rect x="85" y="125" width="130" height="90" fill="#4b5563" opacity="0.3"/>
+
+  <!-- Factory building extension -->
+  <rect x="220" y="140" width="100" height="80" fill="url(#factory)"/>
+
+  <!-- Chimneys -->
+  <rect x="110" y="70" width="20" height="50" fill="#6b7280"/>
+  <rect x="170" y="60" width="20" height="60" fill="#6b7280"/>
+  <rect x="260" y="90" width="20" height="50" fill="#6b7280"/>
+
+  <!-- Smoke from chimneys -->
+  <g opacity="0.4">
+    <ellipse cx="120" cy="55" rx="15" ry="10" fill="#cbd5e1"/>
+    <ellipse cx="115" cy="45" rx="18" ry="12" fill="#cbd5e1"/>
+    <ellipse cx="125" cy="35" rx="20" ry="14" fill="#cbd5e1"/>
+
+    <ellipse cx="180" cy="45" rx="15" ry="10" fill="#cbd5e1"/>
+    <ellipse cx="175" cy="35" rx="18" ry="12" fill="#cbd5e1"/>
+
+    <ellipse cx="270" cy="75" rx="12" ry="8" fill="#cbd5e1"/>
+    <ellipse cx="265" cy="65" rx="15" ry="10" fill="#cbd5e1"/>
+  </g>
+
+  <!-- Windows on factory -->
+  <g fill="#fbbf24" opacity="0.8">
+    <rect x="100" y="140" width="15" height="20" rx="2"/>
+    <rect x="130" y="140" width="15" height="20" rx="2"/>
+    <rect x="160" y="140" width="15" height="20" rx="2"/>
+    <rect x="190" y="140" width="15" height="20" rx="2"/>
+
+    <rect x="100" y="175" width="15" height="20" rx="2"/>
+    <rect x="130" y="175" width="15" height="20" rx="2"/>
+    <rect x="160" y="175" width="15" height="20" rx="2"/>
+    <rect x="190" y="175" width="15" height="20" rx="2"/>
+
+    <rect x="240" y="160" width="15" height="20" rx="2"/>
+    <rect x="270" y="160" width="15" height="20" rx="2"/>
+    <rect x="240" y="190" width="15" height="20" rx="2"/>
+    <rect x="270" y="190" width="15" height="20" rx="2"/>
+  </g>
+
+  <!-- Large gear (golden) -->
+  <g transform="translate(320, 180)">
+    <circle cx="0" cy="0" r="35" fill="url(#gear)"/>
+    <circle cx="0" cy="0" r="25" fill="#f59e0b"/>
+    <circle cx="0" cy="0" r="12" fill="#1f2937"/>
+    <!-- Gear teeth -->
+    <rect x="-5" y="-40" width="10" height="10" fill="url(#gear)"/>
+    <rect x="-5" y="30" width="10" height="10" fill="url(#gear)"/>
+    <rect x="-40" y="-5" width="10" height="10" fill="url(#gear)"/>
+    <rect x="30" y="-5" width="10" height="10" fill="url(#gear)"/>
+    <rect x="-30" y="-30" width="10" height="10" transform="rotate(45)" fill="url(#gear)"/>
+    <rect x="20" y="-30" width="10" height="10" transform="rotate(-45)" fill="url(#gear)"/>
+    <rect x="-30" y="20" width="10" height="10" transform="rotate(-45)" fill="url(#gear)"/>
+    <rect x="20" y="20" width="10" height="10" transform="rotate(45)" fill="url(#gear)"/>
+  </g>
+
+  <!-- Smaller gear interlocking -->
+  <g transform="translate(280, 150)">
+    <circle cx="0" cy="0" r="25" fill="#9ca3af"/>
+    <circle cx="0" cy="0" r="18" fill="#6b7280"/>
+    <circle cx="0" cy="0" r="8" fill="#1f2937"/>
+    <!-- Gear teeth -->
+    <rect x="-4" y="-28" width="8" height="8" fill="#9ca3af"/>
+    <rect x="-4" y="20" width="8" height="8" fill="#9ca3af"/>
+    <rect x="-28" y="-4" width="8" height="8" fill="#9ca3af"/>
+    <rect x="20" y="-4" width="8" height="8" fill="#9ca3af"/>
+  </g>
+
+  <!-- Production chart -->
+  <g transform="translate(40, 160)">
+    <rect x="0" y="0" width="80" height="60" fill="#ffffff" rx="4" opacity="0.9"/>
+    <!-- Chart bars -->
+    <rect x="10" y="40" width="10" height="10" fill="#10b981"/>
+    <rect x="25" y="30" width="10" height="20" fill="#10b981"/>
+    <rect x="40" y="20" width="10" height="30" fill="#34d399"/>
+    <rect x="55" y="10" width="10" height="40" fill="url(#chart)"/>
+    <!-- Arrow up -->
+    <path d="M 70,15 L 75,10 L 70,5" stroke="#10b981" stroke-width="2" fill="none"/>
+    <line x1="75" y1="10" x2="75" y2="25" stroke="#10b981" stroke-width="2"/>
+  </g>
+
+  <!-- Algerian flag on factory -->
+  <g transform="translate(200, 90)">
+    <rect x="0" y="0" width="2" height="40" fill="#6b7280"/>
+    <rect x="2" y="5" width="20" height="12" fill="#006233"/>
+    <rect x="22" y="5" width="20" height="12" fill="#ffffff"/>
+    <!-- Mini crescent and star -->
+    <path d="M 27,11 A 3,3 0 1,1 27,17 A 2.5,2.5 0 1,0 27,11" fill="#d21034" transform="translate(5, -3)"/>
+    <path d="M 0,-2 L 0.5,-0.5 L 2,-0.5 L 0.8,0.3 L 1.2,1.8 L 0,0.8 L -1.2,1.8 L -0.8,0.3 L -2,-0.5 L -0.5,-0.5 Z"
+          fill="#d21034" transform="translate(35, 11)"/>
+  </g>
+
+  <!-- Conveyor belt -->
+  <rect x="60" y="210" width="200" height="8" fill="#4b5563"/>
+  <rect x="60" y="210" width="200" height="3" fill="#6b7280"/>
+  <!-- Boxes on conveyor -->
+  <rect x="80" y="195" width="20" height="15" fill="#92400e" stroke="#78350f" stroke-width="1"/>
+  <rect x="130" y="195" width="20" height="15" fill="#92400e" stroke="#78350f" stroke-width="1"/>
+  <rect x="180" y="195" width="20" height="15" fill="#92400e" stroke="#78350f" stroke-width="1"/>
+
+  <!-- Industrial robot arm (simple) -->
+  <g transform="translate(350, 210)">
+    <rect x="-3" y="0" width="6" height="40" fill="#6b7280"/>
+    <circle cx="0" cy="0" r="5" fill="#d4af37"/>
+    <rect x="-2" y="-25" width="4" height="25" fill="#9ca3af" transform="rotate(-45)"/>
+    <circle cx="0" cy="0" r="3" fill="#fbbf24" transform="translate(-18, -18)"/>
+  </g>
+
+  <!-- Star of Algeria -->
+  <g transform="translate(30, 40)">
+    <path d="M 0,-12 L 2.8,-3.7 L 11.4,-3.7 L 4.7,1.7 L 7.4,9.7 L 0,4.3 L -7.4,9.7 L -4.7,1.7 L -11.4,-3.7 L -2.8,-3.7 Z"
+          fill="#d4af37" opacity="0.8"/>
+  </g>
+</svg>

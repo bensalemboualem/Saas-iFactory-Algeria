@@ -1,0 +1,85 @@
+{
+  "common": {
+    "app_name": "IAFactory",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "search": "Search",
+    "filter": "Filter",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "submit": "Submit",
+    "confirm": "Confirm",
+    "close": "Close"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "cockpit": "AI Cockpit",
+    "chat": "Chat",
+    "voice": "Voice Assistant",
+    "documents": "Documents",
+    "workflows": "Automations",
+    "billing": "Billing",
+    "settings": "Settings",
+    "profile": "Profile",
+    "logout": "Logout"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Sign Up",
+    "email": "Email",
+    "password": "Password",
+    "forgot_password": "Forgot password?",
+    "remember_me": "Remember me",
+    "no_account": "Don't have an account?",
+    "has_account": "Already have an account?"
+  },
+  "dashboard": {
+    "welcome": "Welcome",
+    "credits_remaining": "Credits remaining",
+    "tasks_completed": "Tasks completed",
+    "time_saved": "Time saved",
+    "money_saved": "Money saved",
+    "recent_activity": "Recent activity",
+    "quick_actions": "Quick actions"
+  },
+  "pricing": {
+    "title": "Transparent Pricing, Maximum Value",
+    "subtitle": "Pay for productivity, not access",
+    "monthly": "Monthly",
+    "annual": "Annual",
+    "credits": "credits/month",
+    "choose_plan": "Choose this plan",
+    "current_plan": "Current plan",
+    "upgrade": "Upgrade",
+    "popular": "Popular"
+  },
+  "features": {
+    "chat": "Unlimited AI chat",
+    "rag": "Advanced RAG search",
+    "voice": "Voice assistant",
+    "documents": "Document generation",
+    "workflows": "n8n automations",
+    "video": "Video generation",
+    "api": "API access"
+  },
+  "errors": {
+    "network": "Network connection error",
+    "unauthorized": "Unauthorized",
+    "not_found": "Page not found",
+    "server_error": "Server error",
+    "validation": "Validation error"
+  },
+  "footer": {
+    "copyright": "© 2025 IAFactory Algeria. All rights reserved.",
+    "privacy": "Privacy",
+    "terms": "Terms of Service",
+    "contact": "Contact"
+  }
+}

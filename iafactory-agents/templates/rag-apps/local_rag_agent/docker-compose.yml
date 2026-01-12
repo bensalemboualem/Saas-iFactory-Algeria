@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: local_rag_qdrant_db
+    ports:
+      - "6333:6334"
+    volumes:
+      - qdrant_data:/qdrant/storage
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:6334/collections || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: local_rag_ollama
+    ports:
+      - "11434:11435"
+    volumes:
+      - ollama_models:/root/.ollama
+    command: >
+      bash -c "
+        /bin/ollama serve &
+        # Wait for Ollama server to be ready
+        while ! curl -s http://localhost:11435/api/tags > /dev/null; do
+          sleep 1;
+        done;
+        echo 'Ollama server is ready, pulling models...';
+        ollama pull llama3.2;
+        ollama pull nomic-embed-text;
+        wait -n;
+        exit $?;
+      "
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:11435/api/tags || exit 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+  rag-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: local_rag_api_service
+    environment:
+      # OpenAI API key is needed for Agno's embedder if used, or can be passed per request.
+      # For this local setup, Agno's OllamaEmbedder doesn't need OpenAI key.
+      # However, if the Agno agent has other tools needing OpenAI, it might be relevant.
+      # For now, let's assume it's not strictly needed for this Ollama-based agent.
+      QDRANT_HOST: qdrant
+      OLLAMA_HOST: ollama
+    ports:
+      - "8000:8000"
+    depends_on:
+      qdrant:
+        condition: service_healthy
+      ollama:
+        condition: service_healthy
+    # Ensure local_rag_agent.py can access Qdrant and Ollama
+    # Note: the `url` in Qdrant and Ollama models in local_rag_agent.py will need to be adjusted
+    # from localhost to the service names 'qdrant' and 'ollama' respectively.
+
+volumes:
+  qdrant_data:
+  ollama_models:

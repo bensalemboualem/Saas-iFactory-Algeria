@@ -1,0 +1,197 @@
+# =============================================================================
+# PROMETHEUS CONFIGURATION - iaFactory Algeria
+# Monitoring des 30+ conteneurs sur VPS Hetzner
+# =============================================================================
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    monitor: 'iafactory-algeria'
+    environment: 'production'
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+            - 'alertmanager:9093'
+
+# Load rules
+rule_files:
+  - '/etc/prometheus/alert.rules.yml'
+
+# Scrape configurations
+scrape_configs:
+  # ===========================================================================
+  # PROMETHEUS SELF-MONITORING
+  # ===========================================================================
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+        labels:
+          service: 'prometheus'
+          stack: 'observability'
+
+  # ===========================================================================
+  # NODE EXPORTER - Métriques système VPS Hetzner
+  # ===========================================================================
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['node-exporter:9100']
+        labels:
+          service: 'node-exporter'
+          instance: 'hetzner-vps'
+          stack: 'infrastructure'
+
+  # ===========================================================================
+  # CADVISOR - Métriques Docker / Conteneurs
+  # ===========================================================================
+  - job_name: 'cadvisor'
+    static_configs:
+      - targets: ['cadvisor:8080']
+        labels:
+          service: 'cadvisor'
+          stack: 'docker'
+
+  # ===========================================================================
+  # IAFACTORY CORE SERVICES
+  # ===========================================================================
+  - job_name: 'iafactory-core'
+    metrics_path: /metrics
+    static_configs:
+      # RAG Backend
+      - targets: ['rag-dz-backend-prod:8180']
+        labels:
+          service: 'rag-backend'
+          module: 'core'
+          stack: 'iafactory'
+      
+      # Hub
+      - targets: ['iaf-hub-prod:8182']
+        labels:
+          service: 'hub'
+          module: 'core'
+          stack: 'iafactory'
+
+  # ===========================================================================
+  # IAFACTORY ASSISTANTS
+  # ===========================================================================
+  - job_name: 'iafactory-assistants'
+    metrics_path: /metrics
+    scrape_timeout: 10s
+    static_configs:
+      # Legal Assistant
+      - targets: ['iaf-legal-assistant-prod:8197']
+        labels:
+          service: 'legal-assistant'
+          module: 'assistant'
+          stack: 'iafactory'
+      
+      # Fiscal Assistant
+      - targets: ['iaf-fiscal-assistant-prod:8199']
+        labels:
+          service: 'fiscal-assistant'
+          module: 'assistant'
+          stack: 'iafactory'
+      
+      # Voice Assistant
+      - targets: ['iaf-voice-assistant-prod:8201']
+        labels:
+          service: 'voice-assistant'
+          module: 'assistant'
+          stack: 'iafactory'
+
+  # ===========================================================================
+  # IAFACTORY API & DATA SERVICES
+  # ===========================================================================
+  - job_name: 'iafactory-api'
+    metrics_path: /metrics
+    static_configs:
+      # API Gateway
+      - targets: ['iaf-api-gateway-prod:8203']
+        labels:
+          service: 'api-gateway'
+          module: 'api'
+          stack: 'iafactory'
+      
+      # Billing API
+      - targets: ['iaf-billing-prod:8207']
+        labels:
+          service: 'billing'
+          module: 'api'
+          stack: 'iafactory'
+      
+      # Data DZ Dashboard
+      - targets: ['iaf-data-dashboard-prod:8205']
+        labels:
+          service: 'data-dashboard'
+          module: 'data'
+          stack: 'iafactory'
+      
+      # DZ Connectors
+      - targets: ['iaf-dz-connectors-prod:8195']
+        labels:
+          service: 'dz-connectors'
+          module: 'data'
+          stack: 'iafactory'
+
+  # ===========================================================================
+  # N8N WORKFLOWS
+  # ===========================================================================
+  - job_name: 'n8n'
+    metrics_path: /metrics
+    static_configs:
+      - targets: ['n8n:5678']
+        labels:
+          service: 'n8n'
+          module: 'automation'
+          stack: 'iafactory'
+
+  # ===========================================================================
+  # HEALTH CHECK PROBES - HTTP endpoints
+  # ===========================================================================
+  - job_name: 'iafactory-health'
+    metrics_path: /probe
+    params:
+      module: [http_2xx]
+    static_configs:
+      - targets:
+          - 'http://rag-dz-backend-prod:8180/health'
+          - 'http://iaf-hub-prod:8182/health'
+          - 'http://iaf-legal-assistant-prod:8197/health'
+          - 'http://iaf-fiscal-assistant-prod:8199/health'
+          - 'http://iaf-voice-assistant-prod:8201/health'
+          - 'http://iaf-api-gateway-prod:8203/health'
+          - 'http://iaf-billing-prod:8207/health'
+          - 'http://iaf-data-dashboard-prod:8205/health'
+        labels:
+          probe: 'http'
+          stack: 'iafactory'
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: blackbox-exporter:9115  # Si blackbox-exporter ajouté
+
+  # ===========================================================================
+  # GRAFANA
+  # ===========================================================================
+  - job_name: 'grafana'
+    static_configs:
+      - targets: ['grafana:3000']
+        labels:
+          service: 'grafana'
+          stack: 'observability'
+
+  # ===========================================================================
+  # LOKI
+  # ===========================================================================
+  - job_name: 'loki'
+    static_configs:
+      - targets: ['loki:3100']
+        labels:
+          service: 'loki'
+          stack: 'observability'

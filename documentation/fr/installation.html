@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Installation - IAFactory Algeria</title>
+    <link rel="stylesheet" href="../assets/css/docs-theme.css">
+</head>
+<body>
+    <header class="docs-header">
+        <div class="docs-logo">
+            <img src="../assets/images/logo.png" alt="IAFactory Algeria">
+            <span>IAFactory Algeria</span>
+        </div>
+        <nav class="main-nav">
+            <a href="./index.html">Documentation</a>
+            <a href="https://app.iafactory-algeria.com">Application</a>
+            <a href="./api/index.html">API</a>
+        </nav>
+        <div class="docs-controls">
+            <div class="language-switcher">
+                <button data-lang="fr" class="active">FR</button>
+                <button data-lang="en">EN</button>
+                <button data-lang="ar">AR</button>
+            </div>
+            <div class="theme-toggle">
+                <div class="theme-toggle-slider"></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <!-- ...existing sidebar from index.html... -->
+        </aside>
+
+        <main class="docs-main">
+            <h1>Installation IAFactory Algeria</h1>
+
+            <p class="lead">Guide complet pour installer et configurer IAFactory Algeria sur votre système.</p>
+
+            <h2 id="web-app">Application Web (Aucune installation)</h2>
+
+            <p>La façon la plus simple d'utiliser IAFactory Algeria est via notre application web.</p>
+
+            <div class="alert alert-success">
+                <strong>Accès Immédiat</strong>
+                <p>Rendez-vous sur <a href="https://app.iafactory-algeria.com" target="_blank">app.iafactory-algeria.com</a></p>
+                <ul>
+                    <li>Aucune installation requise</li>
+                    <li>Compatible tous navigateurs (Chrome, Firefox, Safari, Edge)</li>
+                    <li>Accessible depuis PC, Mac, tablette, mobile</li>
+                    <li>Mises à jour automatiques</li>
+                </ul>
+            </div>
+
+            <h2 id="desktop-app">Application Desktop (Windows/Mac/Linux)</h2>
+
+            <h3>Windows</h3>
+            <ol>
+                <li>Téléchargez <code>IAFactory-Algeria-Setup.exe</code></li>
+                <li>Double-cliquez sur le fichier</li>
+                <li>Suivez l'assistant d'installation</li>
+                <li>Lancez IAFactory Algeria depuis le menu Démarrer</li>
+            </ol>
+
+            <div class="alert alert-info">
+                <strong>Configuration minimale Windows :</strong>
+                <ul>
+                    <li>Windows 10 ou supérieur (64-bit)</li>
+                    <li>4 GB RAM (8 GB recommandé)</li>
+                    <li>500 MB d'espace disque</li>
+                    <li>Connexion Internet</li>
+                </ul>
+            </div>
+
+            <h3>macOS</h3>
+            <ol>
+                <li>Téléchargez <code>IAFactory-Algeria.dmg</code></li>
+                <li>Ouvrez le fichier DMG</li>
+                <li>Glissez IAFactory dans Applications</li>
+                <li>Lancez depuis Launchpad</li>
+            </ol>
+
+            <div class="alert alert-warning">
+                <strong>macOS Gatekeeper :</strong>
+                <p>Si vous voyez "Application non vérifiée" :</p>
+                <ol>
+                    <li>Clic droit → Ouvrir</li>
+                    <li>Ou : Préférences Système → Sécurité → "Ouvrir quand même"</li>
+                </ol>
+            </div>
+
+            <h3>Linux</h3>
+
+            <p><strong>Debian/Ubuntu :</strong></p>
+            <pre><code class="language-bash">wget https://downloads.iafactory-algeria.com/iafactory-algeria.deb
+sudo dpkg -i iafactory-algeria.deb
+sudo apt-get install -f</code></pre>
+
+            <p><strong>Fedora/RHEL :</strong></p>
+            <pre><code class="language-bash">wget https://downloads.iafactory-algeria.com/iafactory-algeria.rpm
+sudo rpm -i iafactory-algeria.rpm</code></pre>
+
+            <p><strong>AppImage (toutes distributions) :</strong></p>
+            <pre><code class="language-bash">wget https://downloads.iafactory-algeria.com/IAFactory-Algeria.AppImage
+chmod +x IAFactory-Algeria.AppImage
+./IAFactory-Algeria.AppImage</code></pre>
+
+            <h2 id="mobile-app">Application Mobile</h2>
+
+            <h3>Android</h3>
+            <ol>
+                <li>Ouvrez Google Play Store</li>
+                <li>Recherchez "IAFactory Algeria"</li>
+                <li>Appuyez sur "Installer"</li>
+            </ol>
+
+            <p><strong>Ou téléchargement direct APK :</strong></p>
+            <pre><code class="language-bash"># Via adb
+adb install IAFactory-Algeria.apk</code></pre>
+
+            <h3>iOS</h3>
+            <ol>
+                <li>Ouvrez l'App Store</li>
+                <li>Recherchez "IAFactory Algeria"</li>
+                <li>Appuyez sur "Obtenir"</li>
+            </ol>
+
+            <h2 id="docker">Installation Docker</h2>
+
+            <p>Pour les développeurs et déploiements serveur :</p>
+
+            <h3>Docker Compose (Recommandé)</h3>
+
+            <pre><code class="language-yaml"># docker-compose.yml
+version: '3.8'
+
+services:
+  iafactory:
+    image: iafactory-algeria/platform:latest
+    ports:
+      - "8080:8080"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped</code></pre>
+
+            <p><strong>Lancer :</strong></p>
+            <pre><code class="language-bash">docker-compose up -d</code></pre>
+
+            <h3>Docker Simple</h3>
+
+            <pre><code class="language-bash">docker run -d \
+  -p 8080:8080 \
+  -e OPENAI_API_KEY=your_key \
+  -v $(pwd)/data:/app/data \
+  --name iafactory \
+  iafactory-algeria/platform:latest</code></pre>
+
+            <h2 id="cli">Installation CLI</h2>
+
+            <p>Pour les power users et automatisations :</p>
+
+            <h3>Via npm</h3>
+            <pre><code class="language-bash">npm install -g @iafactory-algeria/cli</code></pre>
+
+            <h3>Via pip</h3>
+            <pre><code class="language-bash">pip install iafactory-algeria</code></pre>
+
+            <h3>Vérifier l'installation</h3>
+            <pre><code class="language-bash">iafactory --version
+iafactory auth login</code></pre>
+
+            <h2 id="api-sdk">Installation SDK/API</h2>
+
+            <h3>Python</h3>
+            <pre><code class="language-bash">pip install iafactory-algeria-sdk</code></pre>
+
+            <p><strong>Exemple d'utilisation :</strong></p>
+            <pre><code class="language-python">from iafactory import IAFactory
+
+client = IAFactory(api_key="your_api_key")
+
+response = client.chat.completions.create(
+    model="gpt-4",
+    messages=[{"role": "user", "content": "Hello!"}]
+)
+
+print(response.choices[0].message.content)</code></pre>
+
+            <h3>JavaScript/TypeScript</h3>
+            <pre><code class="language-bash">npm install @iafactory-algeria/sdk</code></pre>
+
+            <p><strong>Exemple :</strong></p>
+            <pre><code class="language-javascript">import { IAFactory } from '@iafactory-algeria/sdk';
+
+const client = new IAFactory({
+  apiKey: 'your_api_key'
+});
+
+const response = await client.chat.completions.create({
+  model: 'gpt-4',
+  messages: [{ role: 'user', content: 'Hello!' }]
+});
+
+console.log(response.choices[0].message.content);</code></pre>
+
+            <h2 id="configuration">Configuration Initiale</h2>
+
+            <h3>Première Connexion</h3>
+
+            <ol>
+                <li><strong>Créer un compte</strong>
+                    <ul>
+                        <li>Email + mot de passe</li>
+                        <li>Ou connexion Google/GitHub</li>
+                    </ul>
+                </li>
+                <li><strong>Choisir votre plan</strong>
+                    <ul>
+                        <li>Starter (gratuit)</li>
+                        <li>Pro (49€/mois)</li>
+                        <li>Enterprise (sur devis)</li>
+                    </ul>
+                </li>
+                <li><strong>Configurer vos clés API</strong> (optionnel)
+                    <ul>
+                        <li>OpenAI, Anthropic, Google...</li>
+                        <li>Ou utiliser les clés IAFactory (inclus)</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h3>Fichier de Configuration</h3>
+
+            <p>Créez <code>~/.iafactory/config.yaml</code> :</p>
+
+            <pre><code class="language-yaml"># Configuration IAFactory Algeria
+api:
+  url: https://api.iafactory-algeria.com/v1
+  key: your_api_key_here
+
+defaults:
+  model: gpt-4
+  temperature: 0.7
+  max_tokens: 2048
+
+providers:
+  openai:
+    api_key: sk-...
+  anthropic:
+    api_key: sk-ant-...
+
+cache:
+  enabled: true
+  ttl: 3600
+
+logging:
+  level: info
+  file: ~/.iafactory/logs/app.log</code></pre>
+
+            <h2 id="verification">Vérification de l'Installation</h2>
+
+            <h3>Test Rapide</h3>
+
+            <pre><code class="language-bash"># CLI
+iafactory chat "Bonjour, tu fonctionnes ?"
+
+# Python
+python -c "from iafactory import IAFactory; print(IAFactory().version)"
+
+# cURL
+curl -X POST https://api.iafactory-algeria.com/v1/chat/completions \
+  -H "Authorization: Bearer YOUR_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"model":"gpt-4","messages":[{"role":"user","content":"Test"}]}'</code></pre>
+
+            <h2 id="troubleshooting">Dépannage</h2>
+
+            <h3>Problème : "Impossible de se connecter"</h3>
+
+            <p><strong>Solutions :</strong></p>
+            <ol>
+                <li>Vérifiez votre connexion Internet</li>
+                <li>Désactivez temporairement proxy/VPN</li>
+                <li>Vérifiez le firewall (autoriser port 443)</li>
+                <li>Testez : <code>ping api.iafactory-algeria.com</code></li>
+            </ol>
+
+            <h3>Problème : "Clé API invalide"</h3>
+
+            <p><strong>Solutions :</strong></p>
+            <ol>
+                <li>Vérifiez que la clé est correctement copiée (pas d'espaces)</li>
+                <li>Regénérez une nouvelle clé depuis le dashboard</li>
+                <li>Vérifiez que votre abonnement est actif</li>
+            </ol>
+
+            <h3>Problème : "Installation bloquée par antivirus"</h3>
+
+            <p><strong>Solutions :</strong></p>
+            <ol>
+                <li>Ajoutez IAFactory à la liste blanche de votre antivirus</li>
+                <li>Téléchargez depuis le site officiel uniquement</li>
+                <li>Vérifiez la signature numérique du fichier</li>
+            </ol>
+
+            <h2 id="mise-a-jour">Mise à Jour</h2>
+
+            <h3>Application Desktop</h3>
+            <p>Les mises à jour sont automatiques. Un message vous prévient quand une nouvelle version est disponible.</p>
+
+            <h3>CLI</h3>
+            <pre><code class="language-bash"># npm
+npm update -g @iafactory-algeria/cli
+
+# pip
+pip install --upgrade iafactory-algeria</code></pre>
+
+            <h3>Docker</h3>
+            <pre><code class="language-bash">docker pull iafactory-algeria/platform:latest
+docker-compose up -d</code></pre>
+
+            <h2 id="desinstallation">Désinstallation</h2>
+
+            <h3>Windows</h3>
+            <p>Paramètres → Applications → IAFactory Algeria → Désinstaller</p>
+
+            <h3>macOS</h3>
+            <p>Glisser IAFactory vers la Corbeille depuis Applications</p>
+
+            <h3>Linux</h3>
+            <pre><code class="language-bash"># Debian/Ubuntu
+sudo apt remove iafactory-algeria
+
+# Fedora/RHEL
+sudo rpm -e iafactory-algeria</code></pre>
+
+            <h3>CLI</h3>
+            <pre><code class="language-bash"># npm
+npm uninstall -g @iafactory-algeria/cli
+
+# pip
+pip uninstall iafactory-algeria</code></pre>
+
+            <h2 id="support">Besoin d'Aide ?</h2>
+
+            <ul>
+                <li><strong>Email :</strong> support@iafactory-algeria.com</li>
+                <li><strong>Discord :</strong> <a href="https://discord.gg/iafactory">discord.gg/iafactory</a></li>
+                <li><strong>Documentation :</strong> docs.iafactory-algeria.com</li>
+                <li><strong>Tutoriels :</strong> <a href="https://youtube.com/@iafactory">YouTube</a></li>
+            </ul>
+
+            <div class="alert alert-success">
+                <strong>Installation terminée !</strong>
+                <p>Prochaines étapes :</p>
+                <ul>
+                    <li><a href="./introduction.html">Découvrir les fonctionnalités</a></li>
+                    <li><a href="./tips-tricks.html">Trucs et astuces</a></li>
+                    <li><a href="./api/quick-start.html">Commencer avec l'API</a></li>
+                </ul>
+            </div>
+        </main>
+
+        <aside class="docs-toc">
+            <h3 class="docs-toc-title">Sur cette page</h3>
+            <ul></ul>
+        </aside>
+    </div>
+
+    <script src="../assets/js/docs-theme.js"></script>
+</body>
+</html>

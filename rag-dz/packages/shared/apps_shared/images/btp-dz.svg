@@ -1,0 +1,165 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <defs>
+    <linearGradient id="skyBTP" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#38bdf8;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0ea5e9;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="building" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#94a3b8;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#cbd5e1;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="crane" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f97316;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ea580c;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="concrete" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#a8a29e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#78716c;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Sky -->
+  <rect width="400" height="300" fill="url(#skyBTP)"/>
+
+  <!-- Sun -->
+  <circle cx="350" cy="50" r="25" fill="#fbbf24" opacity="0.8"/>
+
+  <!-- Ground -->
+  <rect x="0" y="240" width="400" height="60" fill="#78716c"/>
+  <rect x="0" y="240" width="400" height="5" fill="#57534e"/>
+
+  <!-- Building under construction (main) -->
+  <rect x="120" y="120" width="100" height="120" fill="url(#building)"/>
+
+  <!-- Building floors structure -->
+  <line x1="120" y1="160" x2="220" y2="160" stroke="#64748b" stroke-width="3"/>
+  <line x1="120" y1="200" x2="220" y2="200" stroke="#64748b" stroke-width="3"/>
+
+  <!-- Vertical beams -->
+  <rect x="135" y="120" width="8" height="120" fill="#475569"/>
+  <rect x="167" y="120" width="8" height="120" fill="#475569"/>
+  <rect x="197" y="120" width="8" height="120" fill="#475569"/>
+
+  <!-- Windows being installed -->
+  <rect x="145" y="130" width="15" height="20" fill="#38bdf8" opacity="0.5"/>
+  <rect x="180" y="130" width="15" height="20" fill="#38bdf8" opacity="0.5"/>
+  <rect x="145" y="170" width="15" height="20" fill="#60a5fa" opacity="0.6"/>
+  <rect x="180" y="170" width="15" height="20" fill="#60a5fa" opacity="0.6"/>
+  <rect x="145" y="210" width="15" height="20" fill="#93c5fd" opacity="0.7"/>
+
+  <!-- Construction crane -->
+  <g transform="translate(240, 60)">
+    <!-- Crane tower -->
+    <rect x="-8" y="50" width="16" height="180" fill="url(#crane)"/>
+    <rect x="-10" y="50" width="20" height="15" fill="#dc2626"/>
+    <rect x="-10" y="100" width="20" height="15" fill="#dc2626"/>
+    <rect x="-10" y="150" width="20" height="15" fill="#dc2626"/>
+
+    <!-- Crane horizontal arm -->
+    <rect x="-120" y="40" width="200" height="10" fill="url(#crane)"/>
+    <rect x="-120" y="40" width="200" height="3" fill="#fb923c"/>
+
+    <!-- Crane cabin -->
+    <rect x="-25" y="35" width="30" height="15" fill="#fbbf24"/>
+    <rect x="-22" y="37" width="24" height="11" fill="#1f2937" opacity="0.3"/>
+
+    <!-- Crane cable and hook -->
+    <line x1="-40" y1="50" x2="-40" y2="120" stroke="#374151" stroke-width="2"/>
+    <rect x="-45" y="120" width="10" height="15" fill="#6b7280"/>
+    <path d="M -40,135 L -35,145 L -45,145 Z" fill="#6b7280"/>
+
+    <!-- Algerian flag on crane -->
+    <rect x="75" y="25" width="2" height="25" fill="#374151"/>
+    <rect x="77" y="28" width="15" height="10" fill="#006233"/>
+    <rect x="92" y="28" width="15" height="10" fill="#ffffff"/>
+    <path d="M 92,33 A 2.5,2.5 0 1,1 92,38 A 2,2 0 1,0 92,33" fill="#d21034" transform="translate(5, -2)"/>
+    <path d="M 0,-1.5 L 0.4,-0.3 L 1.5,-0.3 L 0.6,0.2 L 1,1.3 L 0,0.6 L -1,1.3 L -0.6,0.2 L -1.5,-0.3 L -0.4,-0.3 Z"
+          fill="#d21034" transform="translate(100, 33)"/>
+  </g>
+
+  <!-- Second building (taller, background) -->
+  <rect x="250" y="80" width="80" height="160" fill="#94a3b8" opacity="0.7"/>
+  <line x1="250" y1="120" x2="330" y2="120" stroke="#64748b" stroke-width="2"/>
+  <line x1="250" y1="160" x2="330" y2="160" stroke="#64748b" stroke-width="2"/>
+  <line x1="250" y1="200" x2="330" y2="200" stroke="#64748b" stroke-width="2"/>
+
+  <!-- Hard hat / Safety helmet -->
+  <g transform="translate(60, 200)">
+    <ellipse cx="0" cy="10" rx="28" ry="8" fill="#374151" opacity="0.3"/>
+    <path d="M -25,10 L -20,-5 Q 0,-15 20,-5 L 25,10 Z" fill="url(#crane)"/>
+    <path d="M -20,-5 Q 0,-12 20,-5" fill="#fb923c"/>
+    <ellipse cx="0" cy="-8" rx="12" ry="4" fill="#fbbf24"/>
+    <!-- DZ flag sticker on helmet -->
+    <rect x="-8" y="-2" width="8" height="6" fill="#006233"/>
+    <rect x="0" y="-2" width="8" height="6" fill="#ffffff"/>
+    <circle cx="4" cy="1" r="1.5" fill="#d21034"/>
+  </g>
+
+  <!-- Concrete mixer truck -->
+  <g transform="translate(320, 210)">
+    <!-- Truck cabin -->
+    <rect x="0" y="0" width="30" height="20" rx="3" fill="#ea580c"/>
+    <rect x="2" y="2" width="26" height="16" fill="#fb923c"/>
+    <rect x="5" y="5" width="10" height="8" fill="#38bdf8" opacity="0.5"/>
+
+    <!-- Mixer drum -->
+    <ellipse cx="50" cy="10" rx="25" ry="18" fill="url(#concrete)"/>
+    <ellipse cx="50" cy="10" rx="20" ry="14" fill="#d6d3d1"/>
+    <!-- Spiral on drum -->
+    <path d="M 35,10 Q 40,5 45,5 T 55,10 T 60,15" stroke="#57534e" stroke-width="2" fill="none"/>
+
+    <!-- Wheels -->
+    <circle cx="15" cy="25" r="6" fill="#1f2937"/>
+    <circle cx="15" cy="25" r="4" fill="#4b5563"/>
+    <circle cx="55" cy="25" r="8" fill="#1f2937"/>
+    <circle cx="55" cy="25" r="5" fill="#4b5563"/>
+  </g>
+
+  <!-- Construction materials stack -->
+  <g transform="translate(40, 220)">
+    <!-- Cement bags -->
+    <rect x="0" y="5" width="35" height="15" fill="#78716c"/>
+    <rect x="3" y="7" width="29" height="11" fill="#a8a29e"/>
+    <rect x="5" y="-8" width="35" height="15" fill="#78716c"/>
+    <rect x="8" y="-6" width="29" height="11" fill="#a8a29e"/>
+  </g>
+
+  <!-- Bricks stack -->
+  <g transform="translate(140, 225)">
+    <rect x="0" y="0" width="15" height="5" fill="#dc2626"/>
+    <rect x="16" y="0" width="15" height="5" fill="#dc2626"/>
+    <rect x="8" y="-5" width="15" height="5" fill="#b91c1c"/>
+    <rect x="24" y="-5" width="15" height="5" fill="#b91c1c"/>
+    <rect x="0" y="-10" width="15" height="5" fill="#dc2626"/>
+    <rect x="16" y="-10" width="15" height="5" fill="#dc2626"/>
+  </g>
+
+  <!-- Blueprints rolled -->
+  <g transform="translate(200, 235)">
+    <ellipse cx="0" cy="0" rx="3" ry="8" fill="#38bdf8"/>
+    <rect x="0" y="-8" width="30" height="16" fill="#e0f2fe"/>
+    <line x1="5" y1="-5" x2="25" y2="-5" stroke="#0284c7" stroke-width="1"/>
+    <line x1="5" y1="0" x2="20" y2="0" stroke="#0284c7" stroke-width="1"/>
+    <line x1="5" y1="5" x2="22" y2="5" stroke="#0284c7" stroke-width="1"/>
+    <ellipse cx="30" cy="0" rx="3" ry="8" fill="#0ea5e9"/>
+  </g>
+
+  <!-- Safety cones -->
+  <g transform="translate(180, 240)">
+    <path d="M 0,-15 L 8,0 L -8,0 Z" fill="#f97316"/>
+    <rect x="-8" y="0" width="16" height="3" fill="#1f2937"/>
+    <rect x="-4" y="-8" width="8" height="2" fill="#ffffff"/>
+  </g>
+
+  <g transform="translate(210, 240)">
+    <path d="M 0,-15 L 8,0 L -8,0 Z" fill="#f97316"/>
+    <rect x="-8" y="0" width="16" height="3" fill="#1f2937"/>
+    <rect x="-4" y="-8" width="8" height="2" fill="#ffffff"/>
+  </g>
+
+  <!-- Star of Algeria -->
+  <g transform="translate(370, 270)">
+    <path d="M 0,-10 L 2.3,-3.1 L 9.5,-3.1 L 3.9,1.5 L 6.2,8.1 L 0,3.5 L -6.2,8.1 L -3.9,1.5 L -9.5,-3.1 L -2.3,-3.1 Z"
+          fill="#d4af37"/>
+  </g>
+</svg>

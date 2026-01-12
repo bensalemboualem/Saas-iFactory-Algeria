@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writing Prompts - IAFactory Algeria</title>
+    <link rel="stylesheet" href="../../assets/css/docs-theme.css">
+</head>
+<body>
+    <header class="docs-header">
+        <div class="docs-logo">
+            <img src="../../assets/images/logo.png" alt="IAFactory Algeria">
+            <span>IAFactory Algeria</span>
+        </div>
+        <nav class="main-nav">
+            <a href="../index.html">Documentation</a>
+            <a href="https://app.iafactory-algeria.com">App</a>
+            <a href="../api/index.html">API</a>
+        </nav>
+        <div class="docs-controls">
+            <div class="language-switcher">
+                <button data-lang="fr">FR</button>
+                <button data-lang="en" class="active">EN</button>
+                <button data-lang="ar">AR</button>
+            </div>
+            <div class="theme-toggle">
+                <div class="theme-toggle-slider"></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <!-- ...existing sidebar... -->
+        </aside>
+
+        <main class="docs-main">
+            <h1>Writing Prompts</h1>
+
+            <p class="lead">Master the art of communicating with AI to get the best results.</p>
+
+            <h2 id="fundamentals">Fundamentals</h2>
+
+            <h3 id="clarity">1. Clarity</h3>
+
+            <div class="alert alert-success">
+                <strong>Good</strong>
+                <pre><code>Write a Python function that calculates the average of a list of numbers.
+Handle empty lists by returning 0.</code></pre>
+            </div>
+
+            <div class="alert alert-danger">
+                <strong>Bad</strong>
+                <pre><code>do something to calculate</code></pre>
+            </div>
+
+            <h3 id="context">2. Context</h3>
+
+            <pre><code class="language-text">I'm a backend developer using Node.js.
+I'm working on a REST API for an e-commerce site.
+I need a middleware function to validate JWT tokens.
+
+Constraints:
+- Use jsonwebtoken v9
+- Handle expiration
+- Log errors
+- TypeScript</code></pre>
+
+            <h3 id="specificity">3. Specificity</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Vague</th>
+                        <th>Specific</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>"Help me with SQL"</td>
+                        <td>"Write a SQL query to get the top 10 customers by spending in 2024"</td>
+                    </tr>
+                    <tr>
+                        <td>"Explain React"</td>
+                        <td>"Explain the hooks concept in React with a useState and useEffect example"</td>
+                    </tr>
+                    <tr>
+                        <td>"Debug my code"</td>
+                        <td>"This Python code returns KeyError on line 15. Here's the code: [code]. How to fix?"</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 id="prompt-formulas">Prompt Formulas</h2>
+
+            <h3 id="role-task-format">Formula: Role + Task + Format</h3>
+
+            <pre><code class="language-text">You are a [ROLE].
+
+Task: [WHAT YOU WANT]
+
+Output format: [HOW YOU WANT IT]</code></pre>
+
+            <strong>Concrete Example:</strong>
+            <pre><code class="language-text">You are a cybersecurity expert.
+
+Task: Analyze this PHP code and identify security vulnerabilities.
+
+Output format:
+- Numbered list of vulnerabilities
+- Criticality level (Low/Medium/Critical)
+- Recommended solution for each</code></pre>
+
+            <h3 id="context-action-constraints">Formula: Context + Action + Constraints</h3>
+
+            <pre><code class="language-text">Context: [SITUATION]
+
+Action: [WHAT NEEDS TO BE DONE]
+
+Constraints:
+- [CONSTRAINT 1]
+- [CONSTRAINT 2]
+- [CONSTRAINT 3]</code></pre>
+
+            <strong>Example:</strong>
+            <pre><code class="language-text">Context: Mobile fitness app in React Native
+
+Action: Create a Timer component for exercises
+
+Constraints:
+- Use React hooks
+- Display format MM:SS
+- Play/pause/reset buttons
+- Sound notification at end
+- Material Design style</code></pre>
+
+            <h3 id="few-shot">Formula: Few-Shot Learning</h3>
+
+            <pre><code class="language-text">Here are examples:
+
+Example 1:
+Input: [example 1 input]
+Output: [example 1 output]
+
+Example 2:
+Input: [example 2 input]
+Output: [example 2 output]
+
+Now do the same for:
+Input: [your input]</code></pre>
+
+            <h2 id="advanced-techniques">Advanced Techniques</h2>
+
+            <h3 id="chain-of-thought">Chain-of-Thought</h3>
+
+            <pre><code class="language-text">Solve this problem step by step:
+
+Problem: Calculate the total cost of a project
+
+Data:
+- 3 developers at $500/day
+- 2 designers at $400/day
+- 20 working days
+- +20% overhead
+
+Think through each step before answering.</code></pre>
+
+            <h3 id="role-playing">Role-Playing</h3>
+
+            <pre><code class="language-text">You are a senior code reviewer with 15 years of experience.
+You are strict about:
+- Code readability
+- Performance
+- Security
+- Best practices
+
+Review this code as you would for a junior on your team:
+
+[code here]</code></pre>
+
+            <h3 id="constraint-based">Constraint-Based</h3>
+
+            <pre><code class="language-text">Generate 5 brand names for a food delivery startup.
+
+MANDATORY constraints:
+- Maximum 8 letters
+- Easy to pronounce in English and Arabic
+- Available as .com domain
+- Evokes speed or freshness
+- No numbers
+
+For each name, explain why it meets the constraints.</code></pre>
+
+            <h2 id="optimization">Prompt Optimization</h2>
+
+            <h3 id="temperature-usage">Temperature Usage</h3>
+
+            <pre><code class="language-json">{
+  "model": "gpt-4.1",
+  "messages": [...],
+  "temperature": 0.2  // For code/extraction
+}
+
+{
+  "model": "gpt-4.1",
+  "messages": [...],
+  "temperature": 1.3  // For brainstorming/creativity
+}</code></pre>
+
+            <h3 id="token-optimization">Token Optimization</h3>
+
+            <div class="alert alert-warning">
+                <strong>Verbose (expensive)</strong>
+                <pre><code>Could you please help me understand how I might potentially solve this complex problem...</code></pre>
+            </div>
+
+            <div class="alert alert-success">
+                <strong>Concise (economical)</strong>
+                <pre><code>How to solve: [specific problem]
+Code: [snippet]
+Error: [error message]</code></pre>
+            </div>
+
+            <h2 id="anti-patterns">Anti-Patterns to Avoid</h2>
+
+            <h3 id="too-vague">1. Too Vague</h3>
+            <pre><code>"Help me"
+"It doesn't work"
+"Do something with this code"</code></pre>
+
+            <h3 id="too-complex">2. Too Complex at Once</h3>
+            <pre><code>Bad: "Create a complete app with React frontend, Node backend, MongoDB..."
+
+Good: Break into steps:
+1. "Structure Node.js backend with Express"
+2. "Add JWT auth system"
+3. etc...</code></pre>
+
+            <h2 id="templates">Ready-to-Use Templates</h2>
+
+            <h3 id="template-documentation">Technical Documentation</h3>
+
+            <pre><code class="language-text">Document this function/class:
+
+Code:
+[code]
+
+Generate:
+1. Description of what it does
+2. Parameters (type, description)
+3. Return value
+4. Possible exceptions
+5. Usage example
+6. Technical notes
+
+Format: Python Docstring (Google Style)</code></pre>
+
+            <h3 id="template-api-design">API Design</h3>
+
+            <pre><code class="language-text">Design a REST API for [feature].
+
+Specifications:
+- Resources: [list]
+- CRUD actions needed
+- Authentication: JWT
+- Pagination required
+- Rate limiting: 100 req/min
+
+Provide:
+1. Endpoints with HTTP methods
+2. Request/response JSON structure
+3. HTTP status codes
+4. cURL example for each endpoint</code></pre>
+
+            <h2 id="evaluation">Evaluating Prompt Quality</h2>
+
+            <h3 id="checklist">Checklist</h3>
+
+            <ul>
+                <li>Clear objective?</li>
+                <li>Context provided?</li>
+                <li>Constraints specified?</li>
+                <li>Output format defined?</li>
+                <li>Examples if needed?</li>
+                <li>Appropriate detail level?</li>
+                <li>Precise vocabulary?</li>
+            </ul>
+
+            <h2 id="resources">Tools and Resources</h2>
+
+            <ul>
+                <li><a href="https://promptbase.com">PromptBase</a> - Prompt marketplace</li>
+                <li><a href="https://learnprompting.org">Learn Prompting</a> - Free course</li>
+                <li><a href="https://www.promptingguide.ai">Prompting Guide</a> - Interactive guide</li>
+                <li><a href="https://discord.gg/iafactory">IAFactory Discord</a> - Community</li>
+            </ul>
+
+            <div class="alert alert-success">
+                <strong>Next Step:</strong> Practice with our <a href="../tips-tricks.html">interactive exercises</a>!
+            </div>
+        </main>
+
+        <aside class="docs-toc">
+            <h3 class="docs-toc-title">On this page</h3>
+            <ul></ul>
+        </aside>
+    </div>
+
+    <script src="../../assets/js/docs-theme.js"></script>
+</body>
+</html>

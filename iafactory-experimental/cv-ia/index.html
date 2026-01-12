@@ -1,0 +1,1313 @@
+﻿<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <title>CV IA - Generateur de CV Intelligent | IAFactory Algeria</title>
+
+    <!-- IAFactory Unified Components -->
+    <link rel="stylesheet" href="../shared/iafactory-unified.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            --cv-primary: #00a651;
+            --cv-primary-dark: #008c45;
+            --cv-accent: #10b981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--iaf-font-primary, 'Inter', -apple-system, sans-serif);
+            background: var(--iaf-bg);
+            color: var(--iaf-text);
+            min-height: 100vh;
+            padding-top: var(--iaf-header-height, 60px);
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 4rem 1rem 3rem;
+            background: linear-gradient(135deg, rgba(0, 166, 81, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%);
+            border-bottom: 1px solid var(--iaf-border);
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(0, 166, 81, 0.15);
+            color: var(--cv-primary);
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(0, 166, 81, 0.3);
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--cv-primary), var(--cv-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--iaf-text-secondary);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--cv-primary), var(--cv-primary-dark));
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 166, 81, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 166, 81, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--iaf-bg-card);
+            color: var(--iaf-text);
+            border: 2px solid var(--iaf-border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--cv-primary);
+            color: var(--cv-primary);
+        }
+
+        /* Main App Container */
+        .app-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Steps Section */
+        .steps-section {
+            padding: 3rem 1rem;
+            background: var(--iaf-bg-card);
+            border-bottom: 1px solid var(--iaf-border);
+        }
+
+        .steps-title {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .step-card {
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--cv-primary), var(--cv-accent));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 1rem;
+        }
+
+        .step-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-card p {
+            color: var(--iaf-text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* CV Builder Main Area */
+        .cv-builder {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 1024px) {
+            .cv-builder {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Form Panel */
+        .form-panel {
+            background: var(--iaf-bg-card);
+            border: 1px solid var(--iaf-border);
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+
+        .form-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--iaf-border);
+            overflow-x: auto;
+        }
+
+        .form-tab {
+            padding: 1rem 1.5rem;
+            background: transparent;
+            border: none;
+            color: var(--iaf-text-secondary);
+            font-weight: 500;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+            border-bottom: 2px solid transparent;
+        }
+
+        .form-tab:hover {
+            color: var(--iaf-text);
+        }
+
+        .form-tab.active {
+            color: var(--cv-primary);
+            border-bottom-color: var(--cv-primary);
+        }
+
+        .form-content {
+            padding: 1.5rem;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .form-section {
+            display: none;
+        }
+
+        .form-section.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--iaf-border);
+            border-radius: 0.5rem;
+            background: var(--iaf-bg);
+            color: var(--iaf-text);
+            font-size: 0.95rem;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--cv-primary);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Experience/Education Entry */
+        .entry-card {
+            background: var(--iaf-bg);
+            border: 1px solid var(--iaf-border);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .entry-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .entry-title {
+            font-weight: 600;
+        }
+
+        .entry-delete {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+        }
+
+        .add-entry-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(0, 166, 81, 0.1);
+            color: var(--cv-primary);
+            border: 2px dashed var(--cv-primary);
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .add-entry-btn:hover {
+            background: rgba(0, 166, 81, 0.2);
+        }
+
+        /* Preview Panel */
+        .preview-panel {
+            background: var(--iaf-bg-card);
+            border: 1px solid var(--iaf-border);
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+
+        .preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--iaf-border);
+        }
+
+        .preview-title {
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .preview-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .preview-btn {
+            padding: 0.5rem 1rem;
+            background: var(--iaf-bg);
+            border: 1px solid var(--iaf-border);
+            border-radius: 0.5rem;
+            color: var(--iaf-text);
+            font-size: 0.875rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .preview-btn:hover {
+            border-color: var(--cv-primary);
+            color: var(--cv-primary);
+        }
+
+        .preview-btn.download {
+            background: var(--cv-primary);
+            color: white;
+            border-color: var(--cv-primary);
+        }
+
+        .preview-content {
+            padding: 1.5rem;
+            min-height: 600px;
+            background: white;
+        }
+
+        /* CV Preview Styles */
+        .cv-preview {
+            color: #1a1a1a;
+            font-family: 'Inter', sans-serif;
+            line-height: 1.5;
+        }
+
+        .cv-header-section {
+            text-align: center;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--cv-primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .cv-name {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 0.25rem;
+        }
+
+        .cv-title-role {
+            font-size: 1.1rem;
+            color: var(--cv-primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .cv-contact {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .cv-contact span {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .cv-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .cv-section-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--cv-primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e5e5e5;
+            margin-bottom: 1rem;
+        }
+
+        .cv-entry {
+            margin-bottom: 1rem;
+        }
+
+        .cv-entry-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.25rem;
+        }
+
+        .cv-entry-title {
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .cv-entry-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .cv-entry-subtitle {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .cv-entry-description {
+            color: #444;
+            font-size: 0.9rem;
+        }
+
+        .cv-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .cv-skill {
+            background: rgba(0, 166, 81, 0.1);
+            color: var(--cv-primary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.85rem;
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 4rem 1rem;
+            background: var(--iaf-bg);
+        }
+
+        .features-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: var(--iaf-bg-card);
+            border: 1px solid var(--iaf-border);
+            border-radius: 1rem;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--cv-primary);
+            box-shadow: 0 10px 30px rgba(0, 166, 81, 0.1);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, rgba(0, 166, 81, 0.15), rgba(16, 185, 129, 0.1));
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .feature-card p {
+            color: var(--iaf-text-secondary);
+            line-height: 1.6;
+        }
+
+        /* AI Assist Button */
+        .ai-assist-btn {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--cv-primary), var(--cv-accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0, 166, 81, 0.4);
+            z-index: 100;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .ai-assist-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Footer Spacer */
+        .footer-spacer {
+            height: 100px;
+        }
+
+        /* RTL Support */
+        [dir="rtl"] .form-row {
+            direction: rtl;
+        }
+
+        [dir="rtl"] .cv-contact {
+            direction: rtl;
+        }
+
+        [dir="rtl"] .cv-entry-header {
+            flex-direction: row-reverse;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 2rem 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .form-tabs {
+                justify-content: flex-start;
+            }
+
+            .form-tab {
+                padding: 0.75rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .preview-panel {
+                margin-top: 1rem;
+            }
+
+            .ai-assist-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 1.25rem;
+                bottom: 80px;
+            }
+        }
+    </style>
+    <script src="../shared/footer-inject.js" defer></script>
+</head>
+<body data-iaf-auto-init>
+    <!-- Header -->
+    <div id="iaf-header" data-iaf-header></div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <span class="hero-badge"><i class="fas fa-magic"></i> <span data-i18n="ai_powered">Propulse par l'IA</span></span>
+        <h1 data-i18n="cv_title">Creez votre CV Professionnel</h1>
+        <p class="hero-subtitle" data-i18n="cv_subtitle">
+            Generez un CV moderne et optimise ATS en quelques minutes avec l'aide de l'intelligence artificielle
+        </p>
+        <div class="hero-actions">
+            <a href="#builder" class="btn btn-primary">
+                <i class="fas fa-rocket"></i> <span data-i18n="start_now">Commencer maintenant</span>
+            </a>
+            <a href="#features" class="btn btn-secondary">
+                <i class="fas fa-info-circle"></i> <span data-i18n="learn_more">En savoir plus</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Steps Section -->
+    <section class="steps-section">
+        <h2 class="steps-title" data-i18n="simple_steps">3 Etapes Simples</h2>
+        <div class="steps-grid">
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <h3 data-i18n="step1_title">Remplissez vos infos</h3>
+                <p data-i18n="step1_desc">Entrez vos informations personnelles, experiences et competences</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <h3 data-i18n="step2_title">Previsualisation</h3>
+                <p data-i18n="step2_desc">Voyez votre CV en temps reel et ajustez le design</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <h3 data-i18n="step3_title">Telechargez</h3>
+                <p data-i18n="step3_desc">Exportez votre CV en PDF pret pour l'emploi</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CV Builder -->
+    <div class="app-container" id="builder">
+        <div class="cv-builder">
+            <!-- Form Panel -->
+            <div class="form-panel">
+                <div class="form-tabs">
+                    <button class="form-tab active" data-tab="personal" data-i18n="tab_personal">Personnel</button>
+                    <button class="form-tab" data-tab="experience" data-i18n="tab_experience">Experience</button>
+                    <button class="form-tab" data-tab="education" data-i18n="tab_education">Formation</button>
+                    <button class="form-tab" data-tab="skills" data-i18n="tab_skills">Competences</button>
+                </div>
+
+                <div class="form-content">
+                    <!-- Personal Info -->
+                    <div class="form-section active" id="section-personal">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label data-i18n="label_firstname">Prenom</label>
+                                <input type="text" id="firstName" data-i18n-placeholder="placeholder_firstname" placeholder="Ahmed">
+                            </div>
+                            <div class="form-group">
+                                <label data-i18n="label_lastname">Nom</label>
+                                <input type="text" id="lastName" data-i18n-placeholder="placeholder_lastname" placeholder="Benali">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label data-i18n="label_title">Titre professionnel</label>
+                            <input type="text" id="jobTitle" data-i18n-placeholder="placeholder_title" placeholder="Developpeur Full Stack">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label data-i18n="label_email">Email</label>
+                                <input type="email" id="email" placeholder="ahmed@example.com">
+                            </div>
+                            <div class="form-group">
+                                <label data-i18n="label_phone">Telephone</label>
+                                <input type="tel" id="phone" placeholder="+213 555 123 456">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label data-i18n="label_location">Localisation</label>
+                            <input type="text" id="location" data-i18n-placeholder="placeholder_location" placeholder="Alger, Algerie">
+                        </div>
+                        <div class="form-group">
+                            <label data-i18n="label_summary">Resume professionnel</label>
+                            <textarea id="summary" rows="4" data-i18n-placeholder="placeholder_summary" placeholder="Decrivez-vous en quelques phrases..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Experience -->
+                    <div class="form-section" id="section-experience">
+                        <div id="experience-list">
+                            <div class="entry-card" data-entry="exp-1">
+                                <div class="entry-header">
+                                    <span class="entry-title" data-i18n="experience_entry">Experience #1</span>
+                                    <button class="entry-delete" onclick="deleteEntry('exp-1')"><i class="fas fa-trash"></i></button>
+                                </div>
+                                <div class="form-group">
+                                    <label data-i18n="label_company">Entreprise</label>
+                                    <input type="text" class="exp-company" placeholder="Google">
+                                </div>
+                                <div class="form-group">
+                                    <label data-i18n="label_position">Poste</label>
+                                    <input type="text" class="exp-position" placeholder="Senior Developer">
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label data-i18n="label_start_date">Date debut</label>
+                                        <input type="text" class="exp-start" placeholder="Jan 2020">
+                                    </div>
+                                    <div class="form-group">
+                                        <label data-i18n="label_end_date">Date fin</label>
+                                        <input type="text" class="exp-end" placeholder="Present">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label data-i18n="label_description">Description</label>
+                                    <textarea class="exp-description" rows="3" placeholder="Decrivez vos responsabilites..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="add-entry-btn" onclick="addExperience()">
+                            <i class="fas fa-plus"></i> <span data-i18n="add_experience">Ajouter une experience</span>
+                        </button>
+                    </div>
+
+                    <!-- Education -->
+                    <div class="form-section" id="section-education">
+                        <div id="education-list">
+                            <div class="entry-card" data-entry="edu-1">
+                                <div class="entry-header">
+                                    <span class="entry-title" data-i18n="education_entry">Formation #1</span>
+                                    <button class="entry-delete" onclick="deleteEntry('edu-1')"><i class="fas fa-trash"></i></button>
+                                </div>
+                                <div class="form-group">
+                                    <label data-i18n="label_school">Etablissement</label>
+                                    <input type="text" class="edu-school" placeholder="Universite d'Alger">
+                                </div>
+                                <div class="form-group">
+                                    <label data-i18n="label_degree">Diplome</label>
+                                    <input type="text" class="edu-degree" placeholder="Master en Informatique">
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label data-i18n="label_start_date">Date debut</label>
+                                        <input type="text" class="edu-start" placeholder="Sep 2015">
+                                    </div>
+                                    <div class="form-group">
+                                        <label data-i18n="label_end_date">Date fin</label>
+                                        <input type="text" class="edu-end" placeholder="Jun 2020">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="add-entry-btn" onclick="addEducation()">
+                            <i class="fas fa-plus"></i> <span data-i18n="add_education">Ajouter une formation</span>
+                        </button>
+                    </div>
+
+                    <!-- Skills -->
+                    <div class="form-section" id="section-skills">
+                        <div class="form-group">
+                            <label data-i18n="label_skills">Competences (separees par des virgules)</label>
+                            <textarea id="skills" rows="4" data-i18n-placeholder="placeholder_skills" placeholder="JavaScript, Python, React, Node.js, SQL, Git..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label data-i18n="label_languages">Langues</label>
+                            <textarea id="languages" rows="2" data-i18n-placeholder="placeholder_languages" placeholder="Arabe (natif), Francais (courant), Anglais (professionnel)"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Preview Panel -->
+            <div class="preview-panel">
+                <div class="preview-header">
+                    <span class="preview-title"><i class="fas fa-eye"></i> <span data-i18n="preview">Apercu</span></span>
+                    <div class="preview-actions">
+                        <button class="preview-btn" onclick="printCV()">
+                            <i class="fas fa-print"></i> <span data-i18n="print">Imprimer</span>
+                        </button>
+                        <button class="preview-btn download" onclick="downloadPDF()">
+                            <i class="fas fa-download"></i> PDF
+                        </button>
+                    </div>
+                </div>
+                <div class="preview-content">
+                    <div class="cv-preview" id="cv-preview">
+                        <div class="cv-header-section">
+                            <div class="cv-name" id="preview-name">Votre Nom</div>
+                            <div class="cv-title-role" id="preview-title">Votre Titre</div>
+                            <div class="cv-contact">
+                                <span id="preview-email"><i class="fas fa-envelope"></i> email@example.com</span>
+                                <span id="preview-phone"><i class="fas fa-phone"></i> +213 000 000 000</span>
+                                <span id="preview-location"><i class="fas fa-map-marker-alt"></i> Ville, Pays</span>
+                            </div>
+                        </div>
+
+                        <div class="cv-section" id="preview-summary-section" style="display:none;">
+                            <div class="cv-section-title" data-i18n="section_summary">Profil</div>
+                            <p id="preview-summary"></p>
+                        </div>
+
+                        <div class="cv-section" id="preview-experience-section" style="display:none;">
+                            <div class="cv-section-title" data-i18n="section_experience">Experience Professionnelle</div>
+                            <div id="preview-experiences"></div>
+                        </div>
+
+                        <div class="cv-section" id="preview-education-section" style="display:none;">
+                            <div class="cv-section-title" data-i18n="section_education">Formation</div>
+                            <div id="preview-educations"></div>
+                        </div>
+
+                        <div class="cv-section" id="preview-skills-section" style="display:none;">
+                            <div class="cv-section-title" data-i18n="section_skills">Competences</div>
+                            <div class="cv-skills" id="preview-skills"></div>
+                        </div>
+
+                        <div class="cv-section" id="preview-languages-section" style="display:none;">
+                            <div class="cv-section-title" data-i18n="section_languages">Langues</div>
+                            <p id="preview-languages"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <section class="features-section" id="features">
+        <h2 class="features-title" data-i18n="features_title">Pourquoi choisir CV IA ?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-robot"></i></div>
+                <h3 data-i18n="feature1_title">IA Generative</h3>
+                <p data-i18n="feature1_desc">L'IA vous aide a rediger des descriptions percutantes et optimisees pour les recruteurs</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-check-circle"></i></div>
+                <h3 data-i18n="feature2_title">Optimise ATS</h3>
+                <p data-i18n="feature2_desc">Format compatible avec les systemes de suivi des candidatures utilises par les entreprises</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-language"></i></div>
+                <h3 data-i18n="feature3_title">Multilingue</h3>
+                <p data-i18n="feature3_desc">Creez votre CV en francais, arabe ou anglais avec support RTL complet</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-lock"></i></div>
+                <h3 data-i18n="feature4_title">100% Prive</h3>
+                <p data-i18n="feature4_desc">Vos donnees restent sur votre appareil, aucune information n'est stockee sur nos serveurs</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Assist Button -->
+    <button class="ai-assist-btn" onclick="openAIAssist()" title="Aide IA">
+        <i class="fas fa-magic"></i>
+    </button>
+
+    <div class="footer-spacer"></div>
+
+    <!-- Footer -->
+    <div id="iaf-footer" data-iaf-footer></div>
+
+    <!-- Chatbot -->
+    <div id="iaf-chatbot" data-iaf-chatbot></div>
+
+    <!-- IAFactory Unified JS -->
+    <script src="../shared/iafactory-unified.js"></script>
+
+    <!-- CV Builder Logic -->
+    <script>
+        // Translations
+        const CV_TRANSLATIONS = {
+            fr: {
+                ai_powered: "Propulse par l'IA",
+                cv_title: "Creez votre CV Professionnel",
+                cv_subtitle: "Generez un CV moderne et optimise ATS en quelques minutes avec l'aide de l'intelligence artificielle",
+                start_now: "Commencer maintenant",
+                learn_more: "En savoir plus",
+                simple_steps: "3 Etapes Simples",
+                step1_title: "Remplissez vos infos",
+                step1_desc: "Entrez vos informations personnelles, experiences et competences",
+                step2_title: "Previsualisation",
+                step2_desc: "Voyez votre CV en temps reel et ajustez le design",
+                step3_title: "Telechargez",
+                step3_desc: "Exportez votre CV en PDF pret pour l'emploi",
+                tab_personal: "Personnel",
+                tab_experience: "Experience",
+                tab_education: "Formation",
+                tab_skills: "Competences",
+                label_firstname: "Prenom",
+                label_lastname: "Nom",
+                label_title: "Titre professionnel",
+                label_email: "Email",
+                label_phone: "Telephone",
+                label_location: "Localisation",
+                label_summary: "Resume professionnel",
+                label_company: "Entreprise",
+                label_position: "Poste",
+                label_start_date: "Date debut",
+                label_end_date: "Date fin",
+                label_description: "Description",
+                label_school: "Etablissement",
+                label_degree: "Diplome",
+                label_skills: "Competences (separees par des virgules)",
+                label_languages: "Langues",
+                add_experience: "Ajouter une experience",
+                add_education: "Ajouter une formation",
+                preview: "Apercu",
+                print: "Imprimer",
+                features_title: "Pourquoi choisir CV IA ?",
+                feature1_title: "IA Generative",
+                feature1_desc: "L'IA vous aide a rediger des descriptions percutantes et optimisees pour les recruteurs",
+                feature2_title: "Optimise ATS",
+                feature2_desc: "Format compatible avec les systemes de suivi des candidatures",
+                feature3_title: "Multilingue",
+                feature3_desc: "Creez votre CV en francais, arabe ou anglais",
+                feature4_title: "100% Prive",
+                feature4_desc: "Vos donnees restent sur votre appareil",
+                section_summary: "Profil",
+                section_experience: "Experience Professionnelle",
+                section_education: "Formation",
+                section_skills: "Competences",
+                section_languages: "Langues"
+            },
+            en: {
+                ai_powered: "AI Powered",
+                cv_title: "Create Your Professional Resume",
+                cv_subtitle: "Generate a modern ATS-optimized resume in minutes with artificial intelligence",
+                start_now: "Start Now",
+                learn_more: "Learn More",
+                simple_steps: "3 Simple Steps",
+                step1_title: "Fill Your Info",
+                step1_desc: "Enter your personal information, experiences and skills",
+                step2_title: "Preview",
+                step2_desc: "See your CV in real-time and adjust the design",
+                step3_title: "Download",
+                step3_desc: "Export your resume as a job-ready PDF",
+                tab_personal: "Personal",
+                tab_experience: "Experience",
+                tab_education: "Education",
+                tab_skills: "Skills",
+                label_firstname: "First Name",
+                label_lastname: "Last Name",
+                label_title: "Professional Title",
+                label_email: "Email",
+                label_phone: "Phone",
+                label_location: "Location",
+                label_summary: "Professional Summary",
+                label_company: "Company",
+                label_position: "Position",
+                label_start_date: "Start Date",
+                label_end_date: "End Date",
+                label_description: "Description",
+                label_school: "School",
+                label_degree: "Degree",
+                label_skills: "Skills (comma separated)",
+                label_languages: "Languages",
+                add_experience: "Add Experience",
+                add_education: "Add Education",
+                preview: "Preview",
+                print: "Print",
+                features_title: "Why Choose CV IA?",
+                feature1_title: "Generative AI",
+                feature1_desc: "AI helps you write impactful descriptions optimized for recruiters",
+                feature2_title: "ATS Optimized",
+                feature2_desc: "Format compatible with applicant tracking systems",
+                feature3_title: "Multilingual",
+                feature3_desc: "Create your CV in French, Arabic or English",
+                feature4_title: "100% Private",
+                feature4_desc: "Your data stays on your device",
+                section_summary: "Profile",
+                section_experience: "Work Experience",
+                section_education: "Education",
+                section_skills: "Skills",
+                section_languages: "Languages"
+            },
+            ar: {
+                ai_powered: "مدعوم بالذكاء الاصطناعي",
+                cv_title: "انشئ سيرتك الذاتية الاحترافية",
+                cv_subtitle: "انشئ سيرة ذاتية حديثة ومحسنة لنظام ATS في دقائق بمساعدة الذكاء الاصطناعي",
+                start_now: "ابدا الان",
+                learn_more: "اعرف المزيد",
+                simple_steps: "3 خطوات بسيطة",
+                step1_title: "املا معلوماتك",
+                step1_desc: "ادخل معلوماتك الشخصية وخبراتك ومهاراتك",
+                step2_title: "معاينة",
+                step2_desc: "شاهد سيرتك الذاتية في الوقت الفعلي",
+                step3_title: "تحميل",
+                step3_desc: "صدر سيرتك الذاتية بصيغة PDF جاهزة للتوظيف",
+                tab_personal: "شخصي",
+                tab_experience: "الخبرة",
+                tab_education: "التعليم",
+                tab_skills: "المهارات",
+                label_firstname: "الاسم الاول",
+                label_lastname: "اسم العائلة",
+                label_title: "المسمى الوظيفي",
+                label_email: "البريد الالكتروني",
+                label_phone: "الهاتف",
+                label_location: "الموقع",
+                label_summary: "الملخص المهني",
+                label_company: "الشركة",
+                label_position: "المنصب",
+                label_start_date: "تاريخ البداية",
+                label_end_date: "تاريخ النهاية",
+                label_description: "الوصف",
+                label_school: "المؤسسة التعليمية",
+                label_degree: "الشهادة",
+                label_skills: "المهارات (مفصولة بفواصل)",
+                label_languages: "اللغات",
+                add_experience: "اضافة خبرة",
+                add_education: "اضافة تعليم",
+                preview: "معاينة",
+                print: "طباعة",
+                features_title: "لماذا تختار CV IA؟",
+                feature1_title: "الذكاء الاصطناعي التوليدي",
+                feature1_desc: "يساعدك الذكاء الاصطناعي على كتابة اوصاف مؤثرة",
+                feature2_title: "محسن لنظام ATS",
+                feature2_desc: "تنسيق متوافق مع انظمة تتبع المتقدمين",
+                feature3_title: "متعدد اللغات",
+                feature3_desc: "انشئ سيرتك الذاتية بالفرنسية او العربية او الانجليزية",
+                feature4_title: "خاص 100%",
+                feature4_desc: "بياناتك تبقى على جهازك",
+                section_summary: "الملف الشخصي",
+                section_experience: "الخبرة المهنية",
+                section_education: "التعليم",
+                section_skills: "المهارات",
+                section_languages: "اللغات"
+            }
+        };
+
+        // Tab switching
+        document.querySelectorAll('.form-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.form-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById('section-' + tab.dataset.tab).classList.add('active');
+            });
+        });
+
+        // Live preview update
+        let expCount = 1;
+        let eduCount = 1;
+
+        function updatePreview() {
+            // Personal
+            const firstName = document.getElementById('firstName').value || 'Votre';
+            const lastName = document.getElementById('lastName').value || 'Nom';
+            document.getElementById('preview-name').textContent = firstName + ' ' + lastName;
+            document.getElementById('preview-title').textContent = document.getElementById('jobTitle').value || 'Votre Titre';
+            document.getElementById('preview-email').innerHTML = '<i class="fas fa-envelope"></i> ' + (document.getElementById('email').value || 'email@example.com');
+            document.getElementById('preview-phone').innerHTML = '<i class="fas fa-phone"></i> ' + (document.getElementById('phone').value || '+213 000 000 000');
+            document.getElementById('preview-location').innerHTML = '<i class="fas fa-map-marker-alt"></i> ' + (document.getElementById('location').value || 'Ville, Pays');
+
+            // Summary
+            const summary = document.getElementById('summary').value;
+            if (summary) {
+                document.getElementById('preview-summary-section').style.display = 'block';
+                document.getElementById('preview-summary').textContent = summary;
+            } else {
+                document.getElementById('preview-summary-section').style.display = 'none';
+            }
+
+            // Experience
+            const expCards = document.querySelectorAll('#experience-list .entry-card');
+            let expHtml = '';
+            let hasExp = false;
+            expCards.forEach(card => {
+                const company = card.querySelector('.exp-company').value;
+                const position = card.querySelector('.exp-position').value;
+                if (company || position) {
+                    hasExp = true;
+                    expHtml += `
+                        <div class="cv-entry">
+                            <div class="cv-entry-header">
+                                <span class="cv-entry-title">${position || 'Poste'}</span>
+                                <span class="cv-entry-date">${card.querySelector('.exp-start').value} - ${card.querySelector('.exp-end').value}</span>
+                            </div>
+                            <div class="cv-entry-subtitle">${company}</div>
+                            <div class="cv-entry-description">${card.querySelector('.exp-description').value}</div>
+                        </div>
+                    `;
+                }
+            });
+            document.getElementById('preview-experience-section').style.display = hasExp ? 'block' : 'none';
+            document.getElementById('preview-experiences').innerHTML = expHtml;
+
+            // Education
+            const eduCards = document.querySelectorAll('#education-list .entry-card');
+            let eduHtml = '';
+            let hasEdu = false;
+            eduCards.forEach(card => {
+                const school = card.querySelector('.edu-school').value;
+                const degree = card.querySelector('.edu-degree').value;
+                if (school || degree) {
+                    hasEdu = true;
+                    eduHtml += `
+                        <div class="cv-entry">
+                            <div class="cv-entry-header">
+                                <span class="cv-entry-title">${degree || 'Diplome'}</span>
+                                <span class="cv-entry-date">${card.querySelector('.edu-start').value} - ${card.querySelector('.edu-end').value}</span>
+                            </div>
+                            <div class="cv-entry-subtitle">${school}</div>
+                        </div>
+                    `;
+                }
+            });
+            document.getElementById('preview-education-section').style.display = hasEdu ? 'block' : 'none';
+            document.getElementById('preview-educations').innerHTML = eduHtml;
+
+            // Skills
+            const skills = document.getElementById('skills').value;
+            if (skills) {
+                document.getElementById('preview-skills-section').style.display = 'block';
+                const skillsHtml = skills.split(',').map(s => `<span class="cv-skill">${s.trim()}</span>`).join('');
+                document.getElementById('preview-skills').innerHTML = skillsHtml;
+            } else {
+                document.getElementById('preview-skills-section').style.display = 'none';
+            }
+
+            // Languages
+            const languages = document.getElementById('languages').value;
+            if (languages) {
+                document.getElementById('preview-languages-section').style.display = 'block';
+                document.getElementById('preview-languages').textContent = languages;
+            } else {
+                document.getElementById('preview-languages-section').style.display = 'none';
+            }
+        }
+
+        // Add event listeners for live preview
+        document.querySelectorAll('input, textarea').forEach(el => {
+            el.addEventListener('input', updatePreview);
+        });
+
+        function addExperience() {
+            expCount++;
+            const html = `
+                <div class="entry-card" data-entry="exp-${expCount}">
+                    <div class="entry-header">
+                        <span class="entry-title">Experience #${expCount}</span>
+                        <button class="entry-delete" onclick="deleteEntry('exp-${expCount}')"><i class="fas fa-trash"></i></button>
+                    </div>
+                    <div class="form-group">
+                        <label>Entreprise</label>
+                        <input type="text" class="exp-company" placeholder="Entreprise">
+                    </div>
+                    <div class="form-group">
+                        <label>Poste</label>
+                        <input type="text" class="exp-position" placeholder="Poste">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Date debut</label>
+                            <input type="text" class="exp-start" placeholder="Jan 2020">
+                        </div>
+                        <div class="form-group">
+                            <label>Date fin</label>
+                            <input type="text" class="exp-end" placeholder="Present">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea class="exp-description" rows="3" placeholder="Description..."></textarea>
+                    </div>
+                </div>
+            `;
+            document.getElementById('experience-list').insertAdjacentHTML('beforeend', html);
+            document.querySelectorAll('input, textarea').forEach(el => {
+                el.addEventListener('input', updatePreview);
+            });
+        }
+
+        function addEducation() {
+            eduCount++;
+            const html = `
+                <div class="entry-card" data-entry="edu-${eduCount}">
+                    <div class="entry-header">
+                        <span class="entry-title">Formation #${eduCount}</span>
+                        <button class="entry-delete" onclick="deleteEntry('edu-${eduCount}')"><i class="fas fa-trash"></i></button>
+                    </div>
+                    <div class="form-group">
+                        <label>Etablissement</label>
+                        <input type="text" class="edu-school" placeholder="Universite">
+                    </div>
+                    <div class="form-group">
+                        <label>Diplome</label>
+                        <input type="text" class="edu-degree" placeholder="Diplome">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Date debut</label>
+                            <input type="text" class="edu-start" placeholder="Sep 2015">
+                        </div>
+                        <div class="form-group">
+                            <label>Date fin</label>
+                            <input type="text" class="edu-end" placeholder="Jun 2020">
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.getElementById('education-list').insertAdjacentHTML('beforeend', html);
+            document.querySelectorAll('input, textarea').forEach(el => {
+                el.addEventListener('input', updatePreview);
+            });
+        }
+
+        function deleteEntry(id) {
+            const entry = document.querySelector(`[data-entry="${id}"]`);
+            if (entry) {
+                entry.remove();
+                updatePreview();
+            }
+        }
+
+        function printCV() {
+            const content = document.getElementById('cv-preview').innerHTML;
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html>
+                <head>
+                    <title>CV - IAFactory</title>
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+                    <style>
+                        body { font-family: 'Inter', sans-serif; padding: 40px; color: #1a1a1a; }
+                        .cv-header-section { text-align: center; padding-bottom: 20px; border-bottom: 2px solid #00a651; margin-bottom: 20px; }
+                        .cv-name { font-size: 28px; font-weight: 700; }
+                        .cv-title-role { font-size: 18px; color: #00a651; margin: 5px 0 10px; }
+                        .cv-contact { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; font-size: 14px; color: #666; }
+                        .cv-section { margin-bottom: 20px; }
+                        .cv-section-title { font-size: 14px; font-weight: 700; color: #00a651; text-transform: uppercase; border-bottom: 1px solid #e5e5e5; padding-bottom: 5px; margin-bottom: 10px; }
+                        .cv-entry { margin-bottom: 15px; }
+                        .cv-entry-header { display: flex; justify-content: space-between; }
+                        .cv-entry-title { font-weight: 600; }
+                        .cv-entry-date { color: #666; font-size: 14px; }
+                        .cv-entry-subtitle { color: #666; font-size: 14px; }
+                        .cv-skills { display: flex; flex-wrap: wrap; gap: 8px; }
+                        .cv-skill { background: rgba(0, 166, 81, 0.1); color: #00a651; padding: 4px 12px; border-radius: 20px; font-size: 13px; }
+                    </style>
+                    <script src="../shared/footer-inject.js" defer></script>
+</head>
+                <body>${content}</body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print();
+        }
+
+        function downloadPDF() {
+            alert('Pour telecharger en PDF, utilisez la fonction Imprimer et selectionnez "Enregistrer en PDF"');
+            printCV();
+        }
+
+        function openAIAssist() {
+            // Open chatbot for AI assistance
+            const chatbot = document.querySelector('[data-iaf-chatbot]');
+            if (chatbot && typeof window.IAFactoryChatbot !== 'undefined') {
+                window.IAFactoryChatbot.open();
+            } else {
+                alert('Assistant IA disponible bientot!');
+            }
+        }
+
+        // Language change handler
+        window.addEventListener('languageChanged', (e) => {
+            const lang = e.detail.lang;
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (CV_TRANSLATIONS[lang]?.[key]) {
+                    el.textContent = CV_TRANSLATIONS[lang][key];
+                }
+            });
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                if (CV_TRANSLATIONS[lang]?.[key]) {
+                    el.placeholder = CV_TRANSLATIONS[lang][key];
+                }
+            });
+            // RTL for Arabic
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+        });
+
+        // Initialize
+        updatePreview();
+    </script>
+<script>
+    fetch('../shared/help-chatbot.html').then(r => r.text()).then(html => document.body.insertAdjacentHTML('beforeend', html));
+</script>

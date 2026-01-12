@@ -1,0 +1,1850 @@
+{
+    "date": "2025-11-05 12:13:19",
+    "arabic_issues": {
+        "alert.json": [
+            {
+                "key": "updated_successfully",
+                "value": "Updated Successfully",
+                "match": "Updated"
+            },
+            {
+                "key": "general_settings_updated_successfully",
+                "value": "General Settings Updated Successfully",
+                "match": "Updated"
+            },
+            {
+                "key": "general_settings_updated_successfully",
+                "value": "General Settings Updated Successfully",
+                "match": "Settings"
+            },
+            {
+                "key": "created_successfully",
+                "value": "Created Successfully",
+                "match": "Created"
+            },
+            {
+                "key": "user_created_successfully",
+                "value": "User Created Successfully",
+                "match": "Created"
+            },
+            {
+                "key": "user_updated_successfully",
+                "value": "User Updated Successfully",
+                "match": "Updated"
+            }
+        ],
+        "common.json": [
+            {
+                "key": "SMS\/Mail",
+                "value": "SMS\/Mail",
+                "match": "SMS"
+            },
+            {
+                "key": "SMS\/Mail_template",
+                "value": "SMS\/Mail Template",
+                "match": "SMS"
+            }
+        ],
+        "error.json": [
+            {
+                "key": "you_were_trying_to_reach_couldn_t_be_found_on_the_server",
+                "value": "You Were Trying To Reach Couldn T Be Found On The Server",
+                "match": "To"
+            },
+            {
+                "key": "back_to_homepage",
+                "value": "Back To Homepage",
+                "match": "Back"
+            }
+        ],
+        "frontend.json": [
+            {
+                "key": "please_fill_out_the_form_for_admission_guidance_and_information",
+                "value": "Please Fill Out The Form For Admission Guidance And Information",
+                "match": "Information"
+            },
+            {
+                "key": "first_name",
+                "value": "First Name",
+                "match": "Name"
+            },
+            {
+                "key": "enter_first_name",
+                "value": "Enter First Name",
+                "match": "Name"
+            },
+            {
+                "key": "last_name",
+                "value": "Last Name",
+                "match": "Name"
+            },
+            {
+                "key": "enter_last_name",
+                "value": "Enter Last Name",
+                "match": "Name"
+            },
+            {
+                "key": "phone_no",
+                "value": "Phone No",
+                "match": "Phone"
+            },
+            {
+                "key": "email_address",
+                "value": "Email Address",
+                "match": "Email"
+            },
+            {
+                "key": "date_of_birth",
+                "value": "Date Of Birth",
+                "match": "Date"
+            },
+            {
+                "key": "enter_date_of_birth",
+                "value": "Enter Date Of Birth",
+                "match": "Date"
+            },
+            {
+                "key": "Select",
+                "value": "Select",
+                "match": "Select"
+            },
+            {
+                "key": "select_year_session",
+                "value": "Select Year Session",
+                "match": "Select"
+            },
+            {
+                "key": "select_class",
+                "value": "Select Class",
+                "match": "Select"
+            },
+            {
+                "key": "select_class",
+                "value": "Select Class",
+                "match": "Class"
+            },
+            {
+                "key": "select_section",
+                "value": "Select Section",
+                "match": "Select"
+            },
+            {
+                "key": "select_section",
+                "value": "Select Section",
+                "match": "Section"
+            },
+            {
+                "key": "Select_Shift",
+                "value": "Select Shift",
+                "match": "Select"
+            },
+            {
+                "key": "select_gender",
+                "value": "Select Gender",
+                "match": "Select"
+            },
+            {
+                "key": "select_religion",
+                "value": "Select Religion",
+                "match": "Select"
+            },
+            {
+                "key": "previous_school_information",
+                "value": "Previous School Information",
+                "match": "Previous"
+            },
+            {
+                "key": "previous_school_information",
+                "value": "Previous School Information",
+                "match": "Information"
+            },
+            {
+                "key": "previous_school_documents",
+                "value": "Previous School Documents",
+                "match": "Previous"
+            },
+            {
+                "key": "Student_Nationality",
+                "value": "Student Nationality",
+                "match": "Student"
+            },
+            {
+                "key": "Student_Sponken_Language_At_Home",
+                "value": "Student Sponken Language At Home",
+                "match": "Student"
+            },
+            {
+                "key": "Residance_Address",
+                "value": "Residance Address",
+                "match": "Address"
+            },
+            {
+                "key": "document_name",
+                "value": "Document Name",
+                "match": "Name"
+            },
+            {
+                "key": "Enter_Document_Name",
+                "value": "Enter Document Name",
+                "match": "Name"
+            },
+            {
+                "key": "guardian_name",
+                "value": "Guardian Name",
+                "match": "Name"
+            },
+            {
+                "key": "enter_guardian_name",
+                "value": "Enter Guardian Name",
+                "match": "Name"
+            },
+            {
+                "key": "guardian_phone",
+                "value": "Guardian Phone",
+                "match": "Phone"
+            },
+            {
+                "key": "enter_guardian_phone",
+                "value": "Enter Guardian Phone",
+                "match": "Phone"
+            },
+            {
+                "key": "Submit",
+                "value": "Submit",
+                "match": "Submit"
+            }
+        ],
+        "installer.json": [
+            {
+                "key": "Welcome To Installation",
+                "value": "Welcome To Installation",
+                "match": "To"
+            },
+            {
+                "key": "Welcome to Ischool, to complete the installation, please proceed to the next step!",
+                "value": "Welcome To Ischool, To Complete The Installation, Please Proceed To The Next Step!",
+                "match": "To"
+            },
+            {
+                "key": "Welcome to Ischool, to complete the installation, please proceed to the next step!",
+                "value": "Welcome To Ischool, To Complete The Installation, Please Proceed To The Next Step!",
+                "match": "Complete"
+            },
+            {
+                "key": "Please make sure that all the requirements are met before proceeding to the next step.",
+                "value": "Please Make Sure That All The Requirements Are Met Before Proceeding To The Next Step.",
+                "match": "All"
+            },
+            {
+                "key": "It looks like everything meets the requirements, Please click the button below to continue.",
+                "value": "It Looks Like Everything Meets The Requirements, Please Click The Button Below To Continue.",
+                "match": "To"
+            },
+            {
+                "key": "Please enter your access code to verify your license.",
+                "value": "Please Enter Your Access Code To Verify Your License.",
+                "match": "To"
+            },
+            {
+                "key": "Envato Email",
+                "value": "Envato Email",
+                "match": "Email"
+            },
+            {
+                "key": " NB:Enter your purchase code to verify your license, the temporary code for your license is",
+                "value": " NB:Enter Your Purchase Code To Verify Your License, The Temporary Code For Your License Is",
+                "match": "To"
+            },
+            {
+                "key": " NB: To verify your authorization, use your Envato account email address",
+                "value": " NB: To Verify Your Authorization, Use Your Envato Account Email Address",
+                "match": "To"
+            },
+            {
+                "key": " NB: To verify your authorization, use your Envato account email address",
+                "value": " NB: To Verify Your Authorization, Use Your Envato Account Email Address",
+                "match": "Account"
+            },
+            {
+                "key": " NB: What domain or subdomain are you using to access this project?",
+                "value": " NB: What Domain Or Subdomain Are You Using To Access This Project?",
+                "match": "To"
+            },
+            {
+                "key": " It depends on whether you want to install this project in the main domain like",
+                "value": " It Depends On Whether You Want To Install This Project In The Main Domain Like",
+                "match": "To"
+            },
+            {
+                "key": "Check Database Setup and Connection",
+                "value": "Check Database Setup And Connection",
+                "match": "Setup"
+            },
+            {
+                "key": "Force Delete Previous Table",
+                "value": "Force Delete Previous Table",
+                "match": "Delete"
+            },
+            {
+                "key": "Write DB Name",
+                "value": "Write DB Name",
+                "match": "Name"
+            },
+            {
+                "key": "Admin Setup",
+                "value": "Admin Setup",
+                "match": "Setup"
+            },
+            {
+                "key": "Email",
+                "value": "Email",
+                "match": "Email"
+            },
+            {
+                "key": "Ready To Go",
+                "value": "Ready To Go",
+                "match": "To"
+            },
+            {
+                "key": "Please do not refresh or close the browser",
+                "value": "Please Do Not Refresh Or Close The Browser",
+                "match": "Close"
+            },
+            {
+                "key": "Admin Setup & Import SQL",
+                "value": "Admin Setup & Import SQL",
+                "match": "Import"
+            },
+            {
+                "key": "Admin Setup & Import SQL",
+                "value": "Admin Setup & Import SQL",
+                "match": "Setup"
+            },
+            {
+                "key": "Next",
+                "value": "Next",
+                "match": "Next"
+            },
+            {
+                "key": "Complete Installation and Configuration",
+                "value": "Complete Installation And Configuration",
+                "match": "Complete"
+            },
+            {
+                "key": "Congratulations! You successfully installed the application. Please login to your account to start using the application.",
+                "value": "Congratulations! You Successfully Installed The Application. Please Login To Your Account To Start Using The Application.",
+                "match": "To"
+            },
+            {
+                "key": "Congratulations! You successfully installed the application. Please login to your account to start using the application.",
+                "value": "Congratulations! You Successfully Installed The Application. Please Login To Your Account To Start Using The Application.",
+                "match": "Account"
+            }
+        ],
+        "instller.json": [
+            {
+                "key": "Email",
+                "value": "Email",
+                "match": "Email"
+            }
+        ],
+        "language.json": [
+            {
+                "key": "edit_terms",
+                "value": "Edit Terms",
+                "match": "Edit"
+            }
+        ],
+        "livechat.json": [
+            {
+                "key": "Conversaiton List",
+                "value": "Conversaiton List",
+                "match": "List"
+            }
+        ],
+        "parent.json": [
+            {
+                "key": "Guardian Details",
+                "value": "Guardian Details",
+                "match": "Details"
+            },
+            {
+                "key": "Father Details",
+                "value": "Father Details",
+                "match": "Details"
+            },
+            {
+                "key": "Mother Details",
+                "value": "Mother Details",
+                "match": "Details"
+            },
+            {
+                "key": "Name",
+                "value": "Name",
+                "match": "Name"
+            },
+            {
+                "key": "Phone",
+                "value": "Phone",
+                "match": "Phone"
+            },
+            {
+                "key": "Email",
+                "value": "Email",
+                "match": "Email"
+            }
+        ],
+        "settings.json": [
+            {
+                "key": "twilio_account_sid",
+                "value": "Twilio Account Sid",
+                "match": "Account"
+            }
+        ],
+        "student.json": [
+            {
+                "key": "Student Details",
+                "value": "Student Details",
+                "match": "Details"
+            },
+            {
+                "key": "Student Details",
+                "value": "Student Details",
+                "match": "Student"
+            },
+            {
+                "key": "Admission No",
+                "value": "Admission No",
+                "match": "No"
+            },
+            {
+                "key": "Class Section",
+                "value": "Class Section",
+                "match": "Class"
+            },
+            {
+                "key": "Admission Date",
+                "value": "Admission Date",
+                "match": "Date"
+            },
+            {
+                "key": "Phone",
+                "value": "Phone",
+                "match": "Phone"
+            },
+            {
+                "key": "Personal Details",
+                "value": "Personal Details",
+                "match": "Details"
+            },
+            {
+                "key": "Name",
+                "value": "Name",
+                "match": "Name"
+            },
+            {
+                "key": "Date of Birth",
+                "value": "Date Of Birth",
+                "match": "Date"
+            },
+            {
+                "key": "Contact Details",
+                "value": "Contact Details",
+                "match": "Details"
+            },
+            {
+                "key": "Contact Details",
+                "value": "Contact Details",
+                "match": "Contact"
+            },
+            {
+                "key": "Email",
+                "value": "Email",
+                "match": "Email"
+            },
+            {
+                "key": "Address",
+                "value": "Address",
+                "match": "Address"
+            },
+            {
+                "key": "Fees Overview",
+                "value": "Fees Overview",
+                "match": "Fees"
+            },
+            {
+                "key": "Total Fees",
+                "value": "Total Fees",
+                "match": "Total"
+            },
+            {
+                "key": "Total Fees",
+                "value": "Total Fees",
+                "match": "Fees"
+            },
+            {
+                "key": "Total Paid",
+                "value": "Total Paid",
+                "match": "Total"
+            },
+            {
+                "key": "Total Due",
+                "value": "Total Due",
+                "match": "Total"
+            },
+            {
+                "key": "Total Discount",
+                "value": "Total Discount",
+                "match": "Total"
+            },
+            {
+                "key": "Total Fine",
+                "value": "Total Fine",
+                "match": "Total"
+            },
+            {
+                "key": "Total Marks",
+                "value": "Total Marks",
+                "match": "Total"
+            },
+            {
+                "key": "Examination Details",
+                "value": "Examination Details",
+                "match": "Details"
+            },
+            {
+                "key": "Examination Details",
+                "value": "Examination Details",
+                "match": "Examination"
+            },
+            {
+                "key": "Attendance Overview",
+                "value": "Attendance Overview",
+                "match": "Attendance"
+            },
+            {
+                "key": "Total",
+                "value": "Total",
+                "match": "Total"
+            },
+            {
+                "key": "Total Request",
+                "value": "Total Request",
+                "match": "Total"
+            },
+            {
+                "key": "Total Request",
+                "value": "Total Request",
+                "match": "Request"
+            },
+            {
+                "key": "Approved",
+                "value": "Approved",
+                "match": "Approved"
+            },
+            {
+                "key": "Pending",
+                "value": "Pending",
+                "match": "Pending"
+            },
+            {
+                "key": "Rejected",
+                "value": "Rejected",
+                "match": "Rejected"
+            },
+            {
+                "key": "Leave Request Log",
+                "value": "Leave Request Log",
+                "match": "Request"
+            },
+            {
+                "key": "Category",
+                "value": "Category",
+                "match": "Category"
+            }
+        ],
+        "study_material.json": [
+            {
+                "key": "Content Type",
+                "value": "Content Type",
+                "match": "Type"
+            },
+            {
+                "key": "Content List",
+                "value": "Content List",
+                "match": "List"
+            }
+        ],
+        "studymaterial.json": [
+            {
+                "key": "My Content List",
+                "value": "My Content List",
+                "match": "List"
+            }
+        ],
+        "tax.json": [
+            {
+                "key": "Enter start date",
+                "value": "Enter Start Date",
+                "match": "Date"
+            },
+            {
+                "key": "Enter end date",
+                "value": "Enter End Date",
+                "match": "Date"
+            },
+            {
+                "key": "Min Tax Eligible Amount",
+                "value": "Min Tax Eligible Amount",
+                "match": "Amount"
+            },
+            {
+                "key": "Max Tax Amount",
+                "value": "Max Tax Amount",
+                "match": "Amount"
+            }
+        ],
+        "users_roles.json": [
+            {
+                "key": "create",
+                "value": "Create",
+                "match": "Create"
+            },
+            {
+                "key": "update",
+                "value": "Update",
+                "match": "Update"
+            },
+            {
+                "key": "delete",
+                "value": "Delete",
+                "match": "Delete"
+            },
+            {
+                "key": "student_category",
+                "value": "Student Category",
+                "match": "Category"
+            },
+            {
+                "key": "student_category",
+                "value": "Student Category",
+                "match": "Student"
+            },
+            {
+                "key": "promote_students",
+                "value": "Promote Students",
+                "match": "Students"
+            },
+            {
+                "key": "parent",
+                "value": "Parent",
+                "match": "Parent"
+            },
+            {
+                "key": "classes",
+                "value": "Classes",
+                "match": "Classes"
+            },
+            {
+                "key": "time_schedule",
+                "value": "Time Schedule",
+                "match": "Time"
+            },
+            {
+                "key": "time_schedule",
+                "value": "Time Schedule",
+                "match": "Schedule"
+            },
+            {
+                "key": "discount_setup",
+                "value": "Discount Setup",
+                "match": "Setup"
+            },
+            {
+                "key": "exam_type",
+                "value": "Exam Type",
+                "match": "Type"
+            },
+            {
+                "key": "exam_type",
+                "value": "Exam Type",
+                "match": "Exam"
+            },
+            {
+                "key": "exam_assign",
+                "value": "Exam Assign",
+                "match": "Exam"
+            },
+            {
+                "key": "exam_assign",
+                "value": "Exam Assign",
+                "match": "Assign"
+            },
+            {
+                "key": "exam_setting",
+                "value": "Exam Setting",
+                "match": "Exam"
+            },
+            {
+                "key": "account_head",
+                "value": "Account Head",
+                "match": "Account"
+            },
+            {
+                "key": "update terms",
+                "value": "Update Terms",
+                "match": "Update"
+            },
+            {
+                "key": "department",
+                "value": "Department",
+                "match": "Department"
+            },
+            {
+                "key": "designation",
+                "value": "Designation",
+                "match": "Designation"
+            },
+            {
+                "key": "contact_info",
+                "value": "Contact Info",
+                "match": "Contact"
+            },
+            {
+                "key": "dep_contact",
+                "value": "Dep Contact",
+                "match": "Contact"
+            },
+            {
+                "key": "gallery_category",
+                "value": "Gallery Category",
+                "match": "Category"
+            },
+            {
+                "key": "online_exam_type",
+                "value": "Online Exam Type",
+                "match": "Type"
+            },
+            {
+                "key": "online_exam_type",
+                "value": "Online Exam Type",
+                "match": "Exam"
+            },
+            {
+                "key": "online_exam",
+                "value": "Online Exam",
+                "match": "Exam"
+            },
+            {
+                "key": "id_card_generate",
+                "value": "Id Card Generate",
+                "match": "Generate"
+            },
+            {
+                "key": "certificate_generate",
+                "value": "Certificate Generate",
+                "match": "Generate"
+            },
+            {
+                "key": "notice_board",
+                "value": "Notice Board",
+                "match": "Notice"
+            },
+            {
+                "key": "sms_mail_template",
+                "value": "Sms Mail Template",
+                "match": "Mail"
+            },
+            {
+                "key": "sms_mail",
+                "value": "Sms Mail",
+                "match": "Mail"
+            },
+            {
+                "key": "forum_feeds",
+                "value": "Forum Feeds",
+                "match": "Forum"
+            },
+            {
+                "key": "forum_comment",
+                "value": "Forum Comment",
+                "match": "Forum"
+            },
+            {
+                "key": "add_role",
+                "value": "Add Role",
+                "match": "Add"
+            }
+        ],
+        "vehicle_tracker.json": [
+            {
+                "key": "Driver List",
+                "value": "Driver List",
+                "match": "Driver"
+            },
+            {
+                "key": "Driver List",
+                "value": "Driver List",
+                "match": "List"
+            },
+            {
+                "key": "Name",
+                "value": "Name",
+                "match": "Name"
+            },
+            {
+                "key": "Email",
+                "value": "Email",
+                "match": "Email"
+            },
+            {
+                "key": "Phone",
+                "value": "Phone",
+                "match": "Phone"
+            },
+            {
+                "key": "Emergency Contact",
+                "value": "Emergency Contact",
+                "match": "Contact"
+            },
+            {
+                "key": "Permanent Address",
+                "value": "Permanent Address",
+                "match": "Address"
+            },
+            {
+                "key": "Vehicle List",
+                "value": "Vehicle List",
+                "match": "Vehicle"
+            },
+            {
+                "key": "Vehicle List",
+                "value": "Vehicle List",
+                "match": "List"
+            },
+            {
+                "key": "Display Name",
+                "value": "Display Name",
+                "match": "Name"
+            },
+            {
+                "key": "Display Name",
+                "value": "Display Name",
+                "match": "Display"
+            },
+            {
+                "key": "Vehicle Route List",
+                "value": "Vehicle Route List",
+                "match": "Vehicle"
+            },
+            {
+                "key": "Vehicle Route List",
+                "value": "Vehicle Route List",
+                "match": "List"
+            }
+        ]
+    },
+    "french_issues": {
+        "account.json": [
+            {
+                "key": "Enter Sibling Order",
+                "value": "Enter Sibling Order",
+                "type": "non-traduit"
+            }
+        ],
+        "addon.json": [
+            {
+                "key": "Addon",
+                "value": "Addon",
+                "type": "non-traduit"
+            }
+        ],
+        "alert.json": [
+            {
+                "key": "OK",
+                "value": "OK",
+                "type": "non-traduit"
+            }
+        ],
+        "attendance.json": [
+            {
+                "key": "Absent",
+                "value": "Absent",
+                "type": "non-traduit"
+            }
+        ],
+        "common.json": [
+            {
+                "key": "& Absent",
+                "value": "& Absent",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Notifications",
+                "value": "Notifications",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Position",
+                "value": "Position",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Documents",
+                "value": "Documents",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Description",
+                "value": "Description",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Action",
+                "value": "Action",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Si",
+                "value": "Si",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Date",
+                "value": "Date",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Note",
+                "value": "Note",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Type",
+                "value": "Type",
+                "type": "non-traduit"
+            },
+            {
+                "key": "(95 x 95 px)",
+                "value": "(95 x 95 px)",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Absent",
+                "value": "Absent",
+                "type": "non-traduit"
+            },
+            {
+                "key": "P",
+                "value": "P",
+                "type": "non-traduit"
+            },
+            {
+                "key": "A",
+                "value": "A",
+                "type": "non-traduit"
+            },
+            {
+                "key": "F",
+                "value": "F",
+                "type": "non-traduit"
+            },
+            {
+                "key": "00:00:00",
+                "value": "00:00:00",
+                "type": "non-traduit"
+            },
+            {
+                "key": "(155 x 40 px)",
+                "value": "(155 x 40 px)",
+                "type": "non-traduit"
+            },
+            {
+                "key": "(40 x 40 px)",
+                "value": "(40 x 40 px)",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Email",
+                "value": "Email",
+                "type": "non-traduit"
+            },
+            {
+                "key": "(100 x 100 px)",
+                "value": "(100 x 100 px)",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Communication",
+                "value": "Communication",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Forums",
+                "value": "Forums",
+                "type": "non-traduit"
+            }
+        ],
+        "dashboard.json": [
+            {
+                "key": "Parent",
+                "value": "Parent",
+                "type": "non-traduit"
+            }
+        ],
+        "frontend.json": [
+            {
+                "key": "section",
+                "value": "section",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Menus",
+                "value": "Menus",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Pages",
+                "value": "Pages",
+                "type": "non-traduit"
+            },
+            {
+                "key": "OK",
+                "value": "OK",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Notices",
+                "value": "Notices",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Select",
+                "value": "Select",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Section",
+                "value": "Section",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Gender",
+                "value": "Gender",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Religion",
+                "value": "Religion",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Document",
+                "value": "Document",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Submit",
+                "value": "Submit",
+                "type": "non-traduit"
+            }
+        ],
+        "installer.json": [
+            {
+                "key": "Welcome To Installation",
+                "value": "Welcome To Installation",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Get Started",
+                "value": "Get Started",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Check Your Environment For Ischool Installation",
+                "value": "Check Your Environment For Ischool Installation",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Server Requirements",
+                "value": "Server Requirements",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Folder Requirements",
+                "value": "Folder Requirements",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Continue",
+                "value": "Continue",
+                "type": "non-traduit"
+            },
+            {
+                "key": "License Verification",
+                "value": "License Verification",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Access Code",
+                "value": "Access Code",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Envato Email",
+                "value": "Envato Email",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Installed Domain",
+                "value": "Installed Domain",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Purchase Code",
+                "value": "Purchase Code",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Submitting",
+                "value": "Submitting",
+                "type": "non-traduit"
+            },
+            {
+                "key": "DB HOST",
+                "value": "DB HOST",
+                "type": "non-traduit"
+            },
+            {
+                "key": "DB PORT",
+                "value": "DB PORT",
+                "type": "non-traduit"
+            },
+            {
+                "key": "DB DATABASE",
+                "value": "DB DATABASE",
+                "type": "non-traduit"
+            },
+            {
+                "key": "DB USERNAME",
+                "value": "DB USERNAME",
+                "type": "non-traduit"
+            },
+            {
+                "key": "DB PASSWORD",
+                "value": "DB PASSWORD",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Force Delete Previous Table",
+                "value": "Force Delete Previous Table",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Write DB Name",
+                "value": "Write DB Name",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Write DB Username",
+                "value": "Write DB Username",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Write DB Password",
+                "value": "Write DB Password",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Connection Established",
+                "value": "Connection Established",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Admin Setup",
+                "value": "Admin Setup",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Email",
+                "value": "Email",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Password",
+                "value": "Password",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Password Confirmation",
+                "value": "Password Confirmation",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Install With Demo Data",
+                "value": "Install With Demo Data",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Ready To Go",
+                "value": "Ready To Go",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Admin Setup & Import SQL",
+                "value": "Admin Setup & Import SQL",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Next",
+                "value": "Next",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Go Home",
+                "value": "Go Home",
+                "type": "non-traduit"
+            }
+        ],
+        "instller.json": [
+            {
+                "key": "Email",
+                "value": "Email",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Password",
+                "value": "Password",
+                "type": "non-traduit"
+            }
+        ],
+        "leave.json": [
+            {
+                "key": "Type",
+                "value": "Type",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Request Log",
+                "value": "Request Log",
+                "type": "non-traduit"
+            }
+        ],
+        "live_chat.json": [
+            {
+                "key": "Active",
+                "value": "Active",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Conversation List",
+                "value": "Conversation List",
+                "type": "non-traduit"
+            }
+        ],
+        "livechat.json": [
+            {
+                "key": "Conversaiton List",
+                "value": "Conversaiton List",
+                "type": "non-traduit"
+            }
+        ],
+        "multibranch.json": [
+            {
+                "key": "Branches",
+                "value": "Branches",
+                "type": "non-traduit"
+            }
+        ],
+        "parent.json": [
+            {
+                "key": "Guardian Details",
+                "value": "Guardian Details",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Father Details",
+                "value": "Father Details",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Mother Details",
+                "value": "Mother Details",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Name",
+                "value": "Name",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Phone",
+                "value": "Phone",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Email",
+                "value": "Email",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Profession",
+                "value": "Profession",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Relation",
+                "value": "Relation",
+                "type": "non-traduit"
+            }
+        ],
+        "report.json": [
+            {
+                "key": "Type",
+                "value": "Type",
+                "type": "non-traduit"
+            }
+        ],
+        "school.json": [
+            {
+                "key": "Prev School",
+                "value": "Prev School",
+                "type": "non-traduit"
+            }
+        ],
+        "setting.json": [
+            {
+                "key": "Forums",
+                "value": "Forums",
+                "type": "non-traduit"
+            }
+        ],
+        "settings.json": [
+            {
+                "key": "Session",
+                "value": "Session",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Sessions",
+                "value": "Sessions",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Routines",
+                "value": "Routines",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Member",
+                "value": "Member",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Slider",
+                "value": "Slider",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Counter",
+                "value": "Counter",
+                "type": "non-traduit"
+            },
+            {
+                "key": "News",
+                "value": "News",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Images",
+                "value": "Images",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Communication",
+                "value": "Communication",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Forums",
+                "value": "Forums",
+                "type": "non-traduit"
+            }
+        ],
+        "student.json": [
+            {
+                "key": "Student Details",
+                "value": "Student Details",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Admission No",
+                "value": "Admission No",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Class Section",
+                "value": "Class Section",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Leaves",
+                "value": "Leaves",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Admission Date",
+                "value": "Admission Date",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Due Fees",
+                "value": "Due Fees",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Guardian",
+                "value": "Guardian",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Personal Info",
+                "value": "Personal Info",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Gender",
+                "value": "Gender",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Age",
+                "value": "Age",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Months",
+                "value": "Months",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Days",
+                "value": "Days",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Phone",
+                "value": "Phone",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Guardian Info",
+                "value": "Guardian Info",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Profession",
+                "value": "Profession",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Academic Info",
+                "value": "Academic Info",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Section",
+                "value": "Section",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Roll",
+                "value": "Roll",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Profile",
+                "value": "Profile",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Result",
+                "value": "Result",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Siblings",
+                "value": "Siblings",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Personal Details",
+                "value": "Personal Details",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Name",
+                "value": "Name",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Admission Number",
+                "value": "Admission Number",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Contact Details",
+                "value": "Contact Details",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Mobile",
+                "value": "Mobile",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Email",
+                "value": "Email",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Nationality",
+                "value": "Nationality",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Address",
+                "value": "Address",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Place Of Birth",
+                "value": "Place Of Birth",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Fees Overview",
+                "value": "Fees Overview",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Total Fees",
+                "value": "Total Fees",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Total Paid",
+                "value": "Total Paid",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Total Due",
+                "value": "Total Due",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Total Discount",
+                "value": "Total Discount",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Total Fine",
+                "value": "Total Fine",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Result Overview",
+                "value": "Result Overview",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Total Marks",
+                "value": "Total Marks",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Examination Details",
+                "value": "Examination Details",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Attendance Overview",
+                "value": "Attendance Overview",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Total",
+                "value": "Total",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Attended",
+                "value": "Attended",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Absent",
+                "value": "Absent",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Late",
+                "value": "Late",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Half",
+                "value": "Half",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Leave Overview",
+                "value": "Leave Overview",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Total Request",
+                "value": "Total Request",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Approved",
+                "value": "Approved",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Pending",
+                "value": "Pending",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Rejected",
+                "value": "Rejected",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Leave Request Log",
+                "value": "Leave Request Log",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Others",
+                "value": "Others",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Category",
+                "value": "Category",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Emergency",
+                "value": "Emergency",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Relation",
+                "value": "Relation",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Years",
+                "value": "Years",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Transport",
+                "value": "Transport",
+                "type": "non-traduit"
+            }
+        ],
+        "study-material.json": [
+            {
+                "key": "Study Material",
+                "value": "Study Material",
+                "type": "non-traduit"
+            }
+        ],
+        "study_material.json": [
+            {
+                "key": "Content Type",
+                "value": "Content Type",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Contents",
+                "value": "Contents",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Content Share",
+                "value": "Content Share",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Content List",
+                "value": "Content List",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Shared Content",
+                "value": "Shared Content",
+                "type": "non-traduit"
+            },
+            {
+                "key": "My Content",
+                "value": "My Content",
+                "type": "non-traduit"
+            }
+        ],
+        "studymaterial.json": [
+            {
+                "key": "My Content List",
+                "value": "My Content List",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Shared Content Group",
+                "value": "Shared Content Group",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Study Material Group",
+                "value": "Study Material Group",
+                "type": "non-traduit"
+            }
+        ],
+        "tax.json": [
+            {
+                "key": "Tax Setup",
+                "value": "Tax Setup",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Tax Percentage",
+                "value": "Tax Percentage",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Enter Tax Percentage",
+                "value": "Enter Tax Percentage",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Tax Income Head",
+                "value": "Tax Income Head",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Min Tax Eligible Amount",
+                "value": "Min Tax Eligible Amount",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Max Tax Amount",
+                "value": "Max Tax Amount",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Tax",
+                "value": "Tax",
+                "type": "non-traduit"
+            }
+        ],
+        "vehicle_tracker.json": [
+            {
+                "key": "Driver List",
+                "value": "Driver List",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Photo",
+                "value": "Photo",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Name",
+                "value": "Name",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Email",
+                "value": "Email",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Phone",
+                "value": "Phone",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Emergency Contact",
+                "value": "Emergency Contact",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Permanent Address",
+                "value": "Permanent Address",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Driving License",
+                "value": "Driving License",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Vehicle List",
+                "value": "Vehicle List",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Display Name",
+                "value": "Display Name",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Model Number",
+                "value": "Model Number",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Nameplate",
+                "value": "Nameplate",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Capacity",
+                "value": "Capacity",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Facility",
+                "value": "Facility",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Vehicle Route List",
+                "value": "Vehicle Route List",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Start Point",
+                "value": "Start Point",
+                "type": "non-traduit"
+            },
+            {
+                "key": "End Point",
+                "value": "End Point",
+                "type": "non-traduit"
+            },
+            {
+                "key": "Distance",
+                "value": "Distance",
+                "type": "non-traduit"
+            }
+        ]
+    },
+    "total_ar": 162,
+    "total_fr": 190,
+    "total": 352
+}
