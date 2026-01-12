@@ -17,8 +17,8 @@ class ChatRequest(BaseModel):
     stream: bool = False
 
 @router.post("/chat/completions")
-async def chat_completion(request: ChatRequest):
-    user_id = "test-user"
+async def chat_completion(request: ChatRequest, user: dict = Depends(get_current_user)):
+    user_id = user.get("user_id", "test-user")
     
     # 1. Vérifie crédits (1 token = 1 crédit pour simplifier)
     credits = await db.get_user_credits(user_id)
