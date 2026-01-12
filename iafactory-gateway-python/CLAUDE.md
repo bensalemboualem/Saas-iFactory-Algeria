@@ -1,9 +1,17 @@
-﻿# Gateway IAFactory Python
+﻿# IAFactory Gateway Python
 
-CORE du SaaS : facturation + routing IA
+Gateway centralisé multi-providers IA
 
-## Providers
-9 providers : OpenAI, Anthropic, Groq, DeepSeek, Mistral, Gemini, Cohere, Together, OpenRouter
+## Architecture
+- FastAPI + PostgreSQL
+- 9 providers IA : OpenAI , Anthropic, Groq, DeepSeek, Mistral, Gemini, Cohere, Together, OpenRouter
+- Facturation automatique par token
+- Webhook Chargily (paiements Algérie)
+
+## Règles
+- TOUTES les apps passent par gateway
+- Jamais appels directs providers
+- 1 token = 1 crédit
 
 ## Endpoints
 - POST /api/llm/chat/completions
@@ -12,6 +20,4 @@ CORE du SaaS : facturation + routing IA
 - POST /api/credits/consume
 - POST /api/webhook/chargily
 
-## Base
-- PostgreSQL : users, transactions
-- Port 3001
+Port : 3001
