@@ -1,4 +1,4 @@
-"""
+﻿"""
 IAFactory Academy - FastAPI Main Application
 """
 import logging
@@ -12,7 +12,7 @@ import asyncio
 
 from app.core.config import settings
 from app.core.database import engine, Base
-from app.api import auth, users, courses, content, enrollments, payments, certificates  # rag, rag_advanced DISABLED
+from app.api import auth, users, courses, content, enrollments, payments, certificates  # RAG disabled
 
 # Configure logging
 logging.basicConfig(
@@ -236,8 +236,8 @@ app.include_router(content.router, prefix=f"{settings.API_PREFIX}/content", tags
 app.include_router(enrollments.router, prefix=f"{settings.API_PREFIX}/enrollments", tags=["Enrollments"])
 app.include_router(payments.router, prefix=f"{settings.API_PREFIX}/payments", tags=["Payments"])
 app.include_router(certificates.router, prefix=f"{settings.API_PREFIX}/certificates", tags=["Certificates"])
-# app.include_router(rag.router  # DISABLED TEMP, prefix=f"{settings.API_PREFIX}", tags=["RAG"])
-# app.include_router(rag_advanced.router  # DISABLED TEMP, prefix=f"{settings.API_PREFIX}", tags=["RAG Advanced"])
+# app.include_router(rag.router, prefix=f"{settings.API_PREFIX}", tags=["RAG"])  # RAG disabled
+# app.include_router(rag_advanced.router, prefix=f"{settings.API_PREFIX}", tags=["RAG Advanced"])  # RAG disabled
 
 
 if __name__ == "__main__":
