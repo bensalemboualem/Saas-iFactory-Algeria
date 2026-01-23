@@ -1,0 +1,35 @@
+/* ================================================
+   STYLES GLOBAUX - IAFactory Landing
+   Importer ce fichier dans main.tsx
+   ================================================ */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  min-height: 100%;
+  background-color: var(--bg-primary, #1a1a1a);
+}
+
+body {
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  background-color: var(--bg-primary, #1a1a1a);
+  color: var(--text-primary, #f0f0f0);
+}
+
+#root {
+  min-height: 100vh;
+  background-color: var(--bg-primary, #1a1a1a);
+}
+
+/* Mode clair */
+html[data-theme="light"],
+html[data-theme="light"] body,
+html[data-theme="light"] #root {
+  background-color: var(--bg-primary, #FAF9F7);
+  color: var(--text-primary, #1F1F1F);
+}

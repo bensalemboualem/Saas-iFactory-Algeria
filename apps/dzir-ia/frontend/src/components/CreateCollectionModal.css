@@ -1,0 +1,93 @@
+.create-collection-modal form {
+  padding: 20px 24px;
+}
+
+.collection-preview {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.preview-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  min-width: 200px;
+  position: relative;
+  overflow: hidden;
+}
+
+.preview-accent {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+}
+
+.preview-icon {
+  font-size: 24px;
+  margin-left: 8px;
+}
+
+.preview-name {
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.icon-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.icon-option {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--border);
+  background: transparent;
+  border-radius: 8px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-option:hover {
+  background: var(--hover);
+}
+
+.icon-option.active {
+  border-color: var(--primary);
+  background: rgba(0, 168, 107, 0.1);
+}
+
+.color-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.color-option {
+  width: 32px;
+  height: 32px;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.color-option:hover {
+  transform: scale(1.1);
+}
+
+.color-option.active {
+  border-color: white;
+  box-shadow: 0 0 0 2px var(--primary);
+}

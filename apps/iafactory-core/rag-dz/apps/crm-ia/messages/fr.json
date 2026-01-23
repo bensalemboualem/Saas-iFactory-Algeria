@@ -1,0 +1,20 @@
+{
+  "hero": {
+    "title": "📊 CRM IA - Gestion Clients Intelligente",
+    "desc": "CRM alimenté par l'IA pour gérer vos clients et opportunités",
+    "status": "Service actif"
+  },
+  "features": {
+    "1": {"title": "Gestion contacts", "desc": "Fonctionnalité professionnelle alimentée par l'IA pour maximiser votre productivité."},
+    "2": {"title": "Suivi des opportunités", "desc": "Fonctionnalité professionnelle alimentée par l'IA pour maximiser votre productivité."},
+    "3": {"title": "Analyse prédictive", "desc": "Fonctionnalité professionnelle alimentée par l'IA pour maximiser votre productivité."},
+    "4": {"title": "Rapports automatiques", "desc": "Fonctionnalité professionnelle alimentée par l'IA pour maximiser votre productivité."}
+  },
+  "dashboard": {
+    "title": "Tableau de bord",
+    "status": "Connecté"
+  },
+  "ready": "Prêt à commencer ?",
+  "launch": "Lancer l'application",
+  "launch_alert": "CRM IA - Gestion Clients Intelligente - Fonctionnalité en cours de développement"
+}

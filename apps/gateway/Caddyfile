@@ -1,0 +1,66 @@
+# IAFactory Gateway - Caddy Configuration
+# TLS certificates are automatically managed by Let's Encrypt
+#
+# IMPORTANT: Replace YOUR_DOMAIN.com with your actual domain
+# Example: www.iafactoryalgeria.com
+
+# Main domain with www
+www.YOUR_DOMAIN.com {
+    # Reverse proxy to gateway container
+    reverse_proxy gateway:3001 {
+        # Health checks
+        health_uri /health
+        health_interval 30s
+        health_timeout 10s
+
+        # Headers
+        header_up X-Real-IP {remote_host}
+        header_up X-Forwarded-For {remote_host}
+        header_up X-Forwarded-Proto {scheme}
+    }
+
+    # Security headers
+    header {
+        # Prevent clickjacking
+        X-Frame-Options "SAMEORIGIN"
+        # XSS protection
+        X-XSS-Protection "1; mode=block"
+        # Prevent MIME type sniffing
+        X-Content-Type-Options "nosniff"
+        # Referrer policy
+        Referrer-Policy "strict-origin-when-cross-origin"
+        # Remove server header
+        -Server
+    }
+
+    # Rate limiting (additional layer)
+    # Caddy doesn't have built-in rate limiting, handled by gateway
+
+    # Logging
+    log {
+        output file /var/log/caddy/access.log {
+            roll_size 100mb
+            roll_keep 5
+        }
+        format json
+    }
+}
+
+# Redirect apex domain to www
+YOUR_DOMAIN.com {
+    redir https://www.YOUR_DOMAIN.com{uri} permanent
+}
+
+# Optional: Admin-only endpoint (restrict by IP)
+# Uncomment and configure if needed
+# admin.YOUR_DOMAIN.com {
+#     @allowed {
+#         remote_ip YOUR_ADMIN_IP/32
+#     }
+#     handle @allowed {
+#         reverse_proxy gateway:3001
+#     }
+#     handle {
+#         respond "Forbidden" 403
+#     }
+# }

@@ -1,0 +1,181 @@
+# ============================================================
+# IAFactory ChatGPT - Unified Docker Orchestration
+# Version: 1.0.0 - Production Ready
+# ============================================================
+# Usage:
+#   docker-compose -f docker-compose.unified.yml up -d
+#   docker-compose -f docker-compose.unified.yml logs -f
+# ============================================================
+
+services:
+  # ============================================================
+  # DATABASE - PostgreSQL 16 with dual schemas
+  # ============================================================
+  iaf-db:
+    image: postgres:16-alpine
+    container_name: iaf-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USER:-iafactory}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-iafactory_secure_2026}
+      POSTGRES_DB: ${DB_NAME:-iafactory}
+      PGDATA: /var/lib/postgresql/data/pgdata
+      # Create both schemas on init
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --lc-collate=en_US.UTF-8 --lc-ctype=en_US.UTF-8"
+    volumes:
+      - iaf_postgres_data:/var/lib/postgresql/data
+      - ./docker/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql:ro
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-iafactory} -d ${DB_NAME:-iafactory}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - iaf-network
+
+  # ============================================================
+  # CACHE - Redis 7 for rate limiting & sessions
+  # ============================================================
+  iaf-cache:
+    image: redis:7-alpine
+    container_name: iaf-cache
+    restart: unless-stopped
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+    volumes:
+      - iaf_redis_data:/data
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - iaf-network
+
+  # ============================================================
+  # FRONTEND - LobeChat Main App (Next.js)
+  # ============================================================
+  iaf-chat:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: iaf-chat
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://${DB_USER:-iafactory}:${DB_PASSWORD:-iafactory_secure_2026}@iaf-db:5432/${DB_NAME:-iafactory}?schema=lobe
+      REDIS_URL: redis://iaf-cache:6379
+      # Ollama local
+      OLLAMA_PROXY_URL: http://host.docker.internal:11434
+      SSRF_ALLOW_PRIVATE_IP_ADDRESS: "1"
+      # Disable telemetry
+      NEXT_PUBLIC_ANALYTICS_POSTHOG: ""
+    ports:
+      - "${CHAT_PORT:-3210}:3210"
+    depends_on:
+      iaf-db:
+        condition: service_healthy
+      iaf-cache:
+        condition: service_healthy
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - iaf-network
+
+  # ============================================================
+  # GATEWAY - AI API Gateway (Fastify/Node.js)
+  # ============================================================
+  iaf-gateway:
+    build:
+      context: ./apps/gateway
+      dockerfile: Dockerfile
+    container_name: iaf-gateway
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 3001
+      HOST: 0.0.0.0
+      DATABASE_URL: postgresql://${DB_USER:-iafactory}:${DB_PASSWORD:-iafactory_secure_2026}@iaf-db:5432/${DB_NAME:-iafactory}?schema=gateway
+      REDIS_URL: redis://iaf-cache:6379
+      JWT_SECRET: ${JWT_SECRET:-change_me_in_production_32chars}
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+      LOG_PRETTY: "false"
+      # Provider API Keys
+      GROQ_API_KEY: ${GROQ_API_KEY:-}
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+    ports:
+      - "${GATEWAY_PORT:-3001}:3001"
+    depends_on:
+      iaf-db:
+        condition: service_healthy
+      iaf-cache:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:3001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    networks:
+      - iaf-network
+
+  # ============================================================
+  # VIDEO BACKEND - Dzir IA Video (FastAPI/Python)
+  # ============================================================
+  iaf-video:
+    build:
+      context: ./apps/iafactory-core/rag-dz/apps/dzirvideo
+      dockerfile: Dockerfile
+    container_name: iaf-video
+    restart: unless-stopped
+    environment:
+      PYTHONUNBUFFERED: "1"
+      PYTHONDONTWRITEBYTECODE: "1"
+      # API Configuration
+      API_HOST: 0.0.0.0
+      API_PORT: 8200
+      # Video Generation
+      TTS_MODEL: tts_models/fr/css10/vits
+      DEFAULT_VOICE: fr
+      # External APIs
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      REPLICATE_API_TOKEN: ${REPLICATE_API_TOKEN:-}
+    volumes:
+      - iaf_video_output:/app/output
+    ports:
+      - "${VIDEO_PORT:-8200}:8200"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8200/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    networks:
+      - iaf-network
+
+# ============================================================
+# VOLUMES
+# ============================================================
+volumes:
+  iaf_postgres_data:
+    driver: local
+  iaf_redis_data:
+    driver: local
+  iaf_video_output:
+    driver: local
+
+# ============================================================
+# NETWORKS
+# ============================================================
+networks:
+  iaf-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16

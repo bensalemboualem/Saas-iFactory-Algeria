@@ -1,0 +1,140 @@
+/* =====================================================
+   HARMONISATION COULEURS IAFACTORY - AGENTS STREAMLIT
+   Mode Dark & Light identiques à la landing page
+   ===================================================== */
+
+:root {
+    --bg: #020617;
+    --card: #020617;
+    --border: rgba(255, 255, 255, 0.12);
+    --primary: #00a651;
+    --primary-dark: #008c45;
+    --text: #f8fafc;
+    --muted: rgba(248, 250, 252, 0.75);
+    --shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+}
+
+[data-theme="light"] {
+    --bg: #f7f5f0;
+    --card: #f7f5f0;
+    --border: rgba(0, 0, 0, 0.08);
+    --text: #0f172a;
+    --muted: rgba(15, 23, 42, 0.7);
+    --shadow: 0 20px 60px rgba(15, 23, 42, 0.25);
+}
+
+/* Streamlit App Background */
+.stApp {
+    background-color: var(--bg) !important;
+    color: var(--text) !important;
+}
+
+/* Buttons - Primary (Green Algerian) */
+.stButton > button {
+    background-color: var(--primary) !important;
+    color: #021014 !important;
+    border: none !important;
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    padding: 8px 20px !important;
+    transition: all 0.3s ease !important;
+}
+
+.stButton > button:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(0, 166, 81, 0.3) !important;
+    background-color: var(--primary-dark) !important;
+}
+
+/* Cards & Containers */
+.stCard, div[data-testid="stVerticalBlock"] > div {
+    background-color: var(--card) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 16px !important;
+    padding: 20px !important;
+}
+
+/* Sidebar */
+section[data-testid="stSidebar"] {
+    background-color: var(--card) !important;
+    border-right: 1px solid var(--border) !important;
+}
+
+/* Headers */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text) !important;
+}
+
+/* Text */
+p, span, label {
+    color: var(--muted) !important;
+}
+
+/* Success/Info Messages */
+.stSuccess {
+    background-color: rgba(0, 166, 81, 0.1) !important;
+    border-left: 4px solid var(--primary) !important;
+    color: var(--text) !important;
+}
+
+/* Error Messages */
+.stError, .stException {
+    background-color: rgba(239, 68, 68, 0.1) !important;
+    border-left: 4px solid #ef4444 !important;
+    color: var(--text) !important;
+}
+
+/* Tabs */
+.stTabs [data-baseweb="tab-list"] {
+    background-color: var(--card) !important;
+    border-bottom: 1px solid var(--border) !important;
+}
+
+.stTabs [data-baseweb="tab"] {
+    color: var(--muted) !important;
+}
+
+.stTabs [aria-selected="true"] {
+    color: var(--primary) !important;
+    border-bottom: 2px solid var(--primary) !important;
+}
+
+/* Form Inputs - Keep original Streamlit style */
+input, textarea, select {
+    /* Ne pas modifier - garder le style Streamlit original */
+}
+
+/* Expander */
+.streamlit-expanderHeader {
+    background-color: var(--card) !important;
+    border: 1px solid var(--border) !important;
+    color: var(--text) !important;
+}
+
+/* Metrics */
+div[data-testid="stMetricValue"] {
+    color: var(--primary) !important;
+}
+
+/* Progress Bar */
+.stProgress > div > div {
+    background-color: var(--primary) !important;
+}
+
+/* Spinner */
+.stSpinner > div {
+    border-color: var(--primary) transparent transparent transparent !important;
+}
+
+/* Chat Messages */
+.stChatMessage {
+    background-color: var(--card) !important;
+    border: 1px solid var(--border) !important;
+}
+
+/* 3D Effect on Hover for Containers */
+.stCard:hover, div[data-testid="stVerticalBlock"] > div:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: var(--shadow) !important;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}

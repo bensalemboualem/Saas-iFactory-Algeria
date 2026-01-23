@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤖 Test Chatbot IA - BBC School Algeria</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #392C7D, #FF5170);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .test-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .test-questions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .question-card {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .question-card:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-5px);
+        }
+        
+        .question-card h3 {
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .question-card p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .chatbot-demo {
+            background: white;
+            color: #333;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        
+        .chatbot-header {
+            background: linear-gradient(135deg, #392C7D, #FF5170);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .chatbot-messages {
+            height: 400px;
+            overflow-y: auto;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+        
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .message.bot .bubble {
+            background: #e9ecef;
+            color: #333;
+            border-radius: 15px 15px 15px 5px;
+            padding: 12px 16px;
+            max-width: 80%;
+        }
+        
+        .message.user .bubble {
+            background: #392C7D;
+            color: white;
+            border-radius: 15px 15px 5px 15px;
+            padding: 12px 16px;
+            max-width: 80%;
+            margin-left: auto;
+        }
+        
+        .message.user {
+            justify-content: flex-end;
+        }
+        
+        .chatbot-input {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .chatbot-input input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            outline: none;
+            font-size: 14px;
+        }
+        
+        .chatbot-input button {
+            background: #392C7D;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+        
+        .links-section {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .links-section a {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .links-section a:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 Test Chatbot IA BBC School</h1>
+            <p>Testez l'intelligence artificielle de BBC School Algeria</p>
+        </div>
+        
+        <div class="test-section">
+            <h2 style="margin-bottom: 20px;">📋 Questions de Test Rapide</h2>
+            <div class="test-questions">
+                <div class="question-card" onclick="askQuestion('Comment s\'inscrire à BBC School ?')">
+                    <h3>📚 Inscription</h3>
+                    <p>Comment s'inscrire à BBC School Algeria ?</p>
+                </div>
+                <div class="question-card" onclick="askQuestion('Quels sont les frais de scolarité ?')">
+                    <h3>💰 Frais</h3>
+                    <p>Quels sont les frais de scolarité ?</p>
+                </div>
+                <div class="question-card" onclick="askQuestion('Avez-vous un transport scolaire ?')">
+                    <h3>🚌 Transport</h3>
+                    <p>Avez-vous un service de transport ?</p>
+                </div>
+                <div class="question-card" onclick="askQuestion('Quelle est votre cantine ?')">
+                    <h3>🍽️ Cantine</h3>
+                    <p>Parlez-moi de votre cantine</p>
+                </div>
+                <div class="question-card" onclick="askQuestion('Comment préparez-vous au BAC ?')">
+                    <h3>🎓 BAC</h3>
+                    <p>Comment préparez-vous au BAC ?</p>
+                </div>
+                <div class="question-card" onclick="askQuestion('Quels sont vos horaires ?')">
+                    <h3>⏰ Horaires</h3>
+                    <p>Quels sont vos horaires ?</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="chatbot-demo">
+            <div class="chatbot-header">
+                <h3>🤖 Assistant IA BBC School Algeria</h3>
+                <p>Posez vos questions sur notre école</p>
+            </div>
+            
+            <div class="chatbot-messages" id="messages">
+                <div class="message bot">
+                    <div class="bubble">
+                        👋 Bonjour ! Je suis l'assistant IA de BBC School Algeria. Comment puis-je vous aider aujourd'hui ?
+                    </div>
+                </div>
+                <div class="message bot">
+                    <div class="bubble">
+                        💡 Vous pouvez me poser des questions sur :
+                        <br>• Inscription et admission
+                        <br>• Frais de scolarité 
+                        <br>• Transport scolaire
+                        <br>• Cantine et repas
+                        <br>• Programmes BEM/BAC
+                        <br>• Infrastructure et équipements
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chatbot-input">
+                <input type="text" id="userInput" placeholder="Tapez votre question...">
+                <button onclick="sendMessage()">▶</button>
+            </div>
+        </div>
+        
+        <div class="links-section">
+            <a href="http://localhost/onestschooled-test/public" target="_blank">🌐 Site BBC School</a>
+            <a href="http://localhost/onestschooled-test/public/login" target="_blank">🔐 Administration</a>
+            <a href="BBC-SCHOOL-GUIDE-FINAL.md" target="_blank">📋 Guide Complet</a>
+        </div>
+    </div>
+    
+    <script>
+        // Base de connaissances BBC School Algeria
+        const bbcKnowledge = {
+            "inscription|admission|rentrée": "📚 Les inscriptions pour l'année 2025-2026 sont ouvertes ! BBC School Algeria accueille les élèves du CP à la Terminale. Contactez notre secrétariat pour plus d'informations. 📞 Documents requis : acte de naissance, photos, bulletins scolaires.",
+            
+            "transport|bus|navette": "🚌 Nous proposons un service de transport scolaire avec 5 véhicules Mercedes Sprinter sécurisés. Couverture de toute la région d'Alger. Système de géolocalisation et caméras de sécurité. Tarif : 15 000 DZD/mois.",
+            
+            "cantine|repas|déjeuner": "🍽️ Notre cantine propose des repas halal équilibrés et nutritifs, préparés selon les normes d'hygiène strictes. Menu varié avec cuisine algérienne traditionnelle et internationale. Tarif : 8 000 DZD/mois.",
+            
+            "frais|tarifs|prix|scolarité": "💰 Frais de scolarité BBC School Algeria 2024-2025 :\n• Primaire (CP-CM2) : 120 000 DZD/an\n• Collège (6ème-3ème) : 160 000 DZD/an\n• Lycée (2AS-Terminale) : 180 000 DZD/an\nTransport et cantine en supplément. Facilités de paiement disponibles.",
+            
+            "programme|matières|cours|enseignement": "📖 Programmes conformes au ministère algérien de l'Education. Enseignement bilingue français-arabe de qualité. 272 matières enseignées par 45 enseignants qualifiés. Préparation spécialisée BEM et BAC avec taux de réussite de 95%.",
+            
+            "horaires|emploi du temps": "⏰ Horaires BBC School Algeria :\n• Matin : 8h00 - 12h00\n• Après-midi : 13h00 - 17h00\nEmploi du temps adapté selon les niveaux. Possibilité de journée complète avec cantine. Étude surveillée jusqu'à 18h00.",
+            
+            "bac|bem|examens|résultats": "🎓 Excellent taux de réussite : 95% au BAC 2024 ! Préparation intensive avec cours de soutien, examens blancs réguliers et accompagnement personnalisé. Mentions très bien fréquentes. Coaching spécialisé pour les matières scientifiques.",
+            
+            "salles|laboratoires|infrastructure|équipements": "🏫 Infrastructure moderne BBC School :\n• 30 salles de classe équipées\n• Laboratoires de physique-chimie et biologie\n• Salle informatique avec dernières technologies\n• Bibliothèque avec 13 000 ouvrages français/arabe\n• Gymnase et espaces sportifs",
+            
+            "contact|téléphone|adresse|localisation": "📞 Contact BBC School Algeria :\n📧 Email : contact@bbcschool.dz\n📱 Téléphone : +213 21 XX XX XX\n📍 Adresse : BBC School Algeria, Alger\n🌐 Site web : www.bbcschool.dz\n📘 Facebook : /bbcschoolalgeria",
+            
+            "enseignants|professeurs|équipe|staff": "👨‍🏫 Équipe pédagogique d'excellence :\n• 45 enseignants qualifiés et expérimentés\n• Formation continue et certification\n• Suivi personnalisé de chaque élève\n• Méthodes pédagogiques modernes\n• Encadrement bienveillant et professionnel",
+            
+            "activités|sport|clubs|parascolaire": "🎨 Activités parascolaires riches :\n• Clubs scientifiques et littéraires\n• Sport : football, basketball, natation\n• Arts : musique, théâtre, dessin\n• Sorties éducatives et culturelles\n• Compétitions inter-écoles\n• Développement des talents",
+            
+            "langues|français|arabe|bilingue": "🗣️ Enseignement bilingue de qualité :\n• Français : langue d'enseignement principal\n• Arabe : littérature et civilisation\n• Maîtrise parfaite des deux langues\n• Ouverture culturelle et linguistique\n• Préparation aux certifications internationales"
+        };
+        
+        function askQuestion(question) {
+            document.getElementById('userInput').value = question;
+            sendMessage();
+        }
+        
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // Ajouter message utilisateur
+            addMessage(message, 'user');
+            input.value = '';
+            
+            // Simuler la réflexion
+            setTimeout(() => {
+                addMessage('💭 Je réfléchis...', 'bot');
+                
+                setTimeout(() => {
+                    removeLastBotMessage();
+                    const response = getBBCResponse(message);
+                    addMessage(response, 'bot');
+                }, 1500);
+            }, 500);
+        }
+        
+        function getBBCResponse(question) {
+            const lowerQuestion = question.toLowerCase();
+            
+            // Recherche dans la base de connaissances
+            for (const [keywords, response] of Object.entries(bbcKnowledge)) {
+                const keywordList = keywords.split('|');
+                if (keywordList.some(keyword => lowerQuestion.includes(keyword))) {
+                    return response;
+                }
+            }
+            
+            // Réponses par défaut selon le contexte
+            if (lowerQuestion.includes('merci')) {
+                return "🙏 Merci ! C'est un plaisir de vous aider. BBC School Algeria est là pour vous accompagner dans votre projet éducatif !";
+            }
+            
+            if (lowerQuestion.includes('bonjour') || lowerQuestion.includes('salut')) {
+                return "👋 Bonjour ! Bienvenue chez BBC School Algeria. Comment puis-je vous renseigner sur notre établissement ?";
+            }
+            
+            // Réponse par défaut
+            return "🤔 Je n'ai pas d'information spécifique sur ce sujet. Pouvez-vous me poser une question sur nos programmes, frais, transport, cantine, examens ou infrastructure ? Ou contactez directement notre secrétariat au +213 21 XX XX XX !";
+        }
+        
+        function addMessage(text, sender) {
+            const messagesDiv = document.getElementById('messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+            bubble.innerHTML = text.replace(/\n/g, '<br>');
+            
+            messageDiv.appendChild(bubble);
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+        
+        function removeLastBotMessage() {
+            const messages = document.querySelectorAll('#messages .message.bot');
+            if (messages.length > 0) {
+                messages[messages.length - 1].remove();
+            }
+        }
+        
+        // Événement Enter pour envoyer
+        document.getElementById('userInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+        
+        // Messages d'accueil progressifs
+        setTimeout(() => {
+            addMessage("🎯 Astuce : Cliquez sur les cartes ci-dessus pour des questions rapides !", 'bot');
+        }, 3000);
+        
+        console.log('🤖 Chatbot IA BBC School Algeria chargé avec succès !');
+        console.log('📚 Base de connaissances : ' + Object.keys(bbcKnowledge).length + ' sujets couverts');
+    </script>
+</body>
+</html>

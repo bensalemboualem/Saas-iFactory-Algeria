@@ -1,0 +1,147 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 255, 255, 255;
+  --background-end-rgb: 255, 255, 255;
+  --algeria-green: 0, 122, 61;
+  --algeria-red: 206, 17, 38;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 15, 23, 42;
+    --background-end-rgb: 15, 23, 42;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .flag-lg {
+    font-size: 3rem;
+    line-height: 1;
+  }
+
+  .algeria-gradient {
+    background: linear-gradient(135deg, rgb(var(--algeria-green)) 0%, rgb(var(--algeria-red)) 100%);
+  }
+
+  .trophy-gold {
+    color: #FFD700;
+    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.6));
+  }
+}
+
+/* Card styles */
+.card {
+  @apply bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6 border border-slate-200 dark:border-slate-700;
+}
+
+.card-hover {
+  @apply transition-all duration-300 hover:shadow-xl hover:scale-[1.02];
+}
+
+/* Button styles */
+.btn-primary {
+  @apply bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg;
+}
+
+.btn-secondary {
+  @apply bg-secondary hover:bg-secondary/90 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg;
+}
+
+.btn-outline {
+  @apply border-2 border-primary text-primary hover:bg-primary hover:text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200;
+}
+
+/* Badge styles */
+.badge {
+  @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold;
+}
+
+.badge-primary {
+  @apply bg-primary/10 text-primary dark:bg-primary/20;
+}
+
+.badge-secondary {
+  @apply bg-secondary/10 text-secondary dark:bg-secondary/20;
+}
+
+.badge-accent {
+  @apply bg-yellow-500/10 text-yellow-700 dark:bg-yellow-500/20 dark:text-yellow-300;
+}
+
+/* Match card */
+.match-card {
+  @apply card card-hover flex items-center justify-between;
+}
+
+.match-card.live {
+  @apply border-2 border-secondary animate-pulse;
+}
+
+/* Group table */
+.group-table {
+  @apply w-full text-sm;
+}
+
+.group-table th {
+  @apply text-left font-semibold text-slate-700 dark:text-slate-300 pb-2 border-b-2 border-slate-200 dark:border-slate-700;
+}
+
+.group-table td {
+  @apply py-2 border-b border-slate-100 dark:border-slate-800;
+}
+
+.group-table tr.algeria {
+  @apply bg-primary/5 dark:bg-primary/10 font-semibold;
+}
+
+/* Countdown */
+.countdown-digit {
+  @apply bg-gradient-to-br from-primary to-secondary text-white rounded-xl p-6 shadow-xl text-center;
+}
+
+.countdown-digit .number {
+  @apply text-5xl md:text-6xl font-bold;
+}
+
+.countdown-digit .label {
+  @apply text-sm md:text-base text-white/80 mt-2;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
+.fade-in-delay-1 { animation-delay: 0.1s; }
+.fade-in-delay-2 { animation-delay: 0.2s; }
+.fade-in-delay-3 { animation-delay: 0.3s; }
+.fade-in-delay-4 { animation-delay: 0.4s; }
+
+/* Container */
+.container-app {
+  @apply max-w-7xl mx-auto px-4;
+}

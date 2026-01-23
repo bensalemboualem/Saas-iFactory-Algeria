@@ -1,0 +1,438 @@
+:root {
+  --bg: #020617;
+  --bg-alt: #0b1224;
+  --card: #0b1224;
+  --border: rgba(255, 255, 255, 12%);
+  --text: #f8fafc;
+  --muted: rgba(248, 250, 252, 75%);
+  --primary: #00a651;
+  --shadow: 0 20px 60px rgba(0, 0, 0, 55%);
+}
+
+/* Shell = conteneur principal du chat */
+.dziria-shell {
+  position: relative;
+
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  height: 100%;
+
+  color: var(--text);
+
+  background: var(--bg);
+}
+
+/* Toast notifications */
+.dziria-toast {
+  position: fixed;
+  z-index: 9999;
+  inset-block-start: 16px;
+  inset-inline-end: 16px;
+
+  max-width: 520px;
+  padding-block: 10px;
+  padding-inline: 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+
+  background: rgba(0, 0, 0, 55%);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 35%);
+}
+
+.dziria-toast.ok {
+  border-color: rgba(0, 166, 81, 35%);
+}
+
+.dziria-toast.err {
+  border-color: rgba(220, 38, 38, 35%);
+}
+
+.dziria-toast.info {
+  border-color: rgba(59, 130, 246, 35%);
+}
+
+/* Messages zone (scrollable) */
+.dziria-messages {
+  overflow: hidden auto;
+  flex: 1;
+
+  padding-block: 18px 200px;
+  padding-inline: 18px; /* bottom padding pour l'input fixe */
+}
+
+/* Message item */
+.dziria-msg {
+  display: flex;
+  gap: 12px;
+
+  max-width: 920px;
+  margin-block: 0 18px;
+  margin-inline: auto;
+}
+
+.dziria-avatar {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(255, 255, 255, 8%);
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 6%);
+}
+
+.dziria-bubble {
+  flex: 1;
+  border: none;
+  background: transparent;
+}
+
+.dziria-text {
+  font-size: 15px;
+  line-height: 1.65;
+  white-space: pre-wrap;
+}
+
+/* Sources */
+.dziria-sources {
+  margin-block-start: 10px;
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, 10%);
+  border-radius: 14px;
+
+  background: rgba(255, 255, 255, 3%);
+}
+
+.dziria-sources-title {
+  margin-block-end: 8px;
+  font-weight: 800;
+}
+
+.dziria-source {
+  margin-block-end: 8px;
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, 8%);
+  border-radius: 12px;
+
+  background: rgba(0, 0, 0, 15%);
+}
+
+.dziria-source-head {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-weight: 800;
+}
+
+.dziria-source-index {
+  color: var(--primary);
+}
+
+.dziria-source-score {
+  margin-inline-start: auto;
+  font-weight: 700;
+  opacity: 0.7;
+}
+
+.dziria-source-snippet {
+  margin-block-start: 6px;
+  font-size: 13px;
+  line-height: 1.5;
+  opacity: 0.9;
+}
+
+/* Search results */
+.dziria-search-head {
+  max-width: 920px;
+  margin-block: 0 12px;
+  margin-inline: auto;
+}
+
+.dziria-search-title {
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.dziria-search-sub {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.dziria-results {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  max-width: 920px;
+  margin-block: 0;
+  margin-inline: auto;
+}
+
+.dziria-result {
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 10%);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 3%);
+}
+
+.dziria-result-title {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  font-weight: 900;
+}
+
+.dziria-result-score {
+  font-weight: 700;
+  opacity: 0.7;
+}
+
+.dziria-result-snippet {
+  margin-block-start: 8px;
+  line-height: 1.5;
+  opacity: 0.9;
+}
+
+.dziria-result-meta {
+  margin-block-start: 8px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+  font-size: 12px;
+  opacity: 0.65;
+}
+
+.dziria-empty {
+  max-width: 920px;
+  margin-block: 20px;
+  margin-inline: auto;
+  opacity: 0.7;
+}
+
+/* Chatbox (input zone) — FIXE EN BAS */
+.dziria-chatbox {
+  position: fixed;
+  z-index: 100;
+  inset-block-end: 20px;
+  inset-inline: 280px 20px; /* après sidebar (260px + marge) */
+
+  overflow: visible;
+
+  max-width: 920px;
+  margin-block: 0;
+  margin-inline: auto;
+  border: 1px solid rgba(255, 255, 255, 12%);
+  border-block-end: none;
+  border-radius: 16px 16px 0 0;
+
+  background: rgba(2, 6, 23, 96%);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 35%);
+}
+
+/* Header bar (selects + flags) */
+.dziria-headerbar {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+
+  padding-block: 10px;
+  padding-inline: 12px;
+  border-block-end: 1px solid rgba(255, 255, 255, 10%);
+
+  background: rgba(255, 255, 255, 3%);
+}
+
+.dziria-selects {
+  display: flex;
+  flex: 1;
+  gap: 8px;
+  min-width: 0;
+}
+
+.dziria-select {
+  flex: 1;
+
+  min-width: 0;
+  max-width: 260px;
+  padding-block: 8px;
+  padding-inline: 10px;
+  border: 1px solid rgba(255, 255, 255, 12%);
+  border-radius: 10px;
+
+  font-size: 14px;
+  color: var(--text);
+
+  background: rgba(0, 0, 0, 18%);
+}
+
+.dziria-flags {
+  display: flex;
+  flex-shrink: 0;
+  gap: 6px;
+}
+
+.dziria-flag {
+  cursor: pointer;
+
+  padding-block: 8px;
+  padding-inline: 10px;
+  border: 1px solid rgba(255, 255, 255, 12%);
+  border-radius: 10px;
+
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--muted);
+
+  background: rgba(0, 0, 0, 18%);
+}
+
+.dziria-flag.on {
+  border-color: rgba(0, 166, 81, 35%);
+  color: var(--primary);
+  background: rgba(0, 166, 81, 10%);
+}
+
+/* Input row */
+.dziria-inputrow {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+
+  padding: 12px;
+
+  background: rgba(2, 6, 23, 96%);
+}
+
+.dziria-input {
+  flex: 1;
+
+  min-width: 0;
+  padding-block: 12px;
+  padding-inline: 12px;
+  border: 2px solid rgba(255, 255, 255, 12%);
+  border-radius: 12px;
+
+  font-size: 16px;
+  color: var(--text);
+
+  background: rgba(255, 255, 255, 6%);
+  outline: none;
+}
+
+.dziria-input:focus {
+  border-color: var(--primary);
+}
+
+/* Buttons */
+.dziria-plus,
+.dziria-tools {
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 50%;
+
+  font-size: 22px;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 65%);
+
+  background: transparent;
+}
+
+.dziria-plus:hover,
+.dziria-tools:hover {
+  transform: scale(1.05);
+  color: var(--primary);
+}
+
+.dziria-mic {
+  cursor: pointer;
+
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+
+  font-size: 20px;
+  color: rgba(255, 255, 255, 65%);
+
+  background: transparent;
+}
+
+.dziria-mic:hover {
+  transform: scale(1.05);
+  color: #ef4444;
+}
+
+.dziria-send {
+  cursor: pointer;
+
+  width: 44px;
+  min-width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+
+  font-size: 18px;
+  font-weight: 900;
+  color: white;
+
+  background: var(--primary);
+}
+
+.dziria-send:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Menus (+ et tools) */
+.dziria-menu {
+  position: fixed;
+  z-index: 10000;
+
+  min-width: 240px;
+  max-width: 320px;
+  padding: 6px;
+  border: 1px solid rgba(255, 255, 255, 12%);
+  border-radius: 14px;
+
+  background: rgba(15, 23, 42, 96%);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 45%);
+}
+
+.dziria-menu-item {
+  cursor: pointer;
+
+  display: flex;
+  gap: 10px;
+  align-items: center;
+
+  width: 100%;
+  padding-block: 10px;
+  padding-inline: 10px;
+  border: none;
+  border-radius: 10px;
+
+  color: rgba(255, 255, 255, 90%);
+  text-align: start;
+
+  background: transparent;
+}
+
+.dziria-menu-item:hover {
+  background: rgba(255, 255, 255, 6%);
+}

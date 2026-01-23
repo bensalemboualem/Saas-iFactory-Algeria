@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.staging
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    env_file:
+      - .env.staging
+    restart: unless-stopped
+    networks:
+      - iafactory-network
+
+  db:
+    image: postgres:15-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: iafactory_staging
+      POSTGRES_USER: iafactory
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-change_me_in_env}
+    restart: unless-stopped
+    networks:
+      - iafactory-network
+
+volumes:
+  postgres_data:
+
+
+networks:
+  iafactory-network:
+    driver: bridge

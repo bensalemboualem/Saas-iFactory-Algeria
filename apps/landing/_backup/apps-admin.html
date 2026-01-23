@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IAFactory Admin - Apps</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="shared/iafactory-design-system.css">
+  <link rel="stylesheet" href="shared/iafactory-unified.css">
+  <style>
+    :root {
+      --bg-primary: #ffffff;
+      --bg-secondary: #f5f5f5;
+      --bg-card: #fafafa;
+      --text-primary: #0a0a0a;
+      --text-secondary: #525252;
+      --border-color: rgba(0, 0, 0, 0.12);
+      --accent: #8a5fff;
+    }
+    [data-theme="dark"] {
+      --bg-primary: #0a0a0a;
+      --bg-secondary: #171717;
+      --bg-card: #262626;
+      --text-primary: #ffffff;
+      --text-secondary: #a3a3a3;
+      --border-color: rgba(255, 255, 255, 0.12);
+      --accent: #9c7dff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Plus Jakarta Sans", "Tajawal", sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+    }
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border-color);
+      background: var(--bg-primary);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+    }
+    .brand img { height: 28px; }
+    .controls {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .btn {
+      border: 1px solid var(--border-color);
+      background: transparent;
+      color: var(--text-primary);
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 24px 64px;
+    }
+    .page-title h1 {
+      margin: 0 0 6px;
+      font-size: 28px;
+    }
+    .page-title p {
+      margin: 0 0 24px;
+      color: var(--text-secondary);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+    }
+    .card {
+      border: 1px solid var(--border-color);
+      background: var(--bg-card);
+      border-radius: 16px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-height: 180px;
+    }
+    .card h3 { margin: 0; font-size: 18px; }
+    .card p { margin: 0; color: var(--text-secondary); }
+    .meta {
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+    .card a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <header class="page-header">
+    <div class="brand">
+      <img src="assets/images/logoh.png" alt="IAFactory">
+      <span>IAFactory Admin</span>
+    </div>
+    <div class="controls">
+      <select id="langSelect" class="btn" onchange="setLanguage(this.value)">
+        <option value="fr">FR</option>
+        <option value="ar">AR</option>
+        <option value="en">EN</option>
+      </select>
+      <button class="btn" onclick="toggleTheme()">Theme</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="page-title">
+      <h1 data-i18n="apps.title">Apps Admin</h1>
+      <p data-i18n="apps.subtitle">Catalogue interne reserve aux admins</p>
+    </div>
+
+    <section class="grid">
+      <div class="card">
+        <h3>School Pro</h3>
+        <p data-i18n="apps.school.desc">SaaS ecoles: gestion, eleves, cours, IA.</p>
+        <div class="meta">
+          <span>onestschooled</span>
+          <a href="/school" data-i18n="apps.open">Ouvrir</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>IA Academy</h3>
+        <p data-i18n="apps.academy.desc">E-learning IA + challenge 1000 prompteurs.</p>
+        <div class="meta">
+          <span>iafactory-academy</span>
+          <a href="/academy" data-i18n="apps.open">Ouvrir</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Video Platform</h3>
+        <p data-i18n="apps.video.desc">Streaming local DZ, prix adapte.</p>
+        <div class="meta">
+          <span>iafactory-video-platform</span>
+          <a href="/video-studio" data-i18n="apps.open">Ouvrir</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>IA Tools</h3>
+        <p data-i18n="apps.tools.desc">Outils IA internes pour equipes.</p>
+        <div class="meta">
+          <span>iafactory-ai-tools</span>
+          <a href="/tools" data-i18n="apps.open">Ouvrir</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Chat Bolt</h3>
+        <p data-i18n="apps.bolt.desc">Interface chatbot multi-mode.</p>
+        <div class="meta">
+          <span>iafactory-chat-bolt</span>
+          <a href="/chat-bolt" data-i18n="apps.open">Ouvrir</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Gateway</h3>
+        <p data-i18n="apps.gateway.desc">Credits, quotas, facturation.</p>
+        <div class="meta">
+          <span>iafactory-gateway</span>
+          <a href="/gateway" data-i18n="apps.open">Ouvrir</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Video Studio (App)</h3>
+        <p data-i18n="apps.videoStudio.desc">Studio video IA pour templates.</p>
+        <div class="meta">
+          <span>rag-dz/apps/video-studio</span>
+          <a href="/apps/video-studio" data-i18n="apps.open">Ouvrir</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const ADMIN_PASSWORD = "demo123";
+    const SESSION_KEY = "iaf_admin_ok";
+
+    const translations = {
+      fr: {
+        "apps.title": "Apps Admin",
+        "apps.subtitle": "Catalogue interne reserve aux admins",
+        "apps.open": "Ouvrir",
+        "apps.school.desc": "SaaS ecoles: gestion, eleves, cours, IA.",
+        "apps.academy.desc": "E-learning IA + challenge 1000 prompteurs.",
+        "apps.video.desc": "Streaming local DZ, prix adapte.",
+        "apps.tools.desc": "Outils IA internes pour equipes.",
+        "apps.bolt.desc": "Interface chatbot multi-mode.",
+        "apps.gateway.desc": "Credits, quotas, facturation.",
+        "apps.videoStudio.desc": "Studio video IA pour templates."
+      },
+      en: {
+        "apps.title": "Admin Apps",
+        "apps.subtitle": "Internal catalog for admins only",
+        "apps.open": "Open",
+        "apps.school.desc": "School SaaS: management, students, courses, AI.",
+        "apps.academy.desc": "AI e-learning + 1000 prompters challenge.",
+        "apps.video.desc": "Local DZ streaming with fair pricing.",
+        "apps.tools.desc": "Internal AI tools for teams.",
+        "apps.bolt.desc": "Multi-mode chatbot interface.",
+        "apps.gateway.desc": "Credits, quotas, billing.",
+        "apps.videoStudio.desc": "AI video studio for templates."
+      },
+      ar: {
+        "apps.title": "تطبيقات الادمن",
+        "apps.subtitle": "كتالوج داخلي للمدراء فقط",
+        "apps.open": "فتح",
+        "apps.school.desc": "SaaS للمدارس: ادارة، تلاميذ، دروس، ذكاء اصطناعي.",
+        "apps.academy.desc": "تعلم IA + تحدي 1000 مروج برومبت.",
+        "apps.video.desc": "بث محلي بأسعار مناسبة للسوق الجزائري.",
+        "apps.tools.desc": "ادوات IA داخلية للفرق.",
+        "apps.bolt.desc": "واجهة شات بوت متعددة الاوضاع.",
+        "apps.gateway.desc": "ارصدة وحصص وفوترة.",
+        "apps.videoStudio.desc": "ستوديو فيديو IA للقوالب."
+      }
+    };
+
+    function setLanguage(lang) {
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+      document.querySelectorAll("[data-i18n]").forEach((el) => {
+        const key = el.getAttribute("data-i18n");
+        if (translations[lang] && translations[lang][key]) {
+          el.textContent = translations[lang][key];
+        }
+      });
+      localStorage.setItem("lang", lang);
+      const select = document.getElementById("langSelect");
+      if (select) select.value = lang;
+    }
+
+    function toggleTheme() {
+      const root = document.documentElement;
+      const next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      localStorage.setItem("theme", next);
+    }
+
+    function requirePassword() {
+      if (sessionStorage.getItem(SESSION_KEY) === "1") return;
+      const input = prompt("Admin password:");
+      if (input === ADMIN_PASSWORD) {
+        sessionStorage.setItem(SESSION_KEY, "1");
+      } else {
+        window.location.href = "./index.html";
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      requirePassword();
+      const savedLang = localStorage.getItem("lang") || "fr";
+      const savedTheme = localStorage.getItem("theme") || "dark";
+      document.documentElement.setAttribute("data-theme", savedTheme);
+      setLanguage(savedLang);
+    });
+  </script>
+</body>
+</html>

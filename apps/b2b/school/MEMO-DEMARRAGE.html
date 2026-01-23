@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OneStSchooled - Mémo Démarrage</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 800px;
+            width: 100%;
+            padding: 40px;
+        }
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        .method {
+            background: #f8f9fa;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        .method.recommended {
+            border-left-color: #28a745;
+            background: #d4edda;
+        }
+        .method h2 {
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .badge {
+            background: #28a745;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.7em;
+            font-weight: bold;
+        }
+        .step {
+            margin: 10px 0;
+            padding-left: 20px;
+            color: #555;
+            line-height: 1.8;
+        }
+        .url-box {
+            background: #667eea;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 30px 0;
+            font-size: 1.5em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .url-box:hover {
+            transform: scale(1.05);
+        }
+        .url-box a {
+            color: white;
+            text-decoration: none;
+        }
+        .important {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .commands {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        .commands code {
+            color: #9cdcfe;
+        }
+        .tip {
+            background: #d1ecf1;
+            border-left: 5px solid #17a2b8;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .emoji {
+            font-size: 1.5em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><span class="emoji">🚀</span> OneStSchooled</h1>
+        <p class="subtitle">Mémo de Démarrage Rapide</p>
+
+        <div class="method recommended">
+            <h2>
+                <span class="emoji">▶️</span>
+                Méthode 1 : La Plus Simple
+                <span class="badge">RECOMMANDÉE</span>
+            </h2>
+            <div class="step">
+                <strong>Double-cliquer sur :</strong> <code>start-project.bat</code>
+            </div>
+            <div class="step">✅ Le script démarre Apache et MySQL automatiquement</div>
+            <div class="step">✅ Ouvre le navigateur sur votre projet</div>
+            <div class="step">✅ C'est tout !</div>
+        </div>
+
+        <div class="method">
+            <h2><span class="emoji">⚙️</span> Méthode 2 : Manuelle</h2>
+            <div class="step">1. Ouvrir <strong>XAMPP Control Panel</strong></div>
+            <div class="step">2. Cliquer sur <strong>"Start"</strong> pour Apache et MySQL</div>
+            <div class="step">3. Ouvrir votre navigateur et aller sur l'URL ci-dessous</div>
+        </div>
+
+        <div class="url-box">
+            <a href="http://onestschooled.local" target="_blank">
+                🌐 http://onestschooled.local
+            </a>
+        </div>
+
+        <div class="important">
+            <strong>⚠️ IMPORTANT :</strong><br>
+            ❌ Ne plus utiliser : <code>php artisan serve</code><br>
+            ✅ Utiliser : Apache (via XAMPP ou start-project.bat)
+        </div>
+
+        <div class="tip">
+            <strong><span class="emoji">💡</span> Astuce :</strong><br>
+            Créez un raccourci de <code>start-project.bat</code> sur votre bureau pour démarrer encore plus vite !
+        </div>
+
+        <h2 style="margin-top: 30px; color: #667eea;">
+            <span class="emoji">🛠️</span> Commandes Utiles
+        </h2>
+
+        <div class="commands">
+# Aller dans le projet<br>
+<code>cd /c/xampp/htdocs/onestschooled-test</code><br><br>
+
+# Migrations<br>
+<code>php artisan migrate</code><br><br>
+
+# Vider le cache<br>
+<code>php artisan cache:clear</code><br>
+<code>php artisan config:clear</code><br>
+<code>php artisan route:clear</code><br><br>
+
+# Générer la clé<br>
+<code>php artisan key:generate</code>
+        </div>
+
+        <div class="tip">
+            <strong><span class="emoji">🐛</span> En cas de problème :</strong><br>
+            1. Vérifier qu'Apache et MySQL tournent dans XAMPP<br>
+            2. Redémarrer Apache (Stop puis Start)<br>
+            3. Vérifier les logs : <code>C:\xampp\apache\logs\onestschooled-error.log</code>
+        </div>
+    </div>
+</body>
+</html>

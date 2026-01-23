@@ -1,0 +1,13 @@
+./App.tsx
+./Header-actuel.tsx
+./shared/iafactory-design-system.css
+./shared/iafactory-theme.css
+./shared/iafactory-unified.css
+./src/App.tsx
+./src/components/Header.tsx
+./src/global.css
+./src/legacy.css
+./src/legacy.ts
+./src/main.tsx
+./src/styles.css
+./vite.config.ts

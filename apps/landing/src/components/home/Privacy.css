@@ -1,0 +1,64 @@
+.privacy-section {
+  padding: 80px 20px;
+  background: var(--bg-secondary);
+}
+
+.privacy-section .container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.privacy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.privacy-card {
+  background: var(--bg-primary);
+  border-radius: 16px;
+  padding: 32px;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.privacy-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.privacy-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.privacy-icon svg {
+  width: 48px;
+  height: 48px;
+}
+
+.privacy-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+}
+
+.privacy-desc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .privacy-section {
+    padding: 60px 16px;
+  }
+
+  .privacy-grid {
+    grid-template-columns: 1fr;
+  }
+}

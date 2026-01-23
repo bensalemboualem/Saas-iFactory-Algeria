@@ -1,0 +1,1112 @@
+export interface ModelProfile {
+  id: string;
+  name: string;
+  description: string;
+  provider: 'groq' | 'openrouter' | 'deepseek' | 'ollama';
+  actualModel: string;
+  pricing: {
+    input: number;  // credits per 1M tokens
+    output: number; // credits per 1M tokens
+  };
+  features: {
+    streaming: boolean;
+    functionCalling: boolean;
+    vision: boolean;
+  };
+  latency: 'ultra-fast' | 'fast' | 'normal' | 'slow';
+  contextWindow: number;
+  category: 'fast' | 'smart' | 'cheap' | 'local' | 'chinese' | 'open-source' | 'specialized';
+}
+
+export const MODEL_PROFILES: ModelProfile[] = [
+  // ============================================================================
+  // FAST - Groq (Ultra-low latency, cheapest inference)
+  // Prix mis à jour 2026 - https://groq.com/pricing
+  // ============================================================================
+
+  // GPT-OSS (OpenAI open-source) - ULTRA CHEAP
+  {
+    id: 'iaf-fast-gpt-oss-20b',
+    name: 'GPT-OSS 20B',
+    description: 'Ultra-cheap OpenAI OSS via Groq',
+    provider: 'groq',
+    actualModel: 'openai/gpt-oss-20b',
+    pricing: { input: 0.075, output: 0.30 },  // 13.3M tokens/$1 input!
+    features: { streaming: true, functionCalling: true, vision: false },
+    latency: 'ultra-fast',
+    contextWindow: 128000,
+    category: 'fast',
+  },
+  {
+    id: 'iaf-fast-gpt-oss-120b',
+    name: 'GPT-OSS 120B',
+    description: 'Large GPT OSS via Groq',
+    provider: 'groq',
+    actualModel: 'openai/gpt-oss-120b',
+    pricing: { input: 0.15, output: 0.60 },
+    features: { streaming: true, functionCalling: true, vision: false },
+    latency: 'ultra-fast',
+    contextWindow: 128000,
+    category: 'fast',
+  },
+
+  // Llama 4 - NEWEST
+  {
+    id: 'iaf-fast-llama4-scout',
+    name: 'Llama 4 Scout',
+    description: 'Meta Llama 4 MoE 17Bx16E',
+    provider: 'groq',
+    actualModel: 'meta-llama/llama-4-scout-17b-16e-instruct',
+    pricing: { input: 0.11, output: 0.34 },
+    features: { streaming: true, functionCalling: true, vision: false },
+    latency: 'ultra-fast',
+    contextWindow: 128000,
+    category: 'fast',
+  },
+  {
+    id: 'iaf-fast-llama4-maverick',
+    name: 'Llama 4 Maverick',
+    description: 'Meta Llama 4 MoE 17Bx128E',
+    provider: 'groq',
+    actualModel: 'meta-llama/llama-4-maverick-17b-128e-instruct',
+    pricing: { input: 0.20, output: 0.60 },
+    features: { streaming: true, functionCalling: true, vision: false },
+    latency: 'ultra-fast',
+    contextWindow: 128000,
+    category: 'fast',
+  },
+
+  // Llama 3.3
+  {
+    id: 'iaf-fast-llama-70b',
+    name: 'Llama 3.3 70B',
+    description: 'Meta flagship via Groq',
+    provider: 'groq',
+    actualModel: 'llama-3.3-70b-versatile',
+    pricing: { input: 0.59, output: 0.79 },
+    features: { streaming: true, functionCalling: true, vision: false },
+    latency: 'ultra-fast',
+    contextWindow: 128000,
+    category: 'fast',
+  },
+  {
+    id: 'iaf-fast-llama-8b',
+    name: 'Llama 3.1 8B',
+    description: 'Ultra-cheap lightweight',
+    provider: 'groq',
+    actualModel: 'llama-3.1-8b-instant',
+    pricing: { input: 0.05, output: 0.08 },  // 20M tokens/$1 input!
+    features: { streaming: true, functionCalling: true, vision: false },
+    latency: 'ultra-fast',
+    contextWindow: 128000,
+    category: 'fast',
+  },
+
+  // Qwen 3
+  {
+    id: 'iaf-fast-qwen3-32b',
+    name: 'Qwen3 32B',
+    description: 'Alibaba Qwen3 via Groq',
+    provider: 'groq',
+    actualModel: 'qwen/qwen3-32b',
+    pricing: { input: 0.29, output: 0.59 },
+    features: { streaming: true, functionCalling: true, vision: false },
+    latency: 'ultra-fast',
+    contextWindow: 131072,
+    category: 'fast',
+  },
+
+  // Kimi K2 - Moonshot
+  {
+    id: 'iaf-fast-kimi-k2',
+    name: 'Kimi K2 1T',
+    description: 'Moonshot 1T model via Groq',
+    provider: 'groq',
+    actualModel: 'moonshotai/kimi-k2-instruct',
+    pricing: { input: 1.0, output: 3.0 },
+    features: { streaming: true, functionCalling: true, vision: false },
+    latency: 'fast',
+    contextWindow: 256000,
+    category: 'fast',
+  },
+
+  // ============================================================================
+  // SMART - OpenAI via OpenRouter
+  // ============================================================================
+  {
+    id: 'iaf-smart-gpt4o',
+    name: 'GPT-4o',
+    description: 'OpenAI flagship multimodal',
+    provider: 'openrouter',
+    actualModel: 'openai/gpt-4o',
+    pricing: { input: 2.5, output: 10.0 },
+    features: { streaming: true, functionCalling: true, vision: true },
+    latency: 'normal',
+    contextWindow: 128000,
+    category: 'smart',
+  },
+  {
+    id: 'iaf-smart-gpt4o-mini',
+    name: 'GPT-4o Mini',
+    description: 'Fast and cheap GPT-4o',
+    provider: 'openrouter',
+    actualModel: 'openai/gpt-4o-mini',
+    pricing: { input: 0.15, output: 0.60 },
+    features: { streaming: true, functionCalling: true, vision: true },
+    latency: 'fast',
+    contextWindow: 128000,
+    category: 'smart',
+  },
+  {
+    id: 'iaf-smart-gpt4-turbo',
+    name: 'GPT-4 Turbo',
+    description: 'Previous flagship',
+    provider: 'openrouter',
+    actualModel: 'openai/gpt-4-turbo',
+    pricing: { input: 10.0, output: 30.0 },
+    features: { streaming: true, functionCalling: true, vision: true },
+    latency: 'normal',
+    contextWindow: 128000,
+    category: 'smart',
+  },
+  {
+    id: 'iaf-smart-o1',
+    name: 'OpenAI o1',
+    description: 'Advanced reasoning model',
+    provider: 'openrouter',
+    actualModel: 'openai/o1',
+    pricing: { input: 15.0, output: 60.0 },
+    features: { streaming: false, functionCalling: false, vision: true },
+    latency: 'slow',
+    contextWindow: 200000,
+    category: 'smart',
+  },
+  {
+    id: 'iaf-smart-o1-mini',
+    name: 'OpenAI o1-mini',
+    description: 'Fast reasoning model',
+    provider: 'openrouter',
+    actualModel: 'openai/o1-mini',
+    pricing: { input: 3.0, output: 12.0 },
+    features: { streaming: false, functionCalling: false, vision: true },
+    latency: 'normal',
+    contextWindow: 128000,
+    category: 'smart',
+  },
+  {
+    id: 'iaf-smart-o3-mini',
+    name: 'OpenAI o3-mini',
+    description: 'Latest compact reasoning',
+    provider: 'openrouter',
+    actualModel: 'openai/o3-mini',
+    pricing: { input: 1.1, output: 4.4 },
+    features: { streaming: true, functionCalling: true, vision: false },
+    latency: 'fast',
+    contextWindow: 200000,
+    category: 'smart',
+  },
+
+  // ============================================================================
+  // SMART - Anthropic via OpenRouter
+  // ============================================================================
+  {
+    id: 'iaf-smart-claude-opus',
+    name: 'Claude 3 Opus',
+    description: 'Most capable Claude',
+    provider: 'openrouter',
+    actualModel: 'anthropic/claude-3-opus',
+    pricing: { input: 15.0, output: 75.0 },
+    features: { streaming: true, functionCalling: true, vision: true },
+    latency: 'slow',
+    contextWindow: 200000,
+    category: 'smart',
+  },
+  {
+    id: 'iaf-smart-claude-sonnet',
+    name: 'Claude 3.5 Sonnet',
+    description: 'Best balance quality/speed',
+    provider: 'openrouter',
+    actualModel: 'anthropic/claude-3.5-sonnet',
+    pricing: { input: 3.0, output: 15.0 },
+    features: { streaming: true, functionCalling: true, vision: true },
+    latency: 'normal',
+    contextWindow: 200000,
+    category: 'smart',
+  },
+  {
+    id: 'iaf-smart-claude-haiku',
+    name: 'Claude 3.5 Haiku',
+    description: 'Fast and cheap Claude',
+    provider: 'openrouter',
+    actualModel: 'anthropic/claude-3.5-haiku',
+    pricing: { input: 0.80, output: 4.0 },
+    features: { streaming: true, functionCalling: true, vision: true },
+    latency: 'fast',
+    contextWindow: 200000,
+    category: 'smart',
+  },
+
+  // ============================================================================
+  // SMART - Google via OpenRouter
+  // ============================================================================
+  {
+    id: 'iaf-smart-gemini-pro',
+    name: 'Gemini 1.5 Pro',
+    description: '1M context window',
+    provider: 'openrouter',
+    actualModel: 'google/gemini-pro-1.5',
+    pricing: { input: 1.25, output: 5.0 },
+    features: { streaming: true, functionCalling: true, vision: true },
+    latency: 'normal',
+    contextWindow: 2000000,
+    category: 'smart',
+  },
+  {
+    id: 'iaf-smart-gemini-flash',
+    name: 'Gemini 1.5 Flash',
+    description: 'Fast Google model',
+    provider: 'openrouter',
+    actualModel: 'google/gemini-flash-1.5',
+    pricing: { input: 0.075, output: 0.30 },
+    features: { streaming: true, functionCalling: true, vision: true },
+    latency: 'fast',
+    contextWindow: 1000000,
+    category: 'smart',
+  },
+  {
+    id: 'iaf-smart-gemini-flash-8b',
+    name: 'Gemini 1.5 Flash 8B',
+    description: 'Lightweight Gemini',
+    provider: 'openrouter',
+    actualModel: 'google/gemini-flash-1.5-8b',
+    pricing: { input: 0.0375, output: 0.15 },
+    features: { streaming: true, functionCalling: true, vision: true },
+    latency: 'ultra-fast',
+    contextWindow: 1000000,
+    category: 'smart',
+  },
+  {
+    id: 'iaf-smart-gemini-2-flash',
+    name: 'Gemini 2.0 Flash',
+    description: 'Latest Gemini',
+    provider: 'openrouter',
+    actualModel: 'google/gemini-2.0-flash-001',
+    pricing: { input: 0.10, output: 0.40 },
+    features: { streaming: true, functionCalling: true, vision: true },
+    latency: 'fast',
+    contextWindow: 1000000,
+    category: 'smart',
+  },
+
+  // ============================================================================
+  // CHEAP - DeepSeek Direct
+  // ============================================================================
+  {
+    id: 'iaf-cheap-deepseek-v3',
+    name: 'DeepSeek V3',
+    description: 'Best price/performance',
+    provider: 'deepseek',
+    actualModel: 'deepseek-chat',
+    pricing: { input: 0.14, output: 0.28 },
+    features: { streaming: true, functionCalling: true, vision: false },
+    latency: 'fast',
+    contextWindow: 64000,
+    category: 'cheap',
+  },
+  {
+    id: 'iaf-cheap-deepseek-coder',
+    name: 'DeepSeek Coder',
+    description: 'Code specialist',
+    provider: 'deepseek',
+    actualModel: 'deepseek-coder',
+    pricing: { input: 0.14, output: 0.28 },
+    features: { streaming: true, functionCalling: false, vision: false },
+    latency: 'fast',
+    contextWindow: 64000,
+    category: 'cheap',
+  },
+  {
+    id: 'iaf-cheap-deepseek-r1',
+    name: 'DeepSeek R1',
+    description: 'Reasoning with CoT',
+    provider: 'deepseek',
+    actualModel: 'deepseek-reasoner',
+    pricing: { input: 0.55, output: 2.19 },
+    features: { streaming: true, functionCalling: false, vision: false },
+    latency: 'normal',
+    contextWindow: 64000,
+    category: 'cheap',
+  },
+
+  // ============================================================================
+  // CHINESE - Alibaba Qwen via OpenRouter
+  // ============================================================================
+  {
+    id: 'iaf-chinese-qwen-72b',
+    name: 'Qwen 2.5 72B',
+    description: 'Alibaba flagship',
+    provider: 'openrouter',
+    actualModel: 'qwen/qwen-2.5-72b-instruct',
+    pricing: { input: 0.35, output: 0.40 },
+    features: { streaming: true, functionCalling: true, vision: false },
+    latency: 'fast',
+    contextWindow: 131072,
+    category: 'chinese',
+  },
+  {
+    id: 'iaf-chinese-qwen-32b',
+    name: 'Qwen 2.5 32B',
+    description: 'Alibaba mid-size',
+    provider: 'openrouter',
+    actualModel: 'qwen/qwen-2.5-32b-instruct',
+    pricing: { input: 0.20, output: 0.20 },
+    features: { streaming: true, functionCalling: true, vision: false },
+    latency: 'fast',
+    contextWindow: 131072,
+    category: 'chinese',
+  },
+  {
+    id: 'iaf-chinese-qwen-7b',
+    name: 'Qwen 2.5 7B',
+    description: 'Alibaba lightweight',
+    provider: 'openrouter',
+    actualModel: 'qwen/qwen-2.5-7b-instruct',
+    pricing: { input: 0.10, output: 0.10 },
+    features: { streaming: true, functionCalling: true, vision: false },
+    latency: 'fast',
+    contextWindow: 131072,
+    category: 'chinese',
+  },
+  {
+    id: 'iaf-chinese-qwen-coder-32b',
+    name: 'Qwen 2.5 Coder 32B',
+    description: 'Alibaba code model',
+    provider: 'openrouter',
+    actualModel: 'qwen/qwen-2.5-coder-32b-instruct',
+    pricing: { input: 0.20, output: 0.20 },
+    features: { streaming: true, functionCalling: false, vision: false },
+    latency: 'fast',
+    contextWindow: 131072,
+    category: 'chinese',
+  },
+  {
+    id: 'iaf-chinese-qwen-vl-72b',
+    name: 'Qwen 2 VL 72B',
+    description: 'Alibaba vision model',
+    provider: 'openrouter',
+    actualModel: 'qwen/qwen-2-vl-72b-instruct',
+    pricing: { input: 0.40, output: 0.40 },
+    features: { streaming: true, functionCalling: false, vision: true },
+    latency: 'fast',
+    contextWindow: 32768,
+    category: 'chinese',
+  },
+  {
+    id: 'iaf-chinese-qwq-32b',
+    name: 'QwQ 32B Preview',
+    description: 'Alibaba reasoning',
+    provider: 'openrouter',
+    actualModel: 'qwen/qwq-32b-preview',
+    pricing: { input: 0.20, output: 0.20 },
+    features: { streaming: true, functionCalling: false, vision: false },
+    latency: 'normal',
+    contextWindow: 32768,
+    category: 'chinese',
+  },
+
+  // ============================================================================
+  // CHINESE - Zhipu GLM via OpenRouter
+  // ============================================================================
+  {
+    id: 'iaf-chinese-glm4-plus',
+    name: 'GLM-4 Plus',
+    description: 'Zhipu AI flagship',
+    provider: 'openrouter',
+    actualModel: 'zhipu/glm-4-plus',
+    pricing: { input: 0.60, output: 0.60 },
+    features: { streaming: true, functionCalling: true, vision: false },
+    latency: 'fast',
+    contextWindow: 128000,
+    category: 'chinese',
+  },
+  {
+    id: 'iaf-chinese-glm4-flash',
+    name: 'GLM-4 Flash',
+    description: 'Zhipu AI fast',
+    provider: 'openrouter',
+    actualModel: 'zhipu/glm-4-flash',
+    pricing: { input: 0.01, output: 0.01 },
+    features: { streaming: true, functionCalling: true, vision: false },
+    latency: 'ultra-fast',
+    contextWindow: 128000,
+    category: 'chinese',
+  },
+
+  // ============================================================================
+  // CHINESE - 01.AI Yi via OpenRouter
+  // ============================================================================
+  {
+    id: 'iaf-chinese-yi-large',
+    name: 'Yi Large',
+    description: '01.AI flagship',
+    provider: 'openrouter',
+    actualModel: '01-ai/yi-large',
+    pricing: { input: 0.30, output: 0.30 },
+    features: { streaming: true, functionCalling: false, vision: false },
+    latency: 'fast',
+    contextWindow: 32768,
+    category: 'chinese',
+  },
+  {
+    id: 'iaf-chinese-yi-large-turbo',
+    name: 'Yi Large Turbo',
+    description: '01.AI fast',
+    provider: 'openrouter',
+    actualModel: '01-ai/yi-large-turbo',
+    pricing: { input: 0.19, output: 0.19 },
+    features: { streaming: true, functionCalling: false, vision: false },
+    latency: 'fast',
+    contextWindow: 16384,
+    category: 'chinese',
+  },
+  {
+    id: 'iaf-chinese-yi-vision',
+    name: 'Yi Vision',
+    description: '01.AI multimodal',
+    provider: 'openrouter',
+    actualModel: '01-ai/yi-vision',
+    pricing: { input: 0.19, output: 0.19 },
+    features: { streaming: true, functionCalling: false, vision: true },
+    latency: 'fast',
+    contextWindow: 16384,
+    category: 'chinese',
+  },
+
+  // ============================================================================
+  // CHINESE - Moonshot Kimi via OpenRouter
+  // ============================================================================
+  {
+    id: 'iaf-chinese-kimi-128k',
+    name: 'Moonshot Kimi 128K',
+    description: 'Kimi long context',
+    provider: 'openrouter',
+    actualModel: 'moonshotai/moonshot-v1-128k',
+    pricing: { input: 0.60, output: 0.60 },
+    features: { streaming: true, functionCalling: false, vision: false },
+    latency: 'fast',
+    contextWindow: 128000,
+    category: 'chinese',
+  },
+  {
+    id: 'iaf-chinese-kimi-32k',
+    name: 'Moonshot Kimi 32K',
+    description: 'Kimi standard',
+    provider: 'openrouter',
+    actualModel: 'moonshotai/moonshot-v1-32k',
+    pricing: { input: 0.24, output: 0.24 },
+    features: { streaming: true, functionCalling: false, vision: false },
+    latency: 'fast',
+    contextWindow: 32000,
+    category: 'chinese',
+  },
+
+  // ============================================================================
+  // CHINESE - MiniMax via OpenRouter
+  // ============================================================================
+  {
+    id: 'iaf-chinese-minimax',
+    name: 'MiniMax',
+    description: 'MiniMax flagship',
+    provider: 'openrouter',
+    actualModel: 'minimax/minimax-01',
+    pricing: { input: 0.20, output: 1.10 },
+    features: { streaming: true, functionCalling: true, vision: true },
+    latency: 'fast',
+    contextWindow: 1000000,
+    category: 'chinese',
+  },
+
+  // ============================================================================
+  // CHINESE - Baichuan via OpenRouter
+  // ============================================================================
+  {
+    id: 'iaf-chinese-baichuan',
+    name: 'Baichuan 4',
+    description: 'Baichuan flagship',
+    provider: 'openrouter',
+    actualModel: 'baichuan/baichuan-4',
+    pricing: { input: 0.50, output: 0.50 },
+    features: { streaming: true, functionCalling: false, vision: false },
+    latency: 'fast',
+    contextWindow: 32768,
+    category: 'chinese',
+  },
+
+  // ============================================================================
+  // OPEN-SOURCE - Meta Llama via OpenRouter
+  // ============================================================================
+  {
+    id: 'iaf-open-llama-405b',
+    name: 'Llama 3.1 405B',
+    description: 'Meta largest open model',
+    provider: 'openrouter',
+    actualModel: 'meta-llama/llama-3.1-405b-instruct',
+    pricing: { input: 2.70, output: 2.70 },
+    features: { streaming: true, functionCalling: true, vision: false },
+    latency: 'normal',
+    contextWindow: 131072,
+    category: 'open-source',
+  },
+  {
+    id: 'iaf-open-llama-70b',
+    name: 'Llama 3.1 70B',
+    description: 'Meta flagship open',
+    provider: 'openrouter',
+    actualModel: 'meta-llama/llama-3.1-70b-instruct',
+    pricing: { input: 0.52, output: 0.75 },
+    features: { streaming: true, functionCalling: true, vision: false },
+    latency: 'fast',
+    contextWindow: 131072,
+    category: 'open-source',
+  },
+  {
+    id: 'iaf-open-llama-8b',
+    name: 'Llama 3.1 8B',
+    description: 'Meta lightweight',
+    provider: 'openrouter',
+    actualModel: 'meta-llama/llama-3.1-8b-instruct',
+    pricing: { input: 0.055, output: 0.055 },
+    features: { streaming: true, functionCalling: true, vision: false },
+    latency: 'fast',
+    contextWindow: 131072,
+    category: 'open-source',
+  },
+  {
+    id: 'iaf-open-llama-3.3-70b',
+    name: 'Llama 3.3 70B',
+    description: 'Meta latest 70B',
+    provider: 'openrouter',
+    actualModel: 'meta-llama/llama-3.3-70b-instruct',
+    pricing: { input: 0.30, output: 0.30 },
+    features: { streaming: true, functionCalling: true, vision: false },
+    latency: 'fast',
+    contextWindow: 131072,
+    category: 'open-source',
+  },
+
+  // ============================================================================
+  // OPEN-SOURCE - Mistral via OpenRouter
+  // ============================================================================
+  {
+    id: 'iaf-open-mistral-large',
+    name: 'Mistral Large',
+    description: 'Mistral flagship',
+    provider: 'openrouter',
+    actualModel: 'mistralai/mistral-large-2411',
+    pricing: { input: 2.0, output: 6.0 },
+    features: { streaming: true, functionCalling: true, vision: false },
+    latency: 'normal',
+    contextWindow: 128000,
+    category: 'open-source',
+  },
+  {
+    id: 'iaf-open-mistral-medium',
+    name: 'Mistral Medium',
+    description: 'Mistral balanced',
+    provider: 'openrouter',
+    actualModel: 'mistralai/mistral-medium',
+    pricing: { input: 2.70, output: 8.10 },
+    features: { streaming: true, functionCalling: false, vision: false },
+    latency: 'normal',
+    contextWindow: 32000,
+    category: 'open-source',
+  },
+  {
+    id: 'iaf-open-mistral-small',
+    name: 'Mistral Small',
+    description: 'Mistral efficient',
+    provider: 'openrouter',
+    actualModel: 'mistralai/mistral-small-2409',
+    pricing: { input: 0.20, output: 0.60 },
+    features: { streaming: true, functionCalling: true, vision: false },
+    latency: 'fast',
+    contextWindow: 32000,
+    category: 'open-source',
+  },
+  {
+    id: 'iaf-open-mistral-nemo',
+    name: 'Mistral Nemo',
+    description: 'Mistral 12B open',
+    provider: 'openrouter',
+    actualModel: 'mistralai/mistral-nemo',
+    pricing: { input: 0.13, output: 0.13 },
+    features: { streaming: true, functionCalling: true, vision: false },
+    latency: 'fast',
+    contextWindow: 128000,
+    category: 'open-source',
+  },
+  {
+    id: 'iaf-open-codestral',
+    name: 'Codestral',
+    description: 'Mistral code model',
+    provider: 'openrouter',
+    actualModel: 'mistralai/codestral-2501',
+    pricing: { input: 0.30, output: 0.90 },
+    features: { streaming: true, functionCalling: true, vision: false },
+    latency: 'fast',
+    contextWindow: 256000,
+    category: 'open-source',
+  },
+  {
+    id: 'iaf-open-pixtral-large',
+    name: 'Pixtral Large',
+    description: 'Mistral vision model',
+    provider: 'openrouter',
+    actualModel: 'mistralai/pixtral-large-2411',
+    pricing: { input: 2.0, output: 6.0 },
+    features: { streaming: true, functionCalling: true, vision: true },
+    latency: 'normal',
+    contextWindow: 128000,
+    category: 'open-source',
+  },
+  {
+    id: 'iaf-open-pixtral-12b',
+    name: 'Pixtral 12B',
+    description: 'Mistral small vision',
+    provider: 'openrouter',
+    actualModel: 'mistralai/pixtral-12b',
+    pricing: { input: 0.10, output: 0.10 },
+    features: { streaming: true, functionCalling: false, vision: true },
+    latency: 'fast',
+    contextWindow: 4096,
+    category: 'open-source',
+  },
+
+  // ============================================================================
+  // OPEN-SOURCE - Cohere via OpenRouter
+  // ============================================================================
+  {
+    id: 'iaf-open-command-r-plus',
+    name: 'Command R+',
+    description: 'Cohere flagship',
+    provider: 'openrouter',
+    actualModel: 'cohere/command-r-plus-08-2024',
+    pricing: { input: 2.50, output: 10.0 },
+    features: { streaming: true, functionCalling: true, vision: false },
+    latency: 'normal',
+    contextWindow: 128000,
+    category: 'open-source',
+  },
+  {
+    id: 'iaf-open-command-r',
+    name: 'Command R',
+    description: 'Cohere balanced',
+    provider: 'openrouter',
+    actualModel: 'cohere/command-r-08-2024',
+    pricing: { input: 0.14, output: 0.60 },
+    features: { streaming: true, functionCalling: true, vision: false },
+    latency: 'fast',
+    contextWindow: 128000,
+    category: 'open-source',
+  },
+  {
+    id: 'iaf-open-command-r7b',
+    name: 'Command R7B',
+    description: 'Cohere lightweight',
+    provider: 'openrouter',
+    actualModel: 'cohere/command-r7b-12-2024',
+    pricing: { input: 0.0375, output: 0.15 },
+    features: { streaming: true, functionCalling: true, vision: false },
+    latency: 'fast',
+    contextWindow: 128000,
+    category: 'open-source',
+  },
+
+  // ============================================================================
+  // OPEN-SOURCE - NousResearch via OpenRouter
+  // ============================================================================
+  {
+    id: 'iaf-open-hermes-405b',
+    name: 'Hermes 3 405B',
+    description: 'NousResearch flagship',
+    provider: 'openrouter',
+    actualModel: 'nousresearch/hermes-3-llama-3.1-405b',
+    pricing: { input: 0.80, output: 0.80 },
+    features: { streaming: true, functionCalling: true, vision: false },
+    latency: 'normal',
+    contextWindow: 131072,
+    category: 'open-source',
+  },
+  {
+    id: 'iaf-open-hermes-70b',
+    name: 'Hermes 3 70B',
+    description: 'NousResearch 70B',
+    provider: 'openrouter',
+    actualModel: 'nousresearch/hermes-3-llama-3.1-70b',
+    pricing: { input: 0.40, output: 0.40 },
+    features: { streaming: true, functionCalling: true, vision: false },
+    latency: 'fast',
+    contextWindow: 131072,
+    category: 'open-source',
+  },
+
+  // ============================================================================
+  // OPEN-SOURCE - Microsoft via OpenRouter
+  // ============================================================================
+  {
+    id: 'iaf-open-phi-4',
+    name: 'Phi-4',
+    description: 'Microsoft 14B SLM',
+    provider: 'openrouter',
+    actualModel: 'microsoft/phi-4',
+    pricing: { input: 0.07, output: 0.14 },
+    features: { streaming: true, functionCalling: false, vision: false },
+    latency: 'fast',
+    contextWindow: 16384,
+    category: 'open-source',
+  },
+  {
+    id: 'iaf-open-wizardlm-8x22b',
+    name: 'WizardLM 8x22B',
+    description: 'Microsoft instruction',
+    provider: 'openrouter',
+    actualModel: 'microsoft/wizardlm-2-8x22b',
+    pricing: { input: 0.50, output: 0.50 },
+    features: { streaming: true, functionCalling: false, vision: false },
+    latency: 'normal',
+    contextWindow: 65536,
+    category: 'open-source',
+  },
+
+  // ============================================================================
+  // OPEN-SOURCE - NVIDIA via OpenRouter
+  // ============================================================================
+  {
+    id: 'iaf-open-nemotron-70b',
+    name: 'Nemotron 70B',
+    description: 'NVIDIA instruction',
+    provider: 'openrouter',
+    actualModel: 'nvidia/llama-3.1-nemotron-70b-instruct',
+    pricing: { input: 0.12, output: 0.30 },
+    features: { streaming: true, functionCalling: true, vision: false },
+    latency: 'fast',
+    contextWindow: 131072,
+    category: 'open-source',
+  },
+
+  // ============================================================================
+  // OPEN-SOURCE - Databricks via OpenRouter
+  // ============================================================================
+  {
+    id: 'iaf-open-dbrx',
+    name: 'DBRX Instruct',
+    description: 'Databricks MoE',
+    provider: 'openrouter',
+    actualModel: 'databricks/dbrx-instruct',
+    pricing: { input: 0.60, output: 0.60 },
+    features: { streaming: true, functionCalling: false, vision: false },
+    latency: 'fast',
+    contextWindow: 32768,
+    category: 'open-source',
+  },
+
+  // ============================================================================
+  // SPECIALIZED - Perplexity via OpenRouter
+  // ============================================================================
+  {
+    id: 'iaf-spec-perplexity-online',
+    name: 'Perplexity Online',
+    description: 'Web-connected search',
+    provider: 'openrouter',
+    actualModel: 'perplexity/llama-3.1-sonar-large-128k-online',
+    pricing: { input: 1.0, output: 1.0 },
+    features: { streaming: true, functionCalling: false, vision: false },
+    latency: 'normal',
+    contextWindow: 127072,
+    category: 'specialized',
+  },
+  {
+    id: 'iaf-spec-perplexity-chat',
+    name: 'Perplexity Chat',
+    description: 'Perplexity offline',
+    provider: 'openrouter',
+    actualModel: 'perplexity/llama-3.1-sonar-large-128k-chat',
+    pricing: { input: 1.0, output: 1.0 },
+    features: { streaming: true, functionCalling: false, vision: false },
+    latency: 'fast',
+    contextWindow: 131072,
+    category: 'specialized',
+  },
+  {
+    id: 'iaf-spec-perplexity-huge',
+    name: 'Perplexity Huge Online',
+    description: 'Best Perplexity search',
+    provider: 'openrouter',
+    actualModel: 'perplexity/llama-3.1-sonar-huge-128k-online',
+    pricing: { input: 5.0, output: 5.0 },
+    features: { streaming: true, functionCalling: false, vision: false },
+    latency: 'normal',
+    contextWindow: 127072,
+    category: 'specialized',
+  },
+
+  // ============================================================================
+  // SPECIALIZED - AI21 via OpenRouter
+  // ============================================================================
+  {
+    id: 'iaf-spec-jamba-large',
+    name: 'Jamba 1.5 Large',
+    description: 'AI21 256K context',
+    provider: 'openrouter',
+    actualModel: 'ai21/jamba-1-5-large',
+    pricing: { input: 2.0, output: 8.0 },
+    features: { streaming: true, functionCalling: true, vision: false },
+    latency: 'normal',
+    contextWindow: 256000,
+    category: 'specialized',
+  },
+  {
+    id: 'iaf-spec-jamba-mini',
+    name: 'Jamba 1.5 Mini',
+    description: 'AI21 efficient',
+    provider: 'openrouter',
+    actualModel: 'ai21/jamba-1-5-mini',
+    pricing: { input: 0.20, output: 0.40 },
+    features: { streaming: true, functionCalling: true, vision: false },
+    latency: 'fast',
+    contextWindow: 256000,
+    category: 'specialized',
+  },
+
+  // ============================================================================
+  // SPECIALIZED - Amazon via OpenRouter
+  // ============================================================================
+  {
+    id: 'iaf-spec-nova-pro',
+    name: 'Amazon Nova Pro',
+    description: 'AWS flagship',
+    provider: 'openrouter',
+    actualModel: 'amazon/nova-pro-v1',
+    pricing: { input: 0.80, output: 3.20 },
+    features: { streaming: true, functionCalling: true, vision: true },
+    latency: 'normal',
+    contextWindow: 300000,
+    category: 'specialized',
+  },
+  {
+    id: 'iaf-spec-nova-lite',
+    name: 'Amazon Nova Lite',
+    description: 'AWS efficient',
+    provider: 'openrouter',
+    actualModel: 'amazon/nova-lite-v1',
+    pricing: { input: 0.06, output: 0.24 },
+    features: { streaming: true, functionCalling: true, vision: true },
+    latency: 'fast',
+    contextWindow: 300000,
+    category: 'specialized',
+  },
+  {
+    id: 'iaf-spec-nova-micro',
+    name: 'Amazon Nova Micro',
+    description: 'AWS text-only fast',
+    provider: 'openrouter',
+    actualModel: 'amazon/nova-micro-v1',
+    pricing: { input: 0.035, output: 0.14 },
+    features: { streaming: true, functionCalling: true, vision: false },
+    latency: 'ultra-fast',
+    contextWindow: 128000,
+    category: 'specialized',
+  },
+
+  // ============================================================================
+  // SPECIALIZED - xAI via OpenRouter
+  // ============================================================================
+  {
+    id: 'iaf-spec-grok-2',
+    name: 'Grok 2',
+    description: 'xAI flagship',
+    provider: 'openrouter',
+    actualModel: 'x-ai/grok-2-1212',
+    pricing: { input: 2.0, output: 10.0 },
+    features: { streaming: true, functionCalling: true, vision: false },
+    latency: 'normal',
+    contextWindow: 131072,
+    category: 'specialized',
+  },
+  {
+    id: 'iaf-spec-grok-vision',
+    name: 'Grok 2 Vision',
+    description: 'xAI multimodal',
+    provider: 'openrouter',
+    actualModel: 'x-ai/grok-2-vision-1212',
+    pricing: { input: 2.0, output: 10.0 },
+    features: { streaming: true, functionCalling: false, vision: true },
+    latency: 'normal',
+    contextWindow: 32768,
+    category: 'specialized',
+  },
+  {
+    id: 'iaf-spec-grok-beta',
+    name: 'Grok Beta',
+    description: 'xAI experimental',
+    provider: 'openrouter',
+    actualModel: 'x-ai/grok-beta',
+    pricing: { input: 5.0, output: 15.0 },
+    features: { streaming: true, functionCalling: true, vision: false },
+    latency: 'normal',
+    contextWindow: 131072,
+    category: 'specialized',
+  },
+
+  // ============================================================================
+  // SPECIALIZED - Inflection via OpenRouter
+  // ============================================================================
+  {
+    id: 'iaf-spec-inflection-3',
+    name: 'Inflection 3',
+    description: 'Pi model flagship',
+    provider: 'openrouter',
+    actualModel: 'inflection/inflection-3-pi',
+    pricing: { input: 0.80, output: 0.80 },
+    features: { streaming: true, functionCalling: false, vision: false },
+    latency: 'fast',
+    contextWindow: 8000,
+    category: 'specialized',
+  },
+  {
+    id: 'iaf-spec-inflection-prod',
+    name: 'Inflection 3 Prod',
+    description: 'Pi production',
+    provider: 'openrouter',
+    actualModel: 'inflection/inflection-3-productivity',
+    pricing: { input: 1.0, output: 1.0 },
+    features: { streaming: true, functionCalling: false, vision: false },
+    latency: 'fast',
+    contextWindow: 8000,
+    category: 'specialized',
+  },
+
+  // ============================================================================
+  // LOCAL - On-premise (RGPD compliance, data sovereignty)
+  // ============================================================================
+  {
+    id: 'iaf-local-llama-8b',
+    name: 'Llama 3.1 8B (Local)',
+    description: 'On-premise RGPD',
+    provider: 'ollama',
+    actualModel: 'llama3.1:8b',
+    pricing: { input: 0, output: 0 },
+    features: { streaming: true, functionCalling: false, vision: false },
+    latency: 'slow',
+    contextWindow: 128000,
+    category: 'local',
+  },
+  {
+    id: 'iaf-local-llama-70b',
+    name: 'Llama 3.1 70B (Local)',
+    description: 'On-premise large',
+    provider: 'ollama',
+    actualModel: 'llama3.1:70b',
+    pricing: { input: 0, output: 0 },
+    features: { streaming: true, functionCalling: false, vision: false },
+    latency: 'slow',
+    contextWindow: 128000,
+    category: 'local',
+  },
+  {
+    id: 'iaf-local-mistral-7b',
+    name: 'Mistral 7B (Local)',
+    description: 'French on-premise',
+    provider: 'ollama',
+    actualModel: 'mistral:7b',
+    pricing: { input: 0, output: 0 },
+    features: { streaming: true, functionCalling: false, vision: false },
+    latency: 'slow',
+    contextWindow: 32768,
+    category: 'local',
+  },
+  {
+    id: 'iaf-local-mixtral',
+    name: 'Mixtral 8x7B (Local)',
+    description: 'MoE on-premise',
+    provider: 'ollama',
+    actualModel: 'mixtral:8x7b',
+    pricing: { input: 0, output: 0 },
+    features: { streaming: true, functionCalling: false, vision: false },
+    latency: 'slow',
+    contextWindow: 32768,
+    category: 'local',
+  },
+  {
+    id: 'iaf-local-qwen-7b',
+    name: 'Qwen 2.5 7B (Local)',
+    description: 'Chinese on-premise',
+    provider: 'ollama',
+    actualModel: 'qwen2.5:7b',
+    pricing: { input: 0, output: 0 },
+    features: { streaming: true, functionCalling: false, vision: false },
+    latency: 'slow',
+    contextWindow: 32768,
+    category: 'local',
+  },
+  {
+    id: 'iaf-local-deepseek-coder',
+    name: 'DeepSeek Coder (Local)',
+    description: 'Code on-premise',
+    provider: 'ollama',
+    actualModel: 'deepseek-coder:6.7b',
+    pricing: { input: 0, output: 0 },
+    features: { streaming: true, functionCalling: false, vision: false },
+    latency: 'slow',
+    contextWindow: 16384,
+    category: 'local',
+  },
+  {
+    id: 'iaf-local-codellama',
+    name: 'CodeLlama 34B (Local)',
+    description: 'Meta code local',
+    provider: 'ollama',
+    actualModel: 'codellama:34b',
+    pricing: { input: 0, output: 0 },
+    features: { streaming: true, functionCalling: false, vision: false },
+    latency: 'slow',
+    contextWindow: 16384,
+    category: 'local',
+  },
+  {
+    id: 'iaf-local-phi3',
+    name: 'Phi-3 Mini (Local)',
+    description: 'Microsoft SLM local',
+    provider: 'ollama',
+    actualModel: 'phi3:mini',
+    pricing: { input: 0, output: 0 },
+    features: { streaming: true, functionCalling: false, vision: false },
+    latency: 'fast',
+    contextWindow: 4096,
+    category: 'local',
+  },
+  {
+    id: 'iaf-local-gemma2',
+    name: 'Gemma 2 9B (Local)',
+    description: 'Google SLM local',
+    provider: 'ollama',
+    actualModel: 'gemma2:9b',
+    pricing: { input: 0, output: 0 },
+    features: { streaming: true, functionCalling: false, vision: false },
+    latency: 'fast',
+    contextWindow: 8192,
+    category: 'local',
+  },
+];
+
+export function getAvailableModels(): ModelProfile[] {
+  return MODEL_PROFILES;
+}
+
+export function getModelById(id: string): ModelProfile | undefined {
+  return MODEL_PROFILES.find((m) => m.id === id);
+}
+
+export function getDefaultModel(): ModelProfile {
+  return MODEL_PROFILES[0]; // iaf-fast-llama
+}

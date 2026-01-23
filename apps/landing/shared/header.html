@@ -1,0 +1,96 @@
+<!-- IAFactory Header Component -->
+<header class="iaf-header">
+    <div class="iaf-header-container">
+        <a href="/" class="iaf-logo">
+            <div class="iaf-logo-icon">⚡</div>
+            <span class="iaf-logo-text">IAFactory <span class="iaf-logo-highlight">DZ</span></span>
+        </a>
+
+        <nav class="iaf-nav">
+            <a href="/apps.html" class="iaf-nav-link">Applications</a>
+            <a href="/agents.html" class="iaf-nav-link">Agents IA</a>
+            <a href="/workflows.html" class="iaf-nav-link">Workflows</a>
+            <a href="/pricing.html" class="iaf-nav-link">Tarifs</a>
+            <a href="/docs/documentation.html" class="iaf-nav-link">Docs</a>
+        </nav>
+
+        <div class="iaf-header-actions">
+            <button class="iaf-theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <i class="fas fa-moon"></i>
+            </button>
+            <div class="iaf-language-dropdown">
+                <button class="iaf-lang-btn" onclick="toggleLangMenu(event)">
+                    🌐 FR
+                </button>
+                <div class="iaf-lang-menu" id="langMenu">
+                    <button onclick="changeLanguage('fr')">🇫🇷 Français</button>
+                    <button onclick="changeLanguage('ar')">🇩🇿 العربية</button>
+                    <button onclick="changeLanguage('en')">🇬🇧 English</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<script>
+// Header functionality
+(function() {
+    // Theme toggle
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            const icon = themeToggle.querySelector('i');
+            icon.className = newTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+            localStorage.setItem('iaf_theme', newTheme);
+        });
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('iaf_theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        const icon = themeToggle.querySelector('i');
+        icon.className = savedTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+    }
+
+    // Language menu
+    window.toggleLangMenu = function(event) {
+        event.stopPropagation();
+        const menu = document.getElementById('langMenu');
+        if (menu) {
+            menu.classList.toggle('show');
+        }
+    };
+
+    window.changeLanguage = function(lang) {
+        const labels = { fr: '🌐 FR', en: '🌐 EN', ar: '🌐 AR' };
+        const langBtn = document.querySelector('.iaf-lang-btn');
+        if (langBtn) langBtn.textContent = labels[lang] || '🌐 FR';
+
+        const menu = document.getElementById('langMenu');
+        if (menu) menu.classList.remove('show');
+
+        document.documentElement.setAttribute('lang', lang);
+        document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+        localStorage.setItem('iaf_lang', lang);
+    };
+
+    // Close menu on outside click
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.iaf-language-dropdown')) {
+            const menu = document.getElementById('langMenu');
+            if (menu) menu.classList.remove('show');
+        }
+    });
+
+    // Load saved language
+    const savedLang = localStorage.getItem('iaf_lang') || 'fr';
+    const labels = { fr: '🌐 FR', en: '🌐 EN', ar: '🌐 AR' };
+    const langBtn = document.querySelector('.iaf-lang-btn');
+    if (langBtn) langBtn.textContent = labels[savedLang] || '🌐 FR';
+    document.documentElement.setAttribute('lang', savedLang);
+    document.documentElement.setAttribute('dir', savedLang === 'ar' ? 'rtl' : 'ltr');
+})();
+</script>

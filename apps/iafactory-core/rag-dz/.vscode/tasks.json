@@ -1,0 +1,275 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    // ============================================
+    // 🎨 MARKETING (Astro SSG)
+    // ============================================
+    {
+      "label": "marketing:dev",
+      "type": "shell",
+      "command": "npm run dev",
+      "options": {
+        "cwd": "${workspaceFolder}/apps/marketing"
+      },
+      "group": "none",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "group": "marketing"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "marketing:build",
+      "type": "shell",
+      "command": "npm run build",
+      "options": {
+        "cwd": "${workspaceFolder}/apps/marketing"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "group": "marketing"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "marketing:preview",
+      "type": "shell",
+      "command": "npm run preview",
+      "options": {
+        "cwd": "${workspaceFolder}/apps/marketing"
+      },
+      "group": "none",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "group": "marketing"
+      },
+      "problemMatcher": []
+    },
+
+    // ============================================
+    // 🚀 APP SAAS (Next.js) - DÉSACTIVÉ: apps/app n'existe pas
+    // ============================================
+    // NOTE: Créer apps/app/ avec Next.js pour réactiver ces tasks
+    // {
+    //   "label": "app:dev",
+    //   "type": "shell",
+    //   "command": "npm run dev",
+    //   "options": { "cwd": "${workspaceFolder}/apps/app" }
+    // },
+
+    // ============================================
+    // ⚡ API (FastAPI)
+    // ============================================
+    {
+      "label": "api:dev",
+      "type": "shell",
+      "command": "uvicorn app.main:app --reload --host 0.0.0.0 --port 8000",
+      "options": {
+        "cwd": "${workspaceFolder}/services/api"
+      },
+      "group": "none",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "group": "api"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "api:test",
+      "type": "shell",
+      "command": "pytest -v",
+      "options": {
+        "cwd": "${workspaceFolder}/services/api"
+      },
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "group": "api"
+      },
+      "problemMatcher": []
+    },
+
+    // ============================================
+    // 📦 DEPLOY VPS (rsync + SSH)
+    // ============================================
+    {
+      "label": "deploy:marketing",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-c",
+        "rsync -avz --delete ./apps/marketing/dist/ root@46.224.3.125:/opt/rag-dz-v2/marketing-dist/"
+      ],
+      "dependsOn": ["marketing:build"],
+      "group": "none",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "group": "deploy"
+      },
+      "problemMatcher": []
+    },
+    // NOTE: deploy:app désactivé - apps/app n'existe pas
+    // {
+    //   "label": "deploy:app",
+    //   "type": "shell",
+    //   "command": "bash",
+    //   "args": ["-c", "rsync -avz --delete ./apps/app/.next/ root@46.224.3.125:/opt/rag-dz-v2/app-dist/.next/"],
+    //   "dependsOn": ["app:build"]
+    // },
+    {
+      "label": "deploy:api",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-c",
+        "rsync -avz --exclude='__pycache__' --exclude='.venv' --exclude='*.pyc' ./services/api/ root@46.224.3.125:/opt/rag-dz-v2/services/api/"
+      ],
+      "group": "none",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "group": "deploy"
+      },
+      "problemMatcher": []
+    },
+
+    // ============================================
+    // 🖥️ VPS REMOTE COMMANDS (via SSH)
+    // ============================================
+    {
+      "label": "vps:nginx:test",
+      "type": "shell",
+      "command": "ssh",
+      "args": [
+        "root@46.224.3.125",
+        "nginx -t"
+      ],
+      "group": "none",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "group": "vps"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "vps:nginx:reload",
+      "type": "shell",
+      "command": "ssh",
+      "args": [
+        "root@46.224.3.125",
+        "nginx -t && systemctl reload nginx"
+      ],
+      "group": "none",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "group": "vps"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "vps:compose:up",
+      "type": "shell",
+      "command": "ssh",
+      "args": [
+        "root@46.224.3.125",
+        "cd /opt/rag-dz-v2 && docker compose up -d"
+      ],
+      "group": "none",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "group": "vps"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "vps:compose:down",
+      "type": "shell",
+      "command": "ssh",
+      "args": [
+        "root@46.224.3.125",
+        "cd /opt/rag-dz-v2 && docker compose down"
+      ],
+      "group": "none",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "group": "vps"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "vps:logs:api",
+      "type": "shell",
+      "command": "ssh",
+      "args": [
+        "root@46.224.3.125",
+        "cd /opt/rag-dz-v2 && docker compose logs -f --tail=100 api"
+      ],
+      "group": "none",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "group": "vps"
+      },
+      "problemMatcher": [],
+      "isBackground": true
+    },
+
+    // ============================================
+    // 🔧 WORKFLOWS COMBINÉS
+    // ============================================
+    {
+      "label": "workflow:deploy-marketing-full",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "marketing:build",
+        "deploy:marketing",
+        "vps:nginx:reload"
+      ],
+      "group": "none",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "group": "workflows"
+      },
+      "problemMatcher": []
+    },
+    // NOTE: workflow:deploy-app-full désactivé - apps/app n'existe pas
+    // {
+    //   "label": "workflow:deploy-app-full",
+    //   "dependsOrder": "sequence",
+    //   "dependsOn": ["app:build", "deploy:app", "vps:compose:up"]
+    // },
+    {
+      "label": "workflow:dev-all",
+      "dependsOrder": "parallel",
+      "dependsOn": [
+        "marketing:dev",
+        "api:dev"
+      ],
+      "group": "none",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "group": "workflows"
+      },
+      "problemMatcher": []
+    }
+  ]
+}

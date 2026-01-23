@@ -1,0 +1,20 @@
+{
+  "hero": {
+    "title": "📊 AI CRM - Smart Client Management",
+    "desc": "AI-powered CRM to manage your clients and opportunities",
+    "status": "Service active"
+  },
+  "features": {
+    "1": {"title": "Contact management", "desc": "AI-powered professional feature to maximize your productivity."},
+    "2": {"title": "Opportunity tracking", "desc": "AI-powered professional feature to maximize your productivity."},
+    "3": {"title": "Predictive analytics", "desc": "AI-powered professional feature to maximize your productivity."},
+    "4": {"title": "Automated reports", "desc": "AI-powered professional feature to maximize your productivity."}
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "status": "Connected"
+  },
+  "ready": "Ready to start?",
+  "launch": "Launch the app",
+  "launch_alert": "AI CRM - Smart Client Management - Feature in development"
+}

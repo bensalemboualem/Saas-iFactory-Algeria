@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IAFactory Admin - Agents</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="shared/iafactory-design-system.css">
+  <link rel="stylesheet" href="shared/iafactory-unified.css">
+  <style>
+    :root {
+      --bg-primary: #ffffff;
+      --bg-secondary: #f5f5f5;
+      --bg-card: #fafafa;
+      --text-primary: #0a0a0a;
+      --text-secondary: #525252;
+      --border-color: rgba(0, 0, 0, 0.12);
+      --accent: #8a5fff;
+    }
+    [data-theme="dark"] {
+      --bg-primary: #0a0a0a;
+      --bg-secondary: #171717;
+      --bg-card: #262626;
+      --text-primary: #ffffff;
+      --text-secondary: #a3a3a3;
+      --border-color: rgba(255, 255, 255, 0.12);
+      --accent: #9c7dff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Plus Jakarta Sans", "Tajawal", sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+    }
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border-color);
+      background: var(--bg-primary);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+    }
+    .brand img { height: 28px; }
+    .controls {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .btn {
+      border: 1px solid var(--border-color);
+      background: transparent;
+      color: var(--text-primary);
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 24px 64px;
+    }
+    .page-title h1 {
+      margin: 0 0 6px;
+      font-size: 28px;
+    }
+    .page-title p {
+      margin: 0 0 24px;
+      color: var(--text-secondary);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+    }
+    .card {
+      border: 1px solid var(--border-color);
+      background: var(--bg-card);
+      border-radius: 16px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-height: 180px;
+    }
+    .card h3 { margin: 0; font-size: 18px; }
+    .card p { margin: 0; color: var(--text-secondary); }
+    .meta {
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+    .card a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <header class="page-header">
+    <div class="brand">
+      <img src="assets/images/logoh.png" alt="IAFactory">
+      <span>IAFactory Admin</span>
+    </div>
+    <div class="controls">
+      <select id="langSelect" class="btn" onchange="setLanguage(this.value)">
+        <option value="fr">FR</option>
+        <option value="ar">AR</option>
+        <option value="en">EN</option>
+      </select>
+      <button class="btn" onclick="toggleTheme()">Theme</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="page-title">
+      <h1 data-i18n="agents.title">Agents Admin</h1>
+      <p data-i18n="agents.subtitle">Liste interne des agents non exposes aux users</p>
+    </div>
+
+    <section class="grid">
+      <div class="card">
+        <h3>IAFactory Operator</h3>
+        <p data-i18n="agents.operator.desc">Orchestrateur interne: planifier, analyser, executer.</p>
+        <div class="meta">
+          <span>iafactory-operator</span>
+          <a href="/admin/operator" data-i18n="agents.open">Ouvrir</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Legal Team</h3>
+        <p data-i18n="agents.legal.desc">Assistant juridique et redaction de documents.</p>
+        <div class="meta">
+          <span>legal</span>
+          <a href="/agents/legal" data-i18n="agents.open">Ouvrir</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Video Operator</h3>
+        <p data-i18n="agents.video.desc">Generation video et pipeline media.</p>
+        <div class="meta">
+          <span>video-operator</span>
+          <a href="/agents/video" data-i18n="agents.open">Ouvrir</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>UX Research</h3>
+        <p data-i18n="agents.ux.desc">Recherche UX et feedback produit.</p>
+        <div class="meta">
+          <span>ux-research</span>
+          <a href="/agents/ux-research" data-i18n="agents.open">Ouvrir</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Travel Agent</h3>
+        <p data-i18n="agents.travel.desc">Tourisme DZ, itineraire et budget.</p>
+        <div class="meta">
+          <span>travel</span>
+          <a href="/agents/travel" data-i18n="agents.open">Ouvrir</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Discovery DZ</h3>
+        <p data-i18n="agents.discovery.desc">Validation marche et interviews.</p>
+        <div class="meta">
+          <span>discovery-dz</span>
+          <a href="/agents/discovery" data-i18n="agents.open">Ouvrir</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Recruteur DZ</h3>
+        <p data-i18n="agents.recruteur.desc">Entretiens et evaluation candidats.</p>
+        <div class="meta">
+          <span>recruteur-dz</span>
+          <a href="/agents/recruteur" data-i18n="agents.open">Ouvrir</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Recruitment Team</h3>
+        <p data-i18n="agents.recruitment.desc">Pipeline recrutement multi-agent.</p>
+        <div class="meta">
+          <span>recruitment</span>
+          <a href="/agents/recruitment" data-i18n="agents.open">Ouvrir</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Real Estate Team</h3>
+        <p data-i18n="agents.realestate.desc">Immobilier: estimation et conseil.</p>
+        <div class="meta">
+          <span>real_estate</span>
+          <a href="/agents/real-estate" data-i18n="agents.open">Ouvrir</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Teaching Team</h3>
+        <p data-i18n="agents.teaching.desc">Assistant pedagogique et suivi.</p>
+        <div class="meta">
+          <span>teaching</span>
+          <a href="/agents/teaching" data-i18n="agents.open">Ouvrir</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Business Consultant</h3>
+        <p data-i18n="agents.consultant.desc">Conseil business et strategie.</p>
+        <div class="meta">
+          <span>business/consultant</span>
+          <a href="/agents/consultant" data-i18n="agents.open">Ouvrir</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Customer Support</h3>
+        <p data-i18n="agents.support.desc">Support client et base de connaissance.</p>
+        <div class="meta">
+          <span>business/customer-support</span>
+          <a href="/agents/support" data-i18n="agents.open">Ouvrir</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Data Analyst</h3>
+        <p data-i18n="agents.data.desc">Analyse de donnees et insights.</p>
+        <div class="meta">
+          <span>business/data-analysis</span>
+          <a href="/agents/data-analysis" data-i18n="agents.open">Ouvrir</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Financial Coach</h3>
+        <p data-i18n="agents.finance.desc">Coaching financier personnalise.</p>
+        <div class="meta">
+          <span>finance</span>
+          <a href="/agents/finance" data-i18n="agents.open">Ouvrir</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Local RAG</h3>
+        <p data-i18n="agents.localrag.desc">RAG local et recherche interne.</p>
+        <div class="meta">
+          <span>rag/local-rag</span>
+          <a href="/agents/local-rag" data-i18n="agents.open">Ouvrir</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Voice Support</h3>
+        <p data-i18n="agents.voice.desc">Support vocal multilingue.</p>
+        <div class="meta">
+          <span>rag/voice-support</span>
+          <a href="/agents/voice-support" data-i18n="agents.open">Ouvrir</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Finance RAG</h3>
+        <p data-i18n="agents.financeRag.desc">RAG financier et conseils.</p>
+        <div class="meta">
+          <span>rag/finance-agent</span>
+          <a href="/agents/finance-rag" data-i18n="agents.open">Ouvrir</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Chat PDF</h3>
+        <p data-i18n="agents.chatpdf.desc">Chat sur documents PDF.</p>
+        <div class="meta">
+          <span>rag/chat-pdf</span>
+          <a href="/agents/chat-pdf" data-i18n="agents.open">Ouvrir</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const ADMIN_PASSWORD = "demo123";
+    const SESSION_KEY = "iaf_admin_ok";
+
+    const translations = {
+      fr: {
+        "agents.title": "Agents Admin",
+        "agents.subtitle": "Liste interne des agents non exposes aux users",
+        "agents.open": "Ouvrir",
+        "agents.operator.desc": "Orchestrateur interne: planifier, analyser, executer.",
+        "agents.legal.desc": "Assistant juridique et redaction de documents.",
+        "agents.video.desc": "Generation video et pipeline media.",
+        "agents.ux.desc": "Recherche UX et feedback produit.",
+        "agents.travel.desc": "Tourisme DZ, itineraire et budget.",
+        "agents.discovery.desc": "Validation marche et interviews.",
+        "agents.recruteur.desc": "Entretiens et evaluation candidats.",
+        "agents.recruitment.desc": "Pipeline recrutement multi-agent.",
+        "agents.realestate.desc": "Immobilier: estimation et conseil.",
+        "agents.teaching.desc": "Assistant pedagogique et suivi.",
+        "agents.consultant.desc": "Conseil business et strategie.",
+        "agents.support.desc": "Support client et base de connaissance.",
+        "agents.data.desc": "Analyse de donnees et insights.",
+        "agents.finance.desc": "Coaching financier personnalise.",
+        "agents.localrag.desc": "RAG local et recherche interne.",
+        "agents.voice.desc": "Support vocal multilingue.",
+        "agents.financeRag.desc": "RAG financier et conseils.",
+        "agents.chatpdf.desc": "Chat sur documents PDF."
+      },
+      en: {
+        "agents.title": "Admin Agents",
+        "agents.subtitle": "Internal agents not exposed to users",
+        "agents.open": "Open",
+        "agents.operator.desc": "Internal orchestrator: plan, analyze, execute.",
+        "agents.legal.desc": "Legal assistant and document drafting.",
+        "agents.video.desc": "Video generation and media pipeline.",
+        "agents.ux.desc": "UX research and product feedback.",
+        "agents.travel.desc": "DZ travel, itinerary and budget.",
+        "agents.discovery.desc": "Market validation and interviews.",
+        "agents.recruteur.desc": "Recruitment interviews and evaluation.",
+        "agents.recruitment.desc": "Multi-agent recruitment pipeline.",
+        "agents.realestate.desc": "Real estate valuation and advice.",
+        "agents.teaching.desc": "Teaching assistant and follow-up.",
+        "agents.consultant.desc": "Business consulting and strategy.",
+        "agents.support.desc": "Customer support and knowledge base.",
+        "agents.data.desc": "Data analysis and insights.",
+        "agents.finance.desc": "Personal finance coaching.",
+        "agents.localrag.desc": "Local RAG and internal search.",
+        "agents.voice.desc": "Multilingual voice support.",
+        "agents.financeRag.desc": "Financial RAG and guidance.",
+        "agents.chatpdf.desc": "Chat with PDF documents."
+      },
+      ar: {
+        "agents.title": "عملاء الادمن",
+        "agents.subtitle": "قائمة داخلية غير موجهة للمستخدمين",
+        "agents.open": "فتح",
+        "agents.operator.desc": "مشغل داخلي: تخطيط، تحليل، تنفيذ.",
+        "agents.legal.desc": "مساعد قانوني وصياغة وثائق.",
+        "agents.video.desc": "توليد فيديو وخط معالجة.",
+        "agents.ux.desc": "بحث تجربة المستخدم وتغذية راجعة.",
+        "agents.travel.desc": "سفر الجزائر ومسار وميزانية.",
+        "agents.discovery.desc": "تحقق سوق ومقابلات.",
+        "agents.recruteur.desc": "مقابلات وتقييم مرشحين.",
+        "agents.recruitment.desc": "سير عمل توظيف متعدد الوكلاء.",
+        "agents.realestate.desc": "عقارات: تقييم ونصيحة.",
+        "agents.teaching.desc": "مساعد تعليمي ومتابعة.",
+        "agents.consultant.desc": "استشارة اعمال واستراتيجية.",
+        "agents.support.desc": "دعم عملاء وقاعدة معرفة.",
+        "agents.data.desc": "تحليل بيانات ونتائج.",
+        "agents.finance.desc": "توجيه مالي شخصي.",
+        "agents.localrag.desc": "RAG محلي وبحث داخلي.",
+        "agents.voice.desc": "دعم صوتي متعدد اللغات.",
+        "agents.financeRag.desc": "RAG مالي ونصائح.",
+        "agents.chatpdf.desc": "محادثة مع ملفات PDF."
+      }
+    };
+
+    function setLanguage(lang) {
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+      document.querySelectorAll("[data-i18n]").forEach((el) => {
+        const key = el.getAttribute("data-i18n");
+        if (translations[lang] && translations[lang][key]) {
+          el.textContent = translations[lang][key];
+        }
+      });
+      localStorage.setItem("lang", lang);
+      const select = document.getElementById("langSelect");
+      if (select) select.value = lang;
+    }
+
+    function toggleTheme() {
+      const root = document.documentElement;
+      const next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      localStorage.setItem("theme", next);
+    }
+
+    function requirePassword() {
+      if (sessionStorage.getItem(SESSION_KEY) === "1") return;
+      const input = prompt("Admin password:");
+      if (input === ADMIN_PASSWORD) {
+        sessionStorage.setItem(SESSION_KEY, "1");
+      } else {
+        window.location.href = "./index.html";
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      requirePassword();
+      const savedLang = localStorage.getItem("lang") || "fr";
+      const savedTheme = localStorage.getItem("theme") || "dark";
+      document.documentElement.setAttribute("data-theme", savedTheme);
+      setLanguage(savedLang);
+    });
+  </script>
+</body>
+</html>

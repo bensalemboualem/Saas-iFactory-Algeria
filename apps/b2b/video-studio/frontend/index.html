@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Studio Pro - IAFactory Algeria</title>
+    <link rel="stylesheet" href="../../shared/iafactory-unified.css">
+    <link rel="stylesheet" href="../../iafactory-landing/components/header-styles.css">
+    <link rel="stylesheet" href="../../iafactory-landing/components/footer-styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body { margin: 0; padding-top: var(--iaf-header-height, 60px); min-height: 100vh; font-family: var(--iaf-font-primary); background: var(--iaf-bg); color: var(--iaf-text); display: flex; flex-direction: column; }
+        .main-content { flex: 1; display: flex; align-items: center; justify-content: center; padding: 2rem; }
+        .container { max-width: 600px; background: var(--iaf-bg-card); border: 1px solid var(--iaf-border); border-radius: 16px; padding: 3rem; text-align: center; }
+        .icon { font-size: 4rem; margin-bottom: 1.5rem; }
+        h1 { font-size: 2rem; margin-bottom: 1rem; background: var(--iaf-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        p { color: var(--iaf-text-secondary); margin-bottom: 2rem; line-height: 1.6; }
+        .status { background: rgba(234, 179, 8, 0.1); border: 1px solid rgba(234, 179, 8, 0.3); border-radius: 8px; padding: 1rem; margin-bottom: 2rem; }
+        .btn { display: inline-block; background: var(--iaf-gradient); color: white; padding: 1rem 2rem; border-radius: 8px; text-decoration: none; font-weight: 600; transition: transform 0.2s; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0, 166, 81, 0.3); }
+        .info { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--iaf-border); }
+        .info-item { margin: 0.5rem 0; font-size: 0.875rem; color: var(--iaf-text-secondary); }
+        code { background: rgba(0, 0, 0, 0.3); padding: 0.25rem 0.5rem; border-radius: 4px; font-family: monospace; color: var(--iaf-green); }
+    </style>
+    <script src="../shared/footer-inject.js" defer></script>
+</head>
+<body data-theme="dark">
+    <!-- Header -->
+<header class="iaf-header" role="banner">
+    <div class="iaf-header-container">
+        <a href="../../iafactory-landing/index.html" class="header-logo" dir="ltr">
+            <!-- IAFactory Algeria Logo - Contour Neural -->
+            <svg width="48" height="48" viewBox="0 0 100 100" style="margin-right: 10px;">
+                <style>
+                    @keyframes pulse {
+                        0%, 100% { r: 5; opacity: 1; }
+                        50% { r: 7; opacity: 0.7; }
+                    }
+                    @keyframes pulse2 {
+                        0%, 100% { r: 5; opacity: 0.7; }
+                        50% { r: 7; opacity: 1; }
+                    }
+                    .node1 { animation: pulse 2s ease-in-out infinite; }
+                    .node2 { animation: pulse2 2s ease-in-out infinite 0.25s; }
+                    .node3 { animation: pulse 2s ease-in-out infinite 0.5s; }
+                    .node4 { animation: pulse2 2s ease-in-out infinite 0.75s; }
+                    .node5 { animation: pulse 2s ease-in-out infinite 1s; }
+                    .node6 { animation: pulse2 2s ease-in-out infinite 1.25s; }
+                    .node7 { animation: pulse 2s ease-in-out infinite 1.5s; }
+                    .node8 { animation: pulse2 2s ease-in-out infinite 1.75s; }
+                </style>
+                <line x1="50" y1="5" x2="85" y2="20" stroke="#00a651" stroke-width="2"/>
+                <line x1="85" y1="20" x2="95" y2="50" stroke="#00a651" stroke-width="2"/>
+                <line x1="95" y1="50" x2="85" y2="80" stroke="#00a651" stroke-width="2"/>
+                <line x1="85" y1="80" x2="50" y2="95" stroke="#00a651" stroke-width="2"/>
+                <line x1="50" y1="95" x2="15" y2="80" stroke="#00a651" stroke-width="2"/>
+                <line x1="15" y1="80" x2="5" y2="50" stroke="#00a651" stroke-width="2"/>
+                <line x1="5" y1="50" x2="15" y2="20" stroke="#00a651" stroke-width="2"/>
+                <line x1="15" y1="20" x2="50" y2="5" stroke="#00a651" stroke-width="2"/>
+                <circle cx="50" cy="5" r="5" fill="#00a651" class="node1"/>
+                <circle cx="85" cy="20" r="5" fill="#ef4444" class="node2"/>
+                <circle cx="95" cy="50" r="5" fill="#00a651" class="node3"/>
+                <circle cx="85" cy="80" r="5" fill="#ef4444" class="node4"/>
+                <circle cx="50" cy="95" r="5" fill="#00a651" class="node5"/>
+                <circle cx="15" cy="80" r="5" fill="#ef4444" class="node6"/>
+                <circle cx="5" cy="50" r="5" fill="#00a651" class="node7"/>
+                <circle cx="15" cy="20" r="5" fill="#ef4444" class="node8"/>
+                <circle cx="50" cy="50" r="32" fill="#00a651"/>
+                <text x="50" y="52" font-family="Arial Black, sans-serif" font-size="28" font-weight="900" text-anchor="middle" dominant-baseline="middle" fill="white">
+                    <tspan font-size="22">i</tspan><tspan font-size="28">AF</tspan>
+                </text>
+            </svg>
+            <span class="logo-text" style="font-size: 16px;">
+                <span style="color: #00a651;">i</span><span style="color: #00a651;">A</span><span style="color: var(--text);">F</span><span style="color: var(--text);">a</span><span style="color: var(--text);">c</span><span style="color: var(--text);">t</span><span style="color: var(--text);">o</span><span style="color: #ef4444;">r</span><span style="color: #ef4444;">y</span>
+                <span> </span>
+                <span style="color: var(--text);">A</span><span style="color: var(--text);">l</span><span style="color: var(--text);">g</span><span style="color: var(--text);">e</span><span style="color: var(--text);">r</span><span style="color: #00a651;">i</span><span style="color: #00a651;">a</span>
+            </span>
+        </a>
+        <nav class="iaf-nav" role="navigation">
+            <a href="../../iafactory-landing/index.html" class="iaf-nav-link"><i class="fa-solid fa-home iaf-nav-icon"></i><span data-i18n="home">Accueil</span></a>
+            <a href="../../iafactory-landing/apps.html" class="iaf-nav-link"><i class="fa-solid fa-th iaf-nav-icon"></i><span data-i18n="apps">Applications</span></a>
+            <a href="../../iafactory-landing/docs/directory/agents.html" class="iaf-nav-link"><i class="fa-solid fa-robot iaf-nav-icon"></i><span data-i18n="ai_agents">Agents IA</span></a>
+            <a href="../../iafactory-landing/workflows.html" class="iaf-nav-link"><i class="fa-solid fa-diagram-project iaf-nav-icon"></i><span data-i18n="workflows">Workflows</span></a>
+        </nav>
+        <div class="iaf-header-actions">
+            <div class="iaf-language-selector">
+                <button class="iaf-lang-btn" onclick="toggleLangMenu(event)">
+                    <i class="fa-solid fa-globe"></i>
+                    <span class="iaf-lang-label">FR</span>
+                </button>
+                <div class="iaf-lang-menu" id="iaf-lang-menu">
+                    <button class="iaf-lang-option active" onclick="setLanguage('fr')"><span>FR</span> Français</button>
+                    <button class="iaf-lang-option" onclick="setLanguage('en')"><span>EN</span> English</button>
+                    <button class="iaf-lang-option" onclick="setLanguage('ar')"><span>AR</span> العربية</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div class="main-content">
+        <div class="container">
+            <div class="icon">🎬</div>
+            <h1 data-i18n="video_studio_title">Video Studio Pro</h1>
+            <p data-i18n="video_studio_desc">Studio de création vidéo IA professionnel avec support Text-to-Video, Image-to-Video et Darija</p>
+            <div class="status"><span>⚠️</span> <strong data-i18n="coming_soon">Application en cours de déploiement</strong></div>
+            <p style="font-size: 0.95rem;" data-i18n="video_studio_info">Video Studio Pro est une application Next.js qui sera bientôt accessible en production.</p>
+            <a href="../../iafactory-landing/apps.html" class="btn">← <span data-i18n="back_home">Retour aux applications</span></a>
+            <div class="info">
+                <div class="info-item"><strong>Pour les développeurs:</strong></div>
+                <div class="info-item">Lancer en local: <code>cd frontend && npm run dev</code></div>
+                <div class="info-item">L'app sera disponible sur <code>http://localhost:3000</code></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+<div data-iaf-footer></div>
+
+    <script src="../../shared/iafactory-unified.js"></script>
+    <script>
+        // Year
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Language menu toggle
+        function toggleLangMenu(e) {
+            e.stopPropagation();
+            document.getElementById('iaf-lang-menu').classList.toggle('show');
+        }
+        function setLanguage(lang) {
+            document.documentElement.lang = lang;
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            document.getElementById('iaf-lang-menu').classList.remove('show');
+            document.querySelector('.iaf-lang-label').textContent = lang.toUpperCase();
+            localStorage.setItem('iafactory_lang', lang);
+        }
+        document.addEventListener('click', () => {
+            document.getElementById('iaf-lang-menu')?.classList.remove('show');
+        });
+    </script>
+</body>
+</html>

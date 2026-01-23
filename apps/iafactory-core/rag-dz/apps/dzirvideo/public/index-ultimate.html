@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dzir IA Video v2.1 - 40 Générateurs IA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header .stats {
+            display: flex;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .stat {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat .number {
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .stat .label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .main-panel {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .generator-selector {
+            background: #f8f9ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .mode-toggle {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .mode-toggle label {
+            flex: 1;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s;
+        }
+
+        .mode-toggle input[type="radio"] {
+            display: none;
+        }
+
+        .mode-toggle input[type="radio"]:checked + .mode-label {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .generator-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+        }
+
+        .generator-card.selected {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+
+        .cost-estimate {
+            background: #fffbea;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #f59e0b;
+            margin-top: 15px;
+        }
+
+        .cost-estimate .price {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #f59e0b;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-right: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+
+        .progress-panel {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9ff;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .progress-panel.active {
+            display: block;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: #e0e0e0;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .result-card video {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .result-card .info {
+            padding: 15px;
+        }
+
+        .result-card .generator-name {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .result-card .metadata {
+            font-size: 0.9em;
+            color: #6b7280;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: bold;
+            margin: 5px 5px 5px 0;
+        }
+
+        .badge-free {
+            background: #10b981;
+            color: white;
+        }
+
+        .badge-freemium {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .badge-premium {
+            background: #f59e0b;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .header .stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🎬 Dzir IA Video v2.1</h1>
+            <p style="color: #6b7280; margin-top: 10px;">Plateforme Unifiée Multi-Générateurs IA</p>
+
+            <div class="stats">
+                <div class="stat">
+                    <div class="number">40</div>
+                    <div class="label">Générateurs IA</div>
+                </div>
+                <div class="stat">
+                    <div class="number">17</div>
+                    <div class="label">Text-to-Video</div>
+                </div>
+                <div class="stat">
+                    <div class="number">9</div>
+                    <div class="label">Text-to-Image</div>
+                </div>
+                <div class="stat">
+                    <div class="number">FREE</div>
+                    <div class="label">Options Gratuites</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Panel -->
+        <div class="main-panel">
+            <h2 style="margin-bottom: 20px;">Créer une Vidéo IA</h2>
+
+            <!-- Mode Selection -->
+            <div class="mode-toggle">
+                <label>
+                    <input type="radio" name="mode" value="auto" checked>
+                    <div class="mode-label">🤖 Auto-Sélection (Smart Router)</div>
+                </label>
+                <label>
+                    <input type="radio" name="mode" value="manual">
+                    <div class="mode-label">🎯 Sélection Manuelle</div>
+                </label>
+                <label>
+                    <input type="radio" name="mode" value="compare">
+                    <div class="mode-label">⚖️ Mode Comparaison (4 générateurs)</div>
+                </label>
+            </div>
+
+            <!-- Prompt Input -->
+            <div class="form-group">
+                <label for="prompt">✨ Prompt (Description de la vidéo)</label>
+                <textarea id="prompt" placeholder="Ex: Un magnifique coucher de soleil sur le désert algérien du Sahara..."></textarea>
+            </div>
+
+            <!-- Generator Selector (Manual Mode) -->
+            <div id="manual-selector" class="generator-selector" style="display: none;">
+                <label for="generator">Choisir le générateur:</label>
+                <select id="generator">
+                    <optgroup label="💰 GRATUIT - Text-to-Video">
+                        <option value="wan_2_1">⭐ WAN 2.1 (Alibaba) - FREE 100/jour - Quality 85</option>
+                        <option value="digen_sora">DIGEN Sora - FREE Illimité - Quality 78</option>
+                        <option value="cogvideo">CogVideo - FREE Open Source - Quality 78</option>
+                        <option value="open_sora">Open-Sora - FREE Open Source - Quality 75</option>
+                    </optgroup>
+                    <optgroup label="💎 FREEMIUM - Text-to-Video">
+                        <option value="kling_ai">Kling AI - $0.01/s (66 free/day) - Quality 90</option>
+                        <option value="luma_dream">Luma Dream - $0.02/s (30 free/month) - Quality 90</option>
+                        <option value="pika_labs">Pika Labs - $0.015/s (250 credits) - Quality 87</option>
+                        <option value="hailuo_ai">Hailuo AI - $0.008/s (50 credits) - Quality 88</option>
+                        <option value="vidu_ai">Vidu AI - $0.012/s (20 free/day) - Quality 88</option>
+                        <option value="pollo_ai">Pollo AI - $0.008/s (30 free/day) - Quality 79</option>
+                        <option value="krea_video">Krea Video - $0.015/s (15 free/day) - Quality 86</option>
+                    </optgroup>
+                    <optgroup label="🔥 PREMIUM - Text-to-Video">
+                        <option value="runway_gen4">Runway Gen-4 - $0.05/s - Quality 95 (BEST)</option>
+                        <option value="veo_2">Google Veo 2 - $0.50/s - Quality 93</option>
+                        <option value="ltx_studio">LTX Studio - $0.03/s - Quality 93</option>
+                    </optgroup>
+                    <optgroup label="💰 GRATUIT - Text-to-Image">
+                        <option value="qwen_vl">⭐ Qwen-VL (Alibaba) - FREE 200/jour - Quality 80</option>
+                        <option value="flux_1">FLUX.1 - FREE Illimité - Quality 90</option>
+                    </optgroup>
+                    <optgroup label="💎 FREEMIUM - Text-to-Image">
+                        <option value="ideogram">Ideogram - $0.025/img (25/day) - Quality 89</option>
+                        <option value="leonardo_ai">Leonardo AI - $0.01/img (150/day) - Quality 87</option>
+                        <option value="playground_v2">Playground v2 - $0.02/img (50/day) - Quality 88</option>
+                    </optgroup>
+                    <optgroup label="🔥 PREMIUM - Text-to-Image">
+                        <option value="midjourney">Midjourney - $0.05/img - Quality 97 (BEST)</option>
+                        <option value="dall_e_3">DALL-E 3 - $0.04/img - Quality 93</option>
+                        <option value="adobe_firefly">Adobe Firefly - $0.03/img - Quality 91</option>
+                        <option value="stable_diffusion_35">Stable Diffusion 3.5 - $0.04/img - Quality 90</option>
+                    </optgroup>
+                </select>
+            </div>
+
+            <!-- Comparison Selector -->
+            <div id="comparison-selector" class="generator-selector" style="display: none;">
+                <h3>Sélectionner 4 générateurs à comparer:</h3>
+                <div class="comparison-grid">
+                    <div class="generator-card">
+                        <input type="checkbox" name="compare_gen" value="wan_2_1" id="cmp_wan">
+                        <label for="cmp_wan"><strong>WAN 2.1</strong> (FREE) - Quality 85</label>
+                    </div>
+                    <div class="generator-card">
+                        <input type="checkbox" name="compare_gen" value="kling_ai" id="cmp_kling">
+                        <label for="cmp_kling"><strong>Kling AI</strong> ($0.01/s) - Quality 90</label>
+                    </div>
+                    <div class="generator-card">
+                        <input type="checkbox" name="compare_gen" value="luma_dream" id="cmp_luma">
+                        <label for="cmp_luma"><strong>Luma Dream</strong> ($0.02/s) - Quality 90</label>
+                    </div>
+                    <div class="generator-card">
+                        <input type="checkbox" name="compare_gen" value="runway_gen4" id="cmp_runway">
+                        <label for="cmp_runway"><strong>Runway Gen-4</strong> ($0.05/s) - Quality 95</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Parameters -->
+            <div class="form-group">
+                <label for="duration">⏱️ Durée (secondes)</label>
+                <input type="number" id="duration" value="10" min="1" max="120">
+            </div>
+
+            <div class="form-group">
+                <label for="budget">💰 Budget Maximum (USD, 0 = gratuit uniquement)</label>
+                <input type="number" id="budget" value="0" min="0" step="0.01">
+            </div>
+
+            <!-- Cost Estimate -->
+            <div class="cost-estimate">
+                <div style="margin-bottom: 8px;"><strong>💰 Coût Estimé:</strong></div>
+                <div class="price" id="cost-display">Gratuit</div>
+                <div id="cost-breakdown" style="margin-top: 10px; font-size: 0.9em; color: #6b7280;"></div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div style="margin-top: 30px;">
+                <button class="btn btn-primary" id="generate-btn">
+                    🚀 Générer
+                </button>
+                <button class="btn btn-secondary" id="reset-btn">
+                    🔄 Réinitialiser
+                </button>
+            </div>
+        </div>
+
+        <!-- Progress Panel -->
+        <div class="progress-panel" id="progress-panel">
+            <h3>Génération en cours...</h3>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill" style="width: 0%">0%</div>
+            </div>
+            <div id="status-message">Initialisation...</div>
+        </div>
+
+        <!-- Results Panel -->
+        <div id="results-panel" style="margin-top: 30px; display: none;">
+            <div class="main-panel">
+                <h2>✅ Résultats</h2>
+                <div class="results-grid" id="results-grid"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8200/api/v1/generators';
+
+        // Mode switching
+        document.querySelectorAll('input[name="mode"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                document.getElementById('manual-selector').style.display =
+                    e.target.value === 'manual' ? 'block' : 'none';
+                document.getElementById('comparison-selector').style.display =
+                    e.target.value === 'compare' ? 'block' : 'none';
+                updateCostEstimate();
+            });
+        });
+
+        // Cost estimate update
+        function updateCostEstimate() {
+            const mode = document.querySelector('input[name="mode"]:checked').value;
+            const duration = parseFloat(document.getElementById('duration').value) || 10;
+            const budget = parseFloat(document.getElementById('budget').value) || 0;
+
+            let costDisplay = document.getElementById('cost-display');
+            let breakdownDiv = document.getElementById('cost-breakdown');
+
+            if (budget === 0) {
+                costDisplay.textContent = 'Gratuit';
+                breakdownDiv.innerHTML = '<strong>✅ Mode gratuit:</strong> Seuls les générateurs gratuits seront utilisés';
+            } else if (mode === 'auto') {
+                costDisplay.textContent = `≤ $${budget.toFixed(2)}`;
+                breakdownDiv.innerHTML = `Le Smart Router sélectionnera le meilleur générateur dans votre budget`;
+            } else if (mode === 'compare') {
+                const selected = document.querySelectorAll('input[name="compare_gen"]:checked');
+                if (selected.length > 0) {
+                    costDisplay.textContent = `Variable (${selected.length} générateurs)`;
+                    breakdownDiv.innerHTML = `Comparaison de ${selected.length} générateurs simultanément`;
+                } else {
+                    costDisplay.textContent = 'Sélectionnez des générateurs';
+                }
+            }
+        }
+
+        document.getElementById('duration').addEventListener('input', updateCostEstimate);
+        document.getElementById('budget').addEventListener('input', updateCostEstimate);
+
+        // Generate button
+        document.getElementById('generate-btn').addEventListener('click', async () => {
+            const prompt = document.getElementById('prompt').value;
+            if (!prompt.trim()) {
+                alert('Veuillez entrer un prompt!');
+                return;
+            }
+
+            const mode = document.querySelector('input[name="mode"]:checked').value;
+            const duration = parseFloat(document.getElementById('duration').value) || 10;
+            const budget = parseFloat(document.getElementById('budget').value) || 0;
+
+            document.getElementById('progress-panel').classList.add('active');
+            document.getElementById('results-panel').style.display = 'none';
+
+            try {
+                if (mode === 'compare') {
+                    await generateComparison(prompt, duration);
+                } else {
+                    await generateSingle(prompt, duration, budget, mode);
+                }
+            } catch (error) {
+                console.error('Generation error:', error);
+                alert('Erreur: ' + error.message);
+                document.getElementById('progress-panel').classList.remove('active');
+            }
+        });
+
+        async function generateSingle(prompt, duration, budget, mode) {
+            const generator = mode === 'manual' ? document.getElementById('generator').value : null;
+
+            const response = await fetch(`${API_BASE}/generate`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    prompt,
+                    category: 'text-to-video',
+                    generator_name: generator,
+                    duration_seconds: duration,
+                    max_budget_usd: budget,
+                    quality_priority: true
+                })
+            });
+
+            const data = await response.json();
+
+            updateProgress(50, `Génération avec ${data.generator_name}...`);
+
+            // Poll for status
+            await pollStatus(data.generator_name, data.task_id);
+        }
+
+        async function generateComparison(prompt, duration) {
+            const selectedGens = Array.from(document.querySelectorAll('input[name="compare_gen"]:checked'))
+                .map(input => input.value);
+
+            if (selectedGens.length === 0) {
+                alert('Sélectionnez au moins un générateur!');
+                return;
+            }
+
+            const response = await fetch(`${API_BASE}/compare`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    prompt,
+                    category: 'text-to-video',
+                    generators: selectedGens,
+                    duration_seconds: duration
+                })
+            });
+
+            const data = await response.json();
+
+            updateProgress(30, `Génération avec ${selectedGens.length} générateurs...`);
+
+            // Poll all generators
+            const results = await Promise.all(
+                Object.entries(data.generators).map(([name, info]) =>
+                    pollStatus(name, info.task_id)
+                )
+            );
+
+            displayResults(results);
+        }
+
+        async function pollStatus(generatorName, taskId) {
+            let attempts = 0;
+            const maxAttempts = 60; // 5 minutes max
+
+            while (attempts < maxAttempts) {
+                const response = await fetch(`${API_BASE}/status/${generatorName}/${taskId}`);
+                const data = await response.json();
+
+                if (data.status === 'completed') {
+                    updateProgress(100, `✅ Terminé!`);
+                    displayResults([{generator: generatorName, url: data.output_url, data}]);
+                    return {generator: generatorName, url: data.output_url, data};
+                } else if (data.status === 'failed') {
+                    throw new Error(`Génération échouée: ${data.error_message}`);
+                }
+
+                const progress = data.progress_percentage || (attempts / maxAttempts * 100);
+                updateProgress(progress, `Génération avec ${generatorName}...`);
+
+                await new Promise(resolve => setTimeout(resolve, 5000)); // 5s
+                attempts++;
+            }
+
+            throw new Error('Timeout: génération trop longue');
+        }
+
+        function updateProgress(percentage, message) {
+            const fill = document.getElementById('progress-fill');
+            fill.style.width = percentage + '%';
+            fill.textContent = Math.round(percentage) + '%';
+            document.getElementById('status-message').textContent = message;
+        }
+
+        function displayResults(results) {
+            document.getElementById('progress-panel').classList.remove('active');
+            document.getElementById('results-panel').style.display = 'block';
+
+            const grid = document.getElementById('results-grid');
+            grid.innerHTML = '';
+
+            results.forEach(result => {
+                const card = document.createElement('div');
+                card.className = 'result-card';
+                card.innerHTML = `
+                    <video controls src="${result.url}"></video>
+                    <div class="info">
+                        <div class="generator-name">${result.generator}</div>
+                        <div class="metadata">
+                            Duration: ${result.data?.duration || 'N/A'}s<br>
+                            Quality: ${result.data?.quality || 'N/A'}<br>
+                            Cost: ${result.data?.estimated_cost_usd ? '$' + result.data.estimated_cost_usd.toFixed(3) : 'FREE'}
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Reset button
+        document.getElementById('reset-btn').addEventListener('click', () => {
+            document.getElementById('prompt').value = '';
+            document.getElementById('duration').value = '10';
+            document.getElementById('budget').value = '0';
+            document.getElementById('progress-panel').classList.remove('active');
+            document.getElementById('results-panel').style.display = 'none';
+            updateCostEstimate();
+        });
+
+        // Initialize
+        updateCostEstimate();
+    </script>
+</body>
+</html>

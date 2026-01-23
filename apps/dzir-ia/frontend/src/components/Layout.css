@@ -1,0 +1,66 @@
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-left: 0;
+  transition: margin-left 0.3s ease;
+}
+
+.layout.sidebar-open .main-content {
+  margin-left: var(--sidebar-width);
+}
+
+.content-area {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+}
+
+@media (max-width: 768px) {
+  .layout.sidebar-open .main-content {
+    margin-left: 0;
+  }
+}
+
+/* Floating Action Button for Capture */
+.fab-capture {
+  position: fixed;
+  bottom: 100px;
+  right: 24px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary, #00A86B);
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 168, 107, 0.4);
+  transition: all 0.2s ease;
+  z-index: 100;
+}
+
+.fab-capture:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(0, 168, 107, 0.5);
+}
+
+.fab-capture:active {
+  transform: scale(0.95);
+}
+
+@media (max-width: 768px) {
+  .fab-capture {
+    bottom: 80px;
+    right: 16px;
+    width: 48px;
+    height: 48px;
+  }
+}

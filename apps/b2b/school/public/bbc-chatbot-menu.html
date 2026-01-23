@@ -1,0 +1,96 @@
+<!-- BBC School Algeria - Menu Chatbot IA -->
+<!-- À ajouter dans le layout principal de OnestSchool -->
+
+<style>
+.bbc-chatbot-menu {
+    position: fixed;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    z-index: 9999;
+    background: linear-gradient(135deg, #1e3d59 0%, #ff6b35 100%);
+    border-radius: 15px 0 0 15px;
+    padding: 15px 10px;
+    box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+}
+
+.bbc-chatbot-menu:hover {
+    transform: translateY(-50%) translateX(-5px);
+}
+
+.chatbot-menu-item {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 12px;
+    margin: 5px 0;
+    border-radius: 10px;
+    text-align: center;
+    transition: all 0.3s ease;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+}
+
+.chatbot-menu-item:hover {
+    background: rgba(255,255,255,0.3);
+    transform: scale(1.05);
+    color: white;
+    text-decoration: none;
+}
+
+.chatbot-menu-item i {
+    display: block;
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+}
+
+.chatbot-menu-item span {
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.bbc-pulse {
+    animation: bbcPulse 2s infinite;
+}
+
+@keyframes bbcPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+</style>
+
+<div class="bbc-chatbot-menu">
+    <a href="bbc-ia-vitrine.html" class="chatbot-menu-item bbc-pulse" target="_blank" title="Vitrine IA BBC School">
+        <i class="fas fa-robot"></i>
+        <span>IA<br>Vitrine</span>
+    </a>
+    
+    <a href="bbc-chatbot-pro.html" class="chatbot-menu-item" target="_blank" title="Chatbot Professionnel">
+        <i class="fas fa-comments"></i>
+        <span>Chat<br>Pro</span>
+    </a>
+    
+    <a href="chatbot-integration.php" class="chatbot-menu-item" target="_blank" title="Intégration Chatbot">
+        <i class="fas fa-cogs"></i>
+        <span>Config</span>
+    </a>
+    
+    <a href="https://www.facebook.com/bbc.bestbridgeforcreation/" class="chatbot-menu-item" target="_blank" title="Facebook BBC">
+        <i class="fab fa-facebook"></i>
+        <span>Facebook</span>
+    </a>
+</div>
+
+<script>
+console.log('🤖 Menu Chatbot BBC intégré à OnestSchool!');
+console.log('🎯 Accès direct: Vitrine IA, Chat Pro, Config, Facebook');
+
+// Ajouter une notification pour attirer l'attention
+setTimeout(() => {
+    const menu = document.querySelector('.bbc-chatbot-menu');
+    if (menu) {
+        menu.style.animation = 'bounce 1s ease 3';
+    }
+}, 2000);
+</script>

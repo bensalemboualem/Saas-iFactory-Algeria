@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Dzir IA Video — Studio YouTube Shorts IA | IAFactory Algeria</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<!-- FONCTIONS GLOBALES POUR ONCLICK (doivent être avant le body) -->
+<script>
+window.toggleLangMenu = function(event) {
+    event.stopPropagation();
+    var menu = document.getElementById('langMenu');
+    if (menu) {
+        menu.classList.toggle('show');
+    }
+};
+
+window.changeLanguage = function(lang) {
+    var labels = { fr: '🌐 FR', en: '🌐 EN', ar: '🌐 AR' };
+    var langBtn = document.querySelector('.lang-btn');
+    if (langBtn) langBtn.textContent = labels[lang] || '🌐 FR';
+
+    var menu = document.getElementById('langMenu');
+    if (menu) menu.classList.remove('show');
+
+    if (typeof IAFactoryI18n !== 'undefined') {
+        IAFactoryI18n.setLanguage(lang);
+    }
+    localStorage.setItem('iafactory_lang', lang);
+};
+
+document.addEventListener('click', function(e) {
+    if (!e.target.closest('.language-dropdown')) {
+        var menu = document.getElementById('langMenu');
+        if (menu) menu.classList.remove('show');
+    }
+});
+</script>
+
+<!-- ==================== SCRIPT I18N ==================== -->
+<script>
+// Système i18n IAFactory - Support FR/AR/EN
+const IAFactoryI18n = {
+    currentLang: localStorage.getItem('iafactory_lang') || 'fr',
+
+    translations: {
+        // ===== HEADER & NAV =====
+        "home": { fr: "Accueil", ar: "الرئيسية", en: "Home" },
+        "apps": { fr: "Applications", ar: "التطبيقات", en: "Applications" },
+        "pricing": { fr: "Tarifs", ar: "الأسعار", en: "Pricing" },
+        "docs": { fr: "Documentation", ar: "التوثيق", en: "Documentation" },
+        "user": { fr: "Utilisateur", ar: "مستخدم", en: "User" },
+        "developer": { fr: "Développeur", ar: "مطور", en: "Developer" },
+        "login": { fr: "Log in", ar: "تسجيل الدخول", en: "Log in" },
+        "get_started": { fr: "Get Started", ar: "ابدأ الآن", en: "Get Started" },
+
+        // ===== DZIR IA VIDEO SPECIFIC =====
+        "hero_tagline": {
+            fr: "Studio professionnel de création de YouTube Shorts avec IA",
+            ar: "استوديو احترافي لإنشاء فيديوهات يوتيوب شورتس بالذكاء الاصطناعي",
+            en: "Professional AI-powered YouTube Shorts creation studio"
+        },
+        "hero_subtitle": {
+            fr: "Génération automatique de vidéos virales en français avec synthèse vocale et sous-titres",
+            ar: "إنشاء تلقائي لمقاطع فيديو فيروسية بالفرنسية مع تحويل النص إلى كلام والترجمة",
+            en: "Automatic viral video generation in French with TTS and subtitles"
+        },
+
+        // Form Labels
+        "form_script_label": { fr: "📝 Script de la vidéo", ar: "📝 نص الفيديو", en: "📝 Video Script" },
+        "form_script_placeholder": {
+            fr: "Entrez votre script ici... (ex: Bonjour ! Aujourd'hui je vous montre comment créer des vidéos YouTube Shorts automatiquement avec l'IA...)",
+            ar: "أدخل النص هنا... (مثال: مرحبا! اليوم سأريكم كيفية إنشاء فيديوهات يوتيوب شورتس تلقائياً بالذكاء الاصطناعي...)",
+            en: "Enter your script here... (e.g., Hello! Today I'll show you how to create YouTube Shorts videos automatically with AI...)"
+        },
+        "form_title_label": { fr: "🎯 Titre de la vidéo", ar: "🎯 عنوان الفيديو", en: "🎯 Video Title" },
+        "form_title_placeholder": {
+            fr: "ex: Comment créer des YouTube Shorts avec l'IA",
+            ar: "مثال: كيفية إنشاء يوتيوب شورتس بالذكاء الاصطناعي",
+            en: "e.g.: How to create YouTube Shorts with AI"
+        },
+        "form_description_label": { fr: "📄 Description (optionnel)", ar: "📄 الوصف (اختياري)", en: "📄 Description (optional)" },
+        "form_description_placeholder": {
+            fr: "Description de votre vidéo...",
+            ar: "وصف الفيديو الخاص بك...",
+            en: "Your video description..."
+        },
+        "form_tags_label": { fr: "🏷️ Tags (séparés par des virgules)", ar: "🏷️ الوسوم (مفصولة بفواصل)", en: "🏷️ Tags (comma separated)" },
+        "form_tags_placeholder": {
+            fr: "ia, youtube shorts, algerie, tech",
+            ar: "ذكاء اصطناعي، يوتيوب شورتس، الجزائر، تقنية",
+            en: "ai, youtube shorts, algeria, tech"
+        },
+
+        // Buttons
+        "btn_generate": { fr: "🎬 Générer la vidéo", ar: "🎬 إنشاء الفيديو", en: "🎬 Generate Video" },
+        "btn_generating": { fr: "Génération...", ar: "جاري الإنشاء...", en: "Generating..." },
+        "btn_regenerate": { fr: "Générer une autre vidéo", ar: "إنشاء فيديو آخر", en: "Generate another video" },
+        "btn_download": { fr: "📥 Télécharger la vidéo", ar: "📥 تحميل الفيديو", en: "📥 Download Video" },
+
+        // Progress Messages
+        "progress_generating": { fr: "Génération en cours...", ar: "جاري الإنشاء...", en: "Generating..." },
+        "progress_tts": {
+            fr: "🎙️ Génération de la voix avec TTS français...",
+            ar: "🎙️ إنشاء الصوت بتحويل النص إلى كلام بالفرنسية...",
+            en: "🎙️ Generating French voice with TTS..."
+        },
+        "progress_success": { fr: "✅ Vidéo générée avec succès !", ar: "✅ تم إنشاء الفيديو بنجاح!", en: "✅ Video generated successfully!" },
+        "progress_error": { fr: "❌ Erreur:", ar: "❌ خطأ:", en: "❌ Error:" },
+
+        // How it Works Section
+        "howto_title": { fr: "ℹ️ Comment ça marche ?", ar: "ℹ️ كيف يعمل؟", en: "ℹ️ How does it work?" },
+        "howto_step1": {
+            fr: "✍️ Écrivez votre script de YouTube Short (30-60 secondes recommandées)",
+            ar: "✍️ اكتب نص فيديو يوتيوب شورتس (30-60 ثانية موصى بها)",
+            en: "✍️ Write your YouTube Short script (30-60 seconds recommended)"
+        },
+        "howto_step2": {
+            fr: "🎬 Ajoutez un titre accrocheur et des tags pertinents",
+            ar: "🎬 أضف عنواناً جذاباً ووسوماً ذات صلة",
+            en: "🎬 Add a catchy title and relevant tags"
+        },
+        "howto_step3": {
+            fr: "🤖 Notre IA génère la vidéo avec synthèse vocale française et sous-titres",
+            ar: "🤖 الذكاء الاصطناعي ينشئ الفيديو مع تحويل النص إلى كلام بالفرنسية والترجمة",
+            en: "🤖 Our AI generates the video with French TTS and subtitles"
+        },
+        "howto_step4": {
+            fr: "📥 Téléchargez et publiez sur YouTube !",
+            ar: "📥 حمّل وانشر على يوتيوب!",
+            en: "📥 Download and publish on YouTube!"
+        },
+
+        // Footer
+        "footer_copyright": {
+            fr: "© 2025 IAFactory Algeria — Solutions IA pour l'Algérie",
+            ar: "© 2025 IAFactory الجزائر — حلول الذكاء الاصطناعي للجزائر",
+            en: "© 2025 IAFactory Algeria — AI Solutions for Algeria"
+        }
+    },
+
+    init() {
+        const applyLang = () => {
+            // Apply saved language AFTER DOM is loaded
+            this.setLanguage(this.currentLang, false);
+        };
+
+        // Check if DOM is already loaded
+        if (document.readyState === 'loading') {
+            // DOM still loading, wait for it
+            document.addEventListener('DOMContentLoaded', applyLang);
+        } else {
+            // DOM already loaded, execute immediately
+            applyLang();
+        }
+    },
+
+    setLanguage(lang, save = true) {
+        this.currentLang = lang;
+
+        if (save) {
+            localStorage.setItem('iafactory_lang', lang);
+        }
+
+        // Update HTML lang and dir attributes
+        document.documentElement.lang = lang;
+        document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+
+        // Add/remove RTL class for styling
+        if (lang === 'ar') {
+            document.body.classList.add('rtl');
+        } else {
+            document.body.classList.remove('rtl');
+        }
+
+        // Update all translatable elements
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.dataset.i18n;
+            const translation = this.t(key);
+
+            // Handle different element types
+            if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                el.placeholder = translation;
+            } else {
+                el.textContent = translation;
+            }
+        });
+
+        // Custom event for language change
+        window.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang } }));
+    },
+
+    t(key) {
+        const translation = this.translations[key];
+        if (!translation) {
+            console.warn(`Translation missing for key: ${key}`);
+            return key;
+        }
+        return translation[this.currentLang] || translation['fr'] || key;
+    },
+
+    getCurrentLang() {
+        return this.currentLang;
+    }
+};
+
+// Initialize i18n system
+IAFactoryI18n.init();
+</script>
+    <style>
+        :root {
+            --primary: #00a651;
+            --primary-dark: #008c44;
+            --bg: #021014;
+            --bg-card: #0a1f26;
+            --text: #e8f5e9;
+            --muted: #8ba89e;
+            --border: rgba(0, 166, 81, 0.2);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        /* RTL Support */
+        body.rtl {
+            direction: rtl;
+        }
+        body.rtl .header-container,
+        body.rtl .header-actions,
+        body.rtl .profile-toggle,
+        body.rtl .language-dropdown {
+            flex-direction: row-reverse;
+        }
+
+        /* ========== HEADER (EXACT FROM LANDING PAGE) ========== */
+        header {
+            position: sticky;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border);
+            background: rgba(2, 16, 20, 0.95);
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            height: 70px;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .logo-flag {
+            width: 32px;
+        }
+
+        .logo-text {
+            font-size: 18px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .highlight {
+            color: var(--primary);
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 28px;
+        }
+
+        .nav-link {
+            font-size: 15px;
+            font-weight: 500;
+            text-decoration: none;
+            color: var(--muted);
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .profile-toggle {
+            display: flex;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 999px;
+            padding: 4px;
+            gap: 4px;
+        }
+
+        .profile-btn {
+            padding: 8px 16px;
+            background: transparent;
+            border: none;
+            border-radius: 999px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--muted);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .profile-btn.active {
+            background: var(--primary);
+            color: #021014;
+        }
+
+        .btn-login, .btn-get-started {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-login {
+            color: var(--muted);
+        }
+
+        .btn-login:hover {
+            color: var(--primary);
+        }
+
+        .btn-get-started {
+            background: var(--primary);
+            color: #021014;
+        }
+
+        .btn-get-started:hover {
+            background: var(--primary-dark);
+        }
+
+        .language-dropdown {
+            position: relative;
+        }
+
+        .lang-btn {
+            border-radius: 8px;
+            border: none;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text);
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .lang-menu {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 4px;
+            display: none;
+            flex-direction: column;
+            min-width: 150px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        body.rtl .lang-menu {
+            right: auto;
+            left: 0;
+        }
+
+        .lang-menu.show {
+            display: flex;
+        }
+
+        .lang-option {
+            background: transparent;
+            border: none;
+            padding: 8px 12px;
+            color: var(--text);
+            cursor: pointer;
+            font-size: 14px;
+            text-align: left;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        body.rtl .lang-option {
+            text-align: right;
+        }
+
+        .lang-option:hover {
+            background: rgba(0, 166, 81, 0.1);
+            color: var(--primary);
+        }
+
+        /* Main */
+        .main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, var(--primary), #00c95d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Card */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        input[type="text"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 166, 81, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            background: var(--primary);
+            color: #021014;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 100%;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .btn:disabled {
+            background: var(--border);
+            color: var(--muted);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Progress */
+        .progress-container {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary);
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        .status-message {
+            margin-top: 12px;
+            padding: 12px 16px;
+            background: rgba(0, 166, 81, 0.1);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        /* Video Result */
+        .video-result {
+            display: none;
+            margin-top: 24px;
+        }
+
+        video {
+            width: 100%;
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 24px;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header (EXACT FROM LANDING PAGE) -->
+    <header>
+        <div class="header-container">
+            <a href="/" class="header-logo">
+                <img src="https://flagcdn.com/w40/dz.png" alt="Algérie" class="logo-flag">
+                <span class="logo-text"><span class="highlight">IA</span>Factory Alger<span class="highlight">ia</span></span>
+            </a>
+            <nav class="header-nav">
+                <a class="nav-link" href="/apps.html" data-i18n="apps">📱 Applications</a>
+                <a class="nav-link" href="/docs/tarifs.html" data-i18n="pricing">Tarifs</a>
+                <a class="nav-link" href="/docs/documentation.html" data-i18n="docs">Documentation</a>
+            </nav>
+            <div class="header-actions">
+                <div class="profile-toggle">
+                    <button class="profile-btn active" data-profile="user"><span data-i18n="user">👤 Utilisateur</span></button>
+                    <button class="profile-btn" data-profile="dev"><span data-i18n="developer">👨‍💻 Développeur</span></button>
+                </div>
+                <a href="/docs/login.html" class="btn-login" data-i18n="login">Log in</a>
+                <a href="/docs/getstarted.html" class="btn-get-started" data-i18n="get_started">Get Started</a>
+
+                <div class="language-dropdown">
+                    <button class="lang-btn" onclick="toggleLangMenu(event)">🌐 FR</button>
+                    <div class="lang-menu" id="langMenu" data-lang-menu>
+                        <button class="lang-option" onclick="changeLanguage('fr')">🇫🇷 Français</button>
+                        <button class="lang-option" onclick="changeLanguage('en')">🇬🇧 English</button>
+                        <button class="lang-option" onclick="changeLanguage('ar')">🇩🇿 العربية</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main">
+        <!-- Hero -->
+        <div class="hero">
+            <h1>🎬 Dzir IA Video PRO</h1>
+            <p data-i18n="hero_tagline">Studio professionnel de création de YouTube Shorts avec IA</p>
+            <p data-i18n="hero_subtitle" style="margin-top: 8px; font-size: 16px;">Génération automatique de vidéos virales en français avec synthèse vocale et sous-titres</p>
+        </div>
+
+        <!-- Form Card -->
+        <div class="card">
+            <form id="video-form">
+                <div class="form-group">
+                    <label for="script" data-i18n="form_script_label">📝 Script de la vidéo</label>
+                    <textarea
+                        id="script"
+                        name="script_text"
+                        data-i18n="form_script_placeholder"
+                        placeholder="Entrez votre script ici..."
+                        required
+                    ></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="title" data-i18n="form_title_label">🎯 Titre de la vidéo</label>
+                    <input
+                        type="text"
+                        id="title"
+                        name="title"
+                        data-i18n="form_title_placeholder"
+                        placeholder="ex: Comment créer des YouTube Shorts avec l'IA"
+                        required
+                    />
+                </div>
+
+                <div class="form-group">
+                    <label for="description" data-i18n="form_description_label">📄 Description (optionnel)</label>
+                    <textarea
+                        id="description"
+                        name="description"
+                        rows="3"
+                        data-i18n="form_description_placeholder"
+                        placeholder="Description de votre vidéo..."
+                    ></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="tags" data-i18n="form_tags_label">🏷️ Tags (séparés par des virgules)</label>
+                    <input
+                        type="text"
+                        id="tags"
+                        name="tags"
+                        data-i18n="form_tags_placeholder"
+                        placeholder="ia, youtube shorts, algerie, tech"
+                    />
+                </div>
+
+                <button type="submit" class="btn" id="generate-btn">
+                    <i class="fas fa-video"></i> <span data-i18n="btn_generate">Générer la vidéo</span>
+                </button>
+            </form>
+
+            <!-- Progress -->
+            <div class="progress-container" id="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <div class="status-message" id="status-message" data-i18n="progress_generating">
+                    Génération en cours...
+                </div>
+            </div>
+
+            <!-- Video Result -->
+            <div class="video-result" id="video-result">
+                <h3 style="margin-bottom: 16px;" data-i18n="progress_success">✅ Vidéo générée avec succès !</h3>
+                <video id="result-video" controls></video>
+                <a href="#" id="download-link" class="btn" download>
+                    <i class="fas fa-download"></i> <span data-i18n="btn_download">Télécharger la vidéo</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Info Card -->
+        <div class="card">
+            <h3 style="margin-bottom: 16px;" data-i18n="howto_title">ℹ️ Comment ça marche ?</h3>
+            <ol style="line-height: 1.8; color: var(--muted); padding-left: 20px;">
+                <li data-i18n="howto_step1">✍️ Écrivez votre script de YouTube Short (30-60 secondes recommandées)</li>
+                <li data-i18n="howto_step2">🎬 Ajoutez un titre accrocheur et des tags pertinents</li>
+                <li data-i18n="howto_step3">🤖 Notre IA génère la vidéo avec synthèse vocale française et sous-titres</li>
+                <li data-i18n="howto_step4">📥 Téléchargez et publiez sur YouTube !</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p data-i18n="footer_copyright">© 2025 IAFactory Algeria — Solutions IA pour l'Algérie</p>
+    </div>
+
+    <script>
+        const form = document.getElementById('video-form');
+        const generateBtn = document.getElementById('generate-btn');
+        const progressContainer = document.getElementById('progress-container');
+        const progressFill = document.getElementById('progress-fill');
+        const statusMessage = document.getElementById('status-message');
+        const videoResult = document.getElementById('video-result');
+        const resultVideo = document.getElementById('result-video');
+        const downloadLink = document.getElementById('download-link');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // Get form data
+            const formData = {
+                script_text: document.getElementById('script').value,
+                title: document.getElementById('title').value,
+                description: document.getElementById('description').value,
+                tags: document.getElementById('tags').value.split(',').map(t => t.trim()).filter(t => t),
+                publish: false
+            };
+
+            // Show progress
+            generateBtn.disabled = true;
+            const btnText = generateBtn.querySelector('span');
+            btnText.setAttribute('data-i18n', 'btn_generating');
+            btnText.textContent = IAFactoryI18n.t('btn_generating');
+            progressContainer.style.display = 'block';
+            videoResult.style.display = 'none';
+
+            // Simulate progress
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                progress += 10;
+                if (progress <= 90) {
+                    progressFill.style.width = progress + '%';
+                }
+            }, 1000);
+
+            try {
+                statusMessage.setAttribute('data-i18n', 'progress_tts');
+                statusMessage.textContent = IAFactoryI18n.t('progress_tts');
+
+                const response = await fetch('/api/generate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                clearInterval(progressInterval);
+
+                if (!response.ok) {
+                    throw new Error('Erreur de génération');
+                }
+
+                const result = await response.json();
+
+                // Complete progress
+                progressFill.style.width = '100%';
+                statusMessage.setAttribute('data-i18n', 'progress_success');
+                statusMessage.textContent = IAFactoryI18n.t('progress_success');
+
+                // Show video
+                setTimeout(() => {
+                    progressContainer.style.display = 'none';
+                    videoResult.style.display = 'block';
+                    resultVideo.src = `/download/${result.video_path.split('/').pop()}`;
+                    downloadLink.href = resultVideo.src;
+                    generateBtn.disabled = false;
+                    btnText.setAttribute('data-i18n', 'btn_regenerate');
+                    btnText.textContent = IAFactoryI18n.t('btn_regenerate');
+                }, 1000);
+
+            } catch (error) {
+                clearInterval(progressInterval);
+                statusMessage.textContent = IAFactoryI18n.t('progress_error') + ' ' + error.message;
+                statusMessage.style.background = 'rgba(239, 68, 68, 0.1)';
+                statusMessage.style.borderColor = '#ef4444';
+                generateBtn.disabled = false;
+                btnText.setAttribute('data-i18n', 'btn_generate');
+                btnText.textContent = IAFactoryI18n.t('btn_generate');
+            }
+        });
+    </script>
+</body>
+</html>

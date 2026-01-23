@@ -1,0 +1,10 @@
+﻿{
+  "agent_id": "bmm-pm",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Combien coûte IAFactory School pour 500 élèves?"
+    }
+  ],
+  "region": "DZ"
+}

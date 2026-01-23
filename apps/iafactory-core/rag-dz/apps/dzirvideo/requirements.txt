@@ -1,0 +1,46 @@
+# Dzir IA Video - YouTube Shorts Automation with Multi-AI Generators
+# Python 3.10+
+
+# ===== ALIBABA CLOUD AI (PRIORITÉ) =====
+dashscope>=1.14.0  # WAN 2.1 + Qwen 2.1
+
+# ===== TTS (Text-to-Speech) =====
+TTS==0.22.0  # Coqui TTS
+pydub==0.25.1
+
+# Video Processing
+ffmpeg-python==0.2.0
+Pillow>=10.3.0  # Compatible with together SDK
+
+# YouTube API
+google-api-python-client==2.108.0
+google-auth-oauthlib==1.1.0
+google-auth-httplib2==0.1.1
+
+# Subtitle Generation
+srt==3.5.3
+
+# ===== Web Framework =====
+fastapi==0.104.1
+python-multipart==0.0.6  # Required for FastAPI File uploads
+uvicorn[standard]==0.24.0
+pydantic==2.5.0
+
+# ===== Utils =====
+python-dotenv==1.0.0
+click==8.1.7
+requests==2.31.0  # For API calls
+pyyaml>=6.0  # For generators config
+tqdm==4.66.1  # Progress bars
+
+# ===== AI API Clients (40 Generators) =====
+replicate>=0.25.0  # Veo 2, Kling, HunyuanVideo, Mochi, etc.
+openai>=1.10.0  # DALL-E 3, Sora
+anthropic>=0.18.0  # Claude (script optimizer backup)
+together>=1.0.0  # FLUX.1, Stable Diffusion
+
+# Additional AI SDKs
+aiohttp>=3.9.0  # Async HTTP for API calls
+httpx>=0.25.0  # Modern HTTP client
+backoff>=2.2.1  # Exponential backoff for retries
+# Note: numpy installed by TTS (1.22.0), conflicts with together SDK resolved at runtime

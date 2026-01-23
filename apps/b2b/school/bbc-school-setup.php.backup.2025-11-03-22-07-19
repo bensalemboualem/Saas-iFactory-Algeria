@@ -1,0 +1,347 @@
+<?php
+
+/**
+ * BBC School Algeria - Analyse et Correction Automatique des Modules
+ * Script pour identifier et remplir les champs manquants selon la structure de l'école
+ */
+
+require_once __DIR__ . '/vendor/autoload.php';
+$app = require_once __DIR__ . '/bootstrap/app.php';
+$app->make('Illuminate\Contracts\Console\Kernel')->bootstrap();
+
+use Illuminate\Support\Facades\DB;
+
+echo "🏫 BBC SCHOOL ALGERIA - ANALYSE DES MODULES\n";
+echo "==========================================\n\n";
+
+// Configuration spécifique BBC School Algeria
+$bbcSchoolConfig = [
+    'school_name' => 'BBC School Algeria',
+    'country' => 'Algeria',
+    'currency' => 'DZD',
+    'timezone' => 'Africa/Algiers',
+    'academic_year' => '2024-2025',
+    'default_language' => 'French',
+    'secondary_language' => 'Arabic',
+];
+
+echo "📊 ANALYSE DES MODULES EN COURS...\n\n";
+
+try {
+    // 1. VÉRIFIER ET CORRIGER ACADEMIC YEAR
+    echo "1️⃣ MODULE ACADEMIC YEAR\n";
+    echo "----------------------\n";
+    
+    $currentYear = DB::table('sessions')->where('name', $bbcSchoolConfig['academic_year'])->first();
+    if (!$currentYear) {
+        echo "   ⚠️  Année académique manquante : " . $bbcSchoolConfig['academic_year'] . "\n";
+        
+        DB::table('sessions')->insert([
+            'name' => $bbcSchoolConfig['academic_year'],
+            'start_date' => '2024-09-01',
+            'end_date' => '2025-06-30',
+            'status' => 1,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        echo "   ✅ Année académique créée : " . $bbcSchoolConfig['academic_year'] . "\n";
+    } else {
+        echo "   ✅ Année académique OK : " . $bbcSchoolConfig['academic_year'] . "\n";
+    }
+
+    // 2. VÉRIFIER ET CORRIGER DEPARTMENTS (Départements BBC School)
+    echo "\n2️⃣ MODULE DEPARTMENTS\n";
+    echo "-------------------\n";
+    
+    $bbcDepartments = [
+        'Primary Education',
+        'Secondary Education', 
+        'Sciences Department',
+        'Languages Department',
+        'Mathematics Department',
+        'Administration',
+        'Support Staff'
+    ];
+    
+    foreach ($bbcDepartments as $deptName) {
+        $exists = DB::table('departments')->where('name', $deptName)->first();
+        if (!$exists) {
+            DB::table('departments')->insert([
+                'name' => $deptName,
+                'status' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+            echo "   ✅ Département créé : $deptName\n";
+        } else {
+            echo "   ✅ Département OK : $deptName\n";
+        }
+    }
+
+    // 3. VÉRIFIER ET CORRIGER CLASSES (Classes BBC School)
+    echo "\n3️⃣ MODULE CLASSES\n";
+    echo "---------------\n";
+    
+    $bbcClasses = [
+        'CP (Course Préparatoire)',
+        'CE1 (Cours Élémentaire 1)',
+        'CE2 (Cours Élémentaire 2)', 
+        'CM1 (Cours Moyen 1)',
+        'CM2 (Cours Moyen 2)',
+        '6ème (Sixième)',
+        '5ème (Cinquième)',
+        '4ème (Quatrième)',
+        '3ème (Troisième)',
+        '2AS (Deuxième Année Secondaire)',
+        '1AS (Première Année Secondaire)',
+        'Terminale (Terminal)'
+    ];
+    
+    foreach ($bbcClasses as $className) {
+        $exists = DB::table('classes')->where('name', $className)->first();
+        if (!$exists) {
+            DB::table('classes')->insert([
+                'name' => $className,
+                'status' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+            echo "   ✅ Classe créée : $className\n";
+        } else {
+            echo "   ✅ Classe OK : $className\n";
+        }
+    }
+
+    // 4. VÉRIFIER ET CORRIGER SUBJECTS (Matières BBC School Algeria)
+    echo "\n4️⃣ MODULE SUBJECTS (MATIÈRES)\n";
+    echo "---------------------------\n";
+    
+    $bbcSubjects = [
+        'Français (French)',
+        'العربية (Arabic)',
+        'Mathématiques (Mathematics)',
+        'Sciences Physiques (Physics)',
+        'Sciences Naturelles (Biology)',
+        'Histoire-Géographie (History-Geography)',
+        'Anglais (English)',
+        'Éducation Islamique (Islamic Education)',
+        'Éducation Physique (Physical Education)',
+        'Arts Plastiques (Arts)',
+        'Informatique (Computer Science)',
+        'Philosophie (Philosophy)'
+    ];
+    
+    foreach ($bbcSubjects as $subjectName) {
+        $exists = DB::table('subjects')->where('name', $subjectName)->first();
+        if (!$exists) {
+            DB::table('subjects')->insert([
+                'name' => $subjectName,
+                'code' => strtoupper(substr(str_replace([' ', '(', ')'], '', $subjectName), 0, 6)),
+                'status' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+            echo "   ✅ Matière créée : $subjectName\n";
+        } else {
+            echo "   ✅ Matière OK : $subjectName\n";
+        }
+    }
+
+    // 5. VÉRIFIER ET CORRIGER GENDERS
+    echo "\n5️⃣ MODULE GENDERS\n";
+    echo "---------------\n";
+    
+    $genders = ['Male', 'Female'];
+    foreach ($genders as $gender) {
+        $exists = DB::table('genders')->where('name', $gender)->first();
+        if (!$exists) {
+            DB::table('genders')->insert([
+                'name' => $gender,
+                'status' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+            echo "   ✅ Genre créé : $gender\n";
+        } else {
+            echo "   ✅ Genre OK : $gender\n";
+        }
+    }
+
+    // 6. VÉRIFIER ET CORRIGER RELIGIONS
+    echo "\n6️⃣ MODULE RELIGIONS\n";
+    echo "-----------------\n";
+    
+    $religions = ['Islam', 'Christianity', 'Judaism', 'Other'];
+    foreach ($religions as $religion) {
+        $exists = DB::table('religions')->where('name', $religion)->first();
+        if (!$exists) {
+            DB::table('religions')->insert([
+                'name' => $religion,
+                'status' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+            echo "   ✅ Religion créée : $religion\n";
+        } else {
+            echo "   ✅ Religion OK : $religion\n";
+        }
+    }
+
+    // 7. VÉRIFIER ET CORRIGER BLOOD GROUPS
+    echo "\n7️⃣ MODULE BLOOD GROUPS\n";
+    echo "--------------------\n";
+    
+    $bloodGroups = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
+    foreach ($bloodGroups as $blood) {
+        $exists = DB::table('blood_groups')->where('name', $blood)->first();
+        if (!$exists) {
+            DB::table('blood_groups')->insert([
+                'name' => $blood,
+                'status' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+            echo "   ✅ Groupe sanguin créé : $blood\n";
+        } else {
+            echo "   ✅ Groupe sanguin OK : $blood\n";
+        }
+    }
+
+    // 8. VÉRIFIER ET CORRIGER SHIFTS (Horaires BBC School)
+    echo "\n8️⃣ MODULE SHIFTS (HORAIRES)\n";
+    echo "-------------------------\n";
+    
+    // Vérifier la structure de la table shifts
+    $shiftsTableColumns = DB::getSchemaBuilder()->getColumnListing('shifts');
+    $hasTimeColumns = in_array('start_time', $shiftsTableColumns) && in_array('end_time', $shiftsTableColumns);
+    
+    $shifts = [
+        'Morning (Matin)',
+        'Afternoon (Après-midi)', 
+        'Full Day (Journée complète)'
+    ];
+    
+    foreach ($shifts as $shiftName) {
+        $exists = DB::table('shifts')->where('name', $shiftName)->first();
+        if (!$exists) {
+            $insertData = [
+                'name' => $shiftName,
+                'status' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+            
+            // Ajouter les colonnes de temps seulement si elles existent
+            if ($hasTimeColumns) {
+                $timeData = [
+                    'Morning (Matin)' => ['start_time' => '08:00:00', 'end_time' => '12:00:00'],
+                    'Afternoon (Après-midi)' => ['start_time' => '13:00:00', 'end_time' => '17:00:00'], 
+                    'Full Day (Journée complète)' => ['start_time' => '08:00:00', 'end_time' => '17:00:00']
+                ];
+                if (isset($timeData[$shiftName])) {
+                    $insertData = array_merge($insertData, $timeData[$shiftName]);
+                }
+            }
+            
+            DB::table('shifts')->insert($insertData);
+            echo "   ✅ Horaire créé : $shiftName\n";
+        } else {
+            echo "   ✅ Horaire OK : $shiftName\n";
+        }
+    }
+
+    // 9. VÉRIFIER ET CORRIGER DESIGNATIONS (Postes BBC School)
+    echo "\n9️⃣ MODULE DESIGNATIONS (POSTES)\n";
+    echo "-----------------------------\n";
+    
+    $designations = [
+        'Directeur/Directrice (Principal)',
+        'Directeur Adjoint (Vice Principal)',
+        'Enseignant(e) Primaire (Primary Teacher)',
+        'Enseignant(e) Secondaire (Secondary Teacher)',
+        'Professeur de Français (French Teacher)',
+        'Professeur d\'Arabe (Arabic Teacher)',
+        'Professeur de Mathématiques (Math Teacher)',
+        'Professeur de Sciences (Science Teacher)',
+        'Coordinateur Pédagogique (Academic Coordinator)',
+        'Secrétaire (Secretary)',
+        'Comptable (Accountant)',
+        'Agent d\'Entretien (Maintenance Staff)'
+    ];
+    
+    foreach ($designations as $designation) {
+        $exists = DB::table('designations')->where('name', $designation)->first();
+        if (!$exists) {
+            DB::table('designations')->insert([
+                'name' => $designation,
+                'status' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+            echo "   ✅ Poste créé : $designation\n";
+        } else {
+            echo "   ✅ Poste OK : $designation\n";
+        }
+    }
+
+    // 10. ANALYSE DES DONNÉES EXISTANTES
+    echo "\n🔍 ANALYSE DES DONNÉES EXISTANTES\n";
+    echo "===============================\n";
+    
+    $studentsCount = DB::table('students')->count();
+    $parentsCount = DB::table('parent_guardians')->count();
+    $usersCount = DB::table('users')->count();
+    
+    echo "👥 Étudiants enregistrés : $studentsCount\n";
+    echo "👨‍👩‍👧‍👦 Parents enregistrés : $parentsCount\n";
+    echo "👤 Utilisateurs totaux : $usersCount\n";
+
+    // Vérifier les champs vides dans les étudiants
+    $emptyFields = [];
+    $studentsWithEmptyMobile = DB::table('students')
+        ->join('users', 'students.user_id', '=', 'users.id')
+        ->whereNull('users.phone')
+        ->orWhere('users.phone', '')
+        ->count();
+    
+    if ($studentsWithEmptyMobile > 0) {
+        $emptyFields[] = "Mobile vide : $studentsWithEmptyMobile étudiants";
+    }
+
+    $studentsWithEmptyEmail = DB::table('students')
+        ->join('users', 'students.user_id', '=', 'users.id')
+        ->whereNull('users.email')
+        ->orWhere('users.email', '')
+        ->count();
+    
+    if ($studentsWithEmptyEmail > 0) {
+        $emptyFields[] = "Email vide : $studentsWithEmptyEmail étudiants";
+    }
+
+    if (empty($emptyFields)) {
+        echo "✅ Toutes les données étudiants sont complètes !\n";
+    } else {
+        echo "⚠️  Champs à corriger :\n";
+        foreach ($emptyFields as $field) {
+            echo "   - $field\n";
+        }
+    }
+
+    echo "\n🎯 CONFIGURATION BBC SCHOOL VALIDÉE\n";
+    echo "==================================\n";
+    echo "✅ École : " . $bbcSchoolConfig['school_name'] . "\n";
+    echo "✅ Pays : " . $bbcSchoolConfig['country'] . "\n";
+    echo "✅ Année scolaire : " . $bbcSchoolConfig['academic_year'] . "\n";
+    echo "✅ Devise : " . $bbcSchoolConfig['currency'] . "\n";
+    echo "✅ Fuseau horaire : " . $bbcSchoolConfig['timezone'] . "\n";
+
+    echo "\n🚀 TOUS LES MODULES BBC SCHOOL SONT PRÊTS !\n";
+    echo "=========================================\n";
+    echo "🌐 Accéder à l'application : http://localhost/onestschooled-test/public\n";
+
+} catch (Exception $e) {
+    echo "💥 ERREUR : " . $e->getMessage() . "\n";
+    echo "Vérifier la configuration de la base de données.\n";
+}
+
+?>

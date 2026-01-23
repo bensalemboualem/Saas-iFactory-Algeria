@@ -1,0 +1,19 @@
+{
+  "name": "@iafactory/core",
+  "version": "1.0.0",
+  "description": "IAFactory Core - RAG and AI processing engine",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "echo 'See rag-dz subdirectory for development'",
+    "build": "echo 'Build not configured'",
+    "test": "echo 'No tests configured'"
+  },
+  "keywords": [
+    "rag",
+    "ai",
+    "iafactory"
+  ],
+  "author": "IAFactory",
+  "license": "MIT"
+}

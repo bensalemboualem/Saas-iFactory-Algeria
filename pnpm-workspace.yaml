@@ -1,0 +1,19 @@
+packages:
+  # Core packages
+  - 'packages/**'
+  - '.'
+  - 'e2e'
+
+  # Main apps
+  - 'apps/desktop/src/main'
+  - 'apps/gateway'
+  - 'apps/api'
+  - 'apps/web'
+  - 'apps/landing'
+  - 'apps/dzir-ia'
+  - 'apps/iafactory-core'
+
+  # B2B apps (optional - may have own package managers)
+  # - 'apps/b2b/academy'
+  # - 'apps/b2b/school'      # Laravel - uses composer
+  # - 'apps/b2b/video-studio'

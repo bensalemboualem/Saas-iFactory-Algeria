@@ -1,0 +1,124 @@
+.hero {
+  text-align: center;
+  padding: 120px 20px 80px;
+  background: var(--bg-primary);
+}
+
+.hero h1 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+
+.hero-access {
+  font-size: 20px;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+}
+
+.hero-price {
+  font-size: 18px;
+  color: var(--text-secondary);
+  margin: 24px 0;
+}
+
+.hero-price strong {
+  color: var(--accent-primary);
+  font-weight: 600;
+}
+
+.hero-cta {
+  display: inline-block;
+  padding: 16px 48px;
+  font-size: 18px;
+  background: var(--accent-primary);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.hero-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(0, 168, 107, 30%);
+}
+
+.hero-credits {
+  margin-block-start: 24px;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.hero-credits a {
+  font-weight: 500;
+  color: var(--accent-primary);
+  text-decoration: underline;
+}
+
+/* Marquee animation */
+.providers-marquee {
+  width: 100%;
+  overflow: hidden;
+  padding: 24px 0;
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 10%,
+    black 90%,
+    transparent
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 10%,
+    black 90%,
+    transparent
+  );
+}
+
+.marquee-track {
+  display: flex;
+  gap: 32px;
+  animation: marquee 30s linear infinite;
+  width: fit-content;
+}
+
+.provider-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.provider-item img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.provider-item span {
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Pause on hover */
+.providers-marquee:hover .marquee-track {
+  animation-play-state: paused;
+}

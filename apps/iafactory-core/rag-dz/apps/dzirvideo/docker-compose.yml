@@ -1,0 +1,24 @@
+# Dzir IA Video - YouTube Shorts Automation with Multi-AI Generators
+
+services:
+  dzirvideo:
+    build: .
+    container_name: dzir-ia-video
+    ports:
+      - "8200:8200"
+    volumes:
+      - ./scripts:/app/scripts
+      - ./output:/app/output
+      - ./models:/app/models
+      - ./config:/app/config
+      - ./.env:/app/.env
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+    networks:
+      - rag-dz-network
+
+networks:
+  rag-dz-network:
+    external: true
+    name: rag-dz-network

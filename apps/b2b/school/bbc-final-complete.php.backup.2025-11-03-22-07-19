@@ -1,0 +1,240 @@
+<?php
+
+/**
+ * BBC School Algeria - Script FINAL avec colonnes correctes
+ * Remplissage complet selon la structure réelle des tables
+ */
+
+require_once __DIR__ . '/vendor/autoload.php';
+$app = require_once __DIR__ . '/bootstrap/app.php';
+$app->make('Illuminate\Contracts\Console\Kernel')->bootstrap();
+
+use Illuminate\Support\Facades\DB;
+
+echo "🎯 BBC SCHOOL ALGERIA - REMPLISSAGE FINAL COMPLET\n";
+echo "================================================\n\n";
+
+// 📚 LIVRES avec les bonnes colonnes
+echo "📚 AJOUT DE LIVRES BBC SCHOOL (colonnes: name, author_name)\n";
+echo "=========================================================\n";
+
+$bbcBooks = [
+    ['name' => 'Le Petit Prince', 'author_name' => 'Antoine de Saint-Exupéry', 'category_id' => 1, 'code' => 'FR001'],
+    ['name' => 'Les Misérables', 'author_name' => 'Victor Hugo', 'category_id' => 1, 'code' => 'FR002'],
+    ['name' => 'Grammaire Progressive du Français', 'author_name' => 'Maïa Grégoire', 'category_id' => 1, 'code' => 'FR003'],
+    ['name' => 'نهج البلاغة', 'author_name' => 'الإمام علي', 'category_id' => 2, 'code' => 'AR001'],
+    ['name' => 'ديوان المتنبي', 'author_name' => 'أبو الطيب المتنبي', 'category_id' => 2, 'code' => 'AR002'],
+    ['name' => 'تاريخ الجزائر المعاصر', 'author_name' => 'شارل روبير أجرون', 'category_id' => 8, 'code' => 'HI001'],
+    ['name' => 'Mathématiques 3ème - Collection Phare', 'author_name' => 'Roger Brault', 'category_id' => 3, 'code' => 'MA001'],
+    ['name' => 'Géométrie Euclidienne', 'author_name' => 'Jean-Denis Eiden', 'category_id' => 3, 'code' => 'MA002'],
+    ['name' => 'Algèbre et Analyse - Terminale S', 'author_name' => 'André Antibi', 'category_id' => 3, 'code' => 'MA003'],
+    ['name' => 'Biologie - Campbell', 'author_name' => 'Neil A. Campbell', 'category_id' => 4, 'code' => 'BI001'],
+    ['name' => 'Physique Chimie 2nde', 'author_name' => 'André Durupthy', 'category_id' => 5, 'code' => 'PH001'],
+    ['name' => 'Chimie Organique - Paul Arnaud', 'author_name' => 'Paul Arnaud', 'category_id' => 6, 'code' => 'CH001'],
+    ['name' => 'Histoire de l\'Algérie contemporaine', 'author_name' => 'Benjamin Stora', 'category_id' => 7, 'code' => 'HI002'],
+    ['name' => 'Géographie du Maghreb', 'author_name' => 'Jean-François Troin', 'category_id' => 8, 'code' => 'GE001'],
+    ['name' => 'Introduction aux Sciences du Coran', 'author_name' => 'Muhammad Abu Shahba', 'category_id' => 9, 'code' => 'IS001'],
+    ['name' => 'السيرة النبوية لابن هشام', 'author_name' => 'ابن هشام', 'category_id' => 9, 'code' => 'IS002'],
+    ['name' => 'English Literature Anthology', 'author_name' => 'Oxford Press', 'category_id' => 10, 'code' => 'EN001'],
+    ['name' => 'Algorithmes et Structures de Données', 'author_name' => 'Thomas H. Cormen', 'category_id' => 11, 'code' => 'CS001'],
+    ['name' => 'Python pour les Nuls', 'author_name' => 'John Paul Mueller', 'category_id' => 11, 'code' => 'CS002'],
+    ['name' => 'Arts Plastiques - Techniques', 'author_name' => 'Marie Dubois', 'category_id' => 12, 'code' => 'AR003']
+];
+
+foreach ($bbcBooks as $book) {
+    try {
+        $exists = DB::table('books')->where('name', $book['name'])->first();
+        if (!$exists) {
+            DB::table('books')->insert([
+                'name' => $book['name'],
+                'author_name' => $book['author_name'],
+                'category_id' => $book['category_id'],
+                'code' => $book['code'],
+                'publisher_name' => 'BBC School Algeria',
+                'rack_no' => 'R-' . str_pad($book['category_id'], 2, '0', STR_PAD_LEFT),
+                'price' => rand(1500, 8000), // Prix en DZD
+                'quantity' => rand(5, 20),
+                'status' => 1,
+                'description' => 'Livre de la bibliothèque BBC School Algeria',
+                'branch_id' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+            echo "   ✅ {$book['name']} - {$book['author_name']}\n";
+        } else {
+            echo "   ✅ {$book['name']} - Déjà existant\n";
+        }
+    } catch (Exception $e) {
+        echo "   ⚠️  Erreur pour {$book['name']}: " . $e->getMessage() . "\n";
+    }
+}
+
+// 🏫 SALLES DE CLASSE avec room_no
+echo "\n🏫 AJOUT DES SALLES DE CLASSE BBC SCHOOL\n";
+echo "======================================\n";
+
+$bbcClassrooms = [
+    // Salles Primaire
+    ['room_no' => 'CP-A-Rose', 'capacity' => 25],
+    ['room_no' => 'CP-B-Bleue', 'capacity' => 25],
+    ['room_no' => 'CE1-A-Verte', 'capacity' => 28],
+    ['room_no' => 'CE1-B-Jaune', 'capacity' => 28],
+    ['room_no' => 'CE2-A-Orange', 'capacity' => 30],
+    ['room_no' => 'CE2-B-Violette', 'capacity' => 30],
+    ['room_no' => 'CM1-A-101', 'capacity' => 32],
+    ['room_no' => 'CM1-B-102', 'capacity' => 32],
+    ['room_no' => 'CM2-A-103', 'capacity' => 32],
+    ['room_no' => 'CM2-B-104', 'capacity' => 32],
+    
+    // Salles Collège
+    ['room_no' => '6eme-A-201', 'capacity' => 35],
+    ['room_no' => '6eme-B-202', 'capacity' => 35],
+    ['room_no' => '5eme-A-203', 'capacity' => 35],
+    ['room_no' => '5eme-B-204', 'capacity' => 35],
+    ['room_no' => '4eme-A-205', 'capacity' => 35],
+    ['room_no' => '4eme-B-206', 'capacity' => 35],
+    ['room_no' => '3eme-A-207', 'capacity' => 35],
+    ['room_no' => '3eme-B-208', 'capacity' => 35],
+    
+    // Salles Lycée
+    ['room_no' => '2AS-Sciences-301', 'capacity' => 40],
+    ['room_no' => '2AS-Lettres-302', 'capacity' => 40],
+    ['room_no' => '1AS-Sciences-303', 'capacity' => 40],
+    ['room_no' => '1AS-Lettres-304', 'capacity' => 40],
+    ['room_no' => 'Term-Sciences-305', 'capacity' => 40],
+    ['room_no' => 'Term-Lettres-306', 'capacity' => 40],
+    
+    // Salles spécialisées
+    ['room_no' => 'LAB-Physique-401', 'capacity' => 30],
+    ['room_no' => 'LAB-Biologie-402', 'capacity' => 30],
+    ['room_no' => 'SALLE-Info-403', 'capacity' => 25],
+    ['room_no' => 'BIBLIOTHEQUE', 'capacity' => 50],
+    ['room_no' => 'GYMNASE', 'capacity' => 60],
+    ['room_no' => 'SALLE-Musique', 'capacity' => 35],
+    ['room_no' => 'SALLE-Profs', 'capacity' => 20]
+];
+
+foreach ($bbcClassrooms as $classroom) {
+    try {
+        $exists = DB::table('class_rooms')->where('room_no', $classroom['room_no'])->first();
+        if (!$exists) {
+            DB::table('class_rooms')->insert([
+                'room_no' => $classroom['room_no'],
+                'capacity' => $classroom['capacity'],
+                'status' => 1,
+                'branch_id' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+            echo "   ✅ {$classroom['room_no']} - {$classroom['capacity']} places\n";
+        } else {
+            echo "   ✅ {$classroom['room_no']} - Déjà existant\n";
+        }
+    } catch (Exception $e) {
+        echo "   ⚠️  Erreur pour {$classroom['room_no']}: " . $e->getMessage() . "\n";
+    }
+}
+
+// 💰 CONFIGURATION FEES avec les vraies colonnes
+echo "\n💰 CONFIGURATION FEES BBC SCHOOL (Structure réelle)\n";
+echo "==================================================\n";
+
+// D'abord créer fees_types si nécessaire
+$feeTypes = [
+    'Frais de scolarité',
+    'Transport scolaire', 
+    'Cantine',
+    'Activités parascolaires',
+    'Frais d\'examen',
+    'Frais d\'inscription'
+];
+
+echo "📝 Ajout des types de frais :\n";
+foreach ($feeTypes as $feeType) {
+    try {
+        $exists = DB::table('fees_types')->where('name', $feeType)->first();
+        if (!$exists) {
+            DB::table('fees_types')->insert([
+                'name' => $feeType,
+                'status' => 1,
+                'branch_id' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+            echo "   ✅ Type: $feeType\n";
+        } else {
+            echo "   ✅ Type existant: $feeType\n";
+        }
+    } catch (Exception $e) {
+        echo "   ⚠️  Erreur type $feeType: " . $e->getMessage() . "\n";
+    }
+}
+
+// Créer fees_groups
+echo "\n📂 Ajout des groupes de frais :\n";
+$feeGroups = [
+    'Frais Primaire (CP-CM2)',
+    'Frais Collège (6ème-3ème)', 
+    'Frais Lycée (2AS-Terminale)',
+    'Services Additionnels'
+];
+
+foreach ($feeGroups as $group) {
+    try {
+        $exists = DB::table('fees_groups')->where('name', $group)->first();
+        if (!$exists) {
+            DB::table('fees_groups')->insert([
+                'name' => $group,
+                'status' => 1,
+                'branch_id' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+            echo "   ✅ Groupe: $group\n";
+        } else {
+            echo "   ✅ Groupe existant: $group\n";
+        }
+    } catch (Exception $e) {
+        echo "   ⚠️  Erreur groupe $group: " . $e->getMessage() . "\n";
+    }
+}
+
+echo "\n📊 STATISTIQUES FINALES BBC SCHOOL\n";
+echo "=================================\n";
+
+try {
+    $booksCount = DB::table('books')->count();
+    $categoriesCount = DB::table('book_categories')->count();
+    $roomsCount = DB::table('class_rooms')->count();
+    $vehiclesCount = DB::table('vehicles')->count();
+    $studentsCount = DB::table('students')->count();
+    $parentsCount = DB::table('parent_guardians')->count();
+    $subjectsCount = DB::table('subjects')->count();
+    $classesCount = DB::table('classes')->count();
+
+    echo "📚 Livres en bibliothèque : $booksCount\n";
+    echo "📂 Catégories de livres : $categoriesCount\n";
+    echo "🏫 Salles de classe : $roomsCount\n";
+    echo "🚗 Véhicules de transport : $vehiclesCount\n";
+    echo "👥 Étudiants inscrits : $studentsCount\n";
+    echo "👨‍👩‍👧‍👦 Parents enregistrés : $parentsCount\n";
+    echo "📖 Matières enseignées : $subjectsCount\n";
+    echo "📋 Classes disponibles : $classesCount\n";
+
+} catch (Exception $e) {
+    echo "⚠️ Erreur statistiques: " . $e->getMessage() . "\n";
+}
+
+echo "\n🎉 BBC SCHOOL ALGERIA - CONFIGURATION TERMINÉE !\n";
+echo "================================================\n";
+echo "✅ Tous les modules sont maintenant complètement remplis\n";
+echo "🚗 Transport : Mercedes Sprinter, Ford Transit, Iveco, Renault configurés\n";
+echo "📚 Bibliothèque : {$booksCount} livres en français/arabe ajoutés\n";
+echo "🏫 Infrastructure : {$roomsCount} salles de classe créées\n";
+echo "💰 Finance : Types et groupes de frais configurés\n";
+echo "📊 Données complètes : {$studentsCount} étudiants, {$parentsCount} parents\n\n";
+
+echo "🌟 BBC SCHOOL ALGERIA EST PRÊTE POUR L'UTILISATION !\n";
+echo "🌐 Accéder à l'application : http://localhost/onestschooled-test/public\n";
+
+?>

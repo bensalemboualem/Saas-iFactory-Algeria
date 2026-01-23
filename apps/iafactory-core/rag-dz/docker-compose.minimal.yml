@@ -1,0 +1,126 @@
+# =============================================================================
+# IAFACTORY RAG-DZ - DOCKER COMPOSE MINIMAL (RAG ONLY)
+# =============================================================================
+# Usage: docker-compose -f docker-compose.minimal.yml up -d
+# Généré: 2025-12-27
+#
+# Stack minimale pour développement RAG:
+# - PostgreSQL + PGVector (vectorDB SQL)
+# - Redis (cache)
+# - Qdrant (vectorDB)
+# - AnythingLLM (interface RAG)
+# =============================================================================
+
+services:
+  # ===========================================================================
+  # POSTGRESQL + PGVECTOR
+  # ===========================================================================
+  iaf-postgres:
+    image: pgvector/pgvector:pg16
+    container_name: iaf-postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-iafactory}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-iafactory2024}
+      POSTGRES_DB: ${POSTGRES_DB:-iafactory}
+      TZ: Africa/Algiers
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    command: postgres -c shared_preload_libraries=vector
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-iafactory}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - iafactory-network
+
+  # ===========================================================================
+  # REDIS CACHE
+  # ===========================================================================
+  iaf-redis:
+    image: redis:7-alpine
+    container_name: iaf-redis
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+    volumes:
+      - redis-data:/data
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - iafactory-network
+
+  # ===========================================================================
+  # QDRANT VECTOR DATABASE
+  # ===========================================================================
+  iaf-qdrant:
+    image: qdrant/qdrant:latest
+    container_name: iaf-qdrant
+    volumes:
+      - qdrant-data:/qdrant/storage
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    environment:
+      QDRANT_LOG_LEVEL: INFO
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:6333/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - iafactory-network
+
+  # ===========================================================================
+  # ANYTHINGLLM - Interface RAG
+  # ===========================================================================
+  iaf-anythingllm:
+    image: mintplexlabs/anythingllm:latest
+    container_name: iaf-anythingllm
+    ports:
+      - "3001:3001"
+    volumes:
+      - anythingllm-data:/app/server/storage
+    environment:
+      STORAGE_DIR: /app/server/storage
+      JWT_SECRET: ${JWT_SECRET_KEY:-change-me-jwt-secret-32chars}
+      SIG_KEY: ${SIG_KEY:-change-me-sig-key}
+      SIG_SALT: ${SIG_SALT:-change-me-sig-salt}
+      # Connect to Qdrant
+      VECTOR_DB: qdrant
+      QDRANT_ENDPOINT: http://iaf-qdrant:6333
+    depends_on:
+      iaf-qdrant:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - iafactory-network
+
+# =============================================================================
+# VOLUMES PERSISTANTS
+# =============================================================================
+volumes:
+  postgres-data:
+    name: iaf-postgres-data
+  redis-data:
+    name: iaf-redis-data
+  qdrant-data:
+    name: iaf-qdrant-data
+  anythingllm-data:
+    name: iaf-anythingllm-data
+
+# =============================================================================
+# NETWORK
+# =============================================================================
+networks:
+  iafactory-network:
+    name: iafactory-network
+    driver: bridge

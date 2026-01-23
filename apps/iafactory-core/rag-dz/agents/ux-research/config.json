@@ -1,0 +1,95 @@
+{
+  "agent_id": "ia-ux-research",
+  "name": "IA UX Research",
+  "name_ar": "ذكاء بحث المستخدم",
+  "version": "1.0.0",
+  "description": "Agent d'interview pour collecter les feedbacks utilisateurs des produits IA Factory",
+  "category": "internal",
+  "icon": "🔬",
+  "color": "#6366F1",
+  
+  "model": {
+    "provider": "anthropic",
+    "model_id": "claude-sonnet-4-20250514",
+    "temperature": 0.7,
+    "max_tokens": 1024
+  },
+  
+  "interview": {
+    "type": "ux_research",
+    "phases": [
+      {
+        "id": "accueil",
+        "name": "Accueil",
+        "min_exchanges": 1,
+        "max_exchanges": 2,
+        "objectives": ["presentation", "context", "product_identification"]
+      },
+      {
+        "id": "exploration",
+        "name": "Exploration Usage",
+        "min_exchanges": 3,
+        "max_exchanges": 5,
+        "objectives": ["usage_patterns", "frequency", "context_of_use"]
+      },
+      {
+        "id": "friction",
+        "name": "Points de Friction",
+        "min_exchanges": 3,
+        "max_exchanges": 5,
+        "objectives": ["pain_points", "frustrations", "blockers"]
+      },
+      {
+        "id": "suggestions",
+        "name": "Besoins & Suggestions",
+        "min_exchanges": 2,
+        "max_exchanges": 3,
+        "objectives": ["feature_requests", "improvements", "ideal_product"]
+      },
+      {
+        "id": "cloture",
+        "name": "Clôture",
+        "min_exchanges": 1,
+        "max_exchanges": 2,
+        "objectives": ["summary", "additional_comments", "thanks"]
+      }
+    ],
+    "estimated_duration_minutes": 10,
+    "languages": ["fr", "ar", "fr-dz"]
+  },
+  
+  "output": {
+    "generate_report": true,
+    "report_format": "markdown",
+    "extract_insights": true,
+    "satisfaction_score": true,
+    "action_items": true
+  },
+  
+  "products_context": [
+    "Business DZ",
+    "RAG École", 
+    "RAG Islam",
+    "Studio Créatif",
+    "IA Finance",
+    "IA Marketing",
+    "IA Legal",
+    "IA Sales",
+    "IA Data",
+    "IA Startup"
+  ],
+  
+  "ui": {
+    "welcome_message": "Bienvenue dans l'interview UX Research",
+    "completion_message": "Merci pour vos précieux retours !",
+    "show_progress": true,
+    "show_phase_indicator": true
+  },
+  
+  "analytics": {
+    "track_completion_rate": true,
+    "track_avg_duration": true,
+    "track_satisfaction_trends": true,
+    "export_to_dashboard": true
+  }
+}

@@ -1,0 +1,20 @@
+﻿<!doctype html>
+<html lang="fr" dir="ltr" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IAFactory Algeria - Plateforme IA Souveraine</title>
+  <meta name="description" content="Plateforme IA souveraine pour l'Algérie. Applications intelligentes, agents IA et workflows automatisés.">
+  <script>
+    // Initialize theme from localStorage before React loads (prevents flash)
+    (function() {
+      var theme = localStorage.getItem('theme') || 'dark';
+      document.documentElement.dataset.theme = theme;
+    })();
+  </script>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+</html>

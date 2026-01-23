@@ -1,0 +1,80 @@
+{
+  "common": {
+    "welcome": "مرحبا بك",
+    "hello": "مرحبا",
+    "goodbye": "مع السلامة",
+    "yes": "نعم",
+    "no": "لا",
+    "ok": "حسنا",
+    "cancel": "إلغاء",
+    "save": "حفظ",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "loading": "جاري التحميل...",
+    "error": "خطأ",
+    "success": "نجاح",
+    "warning": "تنبيه"
+  },
+  "auth": {
+    "login": "تسجيل الدخول",
+    "logout": "تسجيل الخروج",
+    "register": "التسجيل",
+    "password": "كلمة المرور",
+    "email": "البريد الإلكتروني",
+    "forgot_password": "نسيت كلمة المرور؟",
+    "create_account": "إنشاء حساب"
+  },
+  "dashboard": {
+    "dashboard": "لوحة التحكم",
+    "home": "الرئيسية",
+    "settings": "الإعدادات",
+    "profile": "الملف الشخصي",
+    "notifications": "الإشعارات"
+  },
+  "billing": {
+    "invoices": "الفواتير",
+    "payment": "الدفع",
+    "pay_now": "ادفع الآن",
+    "balance": "الرصيد",
+    "credits": "الرصيد",
+    "buy_credits": "شراء رصيد",
+    "price": "السعر",
+    "total": "المجموع"
+  },
+  "agents": {
+    "assistant": "المساعد",
+    "chat": "محادثة مع المساعد",
+    "ask_question": "اطرح سؤالا",
+    "generating": "المساعد يعمل...",
+    "response": "الرد"
+  },
+  "documents": {
+    "upload": "رفع",
+    "download": "تحميل",
+    "documents": "المستندات",
+    "search": "بحث"
+  },
+  "gov": {
+    "cnas": "CNAS - الضمان الاجتماعي",
+    "cnrc": "CNRC - السجل التجاري",
+    "dgi": "DGI - الضرائب",
+    "sonelgaz": "سونلغاز - الكهرباء والغاز",
+    "attestation": "شهادة",
+    "certificate": "شهادة"
+  },
+  "errors": {
+    "network_error": "خطأ في الاتصال",
+    "server_error": "خطأ في الخادم",
+    "not_found": "غير موجود",
+    "unauthorized": "غير مصرح",
+    "invalid_input": "إدخال غير صالح",
+    "try_again": "حاول مرة أخرى"
+  },
+  "time": {
+    "today": "اليوم",
+    "yesterday": "أمس",
+    "tomorrow": "غدا",
+    "now": "الآن",
+    "later": "لاحقا"
+  }
+}

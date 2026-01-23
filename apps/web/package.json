@@ -1,0 +1,46 @@
+{
+    "name": "web",
+    "version": "0.0.1",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "prisma generate && next build",
+        "start": "next start",
+        "lint": "next lint",
+        "db:generate": "prisma generate",
+        "db:push": "prisma db push",
+        "db:migrate": "prisma migrate dev",
+        "db:studio": "prisma studio",
+        "postinstall": "prisma generate"
+    },
+    "dependencies": {
+        "@anthropic-ai/sdk": "^0.18.0",
+        "@auth/prisma-adapter": "^2.11.1",
+        "@iafactory/tools-registry": "workspace:*",
+        "@lobechat/database": "workspace:*",
+        "@prisma/adapter-better-sqlite3": "^7.2.0",
+        "@prisma/client": "^7.2.0",
+        "autoprefixer": "^10.4.23",
+        "bcryptjs": "^3.0.3",
+        "better-sqlite3": "^11.9.1",
+        "clsx": "^2.0.0",
+        "lucide-react": "^0.378.0",
+        "next": "^15.0.0",
+        "next-auth": "5.0.0-beta.30",
+        "openai": "^4.28.0",
+        "prisma": "^7.2.0",
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0",
+        "tailwind-merge": "^2.0.0"
+    },
+    "devDependencies": {
+        "@types/node": "^20",
+        "@types/react": "^19.0.0",
+        "@types/react-dom": "^19.0.0",
+        "eslint": "^8",
+        "eslint-config-next": "^15.0.0",
+        "postcss": "^8",
+        "tailwindcss": "^3.4.1",
+        "typescript": "^5"
+    }
+}

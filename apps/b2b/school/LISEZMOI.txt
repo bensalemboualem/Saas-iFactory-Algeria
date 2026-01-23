@@ -1,0 +1,45 @@
+╔════════════════════════════════════════════════════════════════╗
+║                                                                ║
+║           OneStSchooled - Configuration XAMPP                  ║
+║                                                                ║
+╚════════════════════════════════════════════════════════════════╝
+
+🚀 INSTALLATION (À FAIRE UNE SEULE FOIS):
+
+   1. Clic droit sur "setup-laravel-xampp.bat"
+   2. Choisir "Exécuter en tant qu'administrateur"
+   3. Attendre la fin de la configuration
+
+   ⚠️  Cette étape est OBLIGATOIRE avant la première utilisation!
+
+
+▶️  DÉMARRER LE PROJET (TOUS LES JOURS):
+
+   Double-cliquer sur "start-project.bat"
+
+   C'est tout! Le script va:
+   ✓ Démarrer Apache et MySQL automatiquement
+   ✓ Ouvrir votre navigateur sur le projet
+
+
+🌐 ACCÈS À L'APPLICATION:
+
+   http://onestschooled.local
+
+
+📚 DOCUMENTATION COMPLÈTE:
+
+   Ouvrir le fichier "INSTALLATION.md" pour plus de détails
+
+
+═══════════════════════════════════════════════════════════════
+
+PLUS JAMAIS DE PROBLÈME DE PORT 8000!
+
+Avec cette configuration:
+✓ Apache gère tout automatiquement
+✓ Pas besoin de "php artisan serve"
+✓ Fonctionne à chaque démarrage de Windows
+✓ Pas de conflit de ports
+
+═══════════════════════════════════════════════════════════════

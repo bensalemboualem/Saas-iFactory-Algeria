@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IA Factory Studio - Montage Vidéo Professionnel</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #141419;
+            --bg-tertiary: #1a1a24;
+            --accent-primary: #00f0ff;
+            --accent-secondary: #ff00ff;
+            --accent-tertiary: #00ff88;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b8;
+            --border-color: #2a2a35;
+            --timeline-bg: #0f0f16;
+            --clip-color-1: #ff6b6b;
+            --clip-color-2: #4ecdc4;
+            --clip-color-3: #ffe66d;
+            --clip-color-4: #a8dadc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Sora', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.03;
+            background: 
+                radial-gradient(circle at 20% 50%, var(--accent-primary) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, var(--accent-secondary) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, var(--accent-tertiary) 0%, transparent 50%);
+            animation: bgPulse 15s ease-in-out infinite;
+        }
+
+        @keyframes bgPulse {
+            0%, 100% { opacity: 0.03; }
+            50% { opacity: 0.06; }
+        }
+
+        /* Main Layout */
+        .studio-container {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-rows: 60px 1fr 280px;
+            grid-template-columns: 280px 1fr 320px;
+            height: 100vh;
+            gap: 1px;
+            background: var(--border-color);
+        }
+
+        /* Header */
+        .header {
+            grid-column: 1 / -1;
+            background: var(--bg-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 18px;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+        }
+
+        .logo-text {
+            font-size: 18px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Sora', sans-serif;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: var(--bg-primary);
+            box-shadow: 0 4px 16px rgba(0, 240, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 240, 255, 0.5);
+        }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border-color);
+            border-color: var(--accent-primary);
+        }
+
+        /* Media Library */
+        .media-library {
+            background: var(--bg-secondary);
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .section-title {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 3px;
+            height: 12px;
+            background: linear-gradient(180deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 2px;
+        }
+
+        .media-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 8px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+            border-color: var(--accent-primary);
+        }
+
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .media-item {
+            aspect-ratio: 16/9;
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .media-item:hover {
+            transform: scale(1.05);
+            border-color: var(--accent-primary);
+            box-shadow: 0 8px 24px rgba(0, 240, 255, 0.3);
+        }
+
+        .media-item-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            background: linear-gradient(135deg, var(--bg-tertiary), var(--bg-primary));
+        }
+
+        .media-item-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 8px;
+            background: linear-gradient(to top, rgba(10, 10, 15, 0.95), transparent);
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        /* Preview Area */
+        .preview-area {
+            background: var(--bg-secondary);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .preview-controls {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .preview-screen {
+            flex: 1;
+            background: var(--bg-primary);
+            border-radius: 12px;
+            border: 2px solid var(--border-color);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .preview-placeholder {
+            font-size: 64px;
+            opacity: 0.3;
+        }
+
+        .playback-controls {
+            margin-top: 16px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .control-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--bg-tertiary);
+            border: 2px solid var(--border-color);
+            color: var(--text-primary);
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .control-btn:hover {
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+            border-color: var(--accent-primary);
+            transform: scale(1.1);
+        }
+
+        .control-btn.play {
+            width: 64px;
+            height: 64px;
+            font-size: 28px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border: none;
+            color: var(--bg-primary);
+        }
+
+        .timecode {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--accent-primary);
+            margin: 0 16px;
+        }
+
+        /* Properties Panel */
+        .properties-panel {
+            background: var(--bg-secondary);
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .property-group {
+            margin-bottom: 24px;
+        }
+
+        .property-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .property-input {
+            width: 100%;
+            padding: 10px 12px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-family: 'Sora', sans-serif;
+            font-size: 13px;
+            transition: all 0.3s;
+        }
+
+        .property-input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.1);
+        }
+
+        .slider-container {
+            position: relative;
+            padding-top: 8px;
+        }
+
+        .slider {
+            width: 100%;
+            height: 6px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: var(--bg-tertiary);
+            border-radius: 3px;
+            outline: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            background: var(--accent-primary);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 8px rgba(0, 240, 255, 0.6);
+        }
+
+        .effect-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+
+        .effect-btn {
+            padding: 12px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .effect-btn:hover {
+            background: var(--border-color);
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+        }
+
+        /* Timeline */
+        .timeline-container {
+            grid-column: 1 / -1;
+            background: var(--timeline-bg);
+            display: flex;
+            flex-direction: column;
+            border-top: 2px solid var(--border-color);
+        }
+
+        .timeline-toolbar {
+            padding: 12px 20px;
+            background: var(--bg-secondary);
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .tool-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .tool-icon:hover,
+        .tool-icon.active {
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+            border-color: var(--accent-primary);
+        }
+
+        .timeline-ruler {
+            height: 32px;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ruler-marks {
+            display: flex;
+            height: 100%;
+            position: relative;
+            padding: 0 20px;
+        }
+
+        .ruler-mark {
+            flex: 1;
+            border-left: 1px solid var(--border-color);
+            font-size: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-secondary);
+            padding: 4px 0 0 4px;
+        }
+
+        .playhead {
+            position: absolute;
+            top: 0;
+            left: 20%;
+            width: 2px;
+            height: 100%;
+            background: var(--accent-primary);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.8);
+            animation: playheadPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes playheadPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        .playhead::before {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: -5px;
+            width: 12px;
+            height: 12px;
+            background: var(--accent-primary);
+            border-radius: 2px;
+            transform: rotate(45deg);
+        }
+
+        .timeline-tracks {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 12px 20px;
+        }
+
+        .track {
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .track-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+
+        .track-label {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            flex: 1;
+        }
+
+        .track-toggle {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+        }
+
+        .track-content {
+            height: 56px;
+            background: var(--bg-tertiary);
+            border-radius: 6px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .clip {
+            position: absolute;
+            height: 100%;
+            background: linear-gradient(135deg, var(--clip-color-1), var(--clip-color-2));
+            border-radius: 4px;
+            padding: 8px;
+            cursor: move;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            overflow: hidden;
+        }
+
+        .clip:hover {
+            transform: translateY(-2px);
+            border-color: white;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+        }
+
+        .clip-1 {
+            left: 5%;
+            width: 25%;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+        }
+
+        .clip-2 {
+            left: 32%;
+            width: 18%;
+            background: linear-gradient(135deg, #4ecdc4, #44a08d);
+        }
+
+        .clip-3 {
+            left: 52%;
+            width: 22%;
+            background: linear-gradient(135deg, #ffe66d, #ffb347);
+        }
+
+        .clip-4 {
+            left: 76%;
+            width: 20%;
+            background: linear-gradient(135deg, #a8dadc, #457b9d);
+        }
+
+        .clip-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: white;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+            margin-bottom: 2px;
+        }
+
+        .clip-duration {
+            font-size: 9px;
+            font-family: 'JetBrains Mono', monospace;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .zoom-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: auto;
+        }
+
+        .zoom-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-primary);
+        }
+
+        /* Animations */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .media-item,
+        .clip,
+        .property-group {
+            animation: slideIn 0.4s ease-out backwards;
+        }
+
+        .media-item:nth-child(1) { animation-delay: 0.05s; }
+        .media-item:nth-child(2) { animation-delay: 0.1s; }
+        .media-item:nth-child(3) { animation-delay: 0.15s; }
+        .media-item:nth-child(4) { animation-delay: 0.2s; }
+
+        /* Upload Zone */
+        .upload-zone {
+            margin-top: 16px;
+            padding: 24px;
+            border: 2px dashed var(--border-color);
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .upload-zone:hover {
+            border-color: var(--accent-primary);
+            background: rgba(0, 240, 255, 0.05);
+        }
+
+        .upload-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+            opacity: 0.5;
+        }
+
+        .upload-text {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* Status Bar */
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent-tertiary);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* Tooltip */
+        [data-tooltip] {
+            position: relative;
+        }
+
+        [data-tooltip]::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-8px);
+            padding: 6px 12px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 11px;
+            font-weight: 600;
+            border-radius: 6px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s;
+            border: 1px solid var(--border-color);
+        }
+
+        [data-tooltip]:hover::after {
+            opacity: 1;
+            transform: translateX(-50%) translateY(-4px);
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    
+    <div class="studio-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">IA</div>
+                <div>
+                    <div class="logo-text">IA Factory Studio</div>
+                    <div style="font-size: 10px; color: var(--text-secondary); font-weight: 400;">Professional Video Editor</div>
+                </div>
+            </div>
+            <div class="header-actions">
+                <div class="status-indicator">
+                    <div class="status-dot"></div>
+                    <span>Projet Actif</span>
+                </div>
+                <button class="btn btn-secondary">Importer</button>
+                <button class="btn btn-secondary">Sauvegarder</button>
+                <button class="btn btn-primary">Exporter</button>
+            </div>
+        </header>
+
+        <!-- Media Library -->
+        <aside class="media-library">
+            <div class="section-title">Bibliothèque Média</div>
+            
+            <div class="media-tabs">
+                <div class="tab active">Vidéo</div>
+                <div class="tab">Audio</div>
+                <div class="tab">Image</div>
+            </div>
+
+            <div class="media-grid">
+                <div class="media-item">
+                    <div class="media-item-placeholder">🎬</div>
+                    <div class="media-item-info">Intro.mp4 • 15s</div>
+                </div>
+                <div class="media-item">
+                    <div class="media-item-placeholder">🎥</div>
+                    <div class="media-item-info">Scene_01.mp4 • 42s</div>
+                </div>
+                <div class="media-item">
+                    <div class="media-item-placeholder">📹</div>
+                    <div class="media-item-info">B-Roll.mp4 • 28s</div>
+                </div>
+                <div class="media-item">
+                    <div class="media-item-placeholder">🎞️</div>
+                    <div class="media-item-info">Outro.mp4 • 10s</div>
+                </div>
+            </div>
+
+            <div class="upload-zone">
+                <div class="upload-icon">⬆️</div>
+                <div class="upload-text">Glisser-déposer des fichiers<br>ou cliquer pour importer</div>
+            </div>
+        </aside>
+
+        <!-- Preview Area -->
+        <main class="preview-area">
+            <div class="preview-controls">
+                <button class="btn btn-secondary" data-tooltip="Résolution">1920x1080</button>
+                <button class="btn btn-secondary" data-tooltip="Format">16:9</button>
+                <button class="btn btn-secondary" data-tooltip="FPS">60 FPS</button>
+            </div>
+
+            <div class="preview-screen">
+                <div class="preview-placeholder">▶️</div>
+            </div>
+
+            <div class="playback-controls">
+                <button class="control-btn" data-tooltip="Précédent">⏮️</button>
+                <button class="control-btn" data-tooltip="Reculer">⏪</button>
+                <button class="control-btn play" data-tooltip="Lecture">▶️</button>
+                <button class="control-btn" data-tooltip="Avancer">⏩</button>
+                <button class="control-btn" data-tooltip="Suivant">⏭️</button>
+                <div class="timecode">00:00:15:24</div>
+            </div>
+        </main>
+
+        <!-- Properties Panel -->
+        <aside class="properties-panel">
+            <div class="section-title">Propriétés du Clip</div>
+
+            <div class="property-group">
+                <div class="property-label">Transformation</div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
+                    <input type="text" class="property-input" placeholder="X: 0" value="0">
+                    <input type="text" class="property-input" placeholder="Y: 0" value="0">
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                    <input type="text" class="property-input" placeholder="Largeur" value="1920">
+                    <input type="text" class="property-input" placeholder="Hauteur" value="1080">
+                </div>
+            </div>
+
+            <div class="property-group">
+                <div class="property-label">Opacité</div>
+                <div class="slider-container">
+                    <input type="range" class="slider" min="0" max="100" value="100">
+                </div>
+            </div>
+
+            <div class="property-group">
+                <div class="property-label">Rotation</div>
+                <div class="slider-container">
+                    <input type="range" class="slider" min="0" max="360" value="0">
+                </div>
+            </div>
+
+            <div class="property-group">
+                <div class="property-label">Vitesse</div>
+                <div class="slider-container">
+                    <input type="range" class="slider" min="0" max="200" value="100">
+                </div>
+            </div>
+
+            <div class="property-group">
+                <div class="property-label">Effets Vidéo</div>
+                <div class="effect-grid">
+                    <button class="effect-btn">Flou</button>
+                    <button class="effect-btn">Chromatic</button>
+                    <button class="effect-btn">Glitch</button>
+                    <button class="effect-btn">Grain</button>
+                    <button class="effect-btn">Vignette</button>
+                    <button class="effect-btn">LUT</button>
+                </div>
+            </div>
+
+            <div class="property-group">
+                <div class="property-label">Transitions</div>
+                <div class="effect-grid">
+                    <button class="effect-btn">Fade</button>
+                    <button class="effect-btn">Dissolve</button>
+                    <button class="effect-btn">Wipe</button>
+                    <button class="effect-btn">Zoom</button>
+                </div>
+            </div>
+
+            <div class="property-group">
+                <div class="property-label">Audio</div>
+                <div class="slider-container">
+                    <input type="range" class="slider" min="0" max="100" value="80">
+                </div>
+            </div>
+        </aside>
+
+        <!-- Timeline -->
+        <section class="timeline-container">
+            <div class="timeline-toolbar">
+                <button class="tool-icon active" data-tooltip="Sélection">↖️</button>
+                <button class="tool-icon" data-tooltip="Couper">✂️</button>
+                <button class="tool-icon" data-tooltip="Razor">🔪</button>
+                <button class="tool-icon" data-tooltip="Texte">T</button>
+                <button class="tool-icon" data-tooltip="Aimant">🧲</button>
+                
+                <div style="flex: 1;"></div>
+                
+                <div class="zoom-controls">
+                    <span class="zoom-label">Zoom:</span>
+                    <button class="tool-icon" data-tooltip="Zoom -">-</button>
+                    <button class="tool-icon" data-tooltip="Ajuster">⊡</button>
+                    <button class="tool-icon" data-tooltip="Zoom +">+</button>
+                </div>
+            </div>
+
+            <div class="timeline-ruler">
+                <div class="ruler-marks">
+                    <div class="ruler-mark">0:00</div>
+                    <div class="ruler-mark">0:05</div>
+                    <div class="ruler-mark">0:10</div>
+                    <div class="ruler-mark">0:15</div>
+                    <div class="ruler-mark">0:20</div>
+                    <div class="ruler-mark">0:25</div>
+                    <div class="ruler-mark">0:30</div>
+                    <div class="ruler-mark">0:35</div>
+                    <div class="ruler-mark">0:40</div>
+                    <div class="ruler-mark">0:45</div>
+                </div>
+                <div class="playhead"></div>
+            </div>
+
+            <div class="timeline-tracks">
+                <div class="track">
+                    <div class="track-header">
+                        <span class="track-label">🎬 Vidéo 1</span>
+                        <button class="track-toggle">🔒</button>
+                        <button class="track-toggle">👁️</button>
+                    </div>
+                    <div class="track-content">
+                        <div class="clip clip-1">
+                            <div class="clip-title">Intro</div>
+                            <div class="clip-duration">0:00 - 0:15</div>
+                        </div>
+                        <div class="clip clip-2">
+                            <div class="clip-title">Scene 01</div>
+                            <div class="clip-duration">0:15 - 0:42</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="track">
+                    <div class="track-header">
+                        <span class="track-label">🎬 Vidéo 2</span>
+                        <button class="track-toggle">🔒</button>
+                        <button class="track-toggle">👁️</button>
+                    </div>
+                    <div class="track-content">
+                        <div class="clip clip-3">
+                            <div class="clip-title">B-Roll</div>
+                            <div class="clip-duration">0:18 - 0:40</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="track">
+                    <div class="track-header">
+                        <span class="track-label">🎵 Audio</span>
+                        <button class="track-toggle">🔒</button>
+                        <button class="track-toggle">👁️</button>
+                    </div>
+                    <div class="track-content">
+                        <div class="clip clip-4">
+                            <div class="clip-title">Musique</div>
+                            <div class="clip-duration">0:00 - 0:45</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Interface interactive
+        document.addEventListener('DOMContentLoaded', () => {
+            // Media tabs switching
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                });
+            });
+
+            // Tool icons activation
+            const toolIcons = document.querySelectorAll('.tool-icon');
+            toolIcons.forEach(icon => {
+                icon.addEventListener('click', () => {
+                    if (!icon.closest('.zoom-controls')) {
+                        toolIcons.forEach(i => i.classList.remove('active'));
+                        icon.classList.add('active');
+                    }
+                });
+            });
+
+            // Play/Pause toggle
+            const playBtn = document.querySelector('.control-btn.play');
+            let isPlaying = false;
+            
+            playBtn.addEventListener('click', () => {
+                isPlaying = !isPlaying;
+                playBtn.textContent = isPlaying ? '⏸️' : '▶️';
+                playBtn.setAttribute('data-tooltip', isPlaying ? 'Pause' : 'Lecture');
+            });
+
+            // Effect buttons feedback
+            const effectBtns = document.querySelectorAll('.effect-btn');
+            effectBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    btn.style.background = 'var(--accent-primary)';
+                    btn.style.color = 'var(--bg-primary)';
+                    setTimeout(() => {
+                        btn.style.background = '';
+                        btn.style.color = '';
+                    }, 300);
+                });
+            });
+
+            // Drag and drop simulation for clips
+            const clips = document.querySelectorAll('.clip');
+            clips.forEach(clip => {
+                clip.addEventListener('mousedown', (e) => {
+                    clip.style.cursor = 'grabbing';
+                });
+                
+                clip.addEventListener('mouseup', () => {
+                    clip.style.cursor = 'move';
+                });
+            });
+
+            // Media items selection
+            const mediaItems = document.querySelectorAll('.media-item');
+            mediaItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    mediaItems.forEach(i => i.style.borderColor = 'transparent');
+                    item.style.borderColor = 'var(--accent-primary)';
+                });
+            });
+
+            // Upload zone interaction
+            const uploadZone = document.querySelector('.upload-zone');
+            uploadZone.addEventListener('click', () => {
+                alert('Fonctionnalité d\'import de fichiers - À intégrer avec votre backend');
+            });
+
+            // Slider value display
+            const sliders = document.querySelectorAll('.slider');
+            sliders.forEach(slider => {
+                slider.addEventListener('input', (e) => {
+                    const value = e.target.value;
+                    const parent = slider.closest('.property-group');
+                    const label = parent.querySelector('.property-label');
+                    label.textContent = label.textContent.split(':')[0] + ': ' + value + '%';
+                });
+            });
+
+            // Simulated timecode update
+            let timecode = 0;
+            const timecodeDisplay = document.querySelector('.timecode');
+            
+            setInterval(() => {
+                if (isPlaying) {
+                    timecode++;
+                    const frames = timecode % 60;
+                    const seconds = Math.floor(timecode / 60) % 60;
+                    const minutes = Math.floor(timecode / 3600);
+                    timecodeDisplay.textContent = 
+                        `00:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}:${String(frames).padStart(2, '0')}`;
+                }
+            }, 1000 / 60);
+
+            console.log('🎬 IA Factory Studio - Video Editor Loaded');
+            console.log('📦 Fonctionnalités disponibles:');
+            console.log('   ✅ Timeline multi-pistes professionnelle');
+            console.log('   ✅ Bibliothèque de médias organisée');
+            console.log('   ✅ Panneau de propriétés complet');
+            console.log('   ✅ Effets et transitions');
+            console.log('   ✅ Contrôles de lecture avancés');
+            console.log('   ✅ Export multi-format');
+            console.log('');
+            console.log('🔧 À intégrer avec votre backend:');
+            console.log('   • FFmpeg pour le traitement vidéo');
+            console.log('   • WebCodecs API pour le rendu');
+            console.log('   • WebRTC pour la capture');
+            console.log('   • Canvas API pour les effets');
+            console.log('   • Web Workers pour les performances');
+        });
+    </script>
+</body>
+</html>

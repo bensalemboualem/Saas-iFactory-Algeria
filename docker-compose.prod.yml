@@ -1,0 +1,46 @@
+# IAFactory-Chat - Docker Compose
+# Programme National IA pour l'Education en Algerie
+# https://www.iafactoryalgeria.com
+
+services:
+  iafactory-chat:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: iafactory-chat
+    restart: unless-stopped
+    ports:
+      - "3210:3210"
+    environment:
+      # Connexion Ollama (sur la machine hote)
+      OLLAMA_PROXY_URL: http://host.docker.internal:11434
+
+      # Desactiver SSRF pour Ollama local
+      SSRF_ALLOW_PRIVATE_IP_ADDRESS: "1"
+
+      # Desactiver telemetrie
+      NEXT_PUBLIC_ANALYTICS_POSTHOG: ""
+      NEXT_PUBLIC_POSTHOG_KEY: ""
+      NEXT_PUBLIC_POSTHOG_HOST: ""
+
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+    volumes:
+      # Persistance des donnees (optionnel)
+      - ./data:/app/data
+
+# ============================================
+# INSTRUCTIONS:
+# ============================================
+# 1. Construire l'image:
+#    docker-compose -f docker-compose.iafactory.yml build
+#
+# 2. Lancer:
+#    docker-compose -f docker-compose.iafactory.yml up -d
+#
+# 3. Acceder:
+#    http://localhost:3210
+#
+# NOTE: Ollama doit etre en cours d'execution sur le port 11434
+# ============================================

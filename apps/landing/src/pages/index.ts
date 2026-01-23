@@ -1,0 +1,10 @@
+export { default as Home } from './Home';
+export { default as Pricing } from './Pricing';
+export { default as B2B } from './B2B';
+export { default as Tools } from './Tools';
+export { default as Apps } from './Apps';
+export { default as Agents } from './Agents';
+export { default as Workflows } from './Workflows';
+export { default as Login } from './Login';
+export { default as Chat } from './Chat';
+export { default as NotFound } from './NotFound';

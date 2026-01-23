@@ -1,0 +1,47 @@
+# IA Factory Video Operator - Requirements
+# MVP Stack for Automated Video Editing Agent
+
+# Core AI/LLM
+anthropic>=0.40.0          # Claude API for reasoning
+langgraph>=0.2.0           # Workflow orchestration
+langchain>=0.3.0           # LLM utilities
+
+# Video Processing
+ffmpeg-python>=0.2.0       # FFmpeg wrapper
+moviepy>=1.0.3             # High-level video editing
+opencv-python>=4.10.0      # Computer vision
+
+# Audio Processing
+pydub>=0.25.1              # Audio manipulation
+openai-whisper>=20240930   # Speech-to-text (local)
+# OR openai>=1.50.0        # Whisper API (cloud)
+
+# Image Processing
+pillow>=10.0.0             # Image manipulation
+
+# ML/Scene Detection
+scenedetect>=0.6.4         # PySceneDetect
+numpy>=1.24.0              # Numerical operations
+
+# API Framework
+fastapi>=0.115.0           # REST API
+uvicorn>=0.32.0            # ASGI server
+python-multipart>=0.0.9    # File uploads
+
+# Queue/Async
+redis>=5.0.0               # Job queue
+celery>=5.4.0              # Task queue (optional)
+
+# Storage
+boto3>=1.35.0              # S3-compatible storage
+
+# Utilities
+pydantic>=2.10.0           # Data validation
+python-dotenv>=1.0.0       # Environment variables
+httpx>=0.27.0              # HTTP client
+aiofiles>=24.1.0           # Async file operations
+
+# Optional: Local ML Models
+# torch>=2.5.0             # PyTorch (for local models)
+# torchvision>=0.20.0      # Vision models
+# mediapipe>=0.10.0        # Face/Pose detection
