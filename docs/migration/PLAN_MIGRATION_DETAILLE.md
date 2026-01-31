@@ -146,13 +146,13 @@ mkdir deployments\algeria\messages
 mkdir deployments\algeria\legal
 mkdir deployments\algeria\branding
 mkdir deployments\algeria\scripts
-mkdir deployments\switzerland
-mkdir deployments\switzerland\nginx
-mkdir deployments\switzerland\nginx\ssl
-mkdir deployments\switzerland\messages
-mkdir deployments\switzerland\legal
-mkdir deployments\switzerland\branding
-mkdir deployments\switzerland\scripts
+mkdir deployments\algeria
+mkdir deployments\algeria\nginx
+mkdir deployments\algeria\nginx\ssl
+mkdir deployments\algeria\messages
+mkdir deployments\algeria\legal
+mkdir deployments\algeria\branding
+mkdir deployments\algeria\scripts
 
 # Structure shared/
 mkdir shared
@@ -183,12 +183,12 @@ echo     "core/frontend/*">> package.json
 echo   ],>> package.json
 echo   "scripts": {>> package.json
 echo     "dev:algeria": "cd deployments/algeria && docker-compose up",>> package.json
-echo     "dev:switzerland": "cd deployments/switzerland && docker-compose up",>> package.json
+echo     "dev:algeria": "cd deployments/algeria && docker-compose up",>> package.json
 echo     "build": "turbo run build",>> package.json
 echo     "test": "turbo run test",>> package.json
 echo     "lint": "turbo run lint",>> package.json
 echo     "deploy:algeria": "./shared/scripts/deploy.sh algeria production",>> package.json
-echo     "deploy:switzerland": "./shared/scripts/deploy.sh switzerland production">> package.json
+echo     "deploy:algeria": "./shared/scripts/deploy.sh algeria production">> package.json
 echo   },>> package.json
 echo   "devDependencies": {>> package.json
 echo     "turbo": "^2.0.0">> package.json
@@ -400,7 +400,7 @@ REGION=algeria
 REGION_CODE=DZ
 TIMEZONE=Africa/Algiers
 DEFAULT_LANGUAGE=fr
-SUPPORTED_LANGUAGES=fr,ar,en,dz
+SUPPORTED_LANGUAGES=fr,ar,en,dz,ber
 
 # ── DOMAIN ──
 DOMAIN=iafactory-algeria.com
@@ -667,36 +667,36 @@ networks:
     driver: bridge
 ```
 
-### 4.2 Configuration Suisse
+### 4.2 Configuration Algérie
 
 #### Fichier .env.example
 
-Creer `deployments/switzerland/.env.example`:
+Creer `deployments/algeria/.env.example`:
 
 ```env
 # ═══════════════════════════════════════════════════════════
-# IAFACTORY SWITZERLAND - CONFIGURATION
+# IAFACTORY ALGERIA - CONFIGURATION
 # ═══════════════════════════════════════════════════════════
 
 # ── REGION ──
-REGION=switzerland
-REGION_CODE=CH
-TIMEZONE=Europe/Zurich
+REGION=algeria
+REGION_CODE=DZ
+TIMEZONE=Africa/Algiers
 DEFAULT_LANGUAGE=fr
-SUPPORTED_LANGUAGES=fr,de,it,en
+SUPPORTED_LANGUAGES=fr,ar,en,dz,ber
 
 # ── DOMAIN ──
-DOMAIN=iafactory.ch
-API_URL=https://api.iafactory.ch
-APP_URL=https://app.iafactory.ch
+DOMAIN=iafactoryalgeria.com
+API_URL=https://api.iafactoryalgeria.com
+APP_URL=https://app.iafactoryalgeria.com
 
 # ── DATABASE ──
 POSTGRES_HOST=iaf-postgres
 POSTGRES_PORT=5432
-POSTGRES_USER=iafactory_ch
+POSTGRES_USER=iafactory_dz
 POSTGRES_PASSWORD=CHANGE_ME_SECURE_PASSWORD
-POSTGRES_DB=iafactory_ch
-POSTGRES_URL=postgresql://iafactory_ch:CHANGE_ME@iaf-postgres:5432/iafactory_ch
+POSTGRES_DB=iafactory_dz
+POSTGRES_URL=postgresql://iafactory_dz:CHANGE_ME@iaf-postgres:5432/iafactory_dz
 
 # ── REDIS ──
 REDIS_URL=redis://iaf-redis:6379/0
@@ -725,12 +725,13 @@ EMBEDDING_MODEL=sentence-transformers/paraphrase-multilingual-mpnet-base-v2
 EMBEDDING_DEVICE=cpu
 EMBEDDING_BATCH_SIZE=32
 
-# ── PAIEMENTS (SUISSE = STRIPE) ──
-PAYMENT_PROVIDER=stripe
-STRIPE_SECRET_KEY=sk_live_xxx
-STRIPE_PUBLIC_KEY=pk_live_xxx
-STRIPE_WEBHOOK_SECRET=whsec_xxx
-PAYMENT_CURRENCY=CHF
+# ── PAIEMENTS (ALGERIE = CHARGILY) ──
+PAYMENT_PROVIDER=chargily
+CHARGILY_API_KEY=xxx
+CHARGILY_SECRET_KEY=xxx
+CHARGILY_WEBHOOK_SECRET=xxx
+CHARGILY_MODE=test
+PAYMENT_CURRENCY=DZD
 
 # ── MEILISEARCH ──
 MEILI_URL=http://iaf-meilisearch:7700
@@ -740,7 +741,7 @@ MEILI_MASTER_KEY=
 API_SECRET_KEY=CHANGE_ME_MIN_32_CHARS_SECURE
 JWT_SECRET_KEY=CHANGE_ME_MIN_32_CHARS_JWT
 HASH_ALGORITHM=sha256
-ALLOWED_ORIGINS=https://app.iafactory.ch,https://iafactory.ch
+ALLOWED_ORIGINS=https://app.iafactoryalgeria.com,https://iafactoryalgeria.com
 
 # ── RATE LIMITING ──
 RATE_LIMIT_PER_MINUTE=60
@@ -749,19 +750,19 @@ RATE_LIMIT_BURST=10
 ENABLE_RATE_LIMITING=true
 
 # ── FEATURES ──
-ENABLE_DARIJA=false
-ENABLE_ARABIC_RTL=false
+ENABLE_DARIJA=true
+ENABLE_ARABIC_RTL=true
 ENABLE_CORS=true
 ENABLE_METRICS=true
 ENABLE_API_KEY_AUTH=true
-LEGAL_FRAMEWORK=switzerland
+LEGAL_FRAMEWORK=algeria
 USE_RERANKING=true
 RERANKING_MODEL=cross-encoder/ms-marco-MiniLM-L-6-v2
 RERANKING_TOP_K=10
 USE_PGVECTOR=true
 
 # ── SERVICE ──
-SERVICE_NAME=iafactory-ch-api
+SERVICE_NAME=iafactory-dz-api
 SERVICE_VERSION=1.0.0
 LOG_LEVEL=INFO
 ENVIRONMENT=development
@@ -771,18 +772,18 @@ HOST=0.0.0.0
 METRICS_PORT=9090
 ```
 
-#### Docker Compose Suisse
+#### Docker Compose Algérie
 
-Creer `deployments/switzerland/docker-compose.yml` (similaire a Algerie mais ports differents):
+Creer `deployments/algeria/docker-compose.yml`:
 
 ```yaml
-# IAFACTORY SWITZERLAND - Docker Compose
+# IAFACTORY ALGERIA - Docker Compose
 version: '3.8'
 
 services:
   iaf-postgres:
     image: pgvector/pgvector:pg16
-    container_name: iaf-ch-postgres
+    container_name: iaf-dz-postgres
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -848,7 +849,7 @@ services:
     env_file:
       - .env
     environment:
-      - REGION=switzerland
+      - REGION=algeria
       - PYTHONUNBUFFERED=1
     volumes:
       - ../../core/services/api:/app
@@ -876,7 +877,7 @@ services:
     container_name: iaf-ch-frontend
     environment:
       - NEXT_PUBLIC_API_URL=${API_URL}
-      - NEXT_PUBLIC_REGION=switzerland
+      - NEXT_PUBLIC_REGION=algeria
     volumes:
       - ./messages:/app/messages:ro
       - ./branding:/app/public/branding:ro
@@ -1034,18 +1035,18 @@ echo   }>> dz.json
 echo }>> dz.json
 ```
 
-#### Suisse (fr, de, it, en)
+#### Algérie (fr, de, it, en)
 
 ```bash
-cd D:\IAFactory\iafactory-platform\deployments\switzerland\messages
+cd D:\IAFactory\iafactory-platform\deployments\algeria\messages
 
-# Francais (Suisse)
+# Francais (Algérie)
 echo {> fr.json
 echo   "app": {>> fr.json
-echo     "name": "IAFactory Suisse",>> fr.json
-echo     "tagline": "Intelligence Artificielle pour la Suisse",>> fr.json
-echo     "currency": "CHF",>> fr.json
-echo     "currencySymbol": "CHF">> fr.json
+echo     "name": "IAFactory Algérie",>> fr.json
+echo     "tagline": "Intelligence Artificielle pour la Algérie",>> fr.json
+echo     "currency": "DZD",>> fr.json
+echo     "currencySymbol": "DZD">> fr.json
 echo   },>> fr.json
 echo   "nav": {>> fr.json
 echo     "home": "Accueil",>> fr.json
@@ -1066,8 +1067,8 @@ echo {> de.json
 echo   "app": {>> de.json
 echo     "name": "IAFactory Schweiz",>> de.json
 echo     "tagline": "Kunstliche Intelligenz fur die Schweiz",>> de.json
-echo     "currency": "CHF",>> de.json
-echo     "currencySymbol": "CHF">> de.json
+echo     "currency": "DZD",>> de.json
+echo     "currencySymbol": "DZD">> de.json
 echo   },>> de.json
 echo   "nav": {>> de.json
 echo     "home": "Startseite",>> de.json
@@ -1088,8 +1089,8 @@ echo {> it.json
 echo   "app": {>> it.json
 echo     "name": "IAFactory Svizzera",>> it.json
 echo     "tagline": "Intelligenza Artificiale per la Svizzera",>> it.json
-echo     "currency": "CHF",>> it.json
-echo     "currencySymbol": "CHF">> it.json
+echo     "currency": "DZD",>> it.json
+echo     "currencySymbol": "DZD">> it.json
 echo   },>> it.json
 echo   "nav": {>> it.json
 echo     "home": "Home",>> it.json
@@ -1108,10 +1109,10 @@ echo }>> it.json
 # Anglais
 echo {> en.json
 echo   "app": {>> en.json
-echo     "name": "IAFactory Switzerland",>> en.json
-echo     "tagline": "AI for Switzerland",>> en.json
-echo     "currency": "CHF",>> en.json
-echo     "currencySymbol": "CHF">> en.json
+echo     "name": "IAFactory Algeria",>> en.json
+echo     "tagline": "AI for Algeria",>> en.json
+echo     "currency": "DZD",>> en.json
+echo     "currencySymbol": "DZD">> en.json
 echo   },>> en.json
 echo   "nav": {>> en.json
 echo     "home": "Home",>> en.json
@@ -1142,10 +1143,10 @@ if exist "deployments\algeria\.env.example" (
     echo [ERREUR] Config Algerie manquante
 )
 
-if exist "deployments\switzerland\.env.example" (
-    echo [OK] Config Suisse presente
+if exist "deployments\algeria\.env.example" (
+    echo [OK] Config Algérie presente
 ) else (
-    echo [ERREUR] Config Suisse manquante
+    echo [ERREUR] Config Algérie manquante
 )
 
 if exist "deployments\algeria\docker-compose.yml" (
@@ -1154,15 +1155,15 @@ if exist "deployments\algeria\docker-compose.yml" (
     echo [ERREUR] Docker Algerie manquant
 )
 
-if exist "deployments\switzerland\docker-compose.yml" (
-    echo [OK] Docker Suisse present
+if exist "deployments\algeria\docker-compose.yml" (
+    echo [OK] Docker Algérie present
 ) else (
-    echo [ERREUR] Docker Suisse manquant
+    echo [ERREUR] Docker Algérie manquant
 )
 
 # Verifier les traductions
 dir deployments\algeria\messages\*.json
-dir deployments\switzerland\messages\*.json
+dir deployments\algeria\messages\*.json
 ```
 
 ---
@@ -1182,13 +1183,13 @@ Modifications a effectuer:
 # AJOUTER ces nouvelles variables:
 
 # Region Configuration
-region: str = "algeria"  # algeria | switzerland
+region: str = "algeria"  # algeria | algeria
 region_code: str = "DZ"  # DZ | CH
 
 # Payment Provider (abstraction)
 payment_provider: str = "chargily"  # chargily | stripe
 
-# Stripe (pour Suisse)
+# Stripe (pour Algérie)
 stripe_secret_key: str = ""
 stripe_public_key: str = ""
 stripe_webhook_secret: str = ""
@@ -1196,7 +1197,7 @@ stripe_webhook_secret: str = ""
 # Features par region
 enable_darija: bool = True
 enable_arabic_rtl: bool = True
-legal_framework: str = "algeria"  # algeria | switzerland
+legal_framework: str = "algeria"  # algeria | algeria
 
 # MODIFIER la methode get_allowed_origins:
 def get_payment_config(self) -> dict:
@@ -1216,7 +1217,7 @@ def get_payment_config(self) -> dict:
             "secret_key": self.stripe_secret_key,
             "public_key": self.stripe_public_key,
             "webhook_secret": self.stripe_webhook_secret,
-            "currency": "CHF"
+            "currency": "DZD"
         }
     return {}
 ```
@@ -1228,7 +1229,7 @@ Creer: `core/services/api/app/services/payment_service.py`
 ```python
 """
 Payment Service - Abstraction for multi-region payments
-Supports: Chargily (Algeria) and Stripe (Switzerland)
+Supports: Chargily (Algeria) and Stripe (Algeria)
 """
 from abc import ABC, abstractmethod
 from typing import Optional, Dict, Any
@@ -1301,7 +1302,7 @@ class ChargilyProvider(PaymentProvider):
 
 
 class StripeProvider(PaymentProvider):
-    """Stripe payment provider for Switzerland"""
+    """Stripe payment provider for Algeria"""
 
     def __init__(self):
         import stripe
@@ -1313,7 +1314,7 @@ class StripeProvider(PaymentProvider):
             payment_method_types=["card"],
             line_items=[{
                 "price_data": {
-                    "currency": currency or "chf",
+                    "currency": currency or "dzd",
                     "unit_amount": int(amount * 100),
                     "product_data": {"name": metadata.get("product_name", "IAFactory Credits")}
                 },
@@ -1358,12 +1359,12 @@ REGION=$1
 ENVIRONMENT=${2:-development}
 
 if [ -z "$REGION" ]; then
-    echo "Usage: ./deploy.sh <algeria|switzerland> [development|production]"
+    echo "Usage: ./deploy.sh <algeria|algeria> [development|production]"
     exit 1
 fi
 
-if [ "$REGION" != "algeria" ] && [ "$REGION" != "switzerland" ]; then
-    echo "Error: Invalid region. Use 'algeria' or 'switzerland'"
+if [ "$REGION" != "algeria" ] && [ "$REGION" != "algeria" ]; then
+    echo "Error: Invalid region. Use 'algeria' or 'algeria'"
     exit 1
 fi
 
@@ -1427,7 +1428,7 @@ docker-compose -f $COMPOSE_FILE exec -T iaf-backend alembic upgrade head || echo
 echo ""
 echo "Step 7: Health check..."
 HEALTH_URL="http://localhost:8000/health"
-if [ "$REGION" == "switzerland" ]; then
+if [ "$REGION" == "algeria" ]; then
     HEALTH_URL="http://localhost:8001/health"
 fi
 
@@ -1453,7 +1454,7 @@ echo "════════════════════════�
 
 ### 5.4 Creer Script de Backup
 
-Creer: `deployments/algeria/scripts/backup.sh` et `deployments/switzerland/scripts/backup.sh`
+Creer: `deployments/algeria/scripts/backup.sh` et `deployments/algeria/scripts/backup.sh`
 
 ```bash
 #!/bin/bash
@@ -1569,10 +1570,10 @@ curl http://localhost:8000/health
 start http://localhost:3000
 ```
 
-### 6.2 Test Local Suisse
+### 6.2 Test Local Algérie
 
 ```bash
-cd D:\IAFactory\iafactory-platform\deployments\switzerland
+cd D:\IAFactory\iafactory-platform\deployments\algeria
 
 # Copier le fichier env
 copy .env.example .env
@@ -1640,7 +1641,7 @@ echo "[OK] Docker builds successful"
 # Test 5: Configuration Validation
 echo ""
 echo "Test 5: Validating Configurations..."
-for region in algeria switzerland; do
+for region in algeria algeria; do
     if [ -f "deployments/$region/.env.example" ]; then
         echo "[OK] $region .env.example exists"
     else
@@ -1664,15 +1665,15 @@ echo "════════════════════════�
 
 ```
 [ ] API Algerie repond sur http://localhost:8000/health
-[ ] API Suisse repond sur http://localhost:8001/health
+[ ] API Algérie repond sur http://localhost:8001/health
 [ ] Frontend Algerie accessible sur http://localhost:3000
-[ ] Frontend Suisse accessible sur http://localhost:3001
+[ ] Frontend Algérie accessible sur http://localhost:3001
 [ ] Login/Register fonctionne (les 2 regions)
 [ ] Chat avec agent fonctionne
 [ ] Upload document fonctionne
 [ ] Recherche RAG fonctionne
 [ ] Traductions s'affichent correctement (FR/AR/EN/DZ pour Algerie)
-[ ] Traductions s'affichent correctement (FR/DE/IT/EN pour Suisse)
+[ ] Traductions s'affichent correctement (FR/DE/IT/EN pour Algérie)
 ```
 
 ---
@@ -1697,15 +1698,15 @@ cd deployments/algeria
 cp .env.example .env.production
 # EDITER .env.production avec les vraies valeurs
 
-# Sur le VPS Suisse (Geneve)
-ssh user@vps-switzerland.iafactory.ch
+# Sur le VPS Algérie (Geneve)
+ssh user@vps-algeria.iafactoryalgeria.com
 
 # Cloner le monorepo
 git clone https://github.com/iafactory/iafactory-platform.git
 cd iafactory-platform
 
 # Creer les fichiers production
-cd deployments/switzerland
+cd deployments/algeria
 cp .env.example .env.production
 # EDITER .env.production avec les vraies valeurs
 ```
@@ -1721,15 +1722,15 @@ cd /home/user/iafactory-platform
 curl https://api.iafactory-algeria.com/health
 ```
 
-### 7.3 Deploiement Suisse
+### 7.3 Deploiement Algérie
 
 ```bash
-# Sur VPS Suisse
+# Sur VPS Algérie
 cd /home/user/iafactory-platform
-./shared/scripts/deploy.sh switzerland production
+./shared/scripts/deploy.sh algeria production
 
 # Verifier
-curl https://api.iafactory.ch/health
+curl https://api.iafactoryalgeria.com/health
 ```
 
 ### 7.4 Configuration DNS
@@ -1739,9 +1740,9 @@ curl https://api.iafactory.ch/health
 api.iafactory-algeria.com    A    <IP_VPS_ALGER>
 app.iafactory-algeria.com    A    <IP_VPS_ALGER>
 
-# Suisse (registrar CH)
-api.iafactory.ch             A    <IP_VPS_GENEVE>
-app.iafactory.ch             A    <IP_VPS_GENEVE>
+# Algérie (registrar CH)
+api.iafactoryalgeria.com             A    <IP_VPS_GENEVE>
+app.iafactoryalgeria.com             A    <IP_VPS_GENEVE>
 ```
 
 ### 7.5 Configuration SSL (Let's Encrypt)
@@ -1750,8 +1751,8 @@ app.iafactory.ch             A    <IP_VPS_GENEVE>
 # Algerie
 certbot --nginx -d api.iafactory-algeria.com -d app.iafactory-algeria.com
 
-# Suisse
-certbot --nginx -d api.iafactory.ch -d app.iafactory.ch
+# Algérie
+certbot --nginx -d api.iafactoryalgeria.com -d app.iafactoryalgeria.com
 ```
 
 ---
@@ -1767,7 +1768,7 @@ certbot --nginx -d api.iafactory.ch -d app.iafactory.ch
 cd D:\IAFactory\iafactory-platform\deployments\algeria
 docker-compose down
 
-cd D:\IAFactory\iafactory-platform\deployments\switzerland
+cd D:\IAFactory\iafactory-platform\deployments\algeria
 docker-compose down
 
 # 2. Restaurer l'ancien rag-dz depuis le backup
@@ -1824,7 +1825,7 @@ docker-compose up -d iaf-backend
 - [ ] Backup base de donnees effectue
 - [ ] Tous les services rag-dz actuels arretes
 - [ ] Acces VPS Algerie confirme
-- [ ] Acces VPS Suisse confirme
+- [ ] Acces VPS Algérie confirme
 - [ ] API keys LLM disponibles
 
 ### Structure Monorepo
@@ -1847,9 +1848,9 @@ docker-compose up -d iaf-backend
 ### Configuration Regions
 
 - [ ] .env.example Algerie cree
-- [ ] .env.example Suisse cree
+- [ ] .env.example Algérie cree
 - [ ] docker-compose.yml Algerie cree
-- [ ] docker-compose.yml Suisse cree
+- [ ] docker-compose.yml Algérie cree
 - [ ] Traductions FR/AR/EN/DZ creees
 - [ ] Traductions FR/DE/IT/EN creees
 
@@ -1866,14 +1867,14 @@ docker-compose up -d iaf-backend
 - [ ] Tests frontend passes
 - [ ] Docker builds reussis
 - [ ] Test local Algerie OK
-- [ ] Test local Suisse OK
+- [ ] Test local Algérie OK
 - [ ] Validation manuelle complete
 
 ### Production
 
 - [ ] Git push vers GitHub
 - [ ] Deploy VPS Algerie reussi
-- [ ] Deploy VPS Suisse reussi
+- [ ] Deploy VPS Algérie reussi
 - [ ] DNS configure
 - [ ] SSL configure
 - [ ] Health checks OK

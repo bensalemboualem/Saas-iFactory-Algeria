@@ -1,4 +1,9 @@
+export { default as Home } from "./Home";
+export { default as Onboarding } from "./Onboarding";
+export { default as Landing } from "./Landing";
 export { default as Chat } from "./Chat";
 export { default as Collections } from "./Collections";
+export { default as CollectionDetail } from "./CollectionDetail";
+export { default as Sources } from "./Sources";
 export { default as Search } from "./Search";
 export { default as Timeline } from "./Timeline";

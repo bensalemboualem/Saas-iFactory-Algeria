@@ -1,0 +1,190 @@
+{
+  "_comment": "INVENTAIRE PROJETS IA FACTORY - Mettre à jour à chaque nouveau projet",
+  "_last_updated": "2026-01-28",
+  
+  "markets": {
+    "DZ": {
+      "name": "Algérie",
+      "flag": "🇩🇿",
+      "domain": "iafactoryalgeria.com",
+      "payment_provider": "Chargily Pay",
+      "currency": "DZD",
+      "languages": ["fr", "ar", "darija"],
+      "target_users": "45M Algériens sans moyens de paiement internationaux"
+    },
+    "CH": {
+      "name": "Suisse",
+      "flag": "🇨🇭",
+      "domain": "iafactory.ch",
+      "payment_provider": "Stripe",
+      "currency": "CHF",
+      "languages": ["fr", "de", "en"],
+      "target_users": "Marché suisse B2B/B2C"
+    }
+  },
+
+  "projects": [
+    {
+      "id": "iafactory-algeria-main",
+      "name": "IA Factory Algeria - Platform Principal",
+      "market": "DZ",
+      "domain": "iafactoryalgeria.com",
+      "repo_path": "C:\\Users\\bbens\\iafactorychatgpt_v2",
+      "env_file": ".env.algeria",
+      "status": "production",
+      "features": [
+        "25+ apps IA",
+        "49 API routers", 
+        "17 agents",
+        "Council (multi-AI consensus)",
+        "Voice Assistant + Archon bridge",
+        "BMAD workflow",
+        "RAG system",
+        "Chargily Pay integration"
+      ],
+      "tech_stack": ["Next.js", "TypeScript", "Prisma", "PostgreSQL"],
+      "api_keys_needed": ["OPENAI", "ANTHROPIC", "GOOGLE_AI", "GROQ", "CHARGILY"],
+      "notes": "Platform principal - NE PAS mélanger avec Suisse"
+    },
+    {
+      "id": "iafactory-suisse-main",
+      "name": "IA Factory Suisse - Platform Principal",
+      "market": "CH",
+      "domain": "iafactory.ch",
+      "repo_path": "/path/to/iafactory-suisse",
+      "env_file": ".env.suisse",
+      "status": "production",
+      "features": [
+        "Agents IA",
+        "Voice Assistant",
+        "Stripe integration"
+      ],
+      "tech_stack": ["Next.js", "TypeScript", "Prisma", "PostgreSQL"],
+      "api_keys_needed": ["OPENAI", "ANTHROPIC", "GOOGLE_AI", "STRIPE"],
+      "notes": "Version suisse - PAS de références à Chargily ou DZD"
+    },
+    {
+      "id": "bolt-plus-ide",
+      "name": "BOLT-PLUS IDE",
+      "market": "DZ",
+      "repo_path": "/path/to/bolt-plus",
+      "env_file": ".env.bolt",
+      "status": "development",
+      "features": ["IDE IA", "Code generation", "Multi-model support"],
+      "tech_stack": ["React", "TypeScript", "Monaco Editor"],
+      "api_keys_needed": ["OPENAI", "ANTHROPIC"],
+      "notes": "⚠️ ATTENTION: Contamination détectée avec RAG system - nettoyer"
+    },
+    {
+      "id": "rag-system",
+      "name": "RAG System",
+      "market": "DZ",
+      "repo_path": "/path/to/rag-system",
+      "env_file": ".env.rag",
+      "status": "development",
+      "features": ["Vector DB", "Document processing", "Semantic search"],
+      "tech_stack": ["Python", "FastAPI", "Pinecone/Qdrant"],
+      "api_keys_needed": ["OPENAI", "PINECONE"],
+      "notes": "⚠️ ATTENTION: Contamination détectée avec BOLT-PLUS"
+    },
+    {
+      "id": "video-studio",
+      "name": "Video Studio",
+      "market": "DZ",
+      "repo_path": "/path/to/video-studio",
+      "env_file": ".env.video",
+      "status": "development",
+      "features": ["TikTok generation", "YouTube content", "Wan 2.1", "CogVideoX-5B"],
+      "tech_stack": ["React", "TypeScript", "Replicate API"],
+      "api_keys_needed": ["REPLICATE", "OPENAI"],
+      "notes": "⚠️ ATTENTION: Problèmes intégration Replicate API"
+    },
+    {
+      "id": "joradp-archiver",
+      "name": "JORADP Archiver",
+      "market": "DZ",
+      "repo_path": "/path/to/joradp",
+      "env_file": ".env.joradp",
+      "status": "development",
+      "features": ["PDF scraping", "OCR FR/AR", "Vector DB", "Journal Officiel Algérien"],
+      "tech_stack": ["Python", "Tesseract OCR", "FastAPI"],
+      "api_keys_needed": ["OPENAI"],
+      "notes": "Projet archivage Journal Officiel - Documents FR et AR"
+    },
+    {
+      "id": "interview-agents",
+      "name": "Interview Agents",
+      "market": "DZ",
+      "repo_path": "/path/to/interview-agents",
+      "env_file": ".env.interview",
+      "status": "development",
+      "features": ["UX Research", "Customer Discovery", "Automated interviews"],
+      "tech_stack": ["TypeScript", "Next.js"],
+      "api_keys_needed": ["OPENAI", "ANTHROPIC"],
+      "notes": "Agents pour recherche utilisateur"
+    },
+    {
+      "id": "education-system",
+      "name": "Education System",
+      "market": "DZ",
+      "repo_path": "/path/to/education",
+      "env_file": ".env.education",
+      "status": "development",
+      "features": ["Algerian schools", "Curriculum aligned", "Student tracking"],
+      "tech_stack": ["Next.js", "TypeScript"],
+      "api_keys_needed": ["OPENAI"],
+      "notes": "Système éducatif adapté programme algérien"
+    },
+    {
+      "id": "real-estate-tools",
+      "name": "Real Estate Tools",
+      "market": "DZ",
+      "repo_path": "/path/to/real-estate",
+      "env_file": ".env.realestate",
+      "status": "development",
+      "features": ["Property search", "Valuation AI", "Algerian market"],
+      "tech_stack": ["Next.js", "TypeScript"],
+      "api_keys_needed": ["OPENAI"],
+      "notes": "Outils immobilier marché algérien"
+    },
+    {
+      "id": "gov-services-automation",
+      "name": "Government Services Automation",
+      "market": "DZ",
+      "repo_path": "/path/to/gov-automation",
+      "env_file": ".env.gov",
+      "status": "development",
+      "features": [
+        "Utilities automation",
+        "Telecom services",
+        "Social security (CNAS/CASNOS)",
+        "Business registration (CNRC)",
+        "Browser automation"
+      ],
+      "tech_stack": ["Python", "Playwright", "FastAPI"],
+      "api_keys_needed": [],
+      "notes": "Automatisation portails administratifs algériens"
+    }
+  ],
+
+  "contamination_risks": [
+    {
+      "projects": ["bolt-plus-ide", "rag-system", "video-studio"],
+      "issue": "Code mélangé entre les 3 projets",
+      "symptoms": ["TypeScript build errors", "React hooks errors", "Functionality conflicts"],
+      "action": "Nettoyer chaque repo individuellement"
+    },
+    {
+      "projects": ["iafactory-algeria-main", "iafactory-suisse-main"],
+      "issue": "Références suisses dans code algérien",
+      "symptoms": ["CHF dans code DZ", "Stripe dans code Chargily"],
+      "action": "Grep et supprimer toutes références croisées"
+    }
+  ],
+
+  "_instructions": {
+    "add_project": "Copier un bloc project et remplir tous les champs",
+    "update_path": "Remplacer /path/to/ par le vrai chemin du repo",
+    "mark_contamination": "Ajouter ⚠️ dans notes si contamination détectée"
+  }
+}

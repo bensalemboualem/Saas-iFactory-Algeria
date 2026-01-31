@@ -33,17 +33,20 @@ function getPagination($ITEM)
 function setting($name)
 {
     try {
-        if ($name == 'currency_symbol') {
-            $currencyCode = Setting::where('name', 'currency_code')->first()?->value;
-            return Currency::where('code', $currencyCode)->first()?->symbol;
-        }
+        // Cache settings for 60 minutes to avoid repeated database queries
+        return Cache::remember("setting_{$name}", 3600, function () use ($name) {
+            if ($name == 'currency_symbol') {
+                $currencyCode = Setting::where('name', 'currency_code')->first()?->value;
+                return Currency::where('code', $currencyCode)->first()?->symbol;
+            }
 
-        $setting_data = Setting::where('name', $name)->first();
-        if ($setting_data) {
-            return $setting_data->value;
-        }
+            $setting_data = Setting::where('name', $name)->first();
+            if ($setting_data) {
+                return $setting_data->value;
+            }
 
-        return null;
+            return null;
+        });
     } catch (\Throwable $th) {
         return null;
     }
@@ -51,29 +54,38 @@ function setting($name)
 
 function settingLocale($name)
 {
-    $setting_data = Setting::where('name', $name)->first();
-    if ($setting_data) {
-        return @$setting_data->defaultTranslate->value;
-    }
-
-    return null;
+    // Cache locale settings for 60 minutes
+    $locale = Session::get('locale', 'en');
+    return Cache::remember("setting_locale_{$name}_{$locale}", 3600, function () use ($name) {
+        $setting_data = Setting::where('name', $name)->first();
+        if ($setting_data) {
+            return @$setting_data->defaultTranslate->value;
+        }
+        return null;
+    });
 }
 
 function examSetting($name)
 {
-    $setting_data = ExaminationSettings::where('name', $name)->where('session_id', setting('session'))->first();
-    if ($setting_data) {
-        return $setting_data->value;
-    }
-
-    return null;
+    $sessionId = setting('session');
+    return Cache::remember("exam_setting_{$name}_{$sessionId}", 3600, function () use ($name, $sessionId) {
+        $setting_data = ExaminationSettings::where('name', $name)->where('session_id', $sessionId)->first();
+        if ($setting_data) {
+            return $setting_data->value;
+        }
+        return null;
+    });
 }
 
 
 function findDirectionOfLang()
 {
-    $data = Language::where('code', Session::get('locale'))->select('direction')->first();
-    return @$data->direction != null ? strtolower(@$data->direction) : '';
+    // PERFORMANCE FIX: Cache language direction for 1 hour
+    $locale = Session::get('locale', 'en');
+    return Cache::remember("lang_direction_{$locale}", 3600, function () use ($locale) {
+        $data = Language::where('code', $locale)->select('direction')->first();
+        return @$data->direction != null ? strtolower(@$data->direction) : '';
+    });
 }
 
 // for menu active
@@ -139,32 +151,34 @@ if (!function_exists('calculateDiscount')) {
 
 function ___($key = null, $replace = [], $locale = null)
 {
+    // PERFORMANCE FIX: Cache translations instead of reading files on every call
     $input = explode('.', $key);
     $term = $input[1] ?? $key;
     $app_local = Session::get('locale') ?: 'ar';
 
     try {
-        if (str_contains($key, '.')) {
-            [$file_name, $trans_key] = explode('.', $key, 2); // allow for multiple dots
+        if (!str_contains($key, '.')) {
+            return ucwords(str_replace('_', ' ', $term));
+        }
 
+        [$file_name, $trans_key] = explode('.', $key, 2);
+
+        // Cache translation file for 1 hour
+        $cache_key = "translations_{$app_local}_{$file_name}";
+        $file_data = Cache::remember($cache_key, 3600, function () use ($app_local, $file_name) {
             $file_path = base_path('lang/' . $app_local . '/' . $file_name . '.json');
+            if (file_exists($file_path)) {
+                return json_decode(file_get_contents($file_path), true) ?? [];
+            }
+            return [];
+        });
+
+        if (array_key_exists($trans_key, $file_data)) {
+            return $file_data[$trans_key];
         }
 
-        if (!file_exists($file_path)) {
-            file_put_contents($file_path, json_encode([]));
-        }
-
-        $file_data = json_decode(file_get_contents($file_path), true) ?? [];
-
-        if (!array_key_exists($trans_key, $file_data)) {
-            // Transform: replace underscores and convert to title case
-            $default_value = ucwords(str_replace('_', ' ', $trans_key));
-
-            $file_data[$trans_key] = $default_value;
-            file_put_contents($file_path, json_encode($file_data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
-        }
-
-        return $file_data[$trans_key];
+        // Return default value without writing to file (avoid disk I/O in production)
+        return ucwords(str_replace('_', ' ', $trans_key));
     } catch (\Exception $e) {
         return ucwords(str_replace('_', ' ', $term));
     }
@@ -709,18 +723,16 @@ function send_web_notification($title, $message, $reciever_id, $url = null)
 if (!function_exists('hasModule')) {
     function hasModule($name): bool
     {
-        $filePath = base_path('modules_statuses.json');
-        $statuses = json_decode(file_get_contents($filePath), true);
-        if (isset($statuses[$name])) {
-            $isModuleEnabled = $statuses[$name];
-            if ($isModuleEnabled) {
-                return true;
-            } else {
-                return false;
+        // PERFORMANCE FIX: Cache module statuses for 1 hour instead of reading file every time
+        $statuses = Cache::remember('modules_statuses', 3600, function () {
+            $filePath = base_path('modules_statuses.json');
+            if (file_exists($filePath)) {
+                return json_decode(file_get_contents($filePath), true) ?? [];
             }
-        } else {
-            return false;
-        }
+            return [];
+        });
+
+        return isset($statuses[$name]) && $statuses[$name] === true;
     }
 }
 
@@ -850,8 +862,9 @@ if (!function_exists('sessionClassStudentByParent')) {
 if (!function_exists('encryptFunction')) {
     function encryptFunction($number = null)
     {
-
-        return openssl_encrypt($number, "AES-128-CTR", "CodeSpeedyKeybj54HH", 0, '8565825542115032');
+        $key = substr(config('app.key'), 7, 16); // Extract 16 chars from APP_KEY
+        $iv = substr(md5(config('app.key')), 0, 16);
+        return openssl_encrypt($number, "AES-128-CTR", $key, 0, $iv);
     }
 };
 
@@ -859,7 +872,9 @@ if (!function_exists('encryptFunction')) {
 if (!function_exists('decryptFunction')) {
     function decryptFunction($encrypted = null)
     {
-        return openssl_decrypt($encrypted, "AES-128-CTR", "CodeSpeedyKeybj54HH", 0, '8565825542115032');
+        $key = substr(config('app.key'), 7, 16);
+        $iv = substr(md5(config('app.key')), 0, 16);
+        return openssl_decrypt($encrypted, "AES-128-CTR", $key, 0, $iv);
     }
 };
 

@@ -76,7 +76,7 @@ npm run db:studio
 npm run dev
 ```
 
-Gateway will be available at `http://localhost:3001`
+Gateway will be available at `http://localhost:5191`
 
 ### 5. Docker Compose (Recommended)
 
@@ -98,7 +98,7 @@ docker-compose down
 All requests require authentication via API key or JWT:
 
 ```bash
-curl http://localhost:3001/v1/models \
+curl http://localhost:5191/v1/models \
   -H "Authorization: Bearer iaf_your_api_key"
 ```
 
@@ -156,8 +156,8 @@ Key environment variables:
 
 ```bash
 # Server
-PORT=3001
-API_BASE_URL=http://localhost:3001
+PORT=5191
+API_BASE_URL=http://localhost:5191
 
 # Database
 DATABASE_URL=postgresql://user:pass@localhost:5432/db
@@ -195,7 +195,7 @@ NODE_ENV=production npm start
 
 ```bash
 docker build -t iafactory-gateway .
-docker run -p 3001:3001 --env-file .env iafactory-gateway
+docker run -p 5191:5191 --env-file .env iafactory-gateway
 ```
 
 ## Connecting Bolt.diy
@@ -204,7 +204,7 @@ Configure Bolt to use IAFactory Gateway:
 
 ```bash
 # In bolt.diy/.env.local
-OPENAI_LIKE_API_BASE_URL=http://localhost:3001/v1
+OPENAI_LIKE_API_BASE_URL=http://localhost:5191/v1
 OPENAI_LIKE_API_KEY=iaf_your_api_key
 ```
 

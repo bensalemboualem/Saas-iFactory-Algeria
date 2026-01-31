@@ -98,8 +98,8 @@ docker-compose restart
 
 **Sur Cloudflare (ou votre registrar):**
 ```
-Type A: video-studio.iafactory.ch → VOTRE_IP_VPS
-Type A: api.iafactory.ch → VOTRE_IP_VPS
+Type A: video-studio.iafactoryalgeria.com → VOTRE_IP_VPS
+Type A: api.iafactoryalgeria.com → VOTRE_IP_VPS
 ```
 
 **Attendre 2-5 minutes que les DNS se propagent.**
@@ -119,8 +119,8 @@ chmod +x setup-nginx.sh
 ```
 
 **Le script va demander:**
-- Domaine frontend: `video-studio.iafactory.ch`
-- Domaine API: `api.iafactory.ch`
+- Domaine frontend: `video-studio.iafactoryalgeria.com`
+- Domaine API: `api.iafactoryalgeria.com`
 - Email Let's Encrypt: `votre@email.com`
 
 **Il va ensuite:**
@@ -136,15 +136,15 @@ chmod +x setup-nginx.sh
 
 ```bash
 # 1. Backend API
-curl https://api.iafactory.ch/health
+curl https://api.iafactoryalgeria.com/health
 # Doit retourner: {"status":"healthy",...}
 
 # 2. Documentation API
-curl https://api.iafactory.ch/docs
+curl https://api.iafactoryalgeria.com/docs
 # Doit retourner du HTML (Swagger UI)
 
 # 3. Frontend (dans le navigateur)
-https://video-studio.iafactory.ch
+https://video-studio.iafactoryalgeria.com
 # Doit afficher la page d'accueil
 ```
 
@@ -234,9 +234,9 @@ curl http://localhost:8000/health
 Si tous les tests passent, votre application est en production!
 
 **Accès:**
-- 🌐 Frontend: https://video-studio.iafactory.ch
-- 🔧 API: https://api.iafactory.ch
-- 📚 Documentation: https://api.iafactory.ch/docs
+- 🌐 Frontend: https://video-studio.iafactoryalgeria.com
+- 🔧 API: https://api.iafactoryalgeria.com
+- 📚 Documentation: https://api.iafactoryalgeria.com/docs
 
 **Prochaines étapes:**
 1. ✅ Tester la génération de vidéos

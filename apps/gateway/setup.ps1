@@ -56,9 +56,9 @@ if ($dockerRunning) {
 # 5. Afficher statut
 Write-Host "`n✅ Setup terminé!" -ForegroundColor Green
 Write-Host "`n📍 Gateway disponible sur:" -ForegroundColor Cyan
-Write-Host "   http://localhost:3001" -ForegroundColor White
-Write-Host "   http://localhost:3001/health (health check)" -ForegroundColor Gray
-Write-Host "   http://localhost:3001/v1/models (API)" -ForegroundColor Gray
+Write-Host "   http://localhost:5191" -ForegroundColor White
+Write-Host "   http://localhost:5191/health (health check)" -ForegroundColor Gray
+Write-Host "   http://localhost:5191/v1/models (API)" -ForegroundColor Gray
 
 Write-Host "`n🔧 Commandes utiles:" -ForegroundColor Cyan
 Write-Host "   npm run dev          - Démarrer en dev" -ForegroundColor Gray

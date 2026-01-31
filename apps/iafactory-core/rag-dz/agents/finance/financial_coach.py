@@ -1,5 +1,5 @@
 """
-Financial Coach Agent - Personal finance for PMEs and individuals (CH + DZ)
+Financial Coach Agent - Personal finance for PMEs and individuals (Algeria)
 """
 from typing import Dict, Any
 from ..core.base_agent import BaseAgent, AgentConfig, AgentResponse
@@ -8,8 +8,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 FINANCIAL_KNOWLEDGE = {
-    "algeria": {"currency": "DZD", "avg_salary": 40000, "inflation_rate": 9.3, "savings_rate_recommended": 20},
-    "switzerland": {"currency": "CHF", "avg_salary": 6500, "inflation_rate": 1.7, "savings_rate_recommended": 15, "pillar_3a_max": 7056}
+    "algeria": {"currency": "DZD", "avg_salary": 40000, "inflation_rate": 9.3, "savings_rate_recommended": 20}
 }
 
 class FinancialCoachAgent(BaseAgent):

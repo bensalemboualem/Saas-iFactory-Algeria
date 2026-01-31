@@ -58,7 +58,8 @@ app = FastAPI(
     ## Marchés cibles
     
     * 🇩🇿 **Algérie** - Français, Arabe, Darija
-    * 🇨🇭 **Suisse** - Français, Allemand, Italien
+    * 🇲🇦 **Maroc** - Français, Arabe, Darija
+    * 🇹🇳 **Tunisie** - Français, Arabe
     """,
     docs_url="/docs",
     redoc_url="/redoc",

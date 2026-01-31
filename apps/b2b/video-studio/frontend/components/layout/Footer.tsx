@@ -13,7 +13,7 @@ export default function Footer() {
     { icon: Twitter, href: "https://twitter.com/iafactory", label: "Twitter" },
     { icon: Github, href: "https://github.com/iafactory", label: "GitHub" },
     { icon: Youtube, href: "https://youtube.com/@iafactory", label: "YouTube" },
-    { icon: Mail, href: "mailto:contact@iafactory.ch", label: "Email" },
+    { icon: Mail, href: "mailto:contact@iafactoryalgeria.com", label: "Email" },
   ];
 
   const footerLinks = [

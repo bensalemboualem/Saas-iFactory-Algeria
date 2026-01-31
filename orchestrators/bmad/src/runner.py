@@ -142,8 +142,9 @@ class BMADRunner:
     Charge les prompts des agents et les exécute via LLM.
     """
 
-    # Mapping agents BMAD standard
+    # Mapping agents BMAD standard + Extended (22 agents total - BMAD v6)
     AGENT_ROLES = {
+        # Core agents (9)
         "analyst": "Business Analyst - Requirements gathering",
         "pm": "Product Manager - PRD creation",
         "architect": "System Architect - Technical design",
@@ -153,10 +154,24 @@ class BMADRunner:
         "test": "QA Engineer - Testing",
         "security": "Security Auditor - Security review",
         "devops": "DevOps Engineer - Deployment",
+        # Extended agents (13) - BMAD v6 + Boualem
+        "scrum_master": "Scrum Master - Sprint facilitation",
+        "tech_lead": "Tech Lead - Technical guidance",
+        "data_analyst": "Data Analyst - Data insights",
+        "documentation": "Documentation Lead - Technical writing",
+        "reviewer": "Code Reviewer - Code quality",
+        "researcher": "Technical Researcher - R&D",
+        "strategist": "Business Strategist - Growth planning",
+        "support": "Support Engineer - Issue resolution",
+        "trainer": "Technical Trainer - Knowledge transfer",
+        "content_writer": "Content Writer - Marketing content",
+        "database": "Database Expert - Data architecture",
+        "superpower": "Super Power Agent - All domains mastery",
     }
 
-    # Prompts par défaut pour agents standard (mode simulation)
+    # Prompts par défaut pour agents standard + Extended (mode simulation)
     DEFAULT_PROMPTS = {
+        # Core agents (9)
         "analyst": "Tu es un Business Analyst expert. Analyse les besoins et génère des requirements structurés.",
         "pm": "Tu es un Product Manager. Crée des PRDs détaillés avec objectifs, features et métriques.",
         "architect": "Tu es un Architecte Système. Conçois des architectures scalables et maintenables.",
@@ -166,6 +181,19 @@ class BMADRunner:
         "test": "Tu es un QA Engineer. Définis des stratégies de test complètes.",
         "security": "Tu es un Security Auditor. Identifie les vulnérabilités et recommande des corrections.",
         "devops": "Tu es un DevOps Engineer. Automatise les déploiements et le monitoring.",
+        # Extended agents (13) - BMAD v6
+        "scrum_master": "Tu es un Scrum Master. Facilite les sprints, élimine les blocages et assure la vélocité de l'équipe.",
+        "tech_lead": "Tu es un Tech Lead. Guide l'équipe sur les choix techniques et assure la qualité du code.",
+        "data_analyst": "Tu es un Data Analyst. Analyse les données, crée des insights et des visualisations.",
+        "documentation": "Tu es un Documentation Lead. Rédige une documentation technique claire et complète.",
+        "reviewer": "Tu es un Code Reviewer. Vérifie la qualité du code, applique les best practices.",
+        "researcher": "Tu es un Technical Researcher. Explore les nouvelles technologies et propose des solutions innovantes.",
+        "strategist": "Tu es un Business Strategist. Définis la vision produit et les stratégies de croissance.",
+        "support": "Tu es un Support Engineer. Résous les problèmes techniques et améliore l'expérience utilisateur.",
+        "trainer": "Tu es un Technical Trainer. Forme l'équipe et crée du contenu pédagogique.",
+        "content_writer": "Tu es un Content Writer. Rédige du contenu marketing, blog posts et documentation utilisateur.",
+        "database": "Tu es un Database Expert. Conçois les schémas, optimise les requêtes et assure l'intégrité des données.",
+        "superpower": "Tu es Boualem, le Super Agent omniscient. Tu maîtrises tous les domaines: développement, architecture, sécurité, DevOps, data, business. Rien n'est impossible pour toi!",
     }
 
     def __init__(

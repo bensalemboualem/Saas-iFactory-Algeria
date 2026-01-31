@@ -69,17 +69,23 @@ export class DeepSeekProvider implements BaseProvider {
 
     for await (const chunk of stream) {
       const choice = chunk.choices[0];
-      
+
+      // Return OpenAI-compatible format with choices array
       yield {
         id: chunk.id,
         object: 'chat.completion.chunk',
         created: chunk.created,
         model: chunk.model,
-        delta: {
-          role: choice.delta.role,
-          content: choice.delta.content || '',
-        },
-        finish_reason: choice.finish_reason || undefined,
+        choices: [
+          {
+            index: 0,
+            delta: {
+              role: choice?.delta?.role,
+              content: choice?.delta?.content || '',
+            },
+            finish_reason: choice?.finish_reason || null,
+          },
+        ],
       };
     }
   }

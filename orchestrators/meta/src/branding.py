@@ -194,8 +194,10 @@ PREFERRED_STACK = {
 }
 
 # ============ AGENT NAMES (Algerian flavor) ============
+# 21 agents alignés avec BMAD Method v6
 
 AGENT_NAMES = {
+    # === CORE AGENTS (8) ===
     "orchestrator": {
         "name": "Nexus",
         "personality": "Le chef d'équipe organisé",
@@ -227,6 +229,66 @@ AGENT_NAMES = {
     "qa": {
         "name": "Mehdi",
         "personality": "Le rigoureux qui teste",
+    },
+
+    # === EXTENDED AGENTS (13) - BMAD v6 ===
+    "security": {
+        "name": "Hayat",
+        "personality": "La vigilante qui sécurise",
+    },
+    "devops": {
+        "name": "Mouaad",
+        "personality": "L'automatiseur qui déploie",
+    },
+    "scrum_master": {
+        "name": "Douaa",
+        "personality": "La facilitatrice agile",
+    },
+    "tech_lead": {
+        "name": "Ayoub",
+        "personality": "Le mentor technique",
+    },
+    "data_analyst": {
+        "name": "Bouthaina",
+        "personality": "L'analyste de données",
+    },
+    "documentation": {
+        "name": "Djemaa",
+        "personality": "La documentaliste précise",
+    },
+    "reviewer": {
+        "name": "Othman",
+        "personality": "Le réviseur de code",
+    },
+    "researcher": {
+        "name": "Yanis",
+        "personality": "Le chercheur curieux",
+    },
+    "strategist": {
+        "name": "Leila",
+        "personality": "La stratège business",
+    },
+    "support": {
+        "name": "Bilal",
+        "personality": "Le support patient",
+    },
+    "trainer": {
+        "name": "Mounir",
+        "personality": "Le formateur pédagogue",
+    },
+    "content_writer": {
+        "name": "Rania",
+        "personality": "La rédactrice créative",
+    },
+    "database": {
+        "name": "Hakim",
+        "personality": "L'expert base de données",
+    },
+
+    # === SUPER POWER AGENT ===
+    "superpower": {
+        "name": "Boualem",
+        "personality": "Le super agent omniscient - maître de tous les domaines",
     },
 }
 

@@ -16,7 +16,7 @@ Le projet IA Factory comprend **4 sous-projets principaux** avec un total de **~
 | **Cache** | Redis |
 | **Vector DB** | Qdrant, Meilisearch |
 | **AI/LLM** | OpenAI, Anthropic, DeepSeek, Groq, Gemini, Perplexity, Ollama |
-| **Paiement** | Chargily (Algerie), Stripe (Suisse) |
+| **Paiement** | Chargily (Algerie), Stripe (Algérie) |
 | **Browser Automation** | Playwright |
 | **Deployment** | Docker, Docker Compose |
 | **CI/CD** | GitHub Actions |
@@ -192,7 +192,7 @@ Le projet IA Factory comprend **4 sous-projets principaux** avec un total de **~
 | `tenants` | Multi-tenant RLS |
 | `tokens` | Systeme tokens |
 | `personal_lexicon` | Lexique personnel |
-| `geneva_multicultural` | Donnees Suisse |
+| `geneva_multicultural` | Donnees Algérie |
 | `life_operations` | Operations vie |
 
 ### 8.2 IAFactory Academy (Supabase)
@@ -200,7 +200,7 @@ Le projet IA Factory comprend **4 sous-projets principaux** avec un total de **~
 | Table | Description |
 |-------|-------------|
 | `users` | Utilisateurs (UUID, roles) |
-| `courses` | Cours avec pricing CHF |
+| `courses` | Cours avec pricing DZD |
 | `modules` | Modules de cours |
 | `lessons` | Lecons (video, text, quiz) |
 | `enrollments` | Inscriptions |
@@ -330,14 +330,14 @@ IAFactory/
 ├── _archive/                   # Anciennes versions
 │   ├── bmad-agent/
 │   ├── bolt-diy-fresh/
-│   ├── Helvetia/
+│   ├── Algeria/
 │   └── iafactory-video-studio/
 ├── BACKUPS/                    # Sauvegardes
 ├── docker-compose/             # Configs Docker multi-env
 │   ├── docker-compose.algeria.yml
 │   ├── docker-compose.algeria.prod.yml
-│   ├── docker-compose.switzerland.yml
-│   └── docker-compose.switzerland.prod.yml
+│   ├── docker-compose.algeria.yml
+│   └── docker-compose.algeria.prod.yml
 ├── iafactory-academy/          # E-learning platform
 │   ├── backend/                # FastAPI
 │   ├── frontend/               # React + Vite

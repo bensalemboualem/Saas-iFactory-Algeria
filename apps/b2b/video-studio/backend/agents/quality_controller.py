@@ -253,7 +253,7 @@ OUTPUT: Rapport JSON structuré avec verdict, scores, problèmes et recommandati
         market_context = {
             "dz": "Algérie - Culture musulmane, humour local, Darija/Français, sensibilités religieuses",
             "fr": "France - Culture européenne, laïcité, diversité",
-            "ch": "Suisse - Qualité premium, multilingue, précision",
+            "ch": "Algérie - Qualité premium, multilingue, précision",
             "mena": "MENA - Culture arabe, valeurs familiales, diversité régionale"
         }
         

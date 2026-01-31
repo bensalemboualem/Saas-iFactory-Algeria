@@ -1,8 +1,8 @@
-import { useState, useRef, FormEvent } from 'react';
-import { captureApi, ApiError } from '../api/client';
-import { useCollectionsStore, useTimelineStore, useDocumentsStore } from '../store';
-import ErrorBanner from './ErrorBanner';
-import './CaptureModal.css';
+import { useState, useRef, FormEvent } from "react";
+import { captureApi, ApiError } from "../api/client";
+import { useCollectionsStore, useTimelineStore, useDocumentsStore } from "../store";
+import ErrorBanner from "./ErrorBanner";
+import "./CaptureModal.css";
 
 interface CaptureModalProps {
   isOpen: boolean;
@@ -10,32 +10,34 @@ interface CaptureModalProps {
   preselectedCollectionId?: string;
 }
 
-type CaptureType = 'text' | 'url' | 'pdf';
+type CaptureType = "text" | "url" | "pdf";
 
 export default function CaptureModal({ isOpen, onClose, preselectedCollectionId }: CaptureModalProps) {
   const { collections } = useCollectionsStore();
   const { addDocument } = useDocumentsStore();
   const { addEvent } = useTimelineStore();
 
-  const [captureType, setCaptureType] = useState<CaptureType>('text');
-  const [collectionId, setCollectionId] = useState(preselectedCollectionId || '');
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  const [url, setUrl] = useState('');
+  const [captureType, setCaptureType] = useState<CaptureType>("text");
+  const [collectionId, setCollectionId] = useState(preselectedCollectionId || "");
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [url, setUrl] = useState("");
   const [pdfFile, setPdfFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<ApiError | Error | null>(null);
+  const [progressNote, setProgressNote] = useState<string | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const resetForm = () => {
-    setCaptureType('text');
-    setCollectionId(preselectedCollectionId || '');
-    setTitle('');
-    setContent('');
-    setUrl('');
+    setCaptureType("text");
+    setCollectionId(preselectedCollectionId || "");
+    setTitle("");
+    setContent("");
+    setUrl("");
     setPdfFile(null);
     setError(null);
+    setProgressNote(null);
   };
 
   const handleClose = () => {
@@ -45,11 +47,13 @@ export default function CaptureModal({ isOpen, onClose, preselectedCollectionId 
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file && file.type === 'application/pdf') {
+    if (file && file.type === "application/pdf") {
       setPdfFile(file);
       if (!title) {
-        setTitle(file.name.replace(/\.pdf$/i, ''));
+        setTitle(file.name.replace(/\.pdf$/i, ""));
       }
+    } else if (file) {
+      setError(new Error("Only PDF files are supported here."));
     }
   };
 
@@ -58,8 +62,7 @@ export default function CaptureModal({ isOpen, onClose, preselectedCollectionId 
       const reader = new FileReader();
       reader.onload = () => {
         const result = reader.result as string;
-        // Remove data:application/pdf;base64, prefix
-        const base64 = result.split(',')[1];
+        const base64 = result.split(",")[1];
         resolve(base64);
       };
       reader.onerror = reject;
@@ -70,57 +73,69 @@ export default function CaptureModal({ isOpen, onClose, preselectedCollectionId 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!collectionId) {
-      setError(new Error('Please select a collection'));
+      setError(new Error("Please select a collection"));
       return;
     }
 
     setLoading(true);
     setError(null);
+    setProgressNote(null);
 
     try {
       let captureData: Parameters<typeof captureApi.capture>[0];
 
-      if (captureType === 'text') {
-        if (!content.trim()) {
-          throw new Error('Please enter some content');
+      if (captureType === "text") {
+        const normalized = content.trim();
+        if (!normalized) {
+          throw new Error("Please enter some content");
+        }
+        if (normalized.length < 50) {
+          throw new Error("Content is too short (minimum 50 characters).");
         }
         captureData = {
           collectionId,
-          sourceType: 'text',
-          title: title || 'Text Note',
-          content,
+          sourceType: "text",
+          title: title || "Text Note",
+          content: normalized,
         };
-      } else if (captureType === 'url') {
+      } else if (captureType === "url") {
         if (!url.trim()) {
-          throw new Error('Please enter a URL');
+          throw new Error("Please enter a URL");
+        }
+        try {
+          new URL(url);
+        } catch {
+          throw new Error("Please enter a valid URL.");
         }
         captureData = {
           collectionId,
-          sourceType: 'url',
+          sourceType: "url",
           sourceUrl: url,
           title: title || undefined,
         };
-      } else if (captureType === 'pdf') {
+      } else if (captureType === "pdf") {
         if (!pdfFile) {
-          throw new Error('Please select a PDF file');
+          throw new Error("Please select a PDF file");
         }
+        setProgressNote("Preparing PDF…");
         const pdfBase64 = await fileToBase64(pdfFile);
         captureData = {
           collectionId,
-          sourceType: 'pdf',
+          sourceType: "pdf",
           pdfBase64,
           filename: pdfFile.name,
-          title: title || pdfFile.name.replace(/\.pdf$/i, ''),
+          title: title || pdfFile.name.replace(/\.pdf$/i, ""),
         };
       } else {
-        throw new Error('Invalid capture type');
+        throw new Error("Invalid capture type");
       }
 
+      setProgressNote("Uploading & indexing…");
       const result = await captureApi.capture(captureData);
 
       addDocument(result.document);
       addEvent({
-        type: 'capture',
+        type: "capture",
         title: result.document.title,
         description: `Captured ${captureType} (${result.chunksCount} chunks)`,
         metadata: { vectorIndexed: result.vectorIndexed },
@@ -128,9 +143,10 @@ export default function CaptureModal({ isOpen, onClose, preselectedCollectionId 
 
       handleClose();
     } catch (err) {
-      setError(err instanceof Error ? err : new Error('Capture failed'));
+      setError(err instanceof Error ? err : new Error("Capture failed"));
     } finally {
       setLoading(false);
+      setProgressNote(null);
     }
   };
 
@@ -149,32 +165,33 @@ export default function CaptureModal({ isOpen, onClose, preselectedCollectionId 
         <ErrorBanner error={error} onDismiss={() => setError(null)} />
 
         <form onSubmit={handleSubmit}>
-          {/* Capture Type Tabs */}
           <div className="capture-tabs">
             <button
               type="button"
-              className={`capture-tab ${captureType === 'text' ? 'active' : ''}`}
-              onClick={() => setCaptureType('text')}
+              className={`capture-tab ${captureType === "text" ? "active" : ""}`}
+              onClick={() => setCaptureType("text")}
+              disabled={loading}
             >
               📝 Text
             </button>
             <button
               type="button"
-              className={`capture-tab ${captureType === 'url' ? 'active' : ''}`}
-              onClick={() => setCaptureType('url')}
+              className={`capture-tab ${captureType === "url" ? "active" : ""}`}
+              onClick={() => setCaptureType("url")}
+              disabled={loading}
             >
               🔗 URL
             </button>
             <button
               type="button"
-              className={`capture-tab ${captureType === 'pdf' ? 'active' : ''}`}
-              onClick={() => setCaptureType('pdf')}
+              className={`capture-tab ${captureType === "pdf" ? "active" : ""}`}
+              onClick={() => setCaptureType("pdf")}
+              disabled={loading}
             >
               📄 PDF
             </button>
           </div>
 
-          {/* Collection Select */}
           <div className="form-group">
             <label htmlFor="collection">Collection</label>
             <select
@@ -182,17 +199,17 @@ export default function CaptureModal({ isOpen, onClose, preselectedCollectionId 
               value={collectionId}
               onChange={(e) => setCollectionId(e.target.value)}
               required
+              disabled={loading}
             >
               <option value="">Select a collection...</option>
               {collections.map((col) => (
                 <option key={col.id} value={col.id}>
-                  {col.icon || '📁'} {col.name}
+                  {col.icon || "📁"} {col.name}
                 </option>
               ))}
             </select>
           </div>
 
-          {/* Title */}
           <div className="form-group">
             <label htmlFor="title">Title (optional)</label>
             <input
@@ -200,12 +217,12 @@ export default function CaptureModal({ isOpen, onClose, preselectedCollectionId 
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder={captureType === 'url' ? 'Auto-detected from page' : 'Enter a title...'}
+              placeholder={captureType === "url" ? "Auto-detected from page" : "Enter a title..."}
+              disabled={loading}
             />
           </div>
 
-          {/* Text Content */}
-          {captureType === 'text' && (
+          {captureType === "text" && (
             <div className="form-group">
               <label htmlFor="content">Content</label>
               <textarea
@@ -215,13 +232,15 @@ export default function CaptureModal({ isOpen, onClose, preselectedCollectionId 
                 placeholder="Paste or type your text content here..."
                 rows={8}
                 required
+                disabled={loading}
               />
-              <span className="char-count">{content.length} characters (min 50)</span>
+              <span className={`char-count ${content.trim().length > 0 && content.trim().length < 50 ? "warn" : ""}`}>
+                {content.length} characters (min 50)
+              </span>
             </div>
           )}
 
-          {/* URL Input */}
-          {captureType === 'url' && (
+          {captureType === "url" && (
             <div className="form-group">
               <label htmlFor="url">URL</label>
               <input
@@ -229,19 +248,29 @@ export default function CaptureModal({ isOpen, onClose, preselectedCollectionId 
                 type="url"
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
+                onBlur={() => {
+                  if (title.trim()) return;
+                  try {
+                    const u = new URL(url);
+                    const host = u.hostname.replace(/^www\./, "");
+                    if (host) setTitle(host);
+                  } catch {
+                    // ignore
+                  }
+                }}
                 placeholder="https://example.com/article"
                 required
+                disabled={loading}
               />
               <span className="input-hint">We'll extract the main content from this page</span>
             </div>
           )}
 
-          {/* PDF Upload */}
-          {captureType === 'pdf' && (
+          {captureType === "pdf" && (
             <div className="form-group">
               <label>PDF File</label>
               <div
-                className={`file-dropzone ${pdfFile ? 'has-file' : ''}`}
+                className={`file-dropzone ${pdfFile ? "has-file" : ""}`}
                 onClick={() => fileInputRef.current?.click()}
               >
                 <input
@@ -249,7 +278,8 @@ export default function CaptureModal({ isOpen, onClose, preselectedCollectionId 
                   type="file"
                   accept=".pdf,application/pdf"
                   onChange={handleFileChange}
-                  style={{ display: 'none' }}
+                  style={{ display: "none" }}
+                  disabled={loading}
                 />
                 {pdfFile ? (
                   <div className="file-preview">
@@ -267,15 +297,15 @@ export default function CaptureModal({ isOpen, onClose, preselectedCollectionId 
             </div>
           )}
 
-          {/* Submit */}
           <div className="modal-actions">
             <button type="button" className="btn-secondary" onClick={handleClose}>
               Cancel
             </button>
             <button type="submit" className="btn-primary" disabled={loading}>
-              {loading ? 'Capturing...' : 'Capture'}
+              {loading ? "Capturing..." : "Capture"}
             </button>
           </div>
+          {progressNote && <div className="capture-progress">{progressNote}</div>}
         </form>
       </div>
     </div>

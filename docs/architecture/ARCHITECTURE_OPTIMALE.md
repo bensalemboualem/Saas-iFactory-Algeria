@@ -1,6 +1,6 @@
 # Architecture Optimale - IAFactory Multi-Region
 
-> **Objectif**: Partager le code entre rag-dz (Algerie) et Helvetia (Suisse)
+> **Objectif**: Partager le code entre rag-dz (Algerie) et Algeria (Algérie)
 > **Date**: 29 Decembre 2025
 > **Base**: RAG_DZ_COMPLET.md (28 apps, 15 agents, 70+ endpoints)
 
@@ -29,18 +29,18 @@
 | **Code IDENTIQUE** | Les 28 apps, 15 agents et workflows DOIVENT etre partages |
 | **Deploiement SEPARE** | 2 VPS independants (Alger + Geneve) |
 | **Config DIFFERENTE** | Langues, env vars, API keys, domaines |
-| **Souverainete donnees** | Donnees DZ restent en Algerie, CH restent en Suisse |
+| **Souverainete donnees** | Donnees DZ restent en Algerie, CH restent en Algérie |
 
 ### Differences par Region
 
-| Aspect | Algerie (rag-dz) | Suisse (Helvetia) |
+| Aspect | Algerie (rag-dz) | Algérie (Algeria) |
 |--------|------------------|-------------------|
-| **Domaine** | iafactory-algeria.com | iafactory.ch |
+| **Domaine** | iafactory-algeria.com | iafactoryalgeria.com |
 | **VPS** | Alger (Icosnet/OVH) | Geneve (Infomaniak) |
 | **Langues UI** | FR, AR, EN, Darija | FR, DE, IT, EN |
-| **Paiements** | Chargily (DZD) | Stripe (CHF/EUR) |
+| **Paiements** | Chargily (DZD) | Stripe (DZD/EUR) |
 | **LLM Local** | Ollama (souverain) | Ollama (souverain) |
-| **Timezone** | Africa/Algiers | Europe/Zurich |
+| **Timezone** | Africa/Algiers | Africa/Algiers |
 | **Legal** | Code Commerce DZ | Code des Obligations CH |
 
 ### Ce qui est PARTAGE (IDENTIQUE)
@@ -153,13 +153,13 @@ iafactory-platform/
 │   │       ├── backup.sh
 │   │       └── restore.sh
 │   │
-│   └── switzerland/               # Config Suisse
+│   └── algeria/               # Config Algérie
 │       ├── .env                   # Variables CH
 │       ├── .env.production
 │       ├── docker-compose.yml     # Stack CH
 │       ├── docker-compose.prod.yml
 │       ├── nginx/
-│       │   └── nginx.conf         # iafactory.ch
+│       │   └── nginx.conf         # iafactoryalgeria.com
 │       ├── messages/              # i18n (fr, de, it, en)
 │       │   ├── fr.json
 │       │   ├── de.json
@@ -267,7 +267,7 @@ rag-dz/
 └── README.md
 
 
-REPOSITORY 3: helvetia (Suisse)
+REPOSITORY 3: helvetia (Algérie)
 ────────────────────────────────
 helvetia/
 ├── package.json                   # Import @iafactory/*
@@ -362,7 +362,7 @@ helvetia/
 │            │                             │                  │
 │  ┌─────────▼─────────┐     ┌─────────────▼─────────┐       │
 │  │ deployments/      │     │ deployments/          │       │
-│  │ algeria/          │     │ switzerland/          │       │
+│  │ algeria/          │     │ algeria/          │       │
 │  │                   │     │                       │       │
 │  │ ├── .env         │     │ ├── .env              │       │
 │  │ ├── docker-compose│     │ ├── docker-compose    │       │
@@ -375,7 +375,7 @@ helvetia/
 │  │ └── branding/    │     │ └── branding/         │       │
 │  │                   │     │                       │       │
 │  │  VPS ALGER       │     │  VPS GENEVE           │       │
-│  │  iafactory-      │     │  iafactory.ch         │       │
+│  │  iafactory-      │     │  iafactoryalgeria.com         │       │
 │  │  algeria.com     │     │                       │       │
 │  └───────────────────┘     └───────────────────────┘       │
 │                                                              │
@@ -526,7 +526,7 @@ iafactory-platform/
 │   │       ├── restore.sh
 │   │       └── ssl-renew.sh
 │   │
-│   └── switzerland/                       # SUISSE
+│   └── algeria/                       # ALGERIA
 │       ├── .env.example
 │       ├── .env.production.example
 │       ├── docker-compose.yml
@@ -572,14 +572,14 @@ iafactory-platform/
 │   │   └── openapi.yaml
 │   └── guides/
 │       ├── algeria.md
-│       └── switzerland.md
+│       └── algeria.md
 │
 ├── .github/                               # CI/CD
 │   └── workflows/
 │       ├── test.yml
 │       ├── build.yml
 │       ├── deploy-algeria.yml
-│       └── deploy-switzerland.yml
+│       └── deploy-algeria.yml
 │
 ├── package.json                           # Root workspace
 ├── pnpm-workspace.yaml
@@ -607,7 +607,7 @@ REGION=algeria
 REGION_CODE=DZ
 TIMEZONE=Africa/Algiers
 DEFAULT_LANGUAGE=fr
-SUPPORTED_LANGUAGES=fr,ar,en,dz
+SUPPORTED_LANGUAGES=fr,ar,en,dz,ber
 
 # ── DOMAIN ──
 DOMAIN=iafactory-algeria.com
@@ -666,31 +666,31 @@ ENABLE_ARABIC_RTL=true
 LEGAL_FRAMEWORK=algeria
 ```
 
-#### deployments/switzerland/.env.example
+#### deployments/algeria/.env.production.example
 
 ```bash
 # ═══════════════════════════════════════════════════════════
-# IAFACTORY SWITZERLAND - CONFIGURATION
+# IAFACTORY ALGERIA - CONFIGURATION PRODUCTION
 # ═══════════════════════════════════════════════════════════
 
 # ── REGION ──
-REGION=switzerland
-REGION_CODE=CH
-TIMEZONE=Europe/Zurich
+REGION=algeria
+REGION_CODE=DZ
+TIMEZONE=Africa/Algiers
 DEFAULT_LANGUAGE=fr
-SUPPORTED_LANGUAGES=fr,de,it,en
+SUPPORTED_LANGUAGES=fr,ar,en,dz,ber
 
 # ── DOMAIN ──
-DOMAIN=iafactory.ch
-API_URL=https://api.iafactory.ch
-APP_URL=https://app.iafactory.ch
+DOMAIN=iafactoryalgeria.com
+API_URL=https://api.iafactoryalgeria.com
+APP_URL=https://app.iafactoryalgeria.com
 
 # ── DATABASE ──
 POSTGRES_HOST=iaf-postgres
 POSTGRES_PORT=5432
-POSTGRES_USER=iafactory_ch
+POSTGRES_USER=iafactory_dz
 POSTGRES_PASSWORD=CHANGE_ME_SECURE_PASSWORD
-POSTGRES_DB=iafactory_ch
+POSTGRES_DB=iafactory_dz
 
 # ── REDIS ──
 REDIS_URL=redis://iaf-redis:6379/0
@@ -706,33 +706,35 @@ OPENAI_API_KEY=sk-xxx
 ANTHROPIC_API_KEY=sk-ant-xxx
 GROQ_API_KEY=gsk_xxx
 GOOGLE_GENERATIVE_AI_API_KEY=AIzaSy-xxx
+DEEPSEEK_API_KEY=sk-xxx
 
 # ── OLLAMA (LOCAL/SOUVERAIN) ──
 OLLAMA_BASE_URL=http://iaf-ollama:11434
 OLLAMA_MODEL=llama3.2
 
-# ── PAIEMENTS (SUISSE = STRIPE) ──
-PAYMENT_PROVIDER=stripe
-STRIPE_SECRET_KEY=sk_live_xxx
-STRIPE_PUBLIC_KEY=pk_live_xxx
-STRIPE_WEBHOOK_SECRET=whsec_xxx
-PAYMENT_CURRENCY=CHF
+# ── PAIEMENTS (ALGERIE = CHARGILY) ──
+PAYMENT_PROVIDER=chargily
+CHARGILY_API_KEY=xxx
+CHARGILY_SECRET_KEY=xxx
+CHARGILY_WEBHOOK_SECRET=xxx
+CHARGILY_MODE=live
+PAYMENT_CURRENCY=DZD
 
 # ── COMMUNICATION ──
 TWILIO_ACCOUNT_SID=xxx
 TWILIO_AUTH_TOKEN=xxx
-TWILIO_PHONE_NUMBER=+41xxx
-TWILIO_WHATSAPP_NUMBER=whatsapp:+41xxx
+TWILIO_PHONE_NUMBER=+213xxx
+TWILIO_WHATSAPP_NUMBER=whatsapp:+213xxx
 
 # ── SECURITY ──
 API_SECRET_KEY=CHANGE_ME_MIN_32_CHARS
 JWT_SECRET_KEY=CHANGE_ME_MIN_32_CHARS
-ALLOWED_ORIGINS=https://app.iafactory.ch,https://iafactory.ch
+ALLOWED_ORIGINS=https://app.iafactoryalgeria.com,https://iafactoryalgeria.com
 
 # ── FEATURES ──
-ENABLE_DARIJA=false
-ENABLE_ARABIC_RTL=false
-LEGAL_FRAMEWORK=switzerland
+ENABLE_DARIJA=true
+ENABLE_ARABIC_RTL=true
+LEGAL_FRAMEWORK=algeria
 ```
 
 ### Docker Compose par Region
@@ -873,7 +875,7 @@ REGION=$1
 ENVIRONMENT=${2:-production}
 
 if [ -z "$REGION" ]; then
-    echo "Usage: ./deploy.sh <algeria|switzerland> [production|staging]"
+    echo "Usage: ./deploy.sh <algeria|algeria> [production|staging]"
     exit 1
 fi
 
@@ -952,8 +954,8 @@ cd deployments/algeria
 cp .env.example .env
 docker-compose up -d
 
-# Setup Suisse (dev)
-cd deployments/switzerland
+# Setup Algérie (dev)
+cd deployments/algeria
 cp .env.example .env
 docker-compose up -d
 
@@ -965,8 +967,8 @@ docker-compose up -d
 # Algerie
 ./shared/scripts/deploy.sh algeria production
 
-# Suisse
-./shared/scripts/deploy.sh switzerland production
+# Algérie
+./shared/scripts/deploy.sh algeria production
 
 
 # ═══════════════════════════════════════════════════════
@@ -976,8 +978,8 @@ docker-compose up -d
 # Backup Algerie
 ./deployments/algeria/scripts/backup.sh
 
-# Backup Suisse
-./deployments/switzerland/scripts/backup.sh
+# Backup Algérie
+./deployments/algeria/scripts/backup.sh
 
 
 # ═══════════════════════════════════════════════════════
@@ -987,7 +989,7 @@ docker-compose up -d
 # Pull + Deploy les 2 regions
 git pull origin main
 ./shared/scripts/deploy.sh algeria production
-./shared/scripts/deploy.sh switzerland production
+./shared/scripts/deploy.sh algeria production
 ```
 
 ---
@@ -1004,7 +1006,7 @@ git init
 
 # 2. Creer la structure
 mkdir -p core/{apps,agents,services,frontend,workflows,infrastructure}
-mkdir -p deployments/{algeria,switzerland}
+mkdir -p deployments/{algeria,algeria}
 mkdir -p shared/{scripts,templates}
 mkdir -p docs
 ```
@@ -1037,13 +1039,13 @@ mv core/agents/recruteur-dz core/agents/recruiter
 cp ../rag-dz/.env deployments/algeria/.env.example
 cp ../rag-dz/docker-compose.yml deployments/algeria/
 
-# 2. Creer les configs Switzerland (adapter)
-cp deployments/algeria/.env.example deployments/switzerland/.env.example
+# 2. Creer les configs Algeria (adapter)
+cp deployments/algeria/.env.example deployments/algeria/.env.example
 # Modifier: REGION, langues, paiements, domaine
 
 # 3. Creer les traductions
 mkdir -p deployments/algeria/messages
-mkdir -p deployments/switzerland/messages
+mkdir -p deployments/algeria/messages
 ```
 
 ### Phase 4: Test (1-2 jours)
@@ -1054,8 +1056,8 @@ cd deployments/algeria
 docker-compose up -d
 # Verifier: http://localhost:3000
 
-# 2. Test local Switzerland
-cd ../switzerland
+# 2. Test local Algeria
+cd ../algeria
 docker-compose up -d
 # Verifier: http://localhost:3001
 
@@ -1074,12 +1076,12 @@ git push origin main
 # 2. Deploy Algerie
 ./shared/scripts/deploy.sh algeria production
 
-# 3. Deploy Suisse
-./shared/scripts/deploy.sh switzerland production
+# 3. Deploy Algérie
+./shared/scripts/deploy.sh algeria production
 
 # 4. Verification finale
 curl https://api.iafactory-algeria.com/health
-curl https://api.iafactory.ch/health
+curl https://api.iafactoryalgeria.com/health
 ```
 
 ### Checklist Migration
@@ -1089,14 +1091,14 @@ curl https://api.iafactory.ch/health
 - [ ] Migrer code core
 - [ ] Renommer dossiers generiques
 - [ ] Creer configs Algeria
-- [ ] Creer configs Switzerland
+- [ ] Creer configs Algeria
 - [ ] Creer traductions FR/AR/EN/DZ
 - [ ] Creer traductions FR/DE/IT/EN
 - [ ] Tester localement Algeria
-- [ ] Tester localement Switzerland
+- [ ] Tester localement Algeria
 - [ ] Setup CI/CD GitHub Actions
 - [ ] Deploy production Algeria
-- [ ] Deploy production Switzerland
+- [ ] Deploy production Algeria
 - [ ] Verifier health checks
 - [ ] Mettre a jour DNS
 - [ ] Archiver ancien rag-dz
@@ -1112,7 +1114,7 @@ iafactory-platform/
 ├── core/                    # CODE PARTAGE (28 apps, 15 agents)
 ├── deployments/
 │   ├── algeria/            # Config DZ (Chargily, ar/fr/dz)
-│   └── switzerland/        # Config CH (Stripe, de/fr/it)
+│   └── algeria/        # Config CH (Stripe, de/fr/it)
 ├── shared/                  # Scripts, templates
 └── docs/                    # Documentation
 ```

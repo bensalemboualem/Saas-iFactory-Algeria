@@ -12,18 +12,9 @@ export default function Footer() {
     {
       title: t('footer_products') || 'Produits',
       links: [
-        { label: t('footer_apps') || 'Applications', to: '/apps' },
-        { label: t('footer_agents') || 'Agents IA', to: '/agents' },
-        { label: t('footer_workflows') || 'Workflows', to: '/workflows' },
-        { label: 'API', to: '/tools' },
-      ],
-    },
-    {
-      title: t('footer_directory') || 'Directory IA',
-      links: [
         { label: t('footer_tools') || 'Outils IA', to: '/tools' },
         { label: t('footer_agents') || 'Agents IA', to: '/agents' },
-        { label: t('footer_workflows') || 'Workflows', to: '/workflows' },
+        { label: t('footer_apps') || 'Applications', to: '/apps' },
       ],
     },
     {
@@ -39,14 +30,12 @@ export default function Footer() {
       links: [
         { label: t('footer_about') || 'À propos', to: '/about' },
         { label: t('footer_pricing') || 'Tarifs', to: '/pricing' },
-        { label: t('footer_b2b') || 'B2B', to: '/b2b' },
         { label: 'Contact', to: '/contact' },
       ],
     },
     {
       title: t('footer_legal') || 'Légal',
       links: [
-        { label: t('footer_legal_mentions') || 'Mentions légales', to: '/mentions' },
         { label: t('footer_privacy') || 'Confidentialité', to: '/privacy' },
         { label: t('footer_terms') || 'CGU', to: '/cgu' },
       ],
@@ -55,15 +44,16 @@ export default function Footer() {
 
   const styles = {
     footer: {
-      background: colors.bgSecondary,
-      padding: '60px 24px 24px',
-      marginTop: '80px',
+      background: 'transparent',
+      borderTop: `1px solid ${colors.borderColor}`,
+      padding: '32px 20px',
+      marginTop: '0',
     },
     footerTop: {
       display: 'grid',
-      gridTemplateColumns: '2fr repeat(5, 1fr)',
+      gridTemplateColumns: '2fr repeat(4, 1fr)',
       gap: '40px',
-      maxWidth: '1200px',
+      maxWidth: '1100px',
       margin: '0 auto 40px',
     },
     footerBrand: {

@@ -12,6 +12,8 @@ packages:
   - 'apps/landing'
   - 'apps/dzir-ia'
   - 'apps/iafactory-core'
+  - 'apps/bolt-ui'
+  - 'apps/academy'
 
   # B2B apps (optional - may have own package managers)
   # - 'apps/b2b/academy'

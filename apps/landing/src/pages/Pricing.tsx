@@ -2,73 +2,191 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 type Theme = 'dark' | 'light';
+type Lang = 'fr' | 'en' | 'ar';
 
-const PLANS = [
-  {
-    id: 'dz_starter',
-    name: 'Starter',
-    price: 0,
-    credits: 100,
-    features: [
-      '100 crédits/mois',
-      'Accès aux modèles essentiels',
-      'Génération texte & image basique',
-      'Support communautaire',
-    ],
-    cta: 'Commencer gratuitement',
-    ctaLink: '/login',
-    popular: false,
+// ============================================================================
+// I18N - FR / EN / AR
+// ============================================================================
+const I18N: Record<Lang, Record<string, string>> = {
+  fr: {
+    title: 'Tarifs simples & transparents',
+    subtitle: "Tous les plans fonctionnent avec un système de crédits mensuels utilisables sur l'ensemble des modèles IA.",
+    popular: 'Plus populaire',
+    perMonth: 'DZD/mois',
+    creditsMonth: 'crédits/mois',
+    // Starter
+    starter_name: 'Starter',
+    starter_f1: '100 crédits/mois',
+    starter_f2: 'Accès aux modèles essentiels',
+    starter_f3: 'Génération texte & image basique',
+    starter_f4: 'Support communautaire',
+    starter_cta: 'Commencer gratuitement',
+    // Pro
+    pro_name: 'Pro',
+    pro_f1: '1 000 crédits/mois',
+    pro_f2: 'Accès à tous les modèles IA',
+    pro_f3: 'Texte, Image, Audio, Code & Vidéo',
+    pro_f4: 'Support prioritaire',
+    pro_f5: 'Accès API',
+    pro_f6: 'Gestion des crédits en temps réel',
+    pro_cta: 'Choisir Pro',
+    // Business
+    business_name: 'Business',
+    business_f1: '5 000 crédits/mois',
+    business_f2: 'Accès aux modèles premium',
+    business_f3: 'Agents IA personnalisés',
+    business_f4: 'Accès API étendu',
+    business_f5: 'Support dédié (SLA)',
+    business_f6: 'Facturation entreprise',
+    business_cta: 'Contacter ventes',
+    // Credit examples
+    creditTitle: 'Exemples de consommation de crédits',
+    creditSubtitle: 'Estimations indicatives pour chaque type de génération',
+    creditNote: 'Les valeurs peuvent évoluer selon la charge et la version des modèles.',
+    text: 'Texte',
+    textUsage: '~1 crédit / réponse courte',
+    image: 'Image',
+    imageUsage: '~10-20 crédits / image',
+    video: 'Vidéo',
+    videoUsage: '~100-300 crédits / génération',
+    audio: 'Audio',
+    audioUsage: '~5-15 crédits / action',
+    code: 'Code',
+    codeUsage: '~1-5 crédits / requête',
+    // Payment
+    paymentTitle: 'Moyens de paiement acceptés',
+    disclaimer: "Les modèles et services tiers sont accessibles via notre plateforme d'orchestration IA. L'accès dépend de la disponibilité et des quotas des fournisseurs.",
   },
-  {
-    id: 'dz_pro',
-    name: 'Pro',
-    price: 1990,
-    credits: 1000,
-    features: [
-      '1 000 crédits/mois',
-      'Accès à tous les modèles IA',
-      'Texte, Image, Audio, Code & Vidéo',
-      'Support prioritaire',
-      'Accès API',
-      'Gestion des crédits en temps réel',
-    ],
-    cta: 'Choisir Pro',
-    ctaLink: '/login?plan=pro',
-    popular: true,
+  en: {
+    title: 'Simple & transparent pricing',
+    subtitle: 'All plans work with a monthly credit system usable across all AI models.',
+    popular: 'Most popular',
+    perMonth: 'DZD/month',
+    creditsMonth: 'credits/month',
+    // Starter
+    starter_name: 'Starter',
+    starter_f1: '100 credits/month',
+    starter_f2: 'Access to essential models',
+    starter_f3: 'Basic text & image generation',
+    starter_f4: 'Community support',
+    starter_cta: 'Start for free',
+    // Pro
+    pro_name: 'Pro',
+    pro_f1: '1,000 credits/month',
+    pro_f2: 'Access to all AI models',
+    pro_f3: 'Text, Image, Audio, Code & Video',
+    pro_f4: 'Priority support',
+    pro_f5: 'API access',
+    pro_f6: 'Real-time credit management',
+    pro_cta: 'Choose Pro',
+    // Business
+    business_name: 'Business',
+    business_f1: '5,000 credits/month',
+    business_f2: 'Access to premium models',
+    business_f3: 'Custom AI agents',
+    business_f4: 'Extended API access',
+    business_f5: 'Dedicated support (SLA)',
+    business_f6: 'Enterprise billing',
+    business_cta: 'Contact sales',
+    // Credit examples
+    creditTitle: 'Credit consumption examples',
+    creditSubtitle: 'Indicative estimates for each generation type',
+    creditNote: 'Values may change depending on load and model versions.',
+    text: 'Text',
+    textUsage: '~1 credit / short response',
+    image: 'Image',
+    imageUsage: '~10-20 credits / image',
+    video: 'Video',
+    videoUsage: '~100-300 credits / generation',
+    audio: 'Audio',
+    audioUsage: '~5-15 credits / action',
+    code: 'Code',
+    codeUsage: '~1-5 credits / request',
+    // Payment
+    paymentTitle: 'Accepted payment methods',
+    disclaimer: 'Third-party models and services are accessible via our AI orchestration platform. Access depends on provider availability and quotas.',
   },
-  {
-    id: 'dz_business',
-    name: 'Business',
-    price: 5990,
-    credits: 5000,
-    features: [
-      '5 000 crédits/mois',
-      'Accès aux modèles premium',
-      'Agents IA personnalisés',
-      'Accès API étendu',
-      'Support dédié (SLA)',
-      'Facturation entreprise',
-    ],
-    cta: 'Contacter ventes',
-    ctaLink: '/contact',
-    popular: false,
+  ar: {
+    title: 'أسعار بسيطة وشفافة',
+    subtitle: 'جميع الخطط تعمل بنظام رصيد شهري يمكن استخدامه على جميع نماذج الذكاء الاصطناعي.',
+    popular: 'الأكثر شعبية',
+    perMonth: 'دج/شهر',
+    creditsMonth: 'رصيد/شهر',
+    // Starter
+    starter_name: 'المبتدئ',
+    starter_f1: '100 رصيد/شهر',
+    starter_f2: 'الوصول للنماذج الأساسية',
+    starter_f3: 'توليد نص وصورة أساسي',
+    starter_f4: 'دعم المجتمع',
+    starter_cta: 'ابدأ مجاناً',
+    // Pro
+    pro_name: 'احترافي',
+    pro_f1: '1,000 رصيد/شهر',
+    pro_f2: 'الوصول لجميع نماذج الذكاء الاصطناعي',
+    pro_f3: 'نص، صورة، صوت، كود وفيديو',
+    pro_f4: 'دعم ذو أولوية',
+    pro_f5: 'الوصول لـ API',
+    pro_f6: 'إدارة الرصيد في الوقت الفعلي',
+    pro_cta: 'اختر Pro',
+    // Business
+    business_name: 'الأعمال',
+    business_f1: '5,000 رصيد/شهر',
+    business_f2: 'الوصول للنماذج المتميزة',
+    business_f3: 'وكلاء ذكاء اصطناعي مخصصون',
+    business_f4: 'وصول API موسع',
+    business_f5: 'دعم مخصص (SLA)',
+    business_f6: 'فواتير المؤسسات',
+    business_cta: 'اتصل بالمبيعات',
+    // Credit examples
+    creditTitle: 'أمثلة استهلاك الرصيد',
+    creditSubtitle: 'تقديرات إرشادية لكل نوع من التوليد',
+    creditNote: 'قد تتغير القيم حسب الحمل وإصدارات النماذج.',
+    text: 'نص',
+    textUsage: '~1 رصيد / رد قصير',
+    image: 'صورة',
+    imageUsage: '~10-20 رصيد / صورة',
+    video: 'فيديو',
+    videoUsage: '~100-300 رصيد / توليد',
+    audio: 'صوت',
+    audioUsage: '~5-15 رصيد / إجراء',
+    code: 'كود',
+    codeUsage: '~1-5 رصيد / طلب',
+    // Payment
+    paymentTitle: 'طرق الدفع المقبولة',
+    disclaimer: 'نماذج وخدمات الطرف الثالث متاحة عبر منصة تنسيق الذكاء الاصطناعي. الوصول يعتمد على توفر المزود والحصص.',
   },
-];
+};
 
-const CREDIT_EXAMPLES = [
-  { category: 'Texte', usage: '~1 crédit / réponse courte', icon: '💬' },
-  { category: 'Image', usage: '~10–20 crédits / image', icon: '🖼️' },
-  { category: 'Vidéo', usage: '~100–300 crédits / génération', icon: '🎬' },
-  { category: 'Audio', usage: '~5–15 crédits / action', icon: '🎵' },
-  { category: 'Code', usage: '~1–5 crédits / requête', icon: '💻' },
-];
+// Payment methods by language
+const PAYMENT_METHODS: Record<Lang, string[]> = {
+  fr: ['Chargily', 'CIB', 'BaridiMob', 'Dahabia'],
+  en: ['Chargily', 'CIB', 'BaridiMob', 'Dahabia'],
+  ar: ['شارجيلي', 'CIB', 'بريدي موب', 'الذهبية'],
+};
+
+// Helper to get language from localStorage
+const getLang = (): Lang => {
+  const saved = localStorage.getItem('lang');
+  if (saved === 'fr' || saved === 'en' || saved === 'ar') return saved;
+  return 'fr';
+};
 
 export default function Pricing() {
   const [theme, setTheme] = useState<Theme>('dark');
+  const [lang, setLang] = useState<Lang>(getLang);
 
   useEffect(() => {
     const savedTheme = (localStorage.getItem('theme') as Theme) || 'dark';
     setTheme(savedTheme);
+
+    // Sync language from lang in localStorage
+    const syncLang = () => {
+      const l = getLang();
+      if (l !== lang) setLang(l);
+    };
+    window.addEventListener('storage', syncLang);
+    window.addEventListener('languageChanged', syncLang);
+    const interval = setInterval(syncLang, 500); // Poll for changes
 
     const observer = new MutationObserver(() => {
       const currentTheme = document.documentElement.dataset.theme as Theme;
@@ -80,19 +198,78 @@ export default function Pricing() {
       attributeFilter: ['data-theme'],
     });
 
-    return () => observer.disconnect();
-  }, []);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('storage', syncLang);
+      window.removeEventListener('languageChanged', syncLang);
+      clearInterval(interval);
+    };
+  }, [lang]);
 
+  // Set RTL direction
+  useEffect(() => {
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  }, [lang]);
+
+  const t = I18N[lang];
+  const isRTL = lang === 'ar';
   const isDark = theme === 'dark';
-  const bgColor = isDark ? '#1a1a1a' : '#FAF9F7';
-  const cardBg = isDark ? '#262626' : '#ffffff';
-  const textColor = isDark ? '#f0f0f0' : '#1F1F1F';
-  const textMuted = isDark ? '#A3A3A3' : '#5D5D5D';
-  const borderColor = isDark ? 'rgba(255, 255, 255, 0.12)' : 'rgba(0, 0, 0, 0.08)';
-  const sectionBg = isDark ? '#1f1f1f' : '#f5f5f0';
+  // Couleurs synchronisées avec Home.tsx
+  const bgColor = isDark ? '#0A0F1A' : '#F6F3EE';
+  const cardBg = isDark ? 'rgba(255,255,255,0.06)' : '#EDE9E3';
+  const textColor = isDark ? '#F8FAFC' : '#141414';
+  const textMuted = isDark ? 'rgba(248,250,252,0.65)' : 'rgba(20,20,20,0.62)';
+  const borderColor = isDark ? 'rgba(255,255,255,0.10)' : 'rgba(20,20,20,0.10)';
+  const sectionBg = isDark ? '#0A0F1A' : '#F6F3EE';
+  const accentColor = isDark ? '#22C55E' : '#1C7A5F';
+  const accentGradient = `linear-gradient(135deg, ${isDark ? '#22C55E' : '#1C7A5F'}, ${isDark ? '#57D6AA' : '#22C55E'})`;
+
+  // Build plans with translations
+  const PLANS = [
+    {
+      id: 'dz_starter',
+      name: t.starter_name,
+      price: 0,
+      credits: 100,
+      features: [t.starter_f1, t.starter_f2, t.starter_f3, t.starter_f4],
+      cta: t.starter_cta,
+      ctaLink: '/login',
+      popular: false,
+    },
+    {
+      id: 'dz_pro',
+      name: t.pro_name,
+      price: 1990,
+      credits: 1000,
+      features: [t.pro_f1, t.pro_f2, t.pro_f3, t.pro_f4, t.pro_f5, t.pro_f6],
+      cta: t.pro_cta,
+      ctaLink: '/login?plan=pro',
+      popular: true,
+    },
+    {
+      id: 'dz_business',
+      name: t.business_name,
+      price: 5990,
+      credits: 5000,
+      features: [t.business_f1, t.business_f2, t.business_f3, t.business_f4, t.business_f5, t.business_f6],
+      cta: t.business_cta,
+      ctaLink: '/contact',
+      popular: false,
+    },
+  ];
+
+  const CREDIT_EXAMPLES = [
+    { category: t.text, usage: t.textUsage, icon: '💬' },
+    { category: t.image, usage: t.imageUsage, icon: '🖼️' },
+    { category: t.video, usage: t.videoUsage, icon: '🎬' },
+    { category: t.audio, usage: t.audioUsage, icon: '🎵' },
+    { category: t.code, usage: t.codeUsage, icon: '💻' },
+  ];
 
   return (
     <div
+      dir={isRTL ? 'rtl' : 'ltr'}
       style={{
         paddingTop: '120px',
         paddingBottom: '80px',
@@ -111,7 +288,7 @@ export default function Pricing() {
               marginBottom: '16px',
             }}
           >
-            Tarifs simples & transparents
+            {t.title}
           </h1>
           <p
             style={{
@@ -122,7 +299,7 @@ export default function Pricing() {
               lineHeight: 1.6,
             }}
           >
-            Tous les plans fonctionnent avec un système de crédits mensuels utilisables sur l'ensemble des modèles IA.
+            {t.subtitle}
           </p>
         </div>
 
@@ -143,11 +320,11 @@ export default function Pricing() {
                 borderRadius: '16px',
                 padding: '32px',
                 border: plan.popular
-                  ? '2px solid #00A86B'
+                  ? `2px solid ${accentColor}`
                   : `1px solid ${borderColor}`,
                 position: 'relative',
                 boxShadow: plan.popular
-                  ? '0 8px 32px rgba(0, 168, 107, 0.2)'
+                  ? `0 8px 32px ${isDark ? 'rgba(34, 197, 94, 0.2)' : 'rgba(0, 98, 51, 0.2)'}`
                   : 'none',
                 display: 'flex',
                 flexDirection: 'column',
@@ -160,7 +337,7 @@ export default function Pricing() {
                     top: '-12px',
                     left: '50%',
                     transform: 'translateX(-50%)',
-                    background: 'linear-gradient(135deg, #00A86B, #2ECC71)',
+                    background: accentGradient,
                     color: '#fff',
                     padding: '4px 16px',
                     borderRadius: '20px',
@@ -169,7 +346,7 @@ export default function Pricing() {
                     whiteSpace: 'nowrap',
                   }}
                 >
-                  Plus populaire
+                  {t.popular}
                 </div>
               )}
 
@@ -195,14 +372,14 @@ export default function Pricing() {
                   {plan.price.toLocaleString()}
                 </span>
                 <span style={{ color: textMuted, fontSize: '16px' }}>
-                  {' '}DZD/mois
+                  {' '}{t.perMonth}
                 </span>
               </div>
 
               <div
                 style={{
-                  background: 'rgba(0, 168, 107, 0.1)',
-                  color: '#00A86B',
+                  background: isDark ? 'rgba(34, 197, 94, 0.1)' : 'rgba(0, 98, 51, 0.1)',
+                  color: accentColor,
                   padding: '8px 16px',
                   borderRadius: '8px',
                   fontSize: '14px',
@@ -212,7 +389,7 @@ export default function Pricing() {
                   alignSelf: 'flex-start',
                 }}
               >
-                {plan.credits.toLocaleString()} crédits/mois
+                {plan.credits.toLocaleString()} {t.creditsMonth}
               </div>
 
               <ul
@@ -236,7 +413,7 @@ export default function Pricing() {
                       lineHeight: 1.4,
                     }}
                   >
-                    <span style={{ color: '#00A86B', flexShrink: 0 }}>✓</span>
+                    <span style={{ color: accentColor, flexShrink: 0 }}>✓</span>
                     {feature}
                   </li>
                 ))}
@@ -251,7 +428,7 @@ export default function Pricing() {
                   borderRadius: '10px',
                   border: plan.popular ? 'none' : `1px solid ${borderColor}`,
                   background: plan.popular
-                    ? 'linear-gradient(135deg, #00A86B, #2ECC71)'
+                    ? accentGradient
                     : 'transparent',
                   color: plan.popular ? '#fff' : textColor,
                   fontSize: '16px',
@@ -286,7 +463,7 @@ export default function Pricing() {
               marginBottom: '12px',
             }}
           >
-            Exemples de consommation de crédits
+            {t.creditTitle}
           </h2>
           <p
             style={{
@@ -296,7 +473,7 @@ export default function Pricing() {
               fontSize: '15px',
             }}
           >
-            Estimations indicatives pour chaque type de génération
+            {t.creditSubtitle}
           </p>
 
           <div
@@ -333,7 +510,7 @@ export default function Pricing() {
                 <div
                   style={{
                     fontSize: '13px',
-                    color: '#00A86B',
+                    color: accentColor,
                     fontWeight: 500,
                   }}
                 >
@@ -352,14 +529,14 @@ export default function Pricing() {
               fontStyle: 'italic',
             }}
           >
-            Les valeurs peuvent évoluer selon la charge et la version des modèles.
+            {t.creditNote}
           </p>
         </div>
 
         {/* Payment Methods */}
         <div style={{ textAlign: 'center', marginBottom: '48px' }}>
           <p style={{ color: textMuted, marginBottom: '16px', fontSize: '15px' }}>
-            Moyens de paiement acceptés
+            {t.paymentTitle}
           </p>
           <div
             style={{
@@ -369,7 +546,7 @@ export default function Pricing() {
               flexWrap: 'wrap',
             }}
           >
-            {['Chargily', 'CIB', 'BaridiMob', 'Dahabia'].map((method) => (
+            {PAYMENT_METHODS[lang].map((method) => (
               <span
                 key={method}
                 style={{
@@ -405,8 +582,7 @@ export default function Pricing() {
               margin: 0,
             }}
           >
-            Les modèles et services tiers sont accessibles via notre plateforme d'orchestration IA.
-            L'accès dépend de la disponibilité et des quotas des fournisseurs.
+            {t.disclaimer}
           </p>
         </div>
       </div>

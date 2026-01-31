@@ -39,6 +39,3 @@
    @stack('script')
        <!-- BBC School Algeria - Scripts personnalisés -->
     <script src="{{ asset('js/bbc-script.js') }}"></script>
-</body>
-
-   </html>

@@ -1,52 +1,51 @@
-import { globSync } from 'fast-glob';
-import fs from 'node:fs/promises';
-import { basename } from 'node:path';
 import { defineConfig, presetIcons, presetUno, transformerDirectives } from 'unocss';
-
-const iconPaths = globSync('./icons/*.svg');
-
-const collectionName = 'bolt';
-
-const customIconCollection = iconPaths.reduce(
-  (acc, iconPath) => {
-    const [iconName] = basename(iconPath).split('.');
-
-    acc[collectionName] ??= {};
-    acc[collectionName][iconName] = async () => fs.readFile(iconPath, 'utf8');
-
-    return acc;
-  },
-  {} as Record<string, Record<string, () => Promise<string>>>,
-);
 
 const BASE_COLORS = {
   white: '#FFFFFF',
+  // Claude.ai aligned colors
+  claude: {
+    // Light theme
+    bgPrimary: '#FFFFFF',
+    bgSecondary: '#F9FAFB',
+    bgChat: '#FAFAFA',
+    userBubble: '#F3F4F6',
+    aiBubble: '#FFFFFF',
+    // Dark theme
+    bgDark: '#1A1A1A',
+    bgDark2: '#242424',
+    bgDark3: '#2D2D2D',
+    // Accent
+    accent: '#DA7756',
+    accentHover: '#C4684A',
+    accentLight: '#E8936C',
+  },
   gray: {
-    50: '#FAFAFA',
-    100: '#F5F5F5',
-    200: '#E5E5E5',
-    300: '#D4D4D4',
-    400: '#A3A3A3',
-    500: '#737373',
-    600: '#525252',
-    700: '#404040',
-    800: '#262626',
-    900: '#171717',
-    950: '#0A0A0A',
+    50: '#F9FAFB',
+    100: '#F3F4F6',
+    200: '#E5E7EB',
+    300: '#D1D5DB',
+    400: '#9CA3AF',
+    500: '#6B7280',
+    600: '#4B5563',
+    700: '#374151',
+    800: '#1F2937',
+    900: '#111827',
+    950: '#030712',
   },
   accent: {
-    50: '#F8F5FF',
-    100: '#F0EBFF',
-    200: '#E1D6FF',
-    300: '#CEBEFF',
-    400: '#B69EFF',
-    500: '#9C7DFF',
-    600: '#8A5FFF',
-    700: '#7645E8',
-    800: '#6234BB',
-    900: '#502D93',
-    950: '#2D1959',
+    50: '#FEF7F5',
+    100: '#FDEEEA',
+    200: '#FBDDD5',
+    300: '#F7C4B5',
+    400: '#F2A48E',
+    500: '#DA7756',
+    600: '#C4684A',
+    700: '#A5553D',
+    800: '#864530',
+    900: '#6B3726',
+    950: '#3B1D13',
   },
+  // Keep green only for success states (not UI accent)
   green: {
     50: '#F0FDF4',
     100: '#DCFCE7',
@@ -61,16 +60,16 @@ const BASE_COLORS = {
     950: '#052E16',
   },
   orange: {
-    50: '#FFFAEB',
-    100: '#FEEFC7',
-    200: '#FEDF89',
-    300: '#FEC84B',
-    400: '#FDB022',
-    500: '#F79009',
-    600: '#DC6803',
-    700: '#B54708',
-    800: '#93370D',
-    900: '#792E0D',
+    50: '#FFF7ED',
+    100: '#FFEDD5',
+    200: '#FED7AA',
+    300: '#FDBA74',
+    400: '#FB923C',
+    500: '#F97316',
+    600: '#EA580C',
+    700: '#C2410C',
+    800: '#9A3412',
+    900: '#7C2D12',
   },
   red: {
     50: '#FEF2F2',
@@ -98,7 +97,7 @@ const COLOR_PRIMITIVES = {
 };
 
 export default defineConfig({
-  safelist: [...Object.keys(customIconCollection[collectionName] || {}).map((x) => `i-bolt:${x}`)],
+  safelist: [],
   shortcuts: {
     'bolt-ease-cubic-bezier': 'ease-[cubic-bezier(0.4,0,0.2,1)]',
     'transition-theme': 'transition-[background-color,border-color,color] duration-150 bolt-ease-cubic-bezier',
@@ -239,10 +238,12 @@ export default defineConfig({
     }),
     presetIcons({
       warn: true,
-      collections: {
-        ...customIconCollection,
-      },
       unit: 'em',
+      extraProperties: {
+        'display': 'inline-block',
+        'vertical-align': 'middle',
+      },
+      autoInstall: true,
     }),
   ],
 });

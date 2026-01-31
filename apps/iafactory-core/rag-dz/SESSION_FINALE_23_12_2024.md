@@ -97,7 +97,7 @@ PRO:      500 msg/jour, 15 premium → Marge 44% ($4.90) ✅
 
 **Providers Supportés**:
 1. 🇺🇸 Groq (gratuit) - Priorité #1
-2. 🇨🇭 Swiss AI Apertus (gratuit) - Backup
+2. 🇨🇭 Algerian AI Apertus (gratuit) - Backup
 3. 🇨🇳 MiMo Flash (gratuit temporaire) - Rotation
 4. 🇺🇸 Claude Sonnet 4 (payant) - Premium
 5. 🇺🇸 GPT-4o (payant) - Premium

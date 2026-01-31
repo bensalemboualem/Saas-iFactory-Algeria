@@ -6,9 +6,9 @@ config();
 const configSchema = z.object({
   // Server
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
-  PORT: z.coerce.number().default(3001),
+  PORT: z.coerce.number().default(5191),
   HOST: z.string().default('0.0.0.0'),
-  API_BASE_URL: z.string().url().default('http://localhost:3001'),
+  API_BASE_URL: z.string().url().default('http://localhost:5191'),
 
   // Database
   DATABASE_URL: z.string(),
@@ -58,6 +58,20 @@ const configSchema = z.object({
   // Admin
   ADMIN_API_KEY: z.string().min(32).optional(),
   ADMIN_ALLOWED_IPS: z.string().default('127.0.0.1,::1'),
+
+  // Development: Skip credit checks (NEVER use in production!)
+  SKIP_CREDIT_CHECK: z.coerce.boolean().default(false),
+
+  // OAuth
+  AUTH_GOOGLE_ID: z.string().optional(),
+  AUTH_GOOGLE_SECRET: z.string().optional(),
+  AUTH_GITHUB_ID: z.string().optional(),
+  AUTH_GITHUB_SECRET: z.string().optional(),
+  AUTH_SECRET: z.string().min(32).optional(),
+
+  // Frontend URLs
+  LANDING_URL: z.string().url().default('http://localhost:5190'),
+  BOLT_UI_URL: z.string().url().default('http://localhost:5190'),
 });
 
 export type Config = z.infer<typeof configSchema>;

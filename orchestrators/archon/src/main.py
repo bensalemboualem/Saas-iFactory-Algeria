@@ -1,12 +1,14 @@
 """
 Archon Orchestrator - Source de vérité KB + Tasks
 Port: 8051
+
+Support multilingue: Arabe (ar), Français (fr), Anglais (en)
 """
 
 import os
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, HTTPException, BackgroundTasks
+from fastapi import FastAPI, HTTPException, BackgroundTasks, Query, Header
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
@@ -14,6 +16,19 @@ from .bridge import ArchonBridge, Document, Project, Task, SearchResult
 from .supabase_bridge import SupabaseBridge
 from .pg_bridge import PostgresBridge
 from .sync import BMadSync, BoltSync, SyncResult, install_git_hook
+from .branding import (
+    ARCHON_BRANDING,
+    get_text,
+    get_agent_info,
+    get_all_agents,
+    get_status_label,
+    get_error_message,
+    get_success_message,
+    get_ui_label,
+    detect_language,
+    get_theme,
+    ARCHON_AGENTS,
+)
 
 # Configuration
 ARCHON_URL = os.getenv("ARCHON_URL", "http://localhost:8181")
@@ -106,21 +121,56 @@ class InstallHookRequest(BaseModel):
     repo_path: str
 
 
+# ============ LANGUAGE HELPERS ============
+
+def get_lang(
+    accept_language: str | None = None,
+    lang_param: str | None = None
+) -> str:
+    """
+    Détermine la langue à utiliser.
+    Priorité: paramètre > header > défaut (fr)
+    """
+    if lang_param and lang_param in ["ar", "fr", "en", "dz", "ber"]:
+        return lang_param
+    if accept_language:
+        # Parse Accept-Language header
+        for part in accept_language.split(","):
+            lang = part.split(";")[0].strip().lower()
+            if lang.startswith("ar"):
+                return "ar"
+            if lang.startswith("fr"):
+                return "fr"
+            if lang.startswith("en"):
+                return "en"
+    return "fr"  # Défaut: français
+
+
 # ============ HEALTH ============
 
 @app.get("/")
-async def root():
-    """Root endpoint"""
+async def root(
+    lang: str | None = Query(None, description="Language: ar, fr, en"),
+    accept_language: str | None = Header(None, alias="Accept-Language")
+):
+    """Root endpoint - Multilingue"""
+    current_lang = get_lang(accept_language, lang)
+
     return {
-        "service": "Nexus Archon Orchestrator",
-        "version": "1.0.0",
+        "service": get_text(ARCHON_BRANDING["title"], current_lang),
+        "description": get_text(ARCHON_BRANDING["description"], current_lang),
+        "version": ARCHON_BRANDING["version"],
+        "language": current_lang,
         "archon_url": ARCHON_URL,
         "endpoints": {
             "health": "/health",
             "search": "/search",
             "ingest": "/ingest",
-            "sync": "/sync"
-        }
+            "sync": "/sync",
+            "agents": "/agents",
+            "i18n": "/i18n/{key}",
+        },
+        "supported_languages": ["ar", "fr", "en", "dz", "ber"],
     }
 
 
@@ -308,3 +358,141 @@ async def sync_directory(
 
     count = await archon_bridge.sync_directory(directory, patterns, source)
     return {"synced": count, "directory": directory}
+
+
+# ============ AGENTS (i18n) ============
+
+@app.get("/agents")
+async def list_agents(
+    lang: str | None = Query(None, description="Language: ar, fr, en"),
+    accept_language: str | None = Header(None, alias="Accept-Language")
+):
+    """
+    Liste tous les agents Archon avec noms localisés.
+
+    Returns:
+        Liste des agents avec nom, titre, avatar en langue demandée
+    """
+    current_lang = get_lang(accept_language, lang)
+    return {
+        "agents": get_all_agents(current_lang),
+        "language": current_lang,
+        "count": len(ARCHON_AGENTS),
+    }
+
+
+@app.get("/agents/{agent_id}")
+async def get_agent(
+    agent_id: str,
+    lang: str | None = Query(None, description="Language: ar, fr, en"),
+    accept_language: str | None = Header(None, alias="Accept-Language")
+):
+    """
+    Récupère un agent spécifique avec informations localisées.
+    """
+    current_lang = get_lang(accept_language, lang)
+    agent = get_agent_info(agent_id, current_lang)
+
+    if agent["name"] == agent_id and agent_id not in ARCHON_AGENTS:
+        raise HTTPException(404, get_error_message("not_found", current_lang))
+
+    return {
+        "agent": agent,
+        "language": current_lang,
+    }
+
+
+# ============ I18N ============
+
+@app.get("/i18n/labels")
+async def get_labels(
+    lang: str | None = Query(None, description="Language: ar, fr, en"),
+    accept_language: str | None = Header(None, alias="Accept-Language")
+):
+    """
+    Récupère tous les labels UI dans la langue spécifiée.
+    """
+    from .branding import UI_LABELS
+    current_lang = get_lang(accept_language, lang)
+
+    return {
+        "labels": {key: get_ui_label(key, current_lang) for key in UI_LABELS},
+        "language": current_lang,
+    }
+
+
+@app.get("/i18n/statuses")
+async def get_statuses(
+    lang: str | None = Query(None, description="Language: ar, fr, en"),
+    accept_language: str | None = Header(None, alias="Accept-Language")
+):
+    """
+    Récupère les labels de statuts dans la langue spécifiée.
+    """
+    from .branding import TASK_STATUS_LABELS, PROJECT_STATUS_LABELS
+    current_lang = get_lang(accept_language, lang)
+
+    return {
+        "task_statuses": {
+            key: get_status_label(key, "task", current_lang)
+            for key in TASK_STATUS_LABELS
+        },
+        "project_statuses": {
+            key: get_status_label(key, "project", current_lang)
+            for key in PROJECT_STATUS_LABELS
+        },
+        "language": current_lang,
+    }
+
+
+@app.get("/i18n/messages")
+async def get_messages(
+    lang: str | None = Query(None, description="Language: ar, fr, en"),
+    accept_language: str | None = Header(None, alias="Accept-Language")
+):
+    """
+    Récupère les messages (erreurs + succès) dans la langue spécifiée.
+    """
+    from .branding import ERROR_MESSAGES, SUCCESS_MESSAGES
+    current_lang = get_lang(accept_language, lang)
+
+    return {
+        "errors": {
+            key: get_error_message(key, current_lang)
+            for key in ERROR_MESSAGES
+        },
+        "success": {
+            key: get_success_message(key, current_lang)
+            for key in SUCCESS_MESSAGES
+        },
+        "language": current_lang,
+    }
+
+
+# ============ THEME ============
+
+@app.get("/theme/{mode}")
+async def get_theme_config(mode: str = "light"):
+    """
+    Récupère la configuration du thème (light/dark).
+    """
+    if mode not in ["light", "dark"]:
+        mode = "light"
+
+    return {
+        "mode": mode,
+        "colors": get_theme(mode),
+    }
+
+
+@app.get("/theme")
+async def list_themes():
+    """
+    Liste les thèmes disponibles.
+    """
+    return {
+        "themes": ["light", "dark"],
+        "default": "light",
+        "light": get_theme("light"),
+        "dark": get_theme("dark"),
+    }

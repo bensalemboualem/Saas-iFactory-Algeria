@@ -1,0 +1,83 @@
+services:
+  school-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: iaf-school-app
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      - APP_ENV=production
+      - APP_DEBUG=false
+      - DB_HOST=school-db
+      - DB_PORT=3306
+      - DB_DATABASE=bbc_school
+      - DB_USERNAME=school_user
+      - DB_PASSWORD=school_password
+      - REDIS_HOST=school-redis
+      - CACHE_DRIVER=file
+      - SESSION_DRIVER=file
+      - QUEUE_CONNECTION=sync
+    volumes:
+      # PERFORMANCE: Use delegated for better performance on Windows/Mac
+      - .:/var/www:delegated
+      # Use named volume for vendor - MUCH faster than bind mount on Windows
+      - school-vendor:/var/www/vendor
+      - school-node-modules:/var/www/node_modules
+      - ./storage:/var/www/storage:delegated
+      - ./bootstrap/cache:/var/www/bootstrap/cache:delegated
+    depends_on:
+      - school-db
+      - school-redis
+    networks:
+      - school-network
+
+  school-db:
+    image: mysql:8.0
+    container_name: iaf-school-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: bbc_school
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_USER: school_user
+      MYSQL_PASSWORD: school_password
+    volumes:
+      - school-db-data:/var/lib/mysql
+    ports:
+      - "3307:3306"
+    networks:
+      - school-network
+
+  school-redis:
+    image: redis:7-alpine
+    container_name: iaf-school-redis
+    restart: unless-stopped
+    ports:
+      - "6381:6379"
+    networks:
+      - school-network
+
+  school-phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: iaf-school-phpmyadmin
+    restart: unless-stopped
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: school-db
+      PMA_USER: root
+      PMA_PASSWORD: root_password
+    depends_on:
+      - school-db
+    networks:
+      - school-network
+
+networks:
+  school-network:
+    driver: bridge
+
+volumes:
+  school-db-data:
+  school-vendor:
+  school-node-modules:

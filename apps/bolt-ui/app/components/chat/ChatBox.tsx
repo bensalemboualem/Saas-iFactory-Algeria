@@ -10,7 +10,6 @@ import { ScreenshotStateManager } from './ScreenshotStateManager';
 import { SendButton } from './SendButton.client';
 import { IconButton } from '~/components/ui/IconButton';
 import { toast } from 'react-toastify';
-import { SpeechRecognitionButton } from '~/components/chat/SpeechRecognition';
 import { SupabaseConnection } from './SupabaseConnection';
 import { ExpoQrModal } from '~/components/workbench/ExpoQrModal';
 import styles from './BaseChat.module.scss';
@@ -19,7 +18,6 @@ import { ColorSchemeDialog } from '~/components/ui/ColorSchemeDialog';
 import type { DesignScheme } from '~/types/design-scheme';
 import type { ElementInfo } from '~/components/workbench/Inspector';
 import { McpTools } from './MCPTools';
-import { NexusToggle } from './NexusToggle';
 
 interface ChatBoxProps {
   isModelSettingsCollapsed: boolean;
@@ -161,10 +159,10 @@ export const ChatBox: React.FC<ChatBoxProps> = (props) => {
             gradientUnits="userSpaceOnUse"
             gradientTransform="rotate(-45)"
           >
-            <stop offset="0%" stopColor="#b44aff" stopOpacity="0%"></stop>
-            <stop offset="40%" stopColor="#b44aff" stopOpacity="80%"></stop>
-            <stop offset="50%" stopColor="#b44aff" stopOpacity="80%"></stop>
-            <stop offset="100%" stopColor="#b44aff" stopOpacity="0%"></stop>
+            <stop offset="0%" stopColor="#DA7756" stopOpacity="0%"></stop>
+            <stop offset="40%" stopColor="#DA7756" stopOpacity="80%"></stop>
+            <stop offset="50%" stopColor="#DA7756" stopOpacity="80%"></stop>
+            <stop offset="100%" stopColor="#DA7756" stopOpacity="0%"></stop>
           </linearGradient>
           <linearGradient id="shine-gradient">
             <stop offset="0%" stopColor="white" stopOpacity="0%"></stop>
@@ -369,7 +367,7 @@ export const ChatBox: React.FC<ChatBoxProps> = (props) => {
                 className={classNames(
                   'flex-1 md:flex-none px-4 py-1.5 rounded-md text-xs font-semibold transition-all flex justify-center items-center gap-2',
                   props.isNexusEnabled
-                    ? 'bg-green-500 text-white shadow-sm ring-1 ring-green-600'
+                    ? 'bg-bolt-elements-item-backgroundAccent text-bolt-elements-item-contentAccent shadow-sm ring-1 ring-accent-500'
                     : 'text-bolt-elements-textSecondary hover:text-bolt-elements-textPrimary'
                 )}
               >

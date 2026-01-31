@@ -2,6 +2,7 @@ from pydantic_settings import BaseSettings
 from functools import lru_cache
 from typing import List
 import os
+import tempfile
 
 
 class Settings(BaseSettings):
@@ -12,7 +13,13 @@ class Settings(BaseSettings):
     
     # API
     API_V1_PREFIX: str = "/api/v1"
-    CORS_ORIGINS: List[str] = ["http://localhost:3000", "https://video.iafactory.dz"]
+    CORS_ORIGINS: List[str] = [
+        "http://localhost:3000",
+        "http://localhost:3001",
+        "http://localhost:3002",
+        "http://localhost:3200",
+        "https://video.iafactory.dz",
+    ]
     
     # Auth
     JWT_SECRET: str = "change-this-in-production"
@@ -29,6 +36,9 @@ class Settings(BaseSettings):
     FAL_KEY: str = ""
     REPLICATE_API_TOKEN: str = ""
     ELEVENLABS_API_KEY: str = ""
+    MINIMAX_API_KEY: str = ""
+    MINIMAX_GROUP_ID: str = ""
+    SUNO_API_KEY: str = ""
     
     # Storage (S3/R2)
     S3_BUCKET: str = "iafactory-videos"
@@ -36,6 +46,9 @@ class Settings(BaseSettings):
     S3_SECRET_KEY: str = ""
     S3_ENDPOINT: str = ""
     S3_REGION: str = "auto"
+
+    # Local output storage
+    OUTPUT_DIR: str = os.path.join(tempfile.gettempdir(), "video-studio", "output")
     
     class Config:
         env_file = ".env"

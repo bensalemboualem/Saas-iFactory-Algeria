@@ -15,6 +15,7 @@ const Agents = lazy(() => import('./pages/Agents'));
 const Workflows = lazy(() => import('./pages/Workflows'));
 const Login = lazy(() => import('./pages/Login'));
 const Chat = lazy(() => import('./pages/Chat'));
+const AuthCallback = lazy(() => import('./pages/AuthCallback'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 // Pages légales et informations
@@ -66,7 +67,7 @@ function PageLoader() {
 
 function AppContent() {
   const location = useLocation();
-  const hideFooter = ['/login', '/chat'].includes(location.pathname);
+  const hideFooter = ['/login', '/chat', '/auth/callback'].includes(location.pathname);
 
   return (
     <>
@@ -82,6 +83,7 @@ function AppContent() {
           <Route path="/workflows" element={<Workflows />} />
           <Route path="/login" element={<Login />} />
           <Route path="/chat" element={<Chat />} />
+          <Route path="/auth/callback" element={<AuthCallback />} />
           {/* Pages légales */}
           <Route path="/cgu" element={<CGU />} />
           <Route path="/privacy" element={<Privacy />} />

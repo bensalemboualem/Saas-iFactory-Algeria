@@ -168,9 +168,9 @@ OPENAI_API_KEY=sk-...     # Pour Whisper (optionnel)
 - Starter: 500 DA/mois (20 reels)
 - Pro: 2,000 DA/mois (100 reels)
 
-### Suisse (Premium)
-- Pro: CHF 99/mois (50 reels)
-- Enterprise: CHF 1,999/mois (unlimited)
+### Algérie (Premium)
+- Pro: DZD 9900/mois (50 reels)
+- Enterprise: DZD 199900/mois (unlimited)
 
 ## 🤝 Intégration avec Dzir IA Video
 

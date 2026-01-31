@@ -1,5 +1,5 @@
 """
-Legal Agent Team - Specialized in Algerian and Swiss legal systems
+Legal Agent Team - Specialized in Algerian legal systems
 """
 from typing import Dict, Any
 from ..core.base_agent import BaseAgent, AgentConfig, AgentResponse, MultiAgentTeam
@@ -12,11 +12,6 @@ LEGAL_SYSTEMS = {
         "main_codes": ["Code Civil", "Code du Commerce", "Code du Travail", "Code de la Famille"],
         "business_types": ["SARL", "SPA", "EURL", "SNC", "EI"],
         "labor_law": {"min_wage": 20000, "work_hours": "40h/week", "paid_leave": "30 jours/an"}
-    },
-    "switzerland": {
-        "main_codes": ["Code Civil Suisse (CC)", "Code des Obligations (CO)", "Code Pénal Suisse (CP)"],
-        "business_types": ["SA", "Sàrl", "Raison Individuelle"],
-        "labor_law": {"work_hours": "41-50h/week", "paid_leave": "4 semaines min", "trial_period": "1-3 mois"}
     }
 }
 

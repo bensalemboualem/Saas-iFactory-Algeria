@@ -13,15 +13,15 @@ const GoogleIcon = () => (
   </svg>
 );
 
-const FacebookIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="#1877F2">
-    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+const GithubIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
   </svg>
 );
 
 export default function Login() {
   const { isDark, colors, accent } = useTheme();
-  const { login, signup, loginWithGoogle, loginWithFacebook, isAuthenticated } = useAuth();
+  const { login, signup, loginWithGoogle, loginWithGithub, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
@@ -31,7 +31,7 @@ export default function Login() {
   const [name, setName] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [oauthLoading, setOauthLoading] = useState<'google' | 'facebook' | null>(null);
+  const [oauthLoading, setOauthLoading] = useState<'google' | 'github' | null>(null);
 
   const nextUrl = searchParams.get('next') || '/chat';
 
@@ -60,7 +60,7 @@ export default function Login() {
     }
   };
 
-  const handleOAuthLogin = async (provider: 'google' | 'facebook') => {
+  const handleOAuthLogin = async (provider: 'google' | 'github') => {
     setError('');
     setOauthLoading(provider);
 
@@ -68,12 +68,11 @@ export default function Login() {
       if (provider === 'google') {
         await loginWithGoogle();
       } else {
-        await loginWithFacebook();
+        await loginWithGithub();
       }
-      navigate(nextUrl);
+      // Note: OAuth redirect - pas de navigate car redirection externe
     } catch (err) {
-      setError(err instanceof Error ? err.message : `Connexion ${provider} echouee`);
-    } finally {
+      setError(err instanceof Error ? err.message : `Connexion ${provider} échouée`);
       setOauthLoading(null);
     }
   };
@@ -122,7 +121,7 @@ export default function Login() {
             marginBottom: '8px',
           }}
         >
-          {isSignup ? 'Creer un compte' : 'Se connecter'}
+          {isSignup ? 'Créer un compte' : 'Se connecter'}
         </h1>
 
         <p
@@ -134,8 +133,8 @@ export default function Login() {
           }}
         >
           {isSignup
-            ? 'Commencez avec 5 credits gratuits'
-            : 'Accedez a l\'IA mondiale'}
+            ? 'Commencez avec 5 crédits gratuits'
+            : 'Accédez à l\'IA mondiale'}
         </p>
 
         {error && (
@@ -197,7 +196,7 @@ export default function Login() {
 
           <button
             type="button"
-            onClick={() => handleOAuthLogin('facebook')}
+            onClick={() => handleOAuthLogin('github')}
             disabled={oauthLoading !== null}
             style={{
               display: 'flex',
@@ -208,16 +207,16 @@ export default function Login() {
               padding: '12px 16px',
               borderRadius: '10px',
               border: 'none',
-              background: '#1877F2',
+              background: '#24292e',
               color: '#ffffff',
               fontSize: '15px',
               fontWeight: 500,
               cursor: oauthLoading ? 'not-allowed' : 'pointer',
-              opacity: oauthLoading && oauthLoading !== 'facebook' ? 0.5 : 1,
+              opacity: oauthLoading && oauthLoading !== 'github' ? 0.5 : 1,
               transition: 'all 0.2s',
             }}
           >
-            {oauthLoading === 'facebook' ? (
+            {oauthLoading === 'github' ? (
               <div
                 style={{
                   width: '20px',
@@ -229,9 +228,9 @@ export default function Login() {
                 }}
               />
             ) : (
-              <FacebookIcon />
+              <GithubIcon />
             )}
-            Continuer avec Facebook
+            Continuer avec GitHub
           </button>
         </div>
 
@@ -373,7 +372,7 @@ export default function Login() {
             {isLoading
               ? 'Chargement...'
               : isSignup
-              ? 'Creer mon compte'
+              ? 'Créer mon compte'
               : 'Se connecter'}
           </button>
         </form>
@@ -386,7 +385,7 @@ export default function Login() {
             color: colors.textMuted,
           }}
         >
-          {isSignup ? 'Deja un compte ?' : 'Pas encore de compte ?'}{' '}
+          {isSignup ? 'Déjà un compte ?' : 'Pas encore de compte ?'}{' '}
           <button
             type="button"
             onClick={() => {
@@ -402,7 +401,7 @@ export default function Login() {
               padding: 0,
             }}
           >
-            {isSignup ? 'Se connecter' : 'Creer un compte'}
+            {isSignup ? 'Se connecter' : 'Créer un compte'}
           </button>
         </div>
       </div>

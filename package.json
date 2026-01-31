@@ -334,6 +334,7 @@
     "@peculiar/webcrypto": "^1.5.0",
     "@playwright/test": "^1.57.0",
     "@prettier/sync": "^0.6.1",
+    "@rollup/rollup-win32-x64-msvc": "4.57.1",
     "@semantic-release/exec": "^6.0.3",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.0",

@@ -42,8 +42,8 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            // PERFORMANCE FIX: Removed duplicate ThrottleRequests - CustomThrottleRequests is sufficient
             \App\Http\Middleware\CustomThrottleRequests::class,
-            \Illuminate\Routing\Middleware\ThrottleRequests::class,
             \App\Http\Middleware\SetAppTimezone::class,
         ],
         'api' => [

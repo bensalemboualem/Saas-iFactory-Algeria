@@ -128,7 +128,7 @@
   ```json
   [
     {
-      "AllowedOrigins": ["https://video-studio.iafactory.ch"],
+      "AllowedOrigins": ["https://video-studio.iafactoryalgeria.com"],
       "AllowedMethods": ["GET", "PUT", "POST", "DELETE"],
       "AllowedHeaders": ["*"],
       "MaxAgeSeconds": 3600
@@ -150,8 +150,8 @@
 - [ ] **Vérifier les variables d'environnement**
   ```bash
   # .env.production
-  NEXT_PUBLIC_API_URL=https://api.iafactory.ch
-  NEXTAUTH_URL=https://video-studio.iafactory.ch
+  NEXT_PUBLIC_API_URL=https://api.iafactoryalgeria.com
+  NEXTAUTH_URL=https://video-studio.iafactoryalgeria.com
   NEXTAUTH_SECRET=...
   ```
 
@@ -280,7 +280,7 @@
   ```python
   app.add_middleware(
       CORSMiddleware,
-      allow_origins=["https://video-studio.iafactory.ch"],
+      allow_origins=["https://video-studio.iafactoryalgeria.com"],
       allow_credentials=True,
       allow_methods=["*"],
       allow_headers=["*"],
@@ -376,7 +376,7 @@ docker-compose -f docker-compose.prod.yml up -d
 
 # Nginx config
 server {
-    server_name video-studio.iafactory.ch;
+    server_name video-studio.iafactoryalgeria.com;
     location / {
         proxy_pass http://localhost:3000;
     }
@@ -470,7 +470,7 @@ server {
 
 **Problèmes techniques:**
 - GitHub Issues: https://github.com/iafactory/video-studio/issues
-- Email: support@iafactory.ch
+- Email: support@iafactoryalgeria.com
 
 **Business:**
-- Email: contact@iafactory.ch
+- Email: contact@iafactoryalgeria.com

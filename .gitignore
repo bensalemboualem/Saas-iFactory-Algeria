@@ -40,8 +40,14 @@ tmp/
 .env.local
 .env*.local
 .env.development
+.env.ready
+.env.production
+.env.desktop
 apps/**/.env
 apps/**/.env.local
+apps/**/.env.ready
+apps/**/.env.production
+**/frontend/.env.local
 venv/
 .venv/
 

@@ -11,7 +11,7 @@ const VIDEO_MODELS: Record<string, string> = {
   'replicate-cogvideo': 'fofr/cogvideox-5b:8c5e35dddfed7efe4d0e4b11a9c23467ab44aa0c401a4835b96451d031417b72',
   'replicate-hunyuan': 'tencent/hunyuan-video:847dfa8b01e739637fc76f480ede0c1d76408e1d694b830b5dfb8e547bf98405',
   'replicate-ltx': 'lightricks/ltx-video:8c47da666861d011d14bddcb50c4c7b0b8f0c0f2a5a8cd3e1c5e1c7c5e1c5e1c',
-  'replicate-mochi': 'genmoai/mochi-1-preview:c0a23f71b1bf6f4c13a457d tried08dc85ab5d741e0b5a9f1a3b2c3d4e5f6g7h8',
+  'replicate-mochi': 'genmoai/mochi-1-preview',
   'replicate-svd': 'stability-ai/stable-video-diffusion:3f0457e4619daac51203dedb472816fd4af51f3149fa7a9e0b5ffcf1b8172438',
   'replicate-i2vgen': 'ali-vilab/i2vgen-xl:5821a338d00033abaaba89080a17eb8783d9a17ed710a6b4246a18e0900ccad4',
 };

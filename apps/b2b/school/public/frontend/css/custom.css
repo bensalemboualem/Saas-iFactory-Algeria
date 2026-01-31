@@ -132,3 +132,70 @@ footer.home_three_footer .copyright_area .footer_border {
     list-style: block;
 }
 
+/* ========================================
+   BBC SCHOOL - Fix Footer Overlap Issue
+   ======================================== */
+
+/* Ensure gallery_area has proper height and clearfix */
+.gallery_area {
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.gallery_area::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.gallery_area .grid {
+    position: relative;
+    min-height: 300px;
+}
+
+/* Instagram section fix */
+.instagram_section {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.instagram_section::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Ensure footer is properly positioned */
+footer.home_three_footer {
+    position: relative;
+    z-index: 10;
+    clear: both;
+    margin-top: 0;
+}
+
+/* Ensure main content sections don't overlap */
+.gallery_area,
+.instagram_section,
+.blog_area {
+    position: relative;
+    overflow: visible;
+}
+
+/* Fix for isotope grid containers */
+.grid {
+    position: relative;
+}
+
+.grid-item {
+    position: relative;
+}
+
+/* Clear any floating elements before footer */
+footer.home_three_footer::before {
+    content: "";
+    display: block;
+    clear: both;
+}
+

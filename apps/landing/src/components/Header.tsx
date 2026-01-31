@@ -81,7 +81,9 @@ const Header = () => {
           right: 0,
           height: '66px',
           zIndex: 1000,
-          background: colors.bgPrimary,
+          background: 'transparent',
+          backdropFilter: 'blur(16px)',
+          borderBottom: `1px solid ${colors.borderColor}`,
         }}
       >
         <nav

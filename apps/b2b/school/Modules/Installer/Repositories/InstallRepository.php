@@ -380,15 +380,25 @@ class InstallRepository
      */
     public function migrateDB()
     {
+        ini_set('max_execution_time', -1);
 
-        try {
-            ini_set('max_execution_time', -1);
-            $sql = base_path('public/installer/db/crm.sql');
-        } catch (Throwable $e) {
+        // Try lms.sql first (OnestSchool default)
+        $sql = base_path('public/installer/db/lms.sql');
+
+        if (!File::exists($sql)) {
+            // Fallback to lms_light.sql
+            $sql = base_path('public/installer/db/lms_light.sql');
+        }
+
+        if (!File::exists($sql)) {
+            // Fallback to config
             $sql = base_path(config('installer.database_file'));
-            if (File::exists($sql)) {
-                DB::unprepared(file_get_contents($sql));
-            }
+        }
+
+        if (File::exists($sql)) {
+            DB::unprepared(file_get_contents($sql));
+        } else {
+            throw new Exception("Database SQL file not found: " . $sql);
         }
     }
 

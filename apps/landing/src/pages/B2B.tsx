@@ -4,8 +4,9 @@ import { useTranslation } from '../i18n';
 type Theme = 'dark' | 'light';
 
 export default function B2B() {
-  const { t } = useTranslation();
+  const { t, lang } = useTranslation();
   const [theme, setTheme] = useState<Theme>('dark');
+  const isRTL = lang === 'ar';
 
   const features = [
     { icon: '🏢', title: t('b2b_custom_solutions'), description: t('b2b_custom_solutions_desc') },
@@ -45,14 +46,17 @@ export default function B2B() {
   }, []);
 
   const isDark = theme === 'dark';
-  const bgColor = isDark ? '#1a1a1a' : '#FAF9F7';
-  const cardBg = isDark ? '#262626' : '#ffffff';
-  const textColor = isDark ? '#f0f0f0' : '#1F1F1F';
-  const textMuted = isDark ? '#A3A3A3' : '#5D5D5D';
-  const borderColor = isDark ? 'rgba(255, 255, 255, 0.12)' : 'rgba(0, 0, 0, 0.08)';
+  // Couleurs synchronisées avec Home.tsx
+  const bgColor = isDark ? '#0A0F1A' : '#F6F3EE';
+  const cardBg = isDark ? 'rgba(255,255,255,0.06)' : '#EDE9E3';
+  const textColor = isDark ? '#F8FAFC' : '#141414';
+  const textMuted = isDark ? 'rgba(248,250,252,0.65)' : 'rgba(20,20,20,0.62)';
+  const borderColor = isDark ? 'rgba(255,255,255,0.10)' : 'rgba(20,20,20,0.10)';
+  const accentGradient = `linear-gradient(135deg, ${isDark ? '#22C55E' : '#1C7A5F'}, ${isDark ? '#57D6AA' : '#22C55E'})`;
 
   return (
     <div
+      dir={isRTL ? 'rtl' : 'ltr'}
       style={{
         paddingTop: '120px',
         paddingBottom: '80px',
@@ -87,14 +91,14 @@ export default function B2B() {
             type="button"
             style={{
               padding: 'clamp(12px, 2vw, 16px) clamp(24px, 4vw, 32px)',
-              background: 'linear-gradient(135deg, #00A86B, #2ECC71)',
+              background: accentGradient,
               color: '#fff',
               fontSize: 'clamp(16px, 2.5vw, 18px)',
               fontWeight: 600,
               border: 'none',
               borderRadius: '12px',
               cursor: 'pointer',
-              boxShadow: '0 4px 16px rgba(0, 168, 107, 0.3)',
+              boxShadow: isDark ? '0 4px 16px rgba(34, 197, 94, 0.3)' : '0 4px 16px rgba(0, 98, 51, 0.3)',
             }}
           >
             {t('b2b_request_demo')}
@@ -221,7 +225,7 @@ export default function B2B() {
               href="mailto:contact@iafactory.dz"
               style={{
                 padding: '14px 28px',
-                background: 'linear-gradient(135deg, #00A86B, #2ECC71)',
+                background: accentGradient,
                 color: '#fff',
                 fontSize: '16px',
                 fontWeight: 600,

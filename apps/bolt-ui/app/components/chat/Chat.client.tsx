@@ -108,7 +108,6 @@ export const ChatImpl = memo(
     // Force chatStarted=true when bmadMessages has content
     useEffect(() => {
       if (bmadMessages.length > 0 && !chatStarted) {
-        console.log('[Chat.client] useEffect: bmadMessages has content, forcing chatStarted=true');
         setChatStarted(true);
       }
     }, [bmadMessages.length, chatStarted]);
@@ -124,7 +123,7 @@ export const ChatImpl = memo(
     const { showChat } = useStore(chatStore);
     const [animationScope, animate] = useAnimate();
     const [apiKeys, setApiKeys] = useState<Record<string, string>>({});
-    const [chatMode, setChatMode] = useState<'discuss' | 'build'>('build');
+    const [chatMode, setChatMode] = useState<'discuss' | 'build'>('discuss');
     const [selectedElement, setSelectedElement] = useState<ElementInfo | null>(null);
     const mcpSettings = useMCPStore((state) => state.settings);
 
@@ -171,7 +170,6 @@ export const ChatImpl = memo(
         setData(undefined);
 
         if (usage) {
-          console.log('Token usage:', usage);
           logStore.logProvider('Chat response completed', {
             component: 'Chat',
             action: 'response',
@@ -412,8 +410,6 @@ export const ChatImpl = memo(
       let finalMessageContent = messageContent;
 
       if (selectedElement) {
-        console.log('Selected Element:', selectedElement);
-
         const elementInfo = `<div class=\"__boltSelectedElement__\" data-element='${JSON.stringify(selectedElement)}'>${JSON.stringify(`${selectedElement.displayText}`)}</div>`;
         finalMessageContent = messageContent + elementInfo;
       }
@@ -642,7 +638,6 @@ export const ChatImpl = memo(
         exportChat={exportChat}
         messages={(() => {
           const allMessages = [...messages, ...bmadMessages];
-          console.log('[Chat.client] Rendering messages - useChat:', messages.length, 'bmad:', bmadMessages.length, 'total:', allMessages.length);
           return allMessages.map((message, i) => {
             if (message.role === 'user') {
               return message;
@@ -689,26 +684,13 @@ export const ChatImpl = memo(
         stop={stop}
         setNexusLastTarget={setNexusLastTarget}
         addBmadMessages={(msgs: Message[]) => {
-          console.log('[Chat.client] addBmadMessages called with', msgs.length, 'messages');
-          setChatStarted(true); // Show chat UI FIRST
+          setChatStarted(true);
           setBmadMessages(prev => [...prev, ...msgs]);
-          console.log('[Chat.client] chatStarted set to true, bmadMessages updated');
         }}
         updateBmadMessage={(messageId: string, content: string) => {
-          console.log('[Chat.client] 📝 updateBmadMessage called:', {
-            messageId,
-            contentPreview: content.substring(0, 80),
-          });
-          setBmadMessages(prev => {
-            const found = prev.some(msg => msg.id === messageId);
-            console.log('[Chat.client] Message found in bmadMessages:', found, 'total messages:', prev.length);
-            if (!found) {
-              console.warn('[Chat.client] ⚠️ Message ID not found! Available IDs:', prev.map(m => m.id));
-            }
-            return prev.map(msg =>
-              msg.id === messageId ? { ...msg, content } : msg
-            );
-          });
+          setBmadMessages(prev => prev.map(msg =>
+            msg.id === messageId ? { ...msg, content } : msg
+          ));
         }}
         designScheme={designScheme}
         setDesignScheme={setDesignScheme}

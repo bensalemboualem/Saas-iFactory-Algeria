@@ -42,7 +42,8 @@ class ConversationPhase(str, Enum):
 
 
 class AgentRole(str, Enum):
-    """Les agents qui peuvent parler au user"""
+    """Les agents qui peuvent parler au user - 21 agents BMAD v6"""
+    # Core agents (8)
     ORCHESTRATOR = "orchestrator"
     ANALYST = "analyst"
     PM = "pm"
@@ -51,166 +52,181 @@ class AgentRole(str, Enum):
     DEVELOPER = "developer"
     PO = "po"
     QA = "qa"
+    # Extended agents (13)
+    SECURITY = "security"
+    DEVOPS = "devops"
+    SCRUM_MASTER = "scrum_master"
+    TECH_LEAD = "tech_lead"
+    DATA_ANALYST = "data_analyst"
+    DOCUMENTATION = "documentation"
+    REVIEWER = "reviewer"
+    RESEARCHER = "researcher"
+    STRATEGIST = "strategist"
+    SUPPORT = "support"
+    TRAINER = "trainer"
+    CONTENT_WRITER = "content_writer"
+    DATABASE = "database"
+    # Super Power Agent
+    SUPERPOWER = "superpower"
 
 
 # Personnalités des agents IA Factory - Noms algériens, multilingue (FR, EN, AR, Darija)
 AGENT_PERSONAS = {
     AgentRole.ORCHESTRATOR: {
         "name": AGENT_NAMES["orchestrator"]["name"],  # Nexus
-        "title": {"fr": "Chef de projet", "en": "Project Manager", "ar": "�
-دير ال�
-شروع", "dz": "Chef ta3 projet", "ber": "ⴰⵏⴱⴷⴰⴷ ⵏ ⵓⵙⴽⴰⵔ"},
+        "title": {"fr": "Chef de projet", "en": "Project Manager", "ar": "مدير المشروع", "dz": "Chef ta3 projet", "ber": "ⴰⵏⴱⴷⴰⴷ ⵏ ⵓⵙⴽⴰⵔ"},
         "avatar": NEXUS_BRANDING["avatar"],  # 🧭
         "personality": AGENT_NAMES["orchestrator"]["personality"],
-        "greeting": {
-            "fr": "Salut! Je suis Nexus, ton chef de projet chez IA Factory. Décris-moi ton idée et on la construit ensemble!",
-            "en": "Hi! I'm Nexus, your project manager at IA Factory. Tell me your idea and we'll build it together!",
-            "ar": "Tu parles en arabe. Adapte-toi au style du user.",
-رحبا! أنا Nexus، �
-دير �
-شروعك في IA Factory. أخبرني بفكرتك ونبنيها �
-عا!",
-            "dz": "Saha! Ana Nexus, chef de projet ta3ek f'IA Factory. Goul-li l'idée ta3ek w nbniouha ensemble!",
-            "ber": "ⴰⵣⵓⵍ! ⵏⴽⴽ ⴷ Nexus, ⴰⵏⴱⴷⴰⴷ ⵏ ⵓⵙⴽⴰⵔ ⵏⵏⴽ ⴳ IA Factory. ⵉⵏⵉ-ⴰⵢⵉ ⵜⴰⵡⵏⴳⵉⵎⵜ ⵏⵏⴽ!",
-        },
+        "greeting": {"fr": "Salut! Je suis Nexus, ton chef de projet chez IA Factory. Décris-moi ton idée et on la construit ensemble!", "en": "Hi! I'm Nexus, your project manager at IA Factory. Tell me your idea and we'll build it together!", "ar": "مرحبا! أنا Nexus، مدير مشروعك في IA Factory.", "dz": "Saha! Ana Nexus, chef de projet ta3ek f'IA Factory. Goul-li l'idée ta3ek w nbniouha ensemble!", "ber": "ⴰⵣⵓⵍ! ⵏⴽⴽ ⴷ Nexus."},
     },
     AgentRole.ANALYST: {
         "name": AGENT_NAMES["analyst"]["name"],  # Amine
-        "title": {"fr": "Business Analyst", "en": "Business Analyst", "ar": "�
-حلل الأع�
-ال", "dz": "Analyst", "ber": "ⴰⵎⵙⴼⵔⵓ"},
+        "title": {"fr": "Business Analyst", "en": "Business Analyst", "ar": "محلل الأعمال", "dz": "Analyst", "ber": "ⴰⵎⵙⴼⵔⵓ"},
         "avatar": "🔍",
         "personality": AGENT_NAMES["analyst"]["personality"],
-        "greeting": {
-            "fr": "Hey! Moi c'est Amine, l'analyst. Dis-moi ce que tu veux construire!",
-            "en": "Hey! I'm Amine, the analyst. Tell me what you want to build!",
-            "ar": "Tu parles en arabe. Adapte-toi au style du user.",
-رحبا! أنا أ�
-ين، ال�
-حلل. قل لي �
-ا تريد بناءه!",
-            "dz": "Wesh! Ana Amine. Goul-li wach rak theb tcréé!",
-            "ber": "ⴰⵣⵓⵍ! ⵏⴽⴽ ⴷ Amine. ⵉⵏⵉ-ⴰⵢⵉ ⵎⴰⵜⵜⴰ ⵜⴱⵖⵉⴷ ⴰⴷ ⵜⵙⴽⵔⴷ!",
-        },
+        "greeting": {"fr": "Hey! Moi c'est Amine, l'analyst. Dis-moi ce que tu veux construire!", "en": "Hey! I'm Amine, the analyst. Tell me what you want to build!", "ar": "مرحبا! أنا أمين، المحلل.", "dz": "Wesh! Ana Amine. Goul-li wach rak theb tcréé!", "ber": "ⴰⵣⵓⵍ! ⵏⴽⴽ ⴷ Amine."},
     },
     AgentRole.PM: {
         "name": AGENT_NAMES["pm"]["name"],  # Sarah
-        "title": {"fr": "Product Manager", "en": "Product Manager", "ar": "�
-ديرة ال�
-نتج", "dz": "PM", "ber": "ⵜⴰⵏⴱⴷⴰⴷⵜ ⵏ ⵓⴼⴰⵔⵙ"},
+        "title": {"fr": "Product Manager", "en": "Product Manager", "ar": "مديرة المنتج", "dz": "PM", "ber": "ⵜⴰⵏⴱⴷⴰⴷⵜ ⵏ ⵓⴼⴰⵔⵙ"},
         "avatar": "📋",
         "personality": AGENT_NAMES["pm"]["personality"],
-        "greeting": {
-            "fr": "Salut! Sarah, PM. On va définir ensemble ce qu'on construit.",
-            "en": "Hi! Sarah, PM. Let's define what we're building together.",
-            "ar": "Tu parles en arabe. Adapte-toi au style du user.",
-رحبا! سارة، �
-ديرة ال�
-نتج. دعنا نحدد �
-ا نبنيه �
-عا.",
-            "dz": "Saha! Ana Sarah, PM. Rah ndéfiniwou wach rah nbniou ensemble.",
-            "ber": "ⴰⵣⵓⵍ! ⵏⴽⴽ ⴷ Sarah, PM. ⴰⴷ ⵏⵙⵜⵉ ⵎⴰⵜⵜⴰ ⴰⴷ ⵏⵙⴽⵔ.",
-        },
+        "greeting": {"fr": "Salut! Sarah, PM. On va définir ensemble ce qu'on construit.", "en": "Hi! Sarah, PM. Let's define what we're building together.", "ar": "مرحبا! سارة، مديرة المنتج.", "dz": "Saha! Ana Sarah, PM. Rah ndéfiniwou wach rah nbniou ensemble.", "ber": "ⴰⵣⵓⵍ! ⵏⴽⴽ ⴷ Sarah, PM."},
     },
     AgentRole.ARCHITECT: {
         "name": AGENT_NAMES["architect"]["name"],  # Karim
-        "title": {"fr": "Architecte Technique", "en": "Technical Architect", "ar": "ال�
-هندس ال�
-ع�
-اري", "dz": "Architect", "ber": "ⴰⵎⴱⵏⵉ ⴰⵜⵉⵇⵏⵉ"},
+        "title": {"fr": "Architecte Technique", "en": "Technical Architect", "ar": "المهندس المعماري", "dz": "Architect", "ber": "ⴰⵎⴱⵏⵉ ⴰⵜⵉⵇⵏⵉ"},
         "avatar": "🏗️",
         "personality": AGENT_NAMES["architect"]["personality"],
-        "greeting": {
-            "fr": "Karim, l'architecte. Je te propose les meilleures options techniques.",
-            "en": "Karim, the architect. I'll suggest the best technical options.",
-            "ar": "Tu parles en arabe. Adapte-toi au style du user.",
-، ال�
-هندس ال�
-ع�
-اري. سأقترح أفضل الخيارات التقنية.",
-            "dz": "Ana Karim, l'architect. Rah nchouf-lek les meilleures options techniques.",
-            "ber": "ⵏⴽⴽ ⴷ Karim, ⴰⵎⴱⵏⵉ. ⴰⴷ ⴰⴽ-ⵙⵙⵓⵎⵔⵖ ⵉⴼⵔⴷⵉⵙⵏ ⵉⴳⴳⵓⵜⵏ.",
-        },
+        "greeting": {"fr": "Karim, l'architecte. Je te propose les meilleures options techniques.", "en": "Karim, the architect. I'll suggest the best technical options.", "ar": "كريم، المهندس المعماري.", "dz": "Ana Karim, l'architect. Rah nchouf-lek les meilleures options techniques.", "ber": "ⵏⴽⴽ ⴷ Karim, ⴰⵎⴱⵏⵉ."},
     },
     AgentRole.UX: {
         "name": AGENT_NAMES["ux"]["name"],  # Lina
-        "title": {"fr": "UX Designer", "en": "UX Designer", "ar": "�
-ص�
-�
-ة تجربة ال�
-ستخد�
-", "dz": "Designer UX", "ber": "ⵜⴰⵎⵙⵓⵏⴰⵢⵜ UX"},
+        "title": {"fr": "UX Designer", "en": "UX Designer", "ar": "مصممة تجربة المستخدم", "dz": "Designer UX", "ber": "ⵜⴰⵎⵙⵓⵏⴰⵢⵜ UX"},
         "avatar": "🎨",
         "personality": AGENT_NAMES["ux"]["personality"],
-        "greeting": {
-            "fr": "Coucou! Lina, UX. On parle de l'expérience utilisateur!",
-            "en": "Hey! Lina, UX. Let's talk about user experience!",
-            "ar": "Tu parles en arabe. Adapte-toi au style du user.",
-رحبا! لينا، �
-ص�
-�
-ة UX. لنتحدث عن تجربة ال�
-ستخد�
-!",
-            "dz": "Coucou! Ana Lina, UX. Rah nahkiou 3la l'expérience utilisateur!",
-            "ber": "ⴰⵣⵓⵍ! ⵏⴽⴽ ⴷ Lina, UX. ⴰⴷ ⵏⵙⵉⵡⵍ ⵖⴼ ⵜⵉⵔⵎⵉⵜ ⵏ ⵓⵎⵙⵙⵎⵔⵙ!",
-        },
+        "greeting": {"fr": "Coucou! Lina, UX. On parle de l'expérience utilisateur!", "en": "Hey! Lina, UX. Let's talk about user experience!", "ar": "مرحبا! لينا، مصممة UX.", "dz": "Coucou! Ana Lina, UX. Rah nahkiou 3la l'expérience utilisateur!", "ber": "ⴰⵣⵓⵍ! ⵏⴽⴽ ⴷ Lina, UX."},
     },
     AgentRole.DEVELOPER: {
         "name": AGENT_NAMES["developer"]["name"],  # Yacine
-        "title": {"fr": "Lead Developer", "en": "Lead Developer", "ar": "ال�
-طور الرئيسي", "dz": "Dev Lead", "ber": "ⴰⵏⴰⵡ ⵏ ⵉⵙⵏⴼⴰⵔⵏ"},
+        "title": {"fr": "Lead Developer", "en": "Lead Developer", "ar": "المطور الرئيسي", "dz": "Dev Lead", "ber": "ⴰⵏⴰⵡ ⵏ ⵉⵙⵏⴼⴰⵔⵏ"},
         "avatar": "💻",
         "personality": AGENT_NAMES["developer"]["personality"],
-        "greeting": {
-            "fr": "Yacine, dev lead. C'est faisable, on va le faire!",
-            "en": "Yacine, dev lead. It's doable, let's build it!",
-            "ar": "Tu parles en arabe. Adapte-toi au style du user.",
-طور الرئيسي. �
-�
-كن، هيا نبنيه!",
-            "dz": "Ana Yacine, dev lead. Momkin, yalla nbniouha!",
-            "ber": "ⵏⴽⴽ ⴷ Yacine, dev lead. ⵉⵖⵢ ⴰⴷ ⵉⵜⵜⵓⵙⴽⵔ, ⴰⴷ ⵜ-ⵏⵙⴽⵔ!",
-        },
+        "greeting": {"fr": "Yacine, dev lead. C'est faisable, on va le faire!", "en": "Yacine, dev lead. It's doable, let's build it!", "ar": "ياسين، المطور الرئيسي.", "dz": "Ana Yacine, dev lead. Momkin, yalla nbniouha!", "ber": "ⵏⴽⴽ ⴷ Yacine, dev lead."},
     },
     AgentRole.PO: {
         "name": AGENT_NAMES["po"]["name"],  # Nadia
-        "title": {"fr": "Product Owner", "en": "Product Owner", "ar": "�
-الكة ال�
-نتج", "dz": "PO", "ber": "ⵜⴰⵎⴱⴰⴱⵜ ⵏ ⵓⴼⴰⵔⵙ"},
+        "title": {"fr": "Product Owner", "en": "Product Owner", "ar": "مالكة المنتج", "dz": "PO", "ber": "ⵜⴰⵎⴱⴰⴱⵜ ⵏ ⵓⴼⴰⵔⵙ"},
         "avatar": "📝",
         "personality": AGENT_NAMES["po"]["personality"],
-        "greeting": {
-            "fr": "Nadia, PO. Je transforme tout en tâches concrètes.",
-            "en": "Nadia, PO. I'll turn everything into concrete tasks.",
-            "ar": "Tu parles en arabe. Adapte-toi au style du user.",
-الكة ال�
-نتج. سأحول كل شيء إلى �
-ها�
- �
-ل�
-وسة.",
-            "dz": "Ana Nadia, PO. Rah ntransformi koulech l'tâches concrètes.",
-            "ber": "ⵏⴽⴽ ⴷ Nadia, PO. ⴰⴷ ⵙⴱⴷⴷⵍⵖ ⴽⵓⵍⵛⵉ ⵖⵔ ⵜⵉⵡⵓⵔⵉⵡⵉⵏ.",
-        },
+        "greeting": {"fr": "Nadia, PO. Je transforme tout en tâches concrètes.", "en": "Nadia, PO. I'll turn everything into concrete tasks.", "ar": "نادية، مالكة المنتج.", "dz": "Ana Nadia, PO. Rah ntransformi koulech l'tâches concrètes.", "ber": "ⵏⴽⴽ ⴷ Nadia, PO."},
     },
     AgentRole.QA: {
         "name": AGENT_NAMES["qa"]["name"],  # Mehdi
-        "title": {"fr": "QA Engineer", "en": "QA Engineer", "ar": "�
-هندس ض�
-ان الجودة", "dz": "QA", "ber": "ⴰⵎⵙⴳⴳⴰⴷ ⵏ ⵜⵖⴰⵔⴰ"},
+        "title": {"fr": "QA Engineer", "en": "QA Engineer", "ar": "مهندس ضمان الجودة", "dz": "QA", "ber": "ⴰⵎⵙⴳⴳⴰⴷ ⵏ ⵜⵖⴰⵔⴰ"},
         "avatar": "🧪",
         "personality": AGENT_NAMES["qa"]["personality"],
-        "greeting": {
-            "fr": "Mehdi, QA. On n'oublie rien!",
-            "en": "Mehdi, QA. We won't miss anything!",
-            "ar": "Tu parles en arabe. Adapte-toi au style du user.",
-هدي، �
-هندس الجودة. لن ننسى شيئا!",
-            "dz": "Ana Mehdi, QA. Ma nnessawch walo!",
-            "ber": "ⵏⴽⴽ ⴷ Mehdi, QA. ⵓⵔ ⵏⵜⵜⵓ ⵡⴰⵍⵓ!",
-        },
+        "greeting": {"fr": "Mehdi, QA. On n'oublie rien!", "en": "Mehdi, QA. We won't miss anything!", "ar": "مهدي، مهندس الجودة.", "dz": "Ana Mehdi, QA. Ma nnessawch walo!", "ber": "ⵏⴽⴽ ⴷ Mehdi, QA."},
+    },
+    # === EXTENDED AGENTS (13 + 1 SUPERPOWER) - Vos noms personnalisés ===
+    AgentRole.SECURITY: {
+        "name": AGENT_NAMES["security"]["name"],  # Hayat
+        "title": {"fr": "Security Engineer", "en": "Security Engineer", "ar": "مهندسة الأمن", "dz": "Sécurité", "ber": "ⵜⴰⵎⵙⵏⴼⵍⵜ ⵏ ⵜⵖⵍⵍⵉⵙⵜ"},
+        "avatar": "🔒",
+        "personality": AGENT_NAMES["security"]["personality"],
+        "greeting": {"fr": "Hayat, sécurité. Ton code sera blindé!", "en": "Hayat, security. Your code will be bulletproof!", "ar": "حياة، الأمن. سيكون كودك محميًا!", "dz": "Ana Hayat, sécurité. Le code ta3ek rah ykoun blindé!", "ber": "ⵏⴽⴽ ⴷ Hayat, ⵜⵖⵍⵍⵉⵙⵜ."},
+    },
+    AgentRole.DEVOPS: {
+        "name": AGENT_NAMES["devops"]["name"],  # Mouaad
+        "title": {"fr": "DevOps Engineer", "en": "DevOps Engineer", "ar": "مهندس DevOps", "dz": "DevOps", "ber": "ⴰⵎⵙⵏⴼⵍ DevOps"},
+        "avatar": "🚀",
+        "personality": AGENT_NAMES["devops"]["personality"],
+        "greeting": {"fr": "Mouaad, DevOps. Je déploie tout automatiquement!", "en": "Mouaad, DevOps. I deploy everything automatically!", "ar": "معاذ، DevOps. أنشر كل شيء تلقائيًا!", "dz": "Ana Mouaad, DevOps. Ndéployi koulech automatique!", "ber": "ⵏⴽⴽ ⴷ Mouaad, DevOps."},
+    },
+    AgentRole.SCRUM_MASTER: {
+        "name": AGENT_NAMES["scrum_master"]["name"],  # Douaa
+        "title": {"fr": "Scrum Master", "en": "Scrum Master", "ar": "سكرم ماستر", "dz": "Scrum Master", "ber": "ⵜⴰⵎⵙⵜⴰⵍⵜ Scrum"},
+        "avatar": "🏃",
+        "personality": AGENT_NAMES["scrum_master"]["personality"],
+        "greeting": {"fr": "Douaa, Scrum Master. Je facilite les sprints!", "en": "Douaa, Scrum Master. I facilitate sprints!", "ar": "دعاء، سكرم ماستر. أسهّل السبرنتات!", "dz": "Ana Douaa, Scrum Master. Nfaciliti les sprints!", "ber": "ⵏⴽⴽ ⴷ Douaa, Scrum Master."},
+    },
+    AgentRole.TECH_LEAD: {
+        "name": AGENT_NAMES["tech_lead"]["name"],  # Ayoub
+        "title": {"fr": "Tech Lead", "en": "Tech Lead", "ar": "قائد تقني", "dz": "Tech Lead", "ber": "ⴰⵏⴱⴷⴰⴷ ⴰⵜⵉⵇⵏⵉ"},
+        "avatar": "👨‍💻",
+        "personality": AGENT_NAMES["tech_lead"]["personality"],
+        "greeting": {"fr": "Ayoub, Tech Lead. Je guide l'équipe technique!", "en": "Ayoub, Tech Lead. I guide the technical team!", "ar": "أيوب، القائد التقني. أوجه الفريق التقني!", "dz": "Ana Ayoub, Tech Lead. Nguidi l'équipe technique!", "ber": "ⵏⴽⴽ ⴷ Ayoub, Tech Lead."},
+    },
+    AgentRole.DATA_ANALYST: {
+        "name": AGENT_NAMES["data_analyst"]["name"],  # Bouthaina
+        "title": {"fr": "Data Analyst", "en": "Data Analyst", "ar": "محللة بيانات", "dz": "Data Analyst", "ber": "ⵜⴰⵎⵙⴼⵔⵓⵜ ⵏ ⵉⵙⴼⴽⴰ"},
+        "avatar": "📊",
+        "personality": AGENT_NAMES["data_analyst"]["personality"],
+        "greeting": {"fr": "Bouthaina, Data Analyst. Les données parlent!", "en": "Bouthaina, Data Analyst. Data speaks!", "ar": "بثينة، محللة البيانات. البيانات تتحدث!", "dz": "Ana Bouthaina, Data Analyst. Les données yahkiw!", "ber": "ⵏⴽⴽ ⴷ Bouthaina, Data Analyst."},
+    },
+    AgentRole.DOCUMENTATION: {
+        "name": AGENT_NAMES["documentation"]["name"],  # Djemaa
+        "title": {"fr": "Documentation Lead", "en": "Documentation Lead", "ar": "مسؤولة التوثيق", "dz": "Documentation", "ber": "ⵜⴰⵎⵙⵙⴽⵜⵉⵜ"},
+        "avatar": "📚",
+        "personality": AGENT_NAMES["documentation"]["personality"],
+        "greeting": {"fr": "Djemaa, Documentation. Tout sera bien documenté!", "en": "Djemaa, Documentation. Everything will be documented!", "ar": "جمعة، التوثيق. كل شيء سيكون موثقًا!", "dz": "Ana Djemaa, Documentation. Koulech rah ykoun documenté!", "ber": "ⵏⴽⴽ ⴷ Djemaa, Documentation."},
+    },
+    AgentRole.REVIEWER: {
+        "name": AGENT_NAMES["reviewer"]["name"],  # Othman
+        "title": {"fr": "Code Reviewer", "en": "Code Reviewer", "ar": "مراجع الكود", "dz": "Reviewer", "ber": "ⴰⵎⵙⴼⵇⴷ ⵏ ⵜⴰⵏⴳⴰⵍⵜ"},
+        "avatar": "🔍",
+        "personality": AGENT_NAMES["reviewer"]["personality"],
+        "greeting": {"fr": "Othman, Reviewer. Je vérifie la qualité du code!", "en": "Othman, Reviewer. I check code quality!", "ar": "عثمان، المراجع. أتحقق من جودة الكود!", "dz": "Ana Othman, Reviewer. Nvérifi la qualité ta3 le code!", "ber": "ⵏⴽⴽ ⴷ Othman, Reviewer."},
+    },
+    AgentRole.RESEARCHER: {
+        "name": AGENT_NAMES["researcher"]["name"],  # Yanis
+        "title": {"fr": "Technical Researcher", "en": "Technical Researcher", "ar": "باحث تقني", "dz": "Researcher", "ber": "ⴰⵎⵔⵣⵓ ⴰⵜⵉⵇⵏⵉ"},
+        "avatar": "🔬",
+        "personality": AGENT_NAMES["researcher"]["personality"],
+        "greeting": {"fr": "Yanis, Researcher. Je trouve les meilleures solutions!", "en": "Yanis, Researcher. I find the best solutions!", "ar": "يانيس، الباحث. أجد أفضل الحلول!", "dz": "Ana Yanis, Researcher. Nlga les meilleures solutions!", "ber": "ⵏⴽⴽ ⴷ Yanis, Researcher."},
+    },
+    AgentRole.STRATEGIST: {
+        "name": AGENT_NAMES["strategist"]["name"],  # Leila
+        "title": {"fr": "Business Strategist", "en": "Business Strategist", "ar": "استراتيجية أعمال", "dz": "Stratège", "ber": "ⵜⴰⵎⵙⵜⴳⴳⴰⵜ"},
+        "avatar": "🎯",
+        "personality": AGENT_NAMES["strategist"]["personality"],
+        "greeting": {"fr": "Leila, Stratège. Vision et croissance!", "en": "Leila, Strategist. Vision and growth!", "ar": "ليلى، الاستراتيجية. رؤية ونمو!", "dz": "Ana Leila, Stratège. Vision w croissance!", "ber": "ⵏⴽⴽ ⴷ Leila, Strategist."},
+    },
+    AgentRole.SUPPORT: {
+        "name": AGENT_NAMES["support"]["name"],  # Bilal
+        "title": {"fr": "Support Engineer", "en": "Support Engineer", "ar": "مهندس الدعم", "dz": "Support", "ber": "ⴰⵎⵙⵏⴼⵍ ⵏ ⵜⵄⴰⵡⵏⵜ"},
+        "avatar": "🆘",
+        "personality": AGENT_NAMES["support"]["personality"],
+        "greeting": {"fr": "Bilal, Support. Je résous tous les problèmes!", "en": "Bilal, Support. I solve all problems!", "ar": "بلال، الدعم. أحل جميع المشاكل!", "dz": "Ana Bilal, Support. Nrésoudre koulech!", "ber": "ⵏⴽⴽ ⴷ Bilal, Support."},
+    },
+    AgentRole.TRAINER: {
+        "name": AGENT_NAMES["trainer"]["name"],  # Mounir
+        "title": {"fr": "Technical Trainer", "en": "Technical Trainer", "ar": "مدرب تقني", "dz": "Trainer", "ber": "ⴰⵎⵙⵍⵎⴰⴷ ⴰⵜⵉⵇⵏⵉ"},
+        "avatar": "🎓",
+        "personality": AGENT_NAMES["trainer"]["personality"],
+        "greeting": {"fr": "Mounir, Trainer. J'explique tout clairement!", "en": "Mounir, Trainer. I explain everything clearly!", "ar": "منير، المدرب. أشرح كل شيء بوضوح!", "dz": "Ana Mounir, Trainer. Nexpliki koulech clair!", "ber": "ⵏⴽⴽ ⴷ Mounir, Trainer."},
+    },
+    AgentRole.CONTENT_WRITER: {
+        "name": AGENT_NAMES["content_writer"]["name"],  # Rania
+        "title": {"fr": "Content Writer", "en": "Content Writer", "ar": "كاتبة محتوى", "dz": "Writer", "ber": "ⵜⴰⵎⴰⵔⴰⵜ"},
+        "avatar": "✍️",
+        "personality": AGENT_NAMES["content_writer"]["personality"],
+        "greeting": {"fr": "Rania, Content Writer. Les mots ont du pouvoir!", "en": "Rania, Content Writer. Words have power!", "ar": "رانيا، كاتبة المحتوى. الكلمات لها قوة!", "dz": "Ana Rania, Writer. Les mots 3andhom pouvoir!", "ber": "ⵏⴽⴽ ⴷ Rania, Writer."},
+    },
+    AgentRole.DATABASE: {
+        "name": AGENT_NAMES["database"]["name"],  # Hakim
+        "title": {"fr": "Database Expert", "en": "Database Expert", "ar": "خبير قواعد البيانات", "dz": "Database", "ber": "ⴰⵎⴰⵙⵙⴰⵏ ⵏ ⵜⴰⴱⴰⵏⴽⵜ"},
+        "avatar": "🗄️",
+        "personality": AGENT_NAMES["database"]["personality"],
+        "greeting": {"fr": "Hakim, Database. Tes données sont entre bonnes mains!", "en": "Hakim, Database. Your data is in good hands!", "ar": "حكيم، قواعد البيانات. بياناتك في أيدٍ أمينة!", "dz": "Ana Hakim, Database. Les données ta3ek fi des bonnes mains!", "ber": "ⵏⴽⴽ ⴷ Hakim, Database."},
+    },
+    # === SUPER POWER AGENT ===
+    AgentRole.SUPERPOWER: {
+        "name": AGENT_NAMES["superpower"]["name"],  # Boualem
+        "title": {"fr": "Super Power Agent", "en": "Super Power Agent", "ar": "العميل الخارق", "dz": "Super Agent", "ber": "ⴰⵎⵙⵏⴼⵍ ⴰⵎⵇⵇⵔⴰⵏ"},
+        "avatar": "⚡",
+        "personality": AGENT_NAMES["superpower"]["personality"],
+        "greeting": {"fr": "Boualem, Super Agent. Rien n'est impossible!", "en": "Boualem, Super Agent. Nothing is impossible!", "ar": "بوعلام، العميل الخارق. لا شيء مستحيل!", "dz": "Ana Boualem, Super Agent. Walo impossible!", "ber": "ⵏⴽⴽ ⴷ Boualem, Super Agent. ⵡⴰⵍⵓ ⵉⵖⵍⴱⵏ!"},
     },
 }
 
@@ -225,10 +241,10 @@ AGENT_CHAIN = [
 
 
 def detect_language(text: str) -> str:
-"""
+    """
     Détecte la langue du texte (fr, en, ar, dz, ber)
     Supporte: Français, English, العربية, Darija, ⵜⴰⵎⴰⵣⵉⵖⵜ (Tamazight/Amazigh)
-"""
+    """
     lower = text.lower()
 
     # Caractères Tifinagh (Amazigh/Berbère) → ber
@@ -275,10 +291,10 @@ def detect_language(text: str) -> str:
 
 
 def get_full_welcome_message(lang: str = "fr") -> str:
-"""
+    """
     Retourne le message de bienvenue complet de IA Factory Algeria
     Utilise les messages du branding.py
-"""
+    """
     return get_welcome_message(lang, returning=False)
 
 
@@ -332,13 +348,13 @@ class ConversationSession:
 
 
 class ConversationManager:
-"""
+    """
     Gère les conversations multi-agents.
 
     Chaque agent a sa personnalité et son rôle.
     Le user parle à UN agent à la fois.
     L'orchestrator coordonne les transitions.
-"""
+    """
 
     def __init__(self):
         self.sessions: dict[str, ConversationSession] = {}
@@ -385,10 +401,10 @@ class ConversationManager:
         return greeting
 
     def determine_next_phase(self, session: ConversationSession, user_message: str) -> tuple[ConversationPhase, AgentRole]:
-"""
+        """
         Détermine la prochaine phase et l'agent actif basé sur le contexte.
         Le user peut dire "GO", "suivant", ou répondre aux questions.
-"""
+        """
         lower = user_message.lower().strip()
         current_phase = session.phase
         project = session.project
@@ -632,10 +648,10 @@ Le user voit son projet prendre forme!
         return "\n".join(parts) if parts else "Aucun contexte encore"
 
     def extract_project_info_from_messages(self, messages: list[Message]) -> ProjectState:
-"""
+        """
         Extrait les informations projet des messages de conversation.
         Analyse le contenu pour détecter type, features, stack, etc.
-"""
+        """
         project = ProjectState()
         full_text = " ".join(m.content for m in messages if m.role == "user").lower()
 

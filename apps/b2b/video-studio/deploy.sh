@@ -153,8 +153,8 @@ STRIPE_SECRET_KEY=REMPLACER_PAR_VOTRE_CLE_SECRETE
 STRIPE_WEBHOOK_SECRET=REMPLACER_PAR_VOTRE_WEBHOOK_SECRET
 
 # === Frontend ===
-FRONTEND_URL=https://video-studio.iafactory.ch
-NEXT_PUBLIC_API_URL=https://api.iafactory.ch
+FRONTEND_URL=https://video-studio.iafactoryalgeria.com
+NEXT_PUBLIC_API_URL=https://api.iafactoryalgeria.com
 
 # === Config ===
 ENVIRONMENT=production
@@ -248,7 +248,7 @@ echo "   (Voir le fichier DEPLOY_VPS.md pour la config complète)"
 echo ""
 echo "4. 🔒 Obtenir les certificats SSL:"
 echo "   apt install certbot python3-certbot-nginx"
-echo "   certbot --nginx -d video-studio.iafactory.ch -d api.iafactory.ch"
+echo "   certbot --nginx -d video-studio.iafactoryalgeria.com -d api.iafactoryalgeria.com"
 echo ""
 echo "5. 🧪 Tester l'API:"
 echo "   curl http://localhost:8000/health"

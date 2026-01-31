@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import ScriptEditor from '../../components/VideoStudio/ScriptEditor';
+import ScriptEditor from '../../../components/VideoStudio/ScriptEditor';
 
 // Supposons une structure de données pour le script, basée sur les modèles Pydantic
 interface Script {
@@ -16,7 +16,7 @@ interface Script {
   status: 'draft' | 'approved' | 'in_production' | 'completed';
 }
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8000';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001';
 
 const EditScriptPage: React.FC = () => {
   const router = useRouter();

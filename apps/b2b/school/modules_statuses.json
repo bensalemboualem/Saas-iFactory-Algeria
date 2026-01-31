@@ -7,5 +7,6 @@
     "MultiBranch": true,
     "LiveTracking": false,
     "PushNotification": true,
-    "StudyMaterial": false
+    "StudyMaterial": false,
+    "AIAssistant": true
 }

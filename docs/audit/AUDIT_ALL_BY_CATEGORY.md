@@ -326,7 +326,7 @@
 - journalist_agent
 - journalist_service
 - legal_assistant_ui ? Legal Assistant DZ - Interface Streamlit
-- legal_team ? Legal Agent Team - Specialized in Algerian and Swiss legal systems
+- legal_team ? Legal Agent Team - Specialized in Algerian and Algerian legal systems
 - llm_client ? IA Factory Operator - LLM Client
 - local_ai_scrapper
 - local_rag_agent
@@ -449,7 +449,7 @@
 
 ### Agents/legal
 - legal_assistant_ui ? Legal Assistant DZ - Interface Streamlit
-- legal_team ? Legal Agent Team - Specialized in Algerian and Swiss legal systems
+- legal_team ? Legal Agent Team - Specialized in Algerian and Algerian legal systems
 
 ### Agents/rag
 - ai_financial_coach_agent

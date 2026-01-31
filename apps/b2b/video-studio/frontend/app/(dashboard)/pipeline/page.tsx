@@ -55,6 +55,19 @@ interface PipelineSegment {
   status: "pending" | "generating" | "completed" | "error";
   progress: number;
   videoUrl?: string;
+  video_url?: string;
+  error?: string;
+}
+
+interface ProjectScene {
+  id: number;
+  order: number;
+  duration: number;
+  script?: string;
+  visual_prompt?: string;
+  status: "pending" | "generating" | "completed" | "error";
+  video_url?: string;
+  videoUrl?: string;
   error?: string;
 }
 
@@ -68,6 +81,21 @@ interface PipelineState {
   audioUrl?: string;
   finalVideoUrl?: string;
   error?: string;
+  progress?: number;
+}
+
+interface ProjectState {
+  id: string;
+  status: "draft" | "storyboarding" | "storyboarded" | "assembling" | "assembled" | "rendering" | "completed" | "error";
+  prompt: string;
+  target_duration: number;
+  model_id: string;
+  music_preset_id?: string | null;
+  narration_lang?: string | null;
+  enable_subtitles: boolean;
+  scenes: ProjectScene[];
+  finalVideoUrl?: string;
+  error?: string;
 }
 
 // Free models data
@@ -75,6 +103,10 @@ const FREE_MODELS: FreeModel[] = [
   { id: "wan-2.1", name: "Wan 2.1", vram: "8GB", duration: 5, credits: 0, quality: 4, available: true },
   { id: "cogvideox-2b", name: "CogVideoX 2B", vram: "8GB", duration: 6, credits: 0, quality: 3, available: true },
   { id: "cogvideox-5b", name: "CogVideoX 5B", vram: "12GB", duration: 6, credits: 2, quality: 4, available: false },
+  { id: "kling-1.6", name: "Kling 1.6 (Fal)", vram: "Cloud", duration: 5, credits: 3, quality: 5, available: true },
+  { id: "luma", name: "Luma (Fal)", vram: "Cloud", duration: 5, credits: 3, quality: 4, available: true },
+  { id: "minimax", name: "MiniMax (Hailuo)", vram: "Cloud", duration: 5, credits: 3, quality: 4, available: true },
+  { id: "minimax-fal", name: "MiniMax (Fal)", vram: "Cloud", duration: 5, credits: 3, quality: 4, available: true },
   { id: "ltx-video-2", name: "LTX Video 2", vram: "12GB", duration: 5, credits: 2, quality: 4, available: false },
   { id: "hunyuan-video", name: "HunyuanVideo", vram: "16GB", duration: 5, credits: 3, quality: 5, available: false },
 ];
@@ -108,6 +140,10 @@ const labels = {
   generate: { fr: "Lancer la Production", ar: "بدء الإنتاج", en: "Start Production" },
   generating: { fr: "Production en cours...", ar: "جاري الإنتاج...", en: "Producing..." },
   download: { fr: "Télécharger", ar: "تحميل", en: "Download" },
+  createProject: { fr: "Créer projet", ar: "إنشاء مشروع", en: "Create project" },
+  storyboard: { fr: "Storyboard", ar: "لوحة قصص", en: "Storyboard" },
+  assemble: { fr: "Assemble", ar: "تجميع", en: "Assemble" },
+  render: { fr: "Render", ar: "تصدير", en: "Render" },
   step1: { fr: "Génération du script", ar: "إنشاء السيناريو", en: "Script generation" },
   step2: { fr: "Génération des segments", ar: "توليد المقاطع", en: "Segment generation" },
   step3: { fr: "Ajout audio & narration", ar: "إضافة الصوت والسرد", en: "Adding audio & narration" },
@@ -126,6 +162,32 @@ const labels = {
   arabic: { fr: "Arabe classique", ar: "عربي فصيح", en: "Classical Arabic" },
   english: { fr: "Anglais", ar: "إنجليزي", en: "English" },
 };
+
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8001";
+
+const normalizeMediaUrl = (url?: string) => {
+  if (!url) return undefined;
+  if (url.startsWith("http://") || url.startsWith("https://")) return url;
+  if (url.startsWith("/")) return `${API_BASE_URL}${url}`;
+  return url;
+};
+
+const mapProjectResponse = (data: any): ProjectState => ({
+  id: data.id,
+  status: data.status,
+  prompt: data.prompt,
+  target_duration: data.target_duration,
+  model_id: data.model_id,
+  music_preset_id: data.music_preset_id ?? null,
+  narration_lang: data.narration_lang ?? null,
+  enable_subtitles: data.enable_subtitles ?? true,
+  scenes: (data.scenes || []).map((scene: any) => ({
+    ...scene,
+    videoUrl: normalizeMediaUrl(scene.video_url || scene.videoUrl),
+  })),
+  finalVideoUrl: normalizeMediaUrl(data.final_video_url || data.finalVideoUrl),
+  error: data.error,
+});
 
 export default function PipelinePage() {
   const { locale } = useLocaleStore();
@@ -147,6 +209,9 @@ export default function PipelinePage() {
     totalSteps: 5,
     segments: [],
   });
+  const [project, setProject] = useState<ProjectState | null>(null);
+  const [isBusy, setIsBusy] = useState(false);
+  const [busyLabel, setBusyLabel] = useState<string | null>(null);
 
   // Compute segments count
   const segmentsCount = Math.ceil(targetDuration / 5);
@@ -156,58 +221,40 @@ export default function PipelinePage() {
   // Start pipeline
   const handleStartPipeline = async () => {
     if (!prompt.trim()) return;
-
-    // Initialize segments
-    const initialSegments: PipelineSegment[] = Array.from({ length: segmentsCount }, (_, i) => ({
-      id: i + 1,
-      prompt: "",
-      status: "pending",
-      progress: 0,
-    }));
-
-    setPipeline({
-      status: "scripting",
-      currentStep: 1,
-      totalSteps: 5,
-      segments: initialSegments,
-    });
-
     try {
-      // Step 1: Generate script
-      await simulateStep("scripting", 3000);
-      
-      // Generate segment prompts from main prompt
-      const segmentPrompts = generateSegmentPrompts(prompt, segmentsCount);
-      setPipeline(prev => ({
-        ...prev,
-        status: "generating",
-        currentStep: 2,
-        script: segmentPrompts.join("\n\n"),
-        segments: prev.segments.map((seg, i) => ({
-          ...seg,
-          prompt: segmentPrompts[i] || prompt,
+      const response = await fetch(`${API_BASE_URL}/api/v1/pipeline/create`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          prompt,
+          target_duration: targetDuration,
+          model_id: selectedModel,
+          music_preset_id: selectedMusic,
+          narration_lang: narrationLang,
+          enable_subtitles: enableSubtitles,
+        }),
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data?.detail || data?.error || "Pipeline creation failed");
+      }
+
+      setPipeline({
+        id: data.id,
+        status: data.status,
+        currentStep: data.current_step || 0,
+        totalSteps: data.total_steps || 5,
+        segments: (data.segments || []).map((s: any) => ({
+          ...s,
+          videoUrl: normalizeMediaUrl(s.video_url || s.videoUrl),
         })),
-      }));
-
-      // Step 2: Generate segments in parallel (3 at a time)
-      await generateSegmentsParallel();
-
-      // Step 3: Audio & narration
-      setPipeline(prev => ({ ...prev, status: "audio", currentStep: 3 }));
-      await simulateStep("audio", 2000);
-
-      // Step 4: Montage
-      setPipeline(prev => ({ ...prev, status: "montage", currentStep: 4 }));
-      await simulateStep("montage", 3000);
-
-      // Step 5: Finalization
-      setPipeline(prev => ({
-        ...prev,
-        status: "completed",
-        currentStep: 5,
-        finalVideoUrl: "/demo-final-video.mp4",
-      }));
-
+        script: data.script,
+        audioUrl: normalizeMediaUrl(data.audio_url || data.audioUrl),
+        finalVideoUrl: normalizeMediaUrl(data.final_video_url || data.finalVideoUrl),
+        error: data.error,
+        progress: data.progress,
+      });
     } catch (error) {
       setPipeline(prev => ({
         ...prev,
@@ -216,6 +263,176 @@ export default function PipelinePage() {
       }));
     }
   };
+
+  const handleCreateProject = async () => {
+    if (!prompt.trim()) return;
+    setIsBusy(true);
+    setBusyLabel(labels.createProject[locale]);
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/v1/pipeline/projects`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          prompt,
+          target_duration: targetDuration,
+          model_id: selectedModel,
+          music_preset_id: selectedMusic,
+          narration_lang: narrationLang,
+          enable_subtitles: enableSubtitles,
+        }),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data?.detail || data?.error || "Project creation failed");
+      }
+      setProject(mapProjectResponse(data));
+    } catch (error) {
+      setProject(prev => prev ? { ...prev, status: "error", error: error instanceof Error ? error.message : "Project failed" } : prev);
+    } finally {
+      setIsBusy(false);
+      setBusyLabel(null);
+    }
+  };
+
+  const handleStoryboard = async () => {
+    if (!project?.id) return;
+    setIsBusy(true);
+    setBusyLabel(labels.storyboard[locale]);
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/v1/pipeline/projects/${project.id}/storyboard`, {
+        method: "POST",
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data?.detail || data?.error || "Storyboard failed");
+      }
+      setProject(mapProjectResponse(data));
+    } catch (error) {
+      setProject(prev => prev ? { ...prev, status: "error", error: error instanceof Error ? error.message : "Storyboard failed" } : prev);
+    } finally {
+      setIsBusy(false);
+      setBusyLabel(null);
+    }
+  };
+
+  const handleAssemble = async () => {
+    if (!project?.id) return;
+    setIsBusy(true);
+    setBusyLabel(labels.assemble[locale]);
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/v1/pipeline/projects/${project.id}/assemble`, {
+        method: "POST",
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data?.detail || data?.error || "Assemble failed");
+      }
+      setProject(mapProjectResponse(data));
+    } catch (error) {
+      setProject(prev => prev ? { ...prev, status: "error", error: error instanceof Error ? error.message : "Assemble failed" } : prev);
+    } finally {
+      setIsBusy(false);
+      setBusyLabel(null);
+    }
+  };
+
+  const handleRenderProject = async () => {
+    if (!project?.id) return;
+    setIsBusy(true);
+    setBusyLabel(labels.render[locale]);
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/v1/pipeline/projects/${project.id}/render`, {
+        method: "POST",
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data?.detail || data?.error || "Render failed");
+      }
+      setProject(mapProjectResponse(data));
+    } catch (error) {
+      setProject(prev => prev ? { ...prev, status: "error", error: error instanceof Error ? error.message : "Render failed" } : prev);
+    } finally {
+      setIsBusy(false);
+      setBusyLabel(null);
+    }
+  };
+
+  const handleLaunchProduction = async () => {
+    setIsBusy(true);
+    setBusyLabel(labels.generate[locale]);
+    try {
+      let projectId = project?.id;
+      if (!projectId) {
+        const createRes = await fetch(`${API_BASE_URL}/api/v1/pipeline/projects`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            prompt,
+            target_duration: targetDuration,
+            model_id: selectedModel,
+            music_preset_id: selectedMusic,
+            narration_lang: narrationLang,
+            enable_subtitles: enableSubtitles,
+          }),
+        });
+        const createData = await createRes.json();
+        if (!createRes.ok) throw new Error(createData?.detail || createData?.error || "Project creation failed");
+        setProject(mapProjectResponse(createData));
+        projectId = createData.id;
+      }
+      if (!projectId) return;
+      const sbRes = await fetch(`${API_BASE_URL}/api/v1/pipeline/projects/${projectId}/storyboard`, { method: "POST" });
+      const sbData = await sbRes.json();
+      if (!sbRes.ok) throw new Error(sbData?.detail || sbData?.error || "Storyboard failed");
+      setProject(mapProjectResponse(sbData));
+      const asRes = await fetch(`${API_BASE_URL}/api/v1/pipeline/projects/${projectId}/assemble`, { method: "POST" });
+      const asData = await asRes.json();
+      if (!asRes.ok) throw new Error(asData?.detail || asData?.error || "Assemble failed");
+      setProject(mapProjectResponse(asData));
+      const rdRes = await fetch(`${API_BASE_URL}/api/v1/pipeline/projects/${projectId}/render`, { method: "POST" });
+      const rdData = await rdRes.json();
+      if (!rdRes.ok) throw new Error(rdData?.detail || rdData?.error || "Render failed");
+      setProject(mapProjectResponse(rdData));
+    } catch (error) {
+      setProject(prev => prev ? { ...prev, status: "error", error: error instanceof Error ? error.message : "Production failed" } : prev);
+    } finally {
+      setIsBusy(false);
+      setBusyLabel(null);
+    }
+  };
+
+  const fetchPipelineStatus = useCallback(async () => {
+    if (!pipeline.id) return;
+    const res = await fetch(`${API_BASE_URL}/api/v1/pipeline/status/${pipeline.id}`);
+    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data?.detail || data?.error || "Status fetch failed");
+    }
+    setPipeline(prev => ({
+      ...prev,
+      status: data.status,
+      currentStep: data.current_step || prev.currentStep,
+      totalSteps: data.total_steps || prev.totalSteps,
+      segments: (data.segments || []).map((s: any) => ({
+        ...s,
+        videoUrl: normalizeMediaUrl(s.video_url || s.videoUrl),
+      })),
+      script: data.script,
+      audioUrl: normalizeMediaUrl(data.audio_url || data.audioUrl),
+      finalVideoUrl: normalizeMediaUrl(data.final_video_url || data.finalVideoUrl),
+      error: data.error,
+      progress: data.progress,
+    }));
+  }, [pipeline.id]);
+
+  useEffect(() => {
+    if (!pipeline.id) return;
+    if (pipeline.status === "completed" || pipeline.status === "error") return;
+    const id = setInterval(() => {
+      fetchPipelineStatus().catch(() => {});
+    }, 2000);
+    return () => clearInterval(id);
+  }, [pipeline.id, pipeline.status, fetchPipelineStatus]);
 
   // Simulate step with delay
   const simulateStep = (step: string, duration: number) => {
@@ -620,108 +837,82 @@ export default function PipelinePage() {
               </div>
             </div>
 
-            {/* Generate Button */}
-            <button
-              onClick={pipeline.status === "idle" ? handleStartPipeline : handleReset}
-              disabled={!prompt.trim() && pipeline.status === "idle"}
-              className={`w-full py-4 rounded-2xl font-bold text-lg transition-all flex items-center justify-center gap-3 ${
-                pipeline.status === "idle"
-                  ? 'bg-gradient-to-r from-cyan-400 to-fuchsia-500 text-white hover:shadow-lg hover:shadow-cyan-500/30 disabled:opacity-50 disabled:cursor-not-allowed'
-                  : pipeline.status === "completed"
-                    ? 'bg-green-500 text-white'
-                    : pipeline.status === "error"
-                      ? 'bg-red-500 text-white'
-                      : 'bg-gradient-to-r from-cyan-400 to-fuchsia-500 text-white animate-pulse'
-              }`}
-            >
-              {pipeline.status === "idle" ? (
-                <>
-                  <Play className="w-6 h-6" />
-                  {labels.generate[locale]}
-                </>
-              ) : pipeline.status === "completed" ? (
-                <>
-                  <RefreshCw className="w-6 h-6" />
-                  {locale === 'ar' ? 'إعادة' : locale === 'en' ? 'New Video' : 'Nouvelle vidéo'}
-                </>
-              ) : pipeline.status === "error" ? (
-                <>
-                  <RefreshCw className="w-6 h-6" />
-                  {locale === 'ar' ? 'إعادة المحاولة' : locale === 'en' ? 'Retry' : 'Réessayer'}
-                </>
-              ) : (
-                <>
-                  <Loader2 className="w-6 h-6 animate-spin" />
-                  {labels.generating[locale]}
-                </>
-              )}
-            </button>
-
-            {/* Pipeline Progress */}
-            <AnimatePresence>
-              {pipeline.status !== "idle" && (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  className={`rounded-2xl p-6 border ${theme === 'dark' ? 'bg-[#141419] border-[#2a2a35]' : 'bg-white border-gray-200'}`}
+            {/* Project Controls */}
+            <div className={`rounded-2xl p-6 border ${theme === 'dark' ? 'bg-[#141419] border-[#2a2a35]' : 'bg-white border-gray-200'}`}>
+              <div className="space-y-3">
+                <button
+                  onClick={handleCreateProject}
+                  disabled={!prompt.trim() || isBusy}
+                  className={`w-full py-3 rounded-xl font-semibold transition-all flex items-center justify-center gap-2 ${
+                    isBusy
+                      ? 'bg-gray-600 text-white'
+                      : 'bg-gradient-to-r from-cyan-400 to-fuchsia-500 text-white hover:shadow-lg hover:shadow-cyan-500/30 disabled:opacity-50 disabled:cursor-not-allowed'
+                  }`}
                 >
-                  <h3 className={`font-semibold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-                    {locale === 'ar' ? 'مراحل الإنتاج' : locale === 'en' ? 'Production Steps' : 'Étapes de production'}
-                  </h3>
-                  
-                  <div className="space-y-3">
-                    {[
-                      { step: 1, label: labels.step1, status: "scripting" },
-                      { step: 2, label: labels.step2, status: "generating" },
-                      { step: 3, label: labels.step3, status: "audio" },
-                      { step: 4, label: labels.step4, status: "montage" },
-                      { step: 5, label: labels.step5, status: "completed" },
-                    ].map(({ step, label, status }) => {
-                      const isCompleted = pipeline.currentStep > step;
-                      const isActive = pipeline.currentStep === step;
-                      const isPending = pipeline.currentStep < step;
-
-                      return (
-                        <div
-                          key={step}
-                          className={`flex items-center gap-3 p-3 rounded-xl transition-all ${
-                            isActive ? 'bg-cyan-400/10 border border-cyan-400/30' : ''
-                          }`}
-                        >
-                          <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                            isCompleted 
-                              ? 'bg-green-500 text-white'
-                              : isActive
-                                ? 'bg-cyan-400 text-white'
-                                : theme === 'dark' ? 'bg-gray-700 text-gray-500' : 'bg-gray-200 text-gray-400'
-                          }`}>
-                            {isCompleted ? (
-                              <CheckCircle2 className="w-5 h-5" />
-                            ) : isActive ? (
-                              <Loader2 className="w-5 h-5 animate-spin" />
-                            ) : (
-                              step
-                            )}
-                          </div>
-                          <span className={`${
-                            isCompleted || isActive 
-                              ? theme === 'dark' ? 'text-white' : 'text-gray-900'
-                              : theme === 'dark' ? 'text-gray-500' : 'text-gray-400'
-                          }`}>
-                            {label[locale]}
-                          </span>
-                        </div>
-                      );
-                    })}
+                  {isBusy && busyLabel === labels.createProject[locale] ? (
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                  ) : (
+                    <Sparkles className="w-5 h-5" />
+                  )}
+                  {labels.createProject[locale]}
+                </button>
+                <div className="grid grid-cols-3 gap-2">
+                  <button
+                    onClick={handleStoryboard}
+                    disabled={!project?.id || isBusy}
+                    className={`py-2 rounded-xl text-sm font-medium border transition-all ${
+                      project?.status === "storyboarded" ? 'border-green-500 text-green-400' : theme === 'dark' ? 'border-[#2a2a35] text-gray-300 hover:border-cyan-400' : 'border-gray-200 text-gray-700 hover:border-cyan-500'
+                    }`}
+                  >
+                    {labels.storyboard[locale]}
+                  </button>
+                  <button
+                    onClick={handleAssemble}
+                    disabled={!project?.id || isBusy}
+                    className={`py-2 rounded-xl text-sm font-medium border transition-all ${
+                      project?.status === "assembled" ? 'border-green-500 text-green-400' : theme === 'dark' ? 'border-[#2a2a35] text-gray-300 hover:border-cyan-400' : 'border-gray-200 text-gray-700 hover:border-cyan-500'
+                    }`}
+                  >
+                    {labels.assemble[locale]}
+                  </button>
+                  <button
+                    onClick={handleRenderProject}
+                    disabled={!project?.id || isBusy}
+                    className={`py-2 rounded-xl text-sm font-medium border transition-all ${
+                      project?.status === "completed" ? 'border-green-500 text-green-400' : theme === 'dark' ? 'border-[#2a2a35] text-gray-300 hover:border-cyan-400' : 'border-gray-200 text-gray-700 hover:border-cyan-500'
+                    }`}
+                  >
+                    {labels.render[locale]}
+                  </button>
+                </div>
+                <button
+                  onClick={handleLaunchProduction}
+                  disabled={!prompt.trim() || isBusy}
+                  className={`w-full py-4 rounded-2xl font-bold text-lg transition-all flex items-center justify-center gap-3 ${
+                    isBusy
+                      ? 'bg-gradient-to-r from-cyan-400 to-fuchsia-500 text-white animate-pulse'
+                      : 'bg-gradient-to-r from-cyan-400 to-fuchsia-500 text-white hover:shadow-lg hover:shadow-cyan-500/30 disabled:opacity-50 disabled:cursor-not-allowed'
+                  }`}
+                >
+                  {isBusy && busyLabel === labels.generate[locale] ? (
+                    <Loader2 className="w-6 h-6 animate-spin" />
+                  ) : (
+                    <Play className="w-6 h-6" />
+                  )}
+                  {labels.generate[locale]}
+                </button>
+                {project?.error && (
+                  <div className="text-sm text-red-400 flex items-center gap-2">
+                    <AlertTriangle className="w-4 h-4" />
+                    {project.error}
                   </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+                )}
+              </div>
+            </div>
 
-            {/* Segments Progress */}
+            {/* Scenes */}
             <AnimatePresence>
-              {pipeline.segments.length > 0 && pipeline.status === "generating" && (
+              {project?.scenes?.length ? (
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -733,51 +924,46 @@ export default function PipelinePage() {
                       {labels.segment[locale]}s
                     </h3>
                     <span className="text-xs px-2 py-1 bg-cyan-400/20 text-cyan-400 rounded-full">
-                      {labels.parallel[locale]}
+                      {project.scenes.length} × 5s
                     </span>
                   </div>
-                  
-                  <div className="space-y-3">
-                    {pipeline.segments.map(segment => (
-                      <div key={segment.id} className="flex items-center gap-3">
-                        <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs ${
-                          segment.status === "completed"
-                            ? 'bg-green-500 text-white'
-                            : segment.status === "generating"
-                              ? 'bg-cyan-400 text-white'
-                              : theme === 'dark' ? 'bg-gray-700 text-gray-400' : 'bg-gray-200 text-gray-500'
-                        }`}>
-                          {segment.status === "completed" ? (
-                            <CheckCircle2 className="w-4 h-4" />
-                          ) : segment.status === "generating" ? (
-                            <Loader2 className="w-4 h-4 animate-spin" />
-                          ) : (
-                            segment.id
-                          )}
-                        </div>
-                        <div className="flex-1">
-                          <div className={`h-2 rounded-full overflow-hidden ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-200'}`}>
-                            <motion.div
-                              className="h-full bg-gradient-to-r from-cyan-400 to-fuchsia-500"
-                              initial={{ width: 0 }}
-                              animate={{ width: `${segment.progress}%` }}
-                              transition={{ duration: 0.3 }}
-                            />
+                  <div className="space-y-4">
+                    {project.scenes.map(scene => (
+                      <div key={scene.id} className={`p-3 rounded-xl border ${theme === 'dark' ? 'border-[#2a2a35]' : 'border-gray-200'}`}>
+                        <div className="flex items-center gap-2 mb-2">
+                          <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs ${
+                            scene.status === "completed"
+                              ? 'bg-green-500 text-white'
+                              : scene.status === "generating"
+                                ? 'bg-cyan-400 text-white'
+                                : scene.status === "error"
+                                  ? 'bg-red-500 text-white'
+                                  : theme === 'dark' ? 'bg-gray-700 text-gray-400' : 'bg-gray-200 text-gray-500'
+                          }`}>
+                            {scene.id}
                           </div>
+                          <span className={theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}>
+                            {scene.script || scene.visual_prompt || "Scene"}
+                          </span>
                         </div>
-                        <span className={`text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>
-                          {Math.round(segment.progress)}%
-                        </span>
+                        {scene.videoUrl && (
+                          <div className="aspect-video bg-black rounded-lg overflow-hidden">
+                            <video src={scene.videoUrl} controls className="w-full h-full object-contain" />
+                          </div>
+                        )}
+                        {scene.error && (
+                          <div className="text-xs text-red-400 mt-2">{scene.error}</div>
+                        )}
                       </div>
                     ))}
                   </div>
                 </motion.div>
-              )}
+              ) : null}
             </AnimatePresence>
 
             {/* Final Video */}
             <AnimatePresence>
-              {pipeline.status === "completed" && pipeline.finalVideoUrl && (
+              {project?.status === "completed" && project.finalVideoUrl && (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
@@ -790,8 +976,16 @@ export default function PipelinePage() {
                     </h3>
                   </div>
                   
-                  <div className="aspect-video bg-black rounded-xl mb-4 flex items-center justify-center">
-                    <Film className="w-16 h-16 text-gray-600" />
+                  <div className="aspect-video bg-black rounded-xl mb-4 flex items-center justify-center overflow-hidden">
+                    {project.finalVideoUrl ? (
+                      <video
+                        src={project.finalVideoUrl}
+                        controls
+                        className="w-full h-full object-contain"
+                      />
+                    ) : (
+                      <Film className="w-16 h-16 text-gray-600" />
+                    )}
                   </div>
                   
                   <div className="grid grid-cols-2 gap-3">

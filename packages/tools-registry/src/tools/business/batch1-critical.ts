@@ -28,7 +28,7 @@ export const businessPlanGenerator: AITool = {
     { name: 'business_idea', type: 'textarea', label: 'Décrivez votre idée', required: true },
     { name: 'target_market', type: 'text', label: 'Marché cible' },
     { name: 'initial_investment', type: 'text', label: 'Investissement initial estimé' },
-    { name: 'country', type: 'select', label: 'Pays', options: ['Algérie', 'France', 'Suisse', 'Maroc', 'Autre'] },
+    { name: 'country', type: 'select', label: 'Pays', options: ['Algérie', 'France', 'Algérie', 'Maroc', 'Autre'] },
     { name: 'plan_purpose', type: 'select', label: 'Objectif du plan', options: ['Banque', 'Investisseurs', 'ANSEJ/CNAC', 'Interne', 'Partenaires'] }
   ],
   outputs: [{ type: 'markdown', name: 'business_plan' }],

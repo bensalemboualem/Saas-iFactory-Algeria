@@ -5,7 +5,6 @@ import { classNames } from '~/utils/classNames';
 import { HeaderActionButtons } from './HeaderActionButtons.client';
 import { ChatDescription } from '~/lib/persistence/ChatDescription.client';
 import { ThemeSwitch } from '~/components/ui/ThemeSwitch';
-import { LanguageSwitch } from '~/components/ui/LanguageSwitch';
 
 export function Header() {
   const chat = useStore(chatStore);
@@ -44,15 +43,10 @@ export function Header() {
         </>
       )}
 
-      {/* Language & Theme switches - always visible */}
+      {/* Theme switch - always visible (Credits & Language moved to sidebar) */}
       <div className="flex items-center gap-2 ml-2">
         <ClientOnly>
-          {() => (
-            <>
-              <LanguageSwitch />
-              <ThemeSwitch />
-            </>
-          )}
+          {() => <ThemeSwitch />}
         </ClientOnly>
       </div>
     </header>

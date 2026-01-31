@@ -1,4 +1,4 @@
-﻿import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { askApi, collectionsApi } from "../../api/client";
 
 type Source = {
@@ -10,7 +10,7 @@ type Source = {
 
 type Msg =
   | { role: "user"; text: string }
-  | { role: "assistant"; sources?: Source[], text: string; };
+  | { role: "assistant"; sources?: Source[]; text: string };
 
 export default function CopilotPanel({ onClose }: { onClose: () => void }) {
   const [collections, setCollections] = useState<Array<{ id: string; name: string }>>([]);
@@ -18,7 +18,7 @@ export default function CopilotPanel({ onClose }: { onClose: () => void }) {
   const collectionIds = useMemo(() => (collectionId ? [collectionId] : undefined), [collectionId]);
 
   const [messages, setMessages] = useState<Msg[]>([
-    { role: "assistant", text: "Dzir IA Copilot â€” pose une question, je rÃ©ponds avec sources." },
+    { role: "assistant", text: "Dzir IA Copilot — pose une question, je réponds avec sources." },
   ]);
   const [input, setInput] = useState("");
   const [busy, setBusy] = useState(false);
@@ -61,11 +61,11 @@ export default function CopilotPanel({ onClose }: { onClose: () => void }) {
             snippet: s.snippet,
             title: s.title,
           })),
-          text: res.answer ?? "(rÃ©ponse vide)",
+          text: res.answer ?? "(réponse vide)",
         },
       ]);
     } catch (e: any) {
-      setMessages((m) => [...m, { role: "assistant", text: `âŒ ${String(e?.message ?? e)}` }]);
+      setMessages((m) => [...m, { role: "assistant", text: `❌ ${String(e?.message ?? e)}` }]);
     } finally {
       setBusy(false);
     }
@@ -76,7 +76,7 @@ export default function CopilotPanel({ onClose }: { onClose: () => void }) {
       <div style={{ alignItems: "center", borderBottom: "1px solid rgba(255,255,255,.10)", display: "flex", gap: 10, height: 56, padding: "0 12px" }}>
         <div style={{ fontWeight: 900 }}>Copilot</div>
         <button onClick={onClose} style={{ background: "transparent", border: "none", color: "#f8fafc", cursor: "pointer", fontSize: 18, marginLeft: "auto" }}>
-          âœ•
+          ✕
         </button>
       </div>
 
@@ -104,7 +104,8 @@ export default function CopilotPanel({ onClose }: { onClose: () => void }) {
                 {m.sources.map((s) => (
                   <div key={s.index} style={{ background: "rgba(0,0,0,.25)", borderRadius: 12, marginBottom: 8, padding: 10 }}>
                     <div style={{ fontWeight: 900 }}>
-                      [{s.index}] {s.title ?? "(sans titre)"} {typeof s.score === "number" ? <span style={{ opacity: 0.7 }}>â€” {s.score.toFixed(3)}</span> : null}
+                      [{s.index}] {s.title ?? "(sans titre)"}{" "}
+                      {typeof s.score === "number" ? <span style={{ opacity: 0.7 }}>— {s.score.toFixed(3)}</span> : null}
                     </div>
                     {s.snippet ? <div style={{ marginTop: 6, opacity: 0.9 }}>{s.snippet}</div> : null}
                   </div>
@@ -119,7 +120,7 @@ export default function CopilotPanel({ onClose }: { onClose: () => void }) {
         <input
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => { if (e.key === "Enter") send(); }}
-          placeholder="Askâ€¦"
+          placeholder="Ask…"
           style={{ background: "rgba(255,255,255,.06)", border: "1px solid rgba(255,255,255,.12)", borderRadius: 12, color: "#f8fafc", flex: 1, fontSize: 16, outline: "none", padding: 12 }}
           value={input}
         />
@@ -129,7 +130,7 @@ export default function CopilotPanel({ onClose }: { onClose: () => void }) {
           style={{ background: "#00a651", border: "none", borderRadius: "50%", color: "white", cursor: busy ? "not-allowed" : "pointer", fontWeight: 900, height: 44, width: 44 }}
           title="Send"
         >
-          {busy ? "â€¦" : "â¬†"}
+          {busy ? "…" : "⬆"}
         </button>
       </div>
     </div>

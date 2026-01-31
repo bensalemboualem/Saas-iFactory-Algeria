@@ -70,8 +70,8 @@ function CreditsContent() {
   const [balance, setBalance] = useState(150);
   
   // Check for Stripe redirect results
-  const success = searchParams.get('success');
-  const canceled = searchParams.get('canceled');
+  const success = searchParams?.get('success');
+  const canceled = searchParams?.get('canceled');
   
   useEffect(() => {
     if (success) {
@@ -84,7 +84,7 @@ function CreditsContent() {
     setLoadingPack(packId);
     
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://video-studio.iafactory.ch/api'}/v1/credits/purchase`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001'}/api/v1/credits/purchase`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

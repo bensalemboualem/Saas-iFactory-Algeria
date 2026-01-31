@@ -1,5 +1,7 @@
 import httpx
 import structlog
+import os
+import uuid
 from typing import List
 from app.core.config import settings
 
@@ -50,13 +52,17 @@ class ElevenLabsService:
                 },
             )
             response.raise_for_status()
-            
-            # In production: upload audio to S3/R2 and return URL
-            # For demo: return a placeholder
+
+            os.makedirs(settings.OUTPUT_DIR, exist_ok=True)
+            filename = f"tts-{uuid.uuid4().hex[:8]}.mp3"
+            output_path = os.path.join(settings.OUTPUT_DIR, filename)
+            with open(output_path, "wb") as f:
+                f.write(response.content)
+
             logger.info("ElevenLabs TTS completed", voice_id=voice_id, language=language)
             
             return {
-                "audio_url": "https://example.com/audio.mp3",  # Replace with actual upload
+                "audio_url": f"/outputs/{filename}",
                 "duration": len(text) * 0.05,  # Rough estimate
             }
     

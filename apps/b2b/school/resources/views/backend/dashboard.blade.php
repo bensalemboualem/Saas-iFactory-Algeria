@@ -6,6 +6,27 @@
 
 @section('content')
 <div class="page-content">
+    {{-- School Name Header --}}
+    <div class="row mb-4">
+        <div class="col-12">
+            <div style="background: linear-gradient(135deg, #392C7D 0%, #5B4BC4 100%); border-radius: 15px; padding: 25px 30px; box-shadow: 0 4px 20px rgba(57, 44, 125, 0.3);">
+                <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;">
+                    <div>
+                        <h1 style="color: white; font-size: 28px; margin: 0; font-weight: 700;">{{ setting('application_name') ?? 'iA Factory School' }}</h1>
+                        <p style="color: rgba(255,255,255,0.8); margin: 8px 0 0 0; font-size: 14px;">
+                            {{ ___('dashboard.welcome_dashboard') ?? 'Bienvenue sur votre tableau de bord' }} |
+                            {{ ___('settings.Session') }}: {{ $session['session']->name ?? date('Y') }}
+                        </p>
+                    </div>
+                    <div style="text-align: right;">
+                        <p style="color: rgba(255,255,255,0.9); margin: 0; font-size: 14px;">{{ date('l, d F Y') }}</p>
+                        <p style="color: rgba(255,255,255,0.7); margin: 5px 0 0 0; font-size: 12px;">{{ setting('address') }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row ">
 
         {{-- Counter --}}

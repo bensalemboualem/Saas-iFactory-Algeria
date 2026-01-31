@@ -131,8 +131,8 @@ STRIPE_SECRET_KEY=sk_live_xxxxx
 STRIPE_WEBHOOK_SECRET=whsec_xxxxx
 
 # Frontend URL
-FRONTEND_URL=https://video-studio.iafactory.ch
-NEXT_PUBLIC_API_URL=https://api.iafactory.ch
+FRONTEND_URL=https://video-studio.iafactoryalgeria.com
+NEXT_PUBLIC_API_URL=https://api.iafactoryalgeria.com
 ```
 
 #### Étape 3: Build et lancer les containers
@@ -195,7 +195,7 @@ nano /etc/nginx/sites-available/video-studio
 # Frontend Next.js
 server {
     listen 80;
-    server_name video-studio.iafactory.ch;
+    server_name video-studio.iafactoryalgeria.com;
 
     location / {
         proxy_pass http://localhost:3000;
@@ -213,7 +213,7 @@ server {
 # Backend API
 server {
     listen 80;
-    server_name api.iafactory.ch;
+    server_name api.iafactoryalgeria.com;
 
     location / {
         proxy_pass http://localhost:8000;
@@ -240,8 +240,8 @@ systemctl reload nginx
 #### Étape 3: Configurer le DNS
 **Sur Cloudflare (ou votre registrar):**
 ```
-Type A: video-studio.iafactory.ch -> VOTRE_IP_VPS
-Type A: api.iafactory.ch -> VOTRE_IP_VPS
+Type A: video-studio.iafactoryalgeria.com -> VOTRE_IP_VPS
+Type A: api.iafactoryalgeria.com -> VOTRE_IP_VPS
 ```
 
 #### Étape 4: Installer SSL avec Let's Encrypt
@@ -250,7 +250,7 @@ Type A: api.iafactory.ch -> VOTRE_IP_VPS
 apt install -y certbot python3-certbot-nginx
 
 # Obtenir les certificats SSL (APRÈS avoir configuré le DNS)
-certbot --nginx -d video-studio.iafactory.ch -d api.iafactory.ch
+certbot --nginx -d video-studio.iafactoryalgeria.com -d api.iafactoryalgeria.com
 
 # Suivre les instructions interactives
 # Choisir: Redirect HTTP to HTTPS (option 2)
@@ -300,7 +300,7 @@ certbot renew --dry-run
 # 2. Activer le mode production
 # 3. Aller dans Developers > API Keys
 # 4. Copier les clés publishable et secret
-# 5. Créer un webhook endpoint: https://api.iafactory.ch/webhooks/stripe
+# 5. Créer un webhook endpoint: https://api.iafactoryalgeria.com/webhooks/stripe
 # Copier: STRIPE_PUBLISHABLE_KEY=pk_live_xxxxx
 #         STRIPE_SECRET_KEY=sk_live_xxxxx
 #         STRIPE_WEBHOOK_SECRET=whsec_xxxxx
@@ -313,7 +313,7 @@ certbot renew --dry-run
 # 3. Créer un bucket: iafactory-videos
 # 4. Générer des access keys
 # 5. Configurer CORS:
-#    AllowedOrigins: ["https://video-studio.iafactory.ch"]
+#    AllowedOrigins: ["https://video-studio.iafactoryalgeria.com"]
 #    AllowedMethods: ["GET", "PUT", "POST", "DELETE"]
 # Copier: S3_ACCESS_KEY=xxxxx
 #         S3_SECRET_KEY=xxxxx
@@ -389,21 +389,21 @@ exit
 
 ### Test 1: API Health Check
 ```bash
-curl https://api.iafactory.ch/health
+curl https://api.iafactoryalgeria.com/health
 # Doit retourner: {"status":"healthy",...}
 ```
 
 ### Test 2: Documentation API
 ```bash
 # Ouvrir dans le navigateur:
-https://api.iafactory.ch/docs
+https://api.iafactoryalgeria.com/docs
 # Doit afficher Swagger UI
 ```
 
 ### Test 3: Frontend
 ```bash
 # Ouvrir dans le navigateur:
-https://video-studio.iafactory.ch
+https://video-studio.iafactoryalgeria.com
 # Doit afficher la page d'accueil Next.js
 ```
 

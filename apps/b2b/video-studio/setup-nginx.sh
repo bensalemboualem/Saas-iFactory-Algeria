@@ -16,8 +16,8 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 # Demander les domaines
-read -p "Domaine frontend (ex: video-studio.iafactory.ch): " FRONTEND_DOMAIN
-read -p "Domaine API (ex: api.iafactory.ch): " API_DOMAIN
+read -p "Domaine frontend (ex: video-studio.iafactoryalgeria.com): " FRONTEND_DOMAIN
+read -p "Domaine API (ex: api.iafactoryalgeria.com): " API_DOMAIN
 read -p "Email pour Let's Encrypt: " LETSENCRYPT_EMAIL
 
 # Vérifier que Nginx est installé

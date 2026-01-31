@@ -7,7 +7,7 @@ export const modelsRoutes: FastifyPluginAsync = async (server) => {
     preHandler: authenticateRequest,
   }, async (request, reply) => {
     const models = getAvailableModels();
-    
+
     return {
       object: 'list',
       data: models.map((model) => ({
@@ -18,8 +18,13 @@ export const modelsRoutes: FastifyPluginAsync = async (server) => {
         permission: [],
         root: model.id,
         parent: null,
-        description: model.description,
+        // Return proper display name for UI
+        name: model.name,
+        description: `${model.name} - ${model.description}`,
         pricing: model.pricing,
+        category: model.category,
+        contextWindow: model.contextWindow,
+        features: model.features,
       })),
     };
   });

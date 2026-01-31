@@ -2,38 +2,38 @@ import { useEffect, useState, useCallback } from 'react';
 
 export type Theme = 'dark' | 'light';
 
-// Couleurs centralisées - Source unique de vérité
+// Couleurs centralisées - Synchronisées avec Home.tsx CSS vars
 export const themeColors = {
   dark: {
-    bgPrimary: '#1a1a1a',
-    bgSecondary: '#0d0d0d',
-    bgCard: '#262626',
-    textPrimary: '#f0f0f0',
-    textSecondary: '#B0B0B0',
-    textMuted: '#A3A3A3',
-    borderColor: 'rgba(255, 255, 255, 0.12)',
-    inputBg: '#1f1f1f',
+    bgPrimary: '#0A0F1A',
+    bgSecondary: '#111827',
+    bgCard: 'rgba(255,255,255,0.06)',
+    textPrimary: '#F8FAFC',
+    textSecondary: 'rgba(248,250,252,0.80)',
+    textMuted: 'rgba(248,250,252,0.65)',
+    borderColor: 'rgba(255,255,255,0.10)',
+    inputBg: '#111827',
   },
   light: {
-    bgPrimary: '#FAF9F7',
-    bgSecondary: '#f5f5f5',
-    bgCard: '#ffffff',
-    textPrimary: '#1F1F1F',
-    textSecondary: '#4A4A4A',
-    textMuted: '#5D5D5D',
-    borderColor: 'rgba(0, 0, 0, 0.08)',
-    inputBg: '#ffffff',
+    bgPrimary: '#F6F3EE',
+    bgSecondary: '#FBF8F3',
+    bgCard: '#EDE9E3',
+    textPrimary: '#141414',
+    textSecondary: 'rgba(20,20,20,0.80)',
+    textMuted: 'rgba(20,20,20,0.62)',
+    borderColor: 'rgba(20,20,20,0.10)',
+    inputBg: '#EDE9E3',
   },
 } as const;
 
 // Couleurs d'accent (vert Algérie)
 export const accentColors = {
-  primary: '#00A86B',
-  secondary: '#2ECC71',
-  dark: '#008B5E',
-  light: '#58D68D',
-  gradient: 'linear-gradient(135deg, #00A86B, #2ECC71)',
-  gradientDark: 'linear-gradient(135deg, #008B5E, #00A86B)',
+  primary: '#1C7A5F',
+  secondary: '#22C55E',
+  dark: '#006233',
+  light: '#2ECC71',
+  gradient: 'linear-gradient(135deg, #1C7A5F, #22C55E)',
+  gradientDark: 'linear-gradient(135deg, #006233, #1C7A5F)',
 } as const;
 
 // Type pour les couleurs (union des deux thèmes)

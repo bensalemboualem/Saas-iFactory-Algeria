@@ -1,0 +1,119 @@
+.collection-detail-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px;
+}
+
+.collection-header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.collection-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.collection-title {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.collection-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  font-size: 20px;
+  color: #0b0b0b;
+}
+
+.collection-subtitle {
+  margin: 6px 0 0;
+  color: var(--text-muted);
+}
+
+.collection-meta {
+  margin: 4px 0 0;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.collection-overview {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.overview-card {
+  padding: 14px;
+  border-radius: 14px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-soft);
+}
+
+.overview-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.overview-value {
+  margin-top: 6px;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.sources-empty {
+  border: 1px dashed var(--border-soft);
+  border-radius: 16px;
+  padding: 32px;
+  text-align: center;
+  background: var(--bg-secondary);
+}
+
+.sources-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.source-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 16px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-soft);
+}
+
+.source-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.source-title {
+  margin: 0;
+  font-size: 16px;
+}
+
+.source-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}

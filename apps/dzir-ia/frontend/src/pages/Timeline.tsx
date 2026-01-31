@@ -1,11 +1,11 @@
-import { useTimelineStore } from '../store';
-import './Timeline.css';
+import { useTimelineStore } from "../store";
+import "./Timeline.css";
 
 const EVENT_ICONS: Record<string, string> = {
-  capture: '📥',
-  search: '🔍',
-  ask: '💬',
-  sync: '🔄',
+  capture: "📥",
+  search: "🔍",
+  ask: "💬",
+  sync: "🔄",
 };
 
 export default function Timeline() {
@@ -24,7 +24,7 @@ export default function Timeline() {
 
       {events.length === 0 ? (
         <div className="empty-state">
-          <div className="empty-icon">📅</div>
+          <div className="empty-icon">📍</div>
           <h2>No activity yet</h2>
           <p>Your interactions with Dzir IA will appear here.</p>
         </div>
@@ -33,7 +33,7 @@ export default function Timeline() {
           {events.map((event, index) => (
             <div key={event.id} className="timeline-item">
               <div className="timeline-marker">
-                <span className="marker-icon">{EVENT_ICONS[event.type] || '📌'}</span>
+                <span className="marker-icon">{EVENT_ICONS[event.type] || "📌"}</span>
                 {index < events.length - 1 && <div className="marker-line" />}
               </div>
               <div className="timeline-content">

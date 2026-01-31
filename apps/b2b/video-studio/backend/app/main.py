@@ -1,7 +1,9 @@
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 import structlog
+import os
 
 from app.core.config import settings
 from app.api.routes import video, audio, templates, credits, auth, pipeline
@@ -39,6 +41,10 @@ app = FastAPI(
     description="API de génération vidéo IA pour le marché algérien",
     lifespan=lifespan,
 )
+
+# Ensure output directory exists and expose it
+os.makedirs(settings.OUTPUT_DIR, exist_ok=True)
+app.mount("/outputs", StaticFiles(directory=settings.OUTPUT_DIR), name="outputs")
 
 # CORS
 app.add_middleware(

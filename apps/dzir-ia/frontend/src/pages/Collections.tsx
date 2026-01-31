@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useCollectionsStore, useTimelineStore } from '../store';
-import { collectionsApi } from '../api/client';
-import { CreateCollectionModal } from '../components';
-import './Collections.css';
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { useCollectionsStore, useTimelineStore } from "../store";
+import { collectionsApi } from "../api/client";
+import { CreateCollectionModal } from "../components";
+import "./Collections.css";
 
 export default function Collections() {
   const { collections, loading, error, setCollections, setLoading, setError } = useCollectionsStore();
@@ -18,7 +18,7 @@ export default function Collections() {
         setCollections(response.collections);
         setError(null);
       } catch (err) {
-        setError('Failed to load collections');
+        setError("Failed to load collections");
         console.error(err);
       } finally {
         setLoading(false);
@@ -35,13 +35,13 @@ export default function Collections() {
       await collectionsApi.delete(id);
       setCollections(collections.filter((c) => c.id !== id));
       addEvent({
-        type: 'sync',
+        type: "sync",
         title: `Deleted: ${name}`,
-        description: 'Collection removed',
+        description: "Collection removed",
       });
     } catch (err) {
       console.error(err);
-      alert('Failed to delete collection');
+      alert("Failed to delete collection");
     }
   };
 
@@ -79,11 +79,11 @@ export default function Collections() {
             <div key={collection.id} className="collection-card">
               <div
                 className="card-accent"
-                style={{ backgroundColor: collection.color || '#00A86B' }}
+                style={{ backgroundColor: collection.color || "#00A86B" }}
               />
               <div className="card-content">
                 <div className="card-header">
-                  <span className="card-icon">{collection.icon || '📁'}</span>
+                  <span className="card-icon">{collection.icon || "📁"}</span>
                   <h3>{collection.name}</h3>
                 </div>
                 {collection.description && (

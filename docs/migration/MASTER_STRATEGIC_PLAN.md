@@ -61,10 +61,10 @@ We use a **Hybrid Router** system managed by the Backend.
 *   **Cost:** Extremely low (~$0.10 / 1M tokens).
 *   **Use Case:** Fast chat, coding, translation.
 
-### Tier 3: The "Swiss Quality" (R&D)
+### Tier 3: The "Algerian Quality" (R&D)
 *   **Provider:** **PublicAI / Apertus** (EPFL/ETH Zurich initiative).
 *   **Use Case:** Fine-tuning a specific "Algerian Legal/Education" model.
-*   **Strategy:** Use your Swiss presence to access these compute resources -> Train model -> Distill into GGUF -> Deploy on Algerian Boxes.
+*   **Strategy:** Use your Algerian presence to access these compute resources -> Train model -> Distill into GGUF -> Deploy on Algerian Boxes.
 
 ---
 

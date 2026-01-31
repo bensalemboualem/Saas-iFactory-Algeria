@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
   output   = "../src/generated/prisma"
@@ -11,163 +8,153 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Org {
-  id        String   @id @default(cuid())
-  name      String
-  slug      String   @unique
-  isActive  Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  users              User[]
-  creditTransactions CreditTransaction[]
-  usageLedger        UsageLedger[]
-
-  @@map("orgs")
-}
-
-model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String?
-  role      String   @default("user") // user, admin, superadmin
-  isActive  Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  orgId String
-  org   Org    @relation(fields: [orgId], references: [id])
-
-  apiKeys            ApiKey[]
-  wallet             CreditWallet?
-  creditTransactions CreditTransaction[]
-  usageLedger        UsageLedger[]
-  conversations      Conversation[]
-
-  @@index([orgId])
-  @@map("users")
-}
-
 model ApiKey {
-  id         String    @id @default(cuid())
-  key        String    @unique @default(cuid()) // iaf_xxxxx
+  id         String    @id
+  key        String    @unique
   name       String
   isActive   Boolean   @default(true)
   lastUsedAt DateTime?
   expiresAt  DateTime?
   createdAt  DateTime  @default(now())
-
-  userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@map("api_keys")
 }
 
+model Conversation {
+  id        String    @id
+  title     String?
+  metadata  Json?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages  Message[]
+  usageLedger UsageLedger[]
+
+  @@index([createdAt])
+  @@index([userId])
+  @@map("conversations")
+}
+
+model CreditReservation {
+  id        String   @id
+  userId    String
+  requestId String   @unique
+  amount    Float
+  status    String   @default("RESERVED")
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+
+  @@index([expiresAt])
+  @@index([userId, status])
+  @@map("credit_reservations")
+}
+
+model CreditTransaction {
+  id             String   @id
+  amount         Float
+  type           String
+  reason         String?
+  idempotencyKey String?
+  createdAt      DateTime @default(now())
+  userId         String
+  orgId          String
+  org            Org      @relation(fields: [orgId], references: [id])
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, idempotencyKey])
+  @@index([createdAt])
+  @@index([orgId])
+  @@index([userId])
+  @@map("credit_transactions")
+}
+
 model CreditWallet {
-  id        String   @id @default(cuid())
-  balance   Float    @default(0) // in credits
+  id        String   @id @default(uuid())
+  balance   Float    @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  userId String @unique
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("credit_wallets")
 }
 
-model CreditTransaction {
-  id             String   @id @default(cuid())
-  amount         Float // positive = credit, negative = debit
-  type           String // credit, debit, refund, adjustment
-  reason         String? // purchase, usage, bonus, refund
-  idempotencyKey String? // for dedup of retried requests
-  createdAt      DateTime @default(now())
-
-  userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  orgId String
-  org   Org    @relation(fields: [orgId], references: [id])
-
-  @@unique([userId, idempotencyKey]) // ensure idempotency per user
-  @@index([userId])
-  @@index([orgId])
-  @@index([createdAt])
-  @@map("credit_transactions")
-}
-
-model UsageLedger {
-  id        String   @id @default(cuid())
-  model     String // iaf-fast-llama, iaf-smart-claude, etc.
-  provider  String // groq, openrouter, deepseek, ollama
-  tokens    Int // total tokens used
-  cost      Float // credits debited
-  metadata  Json? // request details, latency, etc.
-  requestId String?  @unique // PR-004: idempotency + tracing
-  createdAt DateTime @default(now())
-
-  userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  orgId String
-  org   Org    @relation(fields: [orgId], references: [id])
-
-  conversationId String?
-  conversation   Conversation? @relation(fields: [conversationId], references: [id], onDelete: SetNull)
-
-  @@index([userId])
-  @@index([orgId])
-  @@index([conversationId])
-  @@index([createdAt])
-  @@map("usage_ledger")
-}
-
-// PR-003: Credit reservation for atomic reserve/finalize/release pattern
-model CreditReservation {
-  id        String   @id @default(cuid())
-  userId    String
-  requestId String   @unique // Idempotency-Key from request header
-  amount    Float    // Hold amount (same unit as CreditWallet.balance)
-  status    String   @default("RESERVED") // RESERVED | FINALIZED | RELEASED
-  expiresAt DateTime // Auto-release after TTL
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([userId, status])
-  @@index([expiresAt])
-  @@map("credit_reservations")
-}
-
-model Conversation {
-  id        String   @id @default(cuid())
-  title     String?
-  metadata  Json? // model used, settings, etc.
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  messages    Message[]
-  usageLedger UsageLedger[]
-
-  @@index([userId])
-  @@index([createdAt])
-  @@map("conversations")
-}
-
 model Message {
-  id        String   @id @default(cuid())
-  role      String // system, user, assistant
-  content   String   @db.Text
-  metadata  Json? // tokens, model, etc.
-  createdAt DateTime @default(now())
-
+  id             String       @id
+  role           String
+  content        String
+  metadata       Json?
+  createdAt      DateTime     @default(now())
   conversationId String
   conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
 
   @@index([conversationId])
   @@index([createdAt])
   @@map("messages")
+}
+
+model Org {
+  id                 String              @id
+  name               String
+  slug               String?             @unique
+  isActive           Boolean             @default(true)
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime
+  plan               String              @default("free")
+  creditTransactions CreditTransaction[]
+  usageLedger        UsageLedger[]
+  users              User[]
+
+  @@map("orgs")
+}
+
+model UsageLedger {
+  id             String        @id
+  model          String
+  provider       String
+  tokens         Int
+  cost           Float
+  metadata       Json?
+  requestId      String?       @unique
+  createdAt      DateTime      @default(now())
+  userId         String
+  orgId          String
+  conversationId String?
+  conversation   Conversation? @relation(fields: [conversationId], references: [id])
+  org            Org           @relation(fields: [orgId], references: [id])
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([conversationId])
+  @@index([createdAt])
+  @@index([orgId])
+  @@index([userId])
+  @@map("usage_ledger")
+}
+
+model User {
+  id                 String              @id
+  email              String              @unique
+  name               String?
+  role               String              @default("user")
+  isActive           Boolean             @default(true)
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime
+  orgId              String
+  avatar             String?
+  provider           String?
+  providerId         String?
+  apiKeys            ApiKey[]
+  conversations      Conversation[]
+  creditTransactions CreditTransaction[]
+  creditWallet       CreditWallet?
+  usageLedger        UsageLedger[]
+  org                Org                 @relation(fields: [orgId], references: [id])
+
+  @@index([orgId])
+  @@map("users")
 }

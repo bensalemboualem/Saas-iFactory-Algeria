@@ -34,8 +34,16 @@ class LanguageComposer
      */
     public function compose(View $view)
     {
-        $language['languages']  = $this->language->all();
-        $language['language'] = Language::where('code', \Session::get('locale'))->first();
+        // PERFORMANCE FIX: Cache languages for 1 hour
+        $language['languages'] = \Cache::remember('all_languages', 3600, function () {
+            return $this->language->all();
+        });
+
+        $locale = \Session::get('locale', 'en');
+        $language['language'] = \Cache::remember("language_{$locale}", 3600, function () use ($locale) {
+            return Language::where('code', $locale)->first();
+        });
+
         $view->with('language', $language);
     }
 }

@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback, useEffect } from 'react';
-import type { TextSearchOptions, TextSearchOnProgressCallback, WebContainer } from '@webcontainer/api';
+import type { TextSearchOptions, TextSearchOnProgressCallback } from '@webcontainer/api';
 import { workbenchStore } from '~/lib/stores/workbench';
 import { webcontainer } from '~/lib/webcontainer';
 import { WORK_DIR } from '~/utils/constants';
@@ -13,14 +13,15 @@ interface DisplayMatch {
   matchCharEnd: number;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function performTextSearch(
-  instance: WebContainer,
+  instance: any, // E2B/WebContainer instance
   query: string,
   options: Omit<TextSearchOptions, 'folders'>,
   onProgress: (results: DisplayMatch[]) => void,
 ): Promise<void> {
   if (!instance || typeof instance.internal?.textSearch !== 'function') {
-    console.error('WebContainer instance not available or internal searchText method is missing/not a function.');
+    console.error('Container instance not available or textSearch method is missing.');
 
     return;
   }

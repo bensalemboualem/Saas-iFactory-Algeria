@@ -1,9 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from '../i18n';
+import { useTheme } from '../hooks';
 
-type Theme = 'dark' | 'light';
-
+// ============================================================================
+// TYPES
+// ============================================================================
 interface Tool {
   id: string;
   name: string;
@@ -11,12 +13,13 @@ interface Tool {
   icon: string;
   category: string;
   categoryIcon: string;
+  featured?: boolean;
 }
 
-// Liste complète des 262 outils IA classés par catégorie
-const allTools: Tool[] = [
+// Données des outils par langue (FR)
+const toolsFR: Tool[] = [
   // ===== RÉDACTION & CONTENU (30 outils) =====
-  { id: 'article-generator', name: 'Générateur d\'Articles', description: 'Créez des articles de blog optimisés SEO', icon: '📝', category: 'Rédaction', categoryIcon: '✍️' },
+  { id: 'article-generator', name: 'Générateur d\'Articles', description: 'Créez des articles de blog optimisés SEO', icon: '📝', category: 'Rédaction', categoryIcon: '✍️', featured: true },
   { id: 'seo-writer', name: 'Rédacteur SEO', description: 'Contenu optimisé pour les moteurs de recherche', icon: '🔍', category: 'Rédaction', categoryIcon: '✍️' },
   { id: 'title-creator', name: 'Créateur de Titres', description: 'Titres accrocheurs et viraux', icon: '💡', category: 'Rédaction', categoryIcon: '✍️' },
   { id: 'text-summarizer', name: 'Résumeur de Texte', description: 'Résumez n\'importe quel texte en points clés', icon: '📋', category: 'Rédaction', categoryIcon: '✍️' },
@@ -123,7 +126,7 @@ const allTools: Tool[] = [
   { id: 'dissertation-helper', name: 'Aide Dissertation', description: 'Structure et rédaction dissertations', icon: '📄', category: 'Éducation DZ', categoryIcon: '📚' },
 
   // ===== GÉNÉRATION D'IMAGES (20 outils) =====
-  { id: 'image-generator', name: 'Générateur Images', description: 'Créez des images avec l\'IA', icon: '🎨', category: 'Images', categoryIcon: '🖼️' },
+  { id: 'image-generator', name: 'Générateur Images', description: 'Créez des images avec l\'IA', icon: '🎨', category: 'Images', categoryIcon: '🖼️', featured: true },
   { id: 'logo-maker', name: 'Créateur de Logos', description: 'Logos professionnels en secondes', icon: '✨', category: 'Images', categoryIcon: '🖼️' },
   { id: 'avatar-generator', name: 'Générateur Avatars', description: 'Avatars personnalisés', icon: '👤', category: 'Images', categoryIcon: '🖼️' },
   { id: 'background-remover', name: 'Suppression Fond', description: 'Retirez l\'arrière-plan des images', icon: '🔲', category: 'Images', categoryIcon: '🖼️' },
@@ -161,7 +164,7 @@ const allTools: Tool[] = [
   { id: 'video-effects', name: 'Effets Vidéo IA', description: 'Effets visuels automatiques', icon: '✨', category: 'Vidéo', categoryIcon: '🎥' },
 
   // ===== CODE & DÉVELOPPEMENT (20 outils) =====
-  { id: 'code-generator', name: 'Générateur de Code', description: 'Générez du code en langage naturel', icon: '💻', category: 'Code', categoryIcon: '👨‍💻' },
+  { id: 'code-generator', name: 'Générateur de Code', description: 'Générez du code en langage naturel', icon: '💻', category: 'Code', categoryIcon: '👨‍💻', featured: true },
   { id: 'code-reviewer', name: 'Revue de Code', description: 'Analysez et améliorez votre code', icon: '🔍', category: 'Code', categoryIcon: '👨‍💻' },
   { id: 'bug-fixer', name: 'Correcteur de Bugs', description: 'Trouvez et corrigez les bugs', icon: '🐛', category: 'Code', categoryIcon: '👨‍💻' },
   { id: 'code-explainer', name: 'Expliqueur de Code', description: 'Comprenez du code complexe', icon: '📖', category: 'Code', categoryIcon: '👨‍💻' },
@@ -239,38 +242,268 @@ const allTools: Tool[] = [
   { id: 'price-tracker', name: 'Suivi Prix', description: 'Surveillez les prix du marché', icon: '💵', category: 'Données', categoryIcon: '📈' },
 ];
 
-// Catégories uniques pour le filtre
-const categories = [...new Set(allTools.map(t => t.category))];
+// Traduction des catégories
+const categoryTranslations: Record<string, Record<string, string>> = {
+  'Rédaction': { ar: 'الكتابة', en: 'Writing' },
+  'Traduction': { ar: 'الترجمة', en: 'Translation' },
+  'Réseaux Sociaux': { ar: 'وسائل التواصل', en: 'Social Media' },
+  'YouTube': { ar: 'يوتيوب', en: 'YouTube' },
+  'E-Commerce': { ar: 'التجارة الإلكترونية', en: 'E-Commerce' },
+  'Admin Algérie': { ar: 'الإدارة الجزائرية', en: 'Algeria Admin' },
+  'Éducation DZ': { ar: 'التعليم الجزائري', en: 'DZ Education' },
+  'Images': { ar: 'الصور', en: 'Images' },
+  'Audio': { ar: 'الصوت', en: 'Audio' },
+  'Vidéo': { ar: 'الفيديو', en: 'Video' },
+  'Code': { ar: 'البرمجة', en: 'Code' },
+  'Business': { ar: 'الأعمال', en: 'Business' },
+  'Juridique': { ar: 'القانون', en: 'Legal' },
+  'RH': { ar: 'الموارد البشرية', en: 'HR' },
+  'Emails': { ar: 'البريد الإلكتروني', en: 'Emails' },
+  'Chat': { ar: 'الدردشة', en: 'Chat' },
+  'Données': { ar: 'البيانات', en: 'Data' },
+};
+
+// Traduction des noms et descriptions des outils
+const toolTranslations: Record<string, { ar: { name: string; description: string }; en: { name: string; description: string } }> = {
+  'article-generator': { ar: { name: 'منشئ المقالات', description: 'أنشئ مقالات مدونة محسنة لمحركات البحث' }, en: { name: 'Article Generator', description: 'Create SEO-optimized blog articles' } },
+  'seo-writer': { ar: { name: 'كاتب SEO', description: 'محتوى محسن لمحركات البحث' }, en: { name: 'SEO Writer', description: 'Search engine optimized content' } },
+  'title-creator': { ar: { name: 'منشئ العناوين', description: 'عناوين جذابة وفيروسية' }, en: { name: 'Title Creator', description: 'Catchy and viral titles' } },
+  'text-summarizer': { ar: { name: 'ملخص النصوص', description: 'لخص أي نص في نقاط رئيسية' }, en: { name: 'Text Summarizer', description: 'Summarize any text into key points' } },
+  'paraphraser': { ar: { name: 'معيد الصياغة', description: 'أعد صياغة نصوصك بأساليب مختلفة' }, en: { name: 'Paraphraser', description: 'Rephrase your texts with different styles' } },
+  'grammar-checker': { ar: { name: 'مصحح القواعد', description: 'صحح الأخطاء النحوية والإملائية' }, en: { name: 'Grammar Checker', description: 'Fix grammar and spelling mistakes' } },
+  'essay-writer': { ar: { name: 'كاتب المقالات', description: 'اكتب مقالات منظمة' }, en: { name: 'Essay Writer', description: 'Write structured essays' } },
+  'blog-ideas': { ar: { name: 'أفكار المدونة', description: 'أنشئ أفكار محتوى لمدونتك' }, en: { name: 'Blog Ideas', description: 'Generate content ideas for your blog' } },
+  'content-rewriter': { ar: { name: 'إعادة كتابة المحتوى', description: 'أعد كتابة المحتوى الموجود' }, en: { name: 'Content Rewriter', description: 'Rewrite existing content' } },
+  'headline-analyzer': { ar: { name: 'محلل العناوين', description: 'حلل فعالية عناوينك' }, en: { name: 'Headline Analyzer', description: 'Analyze headline effectiveness' } },
+  'meta-description': { ar: { name: 'وصف الميتا', description: 'أنشئ أوصاف ميتا محسنة' }, en: { name: 'Meta Descriptions', description: 'Create optimized meta descriptions' } },
+  'press-release': { ar: { name: 'البيانات الصحفية', description: 'اكتب بيانات صحفية احترافية' }, en: { name: 'Press Releases', description: 'Write professional press releases' } },
+  'speech-writer': { ar: { name: 'كاتب الخطابات', description: 'أنشئ خطابات مؤثرة' }, en: { name: 'Speech Writer', description: 'Create impactful speeches' } },
+  'storyteller': { ar: { name: 'راوي القصص', description: 'أنشئ قصصاً جذابة' }, en: { name: 'AI Storyteller', description: 'Generate captivating stories' } },
+  'slogan-generator': { ar: { name: 'منشئ الشعارات', description: 'أنشئ شعارات لا تُنسى' }, en: { name: 'Slogan Generator', description: 'Create memorable slogans' } },
+  'translator-fr-ar': { ar: { name: 'مترجم فرنسي-عربي', description: 'ترجمة من الفرنسية إلى العربية' }, en: { name: 'FR→AR Translator', description: 'French to Arabic translation' } },
+  'translator-ar-fr': { ar: { name: 'مترجم عربي-فرنسي', description: 'ترجمة من العربية إلى الفرنسية' }, en: { name: 'AR→FR Translator', description: 'Arabic to French translation' } },
+  'translator-en-fr': { ar: { name: 'مترجم إنجليزي-فرنسي', description: 'ترجمة من الإنجليزية إلى الفرنسية' }, en: { name: 'EN→FR Translator', description: 'English to French translation' } },
+  'translator-fr-en': { ar: { name: 'مترجم فرنسي-إنجليزي', description: 'ترجمة من الفرنسية إلى الإنجليزية' }, en: { name: 'FR→EN Translator', description: 'French to English translation' } },
+  'translator-multi': { ar: { name: 'مترجم متعدد اللغات', description: 'ترجمة إلى أكثر من 100 لغة' }, en: { name: 'Multi-Language Translator', description: 'Translation to 100+ languages' } },
+  'translator-darija': { ar: { name: 'مترجم الدارجة', description: 'ترجمة اللهجة الجزائرية' }, en: { name: 'Darija Translator', description: 'Algerian dialect translation' } },
+  'translator-tamazight': { ar: { name: 'مترجم الأمازيغية', description: 'ترجمة البربرية/القبائلية' }, en: { name: 'Tamazight Translator', description: 'Berber/Kabyle translation' } },
+  'document-translator': { ar: { name: 'مترجم المستندات', description: 'ترجم مستندات كاملة' }, en: { name: 'Document Translator', description: 'Translate entire documents' } },
+  'website-translator': { ar: { name: 'مترجم المواقع', description: 'ترجم موقعك الإلكتروني' }, en: { name: 'Website Translator', description: 'Localize your website' } },
+  'subtitle-translator': { ar: { name: 'مترجم الترجمات', description: 'ترجم ملفات SRT/VTT' }, en: { name: 'Subtitle Translator', description: 'Translate SRT/VTT files' } },
+  'instagram-posts': { ar: { name: 'منشورات إنستغرام', description: 'أنشئ منشورات إنستغرام جذابة' }, en: { name: 'Instagram Posts', description: 'Create engaging Instagram posts' } },
+  'instagram-reels': { ar: { name: 'نصوص Reels', description: 'نصوص لـ Instagram Reels' }, en: { name: 'Reels Scripts', description: 'Scripts for Instagram Reels' } },
+  'instagram-stories': { ar: { name: 'قصص إنستغرام', description: 'أفكار ونصوص للقصص' }, en: { name: 'Instagram Stories', description: 'Ideas and texts for Stories' } },
+  'twitter-threads': { ar: { name: 'سلاسل تويتر', description: 'أنشئ سلاسل فيروسية' }, en: { name: 'Twitter/X Threads', description: 'Create viral threads' } },
+  'twitter-posts': { ar: { name: 'منشورات تويتر', description: 'تغريدات محسنة للتفاعل' }, en: { name: 'Twitter/X Posts', description: 'Engagement-optimized tweets' } },
+  'linkedin-posts': { ar: { name: 'منشورات لينكد إن', description: 'محتوى احترافي للينكد إن' }, en: { name: 'LinkedIn Posts', description: 'Professional LinkedIn content' } },
+  'linkedin-articles': { ar: { name: 'مقالات لينكد إن', description: 'مقالات طويلة للينكد إن' }, en: { name: 'LinkedIn Articles', description: 'Long-form LinkedIn articles' } },
+  'tiktok-scripts': { ar: { name: 'نصوص تيك توك', description: 'نصوص لفيديوهات تيك توك الفيروسية' }, en: { name: 'TikTok Scripts', description: 'Scripts for viral TikTok videos' } },
+  'tiktok-captions': { ar: { name: 'تعليقات تيك توك', description: 'أوصاف جذابة لتيك توك' }, en: { name: 'TikTok Captions', description: 'Catchy TikTok descriptions' } },
+  'facebook-posts': { ar: { name: 'منشورات فيسبوك', description: 'منشورات فيسبوك محسنة' }, en: { name: 'Facebook Posts', description: 'Optimized Facebook posts' } },
+  'facebook-ads': { ar: { name: 'إعلانات فيسبوك', description: 'نصوص إعلانية لفيسبوك' }, en: { name: 'Facebook Ads', description: 'Facebook advertising copy' } },
+  'hashtag-generator': { ar: { name: 'منشئ الهاشتاغات', description: 'هاشتاغات ذات صلة ورائجة' }, en: { name: 'Hashtag Generator', description: 'Relevant and trending hashtags' } },
+  'bio-generator': { ar: { name: 'منشئ السيرة', description: 'سير احترافية للملفات الشخصية' }, en: { name: 'Bio Generator', description: 'Professional profile bios' } },
+  'social-calendar': { ar: { name: 'التقويم الاجتماعي', description: 'خطط محتواك الاجتماعي' }, en: { name: 'Social Calendar', description: 'Plan your social content' } },
+  'engagement-booster': { ar: { name: 'معزز التفاعل', description: 'زد تفاعل منشوراتك' }, en: { name: 'Engagement Booster', description: 'Increase post engagement' } },
+  'youtube-titles': { ar: { name: 'عناوين يوتيوب', description: 'عناوين فيروسية لفيديوهاتك' }, en: { name: 'YouTube Titles', description: 'Viral titles for your videos' } },
+  'youtube-descriptions': { ar: { name: 'أوصاف يوتيوب', description: 'أوصاف محسنة لمحركات البحث' }, en: { name: 'YouTube Descriptions', description: 'SEO-optimized descriptions' } },
+  'youtube-scripts': { ar: { name: 'نصوص الفيديو', description: 'نصوص كاملة للفيديوهات' }, en: { name: 'Video Scripts', description: 'Complete video scripts' } },
+  'youtube-tags': { ar: { name: 'وسوم يوتيوب', description: 'وسوم محسنة للظهور' }, en: { name: 'YouTube Tags', description: 'Optimized tags for ranking' } },
+  'youtube-thumbnails': { ar: { name: 'أفكار الصور المصغرة', description: 'مفاهيم صور مصغرة جذابة' }, en: { name: 'Thumbnail Ideas', description: 'Catchy thumbnail concepts' } },
+  'youtube-ideas': { ar: { name: 'أفكار الفيديوهات', description: 'أنشئ أفكار محتوى' }, en: { name: 'Video Ideas', description: 'Generate content ideas' } },
+  'youtube-shorts': { ar: { name: 'نصوص Shorts', description: 'نصوص لـ YouTube Shorts' }, en: { name: 'Shorts Scripts', description: 'Scripts for YouTube Shorts' } },
+  'youtube-hooks': { ar: { name: 'مقدمات الفيديو', description: 'مقدمات جذابة للبدايات' }, en: { name: 'Video Hooks', description: 'Captivating intro hooks' } },
+  'youtube-cta': { ar: { name: 'دعوات للعمل', description: 'CTAs فعالة لفيديوهاتك' }, en: { name: 'Calls to Action', description: 'Effective CTAs for videos' } },
+  'youtube-analytics': { ar: { name: 'تحليل يوتيوب', description: 'حلل أداءك' }, en: { name: 'YouTube Analytics', description: 'Analyze your performance' } },
+  'youtube-chapters': { ar: { name: 'فصول الفيديو', description: 'أنشئ فصولاً تلقائية' }, en: { name: 'Video Chapters', description: 'Create automatic chapters' } },
+  'youtube-comments': { ar: { name: 'ردود التعليقات', description: 'رد على التعليقات بسرعة' }, en: { name: 'Comment Responses', description: 'Respond to comments quickly' } },
+  'product-descriptions': { ar: { name: 'أوصاف المنتجات', description: 'بطاقات منتجات تبيع' }, en: { name: 'Product Descriptions', description: 'Product cards that sell' } },
+  'product-titles': { ar: { name: 'عناوين المنتجات', description: 'عناوين محسنة للسوق' }, en: { name: 'Product Titles', description: 'Marketplace-optimized titles' } },
+  'sales-copy': { ar: { name: 'نصوص البيع', description: 'نصوص بيع مقنعة' }, en: { name: 'Sales Copy', description: 'Persuasive sales texts' } },
+  'email-marketing': { ar: { name: 'التسويق بالبريد', description: 'حملات بريد تحول' }, en: { name: 'Email Marketing', description: 'Campaigns that convert' } },
+  'landing-pages': { ar: { name: 'صفحات الهبوط', description: 'نصوص لصفحات الهبوط' }, en: { name: 'Landing Pages', description: 'Landing page texts' } },
+  'faq-generator': { ar: { name: 'منشئ الأسئلة الشائعة', description: 'أسئلة شائعة تلقائية للمنتجات' }, en: { name: 'FAQ Generator', description: 'Auto FAQs for products' } },
+  'review-responder': { ar: { name: 'ردود المراجعات', description: 'رد على مراجعات العملاء' }, en: { name: 'Review Responses', description: 'Respond to customer reviews' } },
+  'abandoned-cart': { ar: { name: 'رسائل السلة المتروكة', description: 'استعد السلات المتروكة' }, en: { name: 'Abandoned Cart Emails', description: 'Recover abandoned carts' } },
+  'upsell-copy': { ar: { name: 'نصوص البيع الإضافي', description: 'زد متوسط السلة' }, en: { name: 'Upsell Copy', description: 'Increase average cart' } },
+  'category-descriptions': { ar: { name: 'أوصاف الفئات', description: 'نصوص لصفحات الفئات' }, en: { name: 'Category Descriptions', description: 'Category page texts' } },
+  'promo-announcements': { ar: { name: 'إعلانات العروض', description: 'اتصالات ترويجية' }, en: { name: 'Promo Announcements', description: 'Promotional communications' } },
+  'shipping-policies': { ar: { name: 'سياسات الشحن', description: 'نصوص سياسة التوصيل' }, en: { name: 'Shipping Policies', description: 'Delivery policy texts' } },
+  'cnas-agent': { ar: { name: 'وكيل الضمان الاجتماعي', description: 'مساعدة لإجراءات CNAS' }, en: { name: 'CNAS Agent', description: 'Help with CNAS procedures' } },
+  'casnos-agent': { ar: { name: 'وكيل كاسنوس', description: 'دليل CASNOS للمستقلين' }, en: { name: 'CASNOS Agent', description: 'CASNOS guide for freelancers' } },
+  'tax-agent': { ar: { name: 'وكيل الضرائب', description: 'تصريحات ضريبية IRG/IBS' }, en: { name: 'Tax Agent', description: 'IRG/IBS tax returns' } },
+  'cnrc-agent': { ar: { name: 'وكيل السجل التجاري', description: 'السجل التجاري الجزائري' }, en: { name: 'CNRC Agent', description: 'Algerian trade registry' } },
+  'customs-agent': { ar: { name: 'وكيل الجمارك', description: 'الإجراءات الجمركية' }, en: { name: 'Customs Agent', description: 'Customs procedures' } },
+  'anem-agent': { ar: { name: 'وكيل أنام', description: 'مساعدة التوظيف من أنام' }, en: { name: 'ANEM Agent', description: 'ANEM employment help' } },
+  'ansej-agent': { ar: { name: 'وكيل أناد', description: 'إنشاء مؤسسات الشباب' }, en: { name: 'ANADE Agent', description: 'Youth business creation' } },
+  'andi-agent': { ar: { name: 'وكيل أندي', description: 'الاستثمارات في الجزائر' }, en: { name: 'ANDI Agent', description: 'Investments in Algeria' } },
+  'sonelgaz-agent': { ar: { name: 'وكيل سونلغاز', description: 'إجراءات الكهرباء/الغاز' }, en: { name: 'Sonelgaz Agent', description: 'Electricity/gas procedures' } },
+  'seaal-agent': { ar: { name: 'وكيل سيال', description: 'إجراءات المياه' }, en: { name: 'SEAAL Agent', description: 'Water procedures' } },
+  'cpa-agent': { ar: { name: 'وكيل CPA', description: 'خدمات بنك CPA' }, en: { name: 'CPA Agent', description: 'CPA banking services' } },
+  'bna-agent': { ar: { name: 'وكيل BNA', description: 'خدمات بنك BNA' }, en: { name: 'BNA Agent', description: 'BNA banking services' } },
+  'passport-agent': { ar: { name: 'وكيل جواز السفر', description: 'طلب جواز السفر البيومتري' }, en: { name: 'Passport Agent', description: 'Biometric passport request' } },
+  'cni-agent': { ar: { name: 'وكيل بطاقة الهوية', description: 'بطاقة التعريف الوطنية' }, en: { name: 'ID Card Agent', description: 'National ID card' } },
+  'permis-agent': { ar: { name: 'وكيل رخصة القيادة', description: 'رخصة القيادة' }, en: { name: 'License Agent', description: 'Driving license' } },
+  'bac-revision': { ar: { name: 'مراجعة البكالوريا', description: 'التحضير لشهادة البكالوريا' }, en: { name: 'BAC Revision', description: 'Baccalaureate preparation' } },
+  'bem-prep': { ar: { name: 'تحضير شهادة التعليم المتوسط', description: 'التحضير لشهادة BEM' }, en: { name: 'BEM Prep', description: 'BEM preparation' } },
+  'cinq-prep': { ar: { name: 'تحضير السنة الخامسة', description: 'امتحان السنة الخامسة ابتدائي' }, en: { name: '5th Year Prep', description: '5th year primary exam' } },
+  'qcm-generator': { ar: { name: 'منشئ الاختيارات المتعددة', description: 'أنشئ اختبارات QCM تلقائية' }, en: { name: 'MCQ Generator', description: 'Create automatic MCQs' } },
+  'course-sheets': { ar: { name: 'ملخصات الدروس', description: 'ملخصات مراجعة مركزة' }, en: { name: 'Course Sheets', description: 'Synthetic revision sheets' } },
+  'corrected-exercises': { ar: { name: 'تمارين محلولة', description: 'تمارين مع حلول مفصلة' }, en: { name: 'Corrected Exercises', description: 'Exercises with detailed solutions' } },
+  'math-solver': { ar: { name: 'حلال الرياضيات', description: 'حل المسائل الرياضية' }, en: { name: 'Math Solver', description: 'Math problem solving' } },
+  'physics-helper': { ar: { name: 'مساعد الفيزياء', description: 'شروحات الفيزياء والكيمياء' }, en: { name: 'Physics Helper', description: 'Physics-chemistry explanations' } },
+  'arabic-grammar': { ar: { name: 'قواعد العربية', description: 'قواعد اللغة العربية' }, en: { name: 'Arabic Grammar', description: 'Arabic grammar rules' } },
+  'french-grammar': { ar: { name: 'قواعد الفرنسية', description: 'دروس اللغة الفرنسية' }, en: { name: 'French Grammar', description: 'French language courses' } },
+  'english-learning': { ar: { name: 'تعلم الإنجليزية', description: 'دروس إنجليزية تفاعلية' }, en: { name: 'English Learning', description: 'Interactive English courses' } },
+  'history-geo': { ar: { name: 'التاريخ والجغرافيا', description: 'دروس التاريخ والجغرافيا' }, en: { name: 'History-Geo', description: 'History and geography courses' } },
+  'islamic-studies': { ar: { name: 'العلوم الإسلامية', description: 'دروس العلوم الإسلامية' }, en: { name: 'Islamic Studies', description: 'Islamic studies courses' } },
+  'dissertation-helper': { ar: { name: 'مساعد المقالات', description: 'هيكلة وكتابة المقالات' }, en: { name: 'Dissertation Helper', description: 'Essay structure and writing' } },
+  'image-generator': { ar: { name: 'منشئ الصور', description: 'أنشئ صوراً بالذكاء الاصطناعي' }, en: { name: 'Image Generator', description: 'Create images with AI' } },
+  'logo-maker': { ar: { name: 'منشئ الشعارات', description: 'شعارات احترافية في ثوانٍ' }, en: { name: 'Logo Maker', description: 'Professional logos in seconds' } },
+  'avatar-generator': { ar: { name: 'منشئ الأفاتار', description: 'أفاتارات مخصصة' }, en: { name: 'Avatar Generator', description: 'Customized avatars' } },
+  'background-remover': { ar: { name: 'إزالة الخلفية', description: 'أزل خلفية الصور' }, en: { name: 'Background Remover', description: 'Remove image backgrounds' } },
+  'image-upscaler': { ar: { name: 'مكبر الصور', description: 'زد دقة الصور' }, en: { name: 'Image Upscaler', description: 'Increase resolution' } },
+  'image-editor': { ar: { name: 'محرر الصور الذكي', description: 'عدّل بالذكاء الاصطناعي' }, en: { name: 'AI Image Editor', description: 'Edit with AI' } },
+  'mockup-generator': { ar: { name: 'منشئ النماذج', description: 'نماذج لتصاميمك' }, en: { name: 'Mockup Generator', description: 'Mockups for your designs' } },
+  'infographic-maker': { ar: { name: 'منشئ الإنفوغرافيك', description: 'إنفوغرافيك تلقائي' }, en: { name: 'Infographic Maker', description: 'Automatic infographics' } },
+  'social-graphics': { ar: { name: 'صور التواصل الاجتماعي', description: 'صور للمنشورات الاجتماعية' }, en: { name: 'Social Graphics', description: 'Images for social posts' } },
+  'banner-maker': { ar: { name: 'منشئ البانرات', description: 'بانرات ويب وإعلانية' }, en: { name: 'Banner Maker', description: 'Web and ad banners' } },
+  'thumbnail-maker': { ar: { name: 'منشئ الصور المصغرة', description: 'صور مصغرة يوتيوب وفيديو' }, en: { name: 'Thumbnail Maker', description: 'YouTube and video thumbnails' } },
+  'qr-generator': { ar: { name: 'منشئ رمز QR', description: 'رموز QR مخصصة' }, en: { name: 'QR Code Generator', description: 'Customized QR codes' } },
+  'text-to-speech': { ar: { name: 'نص إلى صوت', description: 'حوّل النص إلى صوت' }, en: { name: 'Text to Speech', description: 'Convert text to audio' } },
+  'speech-to-text': { ar: { name: 'صوت إلى نص', description: 'نسخ صوتي تلقائي' }, en: { name: 'Speech to Text', description: 'Automatic audio transcription' } },
+  'voice-cloning': { ar: { name: 'استنساخ الصوت', description: 'استنسخ صوتاً لمحتواك' }, en: { name: 'Voice Cloning', description: 'Clone a voice for your content' } },
+  'podcast-generator': { ar: { name: 'منشئ البودكاست', description: 'أنشئ بودكاست تلقائي' }, en: { name: 'Podcast Generator', description: 'Create automatic podcasts' } },
+  'audio-enhancer': { ar: { name: 'محسّن الصوت', description: 'حسّن جودة الصوت' }, en: { name: 'Audio Enhancer', description: 'Improve audio quality' } },
+  'noise-remover': { ar: { name: 'إزالة الضوضاء', description: 'أزل الضوضاء الخلفية' }, en: { name: 'Noise Remover', description: 'Remove background noise' } },
+  'music-generator': { ar: { name: 'منشئ الموسيقى', description: 'أنشئ موسيقى بالذكاء الاصطناعي' }, en: { name: 'Music Generator', description: 'Create music with AI' } },
+  'audiobook-creator': { ar: { name: 'منشئ الكتب الصوتية', description: 'حوّل الكتب إلى صوت' }, en: { name: 'Audiobook Creator', description: 'Transform books to audio' } },
+  'voice-changer': { ar: { name: 'مغيّر الصوت', description: 'غيّر نبرة وأسلوب الصوت' }, en: { name: 'Voice Changer', description: 'Change voice tone and style' } },
+  'jingle-maker': { ar: { name: 'منشئ الجلجل', description: 'جلجل وموسيقى قصيرة' }, en: { name: 'Jingle Maker', description: 'Jingles and short music' } },
+  'video-generator': { ar: { name: 'منشئ الفيديو', description: 'أنشئ فيديوهات بالذكاء الاصطناعي' }, en: { name: 'Video Generator', description: 'Create videos with AI' } },
+  'video-editor': { ar: { name: 'محرر الفيديو الذكي', description: 'مونتاج فيديو تلقائي' }, en: { name: 'AI Video Editor', description: 'Automatic video editing' } },
+  'subtitle-generator': { ar: { name: 'منشئ الترجمات', description: 'ترجمات تلقائية' }, en: { name: 'Subtitle Generator', description: 'Automatic subtitles' } },
+  'video-summarizer': { ar: { name: 'ملخص الفيديو', description: 'لخّص فيديوهات طويلة' }, en: { name: 'Video Summarizer', description: 'Summarize long videos' } },
+  'clip-maker': { ar: { name: 'منشئ المقاطع', description: 'مقاطع فيروسية تلقائية' }, en: { name: 'Clip Maker', description: 'Automatic viral clips' } },
+  'avatar-video': { ar: { name: 'فيديو الأفاتار', description: 'فيديوهات بأفاتارات ذكية' }, en: { name: 'Avatar Video', description: 'Videos with AI avatars' } },
+  'video-translator': { ar: { name: 'مترجم الفيديو', description: 'ترجم فيديوهاتك' }, en: { name: 'Video Translator', description: 'Translate your videos' } },
+  'intro-maker': { ar: { name: 'منشئ المقدمات', description: 'مقدمات احترافية' }, en: { name: 'Intro Maker', description: 'Professional intros' } },
+  'outro-maker': { ar: { name: 'منشئ الخاتمات', description: 'خاتمات وشاشات نهاية' }, en: { name: 'Outro Maker', description: 'Outros and end screens' } },
+  'video-effects': { ar: { name: 'مؤثرات الفيديو', description: 'مؤثرات بصرية تلقائية' }, en: { name: 'Video Effects', description: 'Automatic visual effects' } },
+  'code-generator': { ar: { name: 'منشئ الكود', description: 'أنشئ كوداً بلغة طبيعية' }, en: { name: 'Code Generator', description: 'Generate code in natural language' } },
+  'code-reviewer': { ar: { name: 'مراجع الكود', description: 'حلّل وحسّن كودك' }, en: { name: 'Code Reviewer', description: 'Analyze and improve your code' } },
+  'bug-fixer': { ar: { name: 'مصلح الأخطاء', description: 'اعثر على الأخطاء وأصلحها' }, en: { name: 'Bug Fixer', description: 'Find and fix bugs' } },
+  'code-explainer': { ar: { name: 'شارح الكود', description: 'افهم كوداً معقداً' }, en: { name: 'Code Explainer', description: 'Understand complex code' } },
+  'sql-generator': { ar: { name: 'منشئ SQL', description: 'استعلامات SQL تلقائية' }, en: { name: 'SQL Generator', description: 'Automatic SQL queries' } },
+  'api-generator': { ar: { name: 'منشئ API', description: 'أنشئ APIs بسرعة' }, en: { name: 'API Generator', description: 'Create APIs quickly' } },
+  'regex-helper': { ar: { name: 'مساعد Regex', description: 'تعبيرات منتظمة مبسطة' }, en: { name: 'Regex Helper', description: 'Simplified regular expressions' } },
+  'unit-test-generator': { ar: { name: 'منشئ الاختبارات', description: 'اختبارات وحدة تلقائية' }, en: { name: 'Test Generator', description: 'Automatic unit tests' } },
+  'documentation-generator': { ar: { name: 'منشئ التوثيق', description: 'توثيق تلقائي' }, en: { name: 'Docs Generator', description: 'Automatic documentation' } },
+  'code-converter': { ar: { name: 'محوّل الكود', description: 'حوّل بين اللغات' }, en: { name: 'Code Converter', description: 'Convert between languages' } },
+  'json-formatter': { ar: { name: 'منسق JSON', description: 'نسّق وتحقق من JSON' }, en: { name: 'JSON Formatter', description: 'Format and validate JSON' } },
+  'html-generator': { ar: { name: 'منشئ HTML', description: 'HTML من الوصف' }, en: { name: 'HTML Generator', description: 'HTML from description' } },
+  'css-generator': { ar: { name: 'منشئ CSS', description: 'أنماط CSS تلقائية' }, en: { name: 'CSS Generator', description: 'Automatic CSS styles' } },
+  'business-plan': { ar: { name: 'خطة العمل', description: 'أنشئ خطة عمل كاملة' }, en: { name: 'Business Plan', description: 'Generate a complete business plan' } },
+  'market-study': { ar: { name: 'دراسة السوق', description: 'حلّل سوقك المستهدف' }, en: { name: 'Market Study', description: 'Analyze your target market' } },
+  'swot-analysis': { ar: { name: 'تحليل SWOT', description: 'نقاط القوة والضعف والفرص والتهديدات' }, en: { name: 'SWOT Analysis', description: 'Strengths, weaknesses, opportunities, threats' } },
+  'pitch-deck': { ar: { name: 'عرض المشروع', description: 'عروض للمستثمرين' }, en: { name: 'Pitch Deck', description: 'Presentations for investors' } },
+  'meeting-notes': { ar: { name: 'ملاحظات الاجتماع', description: 'ملخصات اجتماعات تلقائية' }, en: { name: 'Meeting Notes', description: 'Automatic meeting summaries' } },
+  'project-proposal': { ar: { name: 'اقتراح المشروع', description: 'عروض تجارية' }, en: { name: 'Project Proposal', description: 'Commercial proposals' } },
+  'contract-generator': { ar: { name: 'منشئ العقود', description: 'عقود نموذجية قابلة للتخصيص' }, en: { name: 'Contract Generator', description: 'Customizable contract templates' } },
+  'invoice-maker': { ar: { name: 'منشئ الفواتير', description: 'فواتير احترافية' }, en: { name: 'Invoice Maker', description: 'Professional invoices' } },
+  'report-generator': { ar: { name: 'منشئ التقارير', description: 'تقارير نشاط تلقائية' }, en: { name: 'Report Generator', description: 'Automatic activity reports' } },
+  'kpi-dashboard': { ar: { name: 'لوحة مؤشرات الأداء', description: 'تتبع مؤشراتك الرئيسية' }, en: { name: 'KPI Dashboard', description: 'Track your key indicators' } },
+  'competitor-analysis': { ar: { name: 'تحليل المنافسة', description: 'حلّل منافسيك' }, en: { name: 'Competitor Analysis', description: 'Analyze your competitors' } },
+  'pricing-strategy': { ar: { name: 'استراتيجية التسعير', description: 'حسّن تسعيرك' }, en: { name: 'Pricing Strategy', description: 'Optimize your pricing' } },
+  'brand-voice': { ar: { name: 'صوت العلامة', description: 'حدد هويتك اللفظية' }, en: { name: 'Brand Voice', description: 'Define your verbal identity' } },
+  'legal-contract': { ar: { name: 'العقود القانونية', description: 'اكتب عقوداً قانونية' }, en: { name: 'Legal Contracts', description: 'Write legal contracts' } },
+  'nda-generator': { ar: { name: 'منشئ اتفاقية السرية', description: 'اتفاقيات السرية' }, en: { name: 'NDA Generator', description: 'Confidentiality agreements' } },
+  'terms-conditions': { ar: { name: 'الشروط والأحكام', description: 'الشروط العامة' }, en: { name: 'Terms & Conditions', description: 'General conditions' } },
+  'privacy-policy': { ar: { name: 'سياسة الخصوصية', description: 'حماية البيانات الشخصية' }, en: { name: 'Privacy Policy', description: 'Personal data protection' } },
+  'legal-letter': { ar: { name: 'الرسائل القانونية', description: 'إنذارات ومراسلات' }, en: { name: 'Legal Letters', description: 'Notices and correspondence' } },
+  'trademark-search': { ar: { name: 'بحث العلامة التجارية', description: 'تحقق من توفر العلامة' }, en: { name: 'Trademark Search', description: 'Check trademark availability' } },
+  'legal-summary': { ar: { name: 'الملخص القانوني', description: 'بسّط النصوص القانونية' }, en: { name: 'Legal Summary', description: 'Simplify legal texts' } },
+  'complaint-letter': { ar: { name: 'رسائل الشكوى', description: 'شكاوى رسمية' }, en: { name: 'Complaint Letters', description: 'Formal complaints' } },
+  'job-description': { ar: { name: 'عروض العمل', description: 'اكتب عروضاً جذابة' }, en: { name: 'Job Descriptions', description: 'Write attractive offers' } },
+  'cv-analyzer': { ar: { name: 'محلل السيرة الذاتية', description: 'حلّل الترشيحات' }, en: { name: 'CV Analyzer', description: 'Analyze applications' } },
+  'interview-questions': { ar: { name: 'أسئلة المقابلة', description: 'أسئلة مقابلة ذات صلة' }, en: { name: 'Interview Questions', description: 'Relevant interview questions' } },
+  'onboarding-plan': { ar: { name: 'خطة الإدماج', description: 'إدماج الموظفين الجدد' }, en: { name: 'Onboarding Plan', description: 'New employee integration' } },
+  'performance-review': { ar: { name: 'تقييم الأداء', description: 'التقييمات السنوية' }, en: { name: 'Performance Review', description: 'Annual evaluations' } },
+  'training-plan': { ar: { name: 'خطة التدريب', description: 'برامج التدريب' }, en: { name: 'Training Plan', description: 'Training programs' } },
+  'employee-handbook': { ar: { name: 'دليل الموظف', description: 'دليل الشركة' }, en: { name: 'Employee Handbook', description: 'Company manual' } },
+  'termination-letter': { ar: { name: 'رسائل إنهاء العقد', description: 'إنهاء عقود احترافي' }, en: { name: 'Termination Letters', description: 'Professional contract endings' } },
+  'email-writer': { ar: { name: 'كاتب البريد الإلكتروني', description: 'رسائل احترافية مثالية' }, en: { name: 'Email Writer', description: 'Perfect professional emails' } },
+  'cold-email': { ar: { name: 'رسائل التنقيب', description: 'رسائل تنقيب' }, en: { name: 'Cold Emails', description: 'Prospecting emails' } },
+  'follow-up-email': { ar: { name: 'رسائل المتابعة', description: 'متابعات فعالة' }, en: { name: 'Follow-up Emails', description: 'Effective follow-ups' } },
+  'thank-you-email': { ar: { name: 'رسائل الشكر', description: 'شكر احترافي' }, en: { name: 'Thank You Emails', description: 'Professional thanks' } },
+  'newsletter-writer': { ar: { name: 'كاتب النشرة الإخبارية', description: 'نشرات إخبارية جذابة' }, en: { name: 'Newsletter Writer', description: 'Engaging newsletters' } },
+  'email-subject': { ar: { name: 'مواضيع البريد', description: 'مواضيع تفتح الرسائل' }, en: { name: 'Email Subjects', description: 'Subjects that get opened' } },
+  'apology-email': { ar: { name: 'رسائل الاعتذار', description: 'اعتذارات احترافية' }, en: { name: 'Apology Emails', description: 'Professional apologies' } },
+  'invitation-email': { ar: { name: 'رسائل الدعوة', description: 'دعوات الفعاليات' }, en: { name: 'Invitation Emails', description: 'Event invitations' } },
+  'chatbot-builder': { ar: { name: 'منشئ روبوت المحادثة', description: 'أنشئ روبوت محادثة مخصص' }, en: { name: 'Chatbot Builder', description: 'Create your custom chatbot' } },
+  'customer-support': { ar: { name: 'دعم العملاء الذكي', description: 'رد على العملاء 24/7' }, en: { name: 'AI Customer Support', description: 'Respond to customers 24/7' } },
+  'faq-chatbot': { ar: { name: 'روبوت الأسئلة الشائعة', description: 'ردود تلقائية للأسئلة' }, en: { name: 'FAQ Chatbot', description: 'Automatic FAQ responses' } },
+  'sales-assistant': { ar: { name: 'مساعد المبيعات', description: 'ساعد عملاءك المحتملين على الشراء' }, en: { name: 'Sales Assistant', description: 'Help your prospects buy' } },
+  'booking-assistant': { ar: { name: 'مساعد الحجز', description: 'أدر الحجوزات' }, en: { name: 'Booking Assistant', description: 'Manage reservations' } },
+  'lead-qualifier': { ar: { name: 'مؤهل العملاء المحتملين', description: 'أهّل العملاء المحتملين تلقائياً' }, en: { name: 'Lead Qualifier', description: 'Automatically qualify leads' } },
+  'data-analyzer': { ar: { name: 'محلل البيانات', description: 'حلّل بياناتك بالذكاء الاصطناعي' }, en: { name: 'Data Analyzer', description: 'Analyze your data with AI' } },
+  'sentiment-analyzer': { ar: { name: 'محلل المشاعر', description: 'حلّل الآراء والتعليقات' }, en: { name: 'Sentiment Analyzer', description: 'Analyze opinions and reviews' } },
+  'trend-detector': { ar: { name: 'كاشف الاتجاهات', description: 'حدد الاتجاهات' }, en: { name: 'Trend Detector', description: 'Identify trends' } },
+  'survey-analyzer': { ar: { name: 'محلل الاستبيانات', description: 'حلّل ردود الاستبيانات' }, en: { name: 'Survey Analyzer', description: 'Analyze survey responses' } },
+  'review-analyzer': { ar: { name: 'محلل المراجعات', description: 'لخّص مراجعات العملاء' }, en: { name: 'Review Analyzer', description: 'Synthesize customer reviews' } },
+  'keyword-research': { ar: { name: 'بحث الكلمات المفتاحية', description: 'اعثر على أفضل الكلمات المفتاحية' }, en: { name: 'Keyword Research', description: 'Find the best keywords' } },
+  'competitor-monitor': { ar: { name: 'مراقبة المنافسين', description: 'راقب منافسيك' }, en: { name: 'Competitor Monitor', description: 'Monitor your competitors' } },
+  'price-tracker': { ar: { name: 'تتبع الأسعار', description: 'راقب أسعار السوق' }, en: { name: 'Price Tracker', description: 'Monitor market prices' } },
+};
+
+// Fonction pour obtenir les outils traduits selon la langue
+const getTools = (lang: string): Tool[] => {
+  return toolsFR.map(tool => {
+    const translation = toolTranslations[tool.id];
+    const catTranslation = categoryTranslations[tool.category];
+
+    if (lang === 'ar' && translation && catTranslation) {
+      return {
+        ...tool,
+        name: translation.ar.name,
+        description: translation.ar.description,
+        category: catTranslation.ar,
+      };
+    } else if (lang === 'en' && translation && catTranslation) {
+      return {
+        ...tool,
+        name: translation.en.name,
+        description: translation.en.description,
+        category: catTranslation.en,
+      };
+    }
+    return tool;
+  });
+};
+
+// Fonction pour obtenir les catégories selon la langue
+const getCategories = (lang: string): string[] => {
+  const tools = getTools(lang);
+  return [...new Set(tools.map((t: Tool) => t.category))];
+};
 
 export default function Tools() {
-  const { t } = useTranslation();
+  const { t, lang } = useTranslation();
   const navigate = useNavigate();
-  const [theme, setTheme] = useState<Theme>('dark');
+  const { isDark } = useTheme();
+  const isRTL = lang === 'ar';
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [isLoggedIn] = useState(() => {
     return localStorage.getItem('isLoggedIn') === 'true';
   });
 
-  useEffect(() => {
-    const savedTheme = (localStorage.getItem('theme') as Theme) || 'dark';
-    setTheme(savedTheme);
-
-    const observer = new MutationObserver(() => {
-      const currentTheme = document.documentElement.dataset.theme as Theme;
-      if (currentTheme) setTheme(currentTheme);
-    });
-
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['data-theme'],
-    });
-
-    return () => observer.disconnect();
-  }, []);
+  // Obtenir les outils et catégories selon la langue
+  const allTools = getTools(lang);
+  const categories = getCategories(lang);
 
   // Filtrer les outils
-  const filteredTools = allTools.filter(tool => {
+  const filteredTools = allTools.filter((tool: Tool) => {
     const matchesSearch = tool.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           tool.description.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCategory = selectedCategory === 'all' || tool.category === selectedCategory;
@@ -289,16 +522,19 @@ export default function Tools() {
     }
   };
 
-  const isDark = theme === 'dark';
-  const bgColor = isDark ? '#1a1a1a' : '#FAF9F7';
-  const cardBg = isDark ? '#262626' : '#ffffff';
-  const textColor = isDark ? '#f0f0f0' : '#1F1F1F';
-  const textMuted = isDark ? '#A3A3A3' : '#5D5D5D';
-  const borderColor = isDark ? 'rgba(255, 255, 255, 0.12)' : 'rgba(0, 0, 0, 0.08)';
-  const inputBg = isDark ? '#1f1f1f' : '#ffffff';
+  // Couleurs synchronisées avec Home.tsx
+  const bgColor = isDark ? '#0A0F1A' : '#F6F3EE';
+  const cardBg = isDark ? 'rgba(255,255,255,0.06)' : '#EDE9E3';
+  const textColor = isDark ? '#F8FAFC' : '#141414';
+  const textMuted = isDark ? 'rgba(248,250,252,0.65)' : 'rgba(20,20,20,0.62)';
+  const borderColor = isDark ? 'rgba(255,255,255,0.10)' : 'rgba(20,20,20,0.10)';
+  const inputBg = isDark ? 'rgba(255,255,255,0.06)' : '#EDE9E3';
+  const accentColor = isDark ? '#22C55E' : '#1C7A5F';
+  const accentGradient = `linear-gradient(135deg, ${isDark ? '#22C55E' : '#1C7A5F'}, ${isDark ? '#57D6AA' : '#22C55E'})`;
 
   return (
     <div
+      dir={isRTL ? 'rtl' : 'ltr'}
       style={{
         paddingTop: '120px',
         paddingBottom: '80px',
@@ -345,12 +581,12 @@ export default function Tools() {
           <div style={{ position: 'relative', width: '100%', maxWidth: '500px' }}>
             <input
               type="text"
-              placeholder="Rechercher un outil..."
+              placeholder={t('tools_search_placeholder') || 'Rechercher un outil...'}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               style={{
                 width: '100%',
-                padding: '14px 20px 14px 50px',
+                padding: isRTL ? '14px 50px 14px 20px' : '14px 20px 14px 50px',
                 borderRadius: '12px',
                 border: `1px solid ${borderColor}`,
                 background: inputBg,
@@ -362,7 +598,8 @@ export default function Tools() {
             <span
               style={{
                 position: 'absolute',
-                left: '18px',
+                left: isRTL ? 'auto' : '18px',
+                right: isRTL ? '18px' : 'auto',
                 top: '50%',
                 transform: 'translateY(-50%)',
                 fontSize: '20px',
@@ -387,19 +624,20 @@ export default function Tools() {
               style={{
                 padding: '8px 16px',
                 borderRadius: '20px',
-                border: `1px solid ${selectedCategory === 'all' ? '#00A86B' : borderColor}`,
-                background: selectedCategory === 'all' ? 'rgba(0, 168, 107, 0.15)' : 'transparent',
-                color: selectedCategory === 'all' ? '#00A86B' : textMuted,
+                border: `1px solid ${selectedCategory === 'all' ? accentColor : borderColor}`,
+                background: selectedCategory === 'all' ? `${accentColor}20` : 'transparent',
+                color: selectedCategory === 'all' ? accentColor : textMuted,
                 fontSize: '14px',
                 fontWeight: 500,
                 cursor: 'pointer',
+                transition: 'all 0.2s ease',
               }}
             >
-              Tous ({allTools.length})
+              {t('tools_all') || 'Tous'} ({allTools.length})
             </button>
-            {categories.map((cat) => {
-              const count = allTools.filter(t => t.category === cat).length;
-              const catIcon = allTools.find(t => t.category === cat)?.categoryIcon || '📁';
+            {categories.map((cat: string) => {
+              const count = allTools.filter((t: Tool) => t.category === cat).length;
+              const catIcon = allTools.find((t: Tool) => t.category === cat)?.categoryIcon || '';
               return (
                 <button
                   key={cat}
@@ -408,15 +646,16 @@ export default function Tools() {
                   style={{
                     padding: '8px 16px',
                     borderRadius: '20px',
-                    border: `1px solid ${selectedCategory === cat ? '#00A86B' : borderColor}`,
-                    background: selectedCategory === cat ? 'rgba(0, 168, 107, 0.15)' : 'transparent',
-                    color: selectedCategory === cat ? '#00A86B' : textMuted,
+                    border: `1px solid ${selectedCategory === cat ? accentColor : borderColor}`,
+                    background: selectedCategory === cat ? `${accentColor}20` : 'transparent',
+                    color: selectedCategory === cat ? accentColor : textMuted,
                     fontSize: '14px',
                     fontWeight: 500,
                     cursor: 'pointer',
                     display: 'flex',
                     alignItems: 'center',
                     gap: '6px',
+                    transition: 'all 0.2s ease',
                   }}
                 >
                   <span>{catIcon}</span>
@@ -429,7 +668,7 @@ export default function Tools() {
 
         {/* Results Count */}
         <p style={{ color: textMuted, marginBottom: '24px', textAlign: 'center' }}>
-          {filteredTools.length} outil{filteredTools.length > 1 ? 's' : ''} trouvé{filteredTools.length > 1 ? 's' : ''}
+          {filteredTools.length} {filteredTools.length > 1 ? (t('tools_found_plural') || 'outils trouvés') : (t('tools_found') || 'outil trouvé')}
         </p>
 
         {/* Tools Grid */}
@@ -440,43 +679,65 @@ export default function Tools() {
             gap: '20px',
           }}
         >
-          {filteredTools.map((tool) => (
+          {filteredTools.map((tool: Tool) => (
             <div
               key={tool.id}
               style={{
                 background: cardBg,
                 borderRadius: '16px',
-                padding: '24px',
-                border: `1px solid ${borderColor}`,
+                padding: '20px',
+                border: `1px solid ${tool.featured ? accentColor : borderColor}`,
                 transition: 'all 0.3s ease',
                 cursor: 'pointer',
+                position: 'relative',
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'translateY(-4px)';
-                e.currentTarget.style.borderColor = '#00A86B';
-                e.currentTarget.style.boxShadow = '0 12px 24px rgba(0, 168, 107, 0.15)';
+                e.currentTarget.style.borderColor = accentColor;
+                e.currentTarget.style.boxShadow = `0 12px 24px ${isDark ? 'rgba(34, 197, 94, 0.15)' : 'rgba(0, 98, 51, 0.15)'}`;
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.borderColor = borderColor;
+                e.currentTarget.style.borderColor = tool.featured ? accentColor : borderColor;
                 e.currentTarget.style.boxShadow = 'none';
               }}
             >
+              {/* Featured Badge */}
+              {tool.featured && (
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '12px',
+                    right: '12px',
+                    background: accentGradient,
+                    color: '#fff',
+                    padding: '4px 10px',
+                    borderRadius: '12px',
+                    fontSize: '10px',
+                    fontWeight: 600,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.5px',
+                  }}
+                >
+                  {t('tools_popular') || 'Popular'}
+                </div>
+              )}
+
               {/* Icon & Category */}
               <div
                 style={{
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'flex-start',
-                  marginBottom: '16px',
+                  marginBottom: '12px',
                 }}
               >
                 <div
                   style={{
-                    width: '56px',
-                    height: '56px',
-                    borderRadius: '14px',
-                    background: isDark ? 'rgba(0, 168, 107, 0.1)' : 'rgba(0, 168, 107, 0.08)',
+                    width: '48px',
+                    height: '48px',
+                    borderRadius: '12px',
+                    background: isDark ? `${accentColor}15` : `${accentColor}10`,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -524,38 +785,42 @@ export default function Tools() {
                 {tool.description}
               </p>
 
-              {/* Connect Button */}
-              <button
-                type="button"
-                onClick={() => handleConnect(tool.id)}
-                style={{
-                  width: '100%',
-                  padding: '12px',
-                  background: 'linear-gradient(135deg, #00A86B, #2ECC71)',
-                  border: 'none',
-                  borderRadius: '10px',
-                  color: '#fff',
-                  fontSize: '14px',
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '8px',
-                }}
-              >
-                {isLoggedIn ? (
-                  <>
-                    <span>Utiliser</span>
-                    <span>→</span>
-                  </>
-                ) : (
-                  <>
-                    <span>🔗</span>
-                    <span>Connecter</span>
-                  </>
-                )}
-              </button>
+              {/* Action Buttons */}
+              <div style={{ display: 'flex', gap: '8px' }}>
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleConnect(tool.id);
+                  }}
+                  style={{
+                    flex: 1,
+                    padding: '12px',
+                    background: accentGradient,
+                    border: 'none',
+                    borderRadius: '10px',
+                    color: '#fff',
+                    fontSize: '14px',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '8px',
+                  }}
+                >
+                  {isLoggedIn ? (
+                    <>
+                      <span>{t('tools_use') || 'Utiliser'}</span>
+                      <span>{isRTL ? '←' : '→'}</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>{t('tools_connect') || 'Connecter'}</span>
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
           ))}
         </div>
@@ -587,7 +852,7 @@ export default function Tools() {
                 cursor: 'pointer',
               }}
             >
-              Réinitialiser les filtres
+              {t('tools_reset_filters') || 'Réinitialiser les filtres'}
             </button>
           </div>
         )}
@@ -600,7 +865,7 @@ export default function Tools() {
             borderRadius: '20px',
             padding: 'clamp(24px, 5vw, 48px)',
             textAlign: 'center',
-            border: `2px solid #00A86B`,
+            border: `2px solid ${accentColor}`,
           }}
         >
           <h2
@@ -611,7 +876,7 @@ export default function Tools() {
               marginBottom: '16px',
             }}
           >
-            {isLoggedIn ? t('tools_cta_logged') || 'Accédez à tous les outils' : t('tools_cta_guest') || 'Connectez-vous pour utiliser les outils'}
+            {isLoggedIn ? t('tools_cta_logged') || 'Accedez a tous les outils' : t('tools_cta_guest') || 'Connectez-vous pour utiliser les outils'}
           </h2>
           <p
             style={{
@@ -622,27 +887,28 @@ export default function Tools() {
             }}
           >
             {isLoggedIn
-              ? t('tools_cta_logged_desc') || 'Profitez de 262 outils IA pour booster votre productivité'
-              : t('tools_cta_guest_desc') || 'Créez un compte gratuit et accédez à tous nos outils IA'}
+              ? t('tools_cta_logged_desc') || 'Profitez de 262 outils IA pour booster votre productivite'
+              : t('tools_cta_guest_desc') || 'Creez un compte gratuit et accedez a tous nos outils IA'}
           </p>
           <a
             href={isLoggedIn ? '/chat' : '/login'}
             style={{
               display: 'inline-block',
               padding: 'clamp(12px, 2vw, 16px) clamp(24px, 4vw, 32px)',
-              background: 'linear-gradient(135deg, #00A86B, #2ECC71)',
+              background: accentGradient,
               color: '#fff',
               fontSize: 'clamp(14px, 2.5vw, 18px)',
               fontWeight: 600,
               textDecoration: 'none',
               borderRadius: '12px',
-              boxShadow: '0 4px 16px rgba(0, 168, 107, 0.3)',
+              boxShadow: `0 4px 16px ${isDark ? 'rgba(34, 197, 94, 0.3)' : 'rgba(0, 98, 51, 0.3)'}`,
             }}
           >
-            {isLoggedIn ? t('tools_open_chat') || 'Ouvrir le Chat IA' : t('tools_create_account') || 'Créer un compte gratuit'}
+            {isLoggedIn ? t('tools_open_chat') || 'Ouvrir le Chat IA' : t('tools_create_account') || 'Creer un compte gratuit'}
           </a>
         </div>
       </div>
+
     </div>
   );
 }

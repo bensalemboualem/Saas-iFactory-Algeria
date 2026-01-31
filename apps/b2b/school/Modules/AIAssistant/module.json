@@ -1,0 +1,13 @@
+{
+    "name": "AIAssistant",
+    "alias": "aiassistant",
+    "description": "AI-powered chatbot assistant with RAG for school support",
+    "keywords": ["ai", "chatbot", "rag", "assistant", "support"],
+    "priority": 0,
+    "providers": [
+        "Modules\\AIAssistant\\Providers\\AIAssistantServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

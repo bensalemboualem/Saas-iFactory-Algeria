@@ -1,19 +1,20 @@
 import { memo } from 'react';
-import { IconButton } from '~/components/ui/IconButton';
+import { Gear, Question } from '@phosphor-icons/react';
+
 interface SettingsButtonProps {
   onClick: () => void;
 }
 
 export const SettingsButton = memo(({ onClick }: SettingsButtonProps) => {
   return (
-    <IconButton
+    <button
       onClick={onClick}
-      icon="i-ph:gear"
-      size="xl"
       title="Settings"
       data-testid="settings-button"
-      className="text-[#666] hover:text-bolt-elements-textPrimary hover:bg-bolt-elements-item-backgroundActive/10 transition-colors"
-    />
+      className="flex items-center justify-center p-2 rounded-md text-gray-500 dark:text-gray-400 hover:text-bolt-elements-textPrimary hover:bg-bolt-elements-item-backgroundActive/10 transition-colors"
+    >
+      <Gear size={24} weight="regular" />
+    </button>
   );
 });
 
@@ -23,13 +24,13 @@ interface HelpButtonProps {
 
 export const HelpButton = memo(({ onClick }: HelpButtonProps) => {
   return (
-    <IconButton
+    <button
       onClick={onClick}
-      icon="i-ph:question"
-      size="xl"
       title="Help & Documentation"
       data-testid="help-button"
-      className="text-[#666] hover:text-bolt-elements-textPrimary hover:bg-bolt-elements-item-backgroundActive/10 transition-colors"
-    />
+      className="flex items-center justify-center p-2 rounded-md text-gray-500 dark:text-gray-400 hover:text-bolt-elements-textPrimary hover:bg-bolt-elements-item-backgroundActive/10 transition-colors"
+    >
+      <Question size={24} weight="regular" />
+    </button>
   );
 });

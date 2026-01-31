@@ -64,10 +64,11 @@ function fileToBase64DataUrl(file: File): Promise<string> {
   });
 }
 
-const MODEL_PRESETS: Record<Exclude<Provider, "auto">, Array<{ label: string, value: string; }>> = {
-  local: [
-    { label: "llama3.2:3b (Ollama)", value: "llama3.2:3b" },
-  ],
+const MODEL_PRESETS: Record<
+  Exclude<Provider, "auto">,
+  Array<{ label: string; value: string }>
+> = {
+  local: [{ label: "llama3.2:3b (Ollama)", value: "llama3.2:3b" }],
   openai: [
     { label: "gpt-4o-mini-2024-07-18", value: "gpt-4o-mini-2024-07-18" },
     { label: "gpt-4o", value: "gpt-4o" },
@@ -80,13 +81,16 @@ export default function DzirIAChat() {
   // collections (scope)
   const [collections, setCollections] = useState<Array<{ id: string; name: string }>>([]);
   const [collectionId, setCollectionId] = useState<string>("");
-  const collectionIds = useMemo(() => (collectionId ? [collectionId] : undefined), [collectionId]);
+  const collectionIds = useMemo(
+    () => (collectionId ? [collectionId] : undefined),
+    [collectionId]
+  );
 
-  // ✅ LLM routing
+  // LLM routing
   const [provider, setProvider] = useState<Provider>("auto");
   const [model, setModel] = useState<string>("auto");
 
-  // flags “tools” (juste UX, intégré dans systemPrompt)
+  // flags "tools" (UX only, injected into systemPrompt)
   const [thinking, setThinking] = useState(false);
   const [deepResearch, setDeepResearch] = useState(false);
   const [analysisTool, setAnalysisTool] = useState(false);
@@ -106,7 +110,7 @@ export default function DzirIAChat() {
       text:
         "👋 Bonjour ! Je suis Dzir IA.\n\n" +
         "• Mode Chat : je réponds avec sources à partir de ta base.\n" +
-        "• Mode Search : je te retourne des chunks (RAG search).\n\n" +
+        "• Mode Search : je retourne des chunks (RAG search).\n\n" +
         "Astuce : Upload TXT/PDF via le bouton +.\n" +
         "Astuce LLM : sélectionne Provider=Local + Model=llama3.2:3b pour Ollama.",
     },
@@ -122,11 +126,22 @@ export default function DzirIAChat() {
   const listRef = useRef<HTMLDivElement | null>(null);
   const fileRef = useRef<HTMLInputElement | null>(null);
   const [toast, setToast] = useState<{ kind: "ok" | "err" | "info"; msg: string } | null>(null);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [drawerSources, setDrawerSources] = useState<Source[]>([]);
+  const [drawerTitle, setDrawerTitle] = useState("Sources");
+  const [activeSourceIndex, setActiveSourceIndex] = useState<number | null>(null);
 
   function notify(msg: string, kind: "ok" | "err" | "info" = "info") {
     setToast({ kind, msg });
     window.clearTimeout((notify as any)._t);
     (notify as any)._t = window.setTimeout(() => setToast(null), 2200);
+  }
+
+  function openSources(sources: Source[], title = "Sources", focusIndex?: number) {
+    setDrawerSources(sources);
+    setDrawerTitle(title);
+    setActiveSourceIndex(typeof focusIndex === "number" ? focusIndex : null);
+    setDrawerOpen(true);
   }
 
   // load collections
@@ -138,7 +153,7 @@ export default function DzirIAChat() {
         setCollections(cols);
         if (!collectionId && cols[0]?.id) setCollectionId(cols[0].id);
       } catch {
-        // non bloquant
+        // non-blocking
       }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -171,7 +186,6 @@ export default function DzirIAChat() {
       setModel("auto");
       return;
     }
-    // If current model not in presets, set first
     if (!presets.some((p) => p.value === model)) {
       setModel(presets[0].value);
     }
@@ -202,9 +216,15 @@ export default function DzirIAChat() {
 
   function buildSystemPrompt(): string | undefined {
     const parts: string[] = [];
-    if (thinking) parts.push("Mode réflexion: sois plus rigoureux, structure, étapes, hypothèses explicites.");
-    if (deepResearch) parts.push("Mode deep research: propose un plan + questions de clarification minimales + sources/citations strictes.");
-    if (analysisTool) parts.push("Mode analyse: privilégie tableaux, checklists, étapes, décisions; évite blabla.");
+    if (thinking) {
+      parts.push("Mode réflexion: sois rigoureux, structure, étapes, hypothèses explicites.");
+    }
+    if (deepResearch) {
+      parts.push("Mode deep research: propose un plan + questions minimales + sources/citations strictes.");
+    }
+    if (analysisTool) {
+      parts.push("Mode analyse: privilégie tableaux, checklists, étapes, décisions; évite le blabla.");
+    }
     if (!parts.length) return undefined;
     return parts.join("\n");
   }
@@ -212,19 +232,16 @@ export default function DzirIAChat() {
   function buildAskPayload(query: string) {
     const sys = buildSystemPrompt();
 
-    // ✅ Provider/model routing:
-    // - provider=auto => ne rien envoyer (backend prendra LLM_DEFAULT_PROVIDER)
-    // - model=auto => ne rien envoyer
-    const p: any = {
+    const payload: any = {
       collectionIds,
       query,
       ...(sys ? { systemPrompt: sys } : {}),
     };
 
-    if (provider !== "auto") p.provider = provider;
-    if (model !== "auto") p.model = model;
+    if (provider !== "auto") payload.provider = provider;
+    if (model !== "auto") payload.model = model;
 
-    return p;
+    return payload;
   }
 
   async function sendChat() {
@@ -309,7 +326,10 @@ export default function DzirIAChat() {
         sourceType: "text",
         title: "Note",
       } as any);
-      notify(r.vectorIndexed ? "Capturé + indexé ✅" : "Capturé (index KO)", r.vectorIndexed ? "ok" : "info");
+      notify(
+        r.vectorIndexed ? "Capturé + indexé ✅" : "Capturé (index KO)",
+        r.vectorIndexed ? "ok" : "info"
+      );
     } catch (e: any) {
       notify(`Capture error: ${String(e?.message ?? e)}`, "err");
     } finally {
@@ -332,7 +352,10 @@ export default function DzirIAChat() {
         sourceUrl,
         title: "URL",
       } as any);
-      notify(r.vectorIndexed ? "URL capturée + indexée ✅" : "URL capturée (index KO)", r.vectorIndexed ? "ok" : "info");
+      notify(
+        r.vectorIndexed ? "URL capturée + indexée ✅" : "URL capturée (index KO)",
+        r.vectorIndexed ? "ok" : "info"
+      );
     } catch (e: any) {
       notify(`URL error: ${String(e?.message ?? e)}`, "err");
     } finally {
@@ -362,7 +385,10 @@ export default function DzirIAChat() {
           title: file.name,
         } as any);
 
-        notify(r.vectorIndexed ? "TXT capturé + indexé ✅" : "TXT capturé (index KO)", r.vectorIndexed ? "ok" : "info");
+        notify(
+          r.vectorIndexed ? "TXT capturé + indexé ✅" : "TXT capturé (index KO)",
+          r.vectorIndexed ? "ok" : "info"
+        );
         return;
       }
 
@@ -381,7 +407,10 @@ export default function DzirIAChat() {
           title: file.name,
         } as any);
 
-        notify(r.vectorIndexed ? "PDF capturé + indexé ✅" : "PDF capturé (index KO)", r.vectorIndexed ? "ok" : "info");
+        notify(
+          r.vectorIndexed ? "PDF capturé + indexé ✅" : "PDF capturé (index KO)",
+          r.vectorIndexed ? "ok" : "info"
+        );
         return;
       }
 
@@ -394,10 +423,13 @@ export default function DzirIAChat() {
   const modelOptions =
     provider === "auto"
       ? [{ label: "Model: Auto", value: "auto" }]
-      : [{ label: "Model: Auto", value: "auto" }, ...MODEL_PRESETS[provider].map((m) => ({ label: m.label, value: m.value }))];
+      : [
+          { label: "Model: Auto", value: "auto" },
+          ...MODEL_PRESETS[provider].map((m) => ({ label: m.label, value: m.value })),
+        ];
 
   return (
-    <div className="dziria-shell">
+    <div className={`dziria-shell ${drawerOpen ? "drawer-open" : ""}`}>
       {toast ? <div className={`dziria-toast ${toast.kind}`}>{toast.msg}</div> : null}
 
       <div className="dziria-messages" ref={listRef}>
@@ -410,20 +442,25 @@ export default function DzirIAChat() {
                   <div className="dziria-text">{m.text}</div>
 
                   {"sources" in m && m.sources?.length ? (
-                    <div className="dziria-sources">
-                      <div className="dziria-sources-title">Sources</div>
-                      {m.sources.map((s) => (
-                        <div className="dziria-source" key={s.index}>
-                          <div className="dziria-source-head">
-                            <span className="dziria-source-index">[{s.index}]</span>
-                            <span className="dziria-source-title">{s.title ?? "(sans titre)"}</span>
-                            {typeof s.score === "number" ? (
-                              <span className="dziria-source-score">{s.score.toFixed(3)}</span>
-                            ) : null}
-                          </div>
-                          {s.snippet ? <div className="dziria-source-snippet">{s.snippet}</div> : null}
-                        </div>
-                      ))}
+                    <div className="dziria-citations">
+                      <div className="dziria-citations-label">Citations</div>
+                      <div className="dziria-citations-list">
+                        {m.sources.map((s) => (
+                          <button
+                            className="dziria-citation-chip"
+                            key={s.index}
+                            onClick={() => openSources(m.sources ?? [], "Sources", s.index)}
+                          >
+                            [{s.index}] {s.title ?? "Source"}
+                          </button>
+                        ))}
+                      </div>
+                      <button
+                        className="dziria-citations-open"
+                        onClick={() => openSources(m.sources ?? [], "Sources")}
+                      >
+                        Voir toutes les sources
+                      </button>
                     </div>
                   ) : null}
                 </div>
@@ -480,14 +517,12 @@ export default function DzirIAChat() {
               ))}
             </select>
 
-            {/* ✅ Provider selector */}
             <select className="dziria-select" onChange={(e) => setProvider(e.target.value as Provider)} value={provider}>
               <option value="auto">Provider: Auto</option>
               <option value="openai">Cloud: OpenAI</option>
               <option value="local">Local: Ollama</option>
             </select>
 
-            {/* ✅ Model selector depends on provider */}
             <select className="dziria-select" onChange={(e) => setModel(e.target.value)} value={model}>
               {modelOptions.map((o) => (
                 <option key={o.value} value={o.value}>
@@ -597,6 +632,51 @@ export default function DzirIAChat() {
           </button>
         </div>
       </div>
+
+      {drawerOpen && (
+        <>
+          <div className="dziria-drawer-overlay" onClick={() => setDrawerOpen(false)} />
+          <aside className="dziria-drawer">
+            <div className="dziria-drawer-header">
+              <div>
+                <div className="dziria-drawer-title">{drawerTitle}</div>
+                <div className="dziria-drawer-sub">{drawerSources.length} sources</div>
+              </div>
+              <button className="dziria-drawer-close" onClick={() => setDrawerOpen(false)}>
+                ✕
+              </button>
+            </div>
+
+            <div className="dziria-drawer-list">
+              {drawerSources.length === 0 ? (
+                <div className="dziria-drawer-empty">Aucune source à afficher.</div>
+              ) : (
+                drawerSources.map((s) => (
+                  <div
+                    className={`dziria-drawer-item ${activeSourceIndex === s.index ? "active" : ""}`}
+                    key={s.index}
+                    onClick={() => setActiveSourceIndex(s.index)}
+                  >
+                    <div className="dziria-drawer-item-head">
+                      <span className="dziria-drawer-index">[{s.index}]</span>
+                      <span className="dziria-drawer-title-text">{s.title ?? "Source"}</span>
+                      {typeof s.score === "number" ? (
+                        <span className="dziria-drawer-score">{s.score.toFixed(3)}</span>
+                      ) : null}
+                    </div>
+                    {s.snippet ? <div className="dziria-drawer-snippet">{s.snippet}</div> : null}
+                    {s.sourceUrl ? (
+                      <a className="dziria-drawer-link" href={s.sourceUrl} target="_blank" rel="noreferrer">
+                        Ouvrir la source
+                      </a>
+                    ) : null}
+                  </div>
+                ))
+              )}
+            </div>
+          </aside>
+        </>
+      )}
     </div>
   );
 }

@@ -6,7 +6,7 @@ IAFactory Video Studio Pro est une **usine à contenu multimédia automatisée**
 
 ## 🎯 Objectifs Business
 
-- **Marché cible** : Algérie (Darija/Arabe/Français) et Suisse (Français/Allemand/Italien)
+- **Marché cible** : Algérie (Français/Arabe/Darija/Anglais/Amazigh)
 - **Différenciation** : Contenu local authentique que les IA génériques ne peuvent pas produire
 - **Modèle économique** : Système IAF-Tokens (paiement à l'usage)
 
@@ -216,7 +216,7 @@ claude "Configure la stack Docker complète dans infrastructure/ avec n8n, le ba
 
 ### APIs Externes (clés à configurer)
 - **MiniMax/Hailuo AI** : Génération vidéo premium
-- **Luma Dream Machine** : Alternative vidéo
+- **Luma Dream Machine** : Alternative vidéo (`LUMA_API_KEY`, `LUMA_API_KEY_DZ`)
 - **ElevenLabs** : TTS haute qualité
 - **Suno AI** : Génération musicale
 - **Fal.ai** : Pipeline IA rapide
@@ -255,12 +255,7 @@ claude "Configure la stack Docker complète dans infrastructure/ avec n8n, le ba
 - Support Darija (dialecte algérien)
 - Références culturelles locales
 - Experts virtuels algériens
-- Thèmes : Tech, Économie, Culture DZ
-
-### Suisse Connect
-- Multilinguisme (FR/DE/IT)
-- Conformité réglementaire
-- Thèmes : Finance, Innovation, Business
+- Thèmes : Tech, Économie, Culture DZ, Finance, Innovation, Business
 
 ---
 

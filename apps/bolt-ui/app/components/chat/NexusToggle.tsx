@@ -53,7 +53,7 @@ export const NexusToggle: React.FC<NexusToggleProps> = ({ className = '' }) => {
   const getStatusColor = () => {
     switch (status) {
       case 'connected':
-        return 'bg-green-500';
+        return 'bg-accent-500';
       case 'connecting':
         return 'bg-yellow-500 animate-pulse';
       case 'error':
@@ -88,7 +88,7 @@ export const NexusToggle: React.FC<NexusToggleProps> = ({ className = '' }) => {
               transition-all duration-200 ease-in-out
               ${
                 enabled
-                  ? 'bg-[#00a651] text-white hover:bg-[#008c45]'
+                  ? 'bg-accent-500 text-white hover:bg-accent-600'
                   : 'bg-bolt-elements-background-depth-2 text-bolt-elements-textSecondary hover:bg-bolt-elements-background-depth-3'
               }
               ${isToggling ? 'opacity-50 cursor-wait' : 'cursor-pointer'}

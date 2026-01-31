@@ -34,8 +34,15 @@ class SessionComposer
      */
     public function compose(View $view)
     {
-        $session['sessions']  = $this->session->all();
-        $session['session']   = $this->session->show(setting('session'));
+        // PERFORMANCE FIX: Cache sessions for 30 minutes
+        $session['sessions'] = \Cache::remember('all_sessions', 1800, function () {
+            return $this->session->all();
+        });
+
+        $currentSessionId = setting('session');
+        $session['session'] = \Cache::remember("current_session_{$currentSessionId}", 1800, function () use ($currentSessionId) {
+            return $this->session->show($currentSessionId);
+        });
 
         $view->with('session', $session);
     }

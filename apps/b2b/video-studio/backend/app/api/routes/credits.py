@@ -36,7 +36,7 @@ if STRIPE_SECRET_KEY:
     stripe.api_key = STRIPE_SECRET_KEY
 
 # Site URLs
-FRONTEND_URL = os.getenv("FRONTEND_URL", "https://video-studio.iafactory.ch")
+FRONTEND_URL = os.getenv("FRONTEND_URL", "https://video-studio.iafactoryalgeria.com")
 
 # Processed events (for idempotency)
 _processed_events = set()

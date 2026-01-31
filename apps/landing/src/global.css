@@ -3,6 +3,29 @@
    Importer ce fichier dans main.tsx
    ================================================ */
 
+:root {
+  /* Dark theme (default) - Synchronisé avec Home.tsx */
+  --bg: #0A0F1A;
+  --bg2: #111827;
+  --text: #F8FAFC;
+  --muted: rgba(248 250 252 / 65%);
+  --card: rgba(255 255 255 / 6%);
+  --border: rgba(255 255 255 / 10%);
+  --accent: #22C55E;
+  --accent2: #8A7DFF;
+}
+
+[data-theme="light"] {
+  --bg: #F6F3EE;
+  --bg2: #FBF8F3;
+  --text: #141414;
+  --muted: rgba(20 20 20 / 62%);
+  --card: #EDE9E3;
+  --border: rgba(20 20 20 / 10%);
+  --accent: #1C7A5F;
+  --accent2: #6D5DFC;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -11,25 +34,44 @@
 
 html {
   min-height: 100%;
-  background-color: var(--bg-primary, #1a1a1a);
+  background-color: var(--bg);
 }
 
 body {
   min-height: 100vh;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-  background-color: var(--bg-primary, #1a1a1a);
-  color: var(--text-primary, #f0f0f0);
+  color: var(--text);
+  background-color: var(--bg);
 }
 
 #root {
   min-height: 100vh;
-  background-color: var(--bg-primary, #1a1a1a);
+  background-color: var(--bg);
 }
 
-/* Mode clair */
-html[data-theme="light"],
-html[data-theme="light"] body,
-html[data-theme="light"] #root {
-  background-color: var(--bg-primary, #FAF9F7);
-  color: var(--text-primary, #1F1F1F);
+/* ================================================
+   SUPPORT RTL POUR L'ARABE - Police Cairo
+   ================================================ */
+
+/* Police Cairo pour l'arabe */
+.font-arabic,
+[dir="rtl"],
+[lang="ar"] {
+  font-family: Cairo, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Direction RTL */
+[dir="rtl"] {
+  direction: rtl;
+  text-align: end;
+}
+
+/* Ajustements RTL pour les éléments flex */
+[dir="rtl"] .flex-row {
+  flex-direction: row-reverse;
+}
+
+/* Icônes en RTL */
+[dir="rtl"] .icon-flip {
+  transform: scaleX(-1);
 }

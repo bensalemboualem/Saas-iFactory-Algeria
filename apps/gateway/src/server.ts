@@ -12,6 +12,7 @@ import { chatCompletionsRoutes } from './api/v1/chatCompletions.js';
 import { creditsRoutes } from './api/v1/credits.js';
 import { billingRoutes } from './api/v1/billing.js';
 import { onboardingRoutes } from './api/v1/onboarding.js';
+import { oauthRoutes } from './api/v1/oauth.js';
 
 /**
  * Create Redis client for rate limiting (optional)
@@ -112,6 +113,9 @@ export async function createServer() {
 
   // Onboarding API (signup credits, daily limits)
   await server.register(onboardingRoutes, { prefix: '/onboarding' });
+
+  // OAuth routes (Google, GitHub)
+  await server.register(oauthRoutes);
 
   return server;
 }

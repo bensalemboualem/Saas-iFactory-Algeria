@@ -3,9 +3,13 @@ import { useUIStore, useCollectionsStore } from '../store';
 import './Sidebar.css';
 
 const NAV_ITEMS = [
-  { path: '/', label: 'Collections', icon: '📁' },
-  { path: '/timeline', label: 'Timeline', icon: '📅' },
+  { path: '/', label: 'Home', icon: '🏠' },
+  { path: '/onboarding', label: 'Get Started', icon: '🚀' },
+  { path: '/ask', label: 'Ask', icon: '💬' },
+  { path: '/sources', label: 'Sources', icon: '📁' },
+  { path: '/collections', label: 'Collections', icon: '🗂️' },
   { path: '/search', label: 'Search', icon: '🔍' },
+  { path: '/timeline', label: 'Timeline', icon: '📅' },
   { path: '/graph', label: 'Graph', icon: '🕸️' },
 ];
 

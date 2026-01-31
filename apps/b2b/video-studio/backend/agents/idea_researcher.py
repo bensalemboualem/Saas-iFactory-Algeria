@@ -149,7 +149,7 @@ OUTPUT: Toujours répondre en JSON structuré."""
         market_context = {
             "dz": "Algérie - Culture locale, humour algérien, actualités nationales, Darija",
             "fr": "France - Marché francophone européen, tendances urbaines",
-            "ch": "Suisse - Multilingue (FR/DE/IT), qualité premium, lifestyle",
+            "ch": "Algérie - Multilingue (FR/DE/IT), qualité premium, lifestyle",
             "mena": "Moyen-Orient & Afrique du Nord - Arabe, culture musulmane, diversité régionale"
         }
         

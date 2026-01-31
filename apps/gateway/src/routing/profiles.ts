@@ -21,36 +21,36 @@ export interface ModelProfile {
 export const MODEL_PROFILES: ModelProfile[] = [
   // ============================================================================
   // FAST - Groq (Ultra-low latency, cheapest inference)
-  // Prix mis à jour 2026 - https://groq.com/pricing
+  // Verified models from Groq API - Jan 2026
   // ============================================================================
 
-  // GPT-OSS (OpenAI open-source) - ULTRA CHEAP
+  // Llama Models
   {
-    id: 'iaf-fast-gpt-oss-20b',
-    name: 'GPT-OSS 20B',
-    description: 'Ultra-cheap OpenAI OSS via Groq',
+    id: 'iaf-fast-llama-70b',
+    name: 'Llama 3.3 70B',
+    description: 'Meta flagship via Groq',
     provider: 'groq',
-    actualModel: 'openai/gpt-oss-20b',
-    pricing: { input: 0.075, output: 0.30 },  // 13.3M tokens/$1 input!
+    actualModel: 'llama-3.3-70b-versatile',
+    pricing: { input: 0.59, output: 0.79 },
     features: { streaming: true, functionCalling: true, vision: false },
     latency: 'ultra-fast',
     contextWindow: 128000,
     category: 'fast',
   },
   {
-    id: 'iaf-fast-gpt-oss-120b',
-    name: 'GPT-OSS 120B',
-    description: 'Large GPT OSS via Groq',
+    id: 'iaf-fast-llama-8b',
+    name: 'Llama 3.1 8B',
+    description: 'Ultra-cheap lightweight',
     provider: 'groq',
-    actualModel: 'openai/gpt-oss-120b',
-    pricing: { input: 0.15, output: 0.60 },
+    actualModel: 'llama-3.1-8b-instant',
+    pricing: { input: 0.05, output: 0.08 },
     features: { streaming: true, functionCalling: true, vision: false },
     latency: 'ultra-fast',
     contextWindow: 128000,
     category: 'fast',
   },
 
-  // Llama 4 - NEWEST
+  // Llama 4 - Latest from Meta
   {
     id: 'iaf-fast-llama4-scout',
     name: 'Llama 4 Scout',
@@ -76,33 +76,33 @@ export const MODEL_PROFILES: ModelProfile[] = [
     category: 'fast',
   },
 
-  // Llama 3.3
+  // GPT-OSS - OpenAI open weights on Groq
   {
-    id: 'iaf-fast-llama-70b',
-    name: 'Llama 3.3 70B',
-    description: 'Meta flagship via Groq',
+    id: 'iaf-fast-gpt-oss-20b',
+    name: 'GPT-OSS 20B',
+    description: 'OpenAI OSS via Groq',
     provider: 'groq',
-    actualModel: 'llama-3.3-70b-versatile',
-    pricing: { input: 0.59, output: 0.79 },
+    actualModel: 'openai/gpt-oss-20b',
+    pricing: { input: 0.075, output: 0.30 },
     features: { streaming: true, functionCalling: true, vision: false },
     latency: 'ultra-fast',
     contextWindow: 128000,
     category: 'fast',
   },
   {
-    id: 'iaf-fast-llama-8b',
-    name: 'Llama 3.1 8B',
-    description: 'Ultra-cheap lightweight',
+    id: 'iaf-fast-gpt-oss-120b',
+    name: 'GPT-OSS 120B',
+    description: 'Large GPT OSS via Groq',
     provider: 'groq',
-    actualModel: 'llama-3.1-8b-instant',
-    pricing: { input: 0.05, output: 0.08 },  // 20M tokens/$1 input!
+    actualModel: 'openai/gpt-oss-120b',
+    pricing: { input: 0.15, output: 0.60 },
     features: { streaming: true, functionCalling: true, vision: false },
     latency: 'ultra-fast',
     contextWindow: 128000,
     category: 'fast',
   },
 
-  // Qwen 3
+  // Qwen 3 & Kimi K2
   {
     id: 'iaf-fast-qwen3-32b',
     name: 'Qwen3 32B',
@@ -115,11 +115,9 @@ export const MODEL_PROFILES: ModelProfile[] = [
     contextWindow: 131072,
     category: 'fast',
   },
-
-  // Kimi K2 - Moonshot
   {
     id: 'iaf-fast-kimi-k2',
-    name: 'Kimi K2 1T',
+    name: 'Kimi K2',
     description: 'Moonshot 1T model via Groq',
     provider: 'groq',
     actualModel: 'moonshotai/kimi-k2-instruct',
@@ -130,8 +128,22 @@ export const MODEL_PROFILES: ModelProfile[] = [
     category: 'fast',
   },
 
+  // Groq Compound (Agentic)
+  {
+    id: 'iaf-fast-compound',
+    name: 'Groq Compound',
+    description: 'Groq agentic model',
+    provider: 'groq',
+    actualModel: 'groq/compound',
+    pricing: { input: 0.30, output: 0.90 },
+    features: { streaming: true, functionCalling: true, vision: false },
+    latency: 'fast',
+    contextWindow: 128000,
+    category: 'fast',
+  },
+
   // ============================================================================
-  // SMART - OpenAI via OpenRouter
+  // SMART - OpenAI via OpenRouter (Real Model IDs)
   // ============================================================================
   {
     id: 'iaf-smart-gpt4o',
@@ -160,7 +172,7 @@ export const MODEL_PROFILES: ModelProfile[] = [
   {
     id: 'iaf-smart-gpt4-turbo',
     name: 'GPT-4 Turbo',
-    description: 'Previous flagship',
+    description: 'High capability GPT-4',
     provider: 'openrouter',
     actualModel: 'openai/gpt-4-turbo',
     pricing: { input: 10.0, output: 30.0 },
@@ -170,44 +182,56 @@ export const MODEL_PROFILES: ModelProfile[] = [
     category: 'smart',
   },
   {
-    id: 'iaf-smart-o1',
-    name: 'OpenAI o1',
+    id: 'iaf-smart-gpt4',
+    name: 'GPT-4',
+    description: 'Original GPT-4',
+    provider: 'openrouter',
+    actualModel: 'openai/gpt-4',
+    pricing: { input: 30.0, output: 60.0 },
+    features: { streaming: true, functionCalling: true, vision: false },
+    latency: 'normal',
+    contextWindow: 8192,
+    category: 'smart',
+  },
+  {
+    id: 'iaf-smart-gpt35-turbo',
+    name: 'GPT-3.5 Turbo',
+    description: 'Fast and cheap',
+    provider: 'openrouter',
+    actualModel: 'openai/gpt-3.5-turbo',
+    pricing: { input: 0.50, output: 1.50 },
+    features: { streaming: true, functionCalling: true, vision: false },
+    latency: 'fast',
+    contextWindow: 16385,
+    category: 'smart',
+  },
+  {
+    id: 'iaf-smart-o1-preview',
+    name: 'OpenAI o1 Preview',
     description: 'Advanced reasoning model',
     provider: 'openrouter',
-    actualModel: 'openai/o1',
+    actualModel: 'openai/o1-preview',
     pricing: { input: 15.0, output: 60.0 },
-    features: { streaming: false, functionCalling: false, vision: true },
+    features: { streaming: false, functionCalling: false, vision: false },
     latency: 'slow',
-    contextWindow: 200000,
+    contextWindow: 128000,
     category: 'smart',
   },
   {
     id: 'iaf-smart-o1-mini',
     name: 'OpenAI o1-mini',
-    description: 'Fast reasoning model',
+    description: 'Compact reasoning model',
     provider: 'openrouter',
     actualModel: 'openai/o1-mini',
     pricing: { input: 3.0, output: 12.0 },
-    features: { streaming: false, functionCalling: false, vision: true },
+    features: { streaming: false, functionCalling: false, vision: false },
     latency: 'normal',
     contextWindow: 128000,
     category: 'smart',
   },
-  {
-    id: 'iaf-smart-o3-mini',
-    name: 'OpenAI o3-mini',
-    description: 'Latest compact reasoning',
-    provider: 'openrouter',
-    actualModel: 'openai/o3-mini',
-    pricing: { input: 1.1, output: 4.4 },
-    features: { streaming: true, functionCalling: true, vision: false },
-    latency: 'fast',
-    contextWindow: 200000,
-    category: 'smart',
-  },
 
   // ============================================================================
-  // SMART - Anthropic via OpenRouter
+  // SMART - Anthropic via OpenRouter (Real Model IDs)
   // ============================================================================
   {
     id: 'iaf-smart-claude-opus',
@@ -234,12 +258,24 @@ export const MODEL_PROFILES: ModelProfile[] = [
     category: 'smart',
   },
   {
+    id: 'iaf-smart-claude-sonnet-latest',
+    name: 'Claude 3.5 Sonnet (Latest)',
+    description: 'Latest Claude Sonnet version',
+    provider: 'openrouter',
+    actualModel: 'anthropic/claude-3.5-sonnet:beta',
+    pricing: { input: 3.0, output: 15.0 },
+    features: { streaming: true, functionCalling: true, vision: true },
+    latency: 'normal',
+    contextWindow: 200000,
+    category: 'smart',
+  },
+  {
     id: 'iaf-smart-claude-haiku',
-    name: 'Claude 3.5 Haiku',
+    name: 'Claude 3 Haiku',
     description: 'Fast and cheap Claude',
     provider: 'openrouter',
-    actualModel: 'anthropic/claude-3.5-haiku',
-    pricing: { input: 0.80, output: 4.0 },
+    actualModel: 'anthropic/claude-3-haiku',
+    pricing: { input: 0.25, output: 1.25 },
     features: { streaming: true, functionCalling: true, vision: true },
     latency: 'fast',
     contextWindow: 200000,
@@ -247,26 +283,26 @@ export const MODEL_PROFILES: ModelProfile[] = [
   },
 
   // ============================================================================
-  // SMART - Google via OpenRouter
+  // SMART - Google via OpenRouter (Real Model IDs - Updated Jan 2026)
   // ============================================================================
   {
     id: 'iaf-smart-gemini-pro',
-    name: 'Gemini 1.5 Pro',
-    description: '1M context window',
+    name: 'Gemini 2.5 Pro',
+    description: 'Google flagship latest',
     provider: 'openrouter',
-    actualModel: 'google/gemini-pro-1.5',
+    actualModel: 'google/gemini-2.5-pro',
     pricing: { input: 1.25, output: 5.0 },
     features: { streaming: true, functionCalling: true, vision: true },
     latency: 'normal',
-    contextWindow: 2000000,
+    contextWindow: 1000000,
     category: 'smart',
   },
   {
     id: 'iaf-smart-gemini-flash',
-    name: 'Gemini 1.5 Flash',
+    name: 'Gemini 2.5 Flash',
     description: 'Fast Google model',
     provider: 'openrouter',
-    actualModel: 'google/gemini-flash-1.5',
+    actualModel: 'google/gemini-2.5-flash',
     pricing: { input: 0.075, output: 0.30 },
     features: { streaming: true, functionCalling: true, vision: true },
     latency: 'fast',
@@ -274,11 +310,11 @@ export const MODEL_PROFILES: ModelProfile[] = [
     category: 'smart',
   },
   {
-    id: 'iaf-smart-gemini-flash-8b',
-    name: 'Gemini 1.5 Flash 8B',
+    id: 'iaf-smart-gemini-flash-lite',
+    name: 'Gemini 2.5 Flash Lite',
     description: 'Lightweight Gemini',
     provider: 'openrouter',
-    actualModel: 'google/gemini-flash-1.5-8b',
+    actualModel: 'google/gemini-2.5-flash-lite',
     pricing: { input: 0.0375, output: 0.15 },
     features: { streaming: true, functionCalling: true, vision: true },
     latency: 'ultra-fast',
@@ -286,11 +322,11 @@ export const MODEL_PROFILES: ModelProfile[] = [
     category: 'smart',
   },
   {
-    id: 'iaf-smart-gemini-2-flash',
-    name: 'Gemini 2.0 Flash',
-    description: 'Latest Gemini',
+    id: 'iaf-smart-gemini-3-flash',
+    name: 'Gemini 3 Flash (Preview)',
+    description: 'Latest Gemini 3',
     provider: 'openrouter',
-    actualModel: 'google/gemini-2.0-flash-001',
+    actualModel: 'google/gemini-3-flash-preview',
     pricing: { input: 0.10, output: 0.40 },
     features: { streaming: true, functionCalling: true, vision: true },
     latency: 'fast',
@@ -626,7 +662,7 @@ export const MODEL_PROFILES: ModelProfile[] = [
     name: 'Mistral Small',
     description: 'Mistral efficient',
     provider: 'openrouter',
-    actualModel: 'mistralai/mistral-small-2409',
+    actualModel: 'mistralai/mistral-small-latest',
     pricing: { input: 0.20, output: 0.60 },
     features: { streaming: true, functionCalling: true, vision: false },
     latency: 'fast',

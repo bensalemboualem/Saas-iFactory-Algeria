@@ -177,7 +177,6 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
     // Auto-collapse model settings when chat becomes active
     useEffect(() => {
       if (isChatActive && !isModelSettingsCollapsed) {
-        console.log('[BaseChat] Auto-collapsing model settings - chat is active');
         setIsModelSettingsCollapsed(true);
       }
     }, [isChatActive, isModelSettingsCollapsed]);
@@ -190,9 +189,6 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
         setProgressAnnotations(progressList);
       }
     }, [data]);
-    useEffect(() => {
-      console.log(transcript);
-    }, [transcript]);
 
     useEffect(() => {
       onStreamingChange?.(isStreaming);
@@ -301,39 +297,18 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
       // Store text before any modification
       const text = (messageInput || input || '').trim();
 
-      // === VÉRIF 1: Log état Nexus au moment de l'envoi ===
-      console.log('[handleSendMessage] START', {
-        text: text?.substring(0, 50),
-        isNexusEnabled,
-        nexusStatus,
-        nexusCheck: isNexusEnabled && nexusStatus === 'connected',
-        isProcessing: isNexusProcessingRef.current,
-        addBmadMessages: !!addBmadMessages,
-        updateBmadMessage: !!updateBmadMessage,
-      });
-
-      // ALERT visible pour debug
-      if (isNexusEnabled) {
-        console.warn('[NEXUS DEBUG] Nexus IS ENABLED, status:', nexusStatus);
-      } else {
-        console.warn('[NEXUS DEBUG] Nexus is DISABLED');
-      }
-
       // Guard: if no text, do nothing
       if (!text) {
-        console.log('[handleSendMessage] No text, returning');
         return;
       }
 
       // Guard: if already processing, don't clear input, just return
       if (isNexusProcessingRef.current) {
-        console.log('[handleSendMessage] BLOCKED - already processing');
         return;
       }
 
       // If Nexus is enabled and connected, use GUIDED CONVERSATION with AGENTS
       if (isNexusEnabled && nexusStatus === 'connected') {
-        console.log('[Nexus] ✅ GUIDED CONVERSATION MODE - Multi-Agent');
         isNexusProcessingRef.current = true;
 
         // Stop any ongoing LLM requests
@@ -366,16 +341,12 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
         }
 
         try {
-          console.log('[Nexus] >>> Calling sendChatMessage...');
-
           // Send to multi-agent chat endpoint
           const response: ChatResponse = await sendChatMessage(
             text,
             nexusSessionId || undefined,
             'anonymous'
           );
-
-          console.log('[Nexus] <<< Chat response:', response);
 
           // Store session ID and update active agent
           setNexusSessionId(response.session_id);
@@ -420,7 +391,6 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
           const userWantsToGenerate = goKeywords.some(kw => text.toLowerCase().includes(kw));
 
           if (response.bolt_prompt && userWantsToGenerate) {
-            console.log('[Nexus] 🚀 User confirmed - sending to Bolt LLM');
             setNexusLastTarget?.('bolt');
 
             // Add a system message indicating generation start
@@ -445,7 +415,6 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
             setNexusActiveAgent(null);
           }
 
-          console.log('[Nexus] ✅ Chat handled');
           return; // EXIT - conversation handled
 
         } catch (error) {
@@ -461,12 +430,10 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
         } finally {
           // ALWAYS reset the processing flag
           isNexusProcessingRef.current = false;
-          console.log('[Nexus] Processing flag reset');
         }
       }
 
       // Nexus disabled - direct LLM flow
-      console.log('[Nexus DEBUG] Nexus disabled - direct LLM flow');
       if (sendMessage) {
         sendMessage(event, messageInput);
       }
@@ -537,9 +504,6 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
         }
       }
     };
-
-    // Debug: Log state to trace intro visibility
-    console.log('[BaseChat] Rendering - chatStarted:', chatStarted, 'messages.length:', messages.length, 'isChatActive:', isChatActive);
 
     const baseChat = (
       <div

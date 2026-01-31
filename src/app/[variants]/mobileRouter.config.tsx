@@ -156,6 +156,26 @@ const NotFoundPage = dynamic(() => import('@/components/404'), {
   ssr: false,
 });
 
+// Landing page component
+const LandingPage = dynamic(() => import('./(landing)/LandingPage'), {
+  loading: () => <Loading />,
+  ssr: false,
+});
+
+// Vertical landing pages
+const LegalLanding = dynamic(() => import('./(landing)/verticals/LegalLanding'), {
+  loading: () => <Loading />,
+  ssr: false,
+});
+const EducationLanding = dynamic(() => import('./(landing)/verticals/EducationLanding'), {
+  loading: () => <Loading />,
+  ssr: false,
+});
+const BusinessLanding = dynamic(() => import('./(landing)/verticals/BusinessLanding'), {
+  loading: () => <Loading />,
+  ssr: false,
+});
+
 // Knowledge components
 const KnowledgeHome = dynamic(() => import('./(main)/knowledge/routes/KnowledgeHome'), {
   loading: () => <Loading />,
@@ -533,10 +553,24 @@ export const createMobileRouter = (locale: Locales) =>
           path: 'changelog',
         },
 
-        // Default route - redirect to chat
+        // Vertical landing pages
         {
+          element: <LegalLanding />,
+          path: 'legal',
+        },
+        {
+          element: <EducationLanding />,
+          path: 'education',
+        },
+        {
+          element: <BusinessLanding />,
+          path: 'business',
+        },
+
+        // Default route - landing page
+        {
+          element: <LandingPage />,
           index: true,
-          loader: () => redirect('/chat', { status: 302 }),
         },
 
         // Catch-all route

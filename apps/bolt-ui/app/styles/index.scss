@@ -15,13 +15,11 @@ body {
 }
 
 :root {
-  --gradient-opacity: 0.8;
-  --primary-color: rgba(158, 117, 240, var(--gradient-opacity));
-  --secondary-color: rgba(138, 43, 226, var(--gradient-opacity));
-  --accent-color: rgba(128, 59, 239, var(--gradient-opacity));
-  // --primary-color: rgba(147, 112, 219, var(--gradient-opacity));
-  // --secondary-color: rgba(138, 43, 226, var(--gradient-opacity));
-  // --accent-color: rgba(180, 170, 220, var(--gradient-opacity));
+  --gradient-opacity: 0.6;
+  /* Claude.ai warm accent gradients */
+  --primary-color: rgba(218, 119, 86, var(--gradient-opacity));
+  --secondary-color: rgba(232, 147, 108, var(--gradient-opacity));
+  --accent-color: rgba(196, 104, 74, var(--gradient-opacity));
 }
 
 .modern-scrollbar {

@@ -1,7 +1,8 @@
 import { useStore } from '@nanostores/react';
 import { memo, useEffect, useState } from 'react';
 import { themeStore, toggleTheme } from '~/lib/stores/theme';
-import { IconButton } from './IconButton';
+import { SunDim, MoonStars } from '@phosphor-icons/react';
+import { classNames } from '~/utils/classNames';
 
 interface ThemeSwitchProps {
   className?: string;
@@ -17,13 +18,20 @@ export const ThemeSwitch = memo(({ className }: ThemeSwitchProps) => {
 
   return (
     domLoaded && (
-      <IconButton
-        className={className}
-        icon={theme === 'dark' ? 'i-ph-sun-dim-duotone' : 'i-ph-moon-stars-duotone'}
-        size="xl"
+      <button
+        className={classNames(
+          'flex items-center justify-center p-2 rounded-md text-gray-500 dark:text-gray-400 hover:text-bolt-elements-textPrimary hover:bg-bolt-elements-item-backgroundActive/10 transition-colors',
+          className
+        )}
         title="Toggle Theme"
         onClick={toggleTheme}
-      />
+      >
+        {theme === 'dark' ? (
+          <SunDim size={24} weight="duotone" />
+        ) : (
+          <MoonStars size={24} weight="duotone" />
+        )}
+      </button>
     )
   );
 });

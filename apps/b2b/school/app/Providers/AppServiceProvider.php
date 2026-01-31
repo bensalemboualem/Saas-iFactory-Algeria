@@ -99,17 +99,25 @@ class AppServiceProvider extends ServiceProvider
 
             });
         else:
-            view()->composer('*', function ($view) {
+            // PERFORMANCE FIX: Only compose for frontend views, not ALL views ('*')
+            // Cache the data to avoid DB queries on every view
+            view()->composer(['frontend.*', 'layouts.*'], function ($view) {
 
                 try {
+                    // Cache subscriber count for 1 hour
+                    $subscriber = \Cache::remember('subscriber_count', 3600, function () {
+                        return Subscribe::count();
+                    });
 
-                    $subscriber = Subscribe::count();
-                    $sections = PageSections::with('upload')->get();
-
-                    $sectionArr = [];
-                    foreach ($sections as $section) {
-                        $sectionArr[$section->key] = $section;
-                    }
+                    // Cache page sections for 1 hour
+                    $sectionArr = \Cache::remember('page_sections', 3600, function () {
+                        $sections = PageSections::with('upload')->get();
+                        $arr = [];
+                        foreach ($sections as $section) {
+                            $arr[$section->key] = $section;
+                        }
+                        return $arr;
+                    });
 
                     $view->with([
                         'sections' => $sectionArr,
@@ -145,7 +153,10 @@ class AppServiceProvider extends ServiceProvider
 
         view()->composer(['frontend.partials.footer-content'], function ($view) {
             try {
-                $footer_pages = Page::where('menu_show', 'footer')->get(['id', 'name', 'slug']);
+                // PERFORMANCE FIX: Cache footer pages for 1 hour
+                $footer_pages = \Cache::remember('footer_pages', 3600, function () {
+                    return Page::where('menu_show', 'footer')->get(['id', 'name', 'slug']);
+                });
 
                 $view->with([
                     'footer_pages' => $footer_pages
@@ -159,9 +170,12 @@ class AppServiceProvider extends ServiceProvider
 
         view()->composer(['frontend.partials.menu'], function ($view) {
             try {
-                $footer_pages = Page::where('menu_show', 'header')->get(['id', 'name', 'slug']);
+                // PERFORMANCE FIX: Cache header pages for 1 hour
+                $header_pages = \Cache::remember('header_pages', 3600, function () {
+                    return Page::where('menu_show', 'header')->get(['id', 'name', 'slug']);
+                });
                 $view->with([
-                    'header_pages' => $footer_pages
+                    'header_pages' => $header_pages
                 ]);
             } catch (\Exception $e) {
                 $view->with([
@@ -171,9 +185,16 @@ class AppServiceProvider extends ServiceProvider
         });
 
 
-        if (hasModule('MultiBranch') && Schema::hasTable('branches')) {
+        // PERFORMANCE FIX: Cache module and schema checks
+        $hasMultiBranch = \Cache::remember('has_multibranch_module', 3600, function () {
+            return hasModule('MultiBranch') && Schema::hasTable('branches');
+        });
+
+        if ($hasMultiBranch) {
             view()->composer(['backend.partials.header'], function ($view) {
-                $branches = Branch::pluck('name', 'id');
+                $branches = \Cache::remember('branches_list', 3600, function () {
+                    return Branch::pluck('name', 'id');
+                });
                 $view->with(['branches' => $branches]);
             });
         }

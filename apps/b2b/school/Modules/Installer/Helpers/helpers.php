@@ -90,16 +90,20 @@ if (!function_exists('gbv')) {
 if (!function_exists('AuthPermitCheck')) {
     function AuthPermitCheck()
     {
-        // Check if all required files exist
-        $WelcomeNote = Storage::disk('local')->exists('.WelcomeNote') ? Storage::disk('local')->get('.WelcomeNote') : null;
-        $CheckEnvironment = Storage::disk('local')->exists('.CheckEnvironment') ? Storage::disk('local')->get('.CheckEnvironment') : null;
-        $LicenseVerification = Storage::disk('local')->exists('.LicenseVerification') ? Storage::disk('local')->get('.LicenseVerification') : null;
-        $DatabaseSetup = Storage::disk('local')->exists('.DatabaseSetup') ? Storage::disk('local')->get('.DatabaseSetup') : null;
-        $AdminSetup = Storage::disk('local')->exists('.AdminSetup') ? Storage::disk('local')->get('.AdminSetup') : null;
-        $Complete = Storage::disk('local')->exists('.Complete') ? Storage::disk('local')->get('.Complete') : null;
+        // PERFORMANCE FIX: Cache installation check for 1 hour
+        // Avoids reading 6 files from disk on EVERY request
+        return \Illuminate\Support\Facades\Cache::remember('installer_auth_permit_check', 3600, function () {
+            // Check if all required files exist
+            $WelcomeNote = Storage::disk('local')->exists('.WelcomeNote') ? Storage::disk('local')->get('.WelcomeNote') : null;
+            $CheckEnvironment = Storage::disk('local')->exists('.CheckEnvironment') ? Storage::disk('local')->get('.CheckEnvironment') : null;
+            $LicenseVerification = Storage::disk('local')->exists('.LicenseVerification') ? Storage::disk('local')->get('.LicenseVerification') : null;
+            $DatabaseSetup = Storage::disk('local')->exists('.DatabaseSetup') ? Storage::disk('local')->get('.DatabaseSetup') : null;
+            $AdminSetup = Storage::disk('local')->exists('.AdminSetup') ? Storage::disk('local')->get('.AdminSetup') : null;
+            $Complete = Storage::disk('local')->exists('.Complete') ? Storage::disk('local')->get('.Complete') : null;
 
-        // Check if all required files are present
-        return $allFilesExist = $WelcomeNote && $CheckEnvironment && $LicenseVerification && $DatabaseSetup && $AdminSetup && $Complete;
+            // Check if all required files are present
+            return $WelcomeNote && $CheckEnvironment && $LicenseVerification && $DatabaseSetup && $AdminSetup && $Complete;
+        });
     }
 }
 
@@ -107,23 +111,25 @@ if (!function_exists('AuthPermitCheck')) {
 if (!function_exists('allowedUrls')) {
     function allowedUrls()
     {
-        $allowedUrls = [
-            URL::route('service.install'),
-            URL::route('service.checkEnvironment'),
-            URL::route('service.license'),
-            URL::route('service.license_post'),
-            URL::route('service.database'),
-            URL::route('service.database_post'),
-            URL::route('service.uninstall'),
-            URL::route('service.verify'),
-            URL::route('service.user'),
-            URL::route('service.user_post'),
-            URL::route('service.done'),
-            URL::route('service.reinstall'),
-            URL::route('service.import_sql'),
-            URL::route('service.import_sql_post'),
-        ];
-        return $allowedUrls;
+        // PERFORMANCE FIX: Cache allowed URLs for 1 hour
+        return \Illuminate\Support\Facades\Cache::remember('installer_allowed_urls', 3600, function () {
+            return [
+                URL::route('service.install'),
+                URL::route('service.checkEnvironment'),
+                URL::route('service.license'),
+                URL::route('service.license_post'),
+                URL::route('service.database'),
+                URL::route('service.database_post'),
+                URL::route('service.uninstall'),
+                URL::route('service.verify'),
+                URL::route('service.user'),
+                URL::route('service.user_post'),
+                URL::route('service.done'),
+                URL::route('service.reinstall'),
+                URL::route('service.import_sql'),
+                URL::route('service.import_sql_post'),
+            ];
+        });
     }
 }
 

@@ -80,8 +80,8 @@ chmod +x *.sh
 ```
 
 **Il va demander:**
-- Domaine frontend: `video-studio.iafactory.ch`
-- Domaine API: `api.iafactory.ch`
+- Domaine frontend: `video-studio.iafactoryalgeria.com`
+- Domaine API: `api.iafactoryalgeria.com`
 - Email: `votre@email.com`
 
 **Il va:**
@@ -91,8 +91,8 @@ chmod +x *.sh
 
 **Avant de lancer, configurer vos DNS:**
 ```
-Type A: video-studio.iafactory.ch → IP_VPS
-Type A: api.iafactory.ch → IP_VPS
+Type A: video-studio.iafactoryalgeria.com → IP_VPS
+Type A: api.iafactoryalgeria.com → IP_VPS
 ```
 
 ---
@@ -119,9 +119,9 @@ Type A: api.iafactory.ch → IP_VPS
 ## 🎉 C'EST EN LIGNE!
 
 **Accès:**
-- Frontend: https://video-studio.iafactory.ch
-- API: https://api.iafactory.ch
-- Docs: https://api.iafactory.ch/docs
+- Frontend: https://video-studio.iafactoryalgeria.com
+- API: https://api.iafactoryalgeria.com
+- Docs: https://api.iafactoryalgeria.com/docs
 
 ---
 
@@ -146,8 +146,8 @@ docker-compose down
 docker-compose up -d --build
 
 # Tester l'API
-curl https://api.iafactory.ch/health
-curl https://api.iafactory.ch/docs
+curl https://api.iafactoryalgeria.com/health
+curl https://api.iafactoryalgeria.com/docs
 ```
 
 ---
@@ -182,7 +182,7 @@ curl https://api.iafactory.ch/docs
 
 **Génération Vidéo (7):**
 - Kling AI
-- Luma AI (Suisse + Algeria)
+- Luma AI (Algérie + Algeria)
 - Runway ML
 - MiniMax
 - Pika Labs
@@ -256,7 +256,7 @@ Après déploiement:
 
 2. **Configurer Stripe Webhooks**
    ```
-   URL: https://api.iafactory.ch/webhooks/stripe
+   URL: https://api.iafactoryalgeria.com/webhooks/stripe
    Events: checkout.session.completed, payment_intent.succeeded
    ```
 

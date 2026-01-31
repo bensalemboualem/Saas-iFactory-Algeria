@@ -563,7 +563,7 @@ R : Email : [email] | Chat : disponible sur le site | Téléphone : [numéro] (L
   'shipping-policy-generator': {
     fields: [
       { name: 'business_name', type: 'text', label: 'Nom de l\'entreprise', required: true },
-      { name: 'shipping_zones', type: 'text', label: 'Zones de livraison', placeholder: 'France, Belgique, Suisse...' },
+      { name: 'shipping_zones', type: 'text', label: 'Zones de livraison', placeholder: 'Algérie, Tunisie, Maroc...' },
       { name: 'carriers', type: 'text', label: 'Transporteurs utilisés', placeholder: 'Colissimo, Chronopost, DHL...' },
       { name: 'processing_time', type: 'text', label: 'Délai de traitement', placeholder: 'Ex: 24-48h' },
       { name: 'shipping_options', type: 'textarea', label: 'Options de livraison', placeholder: 'Standard, Express, Point relais...' },
@@ -593,7 +593,7 @@ Pour les destinations non listées, contactez-nous pour un devis personnalisé.
 |-------------|-------------------|-------------------|
 | France métropolitaine | 3-5 jours ouvrés | 24-48h |
 | Belgique / Luxembourg | 4-6 jours ouvrés | 48-72h |
-| Suisse | 5-7 jours ouvrés | 3-4 jours |
+| Maroc | 5-7 jours ouvrés | 3-4 jours |
 | DOM-TOM | 7-14 jours | Sur devis |
 
 **Note :** Ces délais sont donnés à titre indicatif à partir de l'expédition et ne tiennent pas compte des weekends et jours fériés.

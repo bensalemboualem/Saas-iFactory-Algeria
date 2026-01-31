@@ -5,7 +5,7 @@ interface User {
   email: string;
   name?: string;
   avatar?: string;
-  provider?: 'email' | 'google' | 'facebook';
+  provider?: 'email' | 'google' | 'github';
 }
 
 interface AuthContextType {
@@ -16,11 +16,11 @@ interface AuthContextType {
   logout: () => void;
   signup: (email: string, password: string, name?: string) => Promise<void>;
   loginWithGoogle: () => Promise<void>;
-  loginWithFacebook: () => Promise<void>;
+  loginWithGithub: () => Promise<void>;
 }
 
 // Gateway API URL
-const GATEWAY_URL = import.meta.env.VITE_GATEWAY_URL || 'http://localhost:3001';
+const GATEWAY_URL = import.meta.env.VITE_GATEWAY_URL || 'http://localhost:5191';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -75,37 +75,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const loginWithGoogle = async () => {
-    // TODO: Implement real Google OAuth with Gateway
-    // For now, simulate a successful Google login
-    // In production, this would redirect to: ${GATEWAY_URL}/auth/google
-    const mockUser: User = {
-      id: crypto.randomUUID(),
-      email: 'user@gmail.com',
-      name: 'Google User',
-      avatar: 'https://lh3.googleusercontent.com/a/default-user',
-      provider: 'google',
-    };
-
-    // Simulate network delay
-    await new Promise(resolve => setTimeout(resolve, 800));
-    saveUser(mockUser);
+    // Redirection vers Google OAuth via Gateway
+    window.location.href = `${GATEWAY_URL}/auth/google`;
   };
 
-  const loginWithFacebook = async () => {
-    // TODO: Implement real Facebook OAuth with Gateway
-    // For now, simulate a successful Facebook login
-    // In production, this would redirect to: ${GATEWAY_URL}/auth/facebook
-    const mockUser: User = {
-      id: crypto.randomUUID(),
-      email: 'user@facebook.com',
-      name: 'Facebook User',
-      avatar: 'https://graph.facebook.com/default/picture',
-      provider: 'facebook',
-    };
-
-    // Simulate network delay
-    await new Promise(resolve => setTimeout(resolve, 800));
-    saveUser(mockUser);
+  const loginWithGithub = async () => {
+    // Redirection vers GitHub OAuth via Gateway
+    window.location.href = `${GATEWAY_URL}/auth/github`;
   };
 
   return (
@@ -118,7 +94,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         logout,
         signup,
         loginWithGoogle,
-        loginWithFacebook,
+        loginWithGithub,
       }}
     >
       {children}
