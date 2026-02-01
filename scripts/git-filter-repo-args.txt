@@ -1,0 +1,14 @@
+# Lines passed to `git-filter-repo --replace-text <file>` or used to build a --paths list.
+# WARNING: test these in a mirror clone first.
+
+# Remove exact committed filenames (paths)
+apps/bolt-ui/.env.local
+apps/bolt-ui/build
+
+# Replace-text patterns (format: regex==>replacement)
+# - redact any e2b_ keys
+e2b_[0-9a-f]{8,}==[REDACTED-E2B-KEY]
+# - redact OpenAI-style keys
+sk-[A-Za-z0-9_\.-]{16,}==[REDACTED-OPENAI-KEY]
+# - redact obvious IAFactory test key discovered in build
+iaf_test_key_12345==[REDACTED-IAF-TEST-KEY]

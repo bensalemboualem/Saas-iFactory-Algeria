@@ -1,0 +1,44 @@
+name: CI — E2B preview prototype
+
+on:
+  push:
+    paths:
+      - 'apps/bolt-ui/**'
+  pull_request:
+    paths:
+      - 'apps/bolt-ui/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install pnpm
+        run: corepack enable && corepack prepare pnpm@latest --activate
+      - name: Install
+        run: pnpm install --frozen-lockfile
+      - name: Run bolt-ui preview + security tests
+        run: |
+          pnpm -w -F @iafactory/bolt-ui test -- tests/preview-e2b.spec.ts tests/api-e2b-proxy.spec.ts tests/api-e2b-security.spec.ts tests/secret-regression.spec.ts
+
+      - name: Fail on checked-in secrets (fast grep)
+        run: |
+          set -o pipefail
+          echo "Searching for high-confidence secret patterns in apps/bolt-ui..."
+          # E2B API keys (high-confidence)
+          if grep -R --line-number -E "e2b_[0-9a-f]{8,}" apps/bolt-ui 2>/dev/null | head -n 1; then
+            echo "Hardcoded E2B key found in apps/bolt-ui"; exit 1;
+          fi
+          # OpenAI-style secret (sk-...)
+          if grep -R --line-number -E "sk-[A-Za-z0-9_\.-]{16,}" apps/bolt-ui 2>/dev/null | head -n 1; then
+            echo "Potential OpenAI-style secret found in apps/bolt-ui"; exit 1;
+          fi
+          # IAFactory test key (low-cost catch for known accidental literal)
+          if grep -R --line-number -F "iaf_test_key_12345" apps/bolt-ui 2>/dev/null | head -n 1; then
+            echo "IAFactory test key found in apps/bolt-ui"; exit 1;
+          fi
+          echo "No high-confidence secrets found."
