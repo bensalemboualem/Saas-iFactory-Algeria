@@ -10,7 +10,7 @@ import { Sandbox } from '@e2b/code-interpreter';
 import nodePath from 'node:path';
 
 // Store active sandboxes (in production, use Redis or similar)
-const activeSandboxes = new Map<string, Sandbox>();
+export const activeSandboxes = new Map<string, Sandbox>();
 
 const BASE_PATH = '/home/user/project';
 
@@ -61,6 +61,32 @@ function resolvePath(inputPath: string): string {
   }
 
   return `${BASE_PATH}/${normalizedRelative}`;
+}
+
+// --- Command validator (exported for unit + integration tests) ---
+export function isSafeCommand(cmd: string) {
+  if (!cmd || typeof cmd !== 'string') return { ok: false, reason: 'invalid' };
+
+  // Disallow shell operators that permit chaining/substitution
+  const forbidden = /[;&|`$<>\n\r]|\$\(|\)\s*\|\|/;
+  if (forbidden.test(cmd)) return { ok: false, reason: 'forbidden-operators' };
+
+  // Disallow quotes/newlines and other characters commonly used for
+  // command/substitution/redirect attacks, then accept tokens that do
+  // not contain those forbidden characters (flags like `-la` allowed).
+  const forbiddenChars = /['"`\n\r;&|<>$]/;
+  if (forbiddenChars.test(cmd)) return { ok: false, reason: 'forbidden-chars' };
+  const tokens = cmd.trim().split(/\s+/);
+  if (tokens.some((t) => t.length === 0 || t.length > 300)) return { ok: false, reason: 'bad-token' };
+
+  const verb = tokens[0];
+  if ((verb === 'npm' || verb === 'pnpm') && tokens[1] === 'run') {
+    const allowedScripts = new Set(['dev', 'build', 'test', 'start', 'preview', 'electron:dev']);
+    const script = tokens[2]?.replace(/^['"]|['"]$/g, '');
+    if (!script || !allowedScripts.has(script)) return { ok: false, reason: 'disallowed-script' };
+  }
+
+  return { ok: true, argv: tokens };
 }
 
 interface E2BRequest {
@@ -197,6 +223,45 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
         const resolvedCwd = resolvePath(cwd || '/home/user/project');
 
+        // --- Security: validate command to prevent shell/command injection ---
+        // Reject any command containing shell metacharacters and enforce a
+        // conservative token whitelist. For npm/pnpm scripts only allow known scripts.
+        function __nested_isSafeCommand_removed_for_tests(cmd: string) {
+          if (!cmd || typeof cmd !== 'string') return { ok: false, reason: 'invalid' };
+
+          // Disallow common shell operators that allow command chaining / substitution
+          const forbidden = /[;&|`$<>\n\r]|\$\(|\)\s*\|\|/;
+          if (forbidden.test(cmd)) return { ok: false, reason: 'forbidden-operators' };
+
+          // Allow only tokens composed of safe characters (no quotes, no redirects, no subshells)
+          const tokenRe = /^[\w@.\/-:=+%]+$/i;
+          const tokens = cmd.trim().split(/\s+/);
+          if (!tokens.every((t) => tokenRe.test(t))) return { ok: false, reason: 'invalid-token' };
+
+          const verb = tokens[0];
+          // If running npm/pnpm scripts, only allow a short whitelist of script names
+          if ((verb === 'npm' || verb === 'pnpm') && tokens[1] === 'run') {
+            const allowedScripts = new Set([
+              'dev',
+              'build',
+              'test',
+              'start',
+              'preview',
+              'electron:dev',
+            ]);
+            const script = tokens[2]?.replace(/^['"]|['"]$/g, '');
+            if (!script || !allowedScripts.has(script)) return { ok: false, reason: 'disallowed-script' };
+          }
+
+          return { ok: true, argv: tokens };
+        }
+
+        const safety = isSafeCommand(command);
+        if (!safety.ok) {
+          console.warn('[E2B API] Blocked unsafe command:', command, 'reason=', safety.reason);
+          return json({ error: `Unsafe command: ${safety.reason}` }, { status: 400 });
+        }
+
         // Check if this should run in background (for long-running commands like npm run dev)
         if (body.background) {
           console.log('[E2B API] Starting background command:', command, 'in', resolvedCwd);
@@ -212,26 +277,15 @@ export const action = async ({ request }: ActionFunctionArgs) => {
             console.error('[E2B API] Background process failed:', error);
           });
 
-          return json({
-            success: true,
-            background: true,
-            message: 'Command started in background',
-          });
+          return json({ success: true, background: true, message: 'Command started in background' });
         }
 
-        // Synchronous command (default)
-        const result = await sandbox.commands.run(command, {
-          cwd: resolvedCwd,
-        });
+        // Synchronous command (validated above)
+        const result = await sandbox.commands.run(command, { cwd: resolvedCwd });
 
         console.log('[E2B API] Command executed:', command, 'in', resolvedCwd, 'Exit code:', result.exitCode);
 
-        return json({
-          success: true,
-          stdout: result.stdout,
-          stderr: result.stderr,
-          exitCode: result.exitCode,
-        });
+        return json({ success: true, stdout: result.stdout, stderr: result.stderr, exitCode: result.exitCode });
       }
 
       case 'destroy': {

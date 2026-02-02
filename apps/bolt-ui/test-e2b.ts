@@ -10,9 +10,12 @@ async function testE2B() {
 
   // Test 1: Création sandbox
   console.log('1. Création sandbox...');
-  const sandbox = await Sandbox.create({
-    apiKey: process.env.VITE_E2B_API_KEY || 'e2b_4f957a4f985addb434ded6a28c9885d8158031f0',
-  });
+  const apiKey = process.env.VITE_E2B_API_KEY || process.env.E2B_API_KEY;
+  if (!apiKey) {
+    console.error('❌ VITE_E2B_API_KEY / E2B_API_KEY not set - skipping live E2B test to avoid leaking keys.');
+    return;
+  }
+  const sandbox = await Sandbox.create({ apiKey });
   console.log('✅ Sandbox créé:', sandbox.sandboxId, '\n');
 
   // Test 2: Exécution Python

@@ -194,3 +194,8 @@ docker-compose/**/data/
 # IDE project files
 *.code-workspace
 .claude/settings.local.json
+# generated (do not commit)
+__pycache__/
+*.pyc
+# local env (do not commit)
+.env.local*
