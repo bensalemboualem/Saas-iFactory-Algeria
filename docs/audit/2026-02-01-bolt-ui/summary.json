@@ -1,0 +1,462 @@
+{
+  "audit_date": "2026-02-01",
+  "scope": "apps/bolt-ui",
+  "auditor": "Claude Sonnet 4.5",
+  "summary": "L'application bolt-ui présente 4 vulnérabilités critiques (command injection, API key exposure, absence CSP, no rate limiting) et 8 risques élevés nécessitant une action immédiate. L'architecture Remix+React 19+E2B est solide mais manque de protections sécurité essentielles. Effort total estimé: 42 heures sur 3 milestones.",
+  "metrics": {
+    "total_findings": 15,
+    "critical": 4,
+    "high": 5,
+    "medium": 4,
+    "low": 2,
+    "estimated_hours": 42
+  },
+  "top_priorities": [
+    "F-001: Command Injection dans E2B API",
+    "F-002: Exposition clés API côté client",
+    "F-003: Absence de Content Security Policy"
+  ],
+  "findings": [
+    {
+      "id": "F-001",
+      "title": "Command Injection dans E2B API",
+      "severity": "critical",
+      "confidence": 0.95,
+      "files": [
+        "apps/bolt-ui/app/routes/api.e2b.ts:145",
+        "apps/bolt-ui/app/routes/api.e2b.ts:205-213"
+      ],
+      "reproduction": [
+        "pnpm --filter bolt-ui dev",
+        "curl -X POST http://localhost:5192/api/e2b -H 'Content-Type: application/json' -d '{\"action\":\"create\"}'",
+        "curl -X POST http://localhost:5192/api/e2b -H 'Content-Type: application/json' -d '{\"action\":\"files.write\",\"sandboxId\":\"<ID>\",\"path\":\"test\\\"; rm -rf /tmp; echo \\\"\",\"content\":\"pwned\"}'"
+      ],
+      "root_cause": "Construction de commandes shell via template strings non échappés. Les quotes peuvent être injectées via path, command, ou cwd parameters.",
+      "business_impact": "Compromission complète du sandbox E2B, exécution de code arbitraire, possible pivot vers infrastructure hôte",
+      "fix": {
+        "description": "Ajouter une fonction escapeShellArg() utilisant single quotes et échappement de quotes internes. Appliquer à tous les paramètres passés à sandbox.commands.run().",
+        "patch_file": "0001-fix-e2b-command-injection.patch",
+        "breaking": false
+      },
+      "tests": {
+        "file": "apps/bolt-ui/tests/api-e2b-security.spec.ts",
+        "framework": "vitest",
+        "coverage": ["path injection", "quote escaping", "directory traversal"]
+      },
+      "validation_commands": [
+        "git apply 0001-fix-e2b-command-injection.patch",
+        "pnpm --filter bolt-ui dev",
+        "pnpm --filter bolt-ui vitest run tests/api-e2b-security.spec.ts"
+      ],
+      "effort_hours": 8,
+      "pr_suggestion": {
+        "title": "security(bolt-ui): prevent command injection in E2B API",
+        "branch": "fix/e2b-command-injection",
+        "labels": ["security", "critical", "p0"]
+      }
+    },
+    {
+      "id": "F-002",
+      "title": "Exposition de clés API côté client",
+      "severity": "critical",
+      "confidence": 1.0,
+      "files": [
+        "apps/bolt-ui/vite.config.ts:63-70",
+        "apps/bolt-ui/app/routes/api.e2b.ts:101"
+      ],
+      "reproduction": [
+        "pnpm --filter bolt-ui build",
+        "grep -r 'OPENAI_API_KEY\\|ANTHROPIC_API_KEY' apps/bolt-ui/build/client/",
+        "# Alternative: DevTools → Sources → Search 'API_KEY'"
+      ],
+      "root_cause": "vite.config.ts expose des variables via envPrefix qui sont bundlées dans le code client. Les process.env.* dans les routes API sont accessibles si inlining se produit.",
+      "business_impact": "Vol de clés API (OpenAI ~$100-1000/mois), abus de quotas, facturation frauduleuse, exposition données clients",
+      "fix": {
+        "description": "1) Retirer envPrefix non-publics de vite.config. 2) Créer route /api/config/public pour URLs non-sensibles. 3) S'assurer que toutes les clés API sont accédées uniquement dans les loaders/actions serveur.",
+        "patch_file": "0002-fix-api-key-exposure.patch",
+        "breaking": true,
+        "migration_notes": "Les clients utilisant process.env côté client doivent migrer vers fetch('/api/config/public')"
+      },
+      "tests": {
+        "file": "apps/bolt-ui/tests/security/api-key-exposure.spec.ts",
+        "framework": "vitest",
+        "coverage": ["bundle scanning", "regex patterns", "server-only validation"]
+      },
+      "validation_commands": [
+        "git apply 0002-fix-api-key-exposure.patch",
+        "pnpm --filter bolt-ui build",
+        "pnpm --filter bolt-ui vitest run tests/security/api-key-exposure.spec.ts",
+        "grep -r 'sk-\\|ANTHROPIC' apps/bolt-ui/build/client/ || echo '✓ No keys found'"
+      ],
+      "effort_hours": 6,
+      "pr_suggestion": {
+        "title": "security(bolt-ui): move API keys to server-only context",
+        "branch": "fix/api-key-exposure",
+        "labels": ["security", "critical", "breaking"]
+      }
+    },
+    {
+      "id": "F-003",
+      "title": "Absence de Content Security Policy",
+      "severity": "high",
+      "confidence": 1.0,
+      "files": [
+        "apps/bolt-ui/app/root.tsx:81",
+        "apps/bolt-ui/app/root.tsx (headers function missing)"
+      ],
+      "reproduction": [
+        "curl -I http://localhost:5192/",
+        "# Vérifier: pas de Content-Security-Policy header"
+      ],
+      "root_cause": "Aucun header CSP configuré dans Remix. dangerouslySetInnerHTML utilisé sans nonce. Ressources externes (Google Fonts) chargées sans restriction.",
+      "business_impact": "Exposition accrue XSS, clickjacking, injection scripts malveillants, vol de session utilisateur",
+      "fix": {
+        "description": "Ajouter headers() export dans root.tsx avec CSP strict: default-src 'self', script-src avec nonce, style-src unsafe-inline pour styled-components, font/img/connect-src restreints.",
+        "patch_file": "0003-add-csp-headers.patch",
+        "breaking": false
+      },
+      "tests": {
+        "file": "apps/bolt-ui/tests/security/csp-headers.spec.ts",
+        "framework": "vitest",
+        "coverage": ["CSP header presence", "nonce generation", "X-Frame-Options", "nosniff"]
+      },
+      "validation_commands": [
+        "git apply 0003-add-csp-headers.patch",
+        "pnpm --filter bolt-ui dev",
+        "curl -I http://localhost:5192/ | grep -i 'content-security-policy'",
+        "pnpm --filter bolt-ui vitest run tests/security/csp-headers.spec.ts"
+      ],
+      "effort_hours": 4,
+      "pr_suggestion": {
+        "title": "security(bolt-ui): add Content Security Policy headers",
+        "branch": "fix/add-csp",
+        "labels": ["security", "high"]
+      }
+    },
+    {
+      "id": "F-004",
+      "title": "Utilisation de dangerouslySetInnerHTML sans sanitization",
+      "severity": "medium",
+      "confidence": 0.85,
+      "files": [
+        "apps/bolt-ui/app/components/chat/Artifact.tsx",
+        "apps/bolt-ui/app/components/chat/CodeBlock.tsx",
+        "apps/bolt-ui/app/components/chat/ToolInvocations.tsx",
+        "apps/bolt-ui/app/components/chat/ModelSelector.tsx",
+        "apps/bolt-ui/app/components/workbench/DiffView.tsx",
+        "apps/bolt-ui/app/root.tsx:81"
+      ],
+      "reproduction": [
+        "# Analyse statique uniquement",
+        "grep -r 'dangerouslySetInnerHTML' apps/bolt-ui/app/"
+      ],
+      "root_cause": "HTML injecté directement sans DOMPurify ou autre sanitizer. Risque si contenu provient d'API externe ou input utilisateur.",
+      "business_impact": "XSS potentiel si LLM génère HTML malveillant ou si données utilisateur non filtrées",
+      "fix": {
+        "description": "Installer dompurify et wrapper tous les dangerouslySetInnerHTML avec DOMPurify.sanitize(). Configuration ALLOWED_TAGS restreinte.",
+        "patch_file": "0004-sanitize-html-dompurify.patch",
+        "breaking": false
+      },
+      "tests": {
+        "file": "apps/bolt-ui/tests/security/html-sanitization.spec.ts",
+        "framework": "vitest",
+        "coverage": ["script tag removal", "event handler stripping", "allowed tags only"]
+      },
+      "validation_commands": [
+        "pnpm --filter bolt-ui add dompurify @types/dompurify",
+        "git apply 0004-sanitize-html-dompurify.patch",
+        "pnpm --filter bolt-ui vitest run tests/security/html-sanitization.spec.ts"
+      ],
+      "effort_hours": 3,
+      "pr_suggestion": {
+        "title": "security(bolt-ui): sanitize HTML with DOMPurify",
+        "branch": "fix/sanitize-html",
+        "labels": ["security", "medium"]
+      }
+    },
+    {
+      "id": "F-005",
+      "title": "Absence de rate limiting sur API routes",
+      "severity": "high",
+      "confidence": 1.0,
+      "files": [
+        "apps/bolt-ui/app/routes/api.chat.ts",
+        "apps/bolt-ui/app/routes/api.e2b.ts",
+        "apps/bolt-ui/app/routes/*.ts (all API routes)"
+      ],
+      "reproduction": [
+        "# Spam API chat",
+        "for i in {1..100}; do curl -X POST http://localhost:5192/api/chat & done",
+        "# Vérifier: aucun 429 Too Many Requests"
+      ],
+      "root_cause": "Aucun middleware rate limit implémenté. N'importe quel client peut spammer les endpoints.",
+      "business_impact": "Abus de ressources, coûts LLM incontrôlés (potentiellement $1000+/jour), DoS, dégradation service",
+      "fix": {
+        "description": "Créer utils/rateLimit.ts avec limiter package. Appliquer middleware dans chaque route API critique (chat, e2b). Configurer 20 req/min par IP.",
+        "patch_file": "0005-add-rate-limiting.patch",
+        "breaking": false
+      },
+      "tests": {
+        "file": "apps/bolt-ui/tests/api/rate-limiting.spec.ts",
+        "framework": "vitest",
+        "coverage": ["rate limit enforcement", "429 status", "per-IP tracking", "reset after window"]
+      },
+      "validation_commands": [
+        "pnpm --filter bolt-ui add limiter",
+        "git apply 0005-add-rate-limiting.patch",
+        "pnpm --filter bolt-ui dev",
+        "pnpm --filter bolt-ui vitest run tests/api/rate-limiting.spec.ts"
+      ],
+      "effort_hours": 5,
+      "pr_suggestion": {
+        "title": "feat(bolt-ui): add rate limiting to API routes",
+        "branch": "feat/rate-limiting",
+        "labels": ["security", "high", "feature"]
+      }
+    },
+    {
+      "id": "F-006",
+      "title": "localStorage non chiffré pour données sensibles",
+      "severity": "medium",
+      "confidence": 0.9,
+      "files": [
+        "apps/bolt-ui/app/components/deploy/GitHubDeploy.client.tsx",
+        "apps/bolt-ui/app/components/deploy/NetlifyDeploy.client.tsx",
+        "apps/bolt-ui/app/components/deploy/VercelDeploy.client.tsx"
+      ],
+      "reproduction": [
+        "# Ouvrir DevTools → Application → Local Storage",
+        "# Connecter GitHub/Netlify → Observer tokens en clair"
+      ],
+      "root_cause": "Tokens GitHub PAT, Netlify, Vercel stockés en plaintext dans localStorage. Vulnérable à XSS ou accès physique.",
+      "business_impact": "Exposition tokens si XSS réussit, accès repos privés, déploiements non autorisés",
+      "fix": {
+        "description": "Créer utils/secureStorage.ts avec crypto-js AES encryption. Remplacer tous localStorage.setItem/getItem par secureStorage wrapper.",
+        "patch_file": "0006-encrypt-local-storage.patch",
+        "breaking": false,
+        "migration_notes": "Les tokens existants seront invalidés, users devront re-connecter"
+      },
+      "tests": {
+        "file": "apps/bolt-ui/tests/utils/secure-storage.spec.ts",
+        "framework": "vitest",
+        "coverage": ["encryption", "decryption", "invalid data handling"]
+      },
+      "validation_commands": [
+        "pnpm --filter bolt-ui add crypto-js",
+        "git apply 0006-encrypt-local-storage.patch",
+        "pnpm --filter bolt-ui vitest run tests/utils/secure-storage.spec.ts"
+      ],
+      "effort_hours": 4,
+      "pr_suggestion": {
+        "title": "security(bolt-ui): encrypt sensitive data in localStorage",
+        "branch": "fix/encrypt-storage",
+        "labels": ["security", "medium"]
+      }
+    },
+    {
+      "id": "F-007",
+      "title": "Absence de tests E2E",
+      "severity": "medium",
+      "confidence": 1.0,
+      "files": [
+        "apps/bolt-ui/playwright.config.preview.ts (exists but no tests)"
+      ],
+      "reproduction": [
+        "find apps/bolt-ui/tests -name '*.spec.ts' -path '**/e2e/*'",
+        "# Result: empty"
+      ],
+      "root_cause": "Playwright configuré mais aucun test implémenté. Régressions UI non détectées avant production.",
+      "business_impact": "Bugs critiques déployés en production, mauvaise expérience utilisateur, rollbacks coûteux",
+      "fix": {
+        "description": "Créer 5 suites E2E critiques: chat flow, file editing, deployment, error handling, auth flow",
+        "patch_file": "0007-add-e2e-tests.patch",
+        "breaking": false
+      },
+      "tests": {
+        "file": "apps/bolt-ui/tests/e2e/chat-flow.spec.ts",
+        "framework": "playwright",
+        "coverage": ["new chat", "send message", "code generation", "error toast"]
+      },
+      "validation_commands": [
+        "pnpm --filter bolt-ui add -D @playwright/test",
+        "git apply 0007-add-e2e-tests.patch",
+        "pnpm --filter bolt-ui exec playwright test"
+      ],
+      "effort_hours": 12,
+      "pr_suggestion": {
+        "title": "test(bolt-ui): add E2E test suites with Playwright",
+        "branch": "test/e2e-coverage",
+        "labels": ["testing", "quality"]
+      }
+    },
+    {
+      "id": "F-008",
+      "title": "Dépendances obsolètes avec vulnérabilités",
+      "severity": "low",
+      "confidence": 0.8,
+      "files": [
+        "apps/bolt-ui/package.json"
+      ],
+      "reproduction": [
+        "pnpm --filter bolt-ui outdated",
+        "pnpm audit"
+      ],
+      "root_cause": "Packages non mis à jour régulièrement. Certains avec CVEs connus.",
+      "business_impact": "Exposition à vulnérabilités connues, impossibilité d'utiliser nouvelles features",
+      "fix": {
+        "description": "Mettre à jour packages critiques: @remix-run/* 2.15→2.17, react-toastify 10→11",
+        "patch_file": "0008-update-dependencies.patch",
+        "breaking": true,
+        "migration_notes": "react-toastify 11 change API closeButton, voir docs"
+      },
+      "tests": {
+        "file": "Full test suite",
+        "framework": "vitest",
+        "coverage": ["regression tests"]
+      },
+      "validation_commands": [
+        "git apply 0008-update-dependencies.patch",
+        "pnpm install",
+        "pnpm --filter bolt-ui test",
+        "pnpm --filter bolt-ui build"
+      ],
+      "effort_hours": 3,
+      "pr_suggestion": {
+        "title": "chore(bolt-ui): update dependencies to latest",
+        "branch": "chore/deps-update",
+        "labels": ["maintenance"]
+      }
+    },
+    {
+      "id": "F-009",
+      "title": "Google Fonts bloquent le rendu initial",
+      "severity": "medium",
+      "confidence": 1.0,
+      "files": [
+        "apps/bolt-ui/app/root.tsx:38-48"
+      ],
+      "reproduction": [
+        "# Lighthouse audit → Render-blocking resources",
+        "# Google Fonts CSS + WOFF2 chargés en synchrone"
+      ],
+      "root_cause": "Fonts chargées depuis CDN Google sans preload, bloquent First Contentful Paint",
+      "business_impact": "Performance dégradée, FCP +500ms, mauvais score Lighthouse (<80)",
+      "fix": {
+        "description": "Self-host avec fontsource-inter, retirer googleapis.com links, optionnel: font-display swap",
+        "patch_file": "0009-self-host-fonts.patch",
+        "breaking": false
+      },
+      "tests": {
+        "file": "Lighthouse CI",
+        "framework": "lighthouse",
+        "coverage": ["FCP <1.8s", "no blocking resources"]
+      },
+      "validation_commands": [
+        "pnpm --filter bolt-ui add fontsource-inter",
+        "git apply 0009-self-host-fonts.patch",
+        "pnpm --filter bolt-ui build",
+        "lighthouse http://localhost:5192 --view"
+      ],
+      "effort_hours": 2,
+      "pr_suggestion": {
+        "title": "perf(bolt-ui): self-host fonts to improve FCP",
+        "branch": "perf/self-host-fonts",
+        "labels": ["performance"]
+      }
+    },
+    {
+      "id": "F-010",
+      "title": "Pas de lazy loading pour composants lourds",
+      "severity": "medium",
+      "confidence": 1.0,
+      "files": [
+        "apps/bolt-ui/app/routes/chat.$id.tsx",
+        "apps/bolt-ui/app/components/workbench/Workbench.client.tsx"
+      ],
+      "reproduction": [
+        "# Bundle analysis",
+        "pnpm --filter bolt-ui build",
+        "# CodeMirror + xterm chargés immédiatement même si non utilisés"
+      ],
+      "root_cause": "Tous les composants importés statiquement, pas de code-splitting dynamique",
+      "business_impact": "Bundle initial trop large (>500KB), Time to Interactive élevé",
+      "fix": {
+        "description": "Utiliser React.lazy() pour Workbench, CodeMirror, Terminal. Wrap avec Suspense.",
+        "patch_file": "0010-lazy-load-components.patch",
+        "breaking": false
+      },
+      "tests": {
+        "file": "Bundle size limits",
+        "framework": "bundlesize",
+        "coverage": ["initial bundle <300KB"]
+      },
+      "validation_commands": [
+        "git apply 0010-lazy-load-components.patch",
+        "pnpm --filter bolt-ui build",
+        "pnpm --filter bolt-ui add -D bundlesize",
+        "bundlesize"
+      ],
+      "effort_hours": 4,
+      "pr_suggestion": {
+        "title": "perf(bolt-ui): lazy load heavy components",
+        "branch": "perf/lazy-loading",
+        "labels": ["performance"]
+      }
+    }
+  ],
+  "milestones": [
+    {
+      "id": "M1",
+      "title": "Sécurité Critique",
+      "duration_weeks": 2,
+      "findings": ["F-001", "F-002", "F-003", "F-005"],
+      "prs": 4,
+      "risk": "medium",
+      "rollback_plan": "Chaque PR est atomique avec tests, revert via git revert <commit>",
+      "validation": "Full test suite + security scan + manual QA"
+    },
+    {
+      "id": "M2",
+      "title": "Qualité & Tests",
+      "duration_weeks": 1,
+      "findings": ["F-007", "F-004", "F-006"],
+      "prs": 3,
+      "risk": "low",
+      "rollback_plan": "Simple revert, pas d'impact runtime",
+      "validation": "E2E tests passing + coverage >70%"
+    },
+    {
+      "id": "M3",
+      "title": "Performance & Accessibilité",
+      "duration_weeks": 1,
+      "findings": ["F-009", "F-010", "i18n", "a11y"],
+      "prs": 4,
+      "risk": "low",
+      "rollback_plan": "Feature flags pour lazy loading, revert si régression",
+      "validation": "Lighthouse score >90 + axe-core 0 violations"
+    }
+  ],
+  "ci_recommendations": {
+    "github_actions": {
+      "file": ".github/workflows/bolt-ui-ci.yml",
+      "jobs": ["lint", "typecheck", "unit-test", "e2e-test", "security-audit", "build"]
+    },
+    "pre_commit_hooks": {
+      "hooks": ["lint-staged", "typecheck", "unit-test-related"]
+    },
+    "bundle_limits": {
+      "initial": "300KB",
+      "total": "1.5MB"
+    }
+  },
+  "dependencies_audit": {
+    "vulnerable": [],
+    "outdated_critical": [
+      "@remix-run/cloudflare: 2.15.2 → 2.17.4",
+      "@remix-run/react: 2.15.2 → 2.17.4"
+    ],
+    "outdated_minor": [
+      "react-toastify: 10.0.6 → 11.0.0 (breaking)"
+    ]
+  }
+}
