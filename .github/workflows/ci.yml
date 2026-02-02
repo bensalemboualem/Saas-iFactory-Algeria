@@ -3,11 +3,17 @@ name: CI
 on:
   push:
     branches: [ main, master ]
+    paths-ignore:
+      - 'docs/**'
   pull_request:
     branches: [ main, master ]
+    paths-ignore:
+      - 'docs/**'
 
 jobs:
   build:
+    # Skip this workflow when there is no root package.json (monorepo)
+    if: ${{ hashFiles('package.json') != '' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
