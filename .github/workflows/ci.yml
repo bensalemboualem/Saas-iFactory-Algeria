@@ -12,6 +12,8 @@ on:
 
 jobs:
   build:
+    # Skip this workflow when there is no root package.json (monorepo)
+    if: ${{ hashFiles('package.json') != '' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
