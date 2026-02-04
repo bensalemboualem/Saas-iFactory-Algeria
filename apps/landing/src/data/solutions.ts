@@ -1,0 +1,195 @@
+export type Solution = {
+  title: string;
+  description: string;
+  tags: string[];
+  example: string;
+  outcome: string;
+};
+
+export const solutionTags = [
+  'Administration',
+  'Juridique',
+  'RH',
+  'Support',
+  'Marketing',
+  'Education',
+  'Design',
+  'Dev',
+  'Data',
+  'Traduction',
+  'Audio',
+  'Image',
+  'PDF',
+];
+
+export const solutions: Solution[] = [
+  {
+    title: 'Rédiger une note officielle',
+    description: 'Notes & courriers',
+    tags: ['Administration', 'Traduction'],
+    example: 'Note interne pour annoncer un changement de procédure.',
+    outcome: 'Une note claire, formelle et prête à diffuser.',
+  },
+  {
+    title: 'Rédiger un courrier administratif',
+    description: 'Courriers standards',
+    tags: ['Administration'],
+    example: 'Courrier de réponse à une demande de document.',
+    outcome: 'Un courrier concis avec un ton officiel adapté.',
+  },
+  {
+    title: "Résumer un PDF + points d'action",
+    description: 'Synthèse immédiate',
+    tags: ['Administration', 'PDF'],
+    example: 'Rapport de 20 pages à résumer pour une réunion.',
+    outcome: 'Un résumé en puces avec actions prioritaires.',
+  },
+  {
+    title: "Extraire infos d'un PDF/scan",
+    description: 'Tables, champs, infos',
+    tags: ['Administration', 'PDF', 'Data'],
+    example: "Extraction des champs d'un formulaire scanné.",
+    outcome: 'Champs clés structurés en tableau exploitable.',
+  },
+  {
+    title: 'Traduction FR <-> AR (style officiel)',
+    description: 'Ton formel',
+    tags: ['Traduction', 'Administration'],
+    example: 'Traduire un courrier FR vers AR.',
+    outcome: 'Traduction fidèle avec vocabulaire administratif.',
+  },
+  {
+    title: 'Préparer un mémo décisionnel',
+    description: 'Synthèse + recommandations',
+    tags: ['Administration', 'Data'],
+    example: 'Mémo pour arbitrer entre deux options.',
+    outcome: 'Recommandation argumentée avec risques et bénéfices.',
+  },
+  {
+    title: 'PV / compte-rendu de réunion',
+    description: 'Structuré + actions',
+    tags: ['Administration', 'PDF'],
+    example: 'Notes de réunion informelles à structurer.',
+    outcome: 'Compte-rendu propre avec décisions et responsables.',
+  },
+  {
+    title: 'FAQ interne procédures',
+    description: 'Base de réponses',
+    tags: ['Administration', 'Education'],
+    example: 'FAQ pour nouveaux agents administratifs.',
+    outcome: 'Questions/réponses claires et facilement partageables.',
+  },
+  {
+    title: 'Analyse de contrat (résumé/risques)',
+    description: 'Clauses & risques',
+    tags: ['Juridique', 'PDF'],
+    example: 'Contrat fournisseur à analyser rapidement.',
+    outcome: 'Résumé des clauses sensibles et risques principaux.',
+  },
+  {
+    title: 'Rédiger clauses & CGU',
+    description: 'Modèles de clauses',
+    tags: ['Juridique'],
+    example: 'CGU pour une application mobile.',
+    outcome: 'Clauses juridiques cohérentes et complètes.',
+  },
+  {
+    title: 'Emails pro FR/AR/EN',
+    description: 'Réponses rapides',
+    tags: ['Marketing', 'Traduction'],
+    example: 'Réponse client en FR avec version AR.',
+    outcome: 'Email professionnel multilingue en 1 clic.',
+  },
+  {
+    title: 'Propositions commerciales',
+    description: 'Offre claire',
+    tags: ['Marketing'],
+    example: 'Proposition pour un client institutionnel.',
+    outcome: 'Proposition structurée avec valeur et prix.',
+  },
+  {
+    title: 'Support client: réponses & résumé',
+    description: 'Templates support',
+    tags: ['Support'],
+    example: 'Ticket client avec historique long.',
+    outcome: 'Résumé + réponse courtoise et actionnable.',
+  },
+  {
+    title: 'Script appel / argumentaire',
+    description: 'Call script',
+    tags: ['Marketing'],
+    example: 'Script pour prise de rendez-vous B2B.',
+    outcome: 'Argumentaire clair avec objections et réponses.',
+  },
+  {
+    title: 'RH: fiche de poste',
+    description: 'JD structurée',
+    tags: ['RH'],
+    example: 'Fiche de poste pour un chargé marketing.',
+    outcome: 'Description complète avec missions et compétences.',
+  },
+  {
+    title: 'RH: questions entretien',
+    description: "Grille d'entretien",
+    tags: ['RH'],
+    example: 'Entretien pour un profil data.',
+    outcome: 'Liste de questions techniques et comportementales.',
+  },
+  {
+    title: 'Formation: cours & quiz',
+    description: 'Contenu pédagogique',
+    tags: ['Education'],
+    example: 'Mini-cours sur la sécurité informatique.',
+    outcome: 'Plan de cours + quiz de validation.',
+  },
+  {
+    title: 'Résumer une vidéo/texte',
+    description: 'Synthèse',
+    tags: ['Education', 'Data'],
+    example: 'Vidéo de cours à condenser en 10 lignes.',
+    outcome: 'Synthèse claire avec idées clés.',
+  },
+  {
+    title: 'Créer une affiche simple',
+    description: 'Visuel promo',
+    tags: ['Design', 'Image'],
+    example: 'Affiche pour un événement interne.',
+    outcome: 'Visuel propre avec titre et infos essentielles.',
+  },
+  {
+    title: 'Générer visuels produits',
+    description: 'Variantes',
+    tags: ['Design', 'Image'],
+    example: "Variantes d'images pour une boutique en ligne.",
+    outcome: 'Set de visuels cohérents pour le catalogue.',
+  },
+  {
+    title: 'Réécriture / correction',
+    description: 'Amélioration style',
+    tags: ['Marketing'],
+    example: 'Reformuler un texte de présentation.',
+    outcome: 'Texte fluide, clair et plus impactant.',
+  },
+  {
+    title: 'Aide code / débogage',
+    description: 'Explications + patch',
+    tags: ['Dev'],
+    example: 'Erreur TypeScript dans un composant React.',
+    outcome: 'Diagnostic + correctif proposé.',
+  },
+  {
+    title: 'Générer documentation',
+    description: 'README, documentation',
+    tags: ['Dev'],
+    example: 'README pour un projet interne.',
+    outcome: 'Documentation lisible avec exemples.',
+  },
+  {
+    title: 'Analyser un tableau (CSV)',
+    description: 'Analyses & résumé',
+    tags: ['Data'],
+    example: 'CSV de ventes mensuelles à analyser.',
+    outcome: 'Insights rapides + résumé des tendances.',
+  },
+];
+
