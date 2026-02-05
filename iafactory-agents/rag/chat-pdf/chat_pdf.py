@@ -3,22 +3,37 @@ import tempfile
 import streamlit as st
 from embedchain import App
 
-def embedchain_bot(db_path, api_key):
+GATEWAY_URL = os.getenv("GATEWAY_URL", "http://localhost:3001")
+
+def embedchain_bot(db_path):
+    """Configure Embedchain to route LLM calls through the gateway.
+    Embedchain's OpenAI provider supports base_url override."""
     return App.from_config(
         config={
-            "llm": {"provider": "openai", "config": {"api_key": api_key}},
+            "llm": {
+                "provider": "openai",
+                "config": {
+                    "api_key": "gateway",
+                    "model": "gpt-4o",
+                    "api_base": f"{GATEWAY_URL}/v1",
+                },
+            },
             "vectordb": {"provider": "chroma", "config": {"dir": db_path}},
-            "embedder": {"provider": "openai", "config": {"api_key": api_key}},
+            "embedder": {
+                "provider": "openai",
+                "config": {
+                    "api_key": os.getenv("OPENAI_API_KEY", "gateway"),
+                },
+            },
         }
     )
 
 st.title("Chat with PDF")
 
-openai_access_token = st.text_input("OpenAI API Key", type="password")
+db_path = tempfile.mkdtemp()
+app = embedchain_bot(db_path)
 
-if openai_access_token:
-    db_path = tempfile.mkdtemp()
-    app = embedchain_bot(db_path, openai_access_token)
+if True:
 
     pdf_file = st.file_uploader("Upload a PDF file", type="pdf")
 

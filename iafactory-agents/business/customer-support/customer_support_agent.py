@@ -3,22 +3,30 @@ import sys
 sys.path.append('/app/shared')
 from streamlit_i18n import get_i18n, render_header
 
-from openai import OpenAI
 from mem0 import Memory
+import httpx
 import os
 import json
 from datetime import datetime, timedelta
+
+GATEWAY_URL = os.getenv("GATEWAY_URL", "http://localhost:3001")
+
+def _call_gateway(model: str, messages: list, max_tokens: int = 1000) -> str:
+    """Call LLM via IA Factory gateway."""
+    response = httpx.post(
+        f"{GATEWAY_URL}/api/llm/chat/completions",
+        json={"model": model, "messages": messages, "max_tokens": max_tokens},
+        timeout=60.0,
+    )
+    response.raise_for_status()
+    return response.json()["choices"][0]["message"]["content"]
 
 # Set up the Streamlit App
 st.title("AI Customer Support Agent with Memory 🛒")
 st.caption("Chat with a customer support assistant who remembers your past interactions.")
 
-# Set the OpenAI API key
-openai_api_key = st.text_input("Enter OpenAI API Key", type="password")
-
-if openai_api_key:
-    os.environ['OPENAI_API_KEY'] = openai_api_key
-
+# Gateway handles API keys -- no need to ask the user
+if True:
     class CustomerSupportAIAgent:
         def __init__(self):
             # Initialize Mem0 with Qdrant as the vector store
@@ -37,7 +45,6 @@ if openai_api_key:
                 st.error(f"Failed to initialize memory: {e}")
                 st.stop()  # Stop execution if memory initialization fails
 
-            self.client = OpenAI()
             self.app_id = "customer-support"
 
         def handle_query(self, query, user_id=None):
@@ -52,16 +59,15 @@ if openai_api_key:
                         if "memory" in memory:
                             context += f"- {memory['memory']}\n"
 
-                # Generate a response using OpenAI
+                # Generate a response via gateway
                 full_prompt = f"{context}\nCustomer: {query}\nSupport Agent:"
-                response = self.client.chat.completions.create(
+                answer = _call_gateway(
                     model="gpt-4",
                     messages=[
                         {"role": "system", "content": "You are a customer support AI agent for TechGadgets.com, an online electronics store."},
                         {"role": "user", "content": full_prompt}
-                    ]
+                    ],
                 )
-                answer = response.choices[0].message.content
 
                 # Add the query and answer to memory
                 self.memory.add(query, user_id=user_id, metadata={"app_id": self.app_id, "role": "user"})
@@ -97,15 +103,15 @@ if openai_api_key:
 
                 Format the output as a JSON object."""
 
-                response = self.client.chat.completions.create(
+                raw = _call_gateway(
                     model="gpt-4",
                     messages=[
                         {"role": "system", "content": "You are a data generation AI that creates realistic customer profiles and order histories. Always respond with valid JSON."},
                         {"role": "user", "content": prompt}
-                    ]
+                    ],
                 )
 
-                customer_data = json.loads(response.choices[0].message.content)
+                customer_data = json.loads(raw)
 
                 # Add generated data to memory
                 for key, value in customer_data.items():
@@ -203,5 +209,4 @@ if openai_api_key:
     elif not customer_id:
         st.error("Please enter a customer ID to start the chat.")
 
-else:
-    st.warning("Please enter your OpenAI API key to use the customer support agent.")
+    pass

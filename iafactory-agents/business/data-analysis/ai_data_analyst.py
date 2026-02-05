@@ -10,6 +10,9 @@ from agno.agent import Agent
 from agno.models.openai import OpenAIChat
 from agno.tools.duckdb import DuckDbTools
 from agno.tools.pandas import PandasTools
+import os
+
+GATEWAY_URL = os.getenv("GATEWAY_URL", "http://localhost:3001")
 
 # Function to preprocess and save the uploaded file
 def preprocess_and_save(file):
@@ -87,8 +90,9 @@ if uploaded_file is not None and "openai_key" in st.session_state:
         )
         
         # Initialize the Agent with DuckDB and Pandas tools
+        # Route through gateway: Agno's OpenAIChat supports custom base_url
         data_analyst_agent = Agent(
-            model=OpenAIChat(id="gpt-4o", api_key=st.session_state.openai_key),
+            model=OpenAIChat(id="gpt-4o", api_key="gateway", base_url=f"{GATEWAY_URL}/v1"),
             tools=[duckdb_tools, PandasTools()],
             system_message="You are an expert data analyst. Use the 'uploaded_data' table to answer user queries. Generate SQL queries using DuckDB tools to solve the user's query. Provide clear and concise answers with the results.",
             markdown=True,

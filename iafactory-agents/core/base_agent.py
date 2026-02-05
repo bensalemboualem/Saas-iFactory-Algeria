@@ -1,16 +1,18 @@
 """
 Base Agent Class for IA Factory
+All LLM calls route through the gateway (http://localhost:3001)
 """
 from typing import List, Dict, Any, Optional, Callable
 from pydantic import BaseModel, Field
 from abc import ABC, abstractmethod
-from openai import AsyncOpenAI
-from anthropic import AsyncAnthropic
+import httpx
 import logging
 from datetime import datetime
 import os
 
 logger = logging.getLogger(__name__)
+
+GATEWAY_URL = os.getenv("GATEWAY_URL", "http://localhost:3001")
 
 class AgentConfig(BaseModel):
     name: str
@@ -40,43 +42,37 @@ class BaseAgent(ABC):
         self.config = config
         self.memory: List[AgentMessage] = [] if config.memory_enabled else None
         self.tools_registry: Dict[str, Callable] = {}
-        self.client = self._init_llm_client()
-        logger.info(f"Initialized {config.name} with model {config.model}")
-    
-    def _init_llm_client(self):
-        model = self.config.model.lower()
-        if "deepseek" in model:
-            return AsyncOpenAI(
-                api_key=os.getenv("DEEPSEEK_API_KEY"),
-                base_url="https://api.deepseek.com"
-            )
-        elif model.startswith("gpt"):
-            return AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-        elif model.startswith("claude"):
-            return AsyncAnthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
-        return AsyncOpenAI(api_key=os.getenv("DEEPSEEK_API_KEY"), base_url="https://api.deepseek.com")
-    
+        logger.info(f"Initialized {config.name} with model {config.model} via gateway {GATEWAY_URL}")
+
     @abstractmethod
     async def execute(self, input_data: Dict[str, Any]) -> AgentResponse:
         pass
-    
+
     def add_memory(self, message: AgentMessage):
         if self.memory is not None:
             self.memory.append(message)
             if len(self.memory) > 50:
                 self.memory = self.memory[-50:]
-    
+
     async def _call_llm(self, messages: List[Dict[str, str]]) -> Dict[str, Any]:
         try:
-            completion = await self.client.chat.completions.create(
-                model=self.config.model,
-                messages=messages,
-                temperature=self.config.temperature,
-                max_tokens=self.config.max_tokens
-            )
-            return {"content": completion.choices[0].message.content, "tokens": completion.usage.total_tokens}
+            async with httpx.AsyncClient(timeout=60.0) as client:
+                response = await client.post(
+                    f"{GATEWAY_URL}/api/llm/chat/completions",
+                    json={
+                        "model": self.config.model,
+                        "messages": messages,
+                        "temperature": self.config.temperature,
+                        "max_tokens": self.config.max_tokens,
+                    },
+                )
+                response.raise_for_status()
+                data = response.json()
+            content = data["choices"][0]["message"]["content"]
+            tokens = data.get("usage", {}).get("total_tokens", 0)
+            return {"content": content, "tokens": tokens}
         except Exception as e:
-            logger.error(f"LLM call failed: {e}")
+            logger.error(f"LLM call via gateway failed: {e}")
             return {"content": f"Erreur: {str(e)}", "tokens": 0}
 
 class MultiAgentTeam:

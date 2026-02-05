@@ -13,7 +13,9 @@ from google.adk.runners import Runner
 
 
 # Define constants for the agent configuration
+# Routes through gateway -- gateway will forward to the appropriate provider
 MODEL_ID = "gemini-2.5-flash"
+GATEWAY_URL = os.getenv("GATEWAY_URL", "http://localhost:3001")
 APP_NAME = "ai_consultant_agent"
 USER_ID = "consultant-user"
 SESSION_ID = "consultant-session"
