@@ -1,0 +1,1 @@
+[tests] No test script detected for apps/landing. No automated tests run.

@@ -1,0 +1,1 @@
+[lint] No lint script detected for apps/landing (package.json scripts: dev/build/preview/check:no-en).
