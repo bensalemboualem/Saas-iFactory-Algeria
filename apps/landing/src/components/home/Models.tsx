@@ -121,7 +121,7 @@ export default function Models() {
       <div
         className="models-search-bar"
         style={{
-          background: isDark ? 'rgba(26,26,26,0.85)' : 'rgba(255,255,255,0.85)',
+          background: isDark ? 'rgba(37,37,38,0.85)' : 'rgba(255,255,255,0.85)',
           borderBottom: `1px solid ${colors.borderColor}`,
         }}
       >
@@ -139,7 +139,7 @@ export default function Models() {
               onChange={(e) => setSearch(e.target.value)}
               className="models-search-input"
               style={{
-                background: isDark ? '#262626' : '#f5f5f5',
+                background: isDark ? '#2d2d2d' : '#f5f5f5',
                 border: `1px solid ${colors.borderColor}`,
                 color: colors.textPrimary,
               }}
@@ -159,8 +159,8 @@ export default function Models() {
                     activeFilter === cat
                       ? accent.primary
                       : isDark
-                      ? '#262626'
-                      : '#f0f0f0',
+                      ? '#2d2d2d'
+                      : '#f5f5f5',
                   color: activeFilter === cat ? '#fff' : colors.textSecondary,
                   border: activeFilter === cat ? 'none' : `1px solid ${colors.borderColor}`,
                 }}
@@ -185,8 +185,8 @@ export default function Models() {
             key={model.name}
             className="model-card-v2"
             style={{
-              background: isDark ? '#1f1f1f' : '#ffffff',
-              border: `1px solid ${colors.borderColor}`,
+              background: isDark ? '#1e1e1e' : '#ffffff',
+              border: `1px solid ${isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.06)'}`,
             }}
           >
             <div className="model-card-inner">
@@ -231,7 +231,7 @@ export default function Models() {
                     key={tag}
                     className="model-card-tag"
                     style={{
-                      background: isDark ? '#2a2a2a' : '#f5f5f5',
+                      background: isDark ? '#353535' : '#f5f5f5',
                       color: colors.textSecondary,
                     }}
                   >
@@ -242,7 +242,7 @@ export default function Models() {
 
               {/* CTA */}
               <Link
-                to="/login?next=/chat"
+                to={`/chat?model=${encodeURIComponent(model.name)}`}
                 className="model-card-cta"
                 style={{
                   background: isDark ? '#fff' : '#111',

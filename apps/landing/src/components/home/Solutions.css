@@ -1,5 +1,5 @@
 .solutions-section {
-  padding: 80px 24px;
+  padding: 48px 24px;
   background: var(--bg-primary);
   scroll-margin-top: 90px;
 }
@@ -131,7 +131,7 @@
 }
 
 .solution-card {
-  background: var(--bg-secondary);
+  background: var(--bg-card, var(--bg-secondary));
   border: 1px solid var(--border-color);
   border-radius: 16px;
   padding: 18px;
@@ -145,6 +145,16 @@
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(0, 168, 107, 0.12);
   border-color: var(--accent-primary);
+}
+
+[data-theme="light"] .solution-card {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="light"] .solution-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 168, 107, 0.1);
 }
 
 .solution-card h3 {
@@ -209,7 +219,7 @@
 
 @media (max-width: 768px) {
   .solutions-section {
-    padding: 60px 16px;
+    padding: 40px 16px;
   }
 
   .solutions-toolbar {

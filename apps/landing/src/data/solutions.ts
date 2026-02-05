@@ -1,4 +1,5 @@
 export type Solution = {
+  id: string;
   title: string;
   description: string;
   tags: string[];
@@ -24,6 +25,7 @@ export const solutionTags = [
 
 export const solutions: Solution[] = [
   {
+    id: 'note-officielle',
     title: 'Rédiger une note officielle',
     description: 'Notes & courriers',
     tags: ['Administration', 'Traduction'],
@@ -31,6 +33,7 @@ export const solutions: Solution[] = [
     outcome: 'Une note claire, formelle et prête à diffuser.',
   },
   {
+    id: 'courrier-administratif',
     title: 'Rédiger un courrier administratif',
     description: 'Courriers standards',
     tags: ['Administration'],
@@ -38,6 +41,7 @@ export const solutions: Solution[] = [
     outcome: 'Un courrier concis avec un ton officiel adapté.',
   },
   {
+    id: 'resume-pdf',
     title: "Résumer un PDF + points d'action",
     description: 'Synthèse immédiate',
     tags: ['Administration', 'PDF'],
@@ -45,6 +49,7 @@ export const solutions: Solution[] = [
     outcome: 'Un résumé en puces avec actions prioritaires.',
   },
   {
+    id: 'extraction-pdf',
     title: "Extraire infos d'un PDF/scan",
     description: 'Tables, champs, infos',
     tags: ['Administration', 'PDF', 'Data'],
@@ -52,6 +57,7 @@ export const solutions: Solution[] = [
     outcome: 'Champs clés structurés en tableau exploitable.',
   },
   {
+    id: 'traduction-fr-ar',
     title: 'Traduction FR <-> AR (style officiel)',
     description: 'Ton formel',
     tags: ['Traduction', 'Administration'],
@@ -59,6 +65,7 @@ export const solutions: Solution[] = [
     outcome: 'Traduction fidèle avec vocabulaire administratif.',
   },
   {
+    id: 'memo-decisionnel',
     title: 'Préparer un mémo décisionnel',
     description: 'Synthèse + recommandations',
     tags: ['Administration', 'Data'],
@@ -66,6 +73,7 @@ export const solutions: Solution[] = [
     outcome: 'Recommandation argumentée avec risques et bénéfices.',
   },
   {
+    id: 'pv-reunion',
     title: 'PV / compte-rendu de réunion',
     description: 'Structuré + actions',
     tags: ['Administration', 'PDF'],
@@ -73,6 +81,7 @@ export const solutions: Solution[] = [
     outcome: 'Compte-rendu propre avec décisions et responsables.',
   },
   {
+    id: 'faq-interne',
     title: 'FAQ interne procédures',
     description: 'Base de réponses',
     tags: ['Administration', 'Education'],
@@ -80,6 +89,7 @@ export const solutions: Solution[] = [
     outcome: 'Questions/réponses claires et facilement partageables.',
   },
   {
+    id: 'analyse-contrat',
     title: 'Analyse de contrat (résumé/risques)',
     description: 'Clauses & risques',
     tags: ['Juridique', 'PDF'],
@@ -87,6 +97,7 @@ export const solutions: Solution[] = [
     outcome: 'Résumé des clauses sensibles et risques principaux.',
   },
   {
+    id: 'clauses-cgu',
     title: 'Rédiger clauses & CGU',
     description: 'Modèles de clauses',
     tags: ['Juridique'],
@@ -94,6 +105,7 @@ export const solutions: Solution[] = [
     outcome: 'Clauses juridiques cohérentes et complètes.',
   },
   {
+    id: 'emails-pro',
     title: 'Emails pro FR/AR/EN',
     description: 'Réponses rapides',
     tags: ['Marketing', 'Traduction'],
@@ -101,6 +113,7 @@ export const solutions: Solution[] = [
     outcome: 'Email professionnel multilingue en 1 clic.',
   },
   {
+    id: 'proposition-commerciale',
     title: 'Propositions commerciales',
     description: 'Offre claire',
     tags: ['Marketing'],
@@ -108,6 +121,7 @@ export const solutions: Solution[] = [
     outcome: 'Proposition structurée avec valeur et prix.',
   },
   {
+    id: 'support-client',
     title: 'Support client: réponses & résumé',
     description: 'Templates support',
     tags: ['Support'],
@@ -115,6 +129,7 @@ export const solutions: Solution[] = [
     outcome: 'Résumé + réponse courtoise et actionnable.',
   },
   {
+    id: 'script-appel',
     title: 'Script appel / argumentaire',
     description: 'Call script',
     tags: ['Marketing'],
@@ -122,6 +137,7 @@ export const solutions: Solution[] = [
     outcome: 'Argumentaire clair avec objections et réponses.',
   },
   {
+    id: 'fiche-poste',
     title: 'RH: fiche de poste',
     description: 'JD structurée',
     tags: ['RH'],
@@ -129,6 +145,7 @@ export const solutions: Solution[] = [
     outcome: 'Description complète avec missions et compétences.',
   },
   {
+    id: 'questions-entretien',
     title: 'RH: questions entretien',
     description: "Grille d'entretien",
     tags: ['RH'],
@@ -136,6 +153,7 @@ export const solutions: Solution[] = [
     outcome: 'Liste de questions techniques et comportementales.',
   },
   {
+    id: 'formation-cours-quiz',
     title: 'Formation: cours & quiz',
     description: 'Contenu pédagogique',
     tags: ['Education'],
@@ -143,6 +161,7 @@ export const solutions: Solution[] = [
     outcome: 'Plan de cours + quiz de validation.',
   },
   {
+    id: 'resume-video-texte',
     title: 'Résumer une vidéo/texte',
     description: 'Synthèse',
     tags: ['Education', 'Data'],
@@ -150,6 +169,7 @@ export const solutions: Solution[] = [
     outcome: 'Synthèse claire avec idées clés.',
   },
   {
+    id: 'affiche-simple',
     title: 'Créer une affiche simple',
     description: 'Visuel promo',
     tags: ['Design', 'Image'],
@@ -157,6 +177,7 @@ export const solutions: Solution[] = [
     outcome: 'Visuel propre avec titre et infos essentielles.',
   },
   {
+    id: 'visuels-produits',
     title: 'Générer visuels produits',
     description: 'Variantes',
     tags: ['Design', 'Image'],
@@ -164,6 +185,7 @@ export const solutions: Solution[] = [
     outcome: 'Set de visuels cohérents pour le catalogue.',
   },
   {
+    id: 'reecriture-correction',
     title: 'Réécriture / correction',
     description: 'Amélioration style',
     tags: ['Marketing'],
@@ -171,6 +193,7 @@ export const solutions: Solution[] = [
     outcome: 'Texte fluide, clair et plus impactant.',
   },
   {
+    id: 'aide-code',
     title: 'Aide code / débogage',
     description: 'Explications + patch',
     tags: ['Dev'],
@@ -178,6 +201,7 @@ export const solutions: Solution[] = [
     outcome: 'Diagnostic + correctif proposé.',
   },
   {
+    id: 'generer-documentation',
     title: 'Générer documentation',
     description: 'README, documentation',
     tags: ['Dev'],
@@ -185,6 +209,7 @@ export const solutions: Solution[] = [
     outcome: 'Documentation lisible avec exemples.',
   },
   {
+    id: 'analyser-csv',
     title: 'Analyser un tableau (CSV)',
     description: 'Analyses & résumé',
     tags: ['Data'],

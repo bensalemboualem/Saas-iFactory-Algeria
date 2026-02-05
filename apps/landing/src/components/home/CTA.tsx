@@ -37,7 +37,7 @@ export default function CTA() {
             </div>
             <h3 data-i18n="cta.text">{t('cta_text')}</h3>
             <div className="cta-buttons">
-              <Link to="/login" className="btn-secondary" data-i18n="cta.signup">
+              <Link to="/chat" className="btn-secondary" data-i18n="cta.signup">
                 {t('cta_signup')}
               </Link>
               <Link to="/pricing" className="btn-secondary" data-i18n="cta.plans">

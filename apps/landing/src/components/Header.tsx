@@ -25,17 +25,17 @@ const Header = () => {
   ];
 
   const menuLinks = [
-    { href: './docs/getstarted.html', icon: '🚀', label: t('get_started') },
-    { href: './docs/documentation.html', icon: '📖', label: t('docs') },
-    { href: './docs/help.html', icon: '💬', label: t('help_center') },
-    { href: './docs/changelog.html', icon: '📋', label: t('changelog') },
-    { href: './docs/blog.html', icon: '📝', label: t('blog') },
+    { icon: '🚀', label: t('get_started'), to: '/chat' },
+    { icon: '📖', label: t('docs'), to: '/tools' },
+    { icon: '💬', label: t('help_center'), to: '/contact' },
+    { icon: '📋', label: t('changelog'), to: '/about' },
+    { icon: '📝', label: t('blog'), to: '/about' },
   ];
 
   const menuLinksPro = [
-    { href: './docs/pro.html', icon: '⭐', label: t('iafactory_pro') },
+    { icon: '⭐', label: t('iafactory_pro'), to: '/pricing' },
     { icon: '🏢', label: t('enterprise'), to: '/b2b' },
-    { icon: '🔌', label: t('api'), href: './docs/api.html' },
+    { icon: '🔌', label: t('api'), to: '/tools' },
   ];
 
   const languages = [
@@ -91,7 +91,7 @@ const Header = () => {
   const logoSrc = '/assets/images/logo-iafactory.png';
 
   const glassBg = isDark
-    ? 'rgba(20, 20, 20, 0.7)'
+    ? 'rgba(30, 30, 30, 0.75)'
     : 'rgba(255, 255, 255, 0.72)';
 
   const glassBorder = isDark
@@ -165,7 +165,7 @@ const Header = () => {
                   role="menu"
                   aria-label="Menu des paramètres"
                   style={{
-                    background: isDark ? 'rgba(23, 23, 23, 0.95)' : 'rgba(255, 255, 255, 0.95)',
+                    background: isDark ? 'rgba(37, 37, 38, 0.95)' : 'rgba(255, 255, 255, 0.95)',
                     border: `1px solid ${colors.borderColor}`,
                     boxShadow: isDark
                       ? '0 8px 32px rgba(0, 0, 0, 0.5)'
@@ -204,7 +204,7 @@ const Header = () => {
                       onChange={(e) => handleLanguageChange(e.target.value)}
                       aria-label="Sélectionner la langue"
                       style={{
-                        background: isDark ? '#262626' : '#f5f5f5',
+                        background: isDark ? '#2d2d2d' : '#f5f5f5',
                         border: `1px solid ${colors.borderColor}`,
                         borderRadius: '8px',
                         color: colors.textPrimary,
@@ -223,46 +223,34 @@ const Header = () => {
                   <div className="header-separator" style={{ background: colors.borderColor }} role="separator" />
 
                   {menuLinks.map((link) => (
-                    <a
+                    <button
                       key={link.label}
-                      href={link.href}
+                      type="button"
+                      onClick={() => handleNavClick(link.to)}
                       className="header-dropdown-link"
                       role="menuitem"
                       style={{ color: colors.textPrimary }}
                     >
                       <span aria-hidden="true">{link.icon}</span>
                       <span>{link.label}</span>
-                    </a>
+                    </button>
                   ))}
 
                   <div className="header-separator" style={{ background: colors.borderColor }} role="separator" />
 
-                  {menuLinksPro.map((link) =>
-                    link.to ? (
-                      <button
-                        key={link.label}
-                        type="button"
-                        onClick={() => handleNavClick(link.to)}
-                        className="header-dropdown-link"
-                        role="menuitem"
-                        style={{ color: colors.textPrimary }}
-                      >
-                        <span aria-hidden="true">{link.icon}</span>
-                        <span>{link.label}</span>
-                      </button>
-                    ) : (
-                      <a
-                        key={link.label}
-                        href={link.href}
-                        className="header-dropdown-link"
-                        role="menuitem"
-                        style={{ color: colors.textPrimary }}
-                      >
-                        <span aria-hidden="true">{link.icon}</span>
-                        <span>{link.label}</span>
-                      </a>
-                    )
-                  )}
+                  {menuLinksPro.map((link) => (
+                    <button
+                      key={link.label}
+                      type="button"
+                      onClick={() => handleNavClick(link.to)}
+                      className="header-dropdown-link"
+                      role="menuitem"
+                      style={{ color: colors.textPrimary }}
+                    >
+                      <span aria-hidden="true">{link.icon}</span>
+                      <span>{link.label}</span>
+                    </button>
+                  ))}
                 </div>
               )}
             </div>
@@ -305,7 +293,7 @@ const Header = () => {
           className="header-mobile-overlay"
           role="navigation"
           aria-label="Menu mobile"
-          style={{ background: isDark ? 'rgba(10, 10, 10, 0.95)' : 'rgba(255, 255, 255, 0.95)' }}
+          style={{ background: isDark ? 'rgba(30, 30, 30, 0.95)' : 'rgba(255, 255, 255, 0.95)' }}
         >
           <div style={{ marginBottom: '20px' }}>
             {navLinks
@@ -391,7 +379,7 @@ const Header = () => {
               onChange={(e) => handleLanguageChange(e.target.value)}
               aria-label="Sélectionner la langue"
               style={{
-                background: isDark ? '#262626' : '#f5f5f5',
+                background: isDark ? '#2d2d2d' : '#f5f5f5',
                 border: `1px solid ${colors.borderColor}`,
                 borderRadius: '8px',
                 color: colors.textPrimary,

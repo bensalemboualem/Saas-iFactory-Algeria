@@ -63,7 +63,7 @@ export default function Hero() {
 
       {/* CTA buttons */}
       <div className="hero-cta-group">
-        <Link to="/login?next=/bolt" className="hero-cta-primary">
+        <Link to="/chat" className="hero-cta-primary">
           {t('hero_cta_primary')}
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
             <path d="M6 3l5 5-5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>

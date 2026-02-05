@@ -100,7 +100,7 @@ export default function Solutions() {
             const visibleTags = solution.tags.slice(0, 4);
             const remainingTags = solution.tags.length - visibleTags.length;
             return (
-              <article key={solution.title} className="solution-card">
+              <article key={solution.id} className="solution-card">
                 <h3>{solution.title}</h3>
                 <p>{solution.description}</p>
 
@@ -116,7 +116,7 @@ export default function Solutions() {
                 </div>
 
                 <div className="solution-actions">
-                  <Link to="/chat" className="btn-primary">
+                  <Link to={`/chat?solution=${solution.id}`} className="btn-primary">
                     {t('solutions_try')}
                   </Link>
                   <button
